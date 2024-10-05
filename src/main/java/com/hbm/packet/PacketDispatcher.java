@@ -1,6 +1,5 @@
 package com.hbm.packet;
 
-import com.hbm.inventory.leafia.MissileCustomNukePacket;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.lib.RefStrings;
 
@@ -88,8 +87,6 @@ public class PacketDispatcher {
 		//Registercraft
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.SERVER);
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.CLIENT);
-		wrapper.registerMessage(MissileCustomNukePacket.Handler.class, MissileCustomNukePacket.class, i++, Side.SERVER);
-		wrapper.registerMessage(MissileCustomNukePacket.Handler.class, MissileCustomNukePacket.class, i++, Side.CLIENT);
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);
 		//Signals server to consume items and create template
