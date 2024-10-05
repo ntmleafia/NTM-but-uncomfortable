@@ -300,7 +300,7 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack){
-		return (slot < 11 || slot == 23 || slot == 24) && isProcessable(stack);
+		return true;//(slot < 11 || slot == 23 || slot == 24) && isProcessable(stack); fuck it
 	}
 	
 	@Override

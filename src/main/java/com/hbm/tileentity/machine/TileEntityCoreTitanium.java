@@ -290,7 +290,8 @@ public class TileEntityCoreTitanium extends TileEntityMachineBase implements ITi
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack stack){
-		return slot < 11 && isProcessable(stack);
+		return //slot < 11 && isProcessable(stack);
+		 true;
 	}
 	
 	@Override
