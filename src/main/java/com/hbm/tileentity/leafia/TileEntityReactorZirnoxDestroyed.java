@@ -54,7 +54,7 @@ public class TileEntityReactorZirnoxDestroyed extends TileEntity implements ITic
                 MainRegistry.proxy.effectNT(data);
                 world.playSound(null, pos.getX() + 0.5F, pos.getY() + 1.5, pos.getZ() + 0.5, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + world.rand.nextFloat(), world.rand.nextFloat() * 0.7F + 0.3F);
                 ContaminationUtil.radiate(world,pos.getX(),pos.getY()+1,pos.getZ(),64,90,0,40);
-                RadiationSavedData.incrementRad(world, pos, 50, 100);
+                RadiationSavedData.incrementRad(world, pos, 50, 105);
             }
         }
     }

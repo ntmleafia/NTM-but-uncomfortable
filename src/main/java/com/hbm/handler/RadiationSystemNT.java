@@ -90,7 +90,7 @@ public class RadiationSystemNT {
 			return;
 		RadPocket p = getPocket(world, pos);
 		if(p.radiation < max){
-			p.radiation += amount;
+			p.radiation = Math.min(p.radiation+amount,max);
 		}
 		//Mark this pocket as active so it gets updated
 		if(amount > 0){
