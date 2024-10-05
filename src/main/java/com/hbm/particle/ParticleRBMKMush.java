@@ -62,7 +62,7 @@ public class ParticleRBMKMush extends Particle {
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
-		GlStateManager.depthMask(false);
+		GlStateManager.depthMask(false);GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
 		RenderHelper.disableStandardItemLighting();
 
 		Tessellator tes = Tessellator.getInstance();

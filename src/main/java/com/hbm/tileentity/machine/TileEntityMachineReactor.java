@@ -125,7 +125,7 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return i == 2 ? false : (i == 0 ? hasItemPower(stack) : true);
+		return i == 2 ? false : (i == 0 ? (hasItemPower(stack) || (stack.getItem() instanceof ItemLeafiaRod)) : true);
 	}
 
 	public int getProgressScaled(int i) {

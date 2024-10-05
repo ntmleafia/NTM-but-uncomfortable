@@ -15,6 +15,8 @@ import com.hbm.inventory.leafia.inventoryutils.LeafiaPacketReceiver;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
+import com.hbm.main.MainRegistry;
+import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.FluidTypePacketTest;
 import com.hbm.packet.PacketDispatcher;
@@ -144,13 +146,13 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i),prevStack);
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
-        /*
+
         NBTTagCompound data = new NBTTagCompound();
         data.setString("type", "rbmkmush");
         data.setFloat("scale", 4);
         PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5, 250));
         MainRegistry.proxy.effectNT(data);
-*/
+
         int meta = this.getBlockMetadata();
         for (int ox = -2; ox <= 2; ox++) {
             for (int oz = -2; oz <= 2; oz++) {
