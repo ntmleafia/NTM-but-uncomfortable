@@ -81,9 +81,9 @@ public class TileEntityMachineBoiler extends TileEntityMachineBase implements IT
 	
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
 		if(i == 4)
-			if(TileEntityFurnace.getItemBurnTime(stack) > 0)
-				return true;
-		return false;
+			if(TileEntityFurnace.getItemBurnTime(stack) <= 0)
+				return false;
+		return true;
 	}
 	
 	@Override

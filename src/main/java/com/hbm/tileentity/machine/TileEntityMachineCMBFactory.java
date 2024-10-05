@@ -86,24 +86,15 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 		switch(i)
 		{
 		case 0:
-			if(stack.getItem() instanceof IBatteryItem)
-				return true;
-			break;
+			return (stack.getItem() instanceof IBatteryItem);
 		case 1:
-			if(stack.getItem() == ModItems.ingot_magnetized_tungsten || stack.getItem() == ModItems.powder_magnetized_tungsten)
-				return true;
-			break;
+			return (stack.getItem() == ModItems.ingot_magnetized_tungsten || stack.getItem() == ModItems.powder_magnetized_tungsten);
 		case 2:
-			if(FFUtils.containsFluid(stack, ModForgeFluids.watz))
-				return true;
-			break;
+			return (FFUtils.containsFluid(stack, ModForgeFluids.watz));
 		case 3:
-			if(stack.getItem() == ModItems.ingot_advanced_alloy || stack.getItem() == ModItems.powder_advanced_alloy)
-				return true;
-			break;
+			return (stack.getItem() == ModItems.ingot_advanced_alloy || stack.getItem() == ModItems.powder_advanced_alloy);
 		}
-		
-		return false;
+		return true;
 	}
 	
 	public boolean isUseableByPlayer(EntityPlayer player) {

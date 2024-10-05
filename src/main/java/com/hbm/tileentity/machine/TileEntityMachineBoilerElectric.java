@@ -83,9 +83,9 @@ public class TileEntityMachineBoilerElectric extends TileEntityMachineBase imple
 	
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
 		if(i == 4)
-			if(stack != null && stack.getItem() instanceof IBatteryItem)
-				return true;
-		return false;
+			if((stack == null) || !(stack.getItem() instanceof IBatteryItem))
+				return false;
+		return true;
 	}
 	
 	@Override

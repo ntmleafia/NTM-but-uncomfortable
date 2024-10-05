@@ -315,6 +315,6 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 	
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
-		return slot > 10 && slot != 22 && slot != 23 && slot != 24;
+		return true;//slot > 10 && slot != 22 && slot != 23 && slot != 24;
 	}
 }

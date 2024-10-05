@@ -68,8 +68,7 @@ public class TileEntityMachineCoal extends TileEntityMachineBase implements ITic
 		if(i == 0)
 			return isValidFluid(FluidUtil.getFluidContained(stack));
 		if(i == 1)
-			if(TileEntityFurnace.getItemBurnTime(stack) > 0)
-				return true;
+			return (TileEntityFurnace.getItemBurnTime(stack) > 0);
 		if(i == 2)
 			return (stack.getItem() instanceof IBatteryItem);
 		return true;

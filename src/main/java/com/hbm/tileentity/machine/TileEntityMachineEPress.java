@@ -75,7 +75,7 @@ public class TileEntityMachineEPress extends TileEntityMachineBase implements IT
 	
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
-		return slot == 3;
+		return true;
 	}
 
 	@Override

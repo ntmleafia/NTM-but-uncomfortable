@@ -60,9 +60,10 @@ public class TileEntityMachineShredder extends TileEntityMachineBase implements 
 			return true;
 		} else if (i == 29 && stack.getItem() instanceof IBatteryItem) {
 			return true;
-		} else {
-			return (i == 27 || i == 28) && stack.getItem() instanceof ItemBlades;
+		} else if ((i == 27 || i == 28)) {
+			return stack.getItem() instanceof ItemBlades;
 		}
+		return true;
 	}
 	
 	@Override

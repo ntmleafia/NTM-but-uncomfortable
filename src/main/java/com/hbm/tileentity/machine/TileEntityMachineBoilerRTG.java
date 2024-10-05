@@ -87,7 +87,7 @@ public class TileEntityMachineBoilerRTG extends TileEntityMachineBase implements
 		if(i == 2 || i == 6){
 			return (stack != null && !(stack.getItem() instanceof ItemRTGPellet));
 		}
-		return false;
+		return true;
 	}
 	
 	@Override

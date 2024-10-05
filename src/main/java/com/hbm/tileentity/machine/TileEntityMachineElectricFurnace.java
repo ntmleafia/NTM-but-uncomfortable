@@ -72,13 +72,12 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
 		if(i == 0)
-			if(stack.getItem() instanceof IBatteryItem)
-				return true;
+			return (stack.getItem() instanceof IBatteryItem);
 		
 		if(i == 1)
 			return true;
 		
-		return false;
+		return true;
 	}
 	
 	@Override

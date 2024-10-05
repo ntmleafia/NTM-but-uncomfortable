@@ -273,6 +273,6 @@ public class TileEntityMachineArcFurnace extends TileEntityMachineBase implement
 			return (stack.getItem() instanceof IBatteryItem);
 		if(slot == 0)
 			return (!(stack.getItem() instanceof IBatteryItem) && !(stack.getItem() == ModItems.arc_electrode || stack.getItem() == ModItems.arc_electrode_desh));
-		return false;
+		return true;
 	}
 }

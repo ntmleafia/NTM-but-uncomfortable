@@ -306,6 +306,6 @@ public class TileEntityCoreTitanium extends TileEntityMachineBase implements ITi
 	
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
-		return slot > 10 && slot != 22;
+		return true;//slot > 10 && slot != 22;
 	}
 }
