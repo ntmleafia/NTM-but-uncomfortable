@@ -138,12 +138,19 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
 		return true;
 	}
-	
+	public boolean isItemValidForSlotHopper(int i, ItemStack stack) {
+		return true;
+	}
 	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
 		return this.isItemValidForSlot(slot, itemStack);
 	}
-
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+		return true;
+	}
+	public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount) {
+		return this.isItemValidForSlotHopper(slot, itemStack);
+	}
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		return true;
 	}
 	
@@ -173,14 +180,14 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new ItemStackHandlerWrapper(inventory, getAccessibleSlotsFromSide(facing)){
 				@Override
 				public ItemStack extractItem(int slot, int amount, boolean simulate) {
-					if(canExtractItem(slot, inventory.getStackInSlot(slot), amount))
+					if(canExtractItemHopper(slot, inventory.getStackInSlot(slot), amount) && canExtractItem(slot, inventory.getStackInSlot(slot), amount))
 						return super.extractItem(slot, amount, simulate);
 					return ItemStack.EMPTY;
 				}
 				
 				@Override
 				public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-					if(canInsertItem(slot, stack, stack.getCount()))
+					if(canInsertItemHopper(slot, stack, stack.getCount()) && canInsertItem(slot, stack, stack.getCount()))
 						return super.insertItem(slot, stack, simulate);
 					return stack;
 				}

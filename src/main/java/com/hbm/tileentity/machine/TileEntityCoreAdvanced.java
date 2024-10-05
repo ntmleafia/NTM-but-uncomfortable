@@ -299,8 +299,8 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack){
-		return true;//(slot < 11 || slot == 23 || slot == 24) && isProcessable(stack); fuck it
+	public boolean isItemValidForSlotHopper(int slot, ItemStack stack){
+		return (slot < 11 || slot == 23 || slot == 24) && isProcessable(stack);
 	}
 	
 	@Override
@@ -310,11 +310,11 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 	
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemStack, int amount){
-		return this.isItemValidForSlot(slot, itemStack);
+		return this.isItemValidForSlotHopper(slot, itemStack);
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
-		return true;//slot > 10 && slot != 22 && slot != 23 && slot != 24;
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount){
+		return slot > 10 && slot != 22 && slot != 23 && slot != 24;
 	}
 }

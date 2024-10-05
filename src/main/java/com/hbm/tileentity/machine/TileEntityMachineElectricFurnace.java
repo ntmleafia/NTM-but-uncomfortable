@@ -86,7 +86,7 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		if(slot == 0)
 			if (itemStack.getItem() instanceof IBatteryItem && ((IBatteryItem)itemStack.getItem()).getCharge(itemStack) == 0)
 				return true;

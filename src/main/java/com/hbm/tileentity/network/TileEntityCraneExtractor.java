@@ -230,7 +230,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemStack) {
+    public boolean isItemValidForSlotHopper(int i, ItemStack itemStack) {
         return i > 8 && i < 18;
     }
 
@@ -282,12 +282,12 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
     }
     
     @Override
-    public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
-        return this.isItemValidForSlot(slot, itemStack);
+    public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount) {
+        return this.isItemValidForSlotHopper(slot, itemStack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+    public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
         return false;
     }
 }

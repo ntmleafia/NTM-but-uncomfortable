@@ -189,7 +189,7 @@ public class TileEntityRtgFurnace extends TileEntityMachineBase implements ITick
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		if(slot < 4){
 			if(!(itemStack.getItem() instanceof ItemRTGPellet)){
 				return true;

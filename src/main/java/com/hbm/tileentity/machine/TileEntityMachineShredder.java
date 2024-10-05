@@ -56,9 +56,9 @@ public class TileEntityMachineShredder extends TileEntityMachineBase implements 
 	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack){
-		if (i < 9) {
+		if (i == 29 && stack.getItem() instanceof IBatteryItem) {
 			return true;
-		} else if (i == 29 && stack.getItem() instanceof IBatteryItem) {
+		} else if (i < 9) {
 			return true;
 		} else if ((i == 27 || i == 28)) {
 			return stack.getItem() instanceof ItemBlades;
@@ -67,7 +67,7 @@ public class TileEntityMachineShredder extends TileEntityMachineBase implements 
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount){
 		if(slot >= 9 && slot <= 26)
 			return true;
 		if(slot >= 27 && slot <= 29){

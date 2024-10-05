@@ -111,7 +111,7 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	}
 	
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack stack) {
+	public boolean isItemValidForSlotHopper(int i, ItemStack stack) {
 		if(i == 3)
 			return false;
 		if(i == 2)
@@ -120,14 +120,14 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	}
 	
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
-		if(slot == 0 && isItemValidForSlot(slot, itemStack)) return inventory.getStackInSlot(1).getItem() != itemStack.getItem();
-		if(slot == 1 && isItemValidForSlot(slot, itemStack)) return inventory.getStackInSlot(0).getItem() != itemStack.getItem();
-		return isItemValidForSlot(slot, itemStack);
+	public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount) {
+		if(slot == 0 && isItemValidForSlotHopper(slot, itemStack)) return inventory.getStackInSlot(1).getItem() != itemStack.getItem();
+		if(slot == 1 && isItemValidForSlotHopper(slot, itemStack)) return inventory.getStackInSlot(0).getItem() != itemStack.getItem();
+		return isItemValidForSlotHopper(slot, itemStack);
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		if(slot == 3)
 			return true;
 		return false;

@@ -192,7 +192,7 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	}
 	
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack stack) {
+	public boolean isItemValidForSlotHopper(int i, ItemStack stack) {
 		if(i == 0){
 			return true;
 		}
@@ -205,8 +205,8 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	}
 	
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
-		return isItemValidForSlot(slot, itemStack);
+	public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount) {
+		return isItemValidForSlotHopper(slot, itemStack);
 	}
 	
 	@Override

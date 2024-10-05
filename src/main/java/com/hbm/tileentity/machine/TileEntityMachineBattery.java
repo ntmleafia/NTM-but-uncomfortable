@@ -163,12 +163,12 @@ public class TileEntityMachineBattery extends TileEntityMachineBase implements I
 	}
 	
 	@Override
-	public boolean canInsertItem(int i, ItemStack itemStack, int j) {
-		return this.isItemValidForSlot(i, itemStack);
+	public boolean canInsertItemHopper(int i, ItemStack itemStack, int j) {
+		return this.isItemValidForSlotHopper(i, itemStack);
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemStack, int j) {
+	public boolean canExtractItemHopper(int i, ItemStack itemStack, int j) {
 		return (i == 1 || i == 3);
 	}
 

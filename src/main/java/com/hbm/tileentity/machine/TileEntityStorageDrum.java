@@ -136,7 +136,7 @@ public class TileEntityStorageDrum extends TileEntityMachineBase implements ITic
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemStack, int j) {
+	public boolean canExtractItemHopper(int i, ItemStack itemStack, int j) {
 		return !ContaminationUtil.isContaminated(itemStack) && StorageDrumRecipes.getOutput(itemStack) == null;
 	}
 

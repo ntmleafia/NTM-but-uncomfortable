@@ -69,7 +69,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 	}
 	
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemStack, int amount){
+	public boolean canExtractItemHopper(int i, ItemStack itemStack, int amount){
 		if(i == 4)
 			return true;
 		if(i == 0)

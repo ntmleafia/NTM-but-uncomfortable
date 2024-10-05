@@ -80,7 +80,7 @@ public class TileEntityMachineCoal extends TileEntityMachineBase implements ITic
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		if(slot == 3)
 			return true;
 		return false;

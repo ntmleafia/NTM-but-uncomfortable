@@ -72,20 +72,20 @@ public class TileEntityMachineBoilerElectric extends TileEntityMachineBase imple
 	}
 	
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemStack, int amount){
-		return this.isItemValidForSlot(slot, itemStack);
+	public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount){
+		return this.isItemValidForSlotHopper(slot, itemStack);
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount){
 		return false;
 	}
 	
-	public boolean isItemValidForSlot(int i, ItemStack stack) {
+	public boolean isItemValidForSlotHopper(int i, ItemStack stack) {
 		if(i == 4)
-			if((stack == null) || !(stack.getItem() instanceof IBatteryItem))
-				return false;
-		return true;
+			if(stack != null && stack.getItem() instanceof IBatteryItem)
+				return true;
+		return false;
 	}
 	
 	@Override

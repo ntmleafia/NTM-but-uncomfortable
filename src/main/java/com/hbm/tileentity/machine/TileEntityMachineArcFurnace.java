@@ -245,12 +245,12 @@ public class TileEntityMachineArcFurnace extends TileEntityMachineBase implement
 	}
 
 	@Override
-	public boolean canInsertItem(int i, ItemStack itemStack, int j) {
-		return this.isItemValidForSlot(i, itemStack);
+	public boolean canInsertItemHopper(int i, ItemStack itemStack, int j) {
+		return this.isItemValidForSlotHopper(i, itemStack);
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		
 		if(slot == 1)
 			return true;
@@ -266,13 +266,13 @@ public class TileEntityMachineArcFurnace extends TileEntityMachineBase implement
 	}
 	
 	@Override
-	public boolean isItemValidForSlot(int slot, ItemStack stack) {
+	public boolean isItemValidForSlotHopper(int slot, ItemStack stack) {
 		if(slot == 2 || slot == 3 || slot == 4)
 			return stack.getItem() == ModItems.arc_electrode || stack.getItem() == ModItems.arc_electrode_desh;
 		if(slot == 5)
 			return (stack.getItem() instanceof IBatteryItem);
 		if(slot == 0)
 			return (!(stack.getItem() instanceof IBatteryItem) && !(stack.getItem() == ModItems.arc_electrode || stack.getItem() == ModItems.arc_electrode_desh));
-		return true;
+		return false;
 	}
 }

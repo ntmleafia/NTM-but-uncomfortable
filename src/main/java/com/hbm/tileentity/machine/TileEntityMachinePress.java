@@ -225,21 +225,21 @@ public class TileEntityMachinePress extends TileEntityMachineBase implements ITi
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount){
-		return true;
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount){
+		return slot == 3;
 	}
 	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack){
-		if(stack.getItem() instanceof ItemStamp && i == 1)
-			return true;
-		
-		if(TileEntityFurnace.getItemBurnTime(stack) > 0 && i == 0)
-			return true;
-		
-		if(!(stack.getItem() instanceof ItemStamp) && i == 2)
-			return true;
-		return false;
+		switch(i) {
+			case 1:
+				return (stack.getItem() instanceof ItemStamp);
+			case 0:
+				return (TileEntityFurnace.getItemBurnTime(stack) > 0);
+			case 2:
+				return !(stack.getItem() instanceof ItemStamp);
+		}
+		return true;
 	}
 
 	private int detectProgress;

@@ -3,6 +3,7 @@ package com.hbm.tileentity.machine;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.inventory.WasteDrumRecipes;
+import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import net.minecraft.block.Block;
@@ -44,6 +45,9 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 		
 		if(item instanceof ItemRBMKRod)
 			return true;
+
+		if (item instanceof ItemLeafiaRod)
+			return true;
 		
 		return WasteDrumRecipes.hasRecipe(item);
 	}
@@ -59,11 +63,18 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		Item item = itemStack.getItem();
 		
 		if(item instanceof ItemRBMKRod) {
 			return ItemRBMKRod.getCoreHeat(itemStack) < 50 && ItemRBMKRod.getHullHeat(itemStack) < 50;
+		}
+		if(item instanceof ItemLeafiaRod) {
+			NBTTagCompound data = itemStack.getTagCompound();
+			if (data == null)
+				return true;
+			else
+				return data.getDouble("heat") < 50;
 		}
 		
 		return WasteDrumRecipes.isCold(item);
@@ -117,17 +128,16 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 				int r = 60 * 60 * 20 / water;
 				
 				for(int i = 0; i < 12; i++) {
-					
-					if(inventory.getStackInSlot(i).getItem() instanceof ItemRBMKRod) {
-						
-						ItemRBMKRod rod = (ItemRBMKRod) inventory.getStackInSlot(i).getItem();
-						rod.updateHeat(world, inventory.getStackInSlot(i), 0.025D);
-						rod.provideHeat(world, inventory.getStackInSlot(i), 20D, 0.025D);
-						
-					} else if(world.rand.nextInt(r) == 0) {
-						
-						if(!inventory.getStackInSlot(i).isEmpty()) {
-							
+					ItemStack stack = inventory.getStackInSlot(i);
+					if(!stack.isEmpty()) {
+						if(stack.getItem() instanceof ItemRBMKRod) {
+							ItemRBMKRod rod = (ItemRBMKRod) inventory.getStackInSlot(i).getItem();
+							rod.updateHeat(world, inventory.getStackInSlot(i), 0.025D);
+							rod.provideHeat(world, inventory.getStackInSlot(i), 20D, 0.025D);
+						} else if (stack.getItem() instanceof ItemLeafiaRod) {
+							ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+							rod.HeatFunction(stack,true,0,r/(float)(60*60*20*3),20,100);
+						} else if(world.rand.nextInt(r) == 0) {
 							Item waste_hot = inventory.getStackInSlot(i).getItem();
 							ItemStack waste_cold = WasteDrumRecipes.getOutput(waste_hot);
 							if(waste_cold != null){

@@ -632,7 +632,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemStack, int j) {
+	public boolean canExtractItemHopper(int i, ItemStack itemStack, int j) {
 		return i >= 9 && i <= 29;
 	}
 
