@@ -9,8 +9,9 @@ import java.util.Random;
 
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
-import com.hbm.tileentity.leafia.TileEntityReactorZirnox;
-import com.hbm.tileentity.leafia.TileEntityReactorZirnoxDestroyed;
+import com.hbm.tileentity.leafia.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import com.hbm.blocks.ModBlocks;
@@ -296,9 +297,6 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.LoadingCallback;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
@@ -306,10 +304,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -430,6 +426,9 @@ public class MainRegistry {
 	public static ToolMaterial matHS = EnumHelper.addToolMaterial("CRUCIBLE", 3, 10000, 50.0F, 100.0F, 200);
 	public static ToolMaterial matHF = EnumHelper.addToolMaterial("CRUCIBLE", 3, 10000, 50.0F, 100.0F, 200);
 
+	@SideOnly(Side.CLIENT)
+	public static final List<LeafiaQuickModel> rendererWaiting = new ArrayList<>();
+
 	Random rand = new Random();
 
 	@EventHandler
@@ -491,6 +490,9 @@ public class MainRegistry {
 		SiegeTier.registerTiers();
 		HazardRegistry.registerItems();
 		PotionRecipes.registerPotionRecipes();
+
+		rendererWaiting.add(new TileEntityPylonConnector());
+		rendererWaiting.add(new TileEntityMachineAcidizer());
 
 		proxy.registerRenderInfo();
 		HbmWorld.mainRegistry();
@@ -767,7 +769,10 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityRadioTorchReceiver.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_receiver"));
 		GameRegistry.registerTileEntity(TileEntityCraneExtractor.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneejector"));
 		GameRegistry.registerTileEntity(TileEntityCraneInserter.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneinserter"));
-		
+		for (LeafiaQuickModel te : rendererWaiting) {
+			LeafiaQuickModel._loadResources(te,te._assetPath());
+			GameRegistry.registerTileEntity(((TileEntity)te).getClass(),new ResourceLocation(RefStrings.MODID,"tileentity_"+te._resourcePath()));
+		}
 		int i = 0;
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_mk5"), EntityNukeExplosionMK5.class, "entity_nuke_mk5", i++, MainRegistry.instance, 1000, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_d_smoke_fx"), EntityDSmokeFX.class, "entity_d_smoke_fx", i++, MainRegistry.instance, 1000, 1, true);

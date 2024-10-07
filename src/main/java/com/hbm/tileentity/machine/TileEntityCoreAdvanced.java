@@ -309,7 +309,7 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 	}
 	
 	@Override
-	public boolean canInsertItem(int slot, ItemStack itemStack, int amount){
+	public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount){
 		return this.isItemValidForSlotHopper(slot, itemStack);
 	}
 	

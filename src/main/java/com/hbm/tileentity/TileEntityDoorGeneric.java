@@ -64,7 +64,7 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 	}
 	public TileEntityDoorGeneric(){
 	}
-	
+	boolean lastSignal = false;
 	@Override
 	public void update(){
 		if(doorType == null && this.getBlockType() instanceof BlockDoorGeneric)
@@ -164,12 +164,15 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 				RadiationSystemNT.markChunkForRebuild(world, pos);
 			}
 			PacketDispatcher.wrapper.sendToAllAround(new TEDoorAnimationPacket(pos, (byte) state.ordinal(), (byte)(shouldUseBB ? 1 : 0)), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 100));
-			
-			if(redstonePower > 0){
-				tryOpen(-1);
-			} else {
-				tryClose(-1);
+			boolean signal = redstonePower > 0;
+			if ((lastSignal != signal) || !this.manualOpenable()) {
+				if (signal) {
+					tryOpen(-1);
+				} else {
+					tryClose(-1);
+				}
 			}
+			lastSignal = signal;
 			if(redstonePower == -1){
 				redstonePower = 0;
 			}

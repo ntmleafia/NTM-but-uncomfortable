@@ -2,6 +2,7 @@ package com.hbm.render.item;
 
 import java.util.HashMap;
 
+import com.hbm.main.LeafiaQuickModel;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.animloader.AnimationWrapper;
@@ -22,11 +23,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import static com.hbm.main.MainRegistry.rendererWaiting;
+
 public class ItemRenderLibrary {
 
 	public static HashMap<Item, ItemRenderBase> renderers = new HashMap<>();
 
 	public static void init() {
+		for (LeafiaQuickModel te : rendererWaiting) {
+			renderers.put(Item.getItemFromBlock(te._block()),te._itemRenderer());
+		}
 		renderers.put(Item.getItemFromBlock(ModBlocks.machine_selenium), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -4, 0);

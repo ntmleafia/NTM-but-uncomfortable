@@ -122,9 +122,7 @@ import com.hbm.blocks.generic.WasteSand;
 import com.hbm.blocks.generic.WasteLog;
 import com.hbm.blocks.generic.WasteIce;
 import com.hbm.blocks.generic.YellowBarrel;
-import com.hbm.blocks.leafia.AshBalefire;
-import com.hbm.blocks.leafia.ReactorZirnox;
-import com.hbm.blocks.leafia.ReactorZirnoxDestroyed;
+import com.hbm.blocks.leafia.*;
 import com.hbm.blocks.machine.*;
 import com.hbm.blocks.machine.pile.BlockGraphite;
 import com.hbm.blocks.machine.pile.BlockGraphiteFuel;
@@ -153,7 +151,6 @@ import com.hbm.blocks.machine.rbmk.RBMKHeater;
 import com.hbm.blocks.machine.rbmk.RBMKCraneConsole;
 import com.hbm.blocks.network.BlockConveyor;
 import com.hbm.blocks.network.BlockConveyorExpress;
-import com.hbm.blocks.network.BlockConveyorDouble;
 import com.hbm.blocks.network.CraneExtractor;
 import com.hbm.blocks.network.CraneInserter;
 import com.hbm.blocks.network.BlockFluidPipeMk2;
@@ -161,19 +158,7 @@ import com.hbm.blocks.network.BlockFluidPipeSolid;
 import com.hbm.blocks.network.BlockFluidPipeSolidRadResistant;
 import com.hbm.blocks.network.RadioTorchSender;
 import com.hbm.blocks.network.RadioTorchReceiver;
-import com.hbm.blocks.network.energy.BlockCable;
-import com.hbm.blocks.network.energy.CableSwitch;
-import com.hbm.blocks.network.energy.CableDiode;
-import com.hbm.blocks.network.energy.CableDetector;
-import com.hbm.blocks.network.energy.PowerDetector;
-import com.hbm.blocks.network.energy.PylonRedWire;
-import com.hbm.blocks.network.energy.PylonLarge;
-import com.hbm.blocks.network.energy.Substation;
-import com.hbm.blocks.network.energy.WireCoated;
-import com.hbm.blocks.network.energy.WireCoatedRadResistant;
-import com.hbm.blocks.network.energy.BlockConverterRfHe;
-import com.hbm.blocks.network.energy.BlockConverterHeRf;
-import com.hbm.blocks.network.energy.BlockCableGauge;
+import com.hbm.blocks.network.energy.*;
 import com.hbm.blocks.test.KeypadTest;
 import com.hbm.blocks.test.TestObjTester;
 import com.hbm.blocks.test.TestRender;
@@ -195,11 +180,8 @@ import com.hbm.blocks.turret.TurretRocket;
 import com.hbm.blocks.turret.TurretSpitfire;
 import com.hbm.blocks.turret.TurretTau;
 import com.hbm.blocks.turret.TurretTauon;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.HBMSoundHandler;
-import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 
@@ -212,7 +194,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModBlocks {
@@ -834,6 +815,7 @@ public class ModBlocks {
 	public static final Block red_pylon = new PylonRedWire(Material.IRON, "red_pylon").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block red_pylon_large = new PylonLarge(Material.IRON, "red_pylon_large").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block substation = new Substation(Material.IRON,"substation").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block red_connec = new PylonConnector(Material.IRON, "red_connec").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 
 	//Tanks
 	public static final Block barrel_plastic = new BlockFluidBarrel(Material.IRON, 12000, "barrel_plastic").setSoundType(SoundType.STONE).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
@@ -1188,6 +1170,7 @@ public class ModBlocks {
 	public static final int guiID_fel = 126;
 	
 	public static final Block machine_crystallizer = new MachineCrystallizer(Material.IRON, "machine_crystallizer").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_acidizer = new MachineAcidizer(Material.IRON, "machine_acidizer").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_crystallizer = 95;
 	
 	public static final Block machine_shredder = new MachineShredder(Material.IRON, "machine_shredder").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);

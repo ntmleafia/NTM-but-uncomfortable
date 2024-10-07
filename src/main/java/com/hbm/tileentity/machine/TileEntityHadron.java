@@ -74,7 +74,7 @@ public class TileEntityHadron extends TileEntityMachineBase implements ITickable
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		return slot == 2 || slot == 3;
 	}
 	

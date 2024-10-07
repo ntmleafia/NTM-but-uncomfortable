@@ -338,6 +338,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ITi
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemStack) {
 		if(i == 1) return MixerRecipes.matchesInputItem(outputFluid, itemStack);
+		if(i == 2) return itemStack.getItem() == ModItems.forge_fluid_identifier;
 		return false;
 	}
 	

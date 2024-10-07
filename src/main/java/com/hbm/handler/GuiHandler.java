@@ -29,6 +29,7 @@ import com.hbm.tileentity.bomb.TileEntityNukePrototype;
 import com.hbm.tileentity.bomb.TileEntityNukeSolinium;
 import com.hbm.tileentity.bomb.TileEntityNukeTsar;
 import com.hbm.tileentity.bomb.TileEntityRailgun;
+import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import com.hbm.tileentity.leafia.TileEntityReactorZirnox;
 import com.hbm.tileentity.machine.TileEntityAMSBase;
 import com.hbm.tileentity.machine.TileEntityAMSEmitter;
@@ -62,7 +63,6 @@ import com.hbm.tileentity.machine.TileEntityMachineCMBFactory;
 import com.hbm.tileentity.machine.TileEntityMachineCentrifuge;
 import com.hbm.tileentity.machine.TileEntityMachineChemplant;
 import com.hbm.tileentity.machine.TileEntityMachineCoal;
-import com.hbm.tileentity.machine.TileEntityMachineCrystallizer;
 import com.hbm.tileentity.machine.TileEntityMachineCyclotron;
 import com.hbm.tileentity.machine.TileEntityMachineDiesel;
 import com.hbm.tileentity.machine.TileEntityMachineEPress;
@@ -575,8 +575,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_crystallizer:
-				if(entity instanceof TileEntityMachineCrystallizer) {
-					return new ContainerCrystallizer(player.inventory, (TileEntityMachineCrystallizer) entity);
+				if(entity instanceof CrystallizerCopyBase) {
+					return new ContainerCrystallizer(player.inventory, (CrystallizerCopyBase) entity);
 				}
 				return null;
 			case ModBlocks.guiID_mining_laser:
@@ -1189,8 +1189,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_crystallizer:
-				if(entity instanceof TileEntityMachineCrystallizer) {
-					return new GUICrystallizer(player.inventory, (TileEntityMachineCrystallizer) entity);
+				if(entity instanceof CrystallizerCopyBase) {
+					return new GUICrystallizer(player.inventory, (CrystallizerCopyBase) entity);
 				}
 				return null;
 			case ModBlocks.guiID_mining_laser:

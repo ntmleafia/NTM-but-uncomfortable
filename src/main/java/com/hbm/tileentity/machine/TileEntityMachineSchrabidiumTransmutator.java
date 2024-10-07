@@ -68,7 +68,7 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 	}
 	
 	@Override
-	public boolean canExtractItem(int i, ItemStack stack, int amount) {
+	public boolean canExtractItemHopper(int i, ItemStack stack, int amount) {
 		if(i == 2 && stack.getItem() != null && stack.getItem() == ModItems.redcoil_capacitor && ItemCapacitor.getDura(stack) <= 0) {
 			return true;
 		}

@@ -9,7 +9,7 @@ import com.hbm.tileentity.network.energy.TileEntitySubstation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 
-public class RenderSubstation extends TileEntitySpecialRenderer<TileEntitySubstation> {
+public class RenderPylonSubstation extends TileEntitySpecialRenderer<TileEntitySubstation> {
 
 	@Override
 	public void render(TileEntitySubstation sub, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

@@ -210,7 +210,7 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	}
 	
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		if(slot == 1){
 			return true;
 		}

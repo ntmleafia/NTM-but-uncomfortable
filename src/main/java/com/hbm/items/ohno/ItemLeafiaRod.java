@@ -493,7 +493,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 
 		//this.setHasSubtypes(true);
 		this.setMaxStackSize(1);
-		this.life = heatGenerated;
+		this.life = heatGenerated*10;
 		this.meltingPoint = meltingPoint;
 
 		this.setContainerItem(ModItems.leafRod);

@@ -2,7 +2,6 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.CrystallizerRecipes;
 import com.hbm.items.ModItems;
@@ -35,7 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityMachineCrystallizer extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
+public class CrystallizerCopyBase extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
 	public long power;
 	public static final long maxPower = 1000000;
@@ -49,7 +48,7 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 
 	public FluidTank tank;
 
-	public TileEntityMachineCrystallizer() {
+	public CrystallizerCopyBase() {
 		super(0);
 		inventory = new ItemStackHandler(7){
 			@Override
@@ -138,7 +137,7 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 	}
 
 	protected boolean inputValidForTank(int slot){
-		
+
 		if(!inventory.getStackInSlot(slot).isEmpty()){
 			FluidStack containerFluid = FluidUtil.getFluidContained(inventory.getStackInSlot(slot));
 			if(containerFluid != null){
@@ -307,14 +306,14 @@ public class TileEntityMachineCrystallizer extends TileEntityMachineBase impleme
 
 		return Math.min(cycles, 13);
 	}
-	
+
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
 		return slot == 0 && CrystallizerRecipes.getOutputItem(itemStack) != null;
 	}
-	
+
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
 		return slot == 2 || slot == 4;
 	}
 

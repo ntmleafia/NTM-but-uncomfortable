@@ -70,6 +70,11 @@ public class TileEntityMachineRefinery extends TileEntityMachineBase implements 
 		if(nbt.hasKey("f")) {
             this.tankTypes[0] = FluidRegistry.getFluid(nbt.getString("f"));
         }
+		Pair<FluidStack[], ItemStack> recipe = RefineryRecipes.getRecipe(tankTypes[0]);
+		if (recipe != null) {
+			FluidStack[] outputFluids = recipe.getKey();
+			setupTanks(outputFluids);
+		}
 		power = nbt.getLong("power");
 		itemOutputTimer = nbt.getInteger("itemOutputTimer");
 		if(nbt.hasKey("tanks"))
@@ -257,7 +262,7 @@ public class TileEntityMachineRefinery extends TileEntityMachineBase implements 
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack stack, int amount) {
+	public boolean canExtractItemHopper(int i, ItemStack stack, int amount) {
 		return i==2 || i==4 || i==6 || i==8 || i==10 || i==11;
 	}
 	

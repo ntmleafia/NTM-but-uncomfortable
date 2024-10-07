@@ -255,7 +255,7 @@ public class TileEntitySILEX extends TileEntityMachineBase implements ITickable,
 	}
 
 	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int side) {
+	public boolean canExtractItemHopper(int slot, ItemStack itemStack, int side) {
 		return slot >= 4;
 	}
 	

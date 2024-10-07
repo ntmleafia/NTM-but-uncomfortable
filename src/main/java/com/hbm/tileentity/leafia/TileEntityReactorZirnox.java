@@ -421,7 +421,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             double steamtemp = tankTypes[2].getTemperature()-273;
             double boilBase = Math.pow(Math.max(this.hulltemp-(steamtemp),0),0.25)*Math.pow(steamtemp/100,0.75)*feedwatr;
             boilBase/=5;
-            int boiling = (int)(boilBase*5);
+            int boiling = (int)(boilBase*24);
             this.hulltemp = Math.max(this.hulltemp-boilBase/*-Math.pow(this.hulltemp,0.25)*/,20);
             switch(compression) {
                 case 0: tanks[0].drain(boiling/100,true); break;

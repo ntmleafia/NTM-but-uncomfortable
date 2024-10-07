@@ -259,7 +259,7 @@ public class TileEntityFurnaceSteel extends TileEntityMachineBase implements IGU
 	}
 
 	@Override
-	public boolean canExtractItem(int i, ItemStack itemStack, int j) {
+	public boolean canExtractItemHopper(int i, ItemStack itemStack, int j) {
 		return i > 2;
 	}
 
