@@ -103,8 +103,10 @@ public class EntitySpear extends Entity {
 				List<Entity> entities =  new ArrayList<>(world.loadedEntityList);
 				for(Object obj : entities) {
 					
-					if(obj instanceof EntityLivingBase)
+					if(obj instanceof EntityLivingBase) {
 						ContaminationUtil.contaminate((EntityLivingBase) obj, HazardType.DIGAMMA, ContaminationType.DIGAMMA2, 10F);
+						((EntityLivingBase) obj).setDead();
+					}
 				}
 				this.setDead();
 				

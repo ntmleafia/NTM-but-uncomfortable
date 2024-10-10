@@ -268,9 +268,28 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				newFuel = ModItems.bottle_mercury;
 				break;
 			case "pb209":
-				y = 2300+x*0.2;
-				n = "2300 + "+flux+"* 0.2 "+TextFormatting.DARK_RED+"(DANGEROUS)";
+				y = 2300+x*0.4;
+				n = "2300 + "+flux+"* 0.4 "+TextFormatting.DARK_RED+"(DANGEROUS)";
 				newFuel = fromResourceMap.get("leafia_rod_bi209");
+				break;
+			case "lesa326":
+				y = Math.pow(x,0.65)*12;
+				n = ""+flux+"^0.65 * 12 "+TextFormatting.GOLD+"(RISKY)";
+				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+				break;
+			case "mesa326":
+				y = Math.pow(x,0.68)*12;
+				n = ""+flux+"^0.68 * 12 "+TextFormatting.GOLD+"(RISKY)";
+				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+				break;
+			case "hesa326":
+				y = Math.pow(x,0.7)*12;
+				n = ""+flux+"^0.70 * 12 "+TextFormatting.GOLD+"(RISKY)";
+				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+				break;
+			case "sa327":
+				y = Math.pow(x,0.75)*12;
+				n = ""+flux+"^0.75 * 12 "+TextFormatting.GOLD+"(RISKY)";
 				break;
 		}
 		if (updateHeat) {
@@ -296,7 +315,9 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				heatMg = heatMg * -1;
 			else if ((heat >= meltingPoint) && (meltingPoint != 0) && !meltdown)
 				heatMg = heatMg * Math.max(lerp(1,0,(heat-meltingPoint)/(Math.pow(meltingPoint,0.75)+200)),0);
-			if (!meltdown) {
+			if (Math.abs(heatMg) < 0.00001)
+				heatMg = 0;
+			if (!meltdown && (heatMg != 0)) {
 				double curDepletion = data.getDouble("depletion") + Math.max(heatMg / 2, 0) + Math.pow(x / 2 + 1, 0.1) - 1; // +y is preferred but it doesnt really work with inert materials like lithium soo
 				data.setDouble("depletion", curDepletion);
 			}

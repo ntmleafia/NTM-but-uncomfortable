@@ -6,6 +6,7 @@ import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 public class RenderAcidizer extends TileEntitySpecialRenderer<TileEntity> {
@@ -45,7 +46,10 @@ public class RenderAcidizer extends TileEntitySpecialRenderer<TileEntity> {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDepthMask(false);
 			OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-			bindTexture(crys.tank.getFluid().getFluid().getStill());
+			FluidStack stuck = crys.tank.getFluid();
+			if (stuck != null) {
+				bindTexture(stuck.getFluid().getStill());
+			}
 			mdl.__getModel().renderPart("Fluid");
 			GL11.glDepthMask(true);
 			GL11.glDisable(GL11.GL_BLEND);

@@ -53,6 +53,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
     public double meltingPoint = 800;
     public double pressure = 0;
     double lastPressure = 0;
+    boolean kill = false;
     public double maxPressure = 30;
     public byte compression = 0;
     public int generosityTimer = 5*20;
@@ -354,12 +355,17 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
         NBTTagCompound data = stack.getTagCompound();
         if (data != null) {
             avgHeat += (data.getDouble("heat")-20)/24;
+            if (data.getInteger("spillage") > 200) {
+                this.kill = true;
+                explode();
+            }
             return data.getDouble("cooled");
         }
         return 0; // failsafe
     }
     @Override
     public void update() {
+        if (kill) return;
         if (world.isRemote) {
             if (valveOpen && (valveLevel < 6))
                 valveLevel++;
@@ -411,9 +417,11 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             double cooledSum = 0;
             avgHeat = 20;
             for (int i = 0; i < 24; i++) {
+                if (kill) return;
                 if (inventory.getStackInSlot(i).getItem() instanceof ItemLeafiaRod)
                     cooledSum += handleLeafiaFuel(i,coolin*1.5);
             }
+            if (kill) return;
             double difference = Math.abs(avgHeat-this.hulltemp);
             byte sign = 1;
             if (this.hulltemp > avgHeat) sign = -1;

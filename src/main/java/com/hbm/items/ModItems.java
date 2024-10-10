@@ -1614,7 +1614,7 @@ public class ModItems {
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLES236
-			= new ItemLeafiaRod("LESa-236",35000, 2500)
+			= new ItemLeafiaRod("LESa-326",35000, 2500)
 			.setAppearance(billet_les, BILLET, FUEL)
 			.setModerated()
 			.addRadiation(ItemHazard.les * ItemHazard.billet)
@@ -1744,6 +1744,12 @@ public class ModItems {
 			= new ItemLeafiaRod("Depleted Plutonium",0, 0)
 			.setAppearance(waste_plutonium_hot, BILLET, RAW)
 			.addRadiation(19F)
+			.toItem().setCreativeTab(MainRegistry.controlTab);
+	public static final Item
+			leafRodWasteSchrabidium
+			= new ItemLeafiaRod("Depleted Schrabidium",0, 0)
+			.setAppearance(waste_schrabidium_hot, BILLET, RAW)
+			.addRadiation(35F)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLead
