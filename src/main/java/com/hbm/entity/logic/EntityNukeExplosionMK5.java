@@ -226,15 +226,20 @@ public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 		Biome b = world.getBiome(pos);
 		return b.getTempCategory() == Biome.TempCategory.OCEAN || b.isHighHumidity() || b == Biomes.BEACH || b == Biomes.OCEAN || b == Biomes.RIVER  || b == Biomes.DEEP_OCEAN || b == Biomes.FROZEN_OCEAN || b == Biomes.FROZEN_RIVER || b == Biomes.STONE_BEACH || b == Biomes.SWAMPLAND;
 	}
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound p_70037_1_) {
-
+	private void setConfigurationFromRadius(int r) {
+		this.strength = (int)(2*r);
+		this.speed = (int)Math.ceil(100000 / this.strength);
+		this.radius = r;
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound p_70014_1_) {
+	protected void readEntityFromNBT(NBTTagCompound nbt) {
+		this.setConfigurationFromRadius(nbt.getInteger("radius"));
+	}
 
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound nbt) {
+		nbt.setInteger("radius",radius);
 	}
 
 	public static EntityNukeExplosionMK5 statFac(World world, int r, double x, double y, double z) {
@@ -246,9 +251,7 @@ public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 
 		EntityNukeExplosionMK5 mk5 = new EntityNukeExplosionMK5(world);
 
-		mk5.strength = (int)(2*r);
-		mk5.speed = (int)Math.ceil(100000 / mk5.strength);
-		mk5.radius = r;
+		mk5.setConfigurationFromRadius(r);
 
 		mk5.setPosition(x, y, z);
 		mk5.floodPlease = isWet(world, new BlockPos(x, y, z));
