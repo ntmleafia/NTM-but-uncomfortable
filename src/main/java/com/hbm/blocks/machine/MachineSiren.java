@@ -39,11 +39,12 @@ public class MachineSiren extends BlockContainer {
 		} else if(!player.isSneaking())
 		{
 			TileEntityMachineSiren entity = (TileEntityMachineSiren) world.getTileEntity(pos);
-			if(entity != null)
+			if(entity != null && !entity.speakerMode)
 			{
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_siren, world, pos.getX(), pos.getY(), pos.getZ());
+				return true;
 			}
-			return true;
+			return false;
 		} else {
 			return false;
 		}

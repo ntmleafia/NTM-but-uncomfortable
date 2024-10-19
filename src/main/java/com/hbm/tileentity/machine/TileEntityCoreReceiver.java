@@ -11,6 +11,10 @@ import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyGenerator;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -24,10 +28,12 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ILaserable, ITankPacketAcceptor {
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {
 
 	public long power;
 	public long joules;
@@ -168,5 +174,22 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 	@Override
 	public long getMaxPower() {
 		return 0;
+	}
+
+	@Override
+	public String getComponentName() {
+		return "dfc_receiver";
+	}
+	@Callback
+	public Object[] incomingEnergy(Context context, Arguments args) {
+		return new Object[] {syncJoules};
+	}
+	@Callback
+	public Object[] outgoingPower(Context context, Arguments args) {
+		return new Object[] {power};
+	}
+	@Callback
+	public Object[] storedCoolnt(Context context, Arguments args) {
+		return new Object[] {tank.getFluidAmount()};
 	}
 }

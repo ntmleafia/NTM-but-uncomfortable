@@ -7,6 +7,10 @@ import com.hbm.items.machine.ItemLens;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyUser;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -17,10 +21,15 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoreStabilizer extends TileEntityMachineBase implements ITickable, IEnergyUser, LeafiaPacketReceiver {
+import javax.annotation.Nullable;
+import java.util.LinkedHashMap;
+
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityCoreStabilizer extends TileEntityMachineBase implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent {
 
 	public long power;
 	public static final long maxPower = 10000000000000L;
@@ -46,6 +55,80 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 	@Override
 	public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {}
 
+	@Override
+	public String getComponentName() {
+		return "dfc_communicator";
+	}
+	@Callback
+	public Object[] analyze(Context context, Arguments args) {
+		TileEntityCore core = getCore();
+		if (isOn && core != null) {
+			LinkedHashMap<String,Object> mop = new LinkedHashMap<>();
+			mop.put("heat",core.heat);
+			mop.put("restriction",core.field);
+			mop.put("stress",core.heat/(float)core.field);
+			mop.put("corruption",core.overload/60F);
+			mop.put("fuelA",core.tanks[0].getFluidAmount());
+			mop.put("fuelB",core.tanks[1].getFluidAmount());
+			return new Object[] {mop};
+		}
+		return new Object[] {"COULDN'T CONNECT TO THE CORE"};
+	}
+	@Callback(doc = "setLevel(newLevel: number)->(previousLevel: number)")
+	public Object[] setLevel(Context context, Arguments args) {
+		Object[] prev = new Object[] {watts};
+		watts = MathHelper.clamp(args.checkInteger(0),1,100);
+		return prev;
+	}
+	@Callback(doc = "getLevel()->(level: number)")
+	public Object[] getLevel(Context context, Arguments args) {
+		return new Object[] {watts};
+	}
+	@Callback(doc = "validate()->(success: boolean) - Whether the stabilizer is working or not")
+	public Object[] validate(Context context, Arguments args) {
+		return new Object[] {isOn};
+	}
+	@Callback(doc = "durability()->(lensDurability: int, maximum: int) - Returns currently installed lens' durability, or 0 if missing.")
+	public Object[] durability(Context context, Arguments args) {
+		ItemStack stack = inventory.getStackInSlot(0);
+		if(stack.getItem() instanceof ItemLens) {
+			ItemLens lens = (ItemLens) inventory.getStackInSlot(0).getItem();
+			return new Object[] {ItemLens.getLensDamage(stack),lens.maxDamage};
+		}
+		return new Object[] {0,0};
+	}
+	@Callback(doc = "getPower(); returns the current power level - long")
+	public Object[] getPower(Context context, Arguments args) {
+		return new Object[] {power};
+	}
+	@Callback(doc = "getMaxPower(); returns the maximum power level - long")
+	public Object[] getMaxPower(Context context, Arguments args) {
+		return new Object[] {getMaxPower()};
+	}
+	@Callback(doc = "getChargePercent(); returns the charge in percent - double")
+	public Object[] getChargePercent(Context context, Arguments args) {
+		return new Object[] {100D * getPower()/(double)getMaxPower()};
+	}
+	@Nullable
+	TileEntityCore getCore() {
+		EnumFacing dir = EnumFacing.getFront(this.getBlockMetadata());
+		for(int i = 1; i <= range; i++) {
+			int x = pos.getX() + dir.getFrontOffsetX() * i;
+			int y = pos.getY() + dir.getFrontOffsetY() * i;
+			int z = pos.getZ() + dir.getFrontOffsetZ() * i;
+			BlockPos pos1 = new BlockPos(x, y, z);
+			TileEntity te = world.getTileEntity(pos1);
+			if(te instanceof TileEntityCore) {
+				beam = i;
+				return (TileEntityCore)te;
+			}
+			if(te instanceof TileEntityCoreStabilizer)
+				continue;
+			if(world.getBlockState(pos1).getBlock() != Blocks.AIR)
+				break;
+		}
+		return null;
+	}
 	public enum LensType {
 		STANDARD(0x0c222c,0x7F7F7F),
 		BLANK(0x121212,0x646464),
@@ -100,39 +183,18 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 
 			if(lens != null && power >= demand * lens.drainMod) {
 				isOn = true;
-				EnumFacing dir = EnumFacing.getFront(this.getBlockMetadata());
-				for(int i = 1; i <= range; i++) {
-	
-					int x = pos.getX() + dir.getFrontOffsetX() * i;
-					int y = pos.getY() + dir.getFrontOffsetY() * i;
-					int z = pos.getZ() + dir.getFrontOffsetZ() * i;
-					BlockPos pos1 = new BlockPos(x, y, z);
-					
-					TileEntity te = world.getTileEntity(pos1);
-	
-					if(te instanceof TileEntityCore) {
-						
-						TileEntityCore core = (TileEntityCore)te;
-						core.field += (int)(watts * lens.fieldMod);
-						this.power -= (long)(demand * lens.drainMod);
-						beam = i;
-						
-						long dmg = ItemLens.getLensDamage(inventory.getStackInSlot(0));
-						dmg += watts;
-						
-						if(dmg >= lens.maxDamage)
-							inventory.setStackInSlot(0, ItemStack.EMPTY);
-						else
-							ItemLens.setLensDamage(inventory.getStackInSlot(0), dmg);
-						
-						break;
-					}
+				TileEntityCore core = getCore();
+				if (core != null) {
+					core.field += (int)(watts * lens.fieldMod);
+					this.power -= (long)(demand * lens.drainMod);
 
-					if(te instanceof TileEntityCoreStabilizer)
-						continue;
-					
-					if(world.getBlockState(pos1).getBlock() != Blocks.AIR)
-						break;
+					long dmg = ItemLens.getLensDamage(inventory.getStackInSlot(0));
+					dmg += watts;
+
+					if(dmg >= lens.maxDamage)
+						inventory.setStackInSlot(0, ItemStack.EMPTY);
+					else
+						ItemLens.setLensDamage(inventory.getStackInSlot(0), dmg);
 				}
 			}
 			//PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));

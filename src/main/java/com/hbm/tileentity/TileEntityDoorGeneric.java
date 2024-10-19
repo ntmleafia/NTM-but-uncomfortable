@@ -1,19 +1,13 @@
 package com.hbm.tileentity;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.generic.BlockDoorGeneric;
 import com.hbm.handler.RadiationSystemNT;
 import com.hbm.interfaces.IAnimatedDoor;
 import com.hbm.interfaces.IDoor.DoorState;
-import com.hbm.inventory.control_panel.ControlEvent;
-import com.hbm.inventory.control_panel.ControlEventSystem;
-import com.hbm.inventory.control_panel.DataValueFloat;
-import com.hbm.inventory.control_panel.IControllable;
+import com.hbm.inventory.control_panel.*;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
@@ -21,6 +15,10 @@ import com.hbm.packet.TEDoorAnimationPacket;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.machine.TileEntityLockableBase;
 
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -32,11 +30,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITickable, IAnimatedDoor, IControllable {
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITickable, IAnimatedDoor, IControllable, SimpleComponent {
 
 	public DoorState state = DoorState.CLOSED;
 	public DoorDecl doorType;
@@ -399,7 +398,38 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 	public List<String> getOutEvents(){
 		return Arrays.asList("door_open_state");
 	}
-	
+
+	@Override
+	public Map<String, DataValue> getQueryData() {
+		Map<String,DataValue> out = new HashMap<>();
+		out.put("state",new DataValueFloat(state.ordinal()));
+		out.put("position",new DataValueFloat(openTicks/(float)doorType.timeToOpen()));
+		return out;
+	}
+	@Callback(doc = "getState()->(state: number,position: number) - Returns the door's current state (0~3; CLOSED, OPEN, CLOSING, OPENING)")
+	public Object[] getState(Context context, Arguments args) {
+		return new Object[] {state.ordinal(),openTicks/(float)doorType.timeToOpen()};
+	}
+	@Callback(doc = "tryToggle(code: number?)->(success: boolean) - Attempts to toggle your door.")
+	public Object[] tryToggle(Context context, Arguments args) {
+		return new Object[] {tryToggle(args.optInteger(0,10000))};
+	}
+	@Callback(doc = "tryOpen(code: number?)->(success: boolean) - Attempts to toggle your door.")
+	public Object[] tryOpen(Context context, Arguments args) {
+		return new Object[] {tryOpen(args.optInteger(0,10000))};
+	}
+	@Callback(doc = "tryClose(code: number?)->(success: boolean) - Attempts to toggle your door.")
+	public Object[] tryClose(Context context, Arguments args) {
+		return new Object[] {tryClose(args.optInteger(0,10000))};
+	}
+	@Callback(doc = "lock(code: number)->(success: boolean) - Locks your door with given pin. Negative pins will prevent picking. This cannot be undone.")
+	public Object[] lock(Context context, Arguments args) {
+		if (isLocked()) return new Object[] {false};
+		setPins(args.checkInteger(0));
+		lock();
+		return new Object[] {true};
+	}
+
 	@Override
 	public void validate(){
 		super.validate();
@@ -449,4 +479,8 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 		}
 	}
 
+	@Override
+	public String getComponentName() {
+		return "door";
+	}
 }

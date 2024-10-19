@@ -13,6 +13,10 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyUser;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -31,11 +35,13 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ILaserable, ITankPacketAcceptor {
+@Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
+public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {
 
 	public long power;
 	public static final long maxPower = 1000000000L;
@@ -289,4 +295,48 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	public String getComponentName() {
+		return "dfc_emitter";
+	}
+	@Callback(doc = "setLevel(newLevel: number)->(previousLevel: number)")
+	public Object[] setLevel(Context context, Arguments args) {
+		Object[] prev = new Object[] {watts};
+		watts = MathHelper.clamp(args.checkInteger(0),1,100);
+		return prev;
+	}
+	@Callback(doc = "getLevel()->(level: number)")
+	public Object[] getLevel(Context context, Arguments args) {
+		return new Object[] {watts};
+	}
+	@Callback
+	public Object[] outgoingEnergy(Context context, Arguments args) {
+		return new Object[] {joules};
+	}
+	@Callback(doc = "getActive()->(active: boolean)")
+	public Object[] getActive(Context context, Arguments args) {
+		return new Object[] {isOn};
+	}
+	@Callback(doc = "setActive(active: boolean)->(previously: boolean)")
+	public Object[] setActive(Context context, Arguments args) {
+		boolean wasOn = isOn;
+		isOn = args.checkBoolean(0);
+		return new Object[] {wasOn};
+	}
+	@Callback(doc = "getPower(); returns the current power level - long")
+	public Object[] getPower(Context context, Arguments args) {
+		return new Object[] {power};
+	}
+	@Callback(doc = "getMaxPower(); returns the maximum power level - long")
+	public Object[] getMaxPower(Context context, Arguments args) {
+		return new Object[] {getMaxPower()};
+	}
+	@Callback(doc = "getChargePercent(); returns the charge in percent - double")
+	public Object[] getChargePercent(Context context, Arguments args) {
+		return new Object[] {100D * getPower()/(double)getMaxPower()};
+	}
+	@Callback
+	public Object[] storedCoolnt(Context context, Arguments args) {
+		return new Object[] {tank.getFluidAmount()};
+	}
 }

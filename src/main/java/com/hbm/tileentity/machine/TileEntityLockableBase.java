@@ -117,6 +117,7 @@ public class TileEntityLockableBase extends TileEntity {
 	}	
 	
 	public boolean tryPick(EntityPlayer player) {
+		if (lock < 0) return false;
 
 		boolean canPick = false;
 		int hand = hasLockPickTools(player);
