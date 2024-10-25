@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.hbm.command.CommandLeaf;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.hbm.tileentity.leafia.*;
@@ -1071,6 +1072,7 @@ public class MainRegistry {
 		RBMKDials.createDials(evt.getServer().getEntityWorld());
 		evt.registerServerCommand(new CommandRadiation());
 		evt.registerServerCommand(new CommandHbm());
+		evt.registerServerCommand(new CommandLeaf());
 		AdvancementManager.init(evt.getServer());
 		//MUST be initialized AFTER achievements!!
 		BobmazonOfferFactory.reset();

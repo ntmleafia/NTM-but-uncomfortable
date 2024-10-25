@@ -8,6 +8,7 @@ import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
 import com.hbm.handler.RadiationSystemNT.RadPocket;
 import com.hbm.main.MainRegistry;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.saveddata.RadiationSaveStructure;
 import com.hbm.saveddata.RadiationSavedData;
 
@@ -43,6 +44,10 @@ public class RadiationWorldHandler {
 			if(GeneralConfig.enableDebugMode) {
 				MainRegistry.logger.info("[Debug] Starting world destruction processing");
 			}
+			IdkWhereThisShitBelongs.processPockets(world);
+			IdkWhereThisShitBelongs.processPockets(world);
+			IdkWhereThisShitBelongs.processPockets(world);
+			IdkWhereThisShitBelongs.processPockets(world); // "What is optimization?"
 
 			Collection<RadPocket> activePockets = RadiationSystemNT.getActiveCollection(world);
 			if(activePockets.size() == 0)
@@ -124,9 +129,9 @@ public class RadiationWorldHandler {
 		}
 		
 		WorldServer serv = (WorldServer)world;
+		ChunkProviderServer provider = (ChunkProviderServer) serv.getChunkProvider();
 
 		RadiationSavedData data = RadiationSavedData.getData(serv);
-		ChunkProviderServer provider = (ChunkProviderServer) serv.getChunkProvider();
 
 		Object[] entries = data.contamination.entrySet().toArray();
 
@@ -136,7 +141,7 @@ public class RadiationWorldHandler {
 		Entry<ChunkPos, RadiationSaveStructure> randEnt = (Entry<ChunkPos, RadiationSaveStructure>) entries[world.rand.nextInt(entries.length)];
 
 		ChunkPos coords = randEnt.getKey();
-
+		IdkWhereThisShitBelongs.processChunk(provider,coords);
 
 		if(randEnt == null || randEnt.getValue().radiation < threshold)
 			return;

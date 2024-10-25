@@ -137,6 +137,7 @@ public class ContaminationUtil {
 		double rads = ((long)(data.getRadNumFromCoord(player.getPosition()) * 1000D)) / 1000D;
 		double env = ((long)(getPlayerRads(player) * 1000D)) / 1000D;
 
+		boolean sealed = data.isSealed(player.getPosition(),false);
 
 		double res = Library.roundFloat((1D-ContaminationUtil.calculateRadiationMod(player))*100D, 6);
 		double resKoeff = ((long)(HazmatRegistry.getResistance(player) * 100D)) / 100D;
@@ -165,6 +166,8 @@ public class ContaminationUtil {
 		if(resKoeff > 0)
 			resPrefix += TextFormatting.GREEN;
 
+		String myaw = TextFormatting.AQUA + I18nUtil.resolveKey("geiger.sealed.");
+
 		//localization and server-side restrictions have turned this into a painful mess
 		//a *functioning* painful mess, nonetheless
 		player.sendMessage(new TextComponentString("===== ☢ ").appendSibling(new TextComponentTranslation("geiger.title")).appendSibling(new TextComponentString(" ☢ =====")).setStyle(new Style().setColor(TextFormatting.GOLD)));
@@ -173,6 +176,7 @@ public class ContaminationUtil {
 		player.sendMessage(new TextComponentTranslation("geiger.recievedRad").appendSibling(new TextComponentString(" " + recPrefix + rec + " RAD/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 		player.sendMessage(new TextComponentTranslation("geiger.playerRad").appendSibling(new TextComponentString(" " + radPrefix + eRad + " RAD")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 		player.sendMessage(new TextComponentTranslation("geiger.playerRes").appendSibling(new TextComponentString(" " + resPrefix + String.format("%.6f", res) + "% (" + resKoeff + ")")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+		player.sendMessage(new TextComponentTranslation("geiger.sealed."+(sealed ? "true" : "false")).setStyle(new Style().setColor(sealed ? TextFormatting.AQUA : TextFormatting.GOLD)));
 	}
 
 	public static void printDosimeterData(EntityPlayer player) {

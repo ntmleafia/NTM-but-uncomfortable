@@ -109,6 +109,10 @@ public class WasteEarth extends Block implements IItemHazard {
     		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(HbmPotion.radiation, 30 * 20, 29));
     		((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 5 * 20, 0));
     	}
+		if (entity instanceof EntityLivingBase && this == ModBlocks.burning_earth) {
+
+			((EntityLivingBase) entity).setFire(5);
+		}
 	}
 	
 	@Override
@@ -119,11 +123,15 @@ public class WasteEarth extends Block implements IItemHazard {
 		if(this == ModBlocks.waste_earth || this == ModBlocks.waste_mycelium){
 			worldIn.spawnParticle(EnumParticleTypes.TOWN_AURA, pos.getX() + rand.nextFloat(), pos.getY() + 1.1F, pos.getZ() + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
 		}
+		if(this == ModBlocks.burning_earth) {
+			worldIn.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + rand.nextFloat(), pos.getY() + 1.1F, pos.getZ() + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
+			worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + rand.nextFloat(), pos.getY() + 1.1F, pos.getZ() + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
+		}
 	}
 
 	@Override
 	public boolean canEntitySpawn(IBlockState state, Entity entityIn){
-		return ContaminationUtil.isRadImmune(entityIn);
+		return (this == ModBlocks.burning_earth) ? entityIn.isImmuneToFire() : ContaminationUtil.isRadImmune(entityIn);
 	}
 	
 	@Override
@@ -144,6 +152,40 @@ public class WasteEarth extends Block implements IItemHazard {
 				}
 			}
 		}
+/*
+		if(this == ModBlocks.burning_earth) {
+
+			if(rand.nextInt(5) == 0) {
+				for(int i = -1; i < 2; i++) {
+					for(int j = -1; j < 2; j++) {
+						for(int k = -1; k < 2; k++) {
+							BlockPos pos = new BlockPos(x + i, y + j, z + k));
+							if(!world.isBlockLoaded(pos) continue;
+
+							IBlockState b0 = world.getBlockState(pos);
+							IBlockState b1 = world.getBlockState(pos.up());
+
+							if(!b1.isOpaqueCube() &&
+									((b0.getBlock() == Blocks.GRASS || b0.getBlock() == Blocks.MYCELIUM || b0.getBlock() == ModBlocks.waste_earth ||
+											b0.getBlock() == ModBlocks.frozen_grass || b0.getBlock() == ModBlocks.waste_mycelium)
+											&& !world.canLightningStrikeAt(x, y, z))) {
+								world.setBlock(x + i, y + j, z + k, ModBlocks.burning_earth);
+							}
+							if((b0 instanceof BlockLeaves || b0 instanceof BlockBush)) {
+								world.setBlockToAir(x + i, y + j, z + k);
+							}
+							if(b0 == ModBlocks.frozen_dirt) {
+								world.setBlock(x + i, y + j, z + k, Blocks.dirt);
+							}
+							if(b1.isFlammable(world, x, y, z, ForgeDirection.UP) && !(b1 instanceof BlockLeaves || b1 instanceof BlockBush) && world.getBlock(x, y + 1, z) == Blocks.air) {
+								world.setBlock(x, y + 1, z, Blocks.fire);
+							}
+						}
+					}
+				}
+			}
+			world.setBlock(x, y, z, ModBlocks.impact_dirt);
+		}*/
 
 		if(this == ModBlocks.waste_earth || this == ModBlocks.waste_dirt || this == ModBlocks.waste_mycelium) {
 			

@@ -469,7 +469,7 @@ public static GunConfiguration getFatmanConfig() {
 					exp.explode();
 					
 					if(BombConfig.enableNukeClouds) {
-						EntityNukeTorex.statFacBale(bullet.world, posX, posY, posZ, 15);
+						EntityNukeTorex.statFacBale(bullet.world, posX, posY, posZ, 15, false);
 					}
 				}
 			}

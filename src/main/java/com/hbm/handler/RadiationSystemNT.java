@@ -68,6 +68,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
+import javax.annotation.Nullable;
+
 @Mod.EventBusSubscriber(modid = RefStrings.MODID)
 public class RadiationSystemNT {
 
@@ -85,6 +87,9 @@ public class RadiationSystemNT {
 	 * @param amount - the amount to increment by
 	 * @param max - the maximum amount of radiation allowed before it doesn't increment
 	 */
+	public static Collection<ChunkRadiationStorage> getAll(World world) {
+		return getWorldRadData(world).data.values();
+	}
 	public static void incrementRad(World world, BlockPos pos, float amount, float max){
 		if(pos.getY() < 0 || pos.getY() > 255 || !world.isBlockLoaded(pos))
 			return;
@@ -240,6 +245,16 @@ public class RadiationSystemNT {
 		}
 		return st;
 	}
+	@Nullable
+	public static ChunkRadiationStorage getChunkStorage2(World world, ChunkPos pos){
+		WorldRadiationData worldRadData = getWorldRadData(world);
+		ChunkRadiationStorage st = worldRadData.data.get(pos);
+		if(st == null){
+			st = new ChunkRadiationStorage(worldRadData, world.getChunkFromChunkCoords(pos.x,pos.z));
+			worldRadData.data.put(pos, st);
+		}
+		return st;
+	}
 	
 	/**
 	 * Gets the world radiation data for the world
@@ -283,7 +298,7 @@ public class RadiationSystemNT {
 			int thunder = AuxSavedData.getThunder(world);
 
 			if(thunder > 0)
-				AuxSavedData.setThunder(world, thunder - 1);
+				AuxSavedData.decreaseThunder(world,1);
 
 			if(!world.loadedEntityList.isEmpty()) {
 
@@ -376,7 +391,7 @@ public class RadiationSystemNT {
 									world.spawnEntity(creep);
 							entity.setDead();
 							continue;
-						} else if(eRad >= 800 && entity instanceof EntityHorse) {
+						/*} else if(eRad >= 800 && entity instanceof EntityHorse) {
 							EntityHorse horsie = (EntityHorse)entity;
 							EntityZombieHorse zomhorsie = new EntityZombieHorse(world);
 							zomhorsie.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
@@ -390,7 +405,7 @@ public class RadiationSystemNT {
 								if(!world.isRemote)
 									world.spawnEntity(zomhorsie);
 							entity.setDead();
-							continue;
+							continue;*/ // my opninion but they creeps me so i removed it and no one's gonna convineceinc mee
 						} else if(eRad >= 900 && entity.getClass().equals(EntityDuck.class)) {
 
 							EntityQuackos quacc = new EntityQuackos(world);
@@ -1235,14 +1250,20 @@ public class RadiationSystemNT {
 		private static ByteBuffer buf = ByteBuffer.allocate(524288);
 		
 		public WorldRadiationData parent;
-		private Chunk chunk;
-		private SubChunkRadiationStorage[] chunks = new SubChunkRadiationStorage[16];
+		public Chunk chunk;
+		public SubChunkRadiationStorage[] chunks = new SubChunkRadiationStorage[16];
 		
 		public ChunkRadiationStorage(WorldRadiationData parent, Chunk chunk) {
 			this.parent = parent;
 			this.chunk = chunk;
 		}
-		
+
+		public SubChunkRadiationStorage queryGetSubChunk(int i) {
+			SubChunkRadiationStorage storage = chunks[i];
+			if (storage == null)
+				rebuildChunkPockets(chunk,i);
+			return chunks[i];
+		}
 		/**
 		 * Gets the sub chunk for the specified y coordinate
 		 * @param y - the y coordinate of the sub chunk

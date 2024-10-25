@@ -12,6 +12,7 @@ import java.util.Random;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.hbm.items.ohno.ItemLeafiaRod;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.particle.leafia.ParticleBalefire;
 import com.hbm.render.entity.missile.*;
 import com.hbm.render.entity.projectile.RenderZirnoxDebris;
@@ -2388,5 +2389,12 @@ public class ClientProxy extends ServerProxy {
 		}
 		return Minecraft.getMinecraft().getRenderPartialTicks();
 	}
-	
+    @Override
+    public float getImpactDust(World world,int dimension) {
+        return (float) IdkWhereThisShitBelongs.darkness;
+    }
+    @Override
+    public float getImpactFire(World world,int dimension) {
+        return (float)IdkWhereThisShitBelongs.infernal;
+    }
 }

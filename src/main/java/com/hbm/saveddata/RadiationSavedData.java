@@ -117,6 +117,16 @@ public class RadiationSavedData extends WorldSavedData {
     	return 0F;
     }
 
+	public boolean isSealed(BlockPos pos,boolean fallback) {
+		if (!GeneralConfig.advancedRadiation) return false;
+		if (!RadiationSystemNT.isSubChunkLoaded(worldObj,pos))
+			return fallback;
+		RadiationSystemNT.RadPocket pocket = RadiationSystemNT.getPocket(worldObj,pos);
+		if (pocket == null)
+			return fallback;
+		return pocket.isSealed();
+	}
+
     public void updateSystem() {
     	if(GeneralConfig.advancedRadiation)
     		return;

@@ -1,8 +1,10 @@
 package com.hbm.packet;
 
+import com.hbm.command.CommandLeaf;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.lib.RefStrings;
 
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -87,6 +89,11 @@ public class PacketDispatcher {
 		//Registercraft
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.SERVER);
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.CLIENT);
+
+		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactPacket.Handler.class, IdkWhereThisShitBelongs.TomImpactPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactCollapsePacket.Handler.class, IdkWhereThisShitBelongs.TomImpactCollapsePacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(CommandLeaf.ShakecamPacket.Handler.class, CommandLeaf.ShakecamPacket.class, i++, Side.CLIENT);
+
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);
 		//Signals server to consume items and create template

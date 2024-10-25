@@ -40,6 +40,7 @@
   "external.furnacestressed04": {"category": "block", "sounds": [{"name": "hbm:external/furnacestressed04", "stream": false}]},
   "external.furnacestressed05": {"category": "block", "sounds": [{"name": "hbm:external/furnacestressed05", "stream": false}]},
   "external.furnacestressed06": {"category": "block", "sounds": [{"name": "hbm:external/furnacestressed06", "stream": false}]},
+  "weapon.nuke": {"category": "player", "sounds": [{"name": "hbm:weapon/nuclearExplosion", "stream": false}]},
 
 	"item.techBleep": {"category": "player", "sounds": [{"name": "hbm:tool/techBleep", "stream": false}]},
     "item.techBoop": {"category": "player", "sounds": [{"name": "hbm:tool/techBoop", "stream": false}]},
@@ -74,6 +75,8 @@
 	"music.recordsectorsweep": {"category": "record", "sounds": [{"name": "hbm:music/recordsectorsweep", "stream": false}]},
 	"music.recordvortalcombat": {"category": "record", "sounds": [{"name": "hbm:music/recordvortalcombat", "stream": false}]},
 	"music.transmission": {"category": "record", "sounds": [{"name": "hbm:music/recordglass", "stream": false}]},
+  "music.422fgame": {"category": "music", "sounds": [{"name": "hbm:music/422fgame", "stream": false}]},
+  "music.422fmenu": {"category": "music", "sounds": [{"name": "hbm:music/422fmenu", "stream": false}]},
 
 	"weapon.tauShoot": {"category": "player", "sounds": [{"name": "hbm:weapon/tauShoot", "stream": false}]},
 	"weapon.tauChargeLoop": {"category": "player", "sounds": [{"name": "hbm:weapon/tauChargeLoop", "stream": false}]},

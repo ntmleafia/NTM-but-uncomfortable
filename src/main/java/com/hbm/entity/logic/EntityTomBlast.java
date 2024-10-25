@@ -7,6 +7,7 @@ import com.hbm.config.BombConfig;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.main.MainRegistry;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
@@ -35,6 +36,7 @@ public class EntityTomBlast extends Entity implements IChunkLoader {
 	
 	public EntityTomBlast(World worldIn) {
 		super(worldIn);
+		IdkWhereThisShitBelongs.waitFor.add(this);
 	}
 
 	@Override
@@ -42,6 +44,7 @@ public class EntityTomBlast extends Entity implements IChunkLoader {
 		super.onUpdate();
     	if(!CompatibilityConfig.isWarDim(world)){
 			this.setDead();
+			IdkWhereThisShitBelongs.waitFor.remove(this);
 			return;
 		}
         if(!this.did)
@@ -57,11 +60,14 @@ public class EntityTomBlast extends Entity implements IChunkLoader {
         long start = System.currentTimeMillis();
 		boolean flag = false;
 		int columnsProcessed = 0;
+		if (!this.isDead)
+			IdkWhereThisShitBelongs.waitFor.add(this); // I SAID WAIT. MOTHERFUCKER.
 		while(!(columnsProcessed % 32 == 0 && System.currentTimeMillis()+1 > start + BombConfig.mk5)) {
         	flag = exp.update();
         	
         	if(flag) {
         		this.setDead();
+				IdkWhereThisShitBelongs.waitFor.remove(this);
         		break;
         	}
         	columnsProcessed++;
@@ -87,7 +93,6 @@ public class EntityTomBlast extends Entity implements IChunkLoader {
 	@Override
 	public void init(Ticket ticket) {
 		if(!world.isRemote) {
-			
             if(ticket != null) {
             	
                 if(loaderTicket == null) {

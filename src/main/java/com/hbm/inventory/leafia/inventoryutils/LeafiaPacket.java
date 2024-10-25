@@ -4,6 +4,7 @@ import com.hbm.packet.PacketDispatcher;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -127,6 +128,12 @@ public class LeafiaPacket implements IMessage {
 	}
 	public void __sendToClients(double range) {
 		PacketDispatcher.wrapper.sendToAllAround(this,new NetworkRegistry.TargetPoint(dimension,x,y,z,range));
+	}
+	public static void _sendToClient(IMessage message,EntityPlayer player) {
+		if (player instanceof EntityPlayerMP)
+			PacketDispatcher.wrapper.sendTo(message,(EntityPlayerMP)player);
+		else
+			PacketDispatcher.wrapper.sendToAll(message);
 	}
 	
 	public static class Handler implements IMessageHandler<LeafiaPacket,IMessage> {

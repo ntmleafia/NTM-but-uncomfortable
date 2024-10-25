@@ -612,7 +612,8 @@ public class ModBlocks {
 	public static final Block waste_sand_red = new WasteSand(Material.SAND, SoundType.SAND, "waste_sand_red").addRadiation(ItemHazard.trx*ItemHazard.nugget*2).toBlock().setHardness(0.5F).setResistance(1.0F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block waste_trinitite_red = new WasteSand(Material.SAND, SoundType.SAND, "waste_trinitite_red").addRadiation(ItemHazard.trx).toBlock().setHardness(0.5F).setResistance(2.5F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block waste_terracotta = new BlockHazardMeta(Material.ROCK, SoundType.STONE, "waste_terracotta").addRadiation(ItemHazard.trx*ItemHazard.nugget).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(4.0F).setResistance(8.0F);
-	
+	public static final Block burning_earth = new WasteEarth(Material.GRASS, SoundType.GROUND, true, "burning_earth").addFire(1).toBlock().setHardness(0.5F).setResistance(1.0F).setCreativeTab(MainRegistry.resourceTab);
+
 	public static final Block waste_log = new WasteLog(Material.WOOD, SoundType.WOOD, "waste_log").addCoal(2).toBlock().setHardness(5.0F).setResistance(2.5F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block waste_planks = new BlockHazardFuel(Material.WOOD, "waste_planks", 5, 5, 1600).addCoal(1).toBlock().setHardness(0.5F).setResistance(2.5F).setCreativeTab(MainRegistry.resourceTab);
 	public static final Block waste_leaves = new WasteLeaves("waste_leaves").addRadiation(0.15F).toBlock().setHardness(0.3F).setResistance(0.3F).setCreativeTab(MainRegistry.resourceTab);

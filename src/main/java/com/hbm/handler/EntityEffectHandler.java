@@ -14,6 +14,7 @@ import com.hbm.config.RadiationConfig;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.ExtPropPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -37,6 +38,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -44,21 +46,33 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
+import static com.hbm.capability.HbmLivingCapability.EntityHbmProps.maxBlacklung;
+
 public class EntityEffectHandler {
 	public static void onUpdate(EntityLivingBase entity) {
-		
 		if(!entity.world.isRemote) {
-			
 			if(entity.ticksExisted % 20 == 0) {
 				HbmLivingProps.setRadBuf(entity, HbmLivingProps.getRadEnv(entity));
 				HbmLivingProps.setRadEnv(entity, 0);
 			}
-			
 			if(entity instanceof EntityPlayerMP) {
 				NBTTagCompound data = new NBTTagCompound();
 				IEntityHbmProps props = HbmLivingProps.getData(entity);
 				props.saveNBTData(data);
 				PacketDispatcher.wrapper.sendTo(new ExtPropPacket(data), (EntityPlayerMP) entity);
+			}
+			if (entity.ticksExisted % 40 == 20 || entity.isBurning()) {
+				if (IdkWhereThisShitBelongs.getTomImpactLargestPos(entity.world, "infernal", entity.getPosition(), entity.dimension) > 0.1) {
+					if (!IdkWhereThisShitBelongs.isEntityInShelter(entity, false)) {
+						entity.attackEntityFrom(DamageSource.ON_FIRE, 3);
+						entity.setFire(1);
+					}
+				} else if (entity.ticksExisted % 40 == 20)
+					if (IdkWhereThisShitBelongs.getTomImpactLargestPos(entity.world, "dust", entity.getPosition(), entity.dimension) > 0.1) {
+						if (!IdkWhereThisShitBelongs.isEntityInShelter(entity, false)) {
+							ContaminationUtil.applyCoal(entity,(int)(maxBlacklung*0.01),(int)(maxBlacklung*0.01));
+						}
+					}
 			}
 		}
 		
@@ -329,23 +343,23 @@ public class EntityEffectHandler {
 			
 			int bl = HbmLivingProps.getBlackLung(entity);
 			
-			if(bl > 0 && bl < EntityHbmProps.maxBlacklung * 0.25)
+			if(bl > 0 && bl < maxBlacklung * 0.25)
 				HbmLivingProps.setBlackLung(entity, HbmLivingProps.getBlackLung(entity) - 1);
 		}
 
-		double blacklung = Math.min(HbmLivingProps.getBlackLung(entity), EntityHbmProps.maxBlacklung);
+		double blacklung = Math.min(HbmLivingProps.getBlackLung(entity), maxBlacklung);
 		double asbestos = Math.min(HbmLivingProps.getAsbestos(entity), EntityHbmProps.maxAsbestos);
 		
-		boolean coughs = blacklung / EntityHbmProps.maxBlacklung > 0.25D || asbestos / EntityHbmProps.maxAsbestos > 0.25D;
+		boolean coughs = blacklung / maxBlacklung > 0.25D || asbestos / EntityHbmProps.maxAsbestos > 0.25D;
 		
 		if(!coughs)
 			return;
 
-		boolean coughsCoal = blacklung / EntityHbmProps.maxBlacklung > 0.5D;
-		boolean coughsALotOfCoal = blacklung / EntityHbmProps.maxBlacklung > 0.8D;
-		boolean coughsBlood = asbestos / EntityHbmProps.maxAsbestos > 0.75D || blacklung / EntityHbmProps.maxBlacklung > 0.75D;
+		boolean coughsCoal = blacklung / maxBlacklung > 0.5D;
+		boolean coughsALotOfCoal = blacklung / maxBlacklung > 0.8D;
+		boolean coughsBlood = asbestos / EntityHbmProps.maxAsbestos > 0.75D || blacklung / maxBlacklung > 0.75D;
 
-		double blacklungDelta = 1D - (blacklung / (double)EntityHbmProps.maxBlacklung);
+		double blacklungDelta = 1D - (blacklung / (double) maxBlacklung);
 		double asbestosDelta = 1D - (asbestos / (double)EntityHbmProps.maxAsbestos);
 		
 		double total = 1 - (blacklungDelta * asbestosDelta);

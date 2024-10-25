@@ -1,5 +1,6 @@
 package com.hbm.render.misc;
 
+import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 import com.hbm.lib.RefStrings;
 import com.hbm.config.RadiationConfig;
@@ -19,10 +20,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import static com.hbm.main.leafia.IdkWhereThisShitBelongs.darkness;
+import static com.hbm.main.leafia.IdkWhereThisShitBelongs.dustDisplayTicks;
+
 @SideOnly(Side.CLIENT)
 public class RenderScreenOverlay {
 
 	private static final ResourceLocation misc = new ResourceLocation(RefStrings.MODID + ":textures/misc/overlay_misc.png");
+	private static final ResourceLocation dust = new ResourceLocation(RefStrings.MODID + ":textures/misc/dust.png");
+	private static final ResourceLocation dust2 = new ResourceLocation(RefStrings.MODID + ":textures/misc/dust2.png");
 	private static final RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
 	
 	private static long lastRadSurvey;
@@ -233,6 +239,45 @@ public class RenderScreenOverlay {
 
         GL11.glPopMatrix();
 		Minecraft.getMinecraft().renderEngine.bindTexture(Gui.ICONS);
+	}
+	static void drawDust(double time,Gui gui,ScaledResolution resolution,double speed) {
+		speed = speed/60;
+		gui.drawTexturedModalRect(0, 0, (int)Math.floorMod((long)(time*60*speed),256), -(int)Math.floorMod((long)(time*40*speed),256), resolution.getScaledWidth(), resolution.getScaledHeight());
+	}
+	public static void renderTomDust(ScaledResolution resolution, Gui gui) {
+		float intensity = (float)(darkness)*(dustDisplayTicks/30f);
+		if (intensity > 0) {
+			GL11.glPushMatrix();
+			GlStateManager.disableDepth();
+			GlStateManager.depthMask(false);
+			GlStateManager.enableBlend();
+			GlStateManager.disableAlpha();
+			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+			double time = Math.floorMod(System.currentTimeMillis(), 2147483647) / 1e+3;
+
+			GlStateManager.color(0.75f, 0.75f, 0.75f, 0.9f * intensity);
+			Minecraft.getMinecraft().renderEngine.bindTexture(dust2);
+			drawDust(time, gui, resolution, 30);
+			GlStateManager.color(0.75f, 0.75f, 0.75f, 0.6f * intensity);
+			Minecraft.getMinecraft().renderEngine.bindTexture(dust);
+			drawDust(time, gui, resolution, 100);
+			GlStateManager.color(1, 1, 1, 0.5f * intensity);
+			Minecraft.getMinecraft().renderEngine.bindTexture(dust2);
+			drawDust(time, gui, resolution, 60);
+			GlStateManager.color(1, 1, 1, 0.2f * intensity);
+			Minecraft.getMinecraft().renderEngine.bindTexture(dust);
+			drawDust(time, gui, resolution, 150);
+
+			GlStateManager.enableAlpha();
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GlStateManager.color(1, 1, 1, 1);
+
+			GlStateManager.enableDepth();
+			GlStateManager.depthMask(true);
+
+			GL11.glPopMatrix();
+			Minecraft.getMinecraft().renderEngine.bindTexture(Gui.ICONS);
+		}
 	}
 	
 	public enum Crosshair {

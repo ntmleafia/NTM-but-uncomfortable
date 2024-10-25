@@ -18,6 +18,10 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.hbm.world.WorldProviderNTM;
+import net.minecraft.world.DimensionType;
+import net.minecraftforge.common.DimensionManager;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.logging.log4j.Level;
 
@@ -607,7 +611,10 @@ public class ModEventHandler {
 		}
 
 		if(event.phase == Phase.START) {
-			BossSpawnHandler.rollTheDice(event.world);
+			if (event.world != null && !event.world.isRemote) {
+				BossSpawnHandler.rollTheDice(event.world);
+				IdkWhereThisShitBelongs.serverTick(event.world);
+			}
 			TimedGenerator.automaton(event.world, 100);
 		}
 	}
@@ -1009,6 +1016,14 @@ public class ModEventHandler {
 					event.getWorld().setBlockState(new BlockPos(x, y, z), ModBlocks.gas_coal.getDefaultState());
 			}
 		}
+	}
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onLoad(WorldEvent.Load event) {
+		//DimensionManager.unloadWorld(0);
+		//DimensionManager.createProviderFor(0, WorldProviderNTM.class, true);
+		DimensionManager.unregisterDimension(0);
+		WorldProviderNTM.dimType = DimensionType.register("overworld","",0, WorldProviderNTM.class,true);
+		DimensionManager.registerDimension(0,WorldProviderNTM.dimType);
 	}
 
 	@SubscribeEvent

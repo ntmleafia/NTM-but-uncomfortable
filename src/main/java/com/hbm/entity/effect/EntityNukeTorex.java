@@ -2,7 +2,9 @@ package com.hbm.entity.effect;
 
 import java.util.ArrayList;
 
+import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.interfaces.IConstantRenderer;
+import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
 
 import net.minecraft.entity.Entity;
@@ -10,19 +12,27 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /*
  * Toroidial Convection Simulation Explosion Effect
  * Tor                             Ex
  */
-public class EntityNukeTorex extends Entity implements IConstantRenderer {
+public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunkLoader {
+	@SideOnly(Side.CLIENT)
+	public boolean reachedPlayer = false;
+	public boolean sound = true;
+	ForgeChunkManager.Ticket myTicket = null;
 
 	public static final DataParameter<Float> SCALE = EntityDataManager.createKey(EntityNukeTorex.class, DataSerializers.FLOAT);
 	public static final DataParameter<Byte> TYPE = EntityDataManager.createKey(EntityNukeTorex.class, DataSerializers.BYTE);
+	public static final float animationSpeedShk = 6;
+	public static final float animationSpeedGeneral = 3f;
 	
 	public static final int firstCondenseHeight = 130;
 	public static final int secondCondenseHeight = 170;
@@ -54,19 +64,36 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 	public ArrayList<Cloudlet> cloudlets = new ArrayList();
 	public int maxAge = 1000;
 	public float humidity = -1;
+	ChunkPos chunkPos = null;
 
 	public EntityNukeTorex(World p_i1582_1_) {
 		super(p_i1582_1_);
 		this.setSize(20F, 40F);
 		this.isImmuneToFire = true;
 		this.ignoreFrustumCheck = true;
+		this.forceSpawn = true;
 	}
 
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(SCALE, 1.0F);
 		this.dataManager.register(TYPE, Byte.valueOf((byte) 0));
+		myTicket = ForgeChunkManager.requestTicket(MainRegistry.instance, world, ForgeChunkManager.Type.ENTITY);
+		if (myTicket != null)
+			init(myTicket);
 	}
+	@Override
+	public void init(ForgeChunkManager.Ticket ticket) {
+		//if (!world.isRemote) {
+			myTicket.bindEntity(this);
+			myTicket.getModData(); // generate mod data
+			chunkPos = new ChunkPos(chunkCoordX,chunkCoordZ);
+			ForgeChunkManager.forceChunk(myTicket,chunkPos);
+		//}
+	}
+
+	@Override
+	public void loadNeighboringChunks(int newChunkX, int newChunkZ) {}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
@@ -74,12 +101,15 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			setScale(nbt.getFloat("scale"));
 		if (nbt.hasKey("type"))
 			this.dataManager.set(TYPE, nbt.getByte("type"));
+		if (nbt.hasKey("sound"))
+			sound = nbt.getBoolean("sound");
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound nbt) {
 		nbt.setFloat("scale", this.dataManager.get(SCALE));
 		nbt.setByte("type", this.dataManager.get(TYPE));
+		nbt.setBoolean("sound", this.sound);
 	}
 
 	@Override
@@ -87,10 +117,13 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
     public boolean isInRangeToRenderDist(double distance) {
 		return true;
 	}
-
+	float animTick = 0;
+	int animTickI = 0;
 	@Override
 	public void onUpdate() {
 		if(world.isRemote) {
+			animTick = this.ticksExisted*animationSpeedGeneral;
+			animTickI = (int)animTick;
 			
 			double s = this.getScale();
 			double cs = 1.5;
@@ -122,45 +155,45 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 				double x = posX + rand.nextGaussian() * range;
 				double z = posZ + rand.nextGaussian() * range;
 				Cloudlet cloud = new Cloudlet(x, lastSpawnY, z, (float)(rand.nextDouble() * 2D * Math.PI), 0, lifetime);
-				cloud.setScale((float) (Math.sqrt(s) * 3 + this.ticksExisted * 0.0025 * s), (float) (Math.sqrt(s) * 3 + this.ticksExisted * 0.0025 * 6 * cs * s));
+				cloud.setScale((float) (Math.sqrt(s) * 3 + animTick * 0.0025 * s), (float) (Math.sqrt(s) * 3 + animTick * 0.0025 * 6 * cs * s));
 				cloudlets.add(cloud);
 			}
 
-			if(this.ticksExisted < 120 * s){
+			if(animTick < 120 * s){
 				world.setLastLightningBolt(2);
 			}
 			
 			// spawn shock clouds
-			if(this.ticksExisted < 150) {
+			if(this.ticksExisted*animationSpeedShk < 150) {
 				
-				int cloudCount = Math.min(this.ticksExisted * 2, 100);
-				int shockLife = Math.max(400 - this.ticksExisted * 20, 50);
+				int cloudCount = Math.min((int)(this.ticksExisted*animationSpeedShk) * 2, 100);
+				int shockLife = Math.max(400 - (int)(this.ticksExisted*animationSpeedShk) * 20, 50);
 				
 				for(int i = 0; i < cloudCount; i++) {
-					Vec3 vec = Vec3.createVectorHelper((this.ticksExisted + rand.nextDouble() * 2) * 1.5, 0, 0);
+					Vec3 vec = Vec3.createVectorHelper((this.ticksExisted + rand.nextDouble() * 2) * 1.5 * animationSpeedShk /*make it a little faster*/, 0, 0);
 					float rot = (float) (Math.PI * 2 * rand.nextDouble());
 					vec.rotateAroundY(rot);
 					this.cloudlets.add(new Cloudlet(vec.xCoord + posX, world.getHeight((int) (vec.xCoord + posX) + 1, (int) (vec.zCoord + posZ)), vec.zCoord + posZ, rot, 0, shockLife, TorexType.SHOCK)
-							.setScale((float)s * 5F, (float)s * 2F).setMotion(MathHelper.clamp(0.25 * this.ticksExisted - 5, 0, 1)));
+							.setScale((float)s * 5F, (float)s * 2F).setMotion(MathHelper.clamp(0.25 * (int)(this.ticksExisted*animationSpeedShk) - 5, 0, 1)));
 				}
 			}
 			
 			// spawn ring clouds
-			if(this.ticksExisted < 200) {
+			if(animTick < 200) {
 				lifetime *= s;
 				for(int i = 0; i < 2; i++) {
 					Cloudlet cloud = new Cloudlet(posX, posY + coreHeight, posZ, (float)(rand.nextDouble() * 2D * Math.PI), 0, lifetime, TorexType.RING);
-					cloud.setScale(1F + this.ticksExisted * 0.0025F * (float) (cs * s), 1F + this.ticksExisted * 0.0025F * 5F * (float) (cs * s));
+					cloud.setScale(1F + animTick * 0.0025F * (float) (cs * s), 1F + animTick * 0.0025F * 5F * (float) (cs * s));
 					cloudlets.add(cloud);
 				}
 			}
 
-			if(this.humidity > 0 && this.ticksExisted < 220){
+			if(this.humidity > 0 && animTick < 220){
 				// spawn lower condensation clouds
-				spawnCondensationClouds(this.ticksExisted, this.humidity, firstCondenseHeight, 80, 4, s, cs);
+				spawnCondensationClouds(animTickI, this.humidity, firstCondenseHeight, 80, 4, s, cs);
 
 				// spawn upper condensation clouds
-				spawnCondensationClouds(this.ticksExisted, this.humidity, secondCondenseHeight, 80, 2, s, cs);
+				spawnCondensationClouds(animTickI, this.humidity, secondCondenseHeight, 80, 2, s, cs);
 			}
 
 			cloudlets.removeIf(x -> x.isDead);
@@ -180,6 +213,11 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 		if(!world.isRemote && this.ticksExisted > maxAge) {
 			this.setDead();
 		}
+		//if (!world.isRemote)
+			if (this.isDead && chunkPos != null) {
+				ForgeChunkManager.unforceChunk(myTicket, chunkPos);
+				chunkPos = null;
+			}
 	}
 
 	public void spawnCondensationClouds(int age, float humidity, int height, int count, int spreadAngle, double s, double cs){
@@ -226,7 +264,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 	public double getSimulationSpeed() {
 		
 		int simSlow = maxAge / 4;
-		int life = this.ticksExisted;
+		int life = animTickI;
 		
 		if(life > maxAge) {
 			return 0D;
@@ -242,7 +280,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 	public float getAlpha() {
 		
 		int fadeOut = maxAge * 3 / 4;
-		int life = this.ticksExisted;
+		int life = animTickI;
 		
 		if(life > fadeOut) {
 			float fac = (float)(life - fadeOut) / (float)(maxAge - fadeOut);
@@ -365,7 +403,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 		
 		private Vec3 getCondensationMotion() {
 			Vec3 delta = Vec3.createVectorHelper(posX - EntityNukeTorex.this.posX, 0, posZ - EntityNukeTorex.this.posZ).normalize();
-			double speed = motionCondensationMult * EntityNukeTorex.this.getScale() * 0.125D;
+			double speed = motionCondensationMult * EntityNukeTorex.this.getScale() * 0.125D * animationSpeedGeneral;
 			delta.xCoord *= speed;
 			delta.yCoord = 0;
 			delta.zCoord *= speed;
@@ -374,7 +412,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 
 		private Vec3 getShockwaveMotion() {
 			Vec3 delta = Vec3.createVectorHelper(posX - EntityNukeTorex.this.posX, 0, posZ - EntityNukeTorex.this.posZ).normalize();
-			double speed = motionShockwaveMult * EntityNukeTorex.this.getScale() * 0.25D;
+			double speed = motionShockwaveMult * EntityNukeTorex.this.getScale() * 0.25D * animationSpeedShk;
 			delta.xCoord *= speed;
 			delta.yCoord = 0;
 			delta.zCoord *= speed;
@@ -418,7 +456,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			
 			motion = motion.normalize();
 			motion.rotateAroundY(this.angle);
-			double speed = motionRingMult * 0.5D;
+			double speed = motionRingMult * 0.5D * animationSpeedGeneral;
 			motion.xCoord *= speed;
 			motion.yCoord *= speed;
 			motion.zCoord *= speed;
@@ -566,10 +604,22 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 		torex.setPosition(x, y, z);
 		world.spawnEntity(torex);
 	}
+	public static void statFac(World world, double x, double y, double z, float scale, boolean sound) {
+		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F));
+		torex.setPosition(x, y, z);
+		torex.sound = sound;
+		world.spawnEntity(torex);
+	}
 	
 	public static void statFacBale(World world, double x, double y, double z, float scale) {
 		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F)).setType(1);
 		torex.setPosition(x, y, z);
+		world.spawnEntity(torex);
+	}
+	public static void statFacBale(World world, double x, double y, double z, float scale, boolean sound) {
+		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F)).setType(1);
+		torex.setPosition(x, y, z);
+		torex.sound = sound;
 		world.spawnEntity(torex);
 	}
 }

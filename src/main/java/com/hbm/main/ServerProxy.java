@@ -3,6 +3,7 @@ package com.hbm.main;
 import java.io.File;
 
 import com.hbm.handler.HbmKeybinds.EnumKeybind;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.sound.AudioWrapper;
 
@@ -75,5 +76,13 @@ public class ServerProxy
 	
 	public boolean isVanished(Entity e) {
 		return false;
+	}
+
+    public float getImpactDust(World world,int dimension) {
+		return (float)IdkWhereThisShitBelongs.getTomImpactLargest(world,"dust",dimension);
+    }
+
+	public float getImpactFire(World world,int dimension) {
+		return (float)IdkWhereThisShitBelongs.getTomImpactLargest(world,"infernal",dimension);
 	}
 }

@@ -1,17 +1,29 @@
 package com.hbm.main;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
+import com.google.gson.JsonSyntaxException;
+import com.hbm.hfr.render.loader.S_GroupObject;
 import com.hbm.items.ohno.ItemLeafiaRod;
+import com.hbm.main.leafia.BigBruh;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.hbm.main.leafia.LeafiaShakecam;
 import com.hbm.render.item.leafia.LeafiaRodBakedModel;
 import com.hbm.render.item.leafia.LeafiaRodRender;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.MusicTicker;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.shader.*;
+import net.minecraft.client.util.JsonException;
+import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraftforge.client.EnumHelperClient;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -159,12 +171,8 @@ import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.chunk.RenderChunk;
@@ -237,6 +245,78 @@ public class ModEventHandlerClient {
 	public static float deltaMouseY;
 	
 	public static float currentFOV = 70;
+	public static MusicTicker.MusicType darkness;
+	public static MusicTicker.MusicType darkness2;
+	public static boolean nextMusic = true;
+	private static BigBruh shaderGroup;
+	int lastW = 0;
+	int lastH = 0;
+	//private static final Map<String, Shader> shaders = new HashMap<>();
+	private static final Logger LOGGER = LogManager.getLogger();
+	void loadShader(ResourceLocation resourceLocationIn)
+	{
+		if (OpenGlHelper.shadersSupported) {
+			if (ShaderLinkHelper.getStaticShaderLinkHelper() == null) {
+				ShaderLinkHelper.setNewStaticShaderLinkHelper();
+			}
+			Minecraft mc = Minecraft.getMinecraft();
+			lastW = mc.getFramebuffer().framebufferWidth;
+			lastH = mc.getFramebuffer().framebufferHeight;
+			try {
+				shaderGroup = new BigBruh(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), resourceLocationIn);
+				shaderGroup.createBindFramebuffers(mc.displayWidth, mc.displayHeight);
+			} catch (IOException ioexception) {
+				LOGGER.warn("Failed to load shader: {}", resourceLocationIn, ioexception);
+			} catch (JsonSyntaxException jsonsyntaxexception) {
+				LOGGER.warn("Failed to load shader: {}", resourceLocationIn, jsonsyntaxexception);
+			}
+		}
+	}
+	Matrix4f generateMatrix(Framebuffer canvas) {
+		Matrix4f out = new Matrix4f();
+		out.setIdentity();
+		out.m00 = 2.0F / (float)canvas.framebufferTextureWidth;
+		out.m11 = 2.0F / (float)(-canvas.framebufferTextureHeight);
+		out.m22 = -0.0020001999F;
+		out.m33 = 1.0F;
+		out.m03 = -1.0F;
+		out.m13 = 1.0F;
+		out.m23 = -1.0001999F;
+		return out;
+	}
+	/*
+	ShaderManager putShader(String key, String program, Framebuffer canvasRead, Framebuffer canvasWrite) {
+		if (OpenGlHelper.shadersSupported) {
+			LOGGER.info("Putting shader: {}",program);
+			Minecraft mc = Minecraft.getMinecraft();
+			if (ShaderLinkHelper.getStaticShaderLinkHelper() == null) {
+				ShaderLinkHelper.setNewStaticShaderLinkHelper();
+			}
+			try {
+				Shader shader = new Shader(mc.getResourceManager(), program, canvasRead, canvasWrite);
+				shader.setProjectionMatrix(generateMatrix(canvasRead));
+				shaders.put(key, shader);
+				LOGGER.info("Successfully put shader: {}",program);
+				return shader.getShaderManager();
+			} catch (Exception exception) {
+				LOGGER.warn("Failed to put shader: {}", program, exception);
+			}
+		}
+		return null;
+	}*/
+
+	public ModEventHandlerClient() {
+		Minecraft mc = Minecraft.getMinecraft();
+		LeafiaShakecam.noise = new NoiseGeneratorPerlin(new Random(),1);
+		Framebuffer mainCanvas = mc.getFramebuffer();
+		darkness = EnumHelperClient.addMusicType("DARKNESS_GAME", HBMSoundHandler.darkness, 12000, 24000);
+		darkness2 = EnumHelperClient.addMusicType("DARKNESS_MENU", HBMSoundHandler.darkness2, 12000, 14000);
+		this.loadShader(new ResourceLocation("hbm:shaders/help/tom_desat.json"));
+		//Framebuffer tempCanvas = new Framebuffer(mc.getFramebuffer().framebufferWidth,mc.getFramebuffer().framebufferHeight,mc.getFramebuffer().useDepth);
+		//putShader("myaw","invert",mainCanvas,tempCanvas).getShaderUniformOrDefault("InverseAmount").set(0.8F);
+		//putShader("blit","blit",tempCanvas,mainCanvas);
+	}
+
 	
 	public static void updateMouseDelta() {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -1042,36 +1122,69 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void renderTick(RenderTickEvent e){
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(player != null && player.getHeldItemMainhand().getItem() instanceof ItemSwordCutter && ItemSwordCutter.clicked){
-			updateMouseDelta();
-			player.turn(deltaMouseX, deltaMouseY);
-			float oldPitch = player.rotationPitch;
-		    float oldYaw = player.rotationYaw;
-			float y = player.rotationYaw - ItemSwordCutter.yaw;
-			if(y > ItemSwordCutter.MAX_DYAW){
-				player.rotationYaw = ItemSwordCutter.yaw + ItemSwordCutter.MAX_DYAW;
+		if (player != null) {
+			if(player.getHeldItemMainhand().getItem() instanceof ItemSwordCutter && ItemSwordCutter.clicked){
+				updateMouseDelta();
+				player.turn(deltaMouseX, deltaMouseY);
+				float oldPitch = player.rotationPitch;
+				float oldYaw = player.rotationYaw;
+				float y = player.rotationYaw - ItemSwordCutter.yaw;
+				if(y > ItemSwordCutter.MAX_DYAW){
+					player.rotationYaw = ItemSwordCutter.yaw + ItemSwordCutter.MAX_DYAW;
+				}
+				if(y < -ItemSwordCutter.MAX_DYAW){
+					player.rotationYaw = ItemSwordCutter.yaw - ItemSwordCutter.MAX_DYAW;
+				}
+				float p = player.rotationPitch - ItemSwordCutter.pitch;
+				if(p > ItemSwordCutter.MAX_DPITCH){
+					player.rotationPitch = ItemSwordCutter.pitch + ItemSwordCutter.MAX_DPITCH;
+				}
+				if(p < -ItemSwordCutter.MAX_DPITCH){
+					player.rotationPitch = ItemSwordCutter.pitch - ItemSwordCutter.MAX_DPITCH;
+				}
+				player.prevRotationYaw += player.rotationYaw-oldYaw;
+				player.prevRotationPitch += player.rotationPitch-oldPitch;
 			}
-			if(y < -ItemSwordCutter.MAX_DYAW){
-				player.rotationYaw = ItemSwordCutter.yaw - ItemSwordCutter.MAX_DYAW;
+			if (e.phase == Phase.END) {
+				if (shaderGroup != null)
+				{
+					GlStateManager.matrixMode(5890);
+					GlStateManager.pushMatrix();
+					GlStateManager.loadIdentity();
+					Minecraft mc = Minecraft.getMinecraft();
+					Framebuffer mainCanvas = mc.getFramebuffer();
+					if (shaderGroup != null)
+					{
+						if (lastW != mainCanvas.framebufferWidth || lastH != mainCanvas.framebufferHeight) {
+							lastW = mc.getFramebuffer().framebufferWidth;
+							lastH = mc.getFramebuffer().framebufferHeight;
+							shaderGroup.createBindFramebuffers(mainCanvas.framebufferWidth,mainCanvas.framebufferHeight);
+						}
+						shaderGroup.render(e.renderTickTime);
+
+
+					}
+					//for (Shader shader : shaders.values()) {
+					//	shader.render(e.renderTickTime);
+					//}
+					GlStateManager.popMatrix();
+				}
+				if (OpenGlHelper.shadersSupported)
+				{
+				}
 			}
-			float p = player.rotationPitch - ItemSwordCutter.pitch;
-			if(p > ItemSwordCutter.MAX_DPITCH){
-				player.rotationPitch = ItemSwordCutter.pitch + ItemSwordCutter.MAX_DPITCH;
-			}
-			if(p < -ItemSwordCutter.MAX_DPITCH){
-				player.rotationPitch = ItemSwordCutter.pitch - ItemSwordCutter.MAX_DPITCH;
-			}
-			player.prevRotationYaw += player.rotationYaw-oldYaw;
-			player.prevRotationPitch += player.rotationPitch-oldPitch;
 		}
 	}
 	
 	@SubscribeEvent
 	public void fovUpdate(FOVUpdateEvent e){
 		EntityPlayer player = e.getEntity();
+		float multiplier = 1.0F;
 		if(player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
-			e.setNewfov(e.getFov()*1.1F);
+			multiplier *= 1.1F;
 		}
+		multiplier *= IdkWhereThisShitBelongs.fovM;
+		e.setNewfov(e.getFov()*multiplier);
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOW)
@@ -1121,6 +1234,27 @@ public class ModEventHandlerClient {
 			
 			RenderNTMSkybox.didLastRender = false;
 		}
+	}
+	@SubscribeEvent
+	public void setFogDensity(EntityViewRenderEvent.FogDensity event) {
+		event.setDensity((float)Math.max(Math.pow(IdkWhereThisShitBelongs.darkness*(IdkWhereThisShitBelongs.dustDisplayTicks/30f),0.1)*12,event.getDensity()));
+	}
+	@SubscribeEvent
+	public void setFogColor(EntityViewRenderEvent.FogColors event) {
+		Entity entity = event.getEntity();
+		World world = entity.world;
+		Vec3d viewport = ActiveRenderInfo.projectViewFromEntity(entity,event.getRenderPartialTicks());
+		BlockPos viewportPos = new BlockPos(viewport);
+		IBlockState viewportState = world.getBlockState(viewportPos);
+		Vec3d inMaterialColor = viewportState.getBlock().getFogColor(world, viewportPos, viewportState, entity, new Vec3d(1,0,0), (float)event.getRenderPartialTicks());
+
+		event.setRed((float)MathHelper.clamp(event.getRed()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.7/1.5,0,1));
+		event.setGreen((float)MathHelper.clamp(event.getGreen()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.4/1.5,0,1));
+		event.setBlue((float)MathHelper.clamp(event.getBlue()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.1/1.5,0,1));
+
+		//event.setRed((float)inMaterialColor.x);
+		//event.setGreen((float)inMaterialColor.y);
+		//event.setBlue((float)inMaterialColor.z);
 	}
 	
 	@SubscribeEvent
@@ -1172,6 +1306,12 @@ public class ModEventHandlerClient {
 		}
 		if(Minecraft.getMinecraft().player != null){
 			JetpackHandler.clientTick(e);
+			if (e.phase == Phase.END) {
+				LeafiaShakecam.localTick();
+				IdkWhereThisShitBelongs.localTick();
+				if (shaderGroup != null)
+					shaderGroup.accessor.get("intensity").set((float)(IdkWhereThisShitBelongs.darkness)*(IdkWhereThisShitBelongs.dustDisplayTicks/30f)/2f);
+			}
 		}
 	}
 	
@@ -1223,6 +1363,8 @@ public class ModEventHandlerClient {
 	public void cameraSetup(EntityViewRenderEvent.CameraSetup e){
 		RecoilHandler.modifiyCamera(e);
 		JetpackHandler.handleCameraTransform(e);
+		IdkWhereThisShitBelongs.shakeCam();
+		LeafiaShakecam.shakeCam();
 	}
 	
 	FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
@@ -1759,6 +1901,13 @@ public class ModEventHandlerClient {
 		if(helmet.getItem() instanceof ArmorFSB) {
 			((ArmorFSB)helmet.getItem()).handleOverlay(event, player);
 		}
+
+	}
+	@SubscribeEvent
+	public void postOverlayRender(RenderGameOverlayEvent.Post event) {
+		if(event.getType() == ElementType.ALL) {
+			RenderScreenOverlay.renderTomDust(event.getResolution(),Minecraft.getMinecraft().ingameGUI);
+		}
 	}
 	
 	@SubscribeEvent(priority = EventPriority.HIGH)
@@ -1891,8 +2040,15 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void onPlaySound(PlaySoundEvent e) {
 		ResourceLocation r = e.getSound().getSoundLocation();
-
 		WorldClient wc = Minecraft.getMinecraft().world;
+		if (wc != null) {
+			if (MainRegistry.proxy.getImpactDust(wc, Minecraft.getMinecraft().player.dimension) > 0.75F)
+				if (e.getName().matches("music\\.422fgame") || e.getName().matches("music\\.422fmenu")) {
+					nextMusic = !nextMusic;
+					//e.setResultSound(null);
+					//Minecraft.getMinecraft().getMusicTicker().playMusic(MusicTicker.MusicType.MENU);
+				}
+		}
 
 		// Alright, alright, I give the fuck up, you've wasted my time enough
 		// with this bullshit. You win.

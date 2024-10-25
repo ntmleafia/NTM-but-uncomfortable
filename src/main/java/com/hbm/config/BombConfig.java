@@ -19,6 +19,13 @@ public class BombConfig {
 	public static int fatmanRadius = 35;
 	public static int nukaRadius = 25;
 	public static int aSchrabRadius = 20;
+	public static int tomRadius = 600;
+	public static int tomImpactRadius = 1000000;
+	public static double tomImpactExponent = 0.1;
+	public static double tomImpactTimeInfernal = 20;
+	public static double tomImpactTimeVolcanic = 5;
+	public static double tomImpactTimeSeismic = 5;
+	public static double tomImpactTimeDarkness = 8.33;
 	public static int riggedStarRange = 50;
 	public static int riggedStarTicks = 60 * 20;
 
@@ -85,6 +92,27 @@ public class BombConfig {
 		Property propN2 = config.get(CATEGORY_NUKES, "3.13_n2Radius", 200);
 		propN2.setComment("Radius of the N2 mine");
 		n2Radius = propN2.getInt();
+		Property propTom = config.get(CATEGORY_NUKES, "3.14000_tomRadius", 600);
+		propTom.setComment("Radius of explosion created by commanding Gerald. Default is 600");
+		tomRadius = propTom.getInt();
+		Property propTomI = config.get(CATEGORY_NUKES, "3.14001_tomApocalypseRadius", 1000000);
+		propTomI.setComment("How far the said explosion should make the world well, less preferably habitable. Default is 1 million");
+		tomImpactRadius = propTomI.getInt();
+		Property propTomE = config.get(CATEGORY_NUKES, "3.14002_tomApocalypseExponent", 0.1);
+		propTomE.setComment("The lesser it is, the farther you have to get away until a significant drop on the effects. 1 for a linear function. Default is 0.1");
+		tomImpactExponent = propTomE.getDouble();
+		Property propTomD0 = config.get(CATEGORY_NUKES, "3.14010_tomApocalypseDurationInfernal", 20);
+		propTomD0.setComment("How long should entities be burned for being outside, in real life *minutes. Default is 20 minutes");
+		tomImpactTimeInfernal = propTomD0.getDouble();
+		Property propTomD1 = config.get(CATEGORY_NUKES, "3.14011_tomApocalypseDurationVolcanic", 5);
+		propTomD1.setComment("How long should there be eruptions, hot metals and frequent meteors, in real life days. Default is 5 days");
+		tomImpactTimeVolcanic = propTomD1.getDouble();
+		Property propTomD2 = config.get(CATEGORY_NUKES, "3.14012_tomApocalypseDurationSeismic", 5);
+		propTomD2.setComment("How long should there be randomly collapsing blocks. Default is 5 days");
+		tomImpactTimeSeismic = propTomD2.getDouble();
+		Property propTomD3 = config.get(CATEGORY_NUKES, "3.14013_tomApocalypseDurationDarkness", 8.33);
+		propTomD3.setComment("How long entities should get burned outside, in real life days. Default is 8.33 days");
+		tomImpactTimeDarkness = propTomD3.getDouble();
 
 		Property propRS1 = config.get(CATEGORY_NUKES, "3.14_riggedStarRadius", 50);
 		propRS1.setComment("Radius of the Rigged Star Blaster Energy Cell");

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
 
+import com.hbm.lib.HBMSoundHandler;
+import com.hbm.main.leafia.LeafiaShakecam;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.entity.effect.EntityNukeTorex;
@@ -79,8 +81,17 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		EntityPlayer player = MainRegistry.proxy.me();
 
 		double dist = player.getDistance(cloud);
-		double shockwaveDistance = dist - cloud.ticksExisted * 1.5;
+		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk;
 		if(shockwaveDistance > 10 || shockwaveDistance < 0) return;
+
+		if (!cloud.reachedPlayer && cloud.sound) {
+			cloud.reachedPlayer = true;
+			cloud.world.playSound(player, cloud.posX, cloud.posY, cloud.posZ, HBMSoundHandler.nuke, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSimple(8f*(amplitude/100),null,null).configure(amplitude * 10F,8f,null,null));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(15f*(amplitude/100),null,null).configure(amplitude * 10F,8f,1.8f,4f));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(30f*(amplitude/100),null,null).configure(amplitude * 10F,2f,1.5f,3f));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(60f*(amplitude/100),null,null).configure(amplitude * 10F,0.5f,0.5f,2f));
+		}
 		
 		int duration = ((int)(amplitude * Math.min(1, (amplitude * amplitude)/(dist * dist))));
 		int swingTimer = duration<<1;
