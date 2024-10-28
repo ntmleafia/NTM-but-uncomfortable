@@ -10,7 +10,9 @@ import java.util.Random;
 import com.hbm.command.CommandLeaf;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
+import com.hbm.main.leafia.DispenserBullet;
 import com.hbm.tileentity.leafia.*;
+import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
@@ -1064,6 +1066,12 @@ public class MainRegistry {
 			BedrockOreRegistry.registerOreColors();
 			ModForgeFluids.registerFluidColors();
 		}
+		DispenserBullet.register(ModItems.ammo_nuke,BulletConfigSyncingUtil.NUKE_NORMAL);
+		DispenserBullet.register(ModItems.ammo_nuke_low,BulletConfigSyncingUtil.NUKE_LOW);
+		DispenserBullet.register(ModItems.ammo_nuke_high,BulletConfigSyncingUtil.NUKE_HIGH);
+		DispenserBullet.register(ModItems.ammo_nuke_pumpkin,BulletConfigSyncingUtil.NUKE_PUMPKIN);
+		DispenserBullet.register(ModItems.ammo_nuke_safe,BulletConfigSyncingUtil.NUKE_SAFE);
+		DispenserBullet.register(ModItems.ammo_nuke_tots,BulletConfigSyncingUtil.NUKE_TOTS);
 		proxy.postInit(event);
 	}
 

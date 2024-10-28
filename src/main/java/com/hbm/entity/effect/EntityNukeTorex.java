@@ -1,33 +1,48 @@
 package com.hbm.entity.effect;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.main.MainRegistry;
+import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityTracker;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /*
  * Toroidial Convection Simulation Explosion Effect
  * Tor                             Ex
  */
-public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunkLoader {
+public class EntityNukeTorex extends Entity implements IConstantRenderer {
 	@SideOnly(Side.CLIENT)
 	public boolean reachedPlayer = false;
 	public boolean sound = true;
-	ForgeChunkManager.Ticket myTicket = null;
+	boolean valid = false;
 
 	public static final DataParameter<Float> SCALE = EntityDataManager.createKey(EntityNukeTorex.class, DataSerializers.FLOAT);
 	public static final DataParameter<Byte> TYPE = EntityDataManager.createKey(EntityNukeTorex.class, DataSerializers.BYTE);
@@ -64,36 +79,23 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunk
 	public ArrayList<Cloudlet> cloudlets = new ArrayList();
 	public int maxAge = 1000;
 	public float humidity = -1;
-	ChunkPos chunkPos = null;
 
 	public EntityNukeTorex(World p_i1582_1_) {
 		super(p_i1582_1_);
 		this.setSize(20F, 40F);
 		this.isImmuneToFire = true;
 		this.ignoreFrustumCheck = true;
-		this.forceSpawn = true;
 	}
 
 	@Override
 	protected void entityInit() {
 		this.dataManager.register(SCALE, 1.0F);
 		this.dataManager.register(TYPE, Byte.valueOf((byte) 0));
-		myTicket = ForgeChunkManager.requestTicket(MainRegistry.instance, world, ForgeChunkManager.Type.ENTITY);
-		if (myTicket != null)
-			init(myTicket);
-	}
-	@Override
-	public void init(ForgeChunkManager.Ticket ticket) {
-		//if (!world.isRemote) {
-			myTicket.bindEntity(this);
-			myTicket.getModData(); // generate mod data
-			chunkPos = new ChunkPos(chunkCoordX,chunkCoordZ);
-			ForgeChunkManager.forceChunk(myTicket,chunkPos);
-		//}
 	}
 
-	@Override
-	public void loadNeighboringChunks(int newChunkX, int newChunkZ) {}
+	public boolean isValid() {
+		return valid;
+	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
@@ -121,7 +123,21 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunk
 	int animTickI = 0;
 	@Override
 	public void onUpdate() {
-		if(world.isRemote) {
+		this.motionX = 0;
+		this.motionY = 0;
+		this.motionZ = 0;
+		boolean nope = this.addedToChunk;
+		if (nope) {
+			if (!world.isRemote) {
+				this.setDead();
+				for (EntityPlayer player : world.playerEntities) {
+					player.sendMessage(new TextComponentString("ERROR>> Please summon entity_effect_torex only by /hbmleaf torex!").setStyle(new Style().setColor(TextFormatting.RED)));
+				}
+			}
+		}
+		if (world.isRemote && !valid)
+			this.setDead();
+		if(world.isRemote && !nope) {
 			animTick = this.ticksExisted*animationSpeedGeneral;
 			animTickI = (int)animTick;
 			
@@ -210,14 +226,9 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunk
 			heat = maxHeat - Math.pow((maxHeat * this.ticksExisted) / maxAge, 0.6);
 		}
 		
-		if(!world.isRemote && this.ticksExisted > maxAge) {
+		if(/*!world.isRemote && */this.ticksExisted > maxAge) {
 			this.setDead();
 		}
-		//if (!world.isRemote)
-			if (this.isDead && chunkPos != null) {
-				ForgeChunkManager.unforceChunk(myTicket, chunkPos);
-				chunkPos = null;
-			}
 	}
 
 	public void spawnCondensationClouds(int age, float humidity, int height, int count, int spreadAngle, double s, double cs){
@@ -598,28 +609,99 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer, IChunk
 		CONDENSATION,
 		SHOCK
 	}
+	public static void spawnTorex(World world,EntityNukeTorex torex) {
+		torex.valid = true;
+		world.weatherEffects.add(torex);
+		TorexPacket packet = new TorexPacket();
+		packet.entityId = torex.getEntityId();
+		packet.uuid = torex.getUniqueID();
+		packet.x = torex.posX;
+		packet.y = torex.posY;
+		packet.z = torex.posZ;
+		NBTTagCompound nbt = new NBTTagCompound();
+		torex.writeEntityToNBT(nbt);
+		packet.nbt = nbt;
+		double amp = torex.getScale()*100;
+		PacketDispatcher.wrapper.sendToAllAround(packet,new NetworkRegistry.TargetPoint(
+						torex.dimension,
+						packet.x,
+						packet.y,
+						packet.z,
+						200+amp+Math.pow(amp,0.8)*8
+				)
+		);
+		//PacketDispatcher.wrapper.sendToDimension(packet,torex.dimension);
+	}
 	
 	public static void statFac(World world, double x, double y, double z, float scale) {
 		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F));
 		torex.setPosition(x, y, z);
-		world.spawnEntity(torex);
+		spawnTorex(world,torex);
+		//world.spawnEntity(torex);
 	}
 	public static void statFac(World world, double x, double y, double z, float scale, boolean sound) {
 		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F));
 		torex.setPosition(x, y, z);
 		torex.sound = sound;
-		world.spawnEntity(torex);
+		spawnTorex(world,torex);
 	}
 	
 	public static void statFacBale(World world, double x, double y, double z, float scale) {
 		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F)).setType(1);
 		torex.setPosition(x, y, z);
-		world.spawnEntity(torex);
+		spawnTorex(world,torex);
 	}
 	public static void statFacBale(World world, double x, double y, double z, float scale, boolean sound) {
 		EntityNukeTorex torex = new EntityNukeTorex(world).setScale(MathHelper.clamp(scale * 0.01F, 0.25F, 5F)).setType(1);
 		torex.setPosition(x, y, z);
 		torex.sound = sound;
-		world.spawnEntity(torex);
+		spawnTorex(world,torex);
+	}
+	public static class TorexPacket implements IMessage {
+		private int entityId;
+		private double x;
+		private double y;
+		private double z;
+		private NBTTagCompound nbt;
+		private UUID uuid;
+		public TorexPacket() {
+		}
+		@Override
+		public void fromBytes(ByteBuf buf) {
+			this.entityId = buf.readInt();
+			this.uuid = new UUID(buf.readLong(), buf.readLong());
+			this.x = buf.readDouble();
+			this.y = buf.readDouble();
+			this.z = buf.readDouble();
+			this.nbt = ByteBufUtils.readTag(buf);
+		}
+		@Override
+		public void toBytes(ByteBuf buf) {
+			buf.writeInt(this.entityId);
+			buf.writeLong(uuid.getMostSignificantBits());
+			buf.writeLong(uuid.getLeastSignificantBits());
+			buf.writeDouble(this.x);
+			buf.writeDouble(this.y);
+			buf.writeDouble(this.z);
+			ByteBufUtils.writeTag(buf,nbt);
+		}
+		public static class Handler implements IMessageHandler<TorexPacket, IMessage> {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public IMessage onMessage(TorexPacket message, MessageContext ctx) {
+				Minecraft.getMinecraft().addScheduledTask(() -> {
+					Minecraft mc = Minecraft.getMinecraft();
+					EntityNukeTorex torex = new EntityNukeTorex(mc.world);
+					torex.setEntityId(message.entityId);
+					torex.setUniqueId(message.uuid);
+					torex.valid = true;
+					torex.setPosition(message.x,message.y,message.z);
+					EntityTracker.updateServerPosition(torex,message.x,message.y,message.z);
+					torex.readEntityFromNBT(message.nbt);
+					mc.world.addWeatherEffect(torex);
+				});
+				return null;
+			}
+		}
 	}
 }

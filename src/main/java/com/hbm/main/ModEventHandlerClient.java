@@ -7,19 +7,16 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
-import com.hbm.hfr.render.loader.S_GroupObject;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.main.leafia.BigBruh;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.main.leafia.LeafiaShakecam;
+import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.render.item.leafia.LeafiaRodBakedModel;
 import com.hbm.render.item.leafia.LeafiaRodRender;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.MusicTicker;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.shader.*;
-import net.minecraft.client.util.JsonException;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.client.EnumHelperClient;
 import org.apache.logging.log4j.LogManager;
@@ -38,7 +35,6 @@ import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.TrappedBrick.Trap;
 import com.hbm.capability.HbmCapability;
-import com.hbm.capability.HbmLivingCapability.EntityHbmPropsProvider;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.mob.EntityHunterChopper;
 import com.hbm.entity.projectile.EntityChopperMine;
@@ -61,7 +57,6 @@ import com.hbm.interfaces.IItemHUD;
 import com.hbm.interfaces.IPostRender;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.inventory.AssemblerRecipes;
-import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
@@ -79,7 +74,6 @@ import com.hbm.items.machine.ItemRBMKPellet;
 import com.hbm.items.special.ItemHot;
 import com.hbm.items.special.ItemWasteLong;
 import com.hbm.items.special.ItemWasteShort;
-import com.hbm.items.special.ItemBedrockOre;
 import com.hbm.items.special.weapon.GunB92;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGuideBook;
@@ -248,41 +242,32 @@ public class ModEventHandlerClient {
 	public static MusicTicker.MusicType darkness;
 	public static MusicTicker.MusicType darkness2;
 	public static boolean nextMusic = true;
-	private static BigBruh shaderGroup;
+	private static final Map<String,BigBruh> shaderGroups = new HashMap<>();
 	int lastW = 0;
 	int lastH = 0;
 	//private static final Map<String, Shader> shaders = new HashMap<>();
-	private static final Logger LOGGER = LogManager.getLogger();
-	void loadShader(ResourceLocation resourceLocationIn)
+	public static final Logger LOGGER = LogManager.getLogger();
+	void addShader(String key,ResourceLocation resourceLocationIn)
 	{
 		if (OpenGlHelper.shadersSupported) {
 			if (ShaderLinkHelper.getStaticShaderLinkHelper() == null) {
 				ShaderLinkHelper.setNewStaticShaderLinkHelper();
 			}
+			LOGGER.info("Trying to load shader: {}",resourceLocationIn);
 			Minecraft mc = Minecraft.getMinecraft();
 			lastW = mc.getFramebuffer().framebufferWidth;
 			lastH = mc.getFramebuffer().framebufferHeight;
 			try {
-				shaderGroup = new BigBruh(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), resourceLocationIn);
+				BigBruh shaderGroup = new BigBruh(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), resourceLocationIn);
 				shaderGroup.createBindFramebuffers(mc.displayWidth, mc.displayHeight);
+				shaderGroups.put(key,shaderGroup);
+				LOGGER.warn("Successfully put shader: {}", resourceLocationIn);
 			} catch (IOException ioexception) {
 				LOGGER.warn("Failed to load shader: {}", resourceLocationIn, ioexception);
 			} catch (JsonSyntaxException jsonsyntaxexception) {
 				LOGGER.warn("Failed to load shader: {}", resourceLocationIn, jsonsyntaxexception);
 			}
 		}
-	}
-	Matrix4f generateMatrix(Framebuffer canvas) {
-		Matrix4f out = new Matrix4f();
-		out.setIdentity();
-		out.m00 = 2.0F / (float)canvas.framebufferTextureWidth;
-		out.m11 = 2.0F / (float)(-canvas.framebufferTextureHeight);
-		out.m22 = -0.0020001999F;
-		out.m33 = 1.0F;
-		out.m03 = -1.0F;
-		out.m13 = 1.0F;
-		out.m23 = -1.0001999F;
-		return out;
 	}
 	/*
 	ShaderManager putShader(String key, String program, Framebuffer canvasRead, Framebuffer canvasWrite) {
@@ -311,7 +296,8 @@ public class ModEventHandlerClient {
 		Framebuffer mainCanvas = mc.getFramebuffer();
 		darkness = EnumHelperClient.addMusicType("DARKNESS_GAME", HBMSoundHandler.darkness, 12000, 24000);
 		darkness2 = EnumHelperClient.addMusicType("DARKNESS_MENU", HBMSoundHandler.darkness2, 12000, 14000);
-		this.loadShader(new ResourceLocation("hbm:shaders/help/tom_desat.json"));
+		this.addShader("tom",new ResourceLocation("hbm:shaders/help/tom_desat.json"));
+		this.addShader("nuclear",new ResourceLocation("hbm:shaders/help/nuclear.json"));
 		//Framebuffer tempCanvas = new Framebuffer(mc.getFramebuffer().framebufferWidth,mc.getFramebuffer().framebufferHeight,mc.getFramebuffer().useDepth);
 		//putShader("myaw","invert",mainCanvas,tempCanvas).getShaderUniformOrDefault("InverseAmount").set(0.8F);
 		//putShader("blit","blit",tempCanvas,mainCanvas);
@@ -676,6 +662,8 @@ public class ModEventHandlerClient {
 		swapModels(ModItems.ore_bedrock_enriched, reg);
 		swapModels(ModItems.ore_bedrock_exquisite, reg);
 		swapModels(ModItems.ore_bedrock_perfect, reg);
+
+		swapModels(ModItems.detonator_laser, reg);
 		
 		for(Entry<Item, ItemRenderBase> entry : ItemRenderLibrary.renderers.entrySet()){
 			swapModels(entry.getKey(), reg);
@@ -1064,6 +1052,7 @@ public class ModEventHandlerClient {
 	// Called from asm via coremod, in RenderManager#renderEntity
 	@Deprecated
 	public static void onEntityRender(Entity e) {
+		LOGGER.info("I hate this! x1000");
 		if(!GeneralConfig.useShaders || renderingDepthOnly)
 			return;
 		if(!HbmShaderManager.isActiveShader(HbmShaderManager.flashlightWorld)) {
@@ -1103,7 +1092,7 @@ public class ModEventHandlerClient {
 		}
 	}
 
-	// Called from asm via coremod, in GlStateManager#disableLighting
+	// Called from asm via coremod, in LeafiaGls#disableLighting
 	@Deprecated
 	public static void onLightingDisable() {
 		if(HbmShaderManager.isActiveShader(HbmShaderManager.flashlightWorld)) {
@@ -1111,7 +1100,7 @@ public class ModEventHandlerClient {
 		}
 	}
 
-	// Called from asm via coremod, in GlStateManager#enableLighting
+	// Called from asm via coremod, in LeafiaGls#enableLighting
 	@Deprecated
 	public static void onLightingEnable() {
 		if(HbmShaderManager.isActiveShader(HbmShaderManager.flashlightWorld)) {
@@ -1121,6 +1110,9 @@ public class ModEventHandlerClient {
 	
 	@SubscribeEvent
 	public void renderTick(RenderTickEvent e){
+		if (e.phase == Phase.START) {
+			LeafiaGls.resetStacks();
+		}
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if (player != null) {
 			if(player.getHeldItemMainhand().getItem() instanceof ItemSwordCutter && ItemSwordCutter.clicked){
@@ -1146,32 +1138,35 @@ public class ModEventHandlerClient {
 				player.prevRotationPitch += player.rotationPitch-oldPitch;
 			}
 			if (e.phase == Phase.END) {
-				if (shaderGroup != null)
-				{
-					GlStateManager.matrixMode(5890);
-					GlStateManager.pushMatrix();
-					GlStateManager.loadIdentity();
+				LeafiaGls._push();
+				boolean needsUpdate = false;
+				for (BigBruh shaderGroup : shaderGroups.values()) {
+					LeafiaGls.matrixMode(5890);
+					LeafiaGls.pushMatrix();
+					LeafiaGls.loadIdentity();
 					Minecraft mc = Minecraft.getMinecraft();
 					Framebuffer mainCanvas = mc.getFramebuffer();
 					if (shaderGroup != null)
 					{
-						if (lastW != mainCanvas.framebufferWidth || lastH != mainCanvas.framebufferHeight) {
+						if (lastW != mainCanvas.framebufferWidth || lastH != mainCanvas.framebufferHeight || needsUpdate) {
 							lastW = mc.getFramebuffer().framebufferWidth;
 							lastH = mc.getFramebuffer().framebufferHeight;
 							shaderGroup.createBindFramebuffers(mainCanvas.framebufferWidth,mainCanvas.framebufferHeight);
+							needsUpdate = true;
 						}
 						shaderGroup.render(e.renderTickTime);
-
-
 					}
-					//for (Shader shader : shaders.values()) {
-					//	shader.render(e.renderTickTime);
-					//}
-					GlStateManager.popMatrix();
+					LeafiaGls.popMatrix();
 				}
-				if (OpenGlHelper.shadersSupported)
-				{
-				}
+				LeafiaGls._pop();
+				/*
+				//LeafiaGls.color(1.0F, 1.0F, 1.0F, 1.0F);
+				LeafiaGls.enableBlend();
+				LeafiaGls.enableDepth();
+				LeafiaGls.enableAlpha();
+				//LeafiaGls.enableFog();
+				LeafiaGls.enableLighting();
+				LeafiaGls.enableColorMaterial();*/
 			}
 		}
 	}
@@ -1309,8 +1304,18 @@ public class ModEventHandlerClient {
 			if (e.phase == Phase.END) {
 				LeafiaShakecam.localTick();
 				IdkWhereThisShitBelongs.localTick();
-				if (shaderGroup != null)
-					shaderGroup.accessor.get("intensity").set((float)(IdkWhereThisShitBelongs.darkness)*(IdkWhereThisShitBelongs.dustDisplayTicks/30f)/2f);
+				for (String s : shaderGroups.keySet()) {
+					BigBruh shader = shaderGroups.get(s);
+					switch(s) {
+						case "tom":
+							shader.accessor.get("intensity").set((float)(IdkWhereThisShitBelongs.darkness)*(IdkWhereThisShitBelongs.dustDisplayTicks/30f)/2f);
+							break;
+						case "nuclear":
+							shader.accessor.get("blur").set(LeafiaShakecam.blurSum);
+							shader.accessor.get("bloom").set(LeafiaShakecam.bloomSum);
+							break;
+					}
+				}
 			}
 		}
 	}
@@ -1375,7 +1380,7 @@ public class ModEventHandlerClient {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void renderWorld(RenderWorldLastEvent evt) {
 		HbmShaderManager2.createInvMVP();
-		GlStateManager.enableDepth();
+		LeafiaGls.enableDepth();
 		List<Entity> list = Minecraft.getMinecraft().world.loadedEntityList;
 		ClientProxy.renderingConstant = true;
 
@@ -1432,7 +1437,7 @@ public class ModEventHandlerClient {
 			double pitch = Math.toDegrees(Math.atan2(tester.y, sqrt));
 
 			GL11.glPushMatrix();
-			GlStateManager.translate(ssgChainPos.x, ssgChainPos.y, ssgChainPos.z);
+			LeafiaGls.translate(ssgChainPos.x, ssgChainPos.y, ssgChainPos.z);
 			GL11.glRotated(yaw + 90, 0, 1, 0);
 			GL11.glRotated(-pitch + 90, 0, 0, 1);
 			GL11.glScaled(0.125, 0.25, 0.125);
@@ -1440,7 +1445,7 @@ public class ModEventHandlerClient {
 			double len = MathHelper.clamp(tester.lengthVector()*2, 0, 40);
 
 			RenderHelper.bindTexture(ResourceManager.universal);
-			GlStateManager.enableLighting();
+			LeafiaGls.enableLighting();
 			Tessellator.instance.startDrawing(GL11.GL_TRIANGLES);
 			for(int i = 0; i < Math.ceil(len); i++) {
 				float offset = 0;
@@ -1512,9 +1517,9 @@ public class ModEventHandlerClient {
 				GL11.glRotatef(-90, 0, 1, 0);
 
 				GL11.glScalef(scale, scale, scale);
-				GlStateManager.disableCull();
+				LeafiaGls.disableCull();
 				Minecraft.getMinecraft().fontRenderer.drawString(String.valueOf(c), 0, 0, 0xff00ff);
-				GlStateManager.enableCull();
+				LeafiaGls.enableCull();
 	    		GL11.glPopMatrix();
 			}
 			
@@ -1554,41 +1559,41 @@ public class ModEventHandlerClient {
 					GL11.glTranslated(-0.3, 0, 0);
 					GL11.glRotated(Math.toDegrees(angle), 1, 0, 0);
 					GL11.glTranslated(0, 0.2, 0);
-					GlStateManager.disableCull();
-					GlStateManager.disableTexture2D();
-					GlStateManager.enableBlend();
-					GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-					GlStateManager.color(0.7F, 0.7F, 0.7F, 0.4F);
+					LeafiaGls.disableCull();
+					LeafiaGls.disableTexture2D();
+					LeafiaGls.enableBlend();
+					LeafiaGls.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+					LeafiaGls.color(0.7F, 0.7F, 0.7F, 0.4F);
 					buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 					buf.pos(0, 0, -2).endVertex();
 					buf.pos(3, 0, -2).endVertex();
 					buf.pos(3, 0, 2).endVertex();
 					buf.pos(0, 0, 2).endVertex();
 					tes.draw();
-					GlStateManager.enableTexture2D();
-					GlStateManager.disableBlend();
-					GlStateManager.enableCull();
+					LeafiaGls.enableTexture2D();
+					LeafiaGls.disableBlend();
+					LeafiaGls.enableCull();
 					
 					Vec3d[] positions = BobMathUtil.worldFromLocal(new Vector4f(0, 0, -2, 1), new Vector4f(3, 0, -2, 1), new Vector4f(3, 0, 2, 1));
 					Vec3d norm = positions[1].subtract(positions[0]).crossProduct(positions[2].subtract(positions[0])).normalize();
 					ItemSwordCutter.plane = new Vec3d[]{positions[0], norm};
 					GL11.glPopMatrix();
-					GlStateManager.disableTexture2D();
-					GlStateManager.color(1F, 0F, 0F, 1F);
+					LeafiaGls.disableTexture2D();
+					LeafiaGls.color(1F, 0F, 0F, 1F);
 					buf.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 					Vec3d pos1 = positions[1].subtract(player.getPositionEyes(partialTicks));
 					buf.pos(pos1.x, pos1.y+player.getEyeHeight(), pos1.z).endVertex();
 					buf.pos(pos1.x+norm.x, pos1.y+norm.y+player.getEyeHeight(), pos1.z+norm.z).endVertex();
 					tes.draw();
-					GlStateManager.enableTexture2D();
+					LeafiaGls.enableTexture2D();
 					player.turn(deltaMouseX, deltaMouseY);
-					GlStateManager.color(1F, 1F, 1F, 1F);*/
+					LeafiaGls.color(1F, 1F, 1F, 1F);*/
 					if(!(player.getHeldItemMainhand().getItem() instanceof ItemCrucible && ItemCrucible.getCharges(player.getHeldItemMainhand()) == 0)){
 						Vec3d pos1 = ItemSwordCutter.startPos;
 						Vec3d pos2 = player.getLook(partialTicks);
 						Vec3d norm = ItemSwordCutter.startPos.crossProduct(player.getLook(partialTicks));
-						GlStateManager.disableTexture2D();
-						GlStateManager.color(0, 0, 0, 1);
+						LeafiaGls.disableTexture2D();
+						LeafiaGls.color(0, 0, 0, 1);
 						GL11.glPushMatrix();
 						GL11.glLoadIdentity();
 						
@@ -1600,8 +1605,8 @@ public class ModEventHandlerClient {
 						buf.pos(pos2.x, pos2.y, pos2.z).endVertex();
 						tes.draw();
 						GL11.glPopMatrix();
-						GlStateManager.color(1, 1, 1, 1);
-						GlStateManager.enableTexture2D();
+						LeafiaGls.color(1, 1, 1, 1);
+						LeafiaGls.enableTexture2D();
 						if(norm.lengthSquared() > 0.001F){
 							ItemSwordCutter.planeNormal = norm.normalize();
 						}
@@ -1623,7 +1628,7 @@ public class ModEventHandlerClient {
 			GL11.glTranslated(0, player.getEyeHeight(), 0);
 			Vec3d look = player.getLook(partialTicks).scale(2);
 			GL11.glTranslated(look.x, look.y, look.z);
-			GlStateManager.disableTexture2D();
+			LeafiaGls.disableTexture2D();
 			buf.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION);
 			buf.pos(0, 0, 0).endVertex();
 			buf.pos(c1.x, c1.y, c1.z).endVertex();
@@ -1632,7 +1637,7 @@ public class ModEventHandlerClient {
 			buf.pos(0, 0, 0).endVertex();
 			buf.pos(c3.x, c3.y, c3.z).endVertex();
 			tes.draw();
-			GlStateManager.enableTexture2D();
+			LeafiaGls.enableTexture2D();
 			GL11.glPopMatrix();*/
 			
 			//GLUON GUN//
@@ -1810,12 +1815,12 @@ public class ModEventHandlerClient {
 			float x = BobMathUtil.remap(x1, 0, Minecraft.getMinecraft().displayWidth, 0, event.getResolution().getScaledWidth());
 			float y = event.getResolution().getScaledHeight() - BobMathUtil.remap(y1, 0, Minecraft.getMinecraft().displayHeight, 0, event.getResolution().getScaledHeight());
 			RenderHelper.bindTexture(ResourceManager.meathook_marker);
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.enableBlend();
-			GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+			LeafiaGls.color(1.0F, 1.0F, 1.0F, 1.0F);
+			LeafiaGls.enableBlend();
+			LeafiaGls.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
 			RenderHelper.drawGuiRect(x - 2.5F, y - 2.5F, 0, 0, 5, 5, 1, 1);
-			GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-			GlStateManager.disableBlend();
+			LeafiaGls.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+			LeafiaGls.disableBlend();
 		}
 		/// HANDLE GUN AND AMMO OVERLAYS ///
 		if(player.getHeldItem(EnumHand.MAIN_HAND) != null && player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemGunBase) {
@@ -1895,7 +1900,7 @@ public class ModEventHandlerClient {
 		if(Keyboard.isKeyDown(Keyboard.KEY_O) && Minecraft.getMinecraft().currentScreen == null) {
 			PacketDispatcher.wrapper.sendToServer(new AuxButtonPacket(0, 0, 0, 999, 0));
 		}
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		LeafiaGls.color(1.0F, 1.0F, 1.0F, 1.0F);
 		ItemStack helmet = player.inventory.armorInventory.get(3);
 
 		if(helmet.getItem() instanceof ArmorFSB) {
@@ -2132,11 +2137,11 @@ public class ModEventHandlerClient {
 			IBlockState state =  Minecraft.getMinecraft().world.getBlockState(pos);
 			Block block = state.getBlock();
 			if(block instanceof ICustomSelectionBox){
-				GlStateManager.enableBlend();
-	            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-	            GlStateManager.glLineWidth(2.0F);
-	            GlStateManager.disableTexture2D();
-	            GlStateManager.depthMask(false);
+				LeafiaGls.enableBlend();
+	            LeafiaGls.tryBlendFuncSeparate(LeafiaGls.SourceFactor.SRC_ALPHA, LeafiaGls.DestFactor.ONE_MINUS_SRC_ALPHA, LeafiaGls.SourceFactor.ONE, LeafiaGls.DestFactor.ZERO);
+	            LeafiaGls.glLineWidth(2.0F);
+	            LeafiaGls.disableTexture2D();
+	            LeafiaGls.depthMask(false);
 	            EntityPlayer player = evt.getPlayer();
 	            float partialTicks = evt.getPartialTicks();
 	            double d3 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double)partialTicks;
@@ -2145,9 +2150,9 @@ public class ModEventHandlerClient {
 				if(((ICustomSelectionBox)block).renderBox(Minecraft.getMinecraft().world, player, state, evt.getTarget().getBlockPos(), pos.getX()-d3, pos.getY()-d4, pos.getZ()-d5, partialTicks)){
 					evt.setCanceled(true);
 				}
-				GlStateManager.depthMask(true);
-	            GlStateManager.enableTexture2D();
-	            GlStateManager.disableBlend();
+				LeafiaGls.depthMask(true);
+	            LeafiaGls.enableTexture2D();
+	            LeafiaGls.disableBlend();
 			}
 		}
 	}
@@ -2252,7 +2257,7 @@ public class ModEventHandlerClient {
 			double p = 0.0625D;
 			double o = p * 2.75D;
 
-			GlStateManager.disableLighting();
+			LeafiaGls.disableLighting();
 			Minecraft.getMinecraft().renderEngine.bindTexture(poster);
 			net.minecraft.client.renderer.Tessellator tess = net.minecraft.client.renderer.Tessellator.getInstance();
 			BufferBuilder buf = tess.getBuffer();
@@ -2262,7 +2267,7 @@ public class ModEventHandlerClient {
 			buf.pos(-0.5, -0.5 + o, p * 0.5).tex(0, 1).endVertex();
 			buf.pos(0.5, -0.5 + o, p * 0.5).tex(1, 1).endVertex();
 			tess.draw();
-			GlStateManager.enableLighting();
+			LeafiaGls.enableLighting();
 		}
 	}
 }

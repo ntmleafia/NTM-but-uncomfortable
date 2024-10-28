@@ -3,10 +3,12 @@ package com.hbm.tileentity.bomb;
 import com.hbm.items.ModItems;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
@@ -100,14 +102,31 @@ public class TileEntityNukeGadget extends TileEntity {
 	}
 	
 	public boolean isReady() {
-		if(this.exp1() == true && this.exp2() == true && this.exp3() == true && this.exp4() == true)
-		{
-			if(inventory.getStackInSlot(0).getItem() == ModItems.gadget_wireing && inventory.getStackInSlot(5).getItem() == ModItems.gadget_core)
-			{
-				return true;
+		if (world.isRemote) {
+			if (inventory.getStackInSlot(0).getItem() != ModItems.gadget_wireing) return false;
+			for (int i = 1; i <= 4; i++) if (inventory.getStackInSlot(i).getItem() != ModItems.gadget_explosive8) return false;
+			return inventory.getStackInSlot(5).getItem() == ModItems.gadget_core;
+		}
+		if (inventory.getStackInSlot(0).getItem() == ModItems.gadget_wireing) {
+			this.world.playSound(null,pos.getX(),pos.getY(),pos.getZ(),SoundEvents.ENTITY_FIREWORK_BLAST,SoundCategory.BLOCKS,0.1F,1.5f);
+			int amt = 8;
+			for (int i = 1; i <= 4; i++) {
+				if (inventory.getStackInSlot(i).getItem() == ModItems.gadget_explosive8) {
+					amt--;
+					inventory.setStackInSlot(i,ItemStack.EMPTY);
+				}
+			}
+			if (amt < 8) {
+				inventory.setStackInSlot(0,new ItemStack(ModItems.scrap));
+				world.playSound(null,pos,SoundEvents.ENTITY_GENERIC_EXPLODE,SoundCategory.BLOCKS,0.3f + (7 - amt) * 0.2f,(float) Math.pow(amt / 7f,0.5f));
+				if (inventory.getStackInSlot(5).getItem() == ModItems.gadget_core) {
+					if (amt <= 4)
+						return true;
+					else
+						inventory.setStackInSlot(5,new ItemStack(ModItems.nugget_pu239,amt));
+				}
 			}
 		}
-		
 		return false;
 	}
 	

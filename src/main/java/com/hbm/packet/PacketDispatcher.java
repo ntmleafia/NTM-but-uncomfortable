@@ -1,6 +1,7 @@
 package com.hbm.packet;
 
 import com.hbm.command.CommandLeaf;
+import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.lib.RefStrings;
 
@@ -93,6 +94,7 @@ public class PacketDispatcher {
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactPacket.Handler.class, IdkWhereThisShitBelongs.TomImpactPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactCollapsePacket.Handler.class, IdkWhereThisShitBelongs.TomImpactCollapsePacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(CommandLeaf.ShakecamPacket.Handler.class, CommandLeaf.ShakecamPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(EntityNukeTorex.TorexPacket.Handler.class, EntityNukeTorex.TorexPacket.class, i++, Side.CLIENT);
 
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);

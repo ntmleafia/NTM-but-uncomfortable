@@ -3,13 +3,13 @@ package com.hbm.main.leafia;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
+import com.hbm.main.ModEventHandlerClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.client.shader.Shader;
 import net.minecraft.client.shader.ShaderUniform;
 import net.minecraft.client.util.JsonException;
 import net.minecraft.util.JsonUtils;
@@ -34,7 +34,7 @@ public class BigBruh
     private final Framebuffer mainFramebuffer;
     private final IResourceManager resourceManager;
     private final String shaderGroupName;
-    private final List<Shader> listShaders = Lists.<Shader>newArrayList();
+    private final List<ShaderNoClear> listShaders = Lists.<ShaderNoClear>newArrayList();
     private final Map<String, Framebuffer> mapFramebuffers = Maps.<String, Framebuffer>newHashMap();
     private final List<Framebuffer> listFramebuffers = Lists.<Framebuffer>newArrayList();
     private Matrix4f projectionMatrix;
@@ -149,6 +149,7 @@ public class BigBruh
         String s = JsonUtils.getString(jsonobject, "name");
         String s1 = JsonUtils.getString(jsonobject, "intarget");
         String s2 = JsonUtils.getString(jsonobject, "outtarget");
+        ModEventHandlerClient.LOGGER.info("Pass: {}",s);
         Framebuffer framebuffer = this.getFramebuffer(s1);
         Framebuffer framebuffer1 = this.getFramebuffer(s2);
 
@@ -162,7 +163,7 @@ public class BigBruh
         }
         else
         {
-            Shader shader = this.addShader(s, framebuffer, framebuffer1);
+            ShaderNoClear shader = this.addShader(s, framebuffer, framebuffer1);
             JsonArray jsonarray = JsonUtils.getJsonArray(jsonobject, "auxtargets", (JsonArray)null);
 
             if (jsonarray != null)
@@ -261,7 +262,7 @@ public class BigBruh
     {
         JsonObject jsonobject = JsonUtils.getJsonObject(json, "uniform");
         String s = JsonUtils.getString(jsonobject, "name");
-        ShaderUniform shaderuniform = ((Shader)this.listShaders.get(this.listShaders.size() - 1)).getShaderManager().getShaderUniform(s);
+        ShaderUniform shaderuniform = ((ShaderNoClear)this.listShaders.get(this.listShaders.size() - 1)).getShaderManager().getShaderUniform(s);
 
         if (shaderuniform == null)
         {
@@ -272,7 +273,7 @@ public class BigBruh
             if (JsonUtils.hasField(jsonobject,"access")) {
                 accessor.put(JsonUtils.getString(jsonobject,"access"),shaderuniform);
             }
-            if (jsonobject.has("values")) {
+            if (JsonUtils.hasField(jsonobject,"values")) {
                 float[] afloat = new float[4];
                 int i = 0;
 
@@ -332,7 +333,7 @@ public class BigBruh
             framebuffer.deleteFramebuffer();
         }
 
-        for (Shader shader : this.listShaders)
+        for (ShaderNoClear shader : this.listShaders)
         {
             shader.deleteShader();
         }
@@ -342,9 +343,9 @@ public class BigBruh
         this.listShaders.clear();
     }
 
-    public Shader addShader(String programName, Framebuffer framebufferIn, Framebuffer framebufferOut) throws JsonException, IOException
+    public ShaderNoClear addShader(String programName,Framebuffer framebufferIn,Framebuffer framebufferOut) throws JsonException, IOException
     {
-        Shader shader = new Shader(this.resourceManager, programName, framebufferIn, framebufferOut);
+        ShaderNoClear shader = new ShaderNoClear(this.resourceManager, programName, framebufferIn, framebufferOut);
         this.listShaders.add(this.listShaders.size(), shader);
         return shader;
     }
@@ -368,7 +369,7 @@ public class BigBruh
         this.mainFramebufferHeight = this.mainFramebuffer.framebufferTextureHeight;
         this.resetProjectionMatrix();
 
-        for (Shader shader : this.listShaders)
+        for (ShaderNoClear shader : this.listShaders)
         {
             shader.setProjectionMatrix(this.projectionMatrix);
         }
@@ -396,7 +397,7 @@ public class BigBruh
             ;
         }
 
-        for (Shader shader : this.listShaders)
+        for (ShaderNoClear shader : this.listShaders)
         {
             shader.render(this.time / 20.0F);
         }

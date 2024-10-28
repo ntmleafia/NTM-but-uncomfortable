@@ -17,6 +17,8 @@ import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class LeafiaShakecam {
     public static NoiseGeneratorPerlin noise;
+    public static float blurSum = 0;
+    public static float bloomSum = 0;
     public static final Set<shakeInstance> instances = new HashSet<>();
     public static void localTick() {
         int len = instances.size();
@@ -29,14 +31,20 @@ public class LeafiaShakecam {
         }
     }
     public static void shakeCam() {
+        double sumBlur = 0;
+        double sumBloom = 0;
         for (shakeInstance instance : instances) {
             double dist = 0;
             if (instance.position != null) {
                 Vec3d pos = Minecraft.getMinecraft().player.getPositionVector();
                 dist = Math.sqrt(instance.position.distanceSqToCenter(pos.x,pos.y,pos.z));
             }
-            instance.render(dist);
+            double n = instance.render(dist);
+            sumBlur += (Math.pow(n/16,2)*0.005);
+            sumBloom += (Math.pow(n/16/5,6)*0.25);
         }
+        blurSum = (float)sumBlur;
+        bloomSum = (float)sumBloom;
     }
     public static void _addShake(@Nullable BlockPos pos,shakeInstance instance) {
         if (pos != null)
@@ -107,7 +115,7 @@ public class LeafiaShakecam {
         public boolean tick() {
             return false;
         }
-        public void render(double distance) {}
+        public double render(double distance) { return 0; }
     }
     public enum Preset {
         RUPTURE(25,8,2,8),
@@ -141,12 +149,13 @@ public class LeafiaShakecam {
             return !(ticks/20d >= duration);
         }
         @Override
-        public void render(double distance) {
+        public double render(double distance) {
             GL11.glTranslated(
                     0.04*x*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d),
                     0.04*y*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d),
                     0
             );
+            return getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d)*4;
         }
     }
     public static class shakeSmooth extends shakeInstance {
@@ -162,13 +171,14 @@ public class LeafiaShakecam {
             return !(timer >= duration);
         }
         @Override
-        public void render(double distance) {
+        public double render(double distance) {
             long curMil = Math.floorMod(System.currentTimeMillis(),10000);
             timer = timer + Math.floorMod(curMil-lastMil,10000)/1e+3;
             lastMil = curMil;
             GL11.glRotated(noise.getValue(timer*speed,0)*getCalculatedIntensity(distance)*getTimeMultiplier(timer),1,0,0);
             GL11.glRotated(noise.getValue(0,timer*speed)*getCalculatedIntensity(distance)*getTimeMultiplier(timer),0,1,0);
             GL11.glRotated(noise.getValue(timer*speed,timer*speed)*getCalculatedIntensity(distance)*getTimeMultiplier(timer),0,0,1);
+            return getCalculatedIntensity(distance)*getTimeMultiplier(timer)*speed;
         }
     }
 }

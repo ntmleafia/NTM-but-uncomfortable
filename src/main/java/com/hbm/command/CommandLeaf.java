@@ -1,5 +1,6 @@
 package com.hbm.command;
 
+import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.main.leafia.LeafiaEase;
 import com.hbm.main.leafia.LeafiaShakecam;
@@ -7,8 +8,12 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.*;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -80,7 +85,7 @@ public class CommandLeaf extends CommandBase {
                             boolean showCoords = false;
                             boolean showParams = true;
                             if (args.length-1 > 0) {
-                                if ((!args[0].matches(".*\\D.*") || args[0].equals("~")) && args.length < 3) {
+                                if ((!args[0].matches(".*\\D.*") || args[0].startsWith("~")) && args.length < 3) {
                                     showCoords = true;
                                     showParams = false;
                                 }
@@ -112,10 +117,38 @@ public class CommandLeaf extends CommandBase {
                             }
                         }
                         break;
+                    case "torex":
+                        args = shiftArgs(args,1);
+                        if (args.length-1 <= 0) {
+                            list.add("statFac");
+                            list.add("statFacBale");
+                            list.add("summon");
+                        } else {
+                            switch(args[0]) {
+                                case "statFac":
+                                case "statFacBale":
+                                    switch (args.length-1) {
+                                        case 1: list.add(String.valueOf(sender.getPosition().getX())); break;
+                                        case 2: list.add(String.valueOf(sender.getPosition().getY())); break;
+                                        case 3: list.add(String.valueOf(sender.getPosition().getZ())); break;
+                                        case 4: list.add("1"); break;
+                                        case 5:
+                                            list.add("true");
+                                            list.add("false");
+                                            break;
+                                    }
+                                    break;
+                                case "summon":
+                                    if (args.length <= 4) list.add("~");
+                                    break;
+                            }
+                        }
+                        break;
                 }
             } else {
                 list.add("eases");
                 list.add("shake");
+                list.add("torex");
             }
             if(list.size() > 1 && !nosort)
                 list.sort((a,b) -> {
@@ -141,10 +174,69 @@ public class CommandLeaf extends CommandBase {
                         sender.sendMessage(new TextComponentString("  "+s));
                     }
                     break;
+                case "torex":
+                    String usage = "/hbmleaf torex statFac|statFacBale <x> <y> <z> <scale> [sound]\n OR /hbmleaf torex summon [x] [y] [z] [dataTag]";
+                    args = shiftArgs(args,1);
+                    if (args.length < 1)
+                        throw new WrongUsageException(usage, new Object[0]);
+                    if (args[0].startsWith("statFac")) {
+                        if (args.length < 5)
+                            throw new WrongUsageException(usage, new Object[0]);
+                        BlockPos pos = parseBlockPos(sender,args,1,false);
+                        switch(args[0]+args.length) {
+                            case "statFac5":
+                                EntityNukeTorex.statFac(sender.getEntityWorld(),pos.getX(),pos.getY(),pos.getZ(),(float)parseDouble(args[4])); break;
+                            case "statFacBale5":
+                                EntityNukeTorex.statFacBale(sender.getEntityWorld(),pos.getX(),pos.getY(),pos.getZ(),(float)parseDouble(args[4])); break;
+                            case "statFac6":
+                                EntityNukeTorex.statFac(sender.getEntityWorld(),pos.getX(),pos.getY(),pos.getZ(),(float)parseDouble(args[4]),parseBoolean(args[5])); break;
+                            case "statFacBale6":
+                                EntityNukeTorex.statFacBale(sender.getEntityWorld(),pos.getX(),pos.getY(),pos.getZ(),(float)parseDouble(args[4]),parseBoolean(args[5])); break;
+                            default:
+                                throw new WrongUsageException(usage, new Object[0]);
+                        }
+                        notifyCommandListener(sender, this, "commands.summon.success", new Object[0]);
+                    } else if (args[0].equals("summon")) {
+                        //BlockPos blockpos = sender.getPosition();
+                        Vec3d vec3d = sender.getPositionVector();
+                        double d0 = vec3d.x;
+                        double d1 = vec3d.y;
+                        double d2 = vec3d.z;
+                        if (args.length >= 4)
+                        {
+                            d0 = parseDouble(d0, args[1], true);
+                            d1 = parseDouble(d1, args[2], false);
+                            d2 = parseDouble(d2, args[3], true);
+                            //blockpos = new BlockPos(d0, d1, d2);
+                        }
+                        NBTTagCompound nbttagcompound = new NBTTagCompound();
+                        boolean flag = false;
+                        if (args.length >= 5)
+                        {
+                            String s1 = buildString(args, 4);
+                            try
+                            {
+                                nbttagcompound = JsonToNBT.getTagFromJson(s1);
+                                flag = true;
+                            }
+                            catch (NBTException nbtexception)
+                            {
+                                throw new CommandException("commands.summon.tagError", new Object[] {nbtexception.getMessage()});
+                            }
+                        }
+                        EntityNukeTorex torex = new EntityNukeTorex(sender.getEntityWorld());
+                        torex.setPosition(d0,d1,d2);
+                        if (flag)
+                            torex.readFromNBT(nbttagcompound);
+                        EntityNukeTorex.spawnTorex(sender.getEntityWorld(),torex);
+                        notifyCommandListener(sender, this, "commands.summon.success", new Object[0]);
+                    } else
+                        throw new WrongUsageException(usage, new Object[0]);
+                    break;
                 case "shake":
                     args = shiftArgs(args,1);
                     if (args.length < 1)
-                        throw new WrongUsageException("/hbmleaf shake ? OR /hbmleaf shake <player> [<x> <y> <z>] [params...]", new Object[0]);
+                        throw new WrongUsageException("/hbmleaf shake ?\nOR /hbmleaf shake <player> [<x> <y> <z>] [params...]", new Object[0]);
                     if (args[0].equals("?")) {
                         sender.sendMessage(new TextComponentString("Many examples:").setStyle(header));
                         sender.sendMessage(genSuggestion("/hbmleaf shake @a"));
@@ -174,7 +266,7 @@ public class CommandLeaf extends CommandBase {
                     args = shiftArgs(args,1);
                     BlockPos pos = null;
                     if (args.length > 0) {
-                        if (!args[0].matches(".*\\D.*") || args[0].equals("~")) {
+                        if (!args[0].matches(".*\\D.*") || args[0].startsWith("~")) {
                             pos = parseBlockPos(sender,args,0,false);
                             args = shiftArgs(args,3);
                         }

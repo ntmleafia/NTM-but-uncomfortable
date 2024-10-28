@@ -3,10 +3,12 @@ package com.hbm.tileentity.bomb;
 import com.hbm.items.ModItems;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -58,11 +60,29 @@ public class TileEntityNukeMan extends TileEntity {
 	}
 	
 	public boolean isReady() {
-		if(this.exp1() && this.exp2() && this.exp3() && this.exp4())
-		{
-			if(this.inventory.getStackInSlot(0) != ItemStack.EMPTY && this.inventory.getStackInSlot(5) != ItemStack.EMPTY && this.inventory.getStackInSlot(0).getItem() == ModItems.man_igniter && this.inventory.getStackInSlot(5).getItem() == ModItems.man_core)
-			{
-				return true;
+		if (world.isRemote) {
+			if (inventory.getStackInSlot(0).getItem() != ModItems.man_igniter) return false;
+			for (int i = 1; i <= 4; i++) if (inventory.getStackInSlot(i).getItem() != ModItems.gadget_explosive8) return false;
+			return inventory.getStackInSlot(5).getItem() == ModItems.man_core;
+		}
+		if (inventory.getStackInSlot(0).getItem() == ModItems.man_igniter) {
+			world.playSound(null,pos,SoundEvents.BLOCK_TRIPWIRE_ATTACH,SoundCategory.BLOCKS,0.5f,1.5f);
+			int amt = 9;
+			for (int i = 1; i <= 4; i++) {
+				if (inventory.getStackInSlot(i).getItem() == ModItems.gadget_explosive8) {
+					amt--;
+					inventory.setStackInSlot(i,ItemStack.EMPTY);
+				}
+			}
+			if (amt < 9) {
+				inventory.setStackInSlot(0,new ItemStack(ModItems.scrap));
+				world.playSound(null,pos,SoundEvents.ENTITY_GENERIC_EXPLODE,SoundCategory.BLOCKS,0.3f + (7 - amt) * 0.2f,(float) Math.pow(amt / 7f,0.5f));
+				if (inventory.getStackInSlot(5).getItem() == ModItems.man_core) {
+					if (amt <= 5)
+						return true;
+					else
+						inventory.setStackInSlot(5,new ItemStack(ModItems.nugget_pu239,amt));
+				}
 			}
 		}
 		

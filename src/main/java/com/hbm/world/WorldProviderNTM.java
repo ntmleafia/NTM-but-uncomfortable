@@ -92,7 +92,7 @@ public class WorldProviderNTM extends WorldProviderSurface {
     @Override
     public float getSunBrightnessFactor(float par1) {
         float dust = MainRegistry.proxy.getImpactDust(world,dimType.getId());
-        float sunBr = world.getSunBrightnessFactor(par1);
+        float sunBr = super.getSunBrightnessFactor(par1);
         float dimSun = sunBr * (1 - dust);
         return dimSun;
     }

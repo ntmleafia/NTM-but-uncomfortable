@@ -62,6 +62,7 @@ public class RenderNTMSkybox extends IRenderHandler { //why an abstract class us
 	
 	public RenderNTMSkybox(IRenderHandler parent) {
 		this.parent = parent;
+		/*
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		this.fuck = GLAllocation.generateDisplayLists(1);
@@ -70,7 +71,7 @@ public class RenderNTMSkybox extends IRenderHandler { //why an abstract class us
 		this.zazaaz(bufferbuilder, 16.0F, false);
 		this.zazaaz(bufferbuilder, -16.0F, true);
 		tessellator.draw();
-		GlStateManager.glEndList();
+		GlStateManager.glEndList();*/
 	}
 /*
 	public void renderVanillaSrf(float partialTicks, WorldClient world, Minecraft mc) {

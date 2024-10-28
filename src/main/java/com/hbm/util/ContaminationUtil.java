@@ -55,6 +55,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -591,6 +592,14 @@ public class ContaminationUtil {
 		radiate(world, x, y, z, range, rad3d, dig3d, fire3d, blast3d, range);
 	}
 
+	public static Vec3d getKnockback(Vec3d entityPos,Vec3d blastPos,double amplitude) {
+		Vec3d deltaPos = entityPos.subtract(blastPos);
+		double dist = deltaPos.lengthVector();
+		//Vec3d unit = new Vec3d(deltaPos.x/dist,deltaPos.y/dist,deltaPos.z/dist);
+		float force = (float)Math.pow(Math.pow(Math.max(amplitude-dist*0.5,0)/amplitude,2)*amplitude,0.9)/4f;
+		return new Vec3d(deltaPos.x/dist*force,deltaPos.y/dist*force,deltaPos.z/dist*force);
+	}
+
 	public static void radiate(World world, double x, double y, double z, double range, float rad3d, float dig3d, float fire3d, float blast3d, double blastRange) {
 		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(x-range, y-range, z-range, x+range, y+range, z+range));
 		
@@ -659,9 +668,9 @@ public class ContaminationUtil {
 					else
 						e.attackEntityFrom(ModDamageSource.blast, blastDmg);
 				}
-				e.motionX += vec.xCoord * 0.005D * blastDmg;
-				e.motionY += vec.yCoord * 0.005D * blastDmg;
-				e.motionZ += vec.zCoord * 0.005D * blastDmg;
+				e.motionX += vec.xCoord * 0.5D * blastDmg;
+				e.motionY += vec.yCoord * 0.5D * blastDmg;
+				e.motionZ += vec.zCoord * 0.5D * blastDmg;
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public class ExplosionNukeRayBatched {
+	final static int calculateSpeed = 4;
 
 	public HashMap<ChunkPos, HashSet<IntTriplet>> perChunk = new HashMap(); //for future: optimize blockmap further by using sub-chunks instead of chunks
 	public List<ChunkPos> orderedChunks = new ArrayList();
@@ -158,7 +159,7 @@ public class ExplosionNukeRayBatched {
 			// Raise one generalized spiral points
 			this.generateGspUp();
 			raysProcessed++;
-			if(raysProcessed % 50 == 0 && System.currentTimeMillis()+1 > start + time) {
+			if(raysProcessed % 50*calculateSpeed == 0 && System.currentTimeMillis()+1 > start + time) {
 				// System.out.println("NTM C "+raysProcessed+" "+Math.round(1000D * 100D*gspNum/(double)gspNumMax)/1000D+"% "+gspNum+"/"+gspNumMax+" "+(System.currentTimeMillis()-start)+"ms");
 				return;
 			}

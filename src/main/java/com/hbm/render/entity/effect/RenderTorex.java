@@ -5,7 +5,11 @@ import java.util.Comparator;
 import java.util.Random;
 
 import com.hbm.lib.HBMSoundHandler;
+import com.hbm.main.leafia.LeafiaEase;
 import com.hbm.main.leafia.LeafiaShakecam;
+import com.hbm.util.ContaminationUtil;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.entity.effect.EntityNukeTorex;
@@ -49,6 +53,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 	@Override
 	public void doRender(EntityNukeTorex cloud, double x, double y, double z, float entityYaw, float partialTicks){
+		if (!cloud.isValid()) return;
 		float scale = (float)cloud.getScale();
 		float flashDuration = scale * flashBaseDuration;
 		float flareDuration = scale * flareBaseDuration;
@@ -86,11 +91,20 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 		if (!cloud.reachedPlayer && cloud.sound) {
 			cloud.reachedPlayer = true;
-			cloud.world.playSound(player, cloud.posX, cloud.posY, cloud.posZ, HBMSoundHandler.nuke, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSimple(8f*(amplitude/100),null,null).configure(amplitude * 10F,8f,null,null));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(15f*(amplitude/100),null,null).configure(amplitude * 10F,8f,1.8f,4f));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(30f*(amplitude/100),null,null).configure(amplitude * 10F,2f,1.5f,3f));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(60f*(amplitude/100),null,null).configure(amplitude * 10F,0.5f,0.5f,2f));
+			SoundEvent evt = HBMSoundHandler.nuke;
+			if (dist <= 100+Math.pow(amplitude,0.95))
+				evt = HBMSoundHandler.nuke_near;
+			else if (dist > 300+amplitude+Math.pow(amplitude,0.8)*2)
+				evt = HBMSoundHandler.nuke_far;
+			cloud.world.playSound(player, cloud.posX, cloud.posY, cloud.posZ, evt, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSimple(8f*(amplitude/100),LeafiaEase.Ease.BACK,LeafiaEase.Direction.I).configure(amplitude * 12F,24f,0.5f,null));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(15f*(amplitude/100),LeafiaEase.Ease.QUAD,LeafiaEase.Direction.I).configure(amplitude * 5F,12f,1.8f,8f));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(30f*(amplitude/100),null,null).configure(amplitude * 4F,2f,1.5f,3.5f));
+			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(60f*(amplitude/100),null,null).configure(amplitude * 4F,0.5f,0.5f,2f));
+			Vec3d force = ContaminationUtil.getKnockback(player.getPositionVector().addVector(0,player.eyeHeight,0),cloud.getPositionVector(),amplitude);
+			player.motionX += force.x;
+			player.motionY += force.y;
+			player.motionZ += force.z;
 		}
 		
 		int duration = ((int)(amplitude * Math.min(1, (amplitude * amplitude)/(dist * dist))));

@@ -13,9 +13,11 @@ import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.particle.leafia.ParticleBalefire;
 import com.hbm.render.entity.missile.*;
 import com.hbm.render.entity.projectile.RenderZirnoxDebris;
+import com.hbm.render.item.leafia.ItemRenderLaserDetonator;
 import com.hbm.render.item.leafia.LeafiaRodRender;
 import com.hbm.render.tileentity.crate.RenderCrateSteel;
 import com.hbm.render.tileentity.leafia.RenderZirnox;
@@ -604,6 +606,7 @@ public class ClientProxy extends ServerProxy {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		
 		MinecraftForge.EVENT_BUS.register(new ModEventHandlerClient());
+        MinecraftForge.EVENT_BUS.register(new LeafiaGls.Handler());
 		AdvancedModelLoader.registerModelHandler(new HmfModelLoader());
 		
 		HbmShaderManager.loadShaders();
@@ -2323,7 +2326,8 @@ public class ClientProxy extends ServerProxy {
 		ModItems.ore_bedrock_exquisite.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x797D81, 0.9F));
 		ModItems.ore_bedrock_perfect.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x6C6E70, 1F));
 		ModItems.ore_bedrock_enriched.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x55595D, 1F));
-		
+
+        ModItems.detonator_laser.setTileEntityItemStackRenderer(new ItemRenderLaserDetonator());
 		for(Entry<Item, ItemRenderBase> entry : ItemRenderLibrary.renderers.entrySet()){
 			entry.getKey().setTileEntityItemStackRenderer(entry.getValue());
 		}

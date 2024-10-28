@@ -2,6 +2,7 @@ package com.hbm.blocks.bomb;
 
 import java.util.List;
 
+import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.BombConfig;
@@ -66,6 +67,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 		} else if(!player.isSneaking()) {
 			TileEntityNukeBoy entity = (TileEntityNukeBoy) world.getTileEntity(pos);
 			if(entity != null) {
+				LeafiaPacket._start(entity).__write((byte)0,entity.failed).__sendToClients(16);
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_nuke_boy, world, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
@@ -78,12 +80,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		TileEntityNukeBoy entity = (TileEntityNukeBoy) worldIn.getTileEntity(pos);
 		if(worldIn.isBlockIndirectlyGettingPowered(pos) > 0) {
-			if(entity.isReady() && !worldIn.isRemote) {
-				this.onBlockDestroyedByPlayer(worldIn, pos, state);
-				entity.clearSlots();
-				worldIn.setBlockToAir(pos);
-				igniteTestBomb(worldIn, pos.getX(), pos.getY(), pos.getZ());
-			}
+			entity.tryDetonate(true);
 		}
 	}
 
@@ -108,12 +105,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 	@Override
 	public void explode(World world, BlockPos pos) {
 		TileEntityNukeBoy entity = (TileEntityNukeBoy) world.getTileEntity(pos);
-		if(entity.isReady()) {
-			this.onBlockDestroyedByPlayer(world, pos, world.getBlockState(pos));
-			entity.clearSlots();
-			world.setBlockToAir(pos);
-			igniteTestBomb(world, pos.getX(), pos.getY(), pos.getZ());
-		}
+		entity.tryDetonate(true);
 	}
 	
 	@Override

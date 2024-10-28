@@ -3450,6 +3450,7 @@ public class ModItems {
 	public static final Item boy_bullet = new ItemBoy(1.5F, "boy_bullet").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
 	public static final Item boy_propellant = new ItemBoy(0F, "boy_propellant").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
 	public static final Item boy_igniter = new ItemBoy(0F, "boy_igniter").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
+	public static final Item boy_target_invalid = new ItemHazard(35F, "boy_target_invalid").addFire(2).toItem().setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab).setContainerItem(boy_bullet);
 	
 	public static final Item man_core = new ItemManMike(5F, "man_core").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
 	public static final Item man_explosive = new ItemBase("man_explosive").setCreativeTab(MainRegistry.nukeTab);
