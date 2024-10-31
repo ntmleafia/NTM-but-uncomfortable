@@ -17,4 +17,7 @@ public interface IHoldableWeapon {
 	
 	@SideOnly(Side.CLIENT)
 	public default void renderHud(ScaledResolution res, GuiIngame gui, ItemStack stack, float partialTicks){};
+
+	@SideOnly(Side.CLIENT)
+	public default float getADS(){ return 1; }
 }

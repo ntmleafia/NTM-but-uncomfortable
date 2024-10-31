@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
+import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.main.leafia.BigBruh;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
@@ -17,6 +18,7 @@ import com.hbm.render.item.leafia.LeafiaRodRender;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.shader.*;
+import net.minecraft.util.*;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.client.EnumHelperClient;
 import org.apache.logging.log4j.LogManager;
@@ -187,10 +189,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityEndGateway;
 import net.minecraft.tileentity.TileEntityEndPortal;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.MovementInput;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -1170,7 +1168,23 @@ public class ModEventHandlerClient {
 			}
 		}
 	}
-	
+	public static float getViewADS(EntityPlayer player) {
+		if (player.isSneaking()) {
+			boolean canADS = true;
+			ItemStack main = player.getHeldItemMainhand();
+			ItemStack sub = player.getHeldItemOffhand();
+			if ((!main.isEmpty() || !sub.isEmpty()) && (main.isEmpty() != sub.isEmpty())) {
+				Item holding = main.isEmpty() ? sub.getItem() : main.getItem();
+				if (holding instanceof IHoldableWeapon) {
+					IHoldableWeapon weapon = (IHoldableWeapon)holding;
+					if (weapon.getADS() != 1f) {
+						return weapon.getADS()*(main.isEmpty()  ? -1 : 1)*(player.getPrimaryHand().equals(EnumHandSide.RIGHT) ? 1 : -1);
+					}
+				}
+			}
+		}
+		return 0;
+	}
 	@SubscribeEvent
 	public void fovUpdate(FOVUpdateEvent e){
 		EntityPlayer player = e.getEntity();
@@ -1178,6 +1192,9 @@ public class ModEventHandlerClient {
 		if(player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
 			multiplier *= 1.1F;
 		}
+		float viewADS = getViewADS(player);
+		if (viewADS != 0)
+			multiplier *= Math.abs(viewADS);
 		multiplier *= IdkWhereThisShitBelongs.fovM;
 		e.setNewfov(e.getFov()*multiplier);
 	}
@@ -1304,6 +1321,7 @@ public class ModEventHandlerClient {
 			if (e.phase == Phase.END) {
 				LeafiaShakecam.localTick();
 				IdkWhereThisShitBelongs.localTick();
+				EntityNukeFolkvangr.FolkvangrVacuumPacket.Handler.localTick();
 				for (String s : shaderGroups.keySet()) {
 					BigBruh shader = shaderGroups.get(s);
 					switch(s) {
@@ -2127,6 +2145,7 @@ public class ModEventHandlerClient {
 			AssemblerRecipes.backupRecipes = null;
 			AssemblerRecipes.backupTime = null;
 			AssemblerRecipes.backupHidden = null;
+			LeafiaShakecam.instances.clear();
 		}
 	}
 

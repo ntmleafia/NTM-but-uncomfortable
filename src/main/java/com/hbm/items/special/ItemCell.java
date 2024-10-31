@@ -81,7 +81,7 @@ public class ItemCell extends Item {
 						cloud.posX = entityItem.posX;
 						cloud.posY = entityItem.posY;
 						cloud.posZ = entityItem.posZ;
-						entityItem.world.spawnEntity(cloud);
+						entityItem.world.spawnEntity(cloud.setAntischrab());
 					}
 				}
 				return true;

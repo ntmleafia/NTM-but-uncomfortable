@@ -459,7 +459,7 @@ public class EntityMissileCustom extends Entity implements IChunkLoader, IRadarD
 			bf.destructionRange = (int) strength;
 			world.spawnEntity(bf);
 			if(BombConfig.enableNukeClouds) {
-				EntityNukeTorex.statFac(world, posX, posY, posZ, strength);
+				EntityNukeTorex.statFacBale(world, posX, posY, posZ, strength);
 			}
 			break;
 		case N2:

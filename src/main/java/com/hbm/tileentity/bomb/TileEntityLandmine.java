@@ -62,7 +62,7 @@ public class TileEntityLandmine extends TileEntity implements ITickable {
 			
 			if(!isPrimed && !flag) {
 	
-				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.techBoop, SoundCategory.BLOCKS, 2.0F, 1.0F);
+				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.fstbmbStart, SoundCategory.BLOCKS, 2.0F, 1.0F);
 				isPrimed = true;
 			}
 		}

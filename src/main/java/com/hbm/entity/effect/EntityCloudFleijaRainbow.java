@@ -12,8 +12,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCloudFleijaRainbow extends Entity {
-	
+public class EntityCloudFleijaRainbow extends EntityCloudFleija {
+	public EntityCloudFleijaRainbow(World worldIn) {
+		super(worldIn);
+	}
+
+	public EntityCloudFleijaRainbow(World p_i1582_1_,int maxAge) {
+		super(p_i1582_1_,maxAge);
+	}
+	/* MAN THIS IS RIDICULOUSLY STUPID
 	public static final DataParameter<Integer> MAXAGE = EntityDataManager.createKey(EntityCloudFleijaRainbow.class, DataSerializers.VARINT);
 	
 	public int maxAge = 100;
@@ -99,5 +106,5 @@ public class EntityCloudFleijaRainbow extends Entity {
     public boolean isInRangeToRenderDist(double distance)
     {
         return distance < 25000;
-    }
+    }*/
 }

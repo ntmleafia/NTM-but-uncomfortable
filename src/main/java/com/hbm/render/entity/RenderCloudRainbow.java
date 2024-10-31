@@ -39,8 +39,9 @@ public class RenderCloudRainbow extends Render<EntityCloudFleijaRainbow> {
         GlStateManager.disableLighting();
         GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-        
-        GL11.glScalef(cloud.age+partialTicks, cloud.age+partialTicks, cloud.age+partialTicks);
+
+		float s = (float)(cloud.scale+(/*cloud.remoteTicks+*/partialTicks)*cloud.tickrate);
+        GL11.glScalef(s,s,s);
 
 		GL11.glColor3ub((byte)cloud.world.rand.nextInt(0x100), (byte)cloud.world.rand.nextInt(0x100), (byte)cloud.world.rand.nextInt(0x100));
 

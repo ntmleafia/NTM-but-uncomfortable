@@ -6,10 +6,12 @@ import java.util.List;
 
 import com.hbm.config.BombConfig;
 import com.hbm.config.CompatibilityConfig;
+import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.entity.mob.EntityGlowingOne;
 import com.hbm.main.MainRegistry;
 
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
@@ -64,6 +66,7 @@ public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 
 	public EntityNukeExplosionMK5(World world) {
 		super(world);
+		EntityNukeTorex.bindMe = this;
 	}
 
 	public EntityNukeExplosionMK5(World world, int strength, int speed, int radius) {
@@ -76,6 +79,8 @@ public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 	@Override
 	public void onUpdate() {
 		if(world.isRemote) return;
+		if (world instanceof WorldServer)
+			((WorldServer)world).disableLevelSaving = true;
 
 		if(strength == 0 || !CompatibilityConfig.isWarDim(world)) {
 			this.clearLoadedChunks();
@@ -101,10 +106,10 @@ public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 		//make some noise
 		if(!mute) {
 			if(this.radius > 15){
-				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.AMBIENT, this.radius * 0.05F, 0.8F + this.rand.nextFloat() * 0.2F);
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.AMBIENT, this.radius * 0.25F, 0.8F + this.rand.nextFloat() * 0.2F);
 			}else{
 				if(rand.nextInt(5) == 0)
-					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, this.radius * 0.05F, 0.8F + this.rand.nextFloat() * 0.2F);
+					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, this.radius * 0.25F, 0.8F + this.rand.nextFloat() * 0.2F);
 			}
 		}
 

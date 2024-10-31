@@ -151,8 +151,8 @@ public class LeafiaShakecam {
         @Override
         public double render(double distance) {
             GL11.glTranslated(
-                    0.04*x*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d),
-                    0.04*y*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d),
+                    0.04*x*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d)*2,
+                    0.04*y*getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d)*2,
                     0
             );
             return getCalculatedIntensity(distance)*getTimeMultiplier(ticks/20d)*4;

@@ -56,6 +56,9 @@ public class ModDamageSource extends DamageSource {
     public static DamageSource asbestos = (new DamageSource("asbestos")).setDamageIsAbsolute().setDamageBypassesArmor();
     public static DamageSource blacklung = (new DamageSource("blacklung")).setDamageIsAbsolute().setDamageBypassesArmor();
     public static DamageSource mku = (new DamageSource("mku")).setDamageIsAbsolute().setDamageBypassesArmor();
+
+    public static DamageSource fleija = (new DamageSource("fleija")).setDamageBypassesArmor();
+    public static DamageSource back = (new DamageSource("back")).setDamageBypassesArmor().setDamageIsAbsolute().setDamageAllowedInCreativeMode(); // fuck you :D
 	
 	public ModDamageSource(String p_i1566_1_) {
 		super(p_i1566_1_);

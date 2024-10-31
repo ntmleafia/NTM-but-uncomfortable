@@ -2,7 +2,9 @@ package com.hbm.packet;
 
 import com.hbm.command.CommandLeaf;
 import com.hbm.entity.effect.EntityNukeTorex;
+import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
+import com.hbm.items.tool.ItemLaserDetonator;
 import com.hbm.lib.RefStrings;
 
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
@@ -95,6 +97,11 @@ public class PacketDispatcher {
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactCollapsePacket.Handler.class, IdkWhereThisShitBelongs.TomImpactCollapsePacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(CommandLeaf.ShakecamPacket.Handler.class, CommandLeaf.ShakecamPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(EntityNukeTorex.TorexPacket.Handler.class, EntityNukeTorex.TorexPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(EntityNukeTorex.TorexFinishPacket.Handler.class, EntityNukeTorex.TorexFinishPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(ItemLaserDetonator.LaserDetonatorPacket.Handler.class, ItemLaserDetonator.LaserDetonatorPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(EntityNukeFolkvangr.ClearChunkPacket.Handler.class, EntityNukeFolkvangr.ClearChunkPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(EntityNukeFolkvangr.FolkvangrVacuumPacket.Handler.class, EntityNukeFolkvangr.FolkvangrVacuumPacket.class, i++, Side.CLIENT);
+		//wrapper.registerMessage(EntityNukeFolkvangr.SessrumnirSphereSyncPacket.Handler.class, EntityNukeFolkvangr.SessrumnirSphereSyncPacket.class, i++, Side.CLIENT);
 
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);

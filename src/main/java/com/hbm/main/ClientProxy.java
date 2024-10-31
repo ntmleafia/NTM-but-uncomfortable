@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.particle.leafia.ParticleBalefire;
+import com.hbm.particle.leafia.ParticleRedstoneLight;
 import com.hbm.render.entity.missile.*;
 import com.hbm.render.entity.projectile.RenderZirnoxDebris;
 import com.hbm.render.item.leafia.ItemRenderLaserDetonator;
@@ -946,6 +948,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeslaCrab.class, RenderTeslaCrab.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityTom.class, RenderTom.TOM_FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityTomBlast.class, RenderEmpty.FACTORY);
+        RenderingRegistry.registerEntityRenderingHandler(EntityNukeFolkvangr.class, RenderEmpty.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySoyuzCapsule.class, RenderSoyuzCapsule.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySoyuz.class, RenderSoyuz.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLaser.class, RenderLaser.FACTORY);
@@ -1734,6 +1737,20 @@ public class ClientProxy extends ServerProxy {
 
         if("flameb".equals(type)) {
             ParticleBalefire fx = new ParticleBalefire(world, x, y, z);
+            Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+            return;
+        }
+        if("rslight".equals(type)) {
+            float size = data.getFloat("scale");
+            ParticleRedstoneLight fx = new ParticleRedstoneLight(
+                    world,x,y,z,(size == 0) ? 1 : size,
+                    data.getDouble("mX"),
+                    data.getDouble("mY"),
+                    data.getDouble("mZ"),
+                    data.getFloat("red"),
+                    data.getFloat("green"),
+                    data.getFloat("blue")
+            );
             Minecraft.getMinecraft().effectRenderer.addEffect(fx);
             return;
         }

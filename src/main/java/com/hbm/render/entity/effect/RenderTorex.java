@@ -8,6 +8,7 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.leafia.LeafiaEase;
 import com.hbm.main.leafia.LeafiaShakecam;
 import com.hbm.util.ContaminationUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
@@ -57,6 +58,14 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		float scale = (float)cloud.getScale();
 		float flashDuration = scale * flashBaseDuration;
 		float flareDuration = scale * flareBaseDuration;
+		Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+		double d3 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
+		double d4 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
+		double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
+
+		x = cloud.initPosX-d3;
+		y = cloud.initPosY-d4; // you're welcome, you otherwise glitchy piece of sh*t
+		z = cloud.initPosZ-d5;
 
 		doScreenShake(cloud, x, y, z, scale * 100);
 		
@@ -91,16 +100,23 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 		if (!cloud.reachedPlayer && cloud.sound) {
 			cloud.reachedPlayer = true;
-			SoundEvent evt = HBMSoundHandler.nuke;
-			if (dist <= 100+Math.pow(amplitude,0.95))
-				evt = HBMSoundHandler.nuke_near;
-			else if (dist > 300+amplitude+Math.pow(amplitude,0.8)*2)
-				evt = HBMSoundHandler.nuke_far;
-			cloud.world.playSound(player, cloud.posX, cloud.posY, cloud.posZ, evt, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSimple(8f*(amplitude/100),LeafiaEase.Ease.BACK,LeafiaEase.Direction.I).configure(amplitude * 12F,24f,0.5f,null));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(15f*(amplitude/100),LeafiaEase.Ease.QUAD,LeafiaEase.Direction.I).configure(amplitude * 5F,12f,1.8f,8f));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(30f*(amplitude/100),null,null).configure(amplitude * 4F,2f,1.5f,3.5f));
-			LeafiaShakecam._addShake(cloud.getPosition(),new LeafiaShakecam.shakeSmooth(60f*(amplitude/100),null,null).configure(amplitude * 4F,0.5f,0.5f,2f));
+			if (amplitude > 48) {
+				SoundEvent evt = HBMSoundHandler.nuke;
+				if (amplitude > 128) {
+					if (dist <= 100 + Math.pow(amplitude,0.95))
+						evt = HBMSoundHandler.nuke_near;
+					else if (dist > 300 + amplitude + Math.pow(amplitude,0.8) * 2)
+						evt = HBMSoundHandler.nuke_far;
+				} else
+					evt = HBMSoundHandler.nuke_smol;
+				cloud.world.playSound(player,cloud.initPosX,cloud.initPosY,cloud.initPosZ,evt,SoundCategory.AMBIENT,amplitude * 10F,0.8F + cloud.world.rand.nextFloat() * 0.2F);
+				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSimple(8f * (amplitude / 100),LeafiaEase.Ease.BACK,LeafiaEase.Direction.I).configure(amplitude * 12F,24f,0.5f,null));
+				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSmooth(15f * (amplitude / 100),LeafiaEase.Ease.QUAD,LeafiaEase.Direction.I).configure(amplitude * 5F,12f,1.8f,8f));
+				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSmooth(30f * (amplitude / 100),null,null).configure(amplitude * 4F,2f,1.5f,3.5f));
+				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSmooth(60f * (amplitude / 100),null,null).configure(amplitude * 4F,0.5f,0.5f,2f));
+			} else {
+				cloud.world.playSound(player,cloud.getInitialPosition(),HBMSoundHandler.mukeExplosion,SoundCategory.BLOCKS,15,1);
+			}
 			Vec3d force = ContaminationUtil.getKnockback(player.getPositionVector().addVector(0,player.eyeHeight,0),cloud.getPositionVector(),amplitude);
 			player.motionX += force.x;
 			player.motionY += force.y;
@@ -109,9 +125,9 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		
 		int duration = ((int)(amplitude * Math.min(1, (amplitude * amplitude)/(dist * dist))));
 		int swingTimer = duration<<1;
-		cloud.world.playSound(player, cloud.posX, cloud.posY, cloud.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
+		cloud.world.playSound(player, cloud.initPosX, cloud.initPosY, cloud.initPosZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.AMBIENT, amplitude * 10F, 0.8F + cloud.world.rand.nextFloat() * 0.2F);
 		
-		if(player.getDisplayName().equals("Vic4Games")) {
+		if(player.getDisplayName().equals("Vic4Games")) { // What's this troll code doing here lmao
 			player.hurtTime = swingTimer<<1;
 			player.maxHurtTime = duration<<1;
 		} else {
@@ -128,8 +144,8 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 			Cloudlet first = (Cloudlet) arg0;
 			Cloudlet second = (Cloudlet) arg1;
 			EntityPlayer player = MainRegistry.proxy.me();
-			double dist1 = player.getDistanceSq(first.posX, first.posY, first.posZ);
-			double dist2 = player.getDistanceSq(second.posX, second.posY, second.posZ);
+			double dist1 = player.getDistanceSq(first.initPosX, first.initPosY, first.initPosZ);
+			double dist2 = player.getDistanceSq(second.initPosX, second.initPosY, second.initPosZ);
 			
 			return dist1 > dist2 ? -1 : dist1 == dist2 ? 0 : 1;
 		}
@@ -139,7 +155,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
-		OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+		GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA,DestFactor.ONE_MINUS_SRC_ALPHA,SourceFactor.ONE,DestFactor.ZERO);
 		// To prevent particles cutting off before fully fading out
 		GL11.glAlphaFunc(GL11.GL_GREATER, 0);
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -150,16 +166,23 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 		Tessellator tess = Tessellator.getInstance();
         BufferBuilder buf = tess.getBuffer();
-		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-		
 		ArrayList<Cloudlet> cloudlets = new ArrayList(cloud.cloudlets);
 		cloudlets.sort(cloudSorter);
-		
+
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 		for(Cloudlet cloudlet : cloudlets) {
 			Vec3 vec = cloudlet.getInterpPos(partialTicks);
-			tessellateCloudlet(buf, vec.xCoord - cloud.posX, vec.yCoord - cloud.posY, vec.zCoord - cloud.posZ, cloudlet, partialTicks);
+			tessellateCloudlet(buf, vec.xCoord - cloud.initPosX, vec.yCoord - cloud.initPosY, vec.zCoord - cloud.initPosZ, cloudlet, partialTicks, false);
 		}
-
+		tess.draw();
+		GlStateManager.blendFunc(SourceFactor.SRC_COLOR,DestFactor.ONE);
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		for(Cloudlet cloudlet : cloudlets) {
+			if (cloudlet.type != EntityNukeTorex.TorexType.CONDENSATION) {
+				Vec3 vec = cloudlet.getInterpPos(partialTicks);
+				tessellateCloudlet(buf,vec.xCoord - cloud.initPosX,vec.yCoord - cloud.initPosY,vec.zCoord - cloud.initPosZ,cloudlet,partialTicks,true);
+			}
+		}
 		tess.draw();
 
 		GL11.glDepthMask(true);
@@ -208,7 +231,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		GL11.glPopMatrix();
 	}
 
-	private void tessellateCloudlet(BufferBuilder buf, double posX, double posY, double posZ, Cloudlet cloud, float partialTicks) {
+	private void tessellateCloudlet(BufferBuilder buf, double posX, double posY, double posZ, Cloudlet cloud, float partialTicks, boolean additive) {
 
 		float a = cloud.getAlpha();
 		float scale = cloud.getScale();
@@ -230,6 +253,12 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		r = Math.min(1F, r);
 		g = Math.min(1F, g);
 		b = Math.min(1F, b);
+
+		if (additive) {
+			r = Math.max(r*1.2f-0.2f,0f);
+			g = Math.max(g*1.2f-0.2f,0f);
+			b = Math.max(b*1.2f-0.2f,0f);
+		}
 
 		buf.pos((double) (posX - f1 * scale - f3 * scale), (double) (posY - f5 * scale), (double) (posZ - f2 * scale - f4 * scale)).tex(1, 1).color(r, g, b, a).lightmap(br, br).endVertex();
 		buf.pos((double) (posX - f1 * scale + f3 * scale), (double) (posY + f5 * scale), (double) (posZ - f2 * scale + f4 * scale)).tex(1, 0).color(r, g, b, a).lightmap(br, br).endVertex();

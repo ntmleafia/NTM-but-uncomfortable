@@ -1,5 +1,9 @@
 package com.hbm.render.entity;
 
+import com.hbm.entity.effect.EntityCloudFleijaRainbow;
+import com.hbm.main.leafia.LeafiaEase;
+import com.hbm.main.leafia.leafiashader.LeafiaGls;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 import com.hbm.entity.effect.EntityCloudFleija;
 import com.hbm.lib.RefStrings;
@@ -29,9 +33,11 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
     	blastTexture = new ResourceLocation(RefStrings.MODID, "textures/models/explosion/BlastFleija.png");
     	scale = 0;
 	}
-	
+	LeafiaEase shrinkEase = new LeafiaEase(LeafiaEase.Ease.EXPO,LeafiaEase.Direction.I);
+	float lastTicks = 0;
 	@Override
 	public void doRender(EntityCloudFleija cloud, double x, double y, double z, float entityYaw, float partialTicks) {
+		if (cloud instanceof EntityCloudFleijaRainbow) return;
 		GL11.glPushMatrix();
         GL11.glTranslatef((float)x, (float)y, (float)z);
         GlStateManager.disableLighting();
@@ -42,12 +48,58 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
         //GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
        // GlStateManager.disableAlpha();
         
-        float s = cloud.age+partialTicks;
+        float s = (float)(cloud.scale+(/*cloud.remoteTicks+*/partialTicks)*cloud.tickrate);
         GL11.glScalef(s, s, s);
         
         
-        bindTexture(blastTexture);
-        blastModel.renderAll();
+        //bindTexture(blastTexture);
+		LeafiaGls._push();
+		LeafiaGls.disableTexture2D();
+		LeafiaGls.enableBlend();
+		LeafiaGls.disableCull();
+		LeafiaGls.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		float alpha = 1;
+		if (cloud.getDataManager().get(EntityCloudFleija.FINISHED)) {
+			LeafiaGls.pushMatrix(); // multiplying by 0 might be irreversible so
+			float s3 = (float)(shrinkEase.get((cloud.ticksExisted+partialTicks-lastTicks)/(10+Math.pow(cloud.getMaxAge(),0.5)),1,0,true));
+			alpha = (float)(Math.pow(MathHelper.clampedLerp(1,0,(cloud.ticksExisted+partialTicks-lastTicks)/20),2));
+			LeafiaGls.color((float)(Math.pow(0.20,1-Math.pow(alpha,2)*0.75)*Math.pow(alpha,2)),(float)(Math.pow(0.92f,1-Math.pow(alpha,2)*0.75)*Math.pow(alpha,2)),(float)(Math.pow(0.83f,1-Math.pow(alpha,2)*0.75)*Math.pow(alpha,2)));
+			LeafiaGls.scale(s3,s3,s3);
+			blastModel.renderAll();
+			LeafiaGls.popMatrix();
+		} else {
+			lastTicks = cloud.ticksExisted+partialTicks;
+			LeafiaGls.color((float) Math.pow(0.20,0.25),(float) Math.pow(0.92f,0.25),(float) Math.pow(0.83f,0.25));
+			blastModel.renderAll();
+		}
+		LeafiaGls.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,GlStateManager.DestFactor.ONE);
+		for (int i = 1; i <= 3; i++) {
+			LeafiaGls.color(0.20f,0.92f,0.83f,(float)Math.pow(1-i/3f,1.5)*alpha);
+			float s2 = 1+(i*0.1f);
+			LeafiaGls.scale(s2,s2,s2);
+			blastModel.renderAll();
+			LeafiaGls.scale(1/s2,1/s2,1/s2);
+		}
+		if (alpha >= 1) {
+			LeafiaGls.scale(-1,-1,-1);
+			LeafiaGls.color((float) Math.pow(0.20,0.5),(float) Math.pow(0.92f,0.5),(float) Math.pow(0.83f,0.5));
+			LeafiaGls.scale(-1,-1,-1);
+			blastModel.renderAll();
+		}
+		if (cloud.isAntischrab) {
+			LeafiaGls.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,GlStateManager.DestFactor.ONE);
+			float t = cloud.ticksExisted+partialTicks;
+			LeafiaGls.color(1,0.149f,0,(float)Math.pow(1-MathHelper.clamp(t-5,0,20)/20,2));
+			GL11.glScalef(4,4,4);
+			blastModel.renderAll();
+			GL11.glScalef(-1,-1,-1);
+			blastModel.renderAll();
+			GL11.glScalef(-1,-1,-1);
+			GL11.glScalef(0.25f,0.25f,0.25f);
+		}
+		LeafiaGls.disableBlend();
+		LeafiaGls.enableTexture2D();
+		LeafiaGls._pop();
        /* ResourceManager.normal_fadeout.use();
         GL20.glUniform4f(GL20.glGetUniformLocation(ResourceManager.normal_fadeout.getShaderId(), "color"), 0.2F*2, 0.92F*2, 0.83F*2, 1F);
         GL20.glUniform1f(GL20.glGetUniformLocation(ResourceManager.normal_fadeout.getShaderId(), "fadeout_mult"), 2.5F);
@@ -59,6 +111,7 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
         
         //GlStateManager.enableAlpha();
        // GlStateManager.disableBlend();
+		LeafiaGls.color(1,1,1);
         GlStateManager.enableLighting();
         GL11.glEnable(GL11.GL_LIGHTING);
        // GlStateManager.shadeModel(GL11.GL_FLAT);

@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.logic.IChunkLoader;
+import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -159,9 +160,13 @@ public class EntityNukeExplosionMK3 extends Entity implements IChunkLoader {
         		wst = new ExplosionNukeAdvanced((int)this.posX, (int)this.posY, (int)this.posZ, this.world, (int)(this.destructionRange * 1.8), this.coefficient, 2);
         		vap = new ExplosionNukeAdvanced((int)this.posX, (int)this.posY, (int)this.posZ, this.world, (int)(this.destructionRange * 2.5), this.coefficient, 1);
         	} else {
-        		if(extType == 0)
-        			expl = new ExplosionFleija((int)this.posX, (int)this.posY, (int)this.posZ, this.world, this.destructionRange, this.coefficient, this.coefficient2);
-        		if(extType == 1)
+        		if(extType == 0) {
+					EntityNukeFolkvangr folkvangr = new EntityNukeFolkvangr(world,this.getPositionVector(),null);
+					world.spawnEntity(folkvangr);
+					this.setDead(); // big nope
+					return;
+					//expl = new ExplosionFleija((int)this.posX, (int)this.posY, (int)this.posZ, this.world, this.destructionRange, this.coefficient, this.coefficient2);
+				} if(extType == 1)
         			sol = new ExplosionSolinium((int)this.posX, (int)this.posY, (int)this.posZ, this.world, this.destructionRange, this.coefficient, this.coefficient2);
         		if(extType == 2)
         			dry = new ExplosionDrying((int)this.posX, (int)this.posY, (int)this.posZ, this.world, this.destructionRange, this.coefficient, this.coefficient2);

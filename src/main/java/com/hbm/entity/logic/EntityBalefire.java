@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.config.CompatibilityConfig;
+import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.main.MainRegistry;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -63,6 +64,7 @@ public class EntityBalefire extends Entity implements IChunkLoader {
 
 	public EntityBalefire(World p_i1582_1_) {
 		super(p_i1582_1_);
+		EntityNukeTorex.bindMe = this;
 	}
 
     @Override

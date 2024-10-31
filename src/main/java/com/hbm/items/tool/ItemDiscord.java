@@ -18,6 +18,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 
 public class ItemDiscord extends Item {
@@ -32,6 +33,8 @@ public class ItemDiscord extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		RayTraceResult pos = Library.rayTrace(player, 100, 1);
+		if (world.getWorldInfo().getGameType() == GameType.CREATIVE)
+			pos = Library.leafiaRayTraceBlocks(world,player.getPositionVector(),player.getPositionVector().add(player.getLook(1).scale(500)),false,false,true);
 
 		if(pos.typeOfHit == Type.BLOCK) {
 

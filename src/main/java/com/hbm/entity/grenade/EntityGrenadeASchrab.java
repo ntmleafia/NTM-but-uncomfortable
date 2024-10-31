@@ -42,7 +42,7 @@ public class EntityGrenadeASchrab extends EntityGrenadeBase {
 
 				this.world.spawnEntity(entity);
 
-				EntityCloudFleija cloud = new EntityCloudFleija(this.world, BombConfig.aSchrabRadius);
+				EntityCloudFleija cloud = new EntityCloudFleija(this.world, BombConfig.aSchrabRadius).setAntischrab();
 				cloud.posX = this.posX;
 				cloud.posY = this.posY;
 				cloud.posZ = this.posZ;

@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.material.Material;
 import org.apache.logging.log4j.Level;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -445,6 +446,88 @@ public class Library {
 		}
 		
 		return result;
+	}
+	@Nullable
+	public static RayTraceResult leafiaRayTraceBlocks(World world, Vec3d start, Vec3d end, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+		// since minecraft base raytrace is basically shit i made my own one
+		Vec3d direction = end.subtract(start);
+		Vec3d unit = direction.normalize();
+		double[] inclinations = new double[2];
+		double maxAxisValue;
+
+		Vec3d dirAbs = new Vec3d(Math.abs(direction.x),Math.abs(direction.y),Math.abs(direction.z));
+		Vec3d mVector;
+		Vec3d aVector;
+		Vec3d bVector;
+		//EnumFacing.Axis maxAxis;
+		EnumFacing facing;
+		if ((dirAbs.x >= dirAbs.y) && (dirAbs.x >= dirAbs.z)) {
+			facing = (direction.x > 0) ? EnumFacing.EAST : EnumFacing.WEST;
+			//maxAxis = EnumFacing.Axis.X;
+			mVector = new Vec3d(1,0,0);
+			aVector = new Vec3d(0,1,0);
+			bVector = new Vec3d(0,0,1);
+			inclinations[0] = direction.y/dirAbs.x;
+			inclinations[1] = direction.z/dirAbs.x;
+			maxAxisValue = direction.x;
+		} else if ((dirAbs.y >= dirAbs.x) && (dirAbs.y >= dirAbs.z)) {
+			facing = (direction.y > 0) ? EnumFacing.UP : EnumFacing.DOWN;
+			//maxAxis = EnumFacing.Axis.Y;
+			mVector = new Vec3d(0,1,0);
+			aVector = new Vec3d(1,0,0);
+			bVector = new Vec3d(0,0,1);
+			inclinations[0] = direction.x/dirAbs.y;
+			inclinations[1] = direction.z/dirAbs.y;
+			maxAxisValue = direction.y;
+		} else if ((dirAbs.z >= dirAbs.x) && (dirAbs.z >= dirAbs.y)) {
+			facing = (direction.z > 0) ? EnumFacing.SOUTH : EnumFacing.NORTH;
+			//maxAxis = EnumFacing.Axis.Z;
+			mVector = new Vec3d(0,0,1);
+			aVector = new Vec3d(1,0,0);
+			bVector = new Vec3d(0,1,0);
+			inclinations[0] = direction.x/dirAbs.z;
+			inclinations[1] = direction.y/dirAbs.z;
+			maxAxisValue = direction.z;
+		} else
+			throw new RuntimeException("Cannot find maximum axis :/");
+		RayTraceResult lastPos = null;
+		for (int m = 0; m <= Math.abs(maxAxisValue); m++) {
+			Vec3d posVec = start
+					.add(mVector.scale(m*Math.signum(maxAxisValue)))
+					.add(aVector.scale(m*inclinations[0]))
+					.add(bVector.scale(m*inclinations[1]));
+			for (int a = (int)Math.floor(Math.abs(inclinations[0]*m)); a <= (int)Math.ceil(Math.abs(inclinations[0]*m)); a++) {
+				for (int b = (int)Math.floor(Math.abs(inclinations[1]*m)); b <= (int)Math.ceil(Math.abs(inclinations[1]*m)); b++) {
+					BlockPos pos = new BlockPos(
+							start
+							.add(mVector.scale(m*Math.signum(maxAxisValue)))
+							.add(aVector.scale(a*Math.signum(inclinations[0])))
+							.add(bVector.scale(b*Math.signum(inclinations[1])))
+					);
+					if (world.isValid(pos)) {
+						IBlockState state = world.getBlockState(pos);
+						Block block = state.getBlock();
+						if (!ignoreBlockWithoutBoundingBox || state.getMaterial() == Material.PORTAL || state.getCollisionBoundingBox(world, pos) != Block.NULL_AABB)
+						{
+							if (block.canCollideCheck(state, stopOnLiquid))
+							{
+								RayTraceResult result = state.collisionRayTrace(world, pos, posVec.subtract(unit.scale(2)), posVec.add(unit.scale(2)));
+
+								if (result != null)
+								{
+									return result;
+								}
+							}
+							else
+							{
+								lastPos = new RayTraceResult(RayTraceResult.Type.MISS, posVec, facing, pos);
+							}
+						}
+					}
+				}
+			}
+		}
+		return returnLastUncollidableBlock ? lastPos : null;
 	}
 	
 	public static Pair<RayTraceResult, List<Entity>> rayTraceEntitiesOnLine(EntityPlayer player, double d, float f){

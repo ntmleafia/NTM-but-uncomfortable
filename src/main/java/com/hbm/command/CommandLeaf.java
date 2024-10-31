@@ -305,6 +305,10 @@ public class CommandLeaf extends CommandBase {
                 buf.writeInt(pos.getZ());
             }
         }
+        public ShakecamPacket setPos(BlockPos pos) {
+            this.pos = pos;
+            return this;
+        }
         public static class Handler implements IMessageHandler<ShakecamPacket, IMessage> {
             static final String[] numerics = new String[]{"range","intensity","curve","speed","duration"};
             @Override

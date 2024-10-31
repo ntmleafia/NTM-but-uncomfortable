@@ -1,10 +1,13 @@
 package com.hbm.main.leafia.leafiashader;
 
 import com.hbm.core.leafia.LeafiaGlsTransformer;
+import com.hbm.core.leafia.TransformerCoreLeafia;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LeafiaGls extends GlStateManager {
     static class LeafiaGlStack {
@@ -18,6 +21,12 @@ public class LeafiaGls extends GlStateManager {
         int[] blendfuncs = new int[4];
         int alphafuncF;
         float alphafuncR;
+
+        int shademdl;
+
+        Map<Integer,Boolean> capstate = new HashMap<>();
+
+        boolean[] lightState = new boolean[8];
 
         protected void commit() {
             {
@@ -50,6 +59,25 @@ public class LeafiaGls extends GlStateManager {
                 }
             }
             if ((this.alphafuncF != record.alphafuncF) || (this.alphafuncR != record.alphafuncR)) GlStateManager.alphaFunc(this.alphafuncF,this.alphafuncR);
+            for (int i = 0; i < 8; i++) {
+                if (this.lightState[i] != record.lightState[i]) {
+                    if (this.lightState[i])
+                        GlStateManager.enableLight(i);
+                    else
+                        GlStateManager.disableLight(i);
+                }
+            }
+            if (this.shademdl != record.shademdl)
+                GlStateManager.shadeModel(this.shademdl);
+            for (Integer cap : this.capstate.keySet()) {
+                boolean enabled = this.capstate.get(cap);
+                if ((!record.capstate.containsKey(cap)) || (enabled != record.capstate.get(cap))) {
+                    if (enabled)
+                        GlStateManager.glEnableClientState(cap);
+                    else
+                        GlStateManager.glDisableClientState(cap);
+                }
+            }
         }
         protected LeafiaGlStack reflect(LeafiaGlStack stack) {
             //this.(\w+) = stack.(\w+)
@@ -77,6 +105,13 @@ public class LeafiaGls extends GlStateManager {
             for (int i = 0; i < 4; i++)
                 this.blendfuncs[i] = stack.blendfuncs[i];
             this.alphafuncF = stack.alphafuncF; this.alphafuncR = stack.alphafuncR;
+            for (int i = 0; i < 8; i++)
+                this.lightState[i] = stack.lightState[i];
+            this.shademdl = stack.shademdl;
+            this.capstate.clear();
+            for (Integer cap : stack.capstate.keySet()) {
+                this.capstate.put(cap,stack.capstate.get(cap));
+            }
             return this;
         }
     }
@@ -124,6 +159,16 @@ public class LeafiaGls extends GlStateManager {
             record.alphafuncF = func;
             record.alphafuncR = ref;
         }
+        public static void recLight(int light,boolean enabled)
+        {
+            record.lightState[light] = enabled;
+        }
+        public static void shadeModel(int mode) {
+            record.shademdl = mode;
+        }
+        public static void recClientState(int cap,boolean enabled) {
+            record.capstate.put(cap,enabled);
+        }
     }
     static final List<LeafiaGlStack> stacks = new ArrayList<>();
     static { stacks.add(new LeafiaGlStack()); }
@@ -143,7 +188,7 @@ public class LeafiaGls extends GlStateManager {
     public static void _pop() {
         preventStackSyncing = true;
         if (stacks.size() <= 1)
-            throw new LeafiaGlsTransformer.LeafiaDevErrorGls("Attempted to pop the first Gls stack. Something definitely went wrong here.");
+            throw new TransformerCoreLeafia.LeafiaDevErrorGls("Attempted to pop the first Gls stack. Something definitely went wrong here.");
         stacks.remove(stacks.size()-1);
         getLastStack().commit();
         preventStackSyncing = false;

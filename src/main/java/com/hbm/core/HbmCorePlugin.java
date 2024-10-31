@@ -23,7 +23,10 @@ public class HbmCorePlugin implements IFMLLoadingPlugin {
 			}
 		}
 		System.out.println("Shaders are disabled! Not applying transformers!");*/
-		return new String[]{"com.hbm.core.leafia.LeafiaGlsTransformer"/*"com.hbm.core.EntityRendererTransformer"*/};
+		return new String[]{
+				"com.hbm.core.leafia.TransformerCoreLeafia"
+				//took me long enough >:( "com.hbm.core.leafia.LeafiaGlsTransformer","com.hbm.core.leafia.LeafiaWorldServerTransformer"/*"com.hbm.core.EntityRendererTransformer"*/};
+		};
 	}
 
 	@Override

@@ -275,6 +275,8 @@ public final class HBMSoundHandler {
 	public static SoundEvent nuke;
 	public static SoundEvent nuke_near;
 	public static SoundEvent nuke_far;
+	public static SoundEvent nuke_smol;
+	public static SoundEvent nuke_folkvangr;
 
 	
 	
@@ -504,6 +506,8 @@ public final class HBMSoundHandler {
 		nuke = register("weapon.nuke");
 		nuke_near = register("weapon.nuke_n");
 		nuke_far = register("weapon.nuke_d");
+		nuke_smol = register("weapon.nuke_s");
+		nuke_folkvangr = register("weapon.nuke_folkvangr");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};
