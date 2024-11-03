@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.items.ModItems;
-import com.hbm.main.leafia.LeafiaEase;
+import com.hbm.leafialib.LeafiaEase;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 

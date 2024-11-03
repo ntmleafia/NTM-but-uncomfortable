@@ -2,6 +2,7 @@ package com.hbm.blocks.machine;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.TileEntityProxyCombo;
@@ -9,6 +10,7 @@ import com.hbm.tileentity.machine.TileEntityMachineLargeTurbine;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,10 +22,19 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class MachineLargeTurbine extends BlockDummyable {
 
 	public MachineLargeTurbine(Material materialIn, String s) {
 		super(materialIn, s);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addGenerator(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
 	}
 
 	@Override

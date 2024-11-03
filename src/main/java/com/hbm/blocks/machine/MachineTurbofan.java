@@ -2,6 +2,7 @@ package com.hbm.blocks.machine;
 
 import java.util.List;
 
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.items.ModItems;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.BlockDummyable;
@@ -84,6 +85,7 @@ public class MachineTurbofan extends BlockDummyable {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
+		MachineTooltip.addGenerator(list);
 		list.add(I18n.format("trait.fuelefficiency"));
 		list.add(" "+I18n.format("trait.fuelefficiency.desc", I18n.format(FuelGrade.AERO.getGrade()), 100));
 		super.addInformation(stack, worldIn, list, flagIn);

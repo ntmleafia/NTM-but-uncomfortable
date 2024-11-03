@@ -3,6 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ILookOverlay;
@@ -12,6 +13,8 @@ import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntityTowerLarge;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -19,10 +22,18 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
+
 public class MachineTowerLarge extends BlockDummyable implements ILookOverlay {
 
 	public MachineTowerLarge(Material mat, String s) {
 		super(mat, s);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addCondenser(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
 	}
 
 	@Override

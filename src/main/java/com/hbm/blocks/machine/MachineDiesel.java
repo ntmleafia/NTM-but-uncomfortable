@@ -3,6 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.inventory.EngineRecipes.FuelGrade;
@@ -36,7 +37,7 @@ public class MachineDiesel extends BlockContainer {
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileEntityMachineDiesel();
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if(world.isRemote)
@@ -68,6 +69,7 @@ public class MachineDiesel extends BlockContainer {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
+		MachineTooltip.addGenerator(list);
 		list.add(I18n.format("trait.fuelefficiency"));
 		for(FuelGrade grade : FuelGrade.values()) {
 			Double efficiency = TileEntityMachineDiesel.fuelEfficiency.get(grade);

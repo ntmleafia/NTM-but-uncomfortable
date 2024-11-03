@@ -4,6 +4,7 @@ import com.hbm.command.CommandLeaf;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
 import com.hbm.items.tool.ItemLaserDetonator;
 import com.hbm.lib.RefStrings;
 
@@ -102,6 +103,8 @@ public class PacketDispatcher {
 		wrapper.registerMessage(EntityNukeFolkvangr.ClearChunkPacket.Handler.class, EntityNukeFolkvangr.ClearChunkPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(EntityNukeFolkvangr.FolkvangrVacuumPacket.Handler.class, EntityNukeFolkvangr.FolkvangrVacuumPacket.class, i++, Side.CLIENT);
 		//wrapper.registerMessage(EntityNukeFolkvangr.SessrumnirSphereSyncPacket.Handler.class, EntityNukeFolkvangr.SessrumnirSphereSyncPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaRecipePacket.Handler.class, LeafiaRecipeBookServer.LeafiaRecipePacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaTransferItemPacket.Handler.class, LeafiaRecipeBookServer.LeafiaTransferItemPacket.class, i++, Side.SERVER);
 
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);

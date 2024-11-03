@@ -15,13 +15,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIMachineChemplant extends GuiInfoContainer {
+public class GUIWorkstationChemical extends GuiInfoContainer {
 
 	
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_chemplant.png");
 	private TileEntityMachineChemplant chemplant;
 	
-	public GUIMachineChemplant(InventoryPlayer invPlayer, TileEntityMachineChemplant tedf) {
+	public GUIWorkstationChemical(InventoryPlayer invPlayer,TileEntityMachineChemplant tedf) {
 		super(new ContainerMachineChemplant(invPlayer, tedf));
 		chemplant = tedf;
 		

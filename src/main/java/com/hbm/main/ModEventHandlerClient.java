@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
 import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
+import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
+import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeBookTab;
 import com.hbm.items.ohno.ItemLeafiaRod;
 import com.hbm.main.leafia.BigBruh;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
@@ -16,11 +18,13 @@ import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.render.item.leafia.LeafiaRodBakedModel;
 import com.hbm.render.item.leafia.LeafiaRodRender;
 import net.minecraft.client.audio.MusicTicker;
+import net.minecraft.client.gui.toasts.RecipeToast;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.shader.*;
 import net.minecraft.util.*;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.client.EnumHelperClient;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -2133,7 +2137,24 @@ public class ModEventHandlerClient {
 			}
 		}
 	}
-
+	public static Set<Item> unlockedRecipes = new HashSet<>();
+	public static void loadRecipeFromString(String s,boolean isNew) {
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+		unlockedRecipes.add(item);
+		if (!isNew)
+			LeafiaRecipeBookTab.dontAnimate.add(item);
+	}
+	public static void unlockRecipeFromString(String s) {
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+		unlockedRecipes.add(item);
+		RecipeToast.addOrUpdate(Minecraft.getMinecraft().getToastGui(),new LeafiaDummyRecipe(item));
+	}
+	public static void tryUnlockRecipe(Item item) {
+		if (!unlockedRecipes.contains(item)) {
+			unlockedRecipes.add(item);
+			RecipeToast.addOrUpdate(Minecraft.getMinecraft().getToastGui(),new LeafiaDummyRecipe(item));
+		}
+	}
 	@SubscribeEvent
 	public void clientDisconnectFromServer(ClientDisconnectionFromServerEvent e) {
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT && AssemblerRecipes.backupRecipeList != null) {
@@ -2146,6 +2167,8 @@ public class ModEventHandlerClient {
 			AssemblerRecipes.backupTime = null;
 			AssemblerRecipes.backupHidden = null;
 			LeafiaShakecam.instances.clear();
+			unlockedRecipes.clear();
+			LeafiaRecipeBookTab.dontAnimate.clear();
 		}
 	}
 

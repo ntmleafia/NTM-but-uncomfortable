@@ -775,27 +775,27 @@ public class GuiHandler implements IGuiHandler {
 		switch(ID) {
 			case ModBlocks.guiID_machine_press:
 				if(entity instanceof TileEntityMachinePress) {
-					return new GUIMachinePress(player.inventory, (TileEntityMachinePress) entity);
+					return new GUIWorkstationPressBurner(player.inventory, (TileEntityMachinePress) entity);
 				}
 				return null;
 			case ModBlocks.guiID_test_difurnace:
 				if(entity instanceof TileEntityDiFurnace) {
-					return new GUITestDiFurnace(player.inventory, (TileEntityDiFurnace) entity);
+					return new GUIWorkstationDiFurnace(player.inventory, (TileEntityDiFurnace) entity);
 				}
 				return null;
 			case ModBlocks.guiID_rtg_difurnace:
 				if(entity instanceof TileEntityDiFurnaceRTG) {
-					return new GUIDiFurnaceRTG(player.inventory, (TileEntityDiFurnaceRTG) entity);
+					return new GUIWorkstationDiFurnaceRTG(player.inventory, (TileEntityDiFurnaceRTG) entity);
 				}
 				return null;
 			case ModBlocks.guiID_machine_assembler:
 				if(entity instanceof TileEntityMachineAssembler) {
-					return new GUIMachineAssembler(player.inventory, (TileEntityMachineAssembler) entity);
+					return new GUIWorkstationAssembler(player.inventory, (TileEntityMachineAssembler) entity);
 				}
 				return null;
 			case ModBlocks.guiID_machine_chemplant:
 				if(entity instanceof TileEntityMachineChemplant) {
-					return new GUIMachineChemplant(player.inventory, (TileEntityMachineChemplant) entity);
+					return new GUIWorkstationChemical(player.inventory, (TileEntityMachineChemplant) entity);
 				}
 				return null;
 			case ModBlocks.guiID_nuke_man:
@@ -860,7 +860,7 @@ public class GuiHandler implements IGuiHandler {
 				return null;
 			case ModBlocks.guiID_machine_epress:
 				if(entity instanceof TileEntityMachineEPress) {
-					return new GUIMachineEPress(player.inventory, (TileEntityMachineEPress) entity);
+					return new GUIWorkstationPressElectric(player.inventory, (TileEntityMachineEPress) entity);
 				}
 				return null;
 			case ModBlocks.guiID_centrifuge:

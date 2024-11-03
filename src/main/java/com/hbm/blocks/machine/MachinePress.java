@@ -3,6 +3,8 @@ package com.hbm.blocks.machine;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
+import com.hbm.items.ModItems;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityMachinePress;
@@ -88,6 +90,7 @@ public class MachinePress extends BlockContainer {
 			TileEntityMachinePress entity = (TileEntityMachinePress) world.getTileEntity(pos);
 			if(entity != null)
 			{
+				LeafiaRecipeBookServer.unlockRecipe(player,ModItems.plate_copper);
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_machine_press, world, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;

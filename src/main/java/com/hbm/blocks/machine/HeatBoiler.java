@@ -8,6 +8,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
@@ -119,6 +120,7 @@ public class HeatBoiler extends BlockDummyable implements ILookOverlay, ITooltip
 
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
+        MachineTooltip.addBoiler(list);
         this.addStandardInfo(list);
         super.addInformation(stack, worldIn, list, flagIn);
     }

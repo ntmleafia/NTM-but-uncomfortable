@@ -1,21 +1,25 @@
 package com.hbm.inventory.gui;
 
+import com.hbm.inventory.leafia.inventoryutils.LeafiaGuiWorkstation;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBook;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
+import com.hbm.inventory.leafia.inventoryutils.recipe_book_profiles.RecipeBookPress;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.inventory.container.ContainerMachinePress;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityMachinePress;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIMachinePress extends GuiContainer {
+public class GUIWorkstationPressBurner extends LeafiaGuiWorkstation {
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_press.png");
 	private TileEntityMachinePress assembler;
 	
-	public GUIMachinePress(InventoryPlayer invPlayer, TileEntityMachinePress tedf) {
+	public GUIWorkstationPressBurner(InventoryPlayer invPlayer,TileEntityMachinePress tedf) {
 		super(new ContainerMachinePress(invPlayer, tedf));
 		assembler = tedf;
 		
@@ -47,9 +51,13 @@ public class GUIMachinePress extends GuiContainer {
 		int k = assembler.getProgressScaled(16);
         this.drawTexturedModalRect(guiLeft + 79, guiTop + 35, 194, 0, 18, k);
 	}
+
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
+	public LeafiaRecipeBook createRecipeBook() {
+		return super.createRecipeBook().setup(4,48,32);
+	}
+	@Override
+	public LeafiaRecipeBookProfile getRecipeProfile() {
+		return new RecipeBookPress();
 	}
 }

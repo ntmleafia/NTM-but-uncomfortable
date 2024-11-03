@@ -502,7 +502,31 @@ public class OreDictManager {
 		OreDictionary.registerOre("blockGlassLime", glass_trinitite);
 		OreDictionary.registerOre("blockGlassRed", glass_polonium);
 		OreDictionary.registerOre("blockGlassBlack", glass_ash);
-		
+
+		for (Item item : PressRecipes.stamps_9) {
+			OreDictionary.registerOre("stamp9", item);
+		}
+		for (Item item : PressRecipes.stamps_44) {
+			OreDictionary.registerOre("stamp44", item);
+		}
+		for (Item item : PressRecipes.stamps_50) {
+			OreDictionary.registerOre("stamp50", item);
+		}
+		for (Item item : PressRecipes.stamps_357) {
+			OreDictionary.registerOre("stamp357", item);
+		}
+		for (Item item : PressRecipes.stamps_flat) {
+			OreDictionary.registerOre("stampFlat", item);
+		}
+		for (Item item : PressRecipes.stamps_plate) {
+			OreDictionary.registerOre("stampPlate", item);
+		}
+		for (Item item : PressRecipes.stamps_wire) {
+			OreDictionary.registerOre("stampWire", item);
+		}
+		for (Item item : PressRecipes.stamps_circuit) {
+			OreDictionary.registerOre("stampCircuit", item);
+		}
 		//MaterialShapes.registerCompatShapes();
 	}
 	

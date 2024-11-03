@@ -2,12 +2,15 @@ package com.hbm.blocks.gas;
 
 import java.util.Random;
 
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
+import com.hbm.items.ModItems;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.config.GeneralConfig;
 import com.hbm.util.ContaminationUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +34,11 @@ public class BlockGasCoal extends BlockGasBase {
 	@Override
 	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity){
 		ContaminationUtil.applyCoal(entity, 5, 1, 5);
+		if (entity instanceof EntityPlayer) {
+			LeafiaRecipeBookServer.unlockRecipe((EntityPlayer)entity,ModItems.rag);
+			LeafiaRecipeBookServer.unlockRecipe((EntityPlayer)entity,ModItems.mask_rag);
+			LeafiaRecipeBookServer.unlockRecipe((EntityPlayer)entity,ModItems.mask_damp);
+		}
 	}
 
 	@Override

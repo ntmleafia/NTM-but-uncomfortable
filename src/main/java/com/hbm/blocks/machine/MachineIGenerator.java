@@ -2,6 +2,7 @@ package com.hbm.blocks.machine;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.handler.MultiblockHandlerXR;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
@@ -10,7 +11,9 @@ import com.hbm.tileentity.machine.TileEntityMachineIGenerator;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -18,6 +21,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class MachineIGenerator extends BlockDummyable {
 
@@ -34,6 +40,11 @@ public class MachineIGenerator extends BlockDummyable {
 			return new TileEntityProxyCombo(false, true, true);
 		
 		return null;
+	}
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addShit(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
 	}
 
 	@Override

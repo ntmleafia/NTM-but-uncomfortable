@@ -18,8 +18,11 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.inventory.leafia.LeafiaRecipeUnlocker;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
 import com.hbm.world.WorldProviderNTM;
+import net.minecraft.item.*;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -123,10 +126,6 @@ import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -1025,11 +1024,21 @@ public class ModEventHandler {
 		WorldProviderNTM.dimType = DimensionType.register("overworld","",0, WorldProviderNTM.class,true);
 		DimensionManager.registerDimension(0,WorldProviderNTM.dimType);
 	}
-
+	@SubscribeEvent
+	public void onCraft(PlayerEvent.ItemCraftedEvent evt) {
+		//Item item = evt.crafting.getItem();
+		LeafiaRecipeUnlocker.onCraft(evt.player,evt.crafting);
+		//if (item == ItemBlock.getItemFromBlock(Blocks.CRAFTING_TABLE))
+		//	LeafiaRecipeBookServer.unlockRecipe(evt.player,ItemBlock.getItemFromBlock(ModBlocks.machine_press));
+		//evt.player.sendMessage(new TextComponentString(evt.crafting.getUnlocalizedName()));
+	}
 	@SubscribeEvent
 	public void clientJoinServer(PlayerLoggedInEvent e) {
 		if(e.player instanceof EntityPlayerMP){
 			EntityPlayerMP playerMP = (EntityPlayerMP)e.player;
+
+			LeafiaRecipeBookServer.loadRecipe(playerMP);
+
 			PacketDispatcher.sendTo(new AssemblerRecipeSyncPacket(AssemblerRecipes.recipeList, AssemblerRecipes.hidden), playerMP);
 			JetpackHandler.playerLoggedIn(e);
 			IHBMData props = HbmCapability.getData(e.player);

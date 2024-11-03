@@ -1,5 +1,6 @@
 package com.hbm.main.leafia;
 
+import com.hbm.leafialib.LeafiaEase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

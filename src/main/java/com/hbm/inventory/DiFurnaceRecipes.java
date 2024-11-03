@@ -31,7 +31,7 @@ import net.minecraftforge.oredict.OreDictionary;
 @Spaghetti("everything")
 public class DiFurnaceRecipes {
 
-	public static HashMap<Pair<AStack, AStack>, ItemStack> diRecipes = new HashMap<Pair<AStack, AStack>, ItemStack>();
+	public static HashMap<Pair<AStack, AStack>, ItemStack> diRecipes = new HashMap<>();
 	public static HashMap<AStack, Integer> diFuels = new HashMap<AStack, Integer>();
 
 	public static void registerRecipes(){

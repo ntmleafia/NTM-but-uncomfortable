@@ -1,23 +1,18 @@
 package com.hbm.entity.logic.leafia;
 
-import com.hbm.command.CommandLeaf;
 import com.hbm.entity.effect.EntityCloudFleija;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
-import com.hbm.items.tool.ItemLaserDetonator;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
-import com.hbm.main.leafia.LeafiaEase;
+import com.hbm.leafialib.LeafiaEase;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.particle.leafia.ParticleFleijaVacuum;
-import com.hbm.render.amlfrom1710.Vec3;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.*;

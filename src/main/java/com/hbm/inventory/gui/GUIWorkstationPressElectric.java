@@ -11,12 +11,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIMachineEPress extends GuiInfoContainer {
+public class GUIWorkstationPressElectric extends GuiInfoContainer {
 
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_epress.png");
 	private TileEntityMachineEPress press;
 	
-	public GUIMachineEPress(InventoryPlayer invPlayer, TileEntityMachineEPress tedf) {
+	public GUIWorkstationPressElectric(InventoryPlayer invPlayer,TileEntityMachineEPress tedf) {
 		super(new ContainerMachineEPress(invPlayer, tedf));
 		press = tedf;
 		

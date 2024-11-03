@@ -1,7 +1,9 @@
 package com.hbm.inventory.gui;
 
-import java.util.List;
-
+import com.hbm.inventory.leafia.inventoryutils.LeafiaGuiWorkstation;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBook;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
+import com.hbm.inventory.leafia.inventoryutils.recipe_book_profiles.RecipeBookBlastFurnace;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.inventory.container.ContainerDiFurnaceRTG;
@@ -11,20 +13,30 @@ import com.hbm.util.I18nUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIDiFurnaceRTG extends GuiInfoContainer {
+public class GUIWorkstationDiFurnaceRTG extends LeafiaGuiWorkstation {
 	public static ResourceLocation texture = new ResourceLocation(RefStrings.MODID, "textures/gui/processing/gui_rtg_difurnace.png");
 	private TileEntityDiFurnaceRTG bFurnace;
 
-	public GUIDiFurnaceRTG(InventoryPlayer playerInv, TileEntityDiFurnaceRTG te) {
+	public GUIWorkstationDiFurnaceRTG(InventoryPlayer playerInv,TileEntityDiFurnaceRTG te) {
 		super(new ContainerDiFurnaceRTG(playerInv, te));
 		bFurnace = te;
 		this.xSize = 176;
 		this.ySize = 166;
+	}
+
+
+	@Override
+	public LeafiaRecipeBook createRecipeBook() {
+		return super.createRecipeBook().setup(3,0,0);
+	}
+
+	@Override
+	public LeafiaRecipeBookProfile getRecipeProfile() {
+		return new RecipeBookBlastFurnace();
 	}
 
 	@Override

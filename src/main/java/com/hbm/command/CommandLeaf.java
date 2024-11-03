@@ -2,7 +2,7 @@ package com.hbm.command;
 
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
-import com.hbm.main.leafia.LeafiaEase;
+import com.hbm.leafialib.LeafiaEase;
 import com.hbm.main.leafia.LeafiaShakecam;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

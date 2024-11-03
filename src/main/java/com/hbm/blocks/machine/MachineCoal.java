@@ -1,8 +1,10 @@
 package com.hbm.blocks.machine;
 
+import java.util.List;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityMachineCoal;
@@ -14,6 +16,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -32,6 +35,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class MachineCoal extends BlockContainer {
 
@@ -209,7 +214,13 @@ public class MachineCoal extends BlockContainer {
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[]{FACING});
 	}
-	
+
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addGenerator(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
+	}
+
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		return ((EnumFacing)state.getValue(FACING)).getIndex();

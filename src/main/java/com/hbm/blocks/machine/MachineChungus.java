@@ -3,6 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.lib.Library;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.BlockDummyable;
@@ -15,7 +16,9 @@ import com.hbm.tileentity.machine.TileEntityChungus;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -26,10 +29,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 
+import javax.annotation.Nullable;
+
 public class MachineChungus extends BlockDummyable implements ILookOverlay {
 
 	public MachineChungus(Material mat, String s) {
 		super(mat, s);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addGenerator(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
 	}
 
 	@Override

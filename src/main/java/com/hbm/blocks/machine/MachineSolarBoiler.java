@@ -6,6 +6,7 @@ import java.util.List;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.util.I18nUtil;
@@ -101,6 +102,7 @@ public class MachineSolarBoiler extends BlockDummyable implements ITooltipProvid
 	@Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+        MachineTooltip.addBoiler(tooltip);
         this.addStandardInfo(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }

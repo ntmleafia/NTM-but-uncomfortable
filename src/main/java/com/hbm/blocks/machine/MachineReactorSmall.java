@@ -1,8 +1,10 @@
 package com.hbm.blocks.machine;
 
+import java.util.List;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.interfaces.IMultiBlock;
 import com.hbm.lib.InventoryHelper;
@@ -13,6 +15,7 @@ import com.hbm.tileentity.machine.TileEntityMachineReactorSmall;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -25,6 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class MachineReactorSmall extends BlockContainer implements IMultiBlock {
 
 	public MachineReactorSmall(Material materialIn, String s) {
@@ -34,6 +39,12 @@ public class MachineReactorSmall extends BlockContainer implements IMultiBlock {
 		this.setCreativeTab(MainRegistry.machineTab);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
+	}
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addBoiler(tooltip);
+		MachineTooltip.addNuclear(tooltip);
+		super.addInformation(stack,player,tooltip,advanced);
 	}
 
 	@Override

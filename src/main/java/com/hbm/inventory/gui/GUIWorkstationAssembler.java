@@ -14,12 +14,12 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIMachineAssembler extends GuiInfoContainer {
+public class GUIWorkstationAssembler extends GuiInfoContainer {
 
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_assembler.png");
 	private TileEntityMachineAssembler assembler;
 	
-	public GUIMachineAssembler(InventoryPlayer invPlayer, TileEntityMachineAssembler tedf) {
+	public GUIWorkstationAssembler(InventoryPlayer invPlayer,TileEntityMachineAssembler tedf) {
 		super(new ContainerMachineAssembler(invPlayer, tedf));
 		assembler = tedf;
 		

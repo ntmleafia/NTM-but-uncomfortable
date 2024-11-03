@@ -3,6 +3,8 @@ package com.hbm.blocks.machine;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
+import com.hbm.items.ModItems;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityDiFurnace;
@@ -77,6 +79,7 @@ public class MachineDiFurnace extends BlockContainer {
 			TileEntityDiFurnace entity = (TileEntityDiFurnace) world.getTileEntity(pos);
 			if(entity != null)
 			{
+				LeafiaRecipeBookServer.unlockRecipe(player,ModItems.ingot_steel);
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_test_difurnace, world, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
