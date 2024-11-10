@@ -56,6 +56,11 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 	public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {}
 
 	@Override
+	public void onPlayerValidate(EntityPlayer plr) {
+
+	}
+
+	@Override
 	public String getComponentName() {
 		return "dfc_communicator";
 	}

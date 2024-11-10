@@ -9,4 +9,6 @@ public interface LeafiaPacketReceiver {
     @SideOnly(Side.CLIENT)
     public void onReceivePacketLocal(byte key,Object value);
     public void onReceivePacketServer(byte key,Object value,EntityPlayer plr);
+    public default double affectionRange() { return 32; }
+    public void onPlayerValidate(EntityPlayer plr); // little attempt to make this mod less internet expensive..
 }

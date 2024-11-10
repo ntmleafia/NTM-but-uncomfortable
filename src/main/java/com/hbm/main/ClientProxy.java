@@ -22,10 +22,12 @@ import com.hbm.render.entity.projectile.RenderZirnoxDebris;
 import com.hbm.render.item.leafia.ItemRenderLaserDetonator;
 import com.hbm.render.item.leafia.LeafiaRodRender;
 import com.hbm.render.tileentity.crate.RenderCrateSteel;
+import com.hbm.render.tileentity.leafia.RenderPWRControl;
 import com.hbm.render.tileentity.leafia.RenderZirnox;
 import com.hbm.render.tileentity.leafia.RenderZirnoxDestroyed;
 import com.hbm.tileentity.leafia.TileEntityReactorZirnox;
 import com.hbm.tileentity.leafia.TileEntityReactorZirnoxDestroyed;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRControl;
 import com.hbm.tileentity.machine.*;
 import net.minecraft.tileentity.TileEntity;
 import org.apache.logging.log4j.Level;
@@ -791,6 +793,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceIron.class, new RenderFurnaceIron());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSteel.class, new RenderFurnaceSteel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorGeneric.class, new RenderDoorGeneric());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRControl.class, new RenderPWRControl());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());

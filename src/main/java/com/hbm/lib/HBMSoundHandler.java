@@ -278,6 +278,10 @@ public final class HBMSoundHandler {
 	public static SoundEvent nuke_smol;
 	public static SoundEvent nuke_folkvangr;
 
+	public static SoundEvent pwrRodStart;
+	public static SoundEvent pwrRodLoop;
+	public static SoundEvent pwrRodStop;
+
 	
 	
 	public static void init() {
@@ -508,6 +512,10 @@ public final class HBMSoundHandler {
 		nuke_far = register("weapon.nuke_d");
 		nuke_smol = register("weapon.nuke_s");
 		nuke_folkvangr = register("weapon.nuke_folkvangr");
+
+		pwrRodStart = register("external.pwrcontrolstart");
+		pwrRodLoop = register("external.pwrcontrol");
+		pwrRodStop = register("external.pwrcontrolstop");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

@@ -548,4 +548,9 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             valveOpen = (boolean)value;
         }
     }
+
+    @Override
+    public void onPlayerValidate(EntityPlayer plr) {
+
+    }
 }

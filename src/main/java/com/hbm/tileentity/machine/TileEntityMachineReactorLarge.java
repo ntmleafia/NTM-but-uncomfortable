@@ -405,6 +405,11 @@ public class TileEntityMachineReactorLarge extends TileEntity implements ITickab
 	@Override
 	public void update() {
 		if(!world.isRemote) {
+			if (true) {
+				world.setBlockState(pos,ModBlocks.PWR.conductor.getDefaultState());
+				this.invalidate();
+				return;
+			}
 			if(checkBody()) {
 
 				age++;

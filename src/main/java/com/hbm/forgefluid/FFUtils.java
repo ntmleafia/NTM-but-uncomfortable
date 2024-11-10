@@ -218,6 +218,19 @@ public class FFUtils {
 		boolean hasInfo = false;
 		boolean isKeyPressed = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
+		if (FluidTypeHandler.containsTrait(fluid,FluidTypeHandler.FluidTrait.HIGH_PRESSURE)) {
+			if(isKeyPressed){
+				texts.add("§c["+I18n.format("trait.pressure.high")+"]");
+			}
+			hasInfo = true;
+		}
+		if (FluidTypeHandler.containsTrait(fluid,FluidTypeHandler.FluidTrait.EXTREME_PRESSURE)) {
+			if(isKeyPressed){
+				texts.add("§4["+I18n.format("trait.pressure.extreme")+"]");
+			}
+			hasInfo = true;
+		}
+
 		if (FluidTypeHandler.isAntimatter(fluid)) {
 			if(isKeyPressed){
 				texts.add("§4["+I18n.format("trait.antimatter")+"]");

@@ -33,7 +33,15 @@ public class FluidTypeHandler {
 		FluidProperties prop = getProperties(f);
 		return prop.dfcFuel;
 	}
-	
+
+	public static boolean explodeTier0(Fluid f) {
+		return containsTrait(f,FluidTrait.HIGH_PRESSURE) || explodeTier1(f);
+	}
+	public static boolean explodeTier1(Fluid f) {
+		return containsTrait(f,FluidTrait.EXTREME_PRESSURE);
+	}
+	public static boolean explodeTier2(Fluid f) { return false; } // for dummies like me
+
 	public static boolean isAntimatter(Fluid f){
 		return containsTrait(f, FluidTrait.AMAT);
 	}
@@ -76,9 +84,10 @@ public class FluidTypeHandler {
 		fluidProperties.put(ModForgeFluids.steam.getName(), new FluidProperties(0, 0, 1, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.hotsteam.getName(), new FluidProperties(0, 0 ,2, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.superhotsteam.getName(), new FluidProperties(0, 0 ,3, EnumSymbol.NONE));
-		fluidProperties.put(ModForgeFluids.ultrahotsteam.getName(), new FluidProperties(0, 0, 4, EnumSymbol.NONE));
+		fluidProperties.put(ModForgeFluids.ultrahotsteam.getName(), new FluidProperties(0, 0, 4, EnumSymbol.NONE, FluidTrait.HIGH_PRESSURE));
 		fluidProperties.put(ModForgeFluids.coolant.getName(), new FluidProperties(1, 0, 0, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.hotcoolant.getName(), new FluidProperties(1, 0, 4, EnumSymbol.NONE));
+		fluidProperties.put(ModForgeFluids.malcoolant.getName(), new FluidProperties(1, 0, 12, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
 		
 		fluidProperties.put(FluidRegistry.LAVA.getName(), new FluidProperties(4, 0, 0, EnumSymbol.NOWATER));
 		
@@ -204,6 +213,8 @@ public class FluidTypeHandler {
 		CORROSIVE,
 		CORROSIVE_2,
 		NO_CONTAINER,
-		NO_ID;
+		NO_ID,
+		HIGH_PRESSURE,
+		EXTREME_PRESSURE;
 	}
 }

@@ -24,6 +24,9 @@ public class MachineTooltip {
     public static void addMultiblock(List<String> tooltip) {
         tooltip.add(TextFormatting.GRAY+"< "+ I18nUtil.resolveKey("trait._machine.multiblock") +" >");
     }
+    public static void addModular(List<String> tooltip) {
+        append(tooltip,TextFormatting.GREEN+" -"+ I18nUtil.resolveKey("trait._machine.modular"));
+    }
     public static void addCore(List<String> tooltip) {
         append(tooltip,TextFormatting.RED+" -"+ I18nUtil.resolveKey("trait._machine.multiblock.core"));
     }

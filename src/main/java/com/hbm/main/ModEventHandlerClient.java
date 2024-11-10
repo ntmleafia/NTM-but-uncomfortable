@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
 import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
+import com.hbm.inventory.leafia.inventoryutils.LeafiaPacketReceiver;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeBookTab;
 import com.hbm.items.ohno.ItemLeafiaRod;
@@ -1323,6 +1325,35 @@ public class ModEventHandlerClient {
 		if(Minecraft.getMinecraft().player != null){
 			JetpackHandler.clientTick(e);
 			if (e.phase == Phase.END) {
+				if (Minecraft.getMinecraft().world != null) {
+					List<TileEntity> entities = Minecraft.getMinecraft().world.loadedTileEntityList;
+					BlockPos pos = Minecraft.getMinecraft().player.getPosition();
+					if (validatedTEs.size() > 0) {
+						Set<TileEntity> removalQueue = new HashSet<>();
+						for (TileEntity entity : validatedTEs) {
+							if (!entities.contains(entity) || !(entity instanceof LeafiaPacketReceiver))
+								removalQueue.add(entity);
+							else if (!entity.isInvalid()) {
+								LeafiaPacketReceiver receiver = (LeafiaPacketReceiver)entity;
+								if (entity.getPos().getDistance(pos.getX(),pos.getY(),pos.getZ()) > receiver.affectionRange()*1.25) {
+									removalQueue.add(entity);
+								}
+							}
+						}
+						for (TileEntity entity : removalQueue) {
+							validatedTEs.remove(entity);
+						}
+					}
+					for (TileEntity entity : entities) {
+						if (!entity.isInvalid() && entity instanceof LeafiaPacketReceiver && !validatedTEs.contains(entity)) {
+							LeafiaPacketReceiver receiver = (LeafiaPacketReceiver)entity;
+							if (entity.getPos().getDistance(pos.getX(),pos.getY(),pos.getZ()) <= receiver.affectionRange()) {
+								validatedTEs.add(entity);
+								LeafiaPacket._validate(entity);
+							}
+						}
+					}
+				}
 				LeafiaShakecam.localTick();
 				IdkWhereThisShitBelongs.localTick();
 				EntityNukeFolkvangr.FolkvangrVacuumPacket.Handler.localTick();
@@ -1341,6 +1372,7 @@ public class ModEventHandlerClient {
 			}
 		}
 	}
+	final Set<TileEntity> validatedTEs = new HashSet<>();
 	
 	//Sus
 	@SubscribeEvent

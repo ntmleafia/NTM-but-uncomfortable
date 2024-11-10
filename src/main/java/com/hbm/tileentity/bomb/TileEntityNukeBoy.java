@@ -154,4 +154,9 @@ public class TileEntityNukeBoy extends TileEntity implements LeafiaPacketReceive
 	}
 	@Override
 	public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {}
+
+	@Override
+	public void onPlayerValidate(EntityPlayer plr) {
+
+	}
 }

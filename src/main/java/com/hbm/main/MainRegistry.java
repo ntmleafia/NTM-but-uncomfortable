@@ -13,6 +13,8 @@ import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.hbm.main.leafia.DispenserBullet;
 import com.hbm.tileentity.leafia.*;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRControl;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRElement;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -952,6 +954,10 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_digamma_quasar"), EntityQuasar.class, "entity_digamma_quasar", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_folkvangr"), EntityNukeFolkvangr.class, "entity_nuke_folkvangr", i++, MainRegistry.instance, 1000, 1, true);
+
+		GameRegistry.registerTileEntity(TileEntityPWRElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
+		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
+
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
 
 			@Override

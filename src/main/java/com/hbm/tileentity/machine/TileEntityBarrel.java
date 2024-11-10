@@ -103,6 +103,23 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		if(b == ModBlocks.barrel_corroded && world.rand.nextInt(3) == 0) {
 			tank.drain(1, true);
 		}
+
+		if (b == ModBlocks.barrel_steel) {
+			if (FluidTypeHandler.explodeTier1(f)) {
+				world.destroyBlock(pos, false);
+				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
+			}
+		} else if (b == ModBlocks.barrel_tcalloy) {
+			if (FluidTypeHandler.explodeTier2(f)) {
+				world.destroyBlock(pos, false);
+				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
+			}
+		} else {
+			if (FluidTypeHandler.explodeTier0(f)) {
+				world.destroyBlock(pos, false);
+				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
+			}
+		}
 	}
 	
 	public void fillFluidInit(FluidTank tank) {

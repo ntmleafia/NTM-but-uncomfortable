@@ -291,6 +291,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				y = Math.pow(x,0.75)*12;
 				n = ""+flux+"^0.75 * 12 "+TextFormatting.GOLD+"(RISKY)";
 				break;
+			case "dante":
+				y = Math.tan(Math.min(heat/400,0.5)*Math.PI)+x/4;
+				n = "tan(min("+temp+"/400,0.5)*PI)\n + "+flux+"/4 "+TextFormatting.DARK_RED+"(JUST NO)";
+				break;
 		}
 		if (updateHeat) {
 			if(data == null) {

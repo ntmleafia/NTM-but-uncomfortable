@@ -1506,6 +1506,13 @@ public class ModItems {
 	public static final Item pile_rod_boron = new ItemPileRod("pile_rod_boron").setCreativeTab(MainRegistry.controlTab);
 
 	public static final Item leafRod = new ItemLeafiaRod.EmptyLeafiaRod().setCreativeTab(MainRegistry.controlTab);
+	/*
+	public static final Item dante = new ItemBase("dante").setCreativeTab(CreativeTabs.REDSTONE);
+	public static final Item
+			danteRod
+			= new ItemLeafiaRod("Dante",150000000, 9000)
+			.setAppearance(dante, BILLET, ISOTOPE)
+			.toItem().setCreativeTab(CreativeTabs.REDSTONE);*/
 	// rbmk based
 	public static final Item
 			leafRodU38
