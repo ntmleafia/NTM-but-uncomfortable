@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.blocks.leafia.pwr.PWRDiagnosis;
 import com.hbm.inventory.leafia.LeafiaRecipeUnlocker;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
 import com.hbm.main.leafia.IdkWhereThisShitBelongs;
@@ -588,33 +589,34 @@ public class ModEventHandler {
 
 	@SubscribeEvent
 	public void worldTick(WorldTickEvent event) {
-		if(!MainRegistry.allPipeNetworks.isEmpty() && !event.world.isRemote) {
-			Iterator<FFPipeNetwork> itr = MainRegistry.allPipeNetworks.iterator();
-			while(itr.hasNext()) {
-				FFPipeNetwork net = itr.next();
-				if(net.getNetworkWorld() != event.world)
-					continue;
-				if(net != null)
-					net.updateTick();
-				if(net.getPipes().isEmpty()) {
-					net.destroySoft();
-					itr.remove();
+		if (event.world != null && !event.world.isRemote) {
+			if (!MainRegistry.allPipeNetworks.isEmpty()) {
+				Iterator<FFPipeNetwork> itr = MainRegistry.allPipeNetworks.iterator();
+				while (itr.hasNext()) {
+					FFPipeNetwork net = itr.next();
+					if (net.getNetworkWorld() != event.world)
+						continue;
+					if (net != null)
+						net.updateTick();
+					if (net.getPipes().isEmpty()) {
+						net.destroySoft();
+						itr.remove();
+					}
+
 				}
-
 			}
-		}
-		
-		if(event.world != null && !event.world.isRemote && event.world.getTotalWorldTime() % 100 == 97){
-			//Drillgon200: Retarded hack because I'm not convinced game rules are client sync'd
-			PacketDispatcher.wrapper.sendToAll(new SurveyPacket(RBMKDials.getColumnHeight(event.world)));
-		}
 
-		if(event.phase == Phase.START) {
-			if (event.world != null && !event.world.isRemote) {
+			if(event.world.getTotalWorldTime() % 100 == 97){
+				PWRDiagnosis.cleanup();
+				//Drillgon200: Retarded hack because I'm not convinced game rules are client sync'd
+				PacketDispatcher.wrapper.sendToAll(new SurveyPacket(RBMKDials.getColumnHeight(event.world)));
+			}
+
+			if(event.phase == Phase.START) {
 				BossSpawnHandler.rollTheDice(event.world);
 				IdkWhereThisShitBelongs.serverTick(event.world);
+				TimedGenerator.automaton(event.world, 100);
 			}
-			TimedGenerator.automaton(event.world, 100);
 		}
 	}
 	

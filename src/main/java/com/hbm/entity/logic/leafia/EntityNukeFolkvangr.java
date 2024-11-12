@@ -3,10 +3,11 @@ package com.hbm.entity.logic.leafia;
 import com.hbm.entity.effect.EntityCloudFleija;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
+import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
-import com.hbm.leafialib.LeafiaEase;
+import com.llib.LeafiaEase;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.particle.leafia.ParticleFleijaVacuum;
 import io.netty.buffer.ByteBuf;
@@ -144,7 +145,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
                 awaitingBind.remove(this);
                 this.setDead();
                 for (EntityPlayer player : world.playerEntities) {
-                    player.sendMessage(new TextComponentString("ERROR>> EntityCloudFleija did not bind on time").setStyle(new Style().setColor(TextFormatting.RED)));
+                    player.sendMessage(new TextWarningLeafia("ERROR>> EntityCloudFleija did not bind in time!"));
                 }
                 return;
             }

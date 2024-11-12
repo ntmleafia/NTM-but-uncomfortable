@@ -1,4 +1,4 @@
-package com.hbm.leafialib.math;
+package com.llib.math;
 
 public class MathLeafia {
     public static short getTime32s() {

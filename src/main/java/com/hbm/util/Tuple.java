@@ -27,7 +27,7 @@ public class Tuple {
 		public Y getValue() {
 			return this.value;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -58,6 +58,14 @@ public class Tuple {
 				return false;
 			return true;
 		}
+
+		public void setKey(X key) {
+			this.key = key;
+		}
+
+		public void setValue(Y value) {
+			this.value = value;
+		}
 	}
 
 	public static class Triplet<X,Y,Z> {
@@ -83,7 +91,7 @@ public class Tuple {
 		public Z getZ() {
 			return this.z;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -119,6 +127,18 @@ public class Tuple {
 			} else if(!z.equals(other.z))
 				return false;
 			return true;
+		}
+
+		public void setX(X x) {
+			this.x = x;
+		}
+
+		public void setY(Y y) {
+			this.y = y;
+		}
+
+		public void setZ(Z z) {
+			this.z = z;
 		}
 	}
 
@@ -193,6 +213,22 @@ public class Tuple {
 		
 		public Z getZ() {
 			return this.z;
+		}
+
+		public void setW(W w) {
+			this.w = w;
+		}
+
+		public void setX(X x) {
+			this.x = x;
+		}
+
+		public void setY(Y y) {
+			this.y = y;
+		}
+
+		public void setZ(Z z) {
+			this.z = z;
 		}
 	}
 }

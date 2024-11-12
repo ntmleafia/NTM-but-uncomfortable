@@ -7,7 +7,8 @@ import java.util.UUID;
 
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.items.ModItems;
-import com.hbm.leafialib.LeafiaEase;
+import com.llib.LeafiaEase;
+import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 
@@ -22,9 +23,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -150,7 +149,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			if (!world.isRemote) {
 				this.setDead();
 				for (EntityPlayer player : world.playerEntities) {
-					player.sendMessage(new TextComponentString("ERROR>> Please summon entity_effect_torex only by /hbmleaf torex!").setStyle(new Style().setColor(TextFormatting.RED)));
+					player.sendMessage(new TextWarningLeafia("Please summon entity_effect_torex only by /hbmleaf torex!"));
 				}
 			}
 		}

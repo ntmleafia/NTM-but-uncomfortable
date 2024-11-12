@@ -269,6 +269,9 @@ public class ModBlocks {
 		ORE_CLUSTER(6),
 		ORE_HEAVY(8),
 		ORE_HEAVY_CLUSTER(9),
+
+		PWR_CASING(135),
+		PWR_INSIDE(27),
 		;
 		public final float v;
 		GenericBlockResistance(float resistance) {
@@ -1370,6 +1373,9 @@ public class ModBlocks {
 	public static final int guiID_factory_advanced = 25;
 
 	public static class PWR {
+		public static final int guiID = 273;
+		public static final float generalHardness = 24;
+		public static final float innerHardness = 8;
 		public static SoundType soundTypePWRTube = new ModSoundType(HBMSoundHandler.pipePlaced, 0.5F, 1.0F) {
 			@Override
 			public SoundEvent getBreakSound() {
@@ -1377,17 +1383,18 @@ public class ModBlocks {
 			}
 
 		};
-		public static final Block hull = new MachinePWRHull().setCreativeTab(MainRegistry.controlTab);
-		public static final Block reflector = new MachinePWRReflector().setCreativeTab(MainRegistry.controlTab);
+		public static final Block hull = new MachinePWRHull().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block reflector = new MachinePWRReflector().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
-		public static final Block source = new MachinePWRSource().setCreativeTab(MainRegistry.controlTab);
-		public static final Block element = new MachinePWRElement().setCreativeTab(MainRegistry.controlTab);
-		public static final Block control = new MachinePWRControl().setCreativeTab(MainRegistry.controlTab);
+		public static final Block source = new MachinePWRSource().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element = new MachinePWRElement().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block control = new MachinePWRControl().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block channel = new MachinePWRChannel().setCreativeTab(MainRegistry.controlTab);
-		public static final Block conductor = new MachinePWRConductor().setCreativeTab(MainRegistry.controlTab);
+		public static final Block channel = new MachinePWRChannel().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block conductor = new MachinePWRConductor().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.controlTab);
+		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block port = new MachinePWRPort().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 	}
 
 	//Big reactor

@@ -1,4 +1,4 @@
-package com.hbm.leafialib.math;
+package com.llib.math;
 // SI Unit prefixes utility I made on Lua for use in OpenComputers translated to Java.
 // Here's original code if you also play OpenComputers
 /*

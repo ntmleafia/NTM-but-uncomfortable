@@ -12,6 +12,7 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.tileentity.leafia.pwr.TileEntityPWRControl;
 import com.hbm.tileentity.leafia.pwr.TileEntityPWRElement;
 import com.hbm.util.I18nUtil;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -36,7 +37,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MachinePWRControl extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay {
+public class MachinePWRControl extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRCore {
     public MachinePWRControl() {
         super(Material.IRON,"reactor_control");
         this.setUnlocalizedName("pwr_control");
@@ -141,5 +142,15 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
         texts.add("Use name tag to label rods for group control");
 
         ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getUnlocalizedName() + ".name"), 0xFF55FF, 0x3F153F, texts);
+    }
+
+    @Override
+    public boolean tileEntityShouldCreate(World world,BlockPos pos) {
+        return !(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl);
+    }
+    @Override
+    public void neighborChanged(IBlockState state,World worldIn,BlockPos pos,Block blockIn,BlockPos fromPos) { // Fired only on server
+        super.neighborChanged(state,worldIn,pos,blockIn,fromPos);
+        beginDiagnosis(worldIn,pos);
     }
 }

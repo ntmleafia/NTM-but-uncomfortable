@@ -6,7 +6,7 @@ import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
 import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemHazard;
-import com.hbm.leafialib.math.RangeInt;
+import com.llib.math.RangeInt;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.Tuple.Pair;
 import net.minecraft.init.Items;

@@ -1,9 +1,14 @@
 package com.hbm.blocks.leafia.pwr;
 
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.leafia.MachineTooltip;
 import com.hbm.blocks.machine.BlockMachineBase;
+import com.hbm.handler.RadiationSystemNT;
+import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.tileentity.leafia.pwr.TileEntityPWRElement;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRTerminal;
+import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,21 +23,39 @@ import net.minecraft.world.chunk.Chunk;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProvider {
+public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProvider, PWRCore, IRadResistantBlock {
     public MachinePWRTerminal() {
-        super(Material.IRON,-1,"reactor_hatch");
+        super(Material.IRON,ModBlocks.PWR.guiID,"reactor_hatch");
         this.setUnlocalizedName("pwr_terminal");
     }
+
+    @Override
+    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+        RadiationSystemNT.markChunkForRebuild(worldIn, pos);
+        super.onBlockAdded(worldIn, pos, state);
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        RadiationSystemNT.markChunkForRebuild(worldIn, pos);
+        super.breakBlock(worldIn, pos, state);
+    }
+
     @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);
         addStandardInfo(tooltip);
         super.addInformation(stack,player,tooltip,advanced);
+        tooltip.add("§2[" + I18nUtil.resolveKey("trait.radshield") + "]");
+        float hardness = this.getExplosionResistance(null);
+        if(hardness > 50){
+            tooltip.add("§6" + I18nUtil.resolveKey("trait.blastres", hardness));
+        }
     }
     @Override
     public TileEntity createNewTileEntity(World worldIn,int meta) {
-        return null;
+        return new TileEntityPWRTerminal();
     }
 
     @Override
@@ -43,5 +66,10 @@ public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProv
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL; // grrrrwl
+    }
+
+    @Override
+    public boolean tileEntityShouldCreate(World world,BlockPos pos) {
+        return true;
     }
 }

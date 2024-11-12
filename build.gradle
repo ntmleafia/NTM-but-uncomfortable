@@ -86,6 +86,7 @@ repositories {
         name = "jared maven"
         url = "http://maven.blamejared.com/"
     }
+    /*
     maven { //GC
         name = "galacticraft"
         url = "https://maven.galacticraft.net/repository/legacy/"
@@ -93,7 +94,7 @@ repositories {
     maven { //  baubles
         name = "mcmoddev"
         url = "https://maven.mcmoddev.com"
-    }
+    }*/
     maven {
         name = 'CoFH Maven'
         url = 'https://maven.covers1624.net'
@@ -132,9 +133,11 @@ dependencies {
 
     compileOnly "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_crafttweaker}"
 
-    compileOnly fg.deobf("dev.galacticraft:galacticraft-legacy:${version_gc}")
-
-    compileOnly fg.deobf("com.azanor:Baubles:${version_baubles}")
+    //compileOnly fg.deobf("dev.galacticraft:galacticraft-legacy:${version_gc}")
+    // fuckye~ fuckye~ faauckyyee~~
+    //compileOnly fg.deobf("com.azanor:Baubles:${version_baubles}")
+    compile files("../Galacticraft-1.12.2-${version_gc}.jar")
+    compile files("../Baubles-${version_baubles}.jar")
 
     compileOnly fg.deobf("cofh:RedstoneFlux:1.12-${version_redstoneflux}:universal")
 

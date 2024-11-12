@@ -1,13 +1,13 @@
-package com.hbm.leafialib.math;
+package com.llib.math;
 
-import com.hbm.leafialib.math.base.RangeBase;
+import com.llib.math.base.RangeBase;
 
 import java.util.Iterator;
 
-public class RangeLong extends RangeBase implements Iterable<Long> {
-    long min;
-    long max;
-    public RangeLong(long min,long max) {
+public class RangeInt extends RangeBase implements Iterable<Integer> {
+    int min;
+    int max;
+    public RangeInt(int min,int max) {
         this.min = Math.min(min,max);
         this.max = Math.max(min,max);
     }
@@ -46,15 +46,15 @@ public class RangeLong extends RangeBase implements Iterable<Long> {
     public double doubleMax() {
         return this.max;
     }
-    public Iterator<Long> iterator() {
-        return new Iterator<Long>() {
-            long cursor = min;
+    public Iterator<Integer> iterator() {
+        return new Iterator<Integer>() {
+            int cursor = min;
             @Override
             public boolean hasNext() {
                 return cursor <= max;
             }
             @Override
-            public Long next() {
+            public Integer next() {
                 return cursor++;
             }
         };

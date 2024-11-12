@@ -1,4 +1,4 @@
-package com.hbm.leafialib;
+package com.llib;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.SyntaxErrorException;

@@ -1,4 +1,4 @@
-package com.hbm.leafialib.math.base;
+package com.llib.math.base;
 
 public abstract class RangeBase {
     public abstract double lerp(double t);

@@ -4,6 +4,7 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.inventory.gui.GuiInfoContainer;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.lib.RefStrings;
+import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.tileentity.leafia.TileEntityReactorZirnox;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.Minecraft;
@@ -184,6 +185,7 @@ public class ZirnoxGUI extends GuiInfoContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int i, int j) {
+		LeafiaGls.popMatrix();
 		String name = this.entity.hasCustomInventoryName() ? this.entity.getInventoryName() : I18n.format(this.entity.getInventoryName());
 
 		this.fontRenderer.drawString(name, 107 - this.fontRenderer.getStringWidth(name) / 2, 4, 15066597);
@@ -192,6 +194,8 @@ public class ZirnoxGUI extends GuiInfoContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		LeafiaGls.pushMatrix();
+		LeafiaGls.scale(0.7,0.7,1);
 		super.drawDefaultBackground();
 		GL11.glColor4f(1.0F,1.0F,1.0F,1.0F);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);

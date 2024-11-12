@@ -1,7 +1,7 @@
 package com.hbm.render.entity;
 
 import com.hbm.entity.effect.EntityCloudFleijaRainbow;
-import com.hbm.leafialib.LeafiaEase;
+import com.llib.LeafiaEase;
 import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;

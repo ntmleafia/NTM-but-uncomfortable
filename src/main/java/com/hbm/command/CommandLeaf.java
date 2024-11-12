@@ -2,7 +2,8 @@ package com.hbm.command;
 
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
-import com.hbm.leafialib.LeafiaEase;
+import com.llib.LeafiaEase;
+import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.main.leafia.LeafiaShakecam;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -351,14 +352,14 @@ public class CommandLeaf extends CommandBase {
                                                 multipliers[i] = 1/(float)parseDouble(arg);
                                                 break;
                                             default:
-                                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> Invalid operator: "+op).setStyle(new Style().setColor(TextFormatting.RED)));
+                                                Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Invalid operator: "+op));
                                                 break;
                                         }
                                     } catch (NumberInvalidException e) {
-                                        Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> "+e.getMessage()).setStyle(new Style().setColor(TextFormatting.RED)));
+                                        Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia(e.getMessage()));
                                     }
                                 } else
-                                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> Malformed numeric parameter!").setStyle(new Style().setColor(TextFormatting.RED)));
+                                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("Malformed numeric parameter!").setStyle(new Style().setColor(TextFormatting.RED)));
                             }
                         }
                         if (arg.startsWith("ease=")) {
@@ -371,7 +372,7 @@ public class CommandLeaf extends CommandBase {
                                     ease = easeInsta.ease;
                                     direction = easeInsta.dir;
                                 } catch (CommandException e) {
-                                    Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> " + e.getMessage()).setStyle(new Style().setColor(TextFormatting.RED)));
+                                    Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia(e.getMessage()));
                                 }
                             }
                         }
@@ -379,7 +380,7 @@ public class CommandLeaf extends CommandBase {
                             try {
                                 preset = LeafiaShakecam.Preset.valueOf(arg.substring(7));
                             } catch (IllegalArgumentException e) {
-                                Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> " + e.getMessage()).setStyle(new Style().setColor(TextFormatting.RED)));
+                                Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia(e.getMessage()));
                             }
                         }
                     }
@@ -388,7 +389,7 @@ public class CommandLeaf extends CommandBase {
                         case "simple": shake = new LeafiaShakecam.shakeSimple(params[4],ease,direction); break;
                         case "smooth": shake = new LeafiaShakecam.shakeSmooth(params[4],ease,direction); break;
                         default:
-                            Minecraft.getMinecraft().player.sendMessage(new TextComponentString("ERROR>> Invalid type: "+type).setStyle(new Style().setColor(TextFormatting.RED)));
+                            Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Invalid type: "+type));
                             return;
                     }
                     if (preset != null)

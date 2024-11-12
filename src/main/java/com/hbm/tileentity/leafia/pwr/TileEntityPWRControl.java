@@ -1,6 +1,7 @@
 package com.hbm.tileentity.leafia.pwr;
 
 import com.hbm.blocks.leafia.pwr.MachinePWRControl;
+import com.hbm.blocks.leafia.pwr.PWRDiagnosis;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaPacketReceiver;
 import com.hbm.lib.HBMSoundHandler;
@@ -64,12 +65,15 @@ public class TileEntityPWRControl extends TileEntity implements PWRBase, ITickab
         }
     }
     @Override
-    public void setCore(BlockPos pos) {
+    public void setCore(@Nullable BlockPos pos) {
         corePos = pos;
     }
 
     @Override
     public void setData(@Nullable PWRData data) {
+        if (this.data != data) {
+            PWRData.addDataToPacket(LeafiaPacket._start(this),data).__sendToAffectedClients();
+        }
         this.data = data;
     }
     @Override
@@ -91,11 +95,12 @@ public class TileEntityPWRControl extends TileEntity implements PWRBase, ITickab
             targetPosition = compound.getDouble("rodD");
         if (compound.hasKey("name"))
             name = compound.getString("name");
-        if (compound.hasKey("data")) {
-            data = new PWRData();
-            data.readFromNBT(compound);
-        }
         super.readFromNBT(compound);
+        if (compound.hasKey("data")) { // DO NOT MOVE THIS ABOVE SUPER CALL! super.readFromNBT() is where this.pos gets initialized!!
+            data = new PWRData(this);
+            data.readFromNBT(compound);
+            //new PWRDiagnosis(world).addPosition(pos);
+        }
     }
 
     @Override
@@ -204,17 +209,28 @@ public class TileEntityPWRControl extends TileEntity implements PWRBase, ITickab
             case 2:
                 name = (String)value;
                 break;
+            case 31:
+                data = PWRData.tryLoadFromPacket(this,value);
+                break;
         }
+        if (this.data != null)
+            this.data.onReceivePacketLocal(key,value);
     }
     @Override
     public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {/*
         if (key == 0) {
             generateSyncPacket().__sendToClient(plr);
         }*/
+        if (this.data != null)
+            this.data.onReceivePacketServer(key,value,plr);
     }
 
     @Override
     public void onPlayerValidate(EntityPlayer plr) {
-        generateSyncPacket().__write(!name.equals(defaultName) ? 2 : -1,name).__sendToClient(plr);
+        LeafiaPacket packet = generateSyncPacket().__write(!name.equals(defaultName) ? 2 : -1,name);
+        if (this.data != null) {
+            PWRData.addDataToPacket(packet,this.data);
+        }
+        packet.__sendToClient(plr);
     }
 }

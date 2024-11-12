@@ -3,7 +3,7 @@ package com.hbm.inventory.leafia.inventoryutils;
 import com.hbm.inventory.RecipesCommon.*;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeBookTab;
-import com.hbm.leafialib.math.RangeInt;
+import com.llib.math.RangeInt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 

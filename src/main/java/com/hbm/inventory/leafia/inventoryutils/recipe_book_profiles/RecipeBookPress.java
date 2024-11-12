@@ -1,18 +1,13 @@
 package com.hbm.inventory.leafia.inventoryutils.recipe_book_profiles;
 
-import com.hbm.inventory.DiFurnaceRecipes;
 import com.hbm.inventory.PressRecipes;
 import com.hbm.inventory.RecipesCommon;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.items.ModItems;
-import com.hbm.items.special.ItemHazard;
-import com.hbm.leafialib.math.RangeInt;
-import com.hbm.main.MainRegistry;
+import com.llib.math.RangeInt;
 import com.hbm.util.Tuple.Pair;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.*;

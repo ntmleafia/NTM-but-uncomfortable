@@ -13,9 +13,9 @@ public class HbmCoreModContainer extends DummyModContainer {
 	public HbmCoreModContainer() {
 		super(new ModMetadata());
         ModMetadata meta = getMetadata();
-        meta.modId = "hbmcore";
-        meta.name = "NTMCore";
-        meta.description = "Hbm core mod";
+        meta.modId = "leafiacore";
+        meta.name = "LeafiaCore";
+        meta.description = "Binary class transformers to push the boundaries of the mod";
         meta.version = "1.12.2-1.0";
         meta.authorList = Arrays.asList("Hbm/TheBobcat", "Drillgon200", "TheOriginalGolem");
 	}

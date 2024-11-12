@@ -1,6 +1,6 @@
 package com.hbm.inventory.leafia.inventoryutils;
 
-import com.hbm.leafialib.exceptions.LeafiaDevFlaw;
+import com.llib.exceptions.LeafiaDevFlaw;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.Tuple.Pair;
 import io.netty.buffer.ByteBuf;
@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -83,6 +84,10 @@ public class LeafiaPacket implements IMessage {
 				key += 1<<5;
 			} else if (value instanceof String) {
 				key += 2<<5;
+			} else if (value instanceof BlockPos) {
+				key += 3<<5;
+			} else if (value instanceof Vec3d) {
+				key += 4<<5;
 			} else
 				throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Given type not supported for LeafiaPacket.. ("+value.getClass().getName()+")");
 		}
@@ -110,6 +115,18 @@ public class LeafiaPacket implements IMessage {
 					case 10: ByteBufUtils.writeTag(buf,(NBTTagCompound)value); break;
 					case 11: ByteBufUtils.writeItemStack(buf,(ItemStack)value); break;
 					case 12: ByteBufUtils.writeUTF8String(buf,(String)value); break;
+					case 13:
+						BlockPos bpos = (BlockPos)value;
+						buf.writeInt(bpos.getX());
+						buf.writeInt(bpos.getY());
+						buf.writeInt(bpos.getZ());
+						break;
+					case 14:
+						Vec3d vec3d = (Vec3d)value;
+						buf.writeDouble(vec3d.x);
+						buf.writeDouble(vec3d.y);
+						buf.writeDouble(vec3d.z);
+						break;
 					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Unrecognized data type "+c+"!");
 				}
 			} else {
@@ -160,6 +177,8 @@ public class LeafiaPacket implements IMessage {
 					case 10: value = ByteBufUtils.readTag(buf); break;
 					case 11: value = ByteBufUtils.readItemStack(buf); break;
 					case 12: value = ByteBufUtils.readUTF8String(buf); break;
+					case 13: value = new BlockPos(buf.readInt(),buf.readInt(),buf.readInt()); break;
+					case 14: value = new Vec3d(buf.readDouble(),buf.readDouble(),buf.readDouble()); break;
 					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Receiver] Unrecognized data type "+c+"!");
 				}
 				signal.put(entry,new Pair<>(readMode,value));

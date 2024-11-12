@@ -5,14 +5,13 @@ import com.hbm.inventory.RecipesCommon.*;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeBookTab;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeButton;
-import com.hbm.leafialib.math.RangeInt;
+import com.llib.math.RangeInt;
 import com.hbm.lib.RefStrings;
 
 import java.util.*;
 import javax.annotation.Nullable;
 
 import com.hbm.main.ModEventHandlerClient;
-import com.hbm.main.leafia.leafiashader.LeafiaGls;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple;
@@ -39,7 +38,6 @@ import net.minecraft.network.play.client.CPacketRecipeInfo;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;

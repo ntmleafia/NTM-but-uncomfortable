@@ -4,7 +4,7 @@ import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.RecipesCommon;
 import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
 import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
-import com.hbm.leafialib.math.RangeInt;
+import com.llib.math.RangeInt;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
 import net.minecraft.creativetab.CreativeTabs;

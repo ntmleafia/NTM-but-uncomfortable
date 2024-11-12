@@ -3,9 +3,7 @@ package com.hbm.main;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import com.hbm.command.CommandLeaf;
 import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
@@ -15,6 +13,8 @@ import com.hbm.main.leafia.DispenserBullet;
 import com.hbm.tileentity.leafia.*;
 import com.hbm.tileentity.leafia.pwr.TileEntityPWRControl;
 import com.hbm.tileentity.leafia.pwr.TileEntityPWRElement;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRPort;
+import com.hbm.tileentity.leafia.pwr.TileEntityPWRTerminal;
 import net.minecraft.entity.item.EntityExpBottle;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -436,6 +436,8 @@ public class MainRegistry {
 	public static final List<LeafiaQuickModel> rendererWaiting = new ArrayList<>();
 
 	Random rand = new Random();
+
+	public static final Map<Class<? extends TileEntity>,String> registerTileEntities = new HashMap<>();
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -957,6 +959,8 @@ public class MainRegistry {
 
 		GameRegistry.registerTileEntity(TileEntityPWRElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
 		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
+		GameRegistry.registerTileEntity(TileEntityPWRPort.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_port"));
+		GameRegistry.registerTileEntity(TileEntityPWRTerminal.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
 

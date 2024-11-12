@@ -1,11 +1,11 @@
-package com.hbm.leafialib.math;
+package com.llib.math;
 
-import com.hbm.leafialib.math.base.RangeBase;
+import com.llib.math.base.RangeBase;
 
-public class RangeFloat extends RangeBase {
-    float min;
-    float max;
-    public RangeFloat(float min,float max) {
+public class RangeDouble extends RangeBase {
+    double min;
+    double max;
+    public RangeDouble(double min,double max) {
         this.min = Math.min(min,max);
         this.max = Math.max(min,max);
     }
@@ -32,9 +32,7 @@ public class RangeFloat extends RangeBase {
     public double lerp(double t) {
         return min + (max - min) * t;
     }
-    public float lerp(float t) {
-        return min + (max - min) * t;
-    }
+    public float lerp(float t) { return (float)(min + (max - min) * t); } // not very preferable to use..
 
     @Override
     public double doubleMin() {
