@@ -8,7 +8,7 @@ import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
 import com.hbm.handler.RadiationSystemNT.RadPocket;
 import com.hbm.main.MainRegistry;
-import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.hbm.saveddata.RadiationSaveStructure;
 import com.hbm.saveddata.RadiationSavedData;
 

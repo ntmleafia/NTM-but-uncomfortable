@@ -1,0 +1,49 @@
+package com.llib.math.range;
+
+import com.llib.math.range.RangeBase;
+
+public class RangeFloat extends RangeBase {
+    public float min;
+    public float max;
+    public RangeFloat(float min,float max) {
+        this.min = Math.min(min,max);
+        this.max = Math.max(min,max);
+    }
+    public boolean isInRange(int x) {
+        if (x > max) return false;
+        if (x < min) return false;
+        return true;
+    }
+    public boolean isInRange(long x) {
+        if (x > max) return false;
+        if (x < min) return false;
+        return true;
+    }
+    public boolean isInRange(float x) {
+        if (x > max) return false;
+        if (x < min) return false;
+        return true;
+    }
+    public boolean isInRange(double x) {
+        if (x > max) return false;
+        if (x < min) return false;
+        return true;
+    }
+    public double lerp(double t) {
+        return min + (max - min) * t;
+    }
+    public float lerp(float t) {
+        return min + (max - min) * t;
+    }
+    public double ratio(double x) { return (x-min)/(max-min); }
+    public float ratio(float x) { return (float)((x-min)/(max-min)); }
+
+    @Override
+    public double doubleMin() {
+        return this.min;
+    }
+    @Override
+    public double doubleMax() {
+        return this.max;
+    }
+}

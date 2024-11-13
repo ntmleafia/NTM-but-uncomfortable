@@ -2,24 +2,17 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.machine.MachineDiFurnaceRTG;
 import com.hbm.inventory.DiFurnaceRecipes;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemRTGPellet;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.RTGUtil;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TileEntityDiFurnaceRTG extends TileEntityMachineBase implements ITickable, ICapabilityProvider {
 

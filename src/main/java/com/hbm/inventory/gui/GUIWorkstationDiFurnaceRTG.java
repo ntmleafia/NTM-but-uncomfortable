@@ -1,9 +1,9 @@
 package com.hbm.inventory.gui;
 
-import com.hbm.inventory.leafia.inventoryutils.LeafiaGuiWorkstation;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBook;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookProfile;
-import com.hbm.inventory.leafia.inventoryutils.recipe_book_profiles.RecipeBookBlastFurnace;
+import com.leafia.unsorted.recipe_book.LeafiaGuiWorkstation;
+import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBook;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.leafia.unsorted.recipe_book.profiles.RecipeBookBlastFurnace;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.inventory.container.ContainerDiFurnaceRTG;

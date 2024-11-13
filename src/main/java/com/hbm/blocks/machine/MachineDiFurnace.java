@@ -3,7 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
+import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.hbm.items.ModItems;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;

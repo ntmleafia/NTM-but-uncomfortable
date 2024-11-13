@@ -5,9 +5,8 @@ import java.util.List;
 
 import com.hbm.config.BombConfig;
 import com.hbm.config.CompatibilityConfig;
-import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.main.MainRegistry;
-import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
@@ -18,7 +17,6 @@ import org.apache.logging.log4j.Level;
 import com.hbm.config.GeneralConfig;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.explosion.ExplosionTom;
-import com.hbm.main.MainRegistry;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;

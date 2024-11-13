@@ -3,7 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hbm.blocks.leafia.MachineTooltip;
+import com.leafia.dev.MachineTooltip;
 import com.hbm.lib.Library;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.BlockDummyable;
@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;

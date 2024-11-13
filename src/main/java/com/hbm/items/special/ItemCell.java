@@ -6,7 +6,7 @@ import java.util.Random;
 import com.hbm.blocks.bomb.BlockCrashedBomb;
 import com.hbm.config.BombConfig;
 import com.hbm.config.WeaponConfig;
-import com.hbm.entity.effect.EntityCloudFleija;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.forgefluid.HbmFluidHandlerCell;
 import com.hbm.forgefluid.HbmFluidHandlerItemStack;

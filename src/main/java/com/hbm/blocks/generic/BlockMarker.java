@@ -1,7 +1,7 @@
 package com.hbm.blocks.generic;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.leafia.MachineTooltip;
+import com.leafia.dev.MachineTooltip;
 import com.hbm.tileentity.machine.TileEntityStructureMarker;
 
 import net.minecraft.block.Block;

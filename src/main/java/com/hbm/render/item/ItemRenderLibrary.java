@@ -2,7 +2,7 @@ package com.hbm.render.item;
 
 import java.util.HashMap;
 
-import com.hbm.main.LeafiaQuickModel;
+import com.leafia.dev.blockitems.LeafiaQuickModel;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.animloader.AnimationWrapper;

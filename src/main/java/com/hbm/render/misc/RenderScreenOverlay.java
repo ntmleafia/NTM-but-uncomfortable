@@ -1,6 +1,5 @@
 package com.hbm.render.misc;
 
-import net.minecraft.client.renderer.OpenGlHelper;
 import org.lwjgl.opengl.GL11;
 import com.hbm.lib.RefStrings;
 import com.hbm.config.RadiationConfig;
@@ -20,8 +19,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.hbm.main.leafia.IdkWhereThisShitBelongs.darkness;
-import static com.hbm.main.leafia.IdkWhereThisShitBelongs.dustDisplayTicks;
+import static com.leafia.passive.effects.IdkWhereThisShitBelongs.darkness;
+import static com.leafia.passive.effects.IdkWhereThisShitBelongs.dustDisplayTicks;
 
 @SideOnly(Side.CLIENT)
 public class RenderScreenOverlay {

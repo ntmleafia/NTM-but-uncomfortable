@@ -7,19 +7,19 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
-import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacketReceiver;
-import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaDummyRecipe;
-import com.hbm.inventory.leafia.inventoryutils.recipebooks.LeafiaRecipeBookTab;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
+import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
+import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.llib.LeafiaUtil;
-import com.hbm.main.leafia.BigBruh;
-import com.hbm.main.leafia.IdkWhereThisShitBelongs;
-import com.hbm.main.leafia.LeafiaShakecam;
-import com.hbm.main.leafia.leafiashader.LeafiaGls;
-import com.hbm.render.item.leafia.LeafiaRodBakedModel;
-import com.hbm.render.item.leafia.LeafiaRodRender;
+import com.leafia.shit.leafiashader.BigBruh;
+import com.leafia.passive.effects.IdkWhereThisShitBelongs;
+import com.leafia.passive.effects.LeafiaShakecam;
+import com.leafia.transformer.LeafiaGls;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodBakedModel;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodRender;
 import com.hbm.util.Tuple.*;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.gui.toasts.RecipeToast;
@@ -1934,17 +1934,17 @@ public class ModEventHandlerClient {
 						List<Triplet<Integer,Integer,List<Pair<String,NBTBase>>>> stack = new ArrayList<>();
 						stack.add(new Triplet<>(0,0,new ArrayList<>()));
 						for (String key : nbt.getKeySet()) {
-							stack.get(0).getZ().add(new Pair<>(key,nbt.getTag(key)));
+							stack.get(0).getC().add(new Pair<>(key,nbt.getTag(key)));
 						}
 						while (stack.size() > 0) {
 							Triplet<Integer,Integer,List<Pair<String,NBTBase>>> stackItem = stack.get(stack.size()-1);
-							List<Pair<String,NBTBase>> compound = stackItem.getZ();
+							List<Pair<String,NBTBase>> compound = stackItem.getC();
 							if (compound.size() > 0) {
 								Pair<String,NBTBase> entry = compound.remove(0);
 								textY += 10;
-								String lineTxt = (entry.getKey() != null) ? TextFormatting.YELLOW+"["+entry.getKey()+"] " : "["+stackItem.getY()+"] ";
-								stackItem.setY(stackItem.getY()+1);
-								NBTBase value = entry.getValue();
+								String lineTxt = (entry.getA() != null) ? TextFormatting.YELLOW+"["+entry.getA()+"] " : "["+stackItem.getB()+"] ";
+								stackItem.setB(stackItem.getB()+1);
+								NBTBase value = entry.getB();
 								if (value instanceof NBTTagByte)
 									lineTxt += TextFormatting.BLUE + "" + ((NBTTagByte) value).getByte();
 								if (value instanceof NBTTagShort)
@@ -1987,8 +1987,8 @@ public class ModEventHandlerClient {
 								if (value instanceof NBTTagList)
 									textX += 6;
 							}
-							if (stack.get(stack.size()-1).getZ().size() <= 0) {
-								switch(stack.get(stack.size()-1).getX()) {
+							if (stack.get(stack.size()-1).getC().size() <= 0) {
+								switch(stack.get(stack.size()-1).getA()) {
 									case 1:
 										textX -= 6;
 										textY += 10;

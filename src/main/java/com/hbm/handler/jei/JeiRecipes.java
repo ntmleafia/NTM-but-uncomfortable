@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.hbm.blocks.ModBlocks;
-import com.hbm.config.GeneralConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.forgefluid.SpecialContainerFillLists.EnumCell;
 import com.hbm.forgefluid.SpecialContainerFillLists.EnumCanister;
@@ -40,11 +38,9 @@ import com.hbm.inventory.MagicRecipes.MagicRecipe;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
-import com.hbm.inventory.ChemplantRecipes;
 import com.hbm.handler.jei.UpgradeDetailsDatabase.UpgradeTabContent;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemAssemblyTemplate;
-import com.hbm.items.machine.ItemChemistryTemplate;
 import com.hbm.items.machine.ItemFluidIcon;
 import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
@@ -52,7 +48,6 @@ import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
 import com.hbm.lib.Library;
-import com.hbm.main.MainRegistry;
 import com.hbm.util.WeightedRandomObject;
 import com.hbm.util.Tuple.Quartet;
 import com.hbm.util.Tuple.Pair;
@@ -66,8 +61,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -772,7 +765,7 @@ public class JeiRecipes {
 		
 		for(Map.Entry<Pair<PressRecipes.PressType, AStack>, ItemStack> entry : PressRecipes.pressRecipes.entrySet()){
 
-			pressRecipes.add(new PressRecipe(PressRecipes.getStampList(entry.getKey().getKey()), entry.getKey().getValue().getStackList(), entry.getValue()));
+			pressRecipes.add(new PressRecipe(PressRecipes.getStampList(entry.getKey().getA()), entry.getKey().getB().getStackList(), entry.getValue()));
 		}
 		
 		return pressRecipes;
@@ -785,7 +778,7 @@ public class JeiRecipes {
 		alloyFurnaceRecipes = new ArrayList<AlloyFurnaceRecipe>();
 
 		for(Map.Entry<Pair<AStack, AStack>, ItemStack> pairEntry : DiFurnaceRecipes.diRecipes.entrySet()){
-			alloyFurnaceRecipes.add(new AlloyFurnaceRecipe(pairEntry.getKey().getKey(), pairEntry.getKey().getValue(), pairEntry.getValue()));
+			alloyFurnaceRecipes.add(new AlloyFurnaceRecipe(pairEntry.getKey().getA(), pairEntry.getKey().getB(), pairEntry.getValue()));
 		}
 		return alloyFurnaceRecipes;
 	}
@@ -963,8 +956,8 @@ public class JeiRecipes {
 		refineryRecipes = new ArrayList<RefineryRecipe>();
 		
 		for(Fluid fluid : RefineryRecipes.refineryRecipesMap.keySet()){
-			FluidStack[] outputFluids = RefineryRecipes.getRecipe(fluid).getKey();
-			ItemStack outputItem = RefineryRecipes.getRecipe(fluid).getValue();
+			FluidStack[] outputFluids = RefineryRecipes.getRecipe(fluid).getA();
+			ItemStack outputItem = RefineryRecipes.getRecipe(fluid).getB();
 			refineryRecipes.add(new RefineryRecipe(
 					ItemFluidIcon.getStackWithQuantity(fluid, 1000),
 					Arrays.asList(
@@ -1011,8 +1004,8 @@ public class JeiRecipes {
 			fractioningRecipes.add(new FractioningRecipe(
 					ItemFluidIcon.getStackWithQuantity(fluid, 1000),
 					Arrays.asList(
-						ItemFluidIcon.getStackWithQuantity(recipe.getW(), recipe.getY() * 10),
-						ItemFluidIcon.getStackWithQuantity(recipe.getX(), recipe.getZ() * 10)
+						ItemFluidIcon.getStackWithQuantity(recipe.getA(), recipe.getC() * 10),
+						ItemFluidIcon.getStackWithQuantity(recipe.getB(), recipe.getD() * 10)
 					)
 				)
 			);

@@ -2,7 +2,7 @@ package com.hbm.blocks.bomb;
 
 import java.util.List;
 
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.BombConfig;

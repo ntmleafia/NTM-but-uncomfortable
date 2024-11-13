@@ -18,7 +18,7 @@ import com.hbm.items.machine.ItemFFFluidDuct;
 import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.items.machine.ItemFuelRod;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.special.ItemHot;
 import com.hbm.items.special.ItemWasteLong;

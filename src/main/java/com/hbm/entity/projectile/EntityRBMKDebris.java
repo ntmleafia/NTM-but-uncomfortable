@@ -88,7 +88,7 @@ public class EntityRBMKDebris extends EntityDebrisBase {
 		}
 	}
 	@Override
-	int getLifetime(){
+	public int getLifetime(){
 
 		switch(this.getType()){
 		case BLANK:

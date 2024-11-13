@@ -1,7 +1,7 @@
 package com.hbm.inventory.container;
 
 import com.hbm.inventory.SlotMachineOutput;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaItemTransferable;
+import com.leafia.dev.container_utility.LeafiaItemTransferable;
 import com.hbm.tileentity.machine.TileEntityDiFurnaceRTG;
 
 import net.minecraft.entity.player.EntityPlayer;

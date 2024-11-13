@@ -1,6 +1,5 @@
 package com.hbm.entity.projectile;
 
-import com.hbm.items.ModItems;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.machine.rbmk.RBMKDials;
 import com.hbm.util.ContaminationUtil;
@@ -10,7 +9,6 @@ import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -136,7 +134,7 @@ public class EntityDebrisBase extends Entity {
 		}
 	}
 
-	int getLifetime(){ return 0; }
+	public int getLifetime(){ return 0; }
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt){

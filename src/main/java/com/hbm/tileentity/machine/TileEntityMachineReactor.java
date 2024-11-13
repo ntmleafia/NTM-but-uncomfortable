@@ -2,7 +2,7 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.inventory.BreederRecipes.BreederRecipe;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import net.minecraft.item.ItemStack;

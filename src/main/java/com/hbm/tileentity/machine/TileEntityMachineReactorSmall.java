@@ -12,7 +12,7 @@ import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFuelRod;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;

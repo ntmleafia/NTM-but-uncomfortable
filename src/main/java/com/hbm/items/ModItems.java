@@ -147,7 +147,7 @@ import com.hbm.items.machine.ItemStamp;
 import com.hbm.items.machine.ItemTemplateFolder;
 import com.hbm.items.machine.ItemTurretBiometry;
 import com.hbm.items.machine.ItemTurretChip;
-import com.hbm.items.ohno.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.items.ohno.ItemMissileCustomNuke;
 import com.hbm.items.ohno.ItemOhNo;
 import com.hbm.items.special.ItemSimpleConsumable;
@@ -209,7 +209,7 @@ import com.hbm.items.tool.ItemDigammaDiagnostic;
 import com.hbm.items.tool.ItemLungDiagnostic;
 import com.hbm.items.tool.ItemGuideBook;
 import com.hbm.items.tool.ItemKey;
-import com.hbm.items.tool.ItemLaserDetonator;
+import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.hbm.items.tool.ItemLeadBox;
 import com.hbm.items.tool.ItemLock;
 import com.hbm.items.tool.ItemMS;
@@ -304,8 +304,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import static com.hbm.items.ohno.ItemLeafiaRod.ItemType.BILLET;
-import static com.hbm.items.ohno.ItemLeafiaRod.Purity.*;
+import static com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod.ItemType.BILLET;
+import static com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod.Purity.*;
 
 public class ModItems {
 	

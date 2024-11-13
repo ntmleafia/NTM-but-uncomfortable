@@ -1,8 +1,7 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.leafia.MachineTooltip;
-import com.hbm.items.ModItems;
+import com.leafia.dev.MachineTooltip;
 import com.hbm.tileentity.machine.TileEntityHadronDiode;
 import com.hbm.tileentity.machine.TileEntityHadronDiode.DiodeConfig;
 

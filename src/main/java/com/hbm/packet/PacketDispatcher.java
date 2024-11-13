@@ -1,14 +1,14 @@
 package com.hbm.packet;
 
-import com.hbm.command.CommandLeaf;
+import com.leafia.CommandLeaf;
 import com.hbm.entity.effect.EntityNukeTorex;
-import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
-import com.hbm.items.tool.ItemLaserDetonator;
+import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
+import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
+import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.hbm.lib.RefStrings;
 
-import com.hbm.main.leafia.IdkWhereThisShitBelongs;
+import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

@@ -1,7 +1,7 @@
 package com.hbm.core.leafia;
 
-import com.hbm.main.leafia.WorldServerLeafia;
-import com.hbm.main.leafia.leafiashader.LeafiaGls;
+import com.leafia.transformer.WorldServerLeafia;
+import com.leafia.transformer.LeafiaGls;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import org.objectweb.asm.ClassReader;

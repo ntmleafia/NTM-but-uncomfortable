@@ -2,8 +2,8 @@ package com.hbm.tileentity.bomb;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.NukeBoy;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacket;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaPacketReceiver;
+import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.hbm.items.ModItems;
 
 import net.minecraft.entity.player.EntityPlayer;

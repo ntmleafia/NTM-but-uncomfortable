@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Multimap;
-import com.hbm.entity.effect.EntityCloudFleijaRainbow;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.projectile.EntityExplosiveBeam;
 import com.hbm.interfaces.IHasCustomModel;

@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.config.CompatibilityConfig;
-import com.hbm.entity.logic.IChunkLoader;
-import com.hbm.entity.logic.leafia.EntityNukeFolkvangr;
+import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -32,12 +31,10 @@ import com.hbm.explosion.ExplosionNukeAdvanced;
 import com.hbm.explosion.ExplosionSolinium;
 import com.hbm.explosion.ExplosionDrying;
 import com.hbm.interfaces.Spaghetti;
-import com.hbm.main.MainRegistry;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 @Spaghetti("why???")

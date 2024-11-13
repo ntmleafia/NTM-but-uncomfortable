@@ -3,7 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.leafia.MachineTooltip;
+import com.leafia.dev.MachineTooltip;
 import com.hbm.util.I18nUtil;
 
 import net.minecraft.block.Block;
@@ -12,8 +12,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
 
 public class BlockHadronCoil extends Block {
 

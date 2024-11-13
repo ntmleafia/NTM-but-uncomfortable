@@ -2,6 +2,7 @@ package com.hbm.entity.effect;
 
 import com.hbm.config.CompatibilityConfig;
 
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.nbt.NBTTagCompound;

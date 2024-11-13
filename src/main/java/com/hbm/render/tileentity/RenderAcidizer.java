@@ -1,7 +1,6 @@
 package com.hbm.render.tileentity;
 
-import com.hbm.main.LeafiaQuickModel;
-import com.hbm.main.ResourceManager;
+import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

@@ -3,7 +3,7 @@ package com.hbm.items.weapon;
 import java.util.List;
 import java.util.Random;
 
-import com.hbm.entity.effect.EntityCloudFleijaRainbow;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.projectile.EntityModBeam;
 import com.hbm.items.ModItems;

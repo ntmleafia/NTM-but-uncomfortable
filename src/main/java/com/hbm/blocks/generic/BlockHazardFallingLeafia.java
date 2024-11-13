@@ -1,11 +1,9 @@
 package com.hbm.blocks.generic;
 
-import com.hbm.blocks.BlockFallingLeafia;
-import com.hbm.blocks.ModBlocks;
+import com.leafia.shit.BlockFallingLeafia;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.saveddata.RadiationSavedData;
-import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -3,7 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hbm.blocks.leafia.MachineTooltip;
+import com.leafia.dev.MachineTooltip;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ILookOverlay;

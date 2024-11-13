@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hbm.config.WeaponConfig;
 import com.hbm.config.BombConfig;
-import com.hbm.entity.effect.EntityCloudFleijaRainbow;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.items.ModItems;
 

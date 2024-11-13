@@ -125,8 +125,8 @@ public class TileEntityMachineFractionTower extends TileEntity  implements INBTP
 		Quartet<Fluid, Fluid, Integer, Integer> quart = RefineryRecipes.getFractions(types[0]);
 		
 		if(quart != null) {
-			setTankType(1, quart.getW());
-			setTankType(2, quart.getX());
+			setTankType(1, quart.getA());
+			setTankType(2, quart.getB());
 		}
 	}
 	
@@ -136,8 +136,8 @@ public class TileEntityMachineFractionTower extends TileEntity  implements INBTP
 		
 		if(quart != null) {
 			
-			int left = quart.getY();
-			int right = quart.getZ();
+			int left = quart.getC();
+			int right = quart.getD();
 			
 			if(tanks[0].getFluidAmount() >= 100 && hasSpace(left, right)) {
 				tanks[0].drain(100, true);

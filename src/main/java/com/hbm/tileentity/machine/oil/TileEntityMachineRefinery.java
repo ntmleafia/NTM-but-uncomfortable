@@ -4,7 +4,6 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.RefineryRecipes;
-import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.packet.AuxElectricityPacket;
@@ -13,7 +12,6 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.Tuple.Pair;
 
 import api.hbm.energy.IEnergyUser;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -72,7 +70,7 @@ public class TileEntityMachineRefinery extends TileEntityMachineBase implements 
         }
 		Pair<FluidStack[], ItemStack> recipe = RefineryRecipes.getRecipe(tankTypes[0]);
 		if (recipe != null) {
-			FluidStack[] outputFluids = recipe.getKey();
+			FluidStack[] outputFluids = recipe.getA();
 			setupTanks(outputFluids);
 		}
 		power = nbt.getLong("power");
@@ -172,8 +170,8 @@ public class TileEntityMachineRefinery extends TileEntityMachineBase implements 
 
 	private void refine(){
 		Pair<FluidStack[], ItemStack> recipe = RefineryRecipes.getRecipe(tankTypes[0]);
-		FluidStack[] outputFluids = recipe.getKey();
-		ItemStack outputItem = recipe.getValue();
+		FluidStack[] outputFluids = recipe.getA();
+		ItemStack outputItem = recipe.getB();
 		setupTanks(outputFluids);
 		
 		if(power >= 5 && tanks[0].getFluidAmount() >= 100 &&

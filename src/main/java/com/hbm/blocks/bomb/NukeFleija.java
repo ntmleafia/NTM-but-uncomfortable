@@ -6,7 +6,7 @@ import java.util.List;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.BombConfig;
-import com.hbm.entity.effect.EntityCloudFleija;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.interfaces.IBomb;
 import com.hbm.lib.InventoryHelper;

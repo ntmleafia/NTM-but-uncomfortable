@@ -2,7 +2,7 @@ package com.hbm.inventory.container;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.inventory.SlotMachineOutput;
-import com.hbm.inventory.leafia.inventoryutils.LeafiaRecipeBookServer;
+import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemAssemblyTemplate;
 import com.hbm.tileentity.machine.TileEntityMachineAssembler;

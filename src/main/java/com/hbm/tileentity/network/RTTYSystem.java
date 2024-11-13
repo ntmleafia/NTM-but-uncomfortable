@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 import com.hbm.util.Tuple.Pair;
 
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 
 public class RTTYSystem {
@@ -35,7 +34,7 @@ public class RTTYSystem {
 			Object lastSignal = worldEntry.getValue();
 			
 			RTTYChannel channel = new RTTYChannel();
-			channel.timeStamp = identifier.getKey().getTotalWorldTime();
+			channel.timeStamp = identifier.getA().getTotalWorldTime();
 			channel.signal = lastSignal;
 			
 			broadcast.put(identifier, channel);
