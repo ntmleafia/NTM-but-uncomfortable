@@ -88,6 +88,8 @@ public class LeafiaPacket implements IMessage {
 				key += 3<<5;
 			} else if (value instanceof Vec3d) {
 				key += 4<<5;
+			} else if (value == null) {
+				key += 5<<5;
 			} else
 				throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Given type not supported for LeafiaPacket.. ("+value.getClass().getName()+")");
 		}
@@ -127,6 +129,7 @@ public class LeafiaPacket implements IMessage {
 						buf.writeDouble(vec3d.y);
 						buf.writeDouble(vec3d.z);
 						break;
+					case 15: break;
 					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Unrecognized data type "+c+"!");
 				}
 			} else {
@@ -158,7 +161,7 @@ public class LeafiaPacket implements IMessage {
 		identifier = buf.readInt();
 		checkType = Chunk.EnumCreateEntityType.values()[buf.readByte()];
 		readMode = 0;
-		while (buf.readableBytes() >= 2) {
+		while (buf.readableBytes() >= 1) {
 			byte entry = buf.readByte();
 			byte type = getType(entry);
 			if (type == 7) {
@@ -179,6 +182,7 @@ public class LeafiaPacket implements IMessage {
 					case 12: value = ByteBufUtils.readUTF8String(buf); break;
 					case 13: value = new BlockPos(buf.readInt(),buf.readInt(),buf.readInt()); break;
 					case 14: value = new Vec3d(buf.readDouble(),buf.readDouble(),buf.readDouble()); break;
+					case 15: value = null; break;
 					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Receiver] Unrecognized data type "+c+"!");
 				}
 				signal.put(entry,new Pair<>(readMode,value));

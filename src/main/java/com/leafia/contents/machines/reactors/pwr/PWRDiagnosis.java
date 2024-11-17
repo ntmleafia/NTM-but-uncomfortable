@@ -1,7 +1,10 @@
 package com.leafia.contents.machines.reactors.pwr;
 
-import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRConductor;
+import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.fluid.BlockLiquidCorium;
+import com.hbm.blocks.fluid.CoriumFluid;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -21,10 +24,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class PWRDiagnosis {
+	public final boolean isMeltdown;
 	public static final Set<PWRDiagnosis> ongoing = new HashSet<>();
 	private static boolean cleanupInProgress = false; // idk if this is necessary but I hate crashes so much so have this anyway
 	public static void cleanup() {
@@ -50,18 +56,20 @@ public class PWRDiagnosis {
 	public final Set<BlockPos> corePos = new HashSet<>();
 	public final Set<BlockPos> potentialPos = new HashSet<>();
 	public final Set<BlockPos> fuelPositions = new HashSet<>();
+	public final Set<BlockPos> coriums = new HashSet<>();
 	boolean closure = false;
 	World world = null;
 	/*
 	Creates PWRDiagnosis instance, and automatically adds to ongoing Set
 	 */
-	public PWRDiagnosis(World world) {
+	public PWRDiagnosis(World world,BlockPos trigger) {
 		confirmLife();
 		this.world = world;
 		ongoing.add(this);
 		cr = world.rand.nextDouble();
 		cg = world.rand.nextDouble();
 		cb = world.rand.nextDouble();
+		isMeltdown = world.getBlockState(trigger).getBlock() instanceof BlockLiquidCorium;
 	}
 	PWRComponentBlock getPWRBlock(BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
@@ -92,9 +100,18 @@ public class PWRDiagnosis {
 		activePos.add(pos);
 		for (EnumFacing facing : EnumFacing.values()) {
 			BlockPos neighbor = pos.add(facing.getFrontOffsetX(),facing.getFrontOffsetY(),facing.getFrontOffsetZ());
-			if (world.getBlockState(neighbor).getBlock() instanceof PWRComponentBlock) {
+			Block block = world.getBlockState(neighbor).getBlock();
+			if (block instanceof PWRComponentBlock) {
 				addPosition(neighbor);
-			}
+			} else if (block instanceof BlockLiquidCorium) {
+				if (!coriums.contains(pos)) {
+					coriums.add(pos);
+					explorePosition(pos);
+				}
+			} else if (block == ModBlocks.block_corium)
+				addPosition(neighbor);
+			else if (block == ModBlocks.block_corium_cobble)
+				addPosition(neighbor);
 		}
 		activePos.remove(pos);
 		//for (EntityPlayer player : world.playerEntities) {
@@ -150,6 +167,8 @@ public class PWRDiagnosis {
 	void close() {
 		if (closure) return;
 		closure = true;
+		List<BlockPos> members = new ArrayList<>(blockPos); // for darned precision of contains()
+
 		BlockPos outCorePos = null;
 		if (corePos.size() >= 2) { // if theres multiple cores
 			// pick random...
@@ -176,7 +195,7 @@ public class PWRDiagnosis {
 		// iterate over all members (blocks)
 		int channels = 0;
 		int conductors = 0;
-		for (BlockPos pos : blockPos) {
+		for (BlockPos pos : members) {
 			boolean shouldHaveCoreCoords = false;
 			PWRComponentBlock pwr = getPWRBlock(pos);
 			// check if it should have a tile entity
@@ -190,8 +209,18 @@ public class PWRDiagnosis {
 				}
 			}
 			PWRComponentEntity entity = getPWREntity(pos);
-			if (entity != null) // give coordinates of the core for each valid blocks
+			if (entity != null) { // give coordinates of the core for each valid blocks
+				PWRData link = entity.getLinkedCore();
+				if (link != null) {
+					if (!members.contains(link.corePos)) {
+						if (isMeltdown) {
+							link.explode(world,null);
+							return;
+						}
+					}
+				}
 				entity.setCoreLink(shouldHaveCoreCoords ? outCorePos : null);
+			}
 		}
 		// if position for core is booked,
 		if (outCorePos != null) {
@@ -205,9 +234,10 @@ public class PWRDiagnosis {
 				core.members = blockPos;
 				core.tanks[0].setCapacity(4_000*channels);
 				core.tanks[1].setCapacity(4_000*channels);
+				core.coriums = this.coriums.size();
 			}
 		}
-		for (BlockPos pos : blockPos) {
+		for (BlockPos pos : members) {
 			PWRComponentEntity entity = getPWREntity(pos);
 			if (entity != null)
 				entity.onDiagnosis();

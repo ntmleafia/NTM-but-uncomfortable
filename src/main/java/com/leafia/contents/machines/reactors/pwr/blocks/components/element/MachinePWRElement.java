@@ -58,7 +58,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 	public void neighborChanged(IBlockState state,World worldIn,BlockPos pos,Block blockIn,BlockPos fromPos) { // Fired only on server
 		super.neighborChanged(state,worldIn,pos,blockIn,fromPos);
 		check(worldIn,pos);
-		beginDiagnosis(worldIn,pos);
+		beginDiagnosis(worldIn,pos,fromPos);
 	}
 	@Override
 	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {

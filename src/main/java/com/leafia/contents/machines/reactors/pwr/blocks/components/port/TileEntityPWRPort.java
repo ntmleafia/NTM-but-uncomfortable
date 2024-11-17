@@ -25,6 +25,13 @@ public class TileEntityPWRPort extends TileEntity implements PWRComponentEntity,
 	public void setCoreLink(@Nullable BlockPos pos) {
 		corePos = pos;
 	}
+
+	@Nullable
+	@Override
+	public PWRData getLinkedCore() {
+		return PWRComponentEntity.getCoreFromPos(world,corePos);
+	}
+
 	@Override
 	public void assignCore(@Nullable PWRData data) {}
 	@Override

@@ -449,6 +449,11 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 
 	@Override
+	public PWRData getLinkedCore() {
+		return PWRComponentEntity.getCoreFromPos(world,corePos);
+	}
+
+	@Override
 	public void assignCore(@Nullable PWRData data) {
 		if (this.data != data) {
 			PWRData.addDataToPacket(LeafiaPacket._start(this),data).__sendToAffectedClients();
@@ -501,6 +506,13 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 
 	@Override
+	public void invalidate() {
+		super.invalidate();
+		if (this.data != null)
+			this.data.invalidate(world);
+	}
+
+	@Override
 	public void validate() {
 		super.validate();
 		//if (world.isRemote) { // so long lol
@@ -513,6 +525,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 	@Nullable
 	PWRData gatherData() {
+		/*
 		if (this.corePos != null) {
 			TileEntity entity = world.getTileEntity(corePos);
 			if (entity != null) {
@@ -521,7 +534,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				}
 			}
 		}
-		return null;
+		return null;*/
+		return this.getLinkedCore();
 	}
 	@Override
 	public void update() {
@@ -535,29 +549,36 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double coolin = 0;
 					PWRData gathered = gatherData();
 					if (gathered != null) {
-						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)gathered.tanks[0].getCapacity(),0.4);
+						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)gathered.tanks[0].getCapacity(),0.4)
+								*(gathered.tanks[0].getCapacity()/128_000d);
 					}
 					ItemLeafiaRod rod = (ItemLeafiaRod)(stack.getItem());
 					double heatDetection = 0;
-					for (HeatRetrival retrival : cornerFuelMap) {
+					for (HeatRetrival retrival : cornerFuelMap)
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlAvg(world)*height;
-					}
-					for (HeatRetrival retrival : linearFuelMap) {
+					for (HeatRetrival retrival : linearFuelMap)
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlMin(world)*height;
-					}
 					rod.HeatFunction(stack,true,heatDetection,coolin,20,400);
 					rod.decay(stack,inventory,0);
 					NBTTagCompound data = stack.getTagCompound();
 					double cooled = 0;
 					if (data != null) {
 						if (data.getInteger("spillage") > 100) {
-							world.destroyBlock(pos,false);
-							world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
-							if (gathered != null)
-								gathered.explode(world,stack);
+							if (rod.meltdownPriority > 0) {
+								if (gathered != null)
+									gathered.explode(world,stack);
+							} else {
+								inventory.setStackInSlot(0,ItemStack.EMPTY);
+								//world.destroyBlock(pos,false);
+								world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
+								world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
+								return;
+							}
 						}
 						cooled = data.getDouble("cooled");
 					}
+					if (gathered != null)
+						cooled += Math.pow(gathered.coriums*2727,0.1);
 					if (cooled > 0 && gathered != null) {
 						int hotType = 1;
 						int drain = (int)Math.ceil(cooled/10000*gathered.tanks[0].getCapacity());

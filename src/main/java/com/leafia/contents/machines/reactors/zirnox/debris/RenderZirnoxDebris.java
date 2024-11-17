@@ -14,7 +14,7 @@ public class RenderZirnoxDebris extends Render<EntityZirnoxDebris> {
 	public static final IRenderFactory<EntityZirnoxDebris> FACTORY = man -> new RenderZirnoxDebris(man);
 
 	//for fallback only
-	private static final ResourceLocation tex_graphite = new ResourceLocation(RefStrings.MODID + ":textures/blocks/block_graphite.png");
+	public static final ResourceLocation tex_graphite = new ResourceLocation(RefStrings.MODID + ":textures/blocks/block_graphite.png");
 	private static final ResourceLocation tex_rod = new ResourceLocation(RefStrings.MODID + ":textures/models/leafia/zirnox_deb_element.png");
 
 	protected RenderZirnoxDebris(RenderManager renderManager){

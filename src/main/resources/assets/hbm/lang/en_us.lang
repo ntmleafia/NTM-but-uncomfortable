@@ -2447,6 +2447,7 @@ item.hull_big_steel.name=Big Steel Shell
 item.hull_big_titanium.name=Big Titanium Shell
 item.hull_small_aluminium.name=Small Aluminium Shell
 item.hull_small_steel.name=Small Steel Shell
+item.hull_tube_steel.name=Steel Tube
 item.igniter.name=Igniter
 item.industrial_magnet.name=Industrial Magnet
 item.inf_water.name=Infinite Water Tank

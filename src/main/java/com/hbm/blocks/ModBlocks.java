@@ -186,10 +186,15 @@ import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 
 import com.leafia.contents.machines.reactors.pwr.blocks.*;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.MachinePWRPort;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.MachinePWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckMetal;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckStone;
 import com.leafia.contents.machines.reactors.zirnox.ReactorZirnox;
 import com.leafia.contents.machines.reactors.zirnox.ReactorZirnoxDestroyed;
 import com.leafia.shit.BlockFallingBase;
@@ -1402,6 +1407,9 @@ public class ModBlocks {
 
 		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 		public static final Block port = new MachinePWRPort().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+
+		public static final PWRMeshedWreck wreck_stone = new PWRWreckStone();
+		public static final PWRMeshedWreck wreck_metal = new PWRWreckMetal();
 	}
 
 	//Big reactor

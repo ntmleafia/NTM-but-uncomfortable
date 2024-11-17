@@ -149,6 +149,6 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
     @Override
     public void neighborChanged(IBlockState state,World worldIn,BlockPos pos,Block blockIn,BlockPos fromPos) { // Fired only on server
         super.neighborChanged(state,worldIn,pos,blockIn,fromPos);
-        beginDiagnosis(worldIn,pos);
+        beginDiagnosis(worldIn,pos,fromPos);
     }
 }

@@ -12,6 +12,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,11 +23,11 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class CoriumBlock extends BlockFluidClassic {
+public class BlockLiquidCorium extends BlockFluidClassic {
 
 	public Random rand = new Random();
 
-	public CoriumBlock(Fluid fluid, Material material, String s) {
+	public BlockLiquidCorium(Fluid fluid,Material material,String s) {
 		super(fluid, material);
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
@@ -36,16 +39,14 @@ public class CoriumBlock extends BlockFluidClassic {
 		this.setTickRandomly(true);
 		ModBlocks.ALL_BLOCKS.add(this);
 	}
-
 	@Override
 	public boolean canDisplace(IBlockAccess world, BlockPos pos){
 		IBlockState b = world.getBlockState(pos);
 		@SuppressWarnings("deprecation")
-		float res = (float) (Math.sqrt(b.getBlock().getExplosionResistance(null)) * 2);
+		float res = (float) (Math.sqrt(b.getBlock().getExplosionResistance(null)) * 2)/(1+rand.nextInt(2));
 		
 		if(res < 1)
 			return true;
-		Random rand = new Random();
 		
 		return b.getMaterial().isLiquid() || rand.nextInt((int) res) == 0;
 	}
@@ -80,7 +81,46 @@ public class CoriumBlock extends BlockFluidClassic {
 				world.setBlockState(pos, ModBlocks.block_corium_cobble.getDefaultState());
 		}
 	}
-	
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState stateIn,World world,BlockPos pos,Random rand) {
+		super.randomDisplayTick(stateIn,world,pos,rand);
+		if (rand.nextInt(5) == 0) {
+			if (rand.nextInt(20) == 0)
+				world.playSound(pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5, SoundEvents.BLOCK_LAVA_POP, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.7F + rand.nextFloat() * 0.25F, false);
+			{
+				int amt = rand.nextInt(2)+1;
+				for (int i = 0; i < amt; i++)
+					world.spawnParticle(
+							EnumParticleTypes.LAVA,
+							pos.getX()+rand.nextFloat(),pos.getY()+rand.nextFloat(),pos.getZ()+rand.nextFloat(),
+							0,0,0
+					);
+			}
+			{
+				int amt = rand.nextInt(3);
+				for (int i = 0; i < amt; i++)
+					world.spawnParticle(
+							EnumParticleTypes.SMOKE_NORMAL,
+							pos.getX()+rand.nextFloat(),pos.getY()+rand.nextFloat(),pos.getZ()+rand.nextFloat(),
+							rand.nextDouble()/2-0.25,rand.nextDouble()/2-0.25,rand.nextDouble()/2-0.25
+					);
+			}
+			{
+				int amt = rand.nextInt(3);
+				for (int i = 0; i < amt; i++)
+					world.spawnParticle(
+							EnumParticleTypes.SMOKE_LARGE,
+							pos.getX()+rand.nextFloat(),pos.getY()+rand.nextFloat(),pos.getZ()+rand.nextFloat(),
+							rand.nextDouble()/2-0.25,rand.nextDouble()/2-0.25,rand.nextDouble()/2-0.25
+					);
+			}
+		}
+		if (rand.nextInt(100) == 0)
+			world.playSound(pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5, SoundEvents.BLOCK_LAVA_AMBIENT, SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.7F + rand.nextFloat() * 0.25F, false);
+	}
+
 	@Override
 	public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos){
 		return false;

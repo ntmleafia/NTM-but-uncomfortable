@@ -1,7 +1,10 @@
 package com.leafia.contents.machines.reactors.pwr;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.fluid.CoriumBlock;
+import com.hbm.blocks.fluid.BlockLiquidCorium;
+import com.hbm.items.ModItems;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.hbm.explosion.ExplosionNukeGeneric;
@@ -10,6 +13,9 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.HeatRecipes;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck.Erosion;
+import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
@@ -18,22 +24,26 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFire;
+import com.llib.group.LeafiaSet;
+import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -53,10 +63,21 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public String coolantName = ModForgeFluids.coolant.getName();
 	public int compression = 0;
 	public double heat = 20;
+	public int coriums = 0;
 
 	public Set<BlockPos> members = new HashSet<>();
 
 	public TileEntity companion;
+
+	public void invalidate(World world) {
+		if (!(world instanceof WorldServer)) return;
+		BlockPos checkPos = companion.getPos();
+		((PWRComponentEntity)companion).assignCore(null);
+		world.getMinecraftServer().addScheduledTask(()->{
+			if (world.getBlockState(checkPos).getBlock() instanceof BlockLiquidCorium)
+				this.explode(world,null);
+		});
+	}
 
 	public PWRData(TileEntity entity) {
 		tanks = new FluidTank[] {
@@ -76,6 +97,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				ModForgeFluids.steam
 		};
 		this.companion = entity;
+		this.corePos = companion.getPos();
 		valid = !entity.isInvalid();
 	}
 	public World getWorld() {
@@ -163,7 +185,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				valid = true;
 				Block block = companion.getBlockType();
 				if (block instanceof PWRComponentBlock) {
-					((PWRComponentBlock)block).beginDiagnosis(getWorld(),companion.getPos());
+					this.corePos = companion.getPos();
+					((PWRComponentBlock)block).beginDiagnosis(getWorld(),companion.getPos(),companion.getPos());
 				} else
 					companion.invalidate(); // you're coming with me
 			}
@@ -204,12 +227,28 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		}
 		return offsets;
 	}
+	double signedPow(double x,double y) {
+		return Math.pow(Math.abs(x),y)*Math.signum(x);
+	}
 	public void explode(World world,@Nullable ItemStack prevStack) {
 		if (exploded) return;
 		exploded = true;
 		explodeWorld = world;
+		if (members.size() <= 0) return;
 		Vec3d centerPoint = new Vec3d(0,0,0);
+		int minX = Integer.MAX_VALUE;
+		int minY = Integer.MAX_VALUE;
+		int minZ = Integer.MAX_VALUE;
+		int maxX = Integer.MIN_VALUE;
+		int maxY = Integer.MIN_VALUE;
+		int maxZ = Integer.MIN_VALUE;
 		for (BlockPos member : members) {
+			minX = Math.min(minX,member.getX());
+			minY = Math.min(minY,member.getY());
+			minZ = Math.min(minZ,member.getZ());
+			maxX = Math.max(maxX,member.getX());
+			maxY = Math.max(maxY,member.getY());
+			maxZ = Math.max(maxZ,member.getZ());
 			centerPoint = centerPoint.add(new Vec3d(member.getX(),member.getY(),member.getZ()).scale(1d/members.size()));
 			Block block = world.getBlockState(member).getBlock();
 			if (block instanceof PWRComponentBlock) {
@@ -229,6 +268,16 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				//world.setBlockToAir(member);
 			}
 		}
+		double reactorSize = (maxX-minX+1+2+4+maxY-minY+1+2+4+maxZ-minZ+1+2+4)/3d;
+		for (EntityPlayer plr : world.playerEntities) {
+			if (plr.getHeldItem(EnumHand.OFF_HAND).getItem() == ModItems.wand_d) {
+				plr.sendMessage(new TextComponentString("PWR Exploded"));
+				plr.sendMessage(new TextComponentString("  Size: " + reactorSize));
+				plr.sendMessage(new TextComponentString("  x: " + minX + " : " + maxX));
+				plr.sendMessage(new TextComponentString("  y: " + minY + " : " + maxY));
+				plr.sendMessage(new TextComponentString("  z: " + minZ + " : " + maxZ));
+			}
+		}
 		// mmm this is gonna be crispy computer
 		growMembers(growMembers(growMembers(growMembers(members))));
 
@@ -236,12 +285,22 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		// Don't believe me? Try replacing all "motherfucker" occurrences to original "members" (which is a Set) and boom IT BREAKS SOMEHOW
 		List<BlockPos> motherfucker = new ArrayList<>();
 		motherfucker.addAll(members);
-		world.createExplosion(null,centerPoint.x+0.5, centerPoint.y+0.5, centerPoint.z+0.5, 24.0F, true);
+		world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
+		List<BlockPos> placeWrecks = new ArrayList<>();
+		List<BlockPos> vaporized = new ArrayList<>();
+		List<BlockPos> remains = new ArrayList<>();
+		List<BlockPos> allDebris = new ArrayList<>();
+		Vec3d pressure = new Vec3d(0,0,0);
 		for (BlockPos member : motherfucker) {
-			if (world.isAirBlock(member)) continue;
-			Block block = world.getBlockState(member).getBlock();
+			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+			if (world.getBlockState(member).getBlock().isPassable(world,member)) {
+				pressure = pressure.add(ray.scale(2d/motherfucker.size()));
+				continue;
+			}
+			IBlockState state = world.getBlockState(member);
+			Block block = state.getBlock();
 			if (block instanceof BlockFire) continue;
-			if (block instanceof CoriumBlock) continue;
+			if (block instanceof BlockLiquidCorium) continue;
 			if (block instanceof MachinePWRElement) {
 				//world.newExplosion(null,member.getX()+0.5,member.getY()+0.5,member.getZ()+0.5,11,true,true);
 				//world.setBlockState(member,ModBlocks.corium_block.getDefaultState());
@@ -251,7 +310,6 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			//Block fuckyou = Blocks.BLACK_GLAZED_TERRACOTTA;
 
 			boolean destroyed = false;
-			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
 			int counter = 0;
 			int threshold = 7+world.rand.nextInt(3);
 			for (double s = 0; s <= 2; s+=0.2) {
@@ -269,8 +327,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 						case 6: fuckyou = Blocks.RED_GLAZED_TERRACOTTA; break;
 					}*/
 					if (++counter >= threshold) {
-						world.setBlockToAir(member);
+						//world.setBlockToAir(member);
+						vaporized.add(member);
 						destroyed = true;
+						pressure = pressure.add(ray.scale(1d/motherfucker.size()));
 						break;
 					}
 				}
@@ -281,15 +341,195 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			//}
 			if (!destroyed) {
 				// myaaaaa
+				remains.add(member);
+				pressure = pressure.subtract(ray.scale(1d/motherfucker.size()));
+				/*
 				if (block instanceof PWRComponentBlock) {
 					world.setBlockState(member,((world.rand.nextInt(3) == 0) ? ModBlocks.pribris_burning : ModBlocks.pribris).getDefaultState());
-				} else {
+				} else if (block.isFullBlock(state) && !block.isPassable(world,member)) {
 					// almost broken
 					if (counter >= threshold-2) {
-						world.setBlockState(member,ModBlocks.pribris_radiating.getDefaultState()); // Test
+						//world.setBlockState(member,ModBlocks.pribris_radiating.getDefaultState()); // Test
+						placeWrecks.add(member);
+					}
+				}*/
+				//world.setBlockState(member,fuckyou.getDefaultState());
+			}
+		}
+		for (BlockPos pos : vaporized) {
+			if (placeWrecks.contains(pos)) continue; // Somehow
+			boolean converted = false;
+			for (EnumFacing face : EnumFacing.values()) {
+				if (remains.contains(pos.offset(face))) {
+					placeWrecks.add(pos);
+					allDebris.add(pos);
+					converted = true;
+					break;
+				}
+			}
+			if (!converted) {
+				Block block = world.getBlockState(pos).getBlock();
+				if (!(block instanceof IFluidBlock) && (!block.isPassable(world,pos))) {
+					Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
+					EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
+					debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.x,0.8)/2;
+					debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.y,0.8)/2;
+					debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.z,0.8)/2;
+					world.spawnEntity(debris);
+				}
+				world.setBlockToAir(pos);
+			}
+		}
+		// TODO: add cam shake
+		for (BlockPos pos : remains) {
+			boolean buried = true;
+			for (EnumFacing face : EnumFacing.values()) {
+				if (vaporized.contains(pos.offset(face)) || world.getBlockState(pos.offset(face)).getBlock().isPassable(world,pos)) {
+					buried = false;
+					break;
+				}
+			}
+			if (!buried)
+				allDebris.add(pos);
+		}
+		for (BlockPos member : allDebris) {
+			IBlockState state = world.getBlockState(member);
+			Block block = state.getBlock();
+			SoundType soundType = block.getSoundType();
+			Material material = block.getMaterial(state);
+			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+
+			if (block instanceof MachinePWRControl) {
+				world.setBlockState(member,ModBlocks.block_electrical_scrap.getDefaultState());
+				//continue;
+			}
+			double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.lengthVector()/(reactorSize/2),0,1),0.45)*8,0,7);
+			int heat = (int)heatBase;
+			int heatRand = world.rand.nextInt(3);
+			if (heatRand == 1)
+				heat = (int)Math.round(heatBase);
+			else if (heatRand == 2)
+				heat = (int)Math.ceil(heatBase);
+			boolean defaultPlacement = true;
+			if (placeWrecks.contains(member)) {
+				defaultPlacement = false;
+				EnumFacing face = EnumFacing.UP;
+				double absX = Math.abs(ray.x);
+				double absY = Math.abs(ray.y);
+				double absZ = Math.abs(ray.z);
+				if ((absX > absY) && (absX > absZ))
+					face = (ray.x > 0) ? EnumFacing.WEST : EnumFacing.EAST;
+				else if ((absY > absX) && (absY > absZ))
+					face = (ray.y > 0) ? EnumFacing.DOWN : EnumFacing.UP;
+				else if ((absZ > absX) && (absZ > absY))
+					face = (ray.z > 0) ? EnumFacing.NORTH : EnumFacing.SOUTH;
+				EnumFacing most = null;
+				int spaces = -1;
+				int reliableSurround = 0;
+				boolean surrounded = false;
+				for (int i = 0; i < 7; i++) {
+					EnumFacing curFace = (i > 0) ? EnumFacing.values()[i-1] : face;
+					if (i > 0 && curFace.equals(face)) continue; // skip if duplicate
+					if (!world.getBlockState(member.offset(curFace,-1)).isFullBlock()) continue;
+					if (placeWrecks.contains(member.offset(curFace,-1))) continue;
+					if (!world.getBlockState(member.offset(curFace)).getBlock().isPassable(world,member.offset(curFace))) continue;
+					if (placeWrecks.contains(member.offset(curFace))) continue;
+					int mySpaces = 0;
+					EnumFacing[] sides = null;
+					switch(curFace.getAxis()) {
+						case X: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.NORTH,EnumFacing.SOUTH}; break;
+						case Y: sides = EnumFacing.HORIZONTALS; break;
+						case Z: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.EAST,EnumFacing.WEST}; break;
+					}
+					if (sides == null) continue;
+					int surround = 0;
+					int reliable = 0;
+					for (EnumFacing side : sides) {
+						if (placeWrecks.contains(member.offset(side)))
+							surround++;
+						else if (world.getBlockState(member.offset(side)).isFullBlock()) {
+							surround++;
+							reliable++;
+						}
+						if (!world.getBlockState(member.offset(curFace).offset(side)).getBlock().isPassable(world,member.offset(curFace).offset(side))) continue;
+						if (placeWrecks.contains(member.offset(curFace).offset(side))) continue;
+						mySpaces++;
+					}
+					if (mySpaces > spaces) {
+						spaces = mySpaces;
+						most = curFace;
+						surrounded = surround >= 4;
+						reliableSurround = reliable;
 					}
 				}
-				//world.setBlockState(member,fuckyou.getDefaultState());
+				if (most != null) {
+					// TODO: make RUBBLE model
+					// RUBBLE should be used when (most != face)
+					// Actually use it when (!surrounded)
+					// TODO: use SLIGHT if verysurrounded
+					Erosion erosion = PWRMeshedWreck.Erosion.NORMAL;
+					if (reliableSurround >= 2) erosion = Erosion.SLIGHT;
+					else if (!surrounded) erosion = Erosion.RUBBLE;
+					if (material.equals(Material.IRON)) {
+						if (soundType.equals(SoundType.STONE))
+							ModBlocks.PWR.wreck_stone.create(world,member,most,state,erosion,heat);
+						else
+							ModBlocks.PWR.wreck_metal.create(world,member,most,state,erosion,heat);
+					} else
+						defaultPlacement = true;
+				}
+			}
+			if (defaultPlacement) {
+				Block[] sellafieldLevels = new Block[]{
+						ModBlocks.sellafield_slaked,
+						ModBlocks.sellafield_0,
+						ModBlocks.sellafield_1,
+						ModBlocks.sellafield_2,
+						ModBlocks.sellafield_3,
+						ModBlocks.sellafield_4,
+						ModBlocks.sellafield_core
+				};
+				if (heat > 0) {
+					if (block instanceof BlockGrass)
+						world.setBlockState(member,ModBlocks.waste_earth.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockGravel)
+						world.setBlockState(member,ModBlocks.waste_gravel.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockDirt || block == Blocks.FARMLAND)
+						world.setBlockState(member,ModBlocks.waste_dirt.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockSnow)
+						world.setBlockState(member,ModBlocks.waste_snow.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockSnowBlock)
+						world.setBlockState(member,ModBlocks.waste_snow_block.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockMycelium)
+						world.setBlockState(member,ModBlocks.waste_mycelium.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockRedSandstone)
+						world.setBlockState(member,ModBlocks.waste_sandstone_red.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockSandStone)
+						world.setBlockState(member,ModBlocks.waste_sandstone.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockHardenedClay || block instanceof BlockStainedHardenedClay)
+						world.setBlockState(member,ModBlocks.waste_terracotta.getStateFromMeta(Math.min(heat,6)));
+					else if (block instanceof BlockSand) {
+						BlockSand.EnumType meta = state.getValue(BlockSand.VARIANT);
+						world.setBlockState(member,((meta == BlockSand.EnumType.SAND) ? ModBlocks.waste_sand : ModBlocks.waste_sand_red).getStateFromMeta(Math.min(heat,6)));
+					}
+					else {
+						int level = -1;
+						if (block == Blocks.COBBLESTONE || block == Blocks.STONE || block instanceof BlockStone || block == sellafieldLevels[0])
+							level = 0;
+						else {
+							for (int i = 1; i < sellafieldLevels.length; i++) {
+								if (block == sellafieldLevels[i]) {
+									level = i;
+									break;
+								}
+							}
+						}
+						if ((level >= 0) && (heat >= level))
+							world.setBlockState(member,sellafieldLevels[Math.min(heat,6)].getStateFromMeta(world.rand.nextInt(4)));
+						else
+							ModBlocks.PWR.wreck_stone.create(world,member,EnumFacing.UP,state,Erosion.NONE,heat);
+					}
+				}
 			}
 		}
 		NBTTagCompound data = new NBTTagCompound();
@@ -309,10 +549,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				rod.detonate(world,new BlockPos(centerPoint));
 			}
 		}
-		if (nope) {
-			ExplosionNukeGeneric.waste(world, (int)centerPoint.x, (int)centerPoint.y, (int)centerPoint.z, 35);
-			RadiationSavedData.incrementRad(world, new BlockPos(centerPoint), 3000F, 4000F);
-		}
+		ExplosionNukeGeneric.waste(world, (int)centerPoint.x, (int)centerPoint.y, (int)centerPoint.z, 35);
+		RadiationSavedData.incrementRad(world, new BlockPos(centerPoint), 3000F, 4000F);
 	}
 
 	@Override

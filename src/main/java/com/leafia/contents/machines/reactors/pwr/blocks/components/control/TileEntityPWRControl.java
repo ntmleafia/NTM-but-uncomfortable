@@ -70,6 +70,11 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
     }
 
     @Override
+    public PWRData getLinkedCore() {
+        return PWRComponentEntity.getCoreFromPos(world,corePos);
+    }
+
+    @Override
     public void assignCore(@Nullable PWRData data) {
         if (this.data != data) {
             PWRData.addDataToPacket(LeafiaPacket._start(this),data).__sendToAffectedClients();
@@ -126,6 +131,8 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
             sound = null;
         }
         super.invalidate();
+        if (this.data != null)
+            this.data.invalidate(world);
     }
 
     @Override

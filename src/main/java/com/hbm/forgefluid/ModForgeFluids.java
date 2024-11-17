@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.fluid.CoriumBlock;
+import com.hbm.blocks.fluid.BlockLiquidCorium;
 import com.hbm.blocks.fluid.CoriumFluid;
 import com.hbm.blocks.fluid.MudBlock;
 import com.hbm.blocks.fluid.MudFluid;
@@ -19,6 +19,7 @@ import com.hbm.blocks.fluid.VolcanicFluid;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.RefStrings;
 
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fluids.Fluid;
@@ -128,10 +129,13 @@ public class ModForgeFluids {
 	//Block fluids
 	public static Fluid toxic_fluid = new ToxicFluid("toxic_fluid").setDensity(2500).setViscosity(2000).setTemperature(70+273);
 	public static Fluid radwater_fluid = new RadWaterFluid("radwater_fluid").setDensity(1000);
-	public static Fluid mud_fluid = new MudFluid().setDensity(2500).setViscosity(3000).setLuminosity(5).setTemperature(1773);
+	public static Fluid mud_fluid = new MudFluid().setDensity(2500).setViscosity(3000).setLuminosity(5).setTemperature(1773)
+			.setEmptySound(SoundEvents.BLOCK_SLIME_PLACE).setFillSound(SoundEvents.BLOCK_SLIME_FALL);
 	public static Fluid schrabidic = new SchrabidicFluid("schrabidic").setDensity(31200).setViscosity(500);
-	public static Fluid corium_fluid = new CoriumFluid().setDensity(31200).setViscosity(2000).setTemperature(3000);
-	public static Fluid volcanic_lava_fluid = new VolcanicFluid().setLuminosity(15).setDensity(3000).setViscosity(3000).setTemperature(1300);
+	public static Fluid corium_fluid = new CoriumFluid().setDensity(31200).setViscosity(2000).setTemperature(3000)
+			.setEmptySound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA).setFillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
+	public static Fluid volcanic_lava_fluid = new VolcanicFluid().setLuminosity(15).setDensity(3000).setViscosity(3000).setTemperature(1300)
+			.setEmptySound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA).setFillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
 	
 	public static void init() {
 		if(!FluidRegistry.registerFluid(spentsteam))
@@ -312,7 +316,7 @@ public class ModForgeFluids {
 		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.radwater_fluid, ModBlocks.fluidradwater, ModDamageSource.radiation, "radwater_block").setResistance(500F);
 		ModBlocks.mud_block = new MudBlock(ModForgeFluids.mud_fluid, ModBlocks.fluidmud, ModDamageSource.mudPoisoning, "mud_block").setResistance(500F);
 		ModBlocks.schrabidic_block = new SchrabidicBlock(schrabidic, ModBlocks.fluidschrabidic.setReplaceable(), ModDamageSource.radiation, "schrabidic_block").setResistance(500F);
-		ModBlocks.corium_block = new CoriumBlock(corium_fluid, ModBlocks.fluidcorium, "corium_block").setResistance(500F);
+		ModBlocks.corium_block = new BlockLiquidCorium(corium_fluid, ModBlocks.fluidcorium, "corium_block").setResistance(500F).setLightLevel(0.1f);
 		ModBlocks.volcanic_lava_block = new VolcanicBlock(volcanic_lava_fluid, ModBlocks.fluidvolcanic, "volcanic_lava_block").setResistance(500F);
 		toxic_fluid.setBlock(ModBlocks.toxic_block);
 		radwater_fluid.setBlock(ModBlocks.radwater_block);

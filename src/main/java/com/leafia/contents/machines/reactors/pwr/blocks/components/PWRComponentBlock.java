@@ -27,10 +27,10 @@ public interface PWRComponentBlock {
         }
         return null;
     };
-    default void beginDiagnosis(World world,BlockPos pos) {
+    default void beginDiagnosis(World world,BlockPos pos,BlockPos trigger) {
         if (world.isRemote) return;
         PWRDiagnosis.cleanup();
-        PWRDiagnosis diagnosis = new PWRDiagnosis(world);
+        PWRDiagnosis diagnosis = new PWRDiagnosis(world,trigger);
         diagnosis.addPosition(pos);
     }
 }

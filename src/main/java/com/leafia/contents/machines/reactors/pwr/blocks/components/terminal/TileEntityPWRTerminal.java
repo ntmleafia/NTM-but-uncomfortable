@@ -27,6 +27,13 @@ public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEnt
 	public void setCoreLink(@Nullable BlockPos pos) {
 		corePos = pos;
 	}
+
+	@Nullable
+	@Override
+	public PWRData getLinkedCore() {
+		return PWRComponentEntity.getCoreFromPos(world,corePos);
+	}
+
 	@Override
 	public void assignCore(@Nullable PWRData data) {}
 	@Override
@@ -115,10 +122,10 @@ public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEnt
 	@Override
 	public void onReceivePacketLocal(byte key,Object value) {
 		if (key == 0) {
-			if (value.equals(false))
-				corePos = null;
-			else
-				corePos = (BlockPos)value;
+			//if (value.equals(false))
+			//	corePos = null;
+			//else
+				corePos = (BlockPos)value; // Now supports null values!
 		}
 	}
 	@Override
@@ -127,6 +134,6 @@ public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEnt
 	}
 	@Override
 	public void onPlayerValidate(EntityPlayer plr) {
-		LeafiaPacket._start(this).__write(0,corePos).__sendToClient(plr);
+		LeafiaPacket._start(this).__write(0,/*(corePos == null) ? false : */corePos).__sendToClient(plr);
 	}
 }
