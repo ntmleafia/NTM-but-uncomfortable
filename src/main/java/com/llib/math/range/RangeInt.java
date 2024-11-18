@@ -8,8 +8,8 @@ public class RangeInt extends RangeBase implements Iterable<Integer> {
     public int min;
     public int max;
     public RangeInt(int min,int max) {
-        this.min = Math.min(min,max);
-        this.max = Math.max(min,max);
+        this.min = min;
+        this.max = max;
     }
     public boolean isInRange(int x) {
         if (x > max) return false;

@@ -1,6 +1,7 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components.element;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.Tuple.*;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRSource;
@@ -15,6 +16,7 @@ import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.tileentity.TileEntityInventoryBase;
 import com.hbm.util.I18nUtil;
+import com.llib.group.LeafiaMap;
 import com.llib.math.range.RangeDouble;
 import com.llib.math.range.RangeInt;
 import net.minecraft.block.Block;
@@ -94,7 +96,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		linearFuelMap.clear();
 		RangeInt range = new RangeInt(0,height-1);
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			final Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new HashMap<>();
+			final LeafiaMap<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new LeafiaMap<>();
 			List<RangeInt> areas = new ArrayList<>();
 			areas.add(range);
 			Set<Integer> moderatedRows = new HashSet<>();
@@ -102,7 +104,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				BlockPos basePos = pos.add(facing.getFrontOffsetX()*i,0,facing.getFrontOffsetZ()*i);
 				if (!world.isValid(basePos)) break;
 				linetraceNeutrons(basePos,areas,controls);
-				searchFuelAndAdd(basePos,areas,controls,moderatedRows,new MapConsumer(i) {
+				searchFuelAndAdd(basePos,new ArrayList<>(areas),controls.clone(),moderatedRows,new MapConsumer(i) {
 					@Override
 					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(pos,controls,areas,this.i);
@@ -160,7 +162,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 								} else
 									break;
 							}
-							int elementHeight = bottomDepth-curDepth;
+							int elementHeight = bottomDepth-curDepth+1;
 							int moderation = 0;
 							for (int depthMod = curDepth; depthMod <= bottomDepth; depthMod++) {
 								if (moderatedRows.contains(depthMod))
@@ -327,12 +329,11 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						localRatioT = Math.min(localRatioT,MathHelper.clamp(normalizedPos,0,1));
 					}
 				}
-				control += (localRatioB+localRatioT)*(area.max-area.min);
+				control += Math.min(localRatioB+localRatioT,1)*(area.max-area.min);
 			}
 			return control;
 		}
 		public double getControlAvg(World world) {
-			if (controls.size() <= 0) return 1;
 			/*
 			double control = 0;
 			for (BlockPos pos : controls) {
@@ -340,22 +341,20 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			}*/
 			double control = 0;
 			for (RangeDouble area : areas) {
-				double localRatioB = 0;
-				double localRatioT = 0;
+				double localRatio = 0;
 				int cnt = 0;
 				for (Map.Entry<BlockPos,Pair<RangeDouble,RangeDouble>> entry : controls.entrySet()) {
 					cnt++;
 					double rodPos = getControl(world,entry.getKey());
-					{
-						double normalizedPos = entry.getValue().getA().ratio(rodPos);
-						localRatioB += MathHelper.clamp(normalizedPos,0,1);
-					}
-					{
-						double normalizedPos = entry.getValue().getB().ratio(rodPos);
-						localRatioT += MathHelper.clamp(normalizedPos,0,1);
-					}
+					double normalizedPosA = entry.getValue().getA().ratio(rodPos);
+					double normalizedPosB = entry.getValue().getB().ratio(rodPos);
+					localRatio += MathHelper.clamp(Math.max(normalizedPosA,normalizedPosB),0,1);
 				}
-				control += (localRatioB+localRatioT)/cnt*(area.max-area.min);
+				if (cnt <= 0) {
+					localRatio = 1;
+					cnt = 1;
+				}
+				control += localRatio/cnt*(area.max-area.min);
 			}
 			return control;
 		}
@@ -549,7 +548,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double coolin = 0;
 					PWRData gathered = gatherData();
 					if (gathered != null) {
-						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)gathered.tanks[0].getCapacity(),0.4)
+						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
 								*(gathered.tanks[0].getCapacity()/128_000d);
 					}
 					ItemLeafiaRod rod = (ItemLeafiaRod)(stack.getItem());
@@ -558,6 +557,9 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlAvg(world)*height;
 					for (HeatRetrival retrival : linearFuelMap)
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlMin(world)*height;
+					double rad = Math.pow(heatDetection,0.65)/2;
+					RadiationSavedData.incrementRad(world,pos,(float)rad/8,(float)rad);
+
 					rod.HeatFunction(stack,true,heatDetection,coolin,20,400);
 					rod.decay(stack,inventory,0);
 					NBTTagCompound data = stack.getTagCompound();
@@ -572,6 +574,14 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 								//world.destroyBlock(pos,false);
 								world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
 								world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
+								BlockPos nextPos = pos.down();
+								while (world.isValid(nextPos)) {
+									if (world.getBlockState(nextPos).getBlock() instanceof MachinePWRElement)
+										world.setBlockState(nextPos,ModBlocks.corium_block.getDefaultState());
+									else
+										break;
+									nextPos = nextPos.down();
+								}
 								return;
 							}
 						}

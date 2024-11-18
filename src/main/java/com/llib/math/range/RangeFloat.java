@@ -6,8 +6,8 @@ public class RangeFloat extends RangeBase {
     public float min;
     public float max;
     public RangeFloat(float min,float max) {
-        this.min = Math.min(min,max);
-        this.max = Math.max(min,max);
+        this.min = min;
+        this.max = max;
     }
     public boolean isInRange(int x) {
         if (x > max) return false;

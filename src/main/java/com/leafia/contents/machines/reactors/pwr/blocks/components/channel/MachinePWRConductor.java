@@ -21,6 +21,10 @@ public class MachinePWRConductor extends BlockBase implements ITooltipProvider, 
         setSoundType(SoundType.METAL);
     }
     @Override
+    public boolean shouldRenderOnGUI() {
+        return true;
+    }
+    @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);

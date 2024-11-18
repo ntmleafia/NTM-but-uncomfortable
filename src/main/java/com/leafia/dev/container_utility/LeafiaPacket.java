@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class LeafiaPacket implements IMessage {
@@ -56,7 +57,8 @@ public class LeafiaPacket implements IMessage {
 		//BitSet bit = BitSet.valueOf(new byte[]{entry}).get(0,5);
 		return (byte)(entry & 0b00011111);//(bit.cardinality() == 0) ? 0 : bit.toByteArray()[0];
 	}
-	public LeafiaPacket __write(int id,Object value) {
+	public LeafiaPacket __write(int id,Object valueIn) {
+		Object value = valueIn;
 		if (id == -1) return this;
 		byte key = (byte)id;
 		//BitSet bit = BitSet.valueOf(new byte[]{key});
@@ -64,37 +66,46 @@ public class LeafiaPacket implements IMessage {
 		if (id < 0 || id > 0b00011111)
 			throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Entry ID given for LeafiaPacket wasn't in the range of 0 ~ 31");
 		byte mode = 0;
-		if (value instanceof Boolean) {
-		} else if (value instanceof Byte) {
-			key += 1<<5;
-		} else if (value instanceof Short) {
-			key += 2<<5;
-		} else if (value instanceof Integer) {
-			key += 3<<5;
-		} else if (value instanceof Long) {
-			key += 4<<5;
-		} else if (value instanceof Float) {
-			key += 5<<5;
-		} else if (value instanceof Double) {
-			key += 6<<5;
-		} else {
-			mode = 1;
-			if (value instanceof NBTTagCompound) {
-			} else if (value instanceof ItemStack) {
+		boolean skip = false;
+		if (valueIn != null && valueIn.getClass().isArray()) {
+			if (Array.getLength(valueIn) <= 0)
+				skip = true;
+			else
+				value = Array.get(valueIn,0);
+		}
+		if (!skip) {
+			if (value instanceof Boolean) {
+			} else if (value instanceof Byte) {
 				key += 1<<5;
-			} else if (value instanceof String) {
+			} else if (value instanceof Short) {
 				key += 2<<5;
-			} else if (value instanceof BlockPos) {
+			} else if (value instanceof Integer) {
 				key += 3<<5;
-			} else if (value instanceof Vec3d) {
+			} else if (value instanceof Long) {
 				key += 4<<5;
-			} else if (value == null) {
+			} else if (value instanceof Float) {
 				key += 5<<5;
-			} else
-				throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Given type not supported for LeafiaPacket.. ("+value.getClass().getName()+")");
+			} else if (value instanceof Double) {
+				key += 6<<5;
+			} else {
+				mode = 1;
+				if (value instanceof NBTTagCompound) {
+				} else if (value instanceof ItemStack) {
+					key += 1<<5;
+				} else if (value instanceof String) {
+					key += 2<<5;
+				} else if (value instanceof BlockPos) {
+					key += 3<<5;
+				} else if (value instanceof Vec3d) {
+					key += 4<<5;
+				} else if (value == null) {
+					key += 5<<5;
+				} else
+					throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Given type not supported for LeafiaPacket.. ("+value.getClass().getName()+")");
+			}
 		}
 		//this.signal.put((bit.cardinality() == 0) ? 0 : bit.toByteArray()[0],value);
-		this.signal.put(key,new Pair<>(mode,value));
+		this.signal.put(key,new Pair<>(mode,valueIn));
 		return this;
 	}
 	private void encodeByMode(int mode,Set<Byte> entries,ByteBuf buf) {
@@ -103,34 +114,43 @@ public class LeafiaPacket implements IMessage {
 		for (Byte entry : entries) {
 			Pair<Byte,Object> pair = signal.get(entry);
 			if (pair.getA() == (byte)mode) {
-				buf.writeByte(entry);
-				Object value = pair.getB();
 				int c = getType(entry)+mode*10;
-				switch(c) {
-					case 0: buf.writeBoolean((boolean)value); break;
-					case 1: buf.writeByte((byte)value); break;
-					case 2: buf.writeShort((short)value); break;
-					case 3: buf.writeInt((int)value); break;
-					case 4: buf.writeLong((long)value); break;
-					case 5: buf.writeFloat((float)value); break;
-					case 6: buf.writeDouble((double)value); break;
-					case 10: ByteBufUtils.writeTag(buf,(NBTTagCompound)value); break;
-					case 11: ByteBufUtils.writeItemStack(buf,(ItemStack)value); break;
-					case 12: ByteBufUtils.writeUTF8String(buf,(String)value); break;
-					case 13:
-						BlockPos bpos = (BlockPos)value;
-						buf.writeInt(bpos.getX());
-						buf.writeInt(bpos.getY());
-						buf.writeInt(bpos.getZ());
-						break;
-					case 14:
-						Vec3d vec3d = (Vec3d)value;
-						buf.writeDouble(vec3d.x);
-						buf.writeDouble(vec3d.y);
-						buf.writeDouble(vec3d.z);
-						break;
-					case 15: break;
-					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Unrecognized data type "+c+"!");
+				int arrayLength = -1;
+				Object valueIn = pair.getB();
+				if (valueIn != null && valueIn.getClass().isArray()) {
+					buf.writeByte((7<<5)+31); // code for Array (theres no way we would need 31 fucking entire readerset modes anyway)
+					arrayLength = Array.getLength(valueIn);
+					buf.writeInt(entry|arrayLength<<8);
+				} else
+					buf.writeByte(entry);
+				for (int i = 0; (arrayLength < 0) ? (i == 0) : (i < arrayLength); i++) {
+					Object value = (arrayLength < 0) ? valueIn : Array.get(valueIn,i);
+					switch(c) {
+						case 0: buf.writeBoolean((boolean)value); break;
+						case 1: buf.writeByte((byte)value); break;
+						case 2: buf.writeShort((short)value); break;
+						case 3: buf.writeInt((int)value); break;
+						case 4: buf.writeLong((long)value); break;
+						case 5: buf.writeFloat((float)value); break;
+						case 6: buf.writeDouble((double)value); break;
+						case 10: ByteBufUtils.writeTag(buf,(NBTTagCompound)value); break;
+						case 11: ByteBufUtils.writeItemStack(buf,(ItemStack)value); break;
+						case 12: ByteBufUtils.writeUTF8String(buf,(String)value); break;
+						case 13:
+							BlockPos bpos = (BlockPos)value;
+							buf.writeInt(bpos.getX());
+							buf.writeInt(bpos.getY());
+							buf.writeInt(bpos.getZ());
+							break;
+						case 14:
+							Vec3d vec3d = (Vec3d)value;
+							buf.writeDouble(vec3d.x);
+							buf.writeDouble(vec3d.y);
+							buf.writeDouble(vec3d.z);
+							break;
+						case 15: break;
+						default: throw new LeafiaDevFlaw("LeafiaPacket >> [Sender, identifier: "+identifierString+"] Unrecognized data type "+c+"!");
+					}
 				}
 			} else {
 				nextMode = Math.min(nextMode,pair.getA());
@@ -164,9 +184,21 @@ public class LeafiaPacket implements IMessage {
 		while (buf.readableBytes() >= 1) {
 			byte entry = buf.readByte();
 			byte type = getType(entry);
+
+			Object[] array = null;
 			if (type == 7) {
-				readMode = getKey(entry);
-			} else {
+				byte nextMode = getKey(entry);
+				if (nextMode == 31) { // 31 code for Array (Theres no way we would need 31 fucking readerset modes anyway)
+					int entryArray = buf.readInt();
+					entry = (byte)(entryArray&0b111_11111);
+					type = getType(entry);
+					array = new Object[entryArray>>>8];
+				} else {
+					readMode = nextMode;
+					continue;
+				}
+			}
+			for (int arrayIndex = 0; (array == null) ? (arrayIndex == 0) : (arrayIndex < array.length); arrayIndex++) {
 				Object value;
 				int c = type+readMode*10;
 				switch(c) {
@@ -185,8 +217,13 @@ public class LeafiaPacket implements IMessage {
 					case 15: value = null; break;
 					default: throw new LeafiaDevFlaw("LeafiaPacket >> [Receiver] Unrecognized data type "+c+"!");
 				}
-				signal.put(entry,new Pair<>(readMode,value));
+				if (array == null)
+					signal.put(entry,new Pair<>(readMode,value));
+				else
+					array[arrayIndex] = value;
 			}
+			if (array != null)
+				signal.put(entry,new Pair<>(readMode,array));
 		}
 	}
 	TileEntity te = null;

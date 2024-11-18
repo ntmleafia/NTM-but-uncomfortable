@@ -1,6 +1,7 @@
 package com.hbm.handler;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.ModBlocks.PWR;
 import com.hbm.blocks.machine.NTMAnvil;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.inventory.container.*;
@@ -8,6 +9,10 @@ import com.hbm.inventory.control_panel.ContainerControlEdit;
 import com.hbm.inventory.control_panel.GuiControlEdit;
 import com.hbm.inventory.gui.*;
 import com.hbm.inventory.leafia.MissileCustomNukeGUI;
+import com.leafia.contents.machines.reactors.pwr.PWRData;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
+import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxContainer;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxGUI;
 import com.hbm.items.ModItems;
@@ -746,6 +751,13 @@ public class GuiHandler implements IGuiHandler {
 					return new ZirnoxContainer(player.inventory, (TileEntityReactorZirnox) entity);
 				}
 				return null;
+			case PWR.guiID:
+				if(entity instanceof TileEntityPWRTerminal) {
+					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+					if (core != null)
+						return new PWRTerminalContainer(player.inventory,entity,core);
+				}
+				return null;
 		}
 
 		return null;
@@ -1361,6 +1373,13 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_zirnox:
 				if(entity instanceof TileEntityReactorZirnox) {
 					return new ZirnoxGUI(player.inventory, (TileEntityReactorZirnox) entity);
+				}
+				return null;
+			case PWR.guiID:
+				if(entity instanceof TileEntityPWRTerminal) {
+					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+					if (core != null)
+						return new PWRTerminalUI(player.inventory,entity,core);
 				}
 				return null;
 			// ITEM GUIS

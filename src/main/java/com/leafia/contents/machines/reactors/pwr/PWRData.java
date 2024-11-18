@@ -3,8 +3,10 @@ package com.leafia.contents.machines.reactors.pwr;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.fluid.BlockLiquidCorium;
 import com.hbm.items.ModItems;
+import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.hbm.explosion.ExplosionNukeGeneric;
@@ -24,14 +26,19 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
+import com.llib.exceptions.messages.TextWarningLeafia;
 import com.llib.group.LeafiaSet;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -49,12 +56,12 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, LeafiaPacketReceiver {
 	public BlockPos corePos;
@@ -62,12 +69,93 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public Fluid[] tankTypes;
 	public String coolantName = ModForgeFluids.coolant.getName();
 	public int compression = 0;
-	public double heat = 20;
+	//public double heat = 20;
 	public int coriums = 0;
+	public double masterControl = 1;
+	public final Map<String,Double> controlDemand = new HashMap<>();
+
+	PWRComponentBlock getPWRBlock(World world,BlockPos pos) {
+		Block block = world.getBlockState(pos).getBlock();
+		if (block instanceof PWRComponentBlock)
+			return (PWRComponentBlock)block;
+		return null;
+	}
+	PWRComponentBlock getPWRComponent(World world,BlockPos pos) {
+		PWRComponentBlock block = getPWRBlock(world,pos);
+		if (block == null) return null;
+		return block.tileEntityShouldCreate(world,pos) ? block : null;
+	}
+	PWRComponentEntity getPWREntity(World world,BlockPos pos) {
+		PWRComponentBlock pwr = getPWRBlock(world,pos);
+		if (pwr != null)
+			return pwr.getPWR(world,pos);
+		return null;
+	}
 
 	public Set<BlockPos> members = new HashSet<>();
+	public Set<BlockPos> controls = new HashSet<>();
+	public Set<BlockPos> fuels = new HashSet<>();
+	public LeafiaSet<BlockPos> projection = new LeafiaSet<>();
+	public void onDiagnosis(World world) {
+		if (world.isRemote) {
+
+		} else {
+			int slots = 0;
+			for (BlockPos pos : projection) {
+				PWRComponentBlock block = getPWRComponent(world,pos);
+				if (block != null) {
+					if (block instanceof MachinePWRElement) {
+						slots++;
+					}
+				}
+			}
+			if (remoteSize != slots) {
+				remoteContainer = new ItemStackHandler(slots);
+				remoteSize = slots;
+			}
+			addDataToPacket(LeafiaPacket._start(companion),this).__sendToAffectedClients();
+		}
+	}
+	public Pair<LeafiaSet<BlockPos>,LeafiaSet<BlockPos>> getProjectionFuelAndControlPositions() {
+		Pair<LeafiaSet<BlockPos>,LeafiaSet<BlockPos>> output = new Pair<>(new LeafiaSet<>(),new LeafiaSet<>());
+		for (BlockPos pos : projection) {
+			Block block = getWorld().getBlockState(pos).getBlock();
+			if (block instanceof MachinePWRElement)
+				output.getA().add(pos);
+			else if (block instanceof MachinePWRControl)
+				output.getB().add(pos);
+		}
+		return output;
+	}
+	public BlockPos terminal_toGlobal(IBlockState terminal,BlockPos terminalPos,BlockPos pos) {
+		EnumFacing face = terminal.getValue(BlockHorizontal.FACING).getOpposite();
+		Vec3d lookVector = new Vec3d(face.getDirectionVec()); // amazingly, Vec3i does not has .scale() method LMAO
+		Vec3d rightVector = lookVector.crossProduct(new Vec3d(0,1,0));
+		return new BlockPos(new Vec3d(terminalPos).addVector(0.5,0.5+pos.getY(),0.5).add(lookVector.scale(-pos.getZ())).add(rightVector.scale(pos.getX())));
+	}
+	public BlockPos terminal_toLocal(IBlockState terminal,BlockPos terminalPos,BlockPos pos) {
+		EnumFacing face = terminal.getValue(BlockHorizontal.FACING).getOpposite();
+		BlockPos relative = pos.subtract(terminalPos);
+		switch(face) { // IM STUPID OK??
+			case NORTH: return relative;
+			case SOUTH: return new BlockPos(-relative.getX(),relative.getY(),-relative.getZ());
+			case WEST: return new BlockPos(-relative.getZ(),relative.getY(),relative.getX());
+			case EAST: return new BlockPos(relative.getZ(),relative.getY(),-relative.getX());
+			default: throw new LeafiaDevFlaw("PWR Terminals should only face sideways, got "+face.getName()+" how the fuck does this even happen");
+		}
+	}
 
 	public TileEntity companion;
+
+	public ItemStackHandler resourceContainer = new ItemStackHandler(3) {
+		@Override
+		protected void onContentsChanged(int slot) {
+			super.onContentsChanged(slot);
+			companion.markDirty();
+		}
+	};
+	public ItemStackHandler remoteContainer = new ItemStackHandler(0);
+	int remoteSize = 0;
 
 	public void invalidate(World world) {
 		if (!(world instanceof WorldServer)) return;
@@ -150,20 +238,68 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				}
 			}
 		}
-		if (nbt.hasKey("heat"))
-			heat = nbt.getDouble("heat");
-		if(nbt.hasKey("tanks"))
+		//if (nbt.hasKey("heat"))
+		//	heat = nbt.getDouble("heat");
+		if (nbt.hasKey("tanks"))
 			FFUtils.deserializeTankArray(nbt.getTagList("tanks", 10), tanks);
+		if (nbt.hasKey("remoteContainerSize"))
+			remoteSize = nbt.getInteger("remoteContainerSize");
+		if (nbt.hasKey("resourceContainer"))
+			resourceContainer.deserializeNBT(nbt.getCompoundTag("resourceContainer"));
+		if (nbt.hasKey("projectionMap")) {
+			projection.clear();
+			NBTTagList nbtjection = nbt.getTagList("projectionMap",11/*INT[], refer to NBTBase*/);
+			for (NBTBase item : nbtjection) {
+				NBTTagIntArray array = (NBTTagIntArray)item;
+				int[] coords = array.getIntArray();
+				projection.add(new BlockPos(coords[0],coords[1],coords[2]));
+			}
+		}
+		if (nbt.hasKey("controlMaster"))
+			masterControl = nbt.getDouble("controlMaster");
+		if (nbt.hasKey("controlDemand"))
+			readControlPositions(nbt.getCompoundTag("controlDemand"));
 		return this;
 	}
 	public NBTTagCompound writeToNBT(NBTTagCompound mainCompound) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setDouble("heat", heat);
+		//nbt.setDouble("heat", heat);
 		nbt.setInteger("compression", compression);
 		nbt.setTag("tanks", FFUtils.serializeTankArray(tanks));
+		nbt.setInteger("remoteContainerSize",remoteSize);
+		nbt.setTag("resourceContainer",resourceContainer.serializeNBT());
+		NBTTagList nbtjection = new NBTTagList();
+		for (BlockPos pos : projection) {
+			nbtjection.appendTag(new NBTTagIntArray(new int[]{pos.getX(),pos.getY(),pos.getZ()}));
+		}
+		nbt.setTag("projectionMap",nbtjection);
+
+		nbt.setDouble("controlMaster",masterControl);
+		nbt.setTag("controlDemand",writeControlPositions());
 
 		mainCompound.setTag("data",nbt);
 		return mainCompound;
+	}
+	public void readControlPositions(NBTTagCompound nbt) {
+		controlDemand.clear();
+		for (String key : nbt.getKeySet())
+			controlDemand.put(key,nbt.getDouble(key));
+	}
+	public NBTTagCompound writeControlPositions() {
+		Set<String> existingNames = new LeafiaSet<>();
+		for (BlockPos pos : controls) {
+			TileEntity entity = getWorld().getTileEntity(pos);
+			if (entity instanceof TileEntityPWRControl) {
+				TileEntityPWRControl control = (TileEntityPWRControl)entity;
+				existingNames.add(control.name);
+			}
+		}
+		NBTTagCompound nbt = new NBTTagCompound();
+		for (Entry<String,Double> entry : controlDemand.entrySet()) {
+			if (existingNames.contains(entry.getKey()))
+				nbt.setDouble(entry.getKey(),entry.getValue());
+		}
+		return nbt;
 	}
 
 	@Override
@@ -206,6 +342,13 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					tanks[2].drain(decr,true);
 				}
 			}
+			LeafiaPacket._start(companion).__write(30,new int[]{
+					tanks[0].getFluidAmount(),
+					tanks[1].getFluidAmount(),
+					tanks[2].getFluidAmount(),
+					tanks[3].getFluidAmount(),
+					tanks[4].getFluidAmount()
+			});
 		}
 	}
 
@@ -595,19 +738,71 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			return null;
 	}
 
+	void sendControlPositions() {
+		LeafiaPacket._start(companion)
+				.__write(29,writeControlPositions())
+				.__write(28,masterControl)
+				.__sendToAffectedClients();
+	}
+
 	@Override
 	public String getPacketIdentifier() { throw new LeafiaDevFlaw("Method PWRData.getPacketIdentifier() is not supposed to be used! Spaghetti coding moment."); }
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void onReceivePacketLocal(byte key,Object value) {
-
+		if (key == 30) { // Tank packets
+			if (!value.getClass().isArray()) {
+				Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Malformed PWR tank packet! (Given value wasn't Array)"));
+				return;
+			}
+			if (Array.getLength(value) != 5) {
+				Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Malformed PWR tank packet! (Array length must be 5, got "+Array.getLength(value)+")"));
+				return;
+			}
+			for (int i = 0; i < 5; i++)
+				tanks[i].setFluid(new FluidStack(tankTypes[i],Array.getInt(value,i)));
+			// if we somehow got non-int values in the array, well... #ripbozo
+		} else if (key == 29) { // Rod sync packets
+			if (value instanceof NBTTagCompound) {
+				readControlPositions((NBTTagCompound)value);
+			}
+		} else if (key == 28) { // Master rod sync
+			masterControl = (double)value;
+		}
 	}
 	@Override
 	public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {
-
+		if (key == 30) { // control rods request
+			if (value instanceof NBTTagCompound) {
+				NBTTagCompound nbt = (NBTTagCompound)value;
+				if (nbt.hasKey("name")) {
+					controlDemand.put(nbt.getString("name"),nbt.getDouble("level"));
+					manipulateRod(nbt.getString("name"));
+				} else {
+					masterControl = nbt.getDouble("level");
+					manipulateRod(null);
+				}
+				sendControlPositions();
+			}
+		}
 	}
 	@Override
 	public void onPlayerValidate(EntityPlayer plr) {
 		addDataToPacket(LeafiaPacket._start(companion),this).__sendToClient(plr);
+	}
+	void manipulateRod(String name) {
+		for (BlockPos pos : controls) {
+			TileEntity entity = getWorld().getTileEntity(pos);
+			if (entity instanceof TileEntityPWRControl) {
+				TileEntityPWRControl control = (TileEntityPWRControl)entity;
+				double newTarget = 0;
+				if (controlDemand.containsKey(control.name))
+					newTarget = controlDemand.get(control.name)*masterControl;
+				if (name != null) {
+					if (!control.name.equals(name)) continue;
+				}
+				control.targetPosition = newTarget;
+			}
+		}
 	}
 }

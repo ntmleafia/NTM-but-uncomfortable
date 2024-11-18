@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Arrays;
 import java.util.List;
 
+import com.leafia.shit.GuiContainerLeafia;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -19,7 +20,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class GuiInfoContainer extends GuiContainer {
+public abstract class GuiInfoContainer extends GuiContainerLeafia {
 	
 	ResourceLocation guiUtil =  new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_utility.png");
 

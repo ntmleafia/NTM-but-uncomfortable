@@ -29,6 +29,11 @@ public class MachinePWRChannel extends BlockBase implements ITooltipProvider, PW
     }
 
     @Override
+    public boolean shouldRenderOnGUI() {
+        return true;
+    }
+
+    @Override
     public boolean tileEntityShouldCreate(World world,BlockPos pos) {
         return false;
     }

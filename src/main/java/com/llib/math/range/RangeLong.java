@@ -8,8 +8,8 @@ public class RangeLong extends RangeBase implements Iterable<Long> {
     public long min;
     public long max;
     public RangeLong(long min,long max) {
-        this.min = Math.min(min,max);
-        this.max = Math.max(min,max);
+        this.min = min;
+        this.max = max;
     }
     public boolean isInRange(int x) {
         if (x > max) return false;

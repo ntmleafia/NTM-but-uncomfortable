@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.handler.RadiationSystemNT;
+import com.hbm.handler.RadiationSystemNT.RadPocket;
 import com.hbm.lib.Library;
 import com.hbm.items.ModItems;
 import com.hbm.items.gear.ArmorFSB;
@@ -30,6 +32,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 
@@ -123,9 +129,29 @@ public class ItemGeigerCounter extends Item implements IBauble {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand handIn) {
 		if(!world.isRemote) {
-	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.techBoop, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
-	    	ContaminationUtil.printGeigerData(player);
+			if (!player.isSneaking()) {
+				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBoop,SoundCategory.PLAYERS,1.0F,1.0F);
+				ContaminationUtil.printGeigerData(player);
+			} else {
+				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1.0F,1.0F);
+				RadPocket pocket = RadiationSystemNT.getPocket(world,player.getPosition());
+				RadiationSavedData data = RadiationSavedData.getData(player.world);
+				boolean sealed = data.isSealed(player.getPosition(),false);
+				player.sendMessage(new TextComponentString("===== ☢ ").appendSibling(new TextComponentTranslation("geiger.title")).appendSibling(new TextComponentString(" ☢ =====")).setStyle(new Style().setColor(TextFormatting.GOLD)));
+				player.sendMessage(new TextComponentTranslation("geiger.sealed."+(sealed ? "true" : "false")).setStyle(new Style().setColor(sealed ? TextFormatting.AQUA : TextFormatting.GOLD)));
+				if (pocket == null) {
+					player.sendMessage(new TextComponentString("Entirely unshielded").setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+				} else {
+					if (pocket.leaks.size() <= 0)
+						player.sendMessage(new TextComponentString("Failed to detect leaks").setStyle(new Style().setColor(TextFormatting.DARK_GRAY)));
+					else {
+						for (BlockPos leak : pocket.leaks) {
+							// TODO: add some ahh ahhh hh marker that penetrates through walls
+							player.sendMessage(new TextComponentString("Leak detected at "+leak.getX()+", "+leak.getY()+", "+leak.getZ()).setStyle(new Style().setColor(TextFormatting.RED)));
+						}
+					}
+				}
+			}
 		}
 		
 		return super.onItemRightClick(world, player, handIn);

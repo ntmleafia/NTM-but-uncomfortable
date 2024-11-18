@@ -40,6 +40,10 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 		this.setUnlocalizedName("pwr_element");
 		this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
 	}
+	@Override
+	public boolean shouldRenderOnGUI() {
+		return true;
+	}
 	public void check(World world,BlockPos pos) { // Called only on server
 		Chunk chunk = world.getChunkFromBlockCoords(pos);
 		TileEntity entity = chunk.getTileEntity(pos,Chunk.EnumCreateEntityType.CHECK);

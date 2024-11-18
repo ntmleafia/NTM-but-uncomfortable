@@ -42,6 +42,10 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
         setSoundType(SoundType.METAL);
     }
     @Override
+    public boolean shouldRenderOnGUI() {
+        return true;
+    }
+    @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);
@@ -73,11 +77,14 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
             ItemTooling tool = (ItemTooling)(playerIn.getHeldItem(hand).getItem());
             if (tool.getType().equals(IToolable.ToolType.SCREWDRIVER)) {
                 if (!worldIn.isRemote) {
-                    worldIn.playSound(null,pos,HBMSoundHandler.lockOpen,SoundCategory.BLOCKS,0.5f,1);
+                    double ogPos = control.targetPosition;
                     if (hand.equals(EnumHand.OFF_HAND))
                         control.targetPosition = Math.max(control.targetPosition-0.25/control.height,0);
                     else
                         control.targetPosition = Math.min(control.targetPosition+0.25/control.height,1);
+                    if (control.targetPosition == ogPos)
+                        return false;
+                    worldIn.playSound(null,pos,HBMSoundHandler.lockOpen,SoundCategory.BLOCKS,0.5f,1);
                 }
                 return true;
             }

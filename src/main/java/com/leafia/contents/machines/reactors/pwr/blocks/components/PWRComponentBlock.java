@@ -5,8 +5,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public interface PWRComponentBlock {
+    default boolean shouldRenderOnGUI() {
+        return false;
+    }
     boolean tileEntityShouldCreate(World world,BlockPos pos);
+    @Nullable
     default PWRComponentEntity getPWR(World world,BlockPos pos) {
         if (!tileEntityShouldCreate(world,pos)) return null;
         TileEntity entity = world.getTileEntity(pos);
@@ -17,6 +23,7 @@ public interface PWRComponentBlock {
         }
         return null;
     };
+    @Nullable
     default TileEntity getEntity(World world,BlockPos pos) {
         if (!tileEntityShouldCreate(world,pos)) return null;
         TileEntity entity = world.getTileEntity(pos);

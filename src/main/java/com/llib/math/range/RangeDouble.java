@@ -6,8 +6,8 @@ public class RangeDouble extends RangeBase {
     public double min;
     public double max;
     public RangeDouble(double min,double max) {
-        this.min = Math.min(min,max);
-        this.max = Math.max(min,max);
+        this.min = min;
+        this.max = max;
     }
     public boolean isInRange(int x) {
         if (x > max) return false;

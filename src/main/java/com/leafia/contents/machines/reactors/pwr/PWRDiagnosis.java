@@ -3,16 +3,21 @@ package com.leafia.contents.machines.reactors.pwr;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.fluid.BlockLiquidCorium;
 import com.hbm.blocks.fluid.CoriumFluid;
+import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.items.ModItems;
 import com.llib.exceptions.messages.TextWarningLeafia;
+import com.llib.group.LeafiaMap;
+import com.llib.group.LeafiaSet;
 import com.llib.math.MathLeafia;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
+import com.llib.math.range.RangeInt;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +32,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class PWRDiagnosis {
@@ -57,6 +63,49 @@ public class PWRDiagnosis {
 	public final Set<BlockPos> potentialPos = new HashSet<>();
 	public final Set<BlockPos> fuelPositions = new HashSet<>();
 	public final Set<BlockPos> coriums = new HashSet<>();
+	public final Set<BlockPos> controlPositions = new HashSet<>();
+	public final LeafiaMap<Pair<Integer,Integer>,Pair<Integer,Boolean>> projected = new LeafiaMap<>();
+	RangeInt rangeX = new RangeInt(Integer.MAX_VALUE,Integer.MIN_VALUE);
+	RangeInt rangeZ = new RangeInt(Integer.MAX_VALUE,Integer.MIN_VALUE);
+	void gridFill() {
+		for (Entry<Pair<Integer,Integer>,Pair<Integer,Boolean>> entry : projected.entrySet()) {
+			int fromHeight = entry.getValue().getA();
+			for (EnumFacing face : EnumFacing.HORIZONTALS) {
+				List<Pair<Integer,Integer>> buffer = new ArrayList<>();
+				for (int i = 1; true; i++) {
+					Pair<Integer,Integer> offset = new Pair<>(entry.getKey().getA()+face.getFrontOffsetX()*i,entry.getKey().getB()+face.getFrontOffsetZ()*i);
+					if (!rangeX.isInRange(offset.getA()) || !rangeZ.isInRange(offset.getB()))
+						break;
+					if (projected.containsKey(offset)) {
+						if (buffer.size() > 0) {
+							int toHeight = projected.get(offset).getA();
+							int finalHeight = Math.min(fromHeight,toHeight); // TODO: min or max?
+							for (Pair<Integer,Integer> pair : buffer)
+								projected.put(pair,new Pair<>(finalHeight,false));
+						}
+						break;
+					} else
+						buffer.add(offset);
+				}
+			}
+		}
+	}
+	void addProjection(BlockPos pos,boolean isFuel) {
+		Pair<Integer,Integer> pos2d = new Pair<>(pos.getX(),pos.getZ());
+		int height = -1;
+		boolean hasToBeFuel = false;
+		if (projected.containsKey(pos2d)) {
+			height = projected.get(pos2d).getA();
+			hasToBeFuel = projected.get(pos2d).getB();
+		}
+		if ((pos.getY() > height || (isFuel && !hasToBeFuel)) && (isFuel || !hasToBeFuel)) {
+			projected.put(pos2d,new Pair<>(pos.getY(),isFuel));
+			rangeX.min = Math.min(rangeX.min,pos.getX());
+			rangeX.max = Math.max(rangeX.max,pos.getX());
+			rangeZ.min = Math.min(rangeZ.min,pos.getZ());
+			rangeZ.max = Math.max(rangeZ.max,pos.getZ());
+		}
+	}
 	boolean closure = false;
 	World world = null;
 	/*
@@ -128,6 +177,7 @@ public class PWRDiagnosis {
 			confirmLife();
 			PWRComponentBlock pwr = getPWRBlock(pos);
 			debugSpawnParticle(pos.up());
+			boolean isFuel = false;
 			if (pwr != null) {
 				// if this block isn't under control of topping blocks,
 				if (pwr.tileEntityShouldCreate(world,pos)) {
@@ -137,9 +187,14 @@ public class PWRDiagnosis {
 						if (entity instanceof ITickable) // only assign tickable entities as a core
 							potentialPos.add(pos);
 					}
-					if (pwr instanceof MachinePWRElement)
+					if (pwr instanceof MachinePWRElement) {
 						fuelPositions.add(pos);
+						isFuel = true;
+					} if (pwr instanceof MachinePWRControl)
+						controlPositions.add(pos);
 				}
+				if (pwr.shouldRenderOnGUI())
+					addProjection(pos,isFuel);
 			}
 			PWRComponentEntity entity = getPWREntity(pos);
 			if (entity != null) {
@@ -235,6 +290,14 @@ public class PWRDiagnosis {
 				core.tanks[0].setCapacity(4_000*channels);
 				core.tanks[1].setCapacity(4_000*channels);
 				core.coriums = this.coriums.size();
+				core.controls = controlPositions;
+				core.fuels = fuelPositions;
+				gridFill();
+				LeafiaSet<BlockPos> projection = new LeafiaSet<>();
+				for (Entry<Pair<Integer,Integer>,Pair<Integer,Boolean>> entry : projected.entrySet())
+					projection.add(new BlockPos(entry.getKey().getA(),entry.getValue().getA(),entry.getKey().getB()));
+				core.projection = projection;
+				core.onDiagnosis(world);
 			}
 		}
 		for (BlockPos pos : members) {

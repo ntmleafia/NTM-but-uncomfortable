@@ -34,6 +34,7 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.ContaminationUtil;
+import com.llib.group.LeafiaSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
@@ -79,7 +80,10 @@ public class RadiationSystemNT {
 	private static Map<World, WorldRadiationData> worldMap = new HashMap<>();
 	/**A tick counter so radiation only updates once every second.*/
 	private static int ticks;
-	
+
+	public static Collection<ChunkRadiationStorage> getAll(World world) {
+		return getWorldRadData(world).data.values();
+	}
 	/**
 	 * Increments the radiation at the specified block position. Only increments if the current radiaion stored is less than max
 	 * @param world - the world to increment radiation in
@@ -87,9 +91,6 @@ public class RadiationSystemNT {
 	 * @param amount - the amount to increment by
 	 * @param max - the maximum amount of radiation allowed before it doesn't increment
 	 */
-	public static Collection<ChunkRadiationStorage> getAll(World world) {
-		return getWorldRadData(world).data.values();
-	}
 	public static void incrementRad(World world, BlockPos pos, float amount, float max){
 		if(pos.getY() < 0 || pos.getY() > 255 || !world.isBlockLoaded(pos))
 			return;
@@ -1032,13 +1033,16 @@ public class RadiationSystemNT {
 							//Chunk still needs to be loaded to propagate radiation into it
 							if(!pocket.connectionIndices[facing.ordinal()].contains(-1)){
 								pocket.connectionIndices[facing.ordinal()].add(-1);
+								pocket.leaks.add(outPos);
 							}
 						} else {
 							//If it is loaded, see if the pocket at that position is already connected to us. If not, add it as a connection.
 							//Setting outPocket's connection will be handled in setForYLevel
 							RadPocket outPocket = getPocket(world, outPos);
-							if(!pocket.connectionIndices[facing.ordinal()].contains(Integer.valueOf(outPocket.index)))
+							if(!pocket.connectionIndices[facing.ordinal()].contains(Integer.valueOf(outPocket.index))) {
 								pocket.connectionIndices[facing.ordinal()].add(outPocket.index);
+								pocket.leaks.add(outPos);
+							}
 						}
 					}
 					continue;
@@ -1076,6 +1080,7 @@ public class RadiationSystemNT {
 		//If an array contains -1, that means the chunk on that side hasn't been initialized, so it's an implicit connection
 		@SuppressWarnings("unchecked")
 		public List<Integer>[] connectionIndices = new List[EnumFacing.VALUES.length];
+		public final Set<BlockPos> leaks = new LeafiaSet<>();
 		
 		public RadPocket(SubChunkRadiationStorage parent, int index) {
 			this.parent = parent;

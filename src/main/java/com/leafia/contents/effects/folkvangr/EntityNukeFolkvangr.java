@@ -145,7 +145,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
                 awaitingBind.remove(this);
                 this.setDead();
                 for (EntityPlayer player : world.playerEntities) {
-                    player.sendMessage(new TextWarningLeafia("ERROR>> EntityCloudFleija did not bind in time!"));
+                    player.sendMessage(new TextWarningLeafia("EntityCloudFleija did not bind in time!"));
                 }
                 return;
             }
