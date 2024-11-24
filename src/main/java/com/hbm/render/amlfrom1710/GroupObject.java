@@ -32,7 +32,7 @@ public class GroupObject
         if (faces.size() > 0)
         {
         	
-            Tessellator tessellator = Tessellator.instance;
+            CompositeBrush tessellator = CompositeBrush.instance;
             tessellator.startDrawing(glDrawingMode);
             render(tessellator);
             tessellator.draw();
@@ -40,7 +40,7 @@ public class GroupObject
     }
 
     @SideOnly(Side.CLIENT)
-    public void render(Tessellator tessellator)
+    public void render(CompositeBrush tessellator)
     {
         if (faces.size() > 0)
         {
@@ -57,7 +57,7 @@ public class GroupObject
         if (faces.size() > 0)
         {
             
-            Tessellator tessellator = Tessellator.instance;
+            CompositeBrush tessellator = CompositeBrush.instance;
             tessellator.startDrawing(glDrawingMode);
             renderSplit(tessellator, splitHeight, scale);
             tessellator.draw();
@@ -65,7 +65,7 @@ public class GroupObject
     }
 
     @SideOnly(Side.CLIENT)
-    public void renderSplit(Tessellator tessellator, float splitHeight, float scale)
+    public void renderSplit(CompositeBrush tessellator,float splitHeight,float scale)
     {
         if (faces.size() > 0)
         {

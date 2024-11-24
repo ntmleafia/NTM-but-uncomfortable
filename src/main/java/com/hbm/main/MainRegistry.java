@@ -15,6 +15,7 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
+import com.leafia.eventbuses.LeafiaServerListener;
 import com.leafia.passive.DispenserBullet;
 import com.hbm.tileentity.leafia.*;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
@@ -478,6 +479,8 @@ public class MainRegistry {
 		MinecraftForge.EVENT_BUS.register(new ModEventHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new ModEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new ModEventHandler());
+
+		MinecraftForge.EVENT_BUS.register(new LeafiaServerListener());
 		
 		if(event.getSide() == Side.CLIENT) {
 			HbmKeybinds keyHandler = new HbmKeybinds();

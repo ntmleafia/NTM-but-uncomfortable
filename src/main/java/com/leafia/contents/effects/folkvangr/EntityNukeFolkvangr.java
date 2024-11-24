@@ -3,11 +3,13 @@ package com.leafia.contents.effects.folkvangr;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
-import com.llib.LeafiaEase;
+import com.llib.technical.LeafiaEase;
 import com.hbm.packet.PacketDispatcher;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import io.netty.buffer.ByteBuf;
@@ -363,20 +365,20 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 
 
 
-    public static class ClearChunkPacket implements IMessage {
+    public static class ClearChunkPacket extends RecordablePacket {
         public ChunkPos pos;
         public byte min;
         public byte max;
         public ClearChunkPacket() {
         }
         @Override
-        public void fromBytes(ByteBuf buf) {
+        public void fromBits(LeafiaBuf buf) {
             pos = new ChunkPos(buf.readInt(),buf.readInt());
             min = buf.readByte();
             max = buf.readByte();
         }
         @Override
-        public void toBytes(ByteBuf buf) {
+        public void toBits(LeafiaBuf buf) {
             buf.writeInt(pos.x);
             buf.writeInt(pos.z);
             buf.writeByte(min);

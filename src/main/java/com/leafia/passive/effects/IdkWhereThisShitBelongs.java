@@ -10,7 +10,8 @@ import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.saveddata.RadiationSavedData;
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -386,7 +387,7 @@ public class IdkWhereThisShitBelongs {
             }
         }
     }
-    public static class TomImpactPacket implements IMessage {
+    public static class TomImpactPacket extends RecordablePacket {
         public boolean evacuated;
         double infernal;
         double quake;
@@ -394,14 +395,14 @@ public class IdkWhereThisShitBelongs {
         public TomImpactPacket() {
         }
         @Override
-        public void fromBytes(ByteBuf buf) {
+        public void fromBits(LeafiaBuf buf) {
             infernal = buf.readDouble();
             quake = buf.readDouble();
             darkness = buf.readDouble();
             evacuated = buf.readBoolean();
         }
         @Override
-        public void toBytes(ByteBuf buf) {
+        public void toBits(LeafiaBuf buf) {
             buf.writeDouble(infernal);
             buf.writeDouble(quake);
             buf.writeDouble(darkness);
@@ -421,7 +422,7 @@ public class IdkWhereThisShitBelongs {
             }
         }
     }
-    public static class TomImpactCollapsePacket implements IMessage {
+    public static class TomImpactCollapsePacket extends RecordablePacket {
         public int x;
         public int y0;
         public int y1;
@@ -429,14 +430,14 @@ public class IdkWhereThisShitBelongs {
         public TomImpactCollapsePacket() {
         }
         @Override
-        public void fromBytes(ByteBuf buf) {
+        public void fromBits(LeafiaBuf buf) {
             x = buf.readInt();
             y0 = buf.readInt();
             y1 = buf.readInt();
             z = buf.readInt();
         }
         @Override
-        public void toBytes(ByteBuf buf) {
+        public void toBits(LeafiaBuf buf) {
             buf.writeInt(x);
             buf.writeInt(y0);
             buf.writeInt(y1);

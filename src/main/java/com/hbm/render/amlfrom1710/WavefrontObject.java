@@ -170,7 +170,7 @@ public class WavefrontObject implements IModelCustom
     @SideOnly(Side.CLIENT)
     public void renderAll()
     {
-        Tessellator tessellator = Tessellator.instance;
+        CompositeBrush tessellator = CompositeBrush.instance;
 
         if (currentGroupObject != null)
         {
@@ -187,7 +187,7 @@ public class WavefrontObject implements IModelCustom
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void tessellateAll(Tessellator tessellator)
+    public void tessellateAll(CompositeBrush tessellator)
     {
         for (GroupObject groupObject : groupObjects)
         {
@@ -213,7 +213,7 @@ public class WavefrontObject implements IModelCustom
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void tessellateOnly(Tessellator tessellator, String... groupNames) {
+    public void tessellateOnly(CompositeBrush tessellator,String... groupNames) {
         for (GroupObject groupObject : groupObjects)
         {
             for (String groupName : groupNames)
@@ -240,7 +240,7 @@ public class WavefrontObject implements IModelCustom
     }
 
     @SideOnly(Side.CLIENT)
-    public void tessellatePartSplit(Tessellator tessellator, String partName, float splitHeight, float scale) {
+    public void tessellatePartSplit(CompositeBrush tessellator,String partName,float splitHeight,float scale) {
         for (GroupObject groupObject : groupObjects)
         {
             if (partName.equalsIgnoreCase(groupObject.name))
@@ -252,7 +252,7 @@ public class WavefrontObject implements IModelCustom
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void tessellatePart(Tessellator tessellator, String partName) {
+    public void tessellatePart(CompositeBrush tessellator,String partName) {
         for (GroupObject groupObject : groupObjects)
         {
             if (partName.equalsIgnoreCase(groupObject.name))
@@ -285,7 +285,7 @@ public class WavefrontObject implements IModelCustom
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void tessellateAllExcept(Tessellator tessellator, String... excludedGroupNames)
+    public void tessellateAllExcept(CompositeBrush tessellator,String... excludedGroupNames)
     {
         boolean exclude;
         for (GroupObject groupObject : groupObjects)

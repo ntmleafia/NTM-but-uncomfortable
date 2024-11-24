@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.util.vector.Matrix4f;
 
@@ -22,7 +24,6 @@ import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.util.ModelRendererUtil;
 import com.hbm.render.util.Triangle;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -41,7 +42,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PacketSpecialDeath implements IMessage {
+public class PacketSpecialDeath extends RecordablePacket {
 
 	public static Method rGetHurtSound;
 	
@@ -62,7 +63,7 @@ public class PacketSpecialDeath implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		entId = buf.readInt();
 		effectId = buf.readInt();
 		int len = buf.readByte();
@@ -76,7 +77,7 @@ public class PacketSpecialDeath implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(entId);
 		buf.writeInt(effectId);
 		buf.writeByte(auxData.length);

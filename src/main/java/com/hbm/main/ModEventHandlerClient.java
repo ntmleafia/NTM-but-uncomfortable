@@ -10,6 +10,8 @@ import com.google.gson.JsonSyntaxException;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import com.leafia.passive.LeafiaPassiveLocal;
+import com.leafia.passive.rendering.TopRender;
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
@@ -109,7 +111,7 @@ import com.hbm.particle.ParticleFirstPerson;
 import com.hbm.particle.gluon.ParticleGluonBurnTrail;
 import com.hbm.render.LightRenderer;
 import com.hbm.render.RenderHelper;
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.anim.HbmAnimations;
 import com.hbm.render.anim.HbmAnimations.Animation;
@@ -1305,9 +1307,11 @@ public class ModEventHandlerClient {
 				if(isHooked)
 					player.distanceWalkedModified = player.prevDistanceWalkedModified; //Stops the held shotgun from bobbing when hooked
 			}
+			if (Minecraft.getMinecraft().world != null)
+				LeafiaPassiveLocal.priorTick(Minecraft.getMinecraft().world);
 		} else {
-			
 			if(Minecraft.getMinecraft().world != null){
+				LeafiaPassiveLocal.onTick(Minecraft.getMinecraft().world);
 				//Drillgon200: If I add more guns like this, I'll abstract it.
 				for(EntityPlayer player : Minecraft.getMinecraft().world.playerEntities){
 					if(player.getHeldItemMainhand().getItem() == ModItems.gun_egon && !ItemGunEgon.soundsByPlayer.containsKey(player)){
@@ -1504,7 +1508,7 @@ public class ModEventHandlerClient {
 
 			RenderHelper.bindTexture(ResourceManager.universal);
 			LeafiaGls.enableLighting();
-			Tessellator.instance.startDrawing(GL11.GL_TRIANGLES);
+			CompositeBrush.instance.startDrawing(GL11.GL_TRIANGLES);
 			for(int i = 0; i < Math.ceil(len); i++) {
 				float offset = 0;
 				if(ItemGunShotty.motionStrafe != 0){
@@ -1517,11 +1521,11 @@ public class ModEventHandlerClient {
 						offset = -offset;
 				}
 				float scale = (float) (len/20F);
-				Tessellator.instance.setTranslation(0, i, offset*scale);
-				ResourceManager.n45_chain.tessellateAll(Tessellator.instance);
+				CompositeBrush.instance.setTranslation(0, i, offset*scale);
+				ResourceManager.n45_chain.tessellateAll(CompositeBrush.instance);
 			}
 
-			Tessellator.instance.draw();
+			CompositeBrush.instance.draw();
 			GL11.glPopMatrix();
 		}		
 		
@@ -1779,6 +1783,8 @@ public class ModEventHandlerClient {
 				ItemGunEgon.activeTrailParticles.remove(player);
 			}
 		}
+
+		TopRender.main(evt);
 		
 		for(Runnable r : ClientProxy.deferredRenderers){
 			r.run();

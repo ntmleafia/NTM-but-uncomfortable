@@ -1,4 +1,7 @@
 package com.llib.math;
+
+import java.util.function.BiFunction;
+
 // SI Unit prefixes utility I made on Lua for use in OpenComputers translated to Java.
 // Here's original code if you also play OpenComputers
 /*
@@ -22,8 +25,22 @@ public class SiPfx { // Yeah i know SI is supposed to be both uppercase. SHUT UP
 		double pow2 = Math.pow(10,decimals);
 		return Math.floor(num * pow2 + 0.5) / pow2;
 	}
+	public static byte getExponent(double x) {
+		return (byte)Math.floor(Math.log(x)/Math.log(1000));
+	}
+	public static double scale(double x,double exponent) {
+		return x/Math.pow(1000,exponent);
+	}
 	public static String auto(double x) {
-		byte pfxLv = (byte)Math.floor(Math.log(x)/Math.log(1000));
-		return (pfxLv == 0 ? String.valueOf(x)+" " : String.valueOf(round(Math.pow(x/1000,pfxLv),2))+" ")+siPrefix[pfxLv-1];
+		byte pfxLv = getExponent(x);
+		return (pfxLv <= 0 ? String.valueOf(x)+" " : String.valueOf(round(scale(x,pfxLv),2))+" "+siPrefix[pfxLv-1]);
+	}
+	public static String format(String format,double x,boolean full) {
+		byte exponent = getExponent(x);
+		return String.format(format,scale(x,exponent))+(exponent <= 0 ? " " : " "+(full ? siPrefixFull : siPrefix)[exponent-1]);
+	}
+	public static String custom(BiFunction<Double,String,String> callback,double x,boolean full) {
+		byte exponent = getExponent(x);
+		return callback.apply(scale(x,exponent),(exponent <= 0 ? " " : " "+(full ? siPrefixFull : siPrefix)[exponent-1]));
 	}
 }

@@ -19,6 +19,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckE
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
+import com.leafia.eventbuses.LeafiaClientListener;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.leafia.transformer.LeafiaGls;
 import com.leafia.unsorted.ParticleBalefire;
@@ -616,7 +617,8 @@ public class ClientProxy extends ServerProxy {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		
 		MinecraftForge.EVENT_BUS.register(new ModEventHandlerClient());
-        MinecraftForge.EVENT_BUS.register(new LeafiaGls.Handler());
+		MinecraftForge.EVENT_BUS.register(new LeafiaClientListener());
+
 		AdvancedModelLoader.registerModelHandler(new HmfModelLoader());
 		
 		HbmShaderManager.loadShaders();

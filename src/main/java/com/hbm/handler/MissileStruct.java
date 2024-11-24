@@ -7,7 +7,7 @@ import com.hbm.items.weapon.ItemMissile.PartType;
 import com.hbm.render.misc.MissileMultipart;
 import com.hbm.render.misc.MissilePart;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -49,7 +49,7 @@ public class MissileStruct {
 			thruster = (ItemMissile) t;
 	}
 	
-	public void writeToByteBuffer(ByteBuf buf) {
+	public void writeToByteBuffer(LeafiaBuf buf) {
 
 
 		if(warhead != null && warhead.type == PartType.WARHEAD)
@@ -73,7 +73,7 @@ public class MissileStruct {
 			buf.writeInt(0);
 	}
 	
-	public static MissileStruct readFromByteBuffer(ByteBuf buf) {
+	public static MissileStruct readFromByteBuffer(LeafiaBuf buf) {
 		
 		MissileStruct multipart = new MissileStruct();
 

@@ -33,4 +33,16 @@ public class MachineTooltip {
     public static void addShit(List<String> tooltip) {
         tooltip.add(TextFormatting.DARK_RED+"< Obsolete >");
     }
+
+    public static void addUpdate(List<String> tooltip,String... oldKeys) {
+        String buffer = I18nUtil.resolveKey(oldKeys[0]);
+        for (int i = 1; i < oldKeys.length; i++) {
+            if (i >= oldKeys.length-1)
+                buffer = buffer+" and ";
+            else
+                buffer = buffer+ ", ";
+            buffer = buffer + I18nUtil.resolveKey(oldKeys[i]);
+        }
+        tooltip.add(TextFormatting.DARK_PURPLE+"(Replaces "+buffer+")");
+    }
 }

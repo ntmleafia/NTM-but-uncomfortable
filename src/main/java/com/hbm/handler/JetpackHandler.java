@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
@@ -36,7 +37,6 @@ import com.hbm.render.misc.ColorGradient;
 import com.hbm.sound.MovingSoundJetpack;
 import com.hbm.util.BobMathUtil;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.particle.Particle;
@@ -1015,7 +1015,7 @@ public class JetpackHandler {
 			dirty = true;
 		}
 		
-		public void write(ByteBuf buf){
+		public void write(LeafiaBuf buf){
 			buf.writeBoolean(opening);
 			buf.writeBoolean(hover);
 			buf.writeFloat(thrust);
@@ -1024,7 +1024,7 @@ public class JetpackHandler {
 			buf.writeInt(failureTicks);
 		}
 		
-		public void read(ByteBuf buf){
+		public void read(LeafiaBuf buf){
 			opening = buf.readBoolean();
 			hover = buf.readBoolean();
 			thrust = buf.readFloat();

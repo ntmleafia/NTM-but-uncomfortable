@@ -1,6 +1,6 @@
 package com.leafia.passive.effects;
 
-import com.llib.LeafiaEase;
+import com.llib.technical.LeafiaEase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;

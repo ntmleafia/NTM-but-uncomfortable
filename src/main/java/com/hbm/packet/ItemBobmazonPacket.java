@@ -6,10 +6,10 @@ import com.hbm.entity.missile.EntityBobmazon;
 import com.hbm.handler.BobmazonOfferFactory;
 import com.hbm.inventory.gui.GUIScreenBobmazon.Offer;
 import com.hbm.items.ModItems;
-import com.hbm.items.tool.ItemCatalog;
 import com.hbm.lib.ModDamageSource;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class ItemBobmazonPacket implements IMessage {
+public class ItemBobmazonPacket extends RecordablePacket {
 
 	int offer;
 
@@ -45,12 +45,12 @@ public class ItemBobmazonPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		offer = buf.readInt();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(offer);
 	}
 

@@ -7,7 +7,8 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.sound.MovingSoundRocket;
 import com.hbm.sound.MovingSoundBomber;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundCategory;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class LoopedEntitySoundPacket implements IMessage {
+public class LoopedEntitySoundPacket extends RecordablePacket {
 
 	int entityID;
 
@@ -30,12 +31,12 @@ public class LoopedEntitySoundPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		entityID = buf.readInt();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(entityID);
 	}
 

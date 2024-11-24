@@ -63,7 +63,7 @@ public class LeafiaMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Clonea
 			System.arraycopy(values,0,transform,0,index);
 		if (index < values.length-1)
 			System.arraycopy(values,index+1,transform,index,values.length-index-1);
-		set.removeIndex(index);
+		set.remove(index);
 		values = transform;
 	}
 	@Override

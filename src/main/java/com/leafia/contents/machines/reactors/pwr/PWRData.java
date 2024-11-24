@@ -113,6 +113,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				remoteContainer = new ItemStackHandler(slots);
 				remoteSize = slots;
 			}
+			for (FluidTank tank : tanks) {
+				if (tank.getFluidAmount() > tank.getCapacity())// whoops
+					tank.drain(tank.getFluidAmount()-tank.getCapacity(),true);
+			}
 			addDataToPacket(LeafiaPacket._start(companion),this).__sendToAffectedClients();
 		}
 	}
@@ -342,13 +346,31 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					tanks[2].drain(decr,true);
 				}
 			}
+			if (tanks[3].getCapacity() > 0) {
+				int consumption = (int)Math.round(Math.pow(tanks[1].getFluidAmount()/(double)Math.max(tanks[3].getCapacity(),1),0.4)/20);
+				FluidStack stack = tanks[1].drain(consumption,false);
+				FluidStack stack2 = tanks[3].drain(consumption,false);
+				if (stack != null && stack2 != null) {
+					int boilAmt = Math.min(stack.amount,stack2.amount);
+					int division = (int)Math.pow(10,compression);
+					int filled = tanks[4].fill(new FluidStack(tankTypes[4],boilAmt/division),true);
+					tanks[1].drain(Math.min(boilAmt,filled*division),true);
+					tanks[3].drain(Math.min(boilAmt,filled*division),true);
+				}
+			}
 			LeafiaPacket._start(companion).__write(30,new int[]{
+					compression,
+					tanks[0].getCapacity(),
+					tanks[1].getCapacity(),
+					tanks[2].getCapacity(),
+					tanks[3].getCapacity(),
+					tanks[4].getCapacity(),
 					tanks[0].getFluidAmount(),
 					tanks[1].getFluidAmount(),
 					tanks[2].getFluidAmount(),
 					tanks[3].getFluidAmount(),
 					tanks[4].getFluidAmount()
-			});
+			}).__sendToAffectedClients();
 		}
 	}
 
@@ -733,7 +755,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public static PWRData tryLoadFromPacket(TileEntity entity,Object value) {
 		if (value.equals(false)) return null;
 		else if (value instanceof NBTTagCompound)
-			return new PWRData(entity).readFromNBT((NBTTagCompound)value);
+			return new PWRData(entity).readFromNBT((NBTTagCompound) value);
 		else
 			return null;
 	}
@@ -755,17 +777,23 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Malformed PWR tank packet! (Given value wasn't Array)"));
 				return;
 			}
-			if (Array.getLength(value) != 5) {
+			if (Array.getLength(value) != 11) {
 				Minecraft.getMinecraft().player.sendMessage(new TextWarningLeafia("Malformed PWR tank packet! (Array length must be 5, got "+Array.getLength(value)+")"));
 				return;
 			}
+			int readIndex = 0;
+			compression = (int)Array.get(value,readIndex++);
 			for (int i = 0; i < 5; i++)
-				tanks[i].setFluid(new FluidStack(tankTypes[i],Array.getInt(value,i)));
+				tanks[i].setCapacity((int)Array.get(value,readIndex++));
+			for (int i = 0; i < 5; i++)
+				tanks[i].setFluid(new FluidStack(tankTypes[i],(int)Array.get(value,readIndex++)));
 			// if we somehow got non-int values in the array, well... #ripbozo
 		} else if (key == 29) { // Rod sync packets
 			if (value instanceof NBTTagCompound) {
 				readControlPositions((NBTTagCompound)value);
 			}
+		} else if (key == 31) {
+			new PWRDiagnosis(companion.getWorld(),companion.getPos()).addPosition(companion.getPos());
 		} else if (key == 28) { // Master rod sync
 			masterControl = (double)value;
 		}
@@ -783,6 +811,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					manipulateRod(null);
 				}
 				sendControlPositions();
+			}
+		} else if (key == 29) {
+			if (value instanceof Integer) {
+				compression = Math.floorMod((int)value,3);
 			}
 		}
 	}

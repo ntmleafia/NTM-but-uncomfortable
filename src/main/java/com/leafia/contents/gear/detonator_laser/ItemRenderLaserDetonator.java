@@ -6,7 +6,7 @@ import com.hbm.main.ModEventHandlerClient;
 import com.leafia.dev.items.LeafiaGripOffsetHelper;
 import com.leafia.transformer.LeafiaGls;
 import com.hbm.render.amlfrom1710.IModelCustom;
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.item.TEISRBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -132,7 +132,7 @@ public class ItemRenderLaserDetonator extends TEISRBase {
 		float px = 0.0625F;
 		GL11.glTranslatef(0.5626F, px * 18, -px * 14);
 
-		Tessellator tess = Tessellator.instance;
+		CompositeBrush tess = CompositeBrush.instance;
 		tess.startDrawing(GL11.GL_QUADS);
 
 		int sub = 32;

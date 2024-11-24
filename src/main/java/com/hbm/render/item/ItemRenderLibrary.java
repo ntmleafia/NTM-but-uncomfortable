@@ -12,7 +12,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.rbmk.RBMKBase;
 import com.hbm.items.ModItems;
 import com.hbm.main.ResourceManager;
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.tileentity.RenderDemonLamp;
 
 import net.minecraft.block.Block;
@@ -1379,7 +1379,7 @@ public class ItemRenderLibrary {
 			}
 			public void renderCommon(ItemStack stack){
 				bindTexture(((RBMKBase)Block.getBlockFromItem(stack.getItem())).columnTexture);
-				Tessellator tes = Tessellator.instance;
+				CompositeBrush tes = CompositeBrush.instance;
 				tes.startDrawing(GL11.GL_TRIANGLES);
 				ResourceManager.rbmk_element.tessellatePartSplit(tes, "Column", 0.5F, 3);
 				tes.draw();
@@ -1395,7 +1395,7 @@ public class ItemRenderLibrary {
 			}
 			public void renderCommon(ItemStack stack){
 				bindTexture(((RBMKBase)Block.getBlockFromItem(stack.getItem())).columnTexture);
-				Tessellator tes = Tessellator.instance;
+				CompositeBrush tes = CompositeBrush.instance;
 				tes.startDrawing(GL11.GL_TRIANGLES);
 				ResourceManager.rbmk_rods.tessellatePartSplit(tes, "Column", 0.5F, 3);
 				tes.addTranslation(0, 3, 0);
@@ -1414,7 +1414,7 @@ public class ItemRenderLibrary {
 			}
 			public void renderCommon(ItemStack stack){
 				bindTexture(((RBMKBase)Block.getBlockFromItem(stack.getItem())).columnTexture);
-				Tessellator tes = Tessellator.instance;
+				CompositeBrush tes = CompositeBrush.instance;
 				tes.startDrawing(GL11.GL_TRIANGLES);
 				ResourceManager.rbmk_reflector.tessellatePartSplit(tes, "Column", 0.5F, 3);
 				tes.draw();

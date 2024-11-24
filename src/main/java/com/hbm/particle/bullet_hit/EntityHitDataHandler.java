@@ -14,7 +14,7 @@ import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.PacketSpecialDeath;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -80,7 +80,7 @@ public class EntityHitDataHandler {
 		data.add(hit);
 	}
 	
-	public static void encodeData(Entity ent, ByteBuf buf){
+	public static void encodeData(Entity ent,LeafiaBuf buf){
 		List<BulletHit> data = hitData.get(ent);
 		if(data == null){
 			buf.writeByte(0);
@@ -98,7 +98,7 @@ public class EntityHitDataHandler {
 		}
 	}
 	
-	public static List<BulletHit> decodeData(ByteBuf buf){
+	public static List<BulletHit> decodeData(LeafiaBuf buf){
 		List<BulletHit> list = new ArrayList<>();
 		byte size = buf.readByte();
 		for(int i = 0; i < size; i ++){

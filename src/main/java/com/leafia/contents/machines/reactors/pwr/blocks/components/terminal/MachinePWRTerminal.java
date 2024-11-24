@@ -2,6 +2,7 @@ package com.leafia.contents.machines.reactors.pwr.blocks.components.terminal;
 
 import com.hbm.blocks.ITooltipProvider;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
 import com.leafia.dev.MachineTooltip;
@@ -20,6 +21,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -29,6 +31,7 @@ public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProv
 	public MachinePWRTerminal() {
 		super(Material.IRON,ModBlocks.PWR.guiID,"reactor_hatch");
 		this.setUnlocalizedName("pwr_terminal");
+		this.setCreativeTab(MainRegistry.machineTab);
 	}
 
 	@Override
@@ -54,6 +57,7 @@ public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProv
 		if(hardness > 50){
 			tooltip.add("§6" + I18nUtil.resolveKey("trait.blastres", hardness));
 		}
+		MachineTooltip.addUpdate(tooltip,"tile.reactor_hatch.name");
 	}
 	@Override
 	public TileEntity createNewTileEntity(World worldIn,int meta) {

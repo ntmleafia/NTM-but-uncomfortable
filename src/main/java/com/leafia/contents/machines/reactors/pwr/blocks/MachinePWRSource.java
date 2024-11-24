@@ -2,6 +2,7 @@ package com.leafia.contents.machines.reactors.pwr.blocks;
 
 import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.main.MainRegistry;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -19,9 +20,7 @@ public class MachinePWRSource extends BlockBase implements ITooltipProvider {
     }
     @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
-        MachineTooltip.addMultiblock(tooltip);
-        MachineTooltip.addModular(tooltip);
-        MachineTooltip.addNuclear(tooltip);
+        MachineTooltip.addShit(tooltip);
         addStandardInfo(tooltip);
         super.addInformation(stack,player,tooltip,advanced);
     }

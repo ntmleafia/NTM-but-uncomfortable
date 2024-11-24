@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.hbm.entity.effect.EntityCloudTom;
 import com.hbm.main.ClientProxy;
 import com.hbm.main.ResourceManager;
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.amlfrom1710.Vec3;
 
 import net.minecraft.client.Minecraft;
@@ -48,7 +48,7 @@ public class RenderCloudTom extends Render<EntityCloudTom> {
 		int height = 20;
 		int depth = 20;
 
-		Tessellator tess = Tessellator.instance;
+		CompositeBrush tess = CompositeBrush.instance;
 		tess.startDrawingQuads();
 
 		bindTexture(this.getEntityTexture(blast));

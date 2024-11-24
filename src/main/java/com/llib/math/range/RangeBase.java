@@ -1,6 +1,6 @@
 package com.llib.math.range;
 
-public abstract class RangeBase {
+public abstract class RangeBase implements Cloneable {
     public abstract double lerp(double t);
     public abstract float lerp(float t);
     public abstract double ratio(double x);

@@ -18,11 +18,13 @@ import com.llib.group.LeafiaSet;
 import com.llib.math.range.RangeInt;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -240,7 +242,7 @@ public class PWRTerminalUI extends GuiInfoContainer {
 		fuels = keyElements.getA();
 		controls = keyElements.getB();
 		controlsByName = new HashMap<>();
-		for (BlockPos pos : controls) {
+		for (BlockPos pos : core.controls) {
 			TileEntity entity1 = core.getWorld().getTileEntity(pos);
 			if (entity1 instanceof TileEntityPWRControl) {
 				TileEntityPWRControl control = (TileEntityPWRControl)entity1;
@@ -426,23 +428,18 @@ public class PWRTerminalUI extends GuiInfoContainer {
 		if (tip != null) {
 			super.drawHoveringText(Arrays.asList(tip),mouseX,mouseY);
 		}
-		FFUtils.renderTankInfo(this,mouseX,mouseY,5,61+containerOffset,16,52,core.tanks[0]);
-		FFUtils.renderTankInfo(this,mouseX,mouseY,23,61+containerOffset,16,52,core.tanks[1]);
-		FFUtils.renderTankInfo(this,mouseX,mouseY,23,32+containerOffset,16,26,core.tanks[2]);
-		FFUtils.renderTankInfo(this,mouseX,mouseY,-22,61+containerOffset,16,52,core.tanks[3]);
-		FFUtils.renderTankInfo(this,mouseX,mouseY,-5,-3+containerOffset,10,16,core.tanks[4]);
+		FFUtils.renderTankInfo(this,mouseX,mouseY,guiLeft+5,guiTop+containerOffset+61,16,52,core.tanks[0]);
+		FFUtils.renderTankInfo(this,mouseX,mouseY,guiLeft+23,guiTop+containerOffset+61,16,52,core.tanks[1]);
+		FFUtils.renderTankInfo(this,mouseX,mouseY,guiLeft+23,guiTop+containerOffset+32,16,26,core.tanks[2]);
+		FFUtils.renderTankInfo(this,mouseX,mouseY,guiLeft-22,guiTop+containerOffset+25,16,52,core.tanks[3]);
+		FFUtils.renderTankInfo(this,mouseX,mouseY,guiLeft-5,guiTop+containerOffset+-3,10,16,core.tanks[4]);
 		LeafiaGls._pop();
 
 		TextureManager tex = Minecraft.getMinecraft().getTextureManager();
 		tex.bindTexture(texture);
 		LeafiaGls._push();
-		LeafiaGls.disableDepth();
-		LeafiaGls.disableLighting();
-		LeafiaGls.enableAlpha();
-		LeafiaGls.alphaFunc(GL11.GL_ALWAYS,0);
-		LeafiaGls.color(1,1,1,1);
+		LeafiaGls.resetEffects();
 		LeafiaGls.blendFunc(SourceFactor.SRC_ALPHA,DestFactor.ONE);
-		LeafiaGls.enableBlend();
 		for (int i = -1; i < rodPositions.length; i++) {
 			if (((i < 0) ? core.masterControl : rodPositions[i]) > 0)
 				drawTexturedModalRect(guiLeft+244+19*i+9-16,guiTop+containerOffset+7-15,153,190,38,38);
@@ -478,6 +475,7 @@ public class PWRTerminalUI extends GuiInfoContainer {
 	Integer rodHover = null;
 	String hoveringRodName = null;
 	double rodHoverPosition = 0;
+	boolean compressionHover = false;
 
 	void mouse(int mouseX,int mouseY,int button) {
 		if (rodGrab != null) {
@@ -493,6 +491,10 @@ public class PWRTerminalUI extends GuiInfoContainer {
 		super.mouseClicked(mouseX,mouseY,mouseButton);
 		if (rodHover != null) {
 			rodGrab = rodHover;
+			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+		} else if (compressionHover) {
+			LeafiaPacket._start(core.companion).__write(29,core.compression+((mouseButton == 0) ? 1 : -1)).__sendToServer();
+			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 		}
 		mouse(mouseX,mouseY,mouseButton);
 	}
@@ -515,6 +517,7 @@ public class PWRTerminalUI extends GuiInfoContainer {
 	protected void drawGuiContainerBackgroundLayer(float partialTicks,int mouseX,int mouseY) {
 		tip = null;
 		rodHover = null;
+		compressionHover = false;
 		LeafiaGls._push();
 		super.drawDefaultBackground();
 		LeafiaGls.pushMatrix();
@@ -642,14 +645,22 @@ public class PWRTerminalUI extends GuiInfoContainer {
 			}
 		}
 		LeafiaGls.popMatrix();
-		FFUtils.drawLiquid(core.tanks[0],guiLeft,guiTop+44+containerOffset,zLevel,16,52,5,61);
-		FFUtils.drawLiquid(core.tanks[1],guiLeft,guiTop+44+containerOffset,zLevel,16,52,23,61);
-		FFUtils.drawLiquid(core.tanks[2],guiLeft,guiTop+44+containerOffset,zLevel,16,26,23,32);
+		FFUtils.drawLiquid(core.tanks[0],guiLeft,guiTop+containerOffset+80,zLevel,16,52,5,61);
+		FFUtils.drawLiquid(core.tanks[1],guiLeft,guiTop+containerOffset+80,zLevel,16,52,23,61);
+		FFUtils.drawLiquid(core.tanks[2],guiLeft,guiTop+containerOffset+80,zLevel,16,26,23,32);
 
-		tex.bindTexture(texture);
-		drawTexturedModalRect(guiLeft-27,guiTop+containerOffset-9,69,120,38,127);
-		FFUtils.drawLiquid(core.tanks[3],guiLeft,guiTop+44+containerOffset,zLevel,16,52,-22,61);
-		FFUtils.drawLiquid(core.tanks[4],guiLeft,guiTop+44+containerOffset,zLevel,10,16,-5,-3);
+		if (core.tanks[3].getCapacity() > 0) {
+			LeafiaGls.color(1,1,1,1); // for some reason without this the entire thing turns red lol
+			tex.bindTexture(texture);
+			drawTexturedModalRect(guiLeft - 27,guiTop + containerOffset - 9,69,120,38,127);
+			drawTexturedModalRect(guiLeft - 22,guiTop + containerOffset - 4,14*core.compression,238,14,18);
+			if (isPointInRegion(-22,containerOffset-4,14,18,mouseX,mouseY)) {
+				tip = I18nUtil.leafia.statusDecimals("desc.leafia._repeated.reactors.compression",Math.pow(10,core.compression),0);
+				compressionHover = true;
+			}
+			FFUtils.drawLiquid(core.tanks[3],guiLeft,guiTop + containerOffset + 80,zLevel,16,52,-22,61);
+			FFUtils.drawLiquid(core.tanks[4],guiLeft,guiTop + containerOffset + 80,zLevel,10,16,-5,-3);
+		}
 		LeafiaGls._pop();
 	}
 }

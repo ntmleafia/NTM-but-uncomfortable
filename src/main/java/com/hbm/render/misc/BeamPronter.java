@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector4f;
 import com.hbm.config.GeneralConfig;
 import com.hbm.handler.HbmShaderManager2;
 import com.hbm.main.ResourceManager;
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.BobMathUtil;
 
@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -61,7 +60,7 @@ public class BeamPronter {
 			GlStateManager.disableCull();
 		}
         
-		Tessellator tessellator = Tessellator.instance;
+		CompositeBrush tessellator = CompositeBrush.instance;
 		
 		if(beam == EnumBeamType.LINE) {
 			net.minecraft.client.renderer.Tessellator.getInstance().getBuffer().begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);

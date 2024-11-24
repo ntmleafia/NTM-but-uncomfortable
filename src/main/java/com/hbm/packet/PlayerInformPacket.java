@@ -2,7 +2,8 @@ package com.hbm.packet;
 
 import com.hbm.main.MainRegistry;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class PlayerInformPacket implements IMessage {
+public class PlayerInformPacket extends RecordablePacket {
 
 	String dmesg = "";
 
@@ -25,15 +26,15 @@ public class PlayerInformPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 
-		dmesg = ByteBufUtils.readUTF8String(buf);
+		dmesg = buf.readUTF8String();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 
-		ByteBufUtils.writeUTF8String(buf, dmesg);
+		buf.writeUTF8String(dmesg);
 	}
 
 	public static class Handler implements IMessageHandler<PlayerInformPacket, IMessage> {

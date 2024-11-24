@@ -3,23 +3,24 @@ package com.hbm.packet;
 import com.hbm.items.ModItems;
 import com.hbm.items.weapon.ItemGunShotty;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class MeathookJumpPacket implements IMessage {
+public class MeathookJumpPacket extends RecordablePacket {
 
 	public MeathookJumpPacket() {
 	}
 	
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 	}
 	
 	public static class Handler implements IMessageHandler<MeathookJumpPacket, IMessage> {

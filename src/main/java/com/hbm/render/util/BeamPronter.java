@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import net.minecraft.util.math.MathHelper;
 import com.hbm.render.amlfrom1710.Vec3;
 
@@ -48,7 +48,7 @@ public class BeamPronter {
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		}
 
-		Tessellator tessellator = Tessellator.instance;
+		CompositeBrush tessellator = CompositeBrush.instance;
 
 		Vec3 unit = Vec3.createVectorHelper(0, 1, 0);
 		Random rand = new Random(start);

@@ -2,7 +2,8 @@ package com.hbm.packet;
 
 import com.hbm.items.weapon.ItemGunBase;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,7 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class SetGunAnimPacket implements IMessage {
+public class SetGunAnimPacket extends RecordablePacket {
 
 	long time;
 	int animIndex;
@@ -35,7 +36,7 @@ public class SetGunAnimPacket implements IMessage {
 	}
 	
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		time = buf.readLong();
 		animIndex = buf.readInt();
 		this.speedMultiplier = buf.readFloat();
@@ -43,7 +44,7 @@ public class SetGunAnimPacket implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeLong(time);
 		buf.writeInt(animIndex);
 		buf.writeFloat(speedMultiplier);

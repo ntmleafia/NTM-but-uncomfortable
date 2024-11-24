@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import com.leafia.contents.machines.reactors.pwr.PWRDiagnosis;
+import com.leafia.passive.LeafiaPassiveServer;
 import com.leafia.unsorted.recipe_book.LeafiaRecipeUnlocker;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
@@ -561,6 +562,8 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public void worldTick(WorldTickEvent event) {
 		if (event.world != null && !event.world.isRemote) {
+			if (event.phase == Phase.START)
+				LeafiaPassiveServer.priorTick(event.world);
 			if (!MainRegistry.allPipeNetworks.isEmpty()) {
 				Iterator<FFPipeNetwork> itr = MainRegistry.allPipeNetworks.iterator();
 				while (itr.hasNext()) {
@@ -582,12 +585,13 @@ public class ModEventHandler {
 				//Drillgon200: Retarded hack because I'm not convinced game rules are client sync'd
 				PacketDispatcher.wrapper.sendToAll(new SurveyPacket(RBMKDials.getColumnHeight(event.world)));
 			}
-
 			if(event.phase == Phase.START) {
 				BossSpawnHandler.rollTheDice(event.world);
 				IdkWhereThisShitBelongs.serverTick(event.world);
 				TimedGenerator.automaton(event.world, 100);
 			}
+			if (event.phase == Phase.END)
+				LeafiaPassiveServer.onTick(event.world);
 		}
 	}
 	

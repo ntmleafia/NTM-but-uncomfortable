@@ -8,6 +8,8 @@ import com.hbm.inventory.control_panel.ControlPanel;
 import com.hbm.inventory.control_panel.DataValue;
 import com.hbm.tileentity.machine.TileEntityControlPanel;
 
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
@@ -21,6 +23,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+// this class was beyond my understanding so no RecordablePacket.
 public class ControlPanelUpdatePacket implements IMessage {
 
 	PacketBuffer buffer;

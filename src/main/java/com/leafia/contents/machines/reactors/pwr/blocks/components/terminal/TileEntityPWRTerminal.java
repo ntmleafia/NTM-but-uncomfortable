@@ -69,6 +69,10 @@ public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEnt
 		}
 		return super.writeToNBT(compound);
 	}
+	@Override
+	public void onDiagnosis() {
+		LeafiaPacket._start(this).__write(0,corePos).__sendToAffectedClients();
+	}
 
 	// redirects
 	@Override

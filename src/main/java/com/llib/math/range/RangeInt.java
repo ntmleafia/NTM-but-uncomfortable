@@ -61,4 +61,16 @@ public class RangeInt extends RangeBase implements Iterable<Integer> {
             }
         };
     }
+
+    @Override
+    public RangeInt clone() {
+        try {
+            RangeInt clone = (RangeInt) super.clone();
+            clone.min = this.min;
+            clone.max = this.max;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

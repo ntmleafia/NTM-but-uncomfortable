@@ -21,7 +21,8 @@ import com.hbm.tileentity.machine.TileEntityMachineRadar;
 import com.hbm.tileentity.machine.TileEntityReactorControl;
 import com.hbm.tileentity.machine.TileEntitySoyuzLauncher;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import api.hbm.energy.IEnergyConnector.ConnectionPriority;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,7 +34,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class AuxButtonPacket implements IMessage {
+public class AuxButtonPacket extends RecordablePacket {
 
 	int x;
 	int y;
@@ -60,7 +61,7 @@ public class AuxButtonPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
@@ -69,7 +70,7 @@ public class AuxButtonPacket implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);

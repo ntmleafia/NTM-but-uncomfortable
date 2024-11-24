@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 import com.hbm.lib.HBMSoundHandler;
-import com.llib.LeafiaEase;
+import com.llib.technical.LeafiaEase;
 import com.leafia.passive.effects.LeafiaShakecam;
 import com.hbm.util.ContaminationUtil;
 import net.minecraft.client.Minecraft;

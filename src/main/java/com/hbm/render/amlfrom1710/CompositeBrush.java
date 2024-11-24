@@ -7,18 +7,18 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 import java.util.PriorityQueue;
 
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class Tessellator
+public class CompositeBrush // Sorry bro but it was incredibly confusing between minecraft Tessellator class
 {
     private static int nativeBufferSize = 0x200000;
     private static int trivertsInBuffer = (nativeBufferSize / 48) * 6;
@@ -73,17 +73,17 @@ public class Tessellator
     /** The normal to be applied to the face being drawn. */
     private int normal;
     /** The static instance of the Tessellator. */
-    public static final Tessellator instance = new Tessellator(2097152);
+    public static final CompositeBrush instance = new CompositeBrush(2097152);
     /** Whether this tessellator is currently in draw mode. */
     private boolean isDrawing;
     /** The size of the buffers used (in integers). */
     private int bufferSize;
     private static final String __OBFID = "CL_00000960";
 
-    private Tessellator(int p_i1250_1_) {
+    private CompositeBrush(int p_i1250_1_) {
     }
 
-    public Tessellator(){
+    public CompositeBrush(){
     }
 
     static
@@ -327,7 +327,9 @@ public class Tessellator
         /*this.setTextureUV(p_78374_7_, p_78374_9_);
         this.addVertex(p_78374_1_, p_78374_3_, p_78374_5_);*/
     }
-
+    public void addVertex(Vec3d vector) {
+        addVertex(vector.x,vector.y,vector.z);
+    }
     /**
      * Adds a vertex with the specified x,y,z to the current draw call. It will trigger a draw() if the buffer gets
      * full.
@@ -391,6 +393,16 @@ public class Tessellator
         int k = p_78378_1_ >> 8 & 255;
         int l = p_78378_1_ & 255;
         this.setColorOpaque(j, k, l);
+    }
+
+    /**
+     * Sets color from color code, in <b>Inverse-ARGB</b> format.
+     * <br>An alpha value of 00 would be opaque, whereas FF would be invisible.
+     * <p>In other words, <b>Alpha here basically indicates transparency, instead of opacity.</b>
+     * @param code Color code [0xAA_RRGGBB]
+     */
+    public void setColorHex(int code) {
+        this.setColorRGBA(code>>>0_20&0xFF,code>>>0_10&0xFF,code&0xFF,0xFF-(code>>>0_30));
     }
 
     /**

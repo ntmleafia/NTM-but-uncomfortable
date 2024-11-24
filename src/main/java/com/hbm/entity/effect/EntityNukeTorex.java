@@ -7,12 +7,13 @@ import java.util.UUID;
 
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.items.ModItems;
-import com.llib.LeafiaEase;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
+import com.llib.technical.LeafiaEase;
 import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTracker;
@@ -772,16 +773,16 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 		torex.sound = sound;
 		spawnTorex(world,torex);
 	}
-	public static class TorexFinishPacket implements IMessage {
+	public static class TorexFinishPacket extends RecordablePacket {
 		private UUID uuid;
 		public TorexFinishPacket() {
 		}
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBits(LeafiaBuf buf) {
 			this.uuid = new UUID(buf.readLong(), buf.readLong());
 		}
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBits(LeafiaBuf buf) {
 			buf.writeLong(uuid.getMostSignificantBits());
 			buf.writeLong(uuid.getLeastSignificantBits());
 		}
@@ -802,7 +803,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			}
 		}
 	}
-	public static class TorexPacket implements IMessage {
+	public static class TorexPacket extends RecordablePacket {
 		private int entityId;
 		private double x;
 		private double y;
@@ -813,17 +814,17 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 		public TorexPacket() {
 		}
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBits(LeafiaBuf buf) {
 			this.entityId = buf.readInt();
 			this.uuid = new UUID(buf.readLong(), buf.readLong());
 			this.x = buf.readDouble();
 			this.y = buf.readDouble();
 			this.z = buf.readDouble();
 			this.doWait = buf.readBoolean();
-			this.nbt = ByteBufUtils.readTag(buf);
+			this.nbt = buf.readNBT();
 		}
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBits(LeafiaBuf buf) {
 			buf.writeInt(this.entityId);
 			buf.writeLong(uuid.getMostSignificantBits());
 			buf.writeLong(uuid.getLeastSignificantBits());
@@ -831,7 +832,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			buf.writeDouble(this.y);
 			buf.writeDouble(this.z);
 			buf.writeBoolean(this.doWait);
-			ByteBufUtils.writeTag(buf,nbt);
+			buf.writeNBT(nbt);
 		}
 		public static class Handler implements IMessageHandler<TorexPacket, IMessage> {
 			@Override

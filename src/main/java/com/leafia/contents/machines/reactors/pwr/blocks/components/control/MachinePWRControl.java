@@ -4,6 +4,7 @@ import api.hbm.block.IToolable;
 import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -25,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -50,6 +52,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);
         addStandardInfo(tooltip);
+        MachineTooltip.addUpdate(tooltip,"tile.reactor_control.name");
         super.addInformation(stack,player,tooltip,advanced);
     }
 

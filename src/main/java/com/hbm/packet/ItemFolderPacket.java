@@ -8,7 +8,8 @@ import com.hbm.items.machine.ItemCassette;
 import com.hbm.items.machine.ItemChemistryTemplate;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.Library;
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -19,22 +20,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class ItemFolderPacket implements IMessage {
+public class ItemFolderPacket extends RecordablePacket {
 
 	ItemStack stack;
-	PacketBuffer buffer;
+	//PacketBuffer buffer; Have you ever heard of ByteBufUtils
 
 	public ItemFolderPacket() {
 
 	}
 
 	public ItemFolderPacket(ItemStack stack) {
-		buffer = new PacketBuffer(Unpooled.buffer());
-		buffer.writeCompoundTag(stack.writeToNBT(new NBTTagCompound()));
+		this.stack = stack;
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
+		/*
 		if (buffer == null) {
 			buffer = new PacketBuffer(Unpooled.buffer());
 		}
@@ -43,15 +44,18 @@ public class ItemFolderPacket implements IMessage {
 			stack = new ItemStack(buffer.readCompoundTag());
 		} catch(IOException e) {
 			e.printStackTrace();
-		}
+		}*/
+		stack = buf.readItemStack();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
+		/*
 		if (buffer == null) {
 			buffer = new PacketBuffer(Unpooled.buffer());
 		}
-		buf.writeBytes(buffer);
+		buf.writeBytes(buffer);*/
+		buf.writeItemStack(stack);
 	}
 
 	public static class Handler implements IMessageHandler<ItemFolderPacket, IMessage> {

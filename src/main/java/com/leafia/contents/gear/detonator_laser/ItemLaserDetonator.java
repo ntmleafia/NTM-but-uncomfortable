@@ -7,7 +7,8 @@ import com.hbm.interfaces.IHoldableWeapon;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.misc.RenderScreenOverlay;
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
@@ -108,7 +109,7 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 		}
 		return super.onItemRightClick(world, player, hand);
 	}
-	public static class LaserDetonatorPacket implements IMessage {
+	public static class LaserDetonatorPacket extends RecordablePacket {
 		public Vec3 startPoint;
 		public Vec3 direction;
 		public LaserDetonatorPacket() {
@@ -119,12 +120,12 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 			return this;
 		}
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBits(LeafiaBuf buf) {
 			startPoint = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
 			direction = new Vec3(buf.readDouble(),buf.readDouble(),buf.readDouble());
 		}
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBits(LeafiaBuf buf) {
 			buf.writeDouble(startPoint.xCoord);
 			buf.writeDouble(startPoint.yCoord);
 			buf.writeDouble(startPoint.zCoord);

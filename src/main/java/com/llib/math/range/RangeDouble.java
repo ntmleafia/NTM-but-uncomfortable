@@ -44,4 +44,16 @@ public class RangeDouble extends RangeBase {
     public double doubleMax() {
         return this.max;
     }
+
+    @Override
+    public RangeDouble clone() {
+        try {
+            RangeDouble clone = (RangeDouble) super.clone();
+            clone.min = this.min;
+            clone.max = this.max;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

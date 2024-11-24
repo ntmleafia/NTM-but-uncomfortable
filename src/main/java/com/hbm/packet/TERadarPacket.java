@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.hbm.tileentity.machine.TileEntityMachineRadar;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TERadarPacket implements IMessage {
+public class TERadarPacket extends RecordablePacket {
 
 	int x;
 	int y;
@@ -34,7 +35,7 @@ public class TERadarPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
@@ -50,7 +51,7 @@ public class TERadarPacket implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);

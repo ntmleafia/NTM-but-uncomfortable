@@ -3,7 +3,9 @@ package com.hbm.packet;
 import com.leafia.CommandLeaf;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
+import com.leafia.dev.LeafiaDebug.Tracker.LeafiaTrackerPacket;
 import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.hbm.lib.RefStrings;
@@ -93,6 +95,8 @@ public class PacketDispatcher {
 		//Registercraft
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.SERVER);
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(LeafiaCustomPacket.Handler.class, LeafiaCustomPacket.class, i++, Side.SERVER);
+		wrapper.registerMessage(LeafiaCustomPacket.Handler.class, LeafiaCustomPacket.class, i++, Side.CLIENT);
 
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactPacket.Handler.class, IdkWhereThisShitBelongs.TomImpactPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactCollapsePacket.Handler.class, IdkWhereThisShitBelongs.TomImpactCollapsePacket.class, i++, Side.CLIENT);
@@ -105,6 +109,7 @@ public class PacketDispatcher {
 		//wrapper.registerMessage(EntityNukeFolkvangr.SessrumnirSphereSyncPacket.Handler.class, EntityNukeFolkvangr.SessrumnirSphereSyncPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaRecipePacket.Handler.class, LeafiaRecipeBookServer.LeafiaRecipePacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaTransferItemPacket.Handler.class, LeafiaRecipeBookServer.LeafiaTransferItemPacket.class, i++, Side.SERVER);
+		wrapper.registerMessage(LeafiaTrackerPacket.Handler.class, LeafiaTrackerPacket.class, i++, Side.CLIENT);
 
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);

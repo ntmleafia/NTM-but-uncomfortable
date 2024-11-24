@@ -3,10 +3,9 @@ package com.hbm.packet;
 import java.io.IOException;
 
 import com.hbm.tileentity.INBTPacketReceiver;
-import com.hbm.tileentity.TileEntityMachineBase;
-import com.hbm.tileentity.TileEntityTickingBase;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,9 +18,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class NBTPacket implements IMessage {
+public class NBTPacket extends RecordablePacket {
 
-	PacketBuffer buffer;
+	NBTTagCompound buffer;
 	int x;
 	int y;
 	int z;
@@ -31,39 +30,32 @@ public class NBTPacket implements IMessage {
 
 	public NBTPacket(NBTTagCompound nbt, BlockPos pos) {
 
-		this.buffer = new PacketBuffer(Unpooled.buffer());
 		this.x = pos.getX();
 		this.y = pos.getY();
 		this.z = pos.getZ();
 
-		buffer.writeCompoundTag(nbt);
+		buffer=(nbt);
 
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
 
-		if(buffer == null) {
-			buffer = new PacketBuffer(Unpooled.buffer());
-		}
-		buffer.writeBytes(buf);
+		buffer = buf.readNBT();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);
 
-		if(buffer == null) {
-			buffer = new PacketBuffer(Unpooled.buffer());
-		}
-		buf.writeBytes(buffer);
+		buf.writeNBT(buffer);
 	}
 
 	public static class Handler implements IMessageHandler<NBTPacket, IMessage> {
@@ -77,17 +69,15 @@ public class NBTPacket implements IMessage {
 
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(new BlockPos(m.x, m.y, m.z));
 
-				try {
+				 {
 
-					NBTTagCompound nbt = m.buffer.readCompoundTag();
+					NBTTagCompound nbt = m.buffer;
 
 					if(nbt != null) {
 						 if(te instanceof INBTPacketReceiver)
 								((INBTPacketReceiver) te).networkUnpack(nbt);
 					}
 
-				} catch(IOException e) {
-					e.printStackTrace();
 				}
 			});
 

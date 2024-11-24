@@ -1395,18 +1395,18 @@ public class ModBlocks {
 			}
 
 		};
-		public static final Block hull = new MachinePWRHull().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
-		public static final Block reflector = new MachinePWRReflector().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block hull = new MachinePWRHull().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block reflector = new MachinePWRReflector().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
-		public static final Block source = new MachinePWRSource().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block element = new MachinePWRElement().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block control = new MachinePWRControl().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block source = new MachinePWRSource().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element = new MachinePWRElement().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block control = new MachinePWRControl().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block channel = new MachinePWRChannel().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block conductor = new MachinePWRConductor().setCreativeTab(MainRegistry.controlTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block channel = new MachinePWRChannel().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block conductor = new MachinePWRConductor().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
-		public static final Block port = new MachinePWRPort().setCreativeTab(MainRegistry.controlTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block port = new MachinePWRPort().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
 		public static final PWRMeshedWreck wreck_stone = new PWRWreckStone();
 		public static final PWRMeshedWreck wreck_metal = new PWRWreckMetal();

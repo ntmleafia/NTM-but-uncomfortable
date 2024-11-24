@@ -2,7 +2,7 @@ package com.hbm.render.util;
 
 import java.util.ArrayList;
 
-import com.hbm.render.amlfrom1710.Tessellator;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,7 +35,7 @@ public class HbmGroupObject {
     {
         if (faces.size() > 0)
         {
-            Tessellator tessellator = Tessellator.instance;
+            CompositeBrush tessellator = CompositeBrush.instance;
             tessellator.startDrawing(glDrawingMode);
             render(tessellator);
             tessellator.draw();
@@ -43,7 +43,7 @@ public class HbmGroupObject {
     }
 
     @SideOnly(Side.CLIENT)
-    public void render(Tessellator tessellator)
+    public void render(CompositeBrush tessellator)
     {
         if (faces.size() > 0)
         {

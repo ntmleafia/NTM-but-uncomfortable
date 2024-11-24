@@ -61,4 +61,16 @@ public class RangeLong extends RangeBase implements Iterable<Long> {
             }
         };
     }
+
+    @Override
+    public RangeLong clone() {
+        try {
+            RangeLong clone = (RangeLong) super.clone();
+            clone.min = this.min;
+            clone.max = this.max;
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

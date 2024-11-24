@@ -1,6 +1,6 @@
 package com.leafia.contents.effects.folkvangr.visual;
 
-import com.llib.LeafiaEase;
+import com.llib.technical.LeafiaEase;
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;

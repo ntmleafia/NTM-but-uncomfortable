@@ -4,13 +4,14 @@ import com.hbm.items.tool.ItemSatInterface;
 import com.hbm.saveddata.satellites.Satellite;
 import com.hbm.saveddata.satellites.SatelliteSavedData;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class SatCoordPacket implements IMessage {
+public class SatCoordPacket extends RecordablePacket {
 
 	int x;
 	int y;
@@ -31,7 +32,7 @@ public class SatCoordPacket implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
@@ -39,7 +40,7 @@ public class SatCoordPacket implements IMessage {
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);

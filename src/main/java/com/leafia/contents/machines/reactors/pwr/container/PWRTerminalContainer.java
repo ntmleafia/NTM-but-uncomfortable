@@ -62,6 +62,8 @@ public class PWRTerminalContainer extends LeafiaItemTransferable {
 		}
 		// pwr slots
 		this.addSlotToContainer(new ResourceSlot(core.resourceContainer,resourceSlots++,5,43));
+		this.addSlotToContainer(new ResourceSlot(core.resourceContainer,resourceSlots++,-22,79));
+		this.addSlotToContainer(new ResourceSlot(core.resourceContainer,resourceSlots++,-22,97));
 		int slotsAdded = 0;
 		for (BlockPos fuel : fuels) {
 			TileEntity tileEntity = core.getWorld().getTileEntity(fuel);

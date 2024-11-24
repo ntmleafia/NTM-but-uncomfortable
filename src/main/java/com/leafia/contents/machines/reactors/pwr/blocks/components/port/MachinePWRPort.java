@@ -2,6 +2,7 @@ package com.leafia.contents.machines.reactors.pwr.blocks.components.port;
 
 import com.hbm.blocks.ITooltipProvider;
 import com.hbm.blocks.generic.BlockRadResistant;
+import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MachinePWRPort extends BlockRadResistant implements ITooltipProvider, ITileEntityProvider, PWRComponentBlock {
     public MachinePWRPort() {
         super(Material.IRON,"pwr_port");
+        this.setCreativeTab(MainRegistry.machineTab);
     }
     @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {

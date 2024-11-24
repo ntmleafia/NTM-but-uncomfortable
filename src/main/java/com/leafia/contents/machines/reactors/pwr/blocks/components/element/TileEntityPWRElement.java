@@ -10,6 +10,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.control.Machi
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.hbm.interfaces.IRadResistantBlock;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
+import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
@@ -17,6 +18,7 @@ import com.hbm.lib.InventoryHelper;
 import com.hbm.tileentity.TileEntityInventoryBase;
 import com.hbm.util.I18nUtil;
 import com.llib.group.LeafiaMap;
+import com.llib.group.LeafiaSet;
 import com.llib.math.range.RangeDouble;
 import com.llib.math.range.RangeInt;
 import net.minecraft.block.Block;
@@ -28,6 +30,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fluids.FluidStack;
@@ -37,33 +41,50 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class TileEntityPWRElement extends TileEntityInventoryBase implements PWRComponentEntity, ITickable, LeafiaPacketReceiver {
+	public static LeafiaMap<TileEntityPWRElement,LeafiaSet<BlockPos>> listeners = new LeafiaMap<>();
 	BlockPos corePos = null;
 	PWRData data = null;
 	int height = 1;
 
+	LeafiaSet<BlockPos> listenPositions() {
+		if (this.isInvalid()) return new LeafiaSet<>(); // dummy set
+		if (!listeners.containsKey(this)) {
+			listeners.put(this,new LeafiaSet<>());
+		}
+		return listeners.get(this);
+	}
+
 	@Override
 	public void onDiagnosis() {
 		height = getHeight();
+		updateObstacleMappings();
+	}
+	public void updateObstacleMappings() {
+		listenPositions().clear();
 		// call those ultimately complex functions o-o
 		updateCornerMap();
 		updateLinearMap();
 	}
 
 	public int getHeight() {
+		Tracker._startProfile(this,"getHeight");
 		int height = 1;
 		for (BlockPos p = pos.down(); world.isValid(p); p = p.down()) {
+			Tracker._tracePosition(this,p);
 			if (world.getBlockState(p).getBlock() instanceof MachinePWRElement)
 				height++;
 			else
 				break;
 		}
+		Tracker._endProfile(this);
 		return height;
 	}
 	static abstract class MapConsumer {
 		int i = 0;
-		abstract HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas);
+		abstract HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas);
 		public MapConsumer() {}
 		public MapConsumer(int i) {
 			this.i = i;
@@ -73,47 +94,56 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	public final Set<HeatRetrival> linearFuelMap = new HashSet<>();
 	public final Set<HeatRetrival> cornerFuelMap = new HashSet<>();
 	void updateCornerMap() {
+		Tracker._startProfile(this,"updateCornerMap");
 		cornerFuelMap.clear();
 		RangeInt range = new RangeInt(0,height-1);
 		for (int bin = 0; bin <= 0b11; bin++) {
-			final Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new HashMap<>();
+			final Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls = new HashMap<>();
 			List<RangeInt> areas = new ArrayList<>();
-			areas.add(range);
+			areas.add(range.clone());
 			Set<Integer> moderatedRows = new HashSet<>();
-			linetraceNeutrons(pos.add(((bin>>1)&1)*2-1,0,0),areas,controls);
-			linetraceNeutrons(pos.add(0,0,(bin&1)*2-1),areas,controls);
+			linetraceNeutrons(pos.add(((bin>>1)&1)*2-1,0,0),areas,controls,moderatedRows);
+			linetraceNeutrons(pos.add(0,0,(bin&1)*2-1),areas,controls,moderatedRows);
 			searchFuelAndAdd(pos.add(((bin>>1)&1)*2-1,0,(bin&1)*2-1),areas,controls,moderatedRows,new MapConsumer() {
 				@Override
-				HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
-					HeatRetrival retrival = new HeatRetrival(pos,controls,areas);
+				HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas) {
+					HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
+					retrival.entity = TileEntityPWRElement.this;
 					cornerFuelMap.add(retrival);
 					return retrival;
 				}
 			});
 		}
+		Tracker._endProfile(this);
 	}
 	void updateLinearMap() {
+		Tracker._startProfile(this,"updateLinearMap");
 		linearFuelMap.clear();
 		RangeInt range = new RangeInt(0,height-1);
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			final LeafiaMap<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new LeafiaMap<>();
+			final LeafiaMap<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls = new LeafiaMap<>();
 			List<RangeInt> areas = new ArrayList<>();
-			areas.add(range);
+			areas.add(range.clone());
+			showRangesInt(pos.add(facing.getDirectionVec()),areas,"areas start");
 			Set<Integer> moderatedRows = new HashSet<>();
 			for (int i = 1; (areas.size() > 0) && (i < 20); i++) {
 				BlockPos basePos = pos.add(facing.getFrontOffsetX()*i,0,facing.getFrontOffsetZ()*i);
 				if (!world.isValid(basePos)) break;
-				linetraceNeutrons(basePos,areas,controls);
+				Tracker._tracePosition(this,basePos,"basePos");
+				linetraceNeutrons(basePos,areas,controls,moderatedRows);
+				showRangesInt(basePos,areas,"areas");
 				searchFuelAndAdd(basePos,new ArrayList<>(areas),controls.clone(),moderatedRows,new MapConsumer(i) {
 					@Override
-					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
-						HeatRetrival retrival = new HeatRetrival(pos,controls,areas,this.i);
+					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas) {
+						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas,this.i);
+						retrival.entity = TileEntityPWRElement.this;
 						linearFuelMap.add(retrival);
 						return retrival;
 					}
 				});
 			}
 		}
+		Tracker._endProfile(this);
 	}
 	Set<RangeDouble> intersectRanges(Set<RangeDouble> a,Set<RangeDouble> b) {
 		Set<RangeDouble> intersection = new HashSet<>();
@@ -126,20 +156,27 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		}
 		return intersection;
 	}
-	void searchFuelAndAdd(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<Integer> moderatedRows,MapConsumer callback) {
+	void showRanges(BlockPos horizontalPos,Collection<RangeDouble> areas,String name) {
+		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).addVector(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
+		for (RangeDouble area : areas)
+			Tracker._traceLine(this,base.addVector(0,1-area.min*height,0),base.addVector(0,1-area.max*height,0),name);
+	}
+	void showRangesInt(BlockPos horizontalPos,Collection<RangeInt> areas,String name) {
+		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).addVector(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
+		for (RangeInt area : areas)
+			Tracker._traceLine(this,base.addVector(0,1-area.min,0),base.addVector(0,-area.max,0),name);
+	}
+	void searchFuelAndAdd(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<Integer> moderatedRows,MapConsumer callback) {
+		Tracker._startProfile(this,"searchFuelAndAdd");
+		Tracker._tracePosition(this,basePos,"basePos");
 		Set<RangeDouble> scaledAreas = new HashSet<>();
 		for (RangeInt area : areas) {
-			scaledAreas.add(new RangeDouble(area.min / (double) height,area.max / (double) height));
-			for (Integer depth : area) {
-				BlockPos searchPos = basePos.down(depth);
-				if (world.isValid(searchPos)) {
-					Block block = world.getBlockState(searchPos).getBlock();
-					if (block.getRegistryName() != null) {
-						if (("_"+block.getRegistryName().getResourcePath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
-							moderatedRows.add(depth);
-					}
-				}
-			}
+			/* Add 1 basically because:
+			For example we had 3 blocks,
+			With integers, the range would be 1 <= x <= 3
+			But with doubles, the range should be 1 <= x < 4 because 3.99 is also within block 3's area
+			 */
+			scaledAreas.add(new RangeDouble(area.min / (double) height,(area.max+1) / (double) height));
 		}
 		List<Integer> blocked = new ArrayList<>();
 		//int neutronSources = 0; The "Heat Function" is DESIGNED to omit the need of neutron sources.
@@ -152,6 +189,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				while (!blocked.contains(curDepth) && world.isValid(basePos.down(curDepth))) {
 					blocked.add(curDepth);
 					Block block = world.getBlockState(basePos.down(curDepth)).getBlock();
+					Tracker._tracePosition(this,basePos.down(curDepth),"Searching fuels");
 					if (block instanceof MachinePWRElement) {
 						if (((MachinePWRElement) block).tileEntityShouldCreate(world,basePos.down(curDepth))) {
 							int bottomDepth = depth;
@@ -169,7 +207,16 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 									moderation++;
 							}
 							Set<RangeDouble> myArea = new HashSet<>();
-							myArea.add(new RangeDouble(curDepth/(double)height,bottomDepth/(double)height));
+							/* Add 1 to bottomDepth basically because:
+							For example we had 3 blocks,
+							With integers, the range would be 1 <= x <= 3
+							But with doubles, the range should be 1 <= x < 4 because 3.99 is also within block 3's area
+							 */
+							myArea.add(new RangeDouble(curDepth/(double)height,(bottomDepth+1)/(double)height));
+							Tracker._tracePosition(this,basePos.down(curDepth),"Detected fuel");
+							showRanges(basePos,scaledAreas,"scaledAreas");
+							showRanges(basePos,myArea,"myArea");
+							showRanges(basePos,intersectRanges(scaledAreas,myArea),"intersectRanges");
 							callback.accept(basePos.down(curDepth),controls,intersectRanges(scaledAreas,myArea)).moderation = moderation/(double)elementHeight;
 							break;
 						}
@@ -185,6 +232,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					} else if (block instanceof MachinePWRReflector) {
 						reflectors[depth] = true;
 						doReflect = true;
+						Tracker._tracePosition(this,movePos,"Detected reflector");
 					}
 				}
 			}
@@ -214,24 +262,40 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			}
 			callback.accept(pos,controls,intersectRanges(scaledAreas,reflectSet)).moderation = moderation/(double)totalReflectors;
 		}
+		Tracker._endProfile(this);
 	}
-	void linetraceNeutrons(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls) {
+	void linetraceNeutrons(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<Integer> moderatedRows) {
+		Tracker._startProfile(this,"linetraceNeutrons");
+		Tracker._tracePosition(this,basePos,"basePos");
 		RangeInt range = new RangeInt(0,height-1);
 		/* carving out neutron rays */ {
 			for (Integer depth : range) {
-				Block block = world.getBlockState(basePos.down(depth)).getBlock();
-				if (block instanceof IRadResistantBlock) {
-					if (!(((IRadResistantBlock) block).isRadResistant(world,basePos.down(depth))))
-						continue;
-				} else
-					continue;
+				BlockPos searchPos = basePos.down(depth);
 
 				RangeInt subject = null;
 				for (RangeInt area : areas) { if (area.isInRange(depth)) { subject = area; break; } }
 				if (subject == null) continue;
+				listenPositions().add(searchPos);
+
+				Block block = world.getBlockState(searchPos).getBlock();
+				if (world.isValid(searchPos)) {
+					Tracker._tracePosition(this,searchPos,"Looking for graphite");
+					if (block.getRegistryName() != null) {
+						if (("_"+block.getRegistryName().getResourcePath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
+							moderatedRows.add(depth);
+					}
+				}
+
+				if (block instanceof IRadResistantBlock) {
+					if (!(((IRadResistantBlock) block).isRadResistant(world,searchPos)))
+						continue;
+				} else
+					continue;
+
 				areas.remove(subject);
 				int condition = ((subject.min == depth) ? 0b10 : 0)+
 						((subject.max == depth) ? 0b01 : 0);
+				Tracker._tracePosition(this,searchPos,TextFormatting.RED+"Carving out neutron");
 				switch(condition) {
 					case 0b00:
 						areas.add(new RangeInt(subject.min,depth-1));
@@ -248,6 +312,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					case 0b11:
 						break;
 				}
+				showRangesInt(basePos,areas,"carved areas");
 			}
 		}
 
@@ -271,18 +336,37 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				} else {
 					if (!isControl) {
 						int rodBottom = depth-1;
+						Tracker._tracePosition(this,basePos.down(rodTop),"rodTop");
+						Tracker._tracePosition(this,basePos.down(rodBottom),"rodBottom");
 						double rodHeight = rodBottom-rodTop+1;
 						if (rodBottom < height+rodHeight) {
-							int rodUnderneath = rodBottom - height;
+							int rodPeak = height-rodTop;
+							int rodUnderneath = rodTop-height;
+							Tracker._tracePosition(this,basePos.down(rodTop).up(rodPeak),"rodPeak");
+							Tracker._tracePosition(this,basePos.down(rodTop).up(rodUnderneath),"rodUnderneath");
+							double topStart = rodTop/rodHeight;
+							double bottomStart = (rodBottom+1-height)/rodHeight;
 							RangeDouble rangeBottom = new RangeDouble(
-									rodUnderneath / rodHeight,
-									(rodUnderneath + height) / rodHeight
+									bottomStart,
+									bottomStart+height/rodHeight
 							);
 							RangeDouble rangeTop = new RangeDouble(
-									1 - rodTop / rodHeight,
-									1 - (rodTop + height) / rodHeight
+									topStart,
+									topStart-height/rodHeight
 							);
-							controls.put(new BlockPos(basePos.getX(),basePos.getY() - rodTop,basePos.getZ()),new Pair<>(rangeBottom,rangeTop));
+							Tracker._traceLine(
+									this,
+									new Vec3d(basePos.down(rodTop)).addVector(0.5,1+rangeBottom.min*rodHeight,0.5),
+									new Vec3d(basePos.down(rodTop)).addVector(0.5,1+rangeBottom.max*rodHeight,0.5),
+									"rangeBottom",String.format("%01.2f%% ~ %01.2f%%",rangeBottom.min*100,rangeBottom.max*100)
+							);
+							Tracker._traceLine(
+									this,
+									new Vec3d(basePos.down(rodBottom)).addVector(0.5,rangeTop.min*rodHeight,0.5),
+									new Vec3d(basePos.down(rodBottom)).addVector(0.5,rangeTop.max*rodHeight,0.5),
+									"rangeTop",String.format("%01.2f%% ~ %01.2f%%",rangeTop.min*100,rangeTop.max*100)
+							);
+							controls.put(new BlockPos(basePos.getX(),basePos.getY() - rodTop,basePos.getZ()),new Triplet<>(rangeBottom,rangeTop,Math.min(1,rodHeight/height)));
 						}
 						rodTop = null;
 					}
@@ -290,47 +374,65 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				depth++;
 			}
 		}
+		Tracker._endProfile(this);
 	}
 	public static class HeatRetrival {
-		public final Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls;
+		public final Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls;
 		public final BlockPos fuelPos;
 		public final double divisor;
 		public final Set<RangeDouble> areas;
 		public double moderation;
-		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas,int distance) {
+		TileEntityPWRElement entity;
+		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> copiedAreas,int distance) {
 			this.fuelPos = fuelPos;
 			this.divisor = Math.pow(2,distance/2d-1);
-			this.areas = areas;
-			this.controls = controls;
+			this.areas = copiedAreas;
+			this.controls = copyControlMap(controls);
 		}
-		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
+		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> copiedAreas) {
 			this.fuelPos = fuelPos;
 			this.divisor = 2;
-			this.areas = areas;
-			this.controls = controls;
+			this.areas = copiedAreas;
+			this.controls = copyControlMap(controls);
+		}
+		Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> copyControlMap(Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls) {
+			Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> copiedControls = new LeafiaMap<>();
+			for (Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
+				copiedControls.put(
+						entry.getKey(),
+						new Triplet<>(entry.getValue().getA().clone(),entry.getValue().getB().clone(),entry.getValue().getC())
+				);
+			}
+			return copiedControls;
 		}
 		public double getControlMin(World world) {
 			/*double control = 1;
 			for (BlockPos pos : controls) {
 				control = Math.min(control,getControl(world,pos));
 			}*/
+			Tracker._startProfile(entity,"getControlMin");
 			double control = 0;
 			for (RangeDouble area : areas) {
+				double h = entity.height;
+				Vec3d midPos = (new Vec3d(entity.getPos()).add(new Vec3d(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()))).scale(0.5).addVector(0.5,1,0.5);
+				Tracker._traceLine(entity,midPos.subtract(0,area.min*h,0),midPos.subtract(0,area.max*h,0),"areaTest");
 				double localRatioB = 1;
 				double localRatioT = 1;
-				for (Map.Entry<BlockPos,Pair<RangeDouble,RangeDouble>> entry : controls.entrySet()) {
+				for (Map.Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
+					Tracker._tracePosition(entity,entry.getKey(),"Accounting control...");
+					Vec3d vec = new Vec3d(entry.getKey().getX()+0.5,entity.getPos().getY()+1,entry.getKey().getZ()+0.5);
 					double rodPos = getControl(world,entry.getKey());
-					{
-						double normalizedPos = entry.getValue().getA().ratio(rodPos);
-						localRatioB = Math.min(localRatioB,MathHelper.clamp(normalizedPos,0,1));
-					}
-					{
-						double normalizedPos = entry.getValue().getB().ratio(rodPos);
-						localRatioT = Math.min(localRatioT,MathHelper.clamp(normalizedPos,0,1));
-					}
+					double normalizedPosB = Math.max(entry.getValue().getA().ratio(rodPos),0);
+					double normalizedPosT = Math.max(entry.getValue().getB().ratio(rodPos),0);
+					Tracker._traceLine(entity,vec.subtract(0,(1-normalizedPosB)*h,0),vec.subtract(0,(normalizedPosT)*h,0),"Blockage test","Bottom: "+normalizedPosB,"Top: "+normalizedPosT);
+					double surface = entry.getValue().getC();
+					localRatioB = Math.min(localRatioB,MathHelper.clamp(normalizedPosB,0,1)*surface+(1-surface));
+					localRatioT = Math.min(localRatioT,MathHelper.clamp(normalizedPosT,0,1)*surface+(1-surface));
 				}
 				control += Math.min(localRatioB+localRatioT,1)*(area.max-area.min);
 			}
+			Tracker._tracePosition(entity,new BlockPos(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()),"Final control: "+control);
+			Tracker._endProfile(entity);
 			return control;
 		}
 		public double getControlAvg(World world) {
@@ -343,12 +445,13 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			for (RangeDouble area : areas) {
 				double localRatio = 0;
 				int cnt = 0;
-				for (Map.Entry<BlockPos,Pair<RangeDouble,RangeDouble>> entry : controls.entrySet()) {
+				for (Map.Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
 					cnt++;
 					double rodPos = getControl(world,entry.getKey());
 					double normalizedPosA = entry.getValue().getA().ratio(rodPos);
 					double normalizedPosB = entry.getValue().getB().ratio(rodPos);
-					localRatio += MathHelper.clamp(Math.max(normalizedPosA,normalizedPosB),0,1);
+					double surface = entry.getValue().getC();
+					localRatio += MathHelper.clamp(Math.max(normalizedPosA,normalizedPosB)*surface+(1-surface),0,1);
 				}
 				if (cnt <= 0) {
 					localRatio = 1;
@@ -506,6 +609,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 
 	@Override
 	public void invalidate() {
+		listeners.remove(this);
 		super.invalidate();
 		if (this.data != null)
 			this.data.invalidate(world);
@@ -657,6 +761,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						}
 					}
 				}
+				break;
 			case 4:
 				if (value instanceof Boolean) {
 					if (inventory != null) {
@@ -670,8 +775,10 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						}
 					}
 				}
+				break;
 			case 31:
 				data = PWRData.tryLoadFromPacket(this,value);
+				break;
 		}
 		if (this.data != null)
 			this.data.onReceivePacketLocal(key,value);

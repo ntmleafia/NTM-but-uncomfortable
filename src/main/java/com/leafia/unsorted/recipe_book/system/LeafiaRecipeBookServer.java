@@ -4,7 +4,8 @@ import com.hbm.main.CraftingManager;
 import com.hbm.main.ModEventHandlerClient;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.Tuple.Triplet;
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -98,7 +99,7 @@ public class LeafiaRecipeBookServer {
             PacketDispatcher.wrapper.sendTo(packet,player);
         }
     }
-    public static class LeafiaRecipePacket implements IMessage {
+    public static class LeafiaRecipePacket extends RecordablePacket {
         public byte type;
         public List<String> resources = new ArrayList<>(); // i know this is very expensive but it's also the most stable soo
         public LeafiaRecipePacket() {
@@ -111,17 +112,17 @@ public class LeafiaRecipeBookServer {
             }*/
         }
         @Override
-        public void fromBytes(ByteBuf buf) {
+        public void fromBits(LeafiaBuf buf) {
             type = buf.readByte();
             while (buf.isReadable()) {
-                resources.add(ByteBufUtils.readUTF8String(buf));
+                resources.add(buf.readUTF8String());
             }
         }
         @Override
-        public void toBytes(ByteBuf buf) {
+        public void toBits(LeafiaBuf buf) {
             buf.writeByte(type);
             for (String res : resources) {
-                ByteBufUtils.writeUTF8String(buf,res);
+                buf.writeUTF8String(res);
             }
         }
         public static class Handler implements IMessageHandler<LeafiaRecipePacket, IMessage> {
@@ -140,18 +141,18 @@ public class LeafiaRecipeBookServer {
             }
         }
     }
-    public static class LeafiaTransferItemPacket implements IMessage {
+    public static class LeafiaTransferItemPacket extends RecordablePacket {
         List<Triplet<Integer,Integer,Integer>> transfer = new ArrayList<>();
         public LeafiaTransferItemPacket() {
         }
         @Override
-        public void fromBytes(ByteBuf buf) {
-            while (buf.readableBytes() >= 3) {
+        public void fromBits(LeafiaBuf buf) {
+            while (buf.readableBits() >= 32*3) {
                 transfer.add(new Triplet<>(buf.readInt(),buf.readInt(),buf.readInt()));
             }
         }
         @Override
-        public void toBytes(ByteBuf buf) {
+        public void toBits(LeafiaBuf buf) {
             for (Triplet<Integer,Integer,Integer> triplet : transfer) {
                 buf.writeInt(triplet.getA());
                 buf.writeInt(triplet.getB());

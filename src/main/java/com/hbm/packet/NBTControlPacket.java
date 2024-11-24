@@ -4,7 +4,8 @@ import java.io.IOException;
 
 import com.hbm.interfaces.IControlReceiver;
 
-import io.netty.buffer.ByteBuf;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,9 +16,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class NBTControlPacket implements IMessage {
+public class NBTControlPacket extends RecordablePacket {
 	
-	PacketBuffer buffer;
+	NBTTagCompound buffer; // i have no wrods
 	int x;
 	int y;
 	int z;
@@ -29,39 +30,32 @@ public class NBTControlPacket implements IMessage {
 	}
 	
 	public NBTControlPacket(NBTTagCompound nbt, int x, int y, int z) {
-		
-		this.buffer = new PacketBuffer(Unpooled.buffer());
+
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		
-		buffer.writeCompoundTag(nbt);
+		buffer = (nbt);
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBits(LeafiaBuf buf) {
 		
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
-		
-		if (buffer == null) {
-			buffer = new PacketBuffer(Unpooled.buffer());
-		}
-		buffer.writeBytes(buf);
+
+		buffer = buf.readNBT();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBits(LeafiaBuf buf) {
 		
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);
-		
-		if (buffer == null) {
-			buffer = new PacketBuffer(Unpooled.buffer());
-		}
-		buf.writeBytes(buffer);
+
+		buf.writeNBT(buffer);
 	}
 
 	public static class Handler implements IMessageHandler<NBTControlPacket, IMessage> {
@@ -77,9 +71,9 @@ public class NBTControlPacket implements IMessage {
 				
 				TileEntity te = p.world.getTileEntity(new BlockPos(m.x, m.y, m.z));
 				
-				try {
+				 {
 					
-					NBTTagCompound nbt = m.buffer.readCompoundTag();
+					NBTTagCompound nbt = m.buffer;
 					
 					if(nbt != null) {
 						if(te instanceof IControlReceiver) {
@@ -91,8 +85,6 @@ public class NBTControlPacket implements IMessage {
 						}
 					}
 					
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			});
 			
