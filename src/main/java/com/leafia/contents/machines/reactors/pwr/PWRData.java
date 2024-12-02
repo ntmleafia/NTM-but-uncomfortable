@@ -21,6 +21,7 @@ import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.llib.LeafiaUtil;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
@@ -195,10 +196,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public World getWorld() {
 		return this.companion.getWorld();
 	}
-	public PWRData readFromNBT(NBTTagCompound nbt) {
-		nbt = nbt.getCompoundTag("data");
-		if(nbt.hasKey("compression"))
-			compression = nbt.getInteger("compression");
+	public void onUpdateCompression() {
 		if(compression == 0){
 			if (tankTypes[4] != ModForgeFluids.steam)
 				tanks[4].drain(tanks[4].getCapacity(),true);
@@ -212,6 +210,12 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				tanks[4].drain(tanks[4].getCapacity(),true);
 			tankTypes[4] = ModForgeFluids.superhotsteam;
 		}
+	}
+	public PWRData readFromNBT(NBTTagCompound nbt) {
+		nbt = nbt.getCompoundTag("data");
+		if(nbt.hasKey("compression"))
+			compression = nbt.getInteger("compression");
+		onUpdateCompression();
 		tankTypes[0] = ModForgeFluids.coolant;
 		tankTypes[1] = ModForgeFluids.hotcoolant;
 		tankTypes[2] = ModForgeFluids.malcoolant;
@@ -317,7 +321,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		}
 	}
 	boolean valid = false;
-	int timeToDrainMalcoolant = 10;
+	float timeToDrainMalcoolant = 15;
+	@SideOnly(Side.CLIENT)
+	public int warnTicks = 0;
+	public double stressTimer = 300;
 	@Override
 	public void update() {
 		if (!valid) {
@@ -335,26 +342,36 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		if (getWorld().isRemote) {
 			//Minecraft.getMinecraft().player.sendMessage(new TextComponentString("hello... here at "+companion.getPos()+".. ,,uwu,,"));
 			// The debug code above is a serious sign of mental illness.
+			warnTicks = Math.floorMod(warnTicks+1,8);
 		} else {
 			//for (EntityPlayer player : getWorld().playerEntities) {
 			//    player.sendMessage(new TextComponentString("" + getWorld().isRemote + "! Im at " + companion.getPos()));
 			//}
+			if (coriums > 0)
+				spendCoolant(Math.pow(coriums*2727,0.414),null);
 			if (tanks[2].getFluidAmount() > 0) {
-				int decr = tanks[2].getCapacity()/timeToDrainMalcoolant;
+				int decr = tanks[2].getCapacity()*64/Math.round(timeToDrainMalcoolant*20);
 				if (tanks[1].getCapacity()-tanks[1].getFluidAmount() >= decr) {
 					tanks[1].fill(new FluidStack(tankTypes[1],decr),true);
 					tanks[2].drain(decr,true);
 				}
+				// directly copied from zirnox port lmfao
+				double stress = tanks[2].getFluidAmount()/(double)tanks[2].getCapacity();
+				stressTimer -= Math.pow(stress,0.9)*64;
+				if (stressTimer <= 0) {
+					BlockPos pos = (BlockPos)members.toArray()[getWorld().rand.nextInt(members.size())];
+					getWorld().playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundHandler.stressSounds[getWorld().rand.nextInt(7)],SoundCategory.BLOCKS, (float)MathHelper.clampedLerp(0.25,4,Math.pow(stress,4)),1.0F);
+				}
 			}
 			if (tanks[3].getCapacity() > 0) {
-				int consumption = (int)Math.round(Math.pow(tanks[1].getFluidAmount()/(double)Math.max(tanks[3].getCapacity(),1),0.4)/20);
-				FluidStack stack = tanks[1].drain(consumption,false);
+				int consumption = (int)Math.round(Math.pow(tanks[3].getFluidAmount()/(double)Math.max(tanks[1].getCapacity(),1),0.4)*200);
+				FluidStack stack = tanks[1].drain(consumption/3,false);
 				FluidStack stack2 = tanks[3].drain(consumption,false);
 				if (stack != null && stack2 != null) {
-					int boilAmt = Math.min(stack.amount,stack2.amount);
+					int boilAmt = Math.min(stack.amount*3,stack2.amount);
 					int division = (int)Math.pow(10,compression);
 					int filled = tanks[4].fill(new FluidStack(tankTypes[4],boilAmt/division),true);
-					tanks[1].drain(Math.min(boilAmt,filled*division),true);
+					tanks[1].drain(Math.min(boilAmt,filled*division)/3,true);
 					tanks[3].drain(Math.min(boilAmt,filled*division),true);
 				}
 			}
@@ -372,6 +389,18 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					tanks[4].getFluidAmount()
 			}).__sendToAffectedClients();
 		}
+	}
+	public void spendCoolant(double cooled,@Nullable ItemStack stack) {
+		int hotType = 1;
+		int drain = (int)Math.ceil(cooled/12500*tanks[0].getCapacity());
+		if (tanks[0].getFluidAmount() > 0) {
+			if (tanks[1].getFluidAmount() >= tanks[1].getCapacity())
+				hotType = 2;
+			tanks[hotType].fill(new FluidStack(tankTypes[hotType],drain/hotType),true);
+			if (tanks[2].getFluidAmount() >= tanks[2].getCapacity())
+				explode(getWorld(),stack);
+		}
+		tanks[0].drain(drain,true);
 	}
 
 	boolean exploded = false;
@@ -458,7 +487,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		Vec3d pressure = new Vec3d(0,0,0);
 		for (BlockPos member : motherfucker) {
 			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
-			if (world.getBlockState(member).getBlock().isPassable(world,member)) {
+			if (!world.getBlockState(member).getMaterial().isSolid()) {
 				pressure = pressure.add(ray.scale(2d/motherfucker.size()));
 				continue;
 			}
@@ -506,7 +535,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			//}
 			if (!destroyed) {
 				// myaaaaa
-				remains.add(member);
+				if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member)))
+					remains.add(member);
 				pressure = pressure.subtract(ray.scale(1d/motherfucker.size()));
 				/*
 				if (block instanceof PWRComponentBlock) {
@@ -526,15 +556,17 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			boolean converted = false;
 			for (EnumFacing face : EnumFacing.values()) {
 				if (remains.contains(pos.offset(face))) {
-					placeWrecks.add(pos);
-					allDebris.add(pos);
-					converted = true;
+					if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
+						placeWrecks.add(pos);
+						allDebris.add(pos);
+						converted = true;
+					}
 					break;
 				}
 			}
 			if (!converted) {
 				Block block = world.getBlockState(pos).getBlock();
-				if (!(block instanceof IFluidBlock) && (!block.isPassable(world,pos))) {
+				if (!(block instanceof IFluidBlock) && LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
 					Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
 					EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
 					debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.x,0.8)/2;
@@ -549,7 +581,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		for (BlockPos pos : remains) {
 			boolean buried = true;
 			for (EnumFacing face : EnumFacing.values()) {
-				if (vaporized.contains(pos.offset(face)) || world.getBlockState(pos.offset(face)).getBlock().isPassable(world,pos)) {
+				if (vaporized.contains(pos.offset(face)) || !LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos.offset(face)))) {
 					buried = false;
 					break;
 				}
@@ -616,7 +648,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 							surround++;
 							reliable++;
 						}
-						if (!world.getBlockState(member.offset(curFace).offset(side)).getBlock().isPassable(world,member.offset(curFace).offset(side))) continue;
+						if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member.offset(curFace).offset(side)))) continue;
 						if (placeWrecks.contains(member.offset(curFace).offset(side))) continue;
 						mySpaces++;
 					}
@@ -728,8 +760,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			return 0;
 		} else if(resource.getFluid() == tankTypes[0]){
 			return tanks[0].fill(resource, doFill);
-		} else if(resource.getFluid() == tankTypes[1]){
-			return tanks[1].fill(resource, doFill);
+		} else if(resource.getFluid() == tankTypes[3]){
+			return tanks[3].fill(resource, doFill);
 		} else {
 			return 0;
 		}
@@ -782,7 +814,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				return;
 			}
 			int readIndex = 0;
+			int prevCompression = compression;
 			compression = (int)Array.get(value,readIndex++);
+			if (prevCompression != compression)
+				onUpdateCompression();
 			for (int i = 0; i < 5; i++)
 				tanks[i].setCapacity((int)Array.get(value,readIndex++));
 			for (int i = 0; i < 5; i++)
@@ -815,6 +850,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		} else if (key == 29) {
 			if (value instanceof Integer) {
 				compression = Math.floorMod((int)value,3);
+				onUpdateCompression();
 			}
 		}
 	}

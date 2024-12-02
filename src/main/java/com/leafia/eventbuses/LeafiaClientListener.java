@@ -1,6 +1,6 @@
 package com.leafia.eventbuses;
 
-import com.leafia.transformer.LeafiaOverlayDebug;
+import com.leafia.transformer.LeafiaGeneralLocal;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -12,6 +12,6 @@ public class LeafiaClientListener {
 	 */
 	@SubscribeEvent
 	public void dammit(RenderGameOverlayEvent.Text debug) {
-		LeafiaOverlayDebug.injectDebugInfoLeft(debug.getLeft());
+		LeafiaGeneralLocal.injectDebugInfoLeft(debug.getLeft());
 	}
 }

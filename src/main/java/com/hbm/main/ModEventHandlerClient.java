@@ -8,10 +8,12 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
+import com.leafia.contents.worldgen.ModBiome;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.passive.LeafiaPassiveLocal;
 import com.leafia.passive.rendering.TopRender;
+import com.leafia.transformer.LeafiaGls.LeafiaGlStack;
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
@@ -29,6 +31,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.shader.*;
 import net.minecraft.nbt.*;
 import net.minecraft.util.*;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.client.EnumHelperClient;
@@ -1259,9 +1262,54 @@ public class ModEventHandlerClient {
 			RenderNTMSkybox.didLastRender = false;
 		}
 	}
+	Map<ModBiome,Float> getBiomeRatios(Entity entity) {
+		World world = entity.world;
+		int mops = 0;
+		Map<ModBiome,Integer> mop = new HashMap<>();
+		BlockPos pos = entity.getPosition();
+		for (int ox = -3; ox <= 3; ox++) {
+			for (int oz = -3; oz <= 3; oz++) {
+				Biome biome = world.getBiome(pos.add(ox*5,0,oz*5));
+				if (biome instanceof ModBiome)
+					mop.put((ModBiome)biome,mop.getOrDefault((ModBiome)biome,0)+1);
+				mops++;
+			}
+		}
+		Map<ModBiome,Float> map = new HashMap<>();
+		for (Entry<ModBiome,Integer> entry : mop.entrySet())
+			map.put(entry.getKey(),entry.getValue().floatValue()/mops);
+		return map;
+	}
 	@SubscribeEvent
-	public void setFogDensity(EntityViewRenderEvent.FogDensity event) {
-		event.setDensity((float)Math.max(Math.pow(IdkWhereThisShitBelongs.darkness*(IdkWhereThisShitBelongs.dustDisplayTicks/30f),0.1)*12,event.getDensity()));
+	public void overrideFog(EntityViewRenderEvent.RenderFogEvent event) {
+		LeafiaGlStack stack = LeafiaGls.getLastStack();
+		float density = stack.fogDensity;
+		float start = stack.fogStart;
+		float end = stack.fogEnd;
+		float ogDensity = density;
+		float ogStart = start;
+		float ogEnd = end;
+		for (Entry<ModBiome,Float> entry : getBiomeRatios(event.getEntity()).entrySet()) {
+			{
+				float delta = entry.getKey().getFogDensity(ogDensity)-density;
+				density += delta*entry.getValue();
+			}
+			{
+				float delta = entry.getKey().getFogStart(ogStart)-start;
+				start += delta*entry.getValue();
+			}
+			{
+				float delta = entry.getKey().getFogEnd(ogEnd)-end;
+				end += delta*entry.getValue();
+			}
+		}
+		density = (float)Math.max(Math.pow(IdkWhereThisShitBelongs.darkness*(IdkWhereThisShitBelongs.dustDisplayTicks/30f),0.1)*4,density);
+		if (density != ogDensity)
+			LeafiaGls.setFogDensity(start);
+		if (start != ogStart)
+			LeafiaGls.setFogStart(start);
+		if (end != ogEnd)
+			LeafiaGls.setFogEnd(end);
 	}
 	@SubscribeEvent
 	public void setFogColor(EntityViewRenderEvent.FogColors event) {
@@ -1272,9 +1320,17 @@ public class ModEventHandlerClient {
 		IBlockState viewportState = world.getBlockState(viewportPos);
 		Vec3d inMaterialColor = viewportState.getBlock().getFogColor(world, viewportPos, viewportState, entity, new Vec3d(1,0,0), (float)event.getRenderPartialTicks());
 
-		event.setRed((float)MathHelper.clamp(event.getRed()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.7/1.5,0,1));
-		event.setGreen((float)MathHelper.clamp(event.getGreen()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.4/1.5,0,1));
-		event.setBlue((float)MathHelper.clamp(event.getBlue()+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.1/1.5,0,1));
+		Vec3d col = new Vec3d(event.getRed(),event.getGreen(),event.getBlue());
+		for (Entry<ModBiome,Float> entry : getBiomeRatios(entity).entrySet()) {
+			int code = entry.getKey().getFogColor();
+			Vec3d add = new Vec3d(code>>>16&0xFF,code>>>8&0xFF,code&0xFF).scale(1/255d).subtract(col);
+			double alpha = (1-(code>>24&0xFF)/255d)*entry.getValue();
+			col = col.add(add.scale(alpha));
+		}
+
+		event.setRed((float)MathHelper.clamp(col.x+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.7/1.5,0,1));
+		event.setGreen((float)MathHelper.clamp(col.y+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.4/1.5,0,1));
+		event.setBlue((float)MathHelper.clamp(col.z+(1-IdkWhereThisShitBelongs.darkness)*IdkWhereThisShitBelongs.infernal*0.1/1.5,0,1));
 
 		//event.setRed((float)inMaterialColor.x);
 		//event.setGreen((float)inMaterialColor.y);

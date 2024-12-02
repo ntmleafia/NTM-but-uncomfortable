@@ -1,12 +1,26 @@
 package com.leafia.transformer;
 
+import com.hbm.lib.RefStrings;
+import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
+import com.leafia.contents.worldgen.biomes.effects.ParticleCloudSmall;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.llib.math.SiPfx;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 import java.util.List;
 
-public class LeafiaOverlayDebug {
+public class LeafiaGeneralLocal {
 	public static void injectDebugInfoLeft(List<String> list) {
 		int index = -1;
 		for (int i = 0; i < list.size(); i++) {
@@ -19,6 +33,24 @@ public class LeafiaOverlayDebug {
 			list.add(index,"NTM packet network: "+SiPfx.format("%01.2f",RecordablePacket.previousByteUsageSec,true).toLowerCase()+"bytes/sec");
 			list.add(index+1,"("+SiPfx.format("%01.2f",RecordablePacket.previousByteUsageMin,true).toLowerCase()+"bytes/min, "+SiPfx.format("%01.2f",RecordablePacket.previousByteUsage,true).toLowerCase()+"bytes/tick)");
 		}
+	}
+	public static final ResourceLocation acidRain = new ResourceLocation(RefStrings.MODID, "textures/acidicrain.png");
+	public static boolean acidRainParticles(Entity entity,Biome biome,IBlockState state,BlockPos down,double rx,double rz,AxisAlignedBB bb) {
+		double x = (double)down.getX()+rx;
+		double y = (double)((float)down.getY()+0.1F)+bb.maxY;
+		double z = (double)down.getZ()+rz;
+		World world = entity.world;
+		if (biome instanceof HasAcidicRain) {
+			if (world.rand.nextInt(10) == 0) {
+				int rand = world.rand.nextInt(2)+1;
+				for (int i = 0; i < rand; i++)
+					Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleCloudSmall(world,x,y,z,0.25f));
+			}
+			if (world.rand.nextInt(900) == 0)
+				world.playSound(Minecraft.getMinecraft().player,down,SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,SoundCategory.AMBIENT,0.1f,world.rand.nextFloat()*0.2f+0.6f);
+			return false;
+		}
+		return true;
 	}
 	public static void injectWackySplashes(List<String> splash) {
 		splash.add("Floppenheimer!");

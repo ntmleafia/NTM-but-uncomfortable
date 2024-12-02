@@ -20,6 +20,8 @@ import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.llib.group.LeafiaMap;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,6 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -100,6 +103,27 @@ public class ItemWandD extends Item {
 					}
 					Tracker.notifySelectionChange();
 				}
+			} else {
+				pos = player.getPosition().down();
+				IBlockState state = world.getBlockState(pos);
+				Block block = state.getBlock();
+				Material mat = state.getMaterial();
+				LeafiaDebug.debugPos(world,pos,15,0x40FF00,
+						TextFormatting.GREEN+"BLK: !isPassable: "+pfx(!block.isPassable(world,pos)),
+						"BLK: isCollidable: "+pfx(block.isCollidable()),
+						"BLK: isNormalCube: "+pfx(block.isNormalCube(state,world,pos)),
+						TextFormatting.YELLOW+"-----------",
+						"STAT: isFullBlock: "+pfx(state.isFullBlock()),
+						"STAT: isFullCube: "+pfx(state.isFullCube()),
+						"STAT: isNormalCube: "+pfx(state.isOpaqueCube()),
+						"STAT: isBlockNormalCube: "+pfx(state.isBlockNormalCube()),
+						"STAT: isOpaqueCube: "+pfx(state.isOpaqueCube()),
+						TextFormatting.GREEN+"BLK: !isTranslucent: "+pfx(!state.isTranslucent()),
+						"STAT: renderType: "+state.getRenderType().name(),
+						TextFormatting.YELLOW+"-----------",
+						"MAT: isOpaque: "+pfx(mat.isOpaque()),
+						"MAT: isSolid: "+pfx(mat.isSolid())
+				);
 			}
 		} else {
 			clickClient(world, player, pos, hitX, hitY, hitZ);
@@ -123,6 +147,9 @@ public class ItemWandD extends Item {
 		MainRegistry.time = System.currentTimeMillis();
 		
 		return EnumActionResult.SUCCESS;
+	}
+	public String pfx(boolean shit) {
+		return shit ? TextFormatting.DARK_GREEN+"true" : TextFormatting.DARK_RED+"false";
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -13,6 +13,7 @@ import com.hbm.config.RadiationConfig;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
+import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.ExtPropPacket;
@@ -129,9 +130,20 @@ public class EntityEffectHandler {
 				ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, rad / 20F);
 			}
 	
-			if(entity.world.isRaining() && RadiationConfig.cont > 0 && AuxSavedData.getThunder(entity.world) > 0 && entity.world.canBlockSeeSky(new BlockPos(ix, iy, iz))) {
-				
-				ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, RadiationConfig.cont * 0.0005F);
+			if(entity.world.isRaining() && entity.world.canBlockSeeSky(new BlockPos(ix, iy, iz))) {
+				if (RadiationConfig.cont > 0 && AuxSavedData.getThunder(entity.world) > 0) {
+					ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, RadiationConfig.cont * 0.0005F);
+				} else if (entity.world.getBiome(new BlockPos(ix, iy, iz)) instanceof HasAcidicRain) {
+					boolean active = false;
+					PotionEffect effect = entity.getActivePotionEffect(MobEffects.POISON);
+					if (effect != null) {
+						if (effect.getDuration() > 5)
+							active = true;
+					}
+					if (!active)
+						entity.addPotionEffect(new PotionEffect(MobEffects.POISON,35,1,false,false));
+					ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, RadiationConfig.cont * 0.0005F);
+				}
 			}
 			
 			if(entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.isCreativeMode)

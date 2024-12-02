@@ -285,6 +285,7 @@ import com.hbm.potion.HbmPotion;
 import com.hbm.tileentity.machine.rbmk.IRBMKFluxReceiver.NType;
 
 import api.hbm.block.IToolable.ToolType;
+import com.leafia.contents.gear.wands.ItemWandSaving;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -3820,6 +3821,7 @@ public class ModItems {
 	public static final Item wand = new ItemWand("wand_k").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	public static final Item wand_s = new ItemWandS("wand_s").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	public static final Item wand_d = new ItemWandD("wand_d").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
+	public static final Item wand_leaf = new ItemWandSaving("wand_leaf").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	public static final Item rod_of_discord = new ItemDiscord("rod_of_discord").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	public static final Item analyzer = new ItemAnalyzer("analyzer").setMaxStackSize(1).setCreativeTab(null);
 	public static final Item defuser = new ItemTooling(ToolType.DEFUSER, 100, "defuser").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);

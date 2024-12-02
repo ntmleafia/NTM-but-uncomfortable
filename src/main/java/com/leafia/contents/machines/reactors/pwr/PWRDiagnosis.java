@@ -308,10 +308,10 @@ public class PWRDiagnosis {
 					core.fuels = fuelPositions;
 				}
 				if (!world.isRemote) {
-					core.tanks[0].setCapacity(8_000*channels);
-					core.tanks[1].setCapacity(8_000*channels);
-					core.tanks[3].setCapacity(4_000*conductors);
-					core.tanks[4].setCapacity(2_000*conductors);
+					core.tanks[0].setCapacity(800*channels);
+					core.tanks[1].setCapacity(800*channels);
+					core.tanks[3].setCapacity(400*conductors);
+					core.tanks[4].setCapacity(200*conductors);
 					core.coriums = this.coriums.size();
 					gridFill();
 					LeafiaSet<BlockPos> projection = new LeafiaSet<>();

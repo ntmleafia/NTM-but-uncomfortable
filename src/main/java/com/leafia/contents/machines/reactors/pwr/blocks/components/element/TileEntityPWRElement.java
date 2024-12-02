@@ -17,6 +17,7 @@ import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.tileentity.TileEntityInventoryBase;
 import com.hbm.util.I18nUtil;
+import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
 import com.llib.math.range.RangeDouble;
@@ -84,7 +85,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 	static abstract class MapConsumer {
 		int i = 0;
-		abstract HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas);
+		abstract HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas);
 		public MapConsumer() {}
 		public MapConsumer(int i) {
 			this.i = i;
@@ -92,27 +93,50 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 
 	public final Set<HeatRetrival> linearFuelMap = new HashSet<>();
-	public final Set<HeatRetrival> cornerFuelMap = new HashSet<>();
+	public final Set<Pair<HeatRetrival,HeatRetrival>> cornerFuelMap = new HashSet<>();
 	void updateCornerMap() {
 		Tracker._startProfile(this,"updateCornerMap");
 		cornerFuelMap.clear();
 		RangeInt range = new RangeInt(0,height-1);
 		for (int bin = 0; bin <= 0b11; bin++) {
-			final Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls = new HashMap<>();
-			List<RangeInt> areas = new ArrayList<>();
-			areas.add(range.clone());
-			Set<Integer> moderatedRows = new HashSet<>();
-			linetraceNeutrons(pos.add(((bin>>1)&1)*2-1,0,0),areas,controls,moderatedRows);
-			linetraceNeutrons(pos.add(0,0,(bin&1)*2-1),areas,controls,moderatedRows);
-			searchFuelAndAdd(pos.add(((bin>>1)&1)*2-1,0,(bin&1)*2-1),areas,controls,moderatedRows,new MapConsumer() {
-				@Override
-				HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas) {
-					HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
-					retrival.entity = TileEntityPWRElement.this;
-					cornerFuelMap.add(retrival);
-					return retrival;
-				}
-			});
+			Pair<HeatRetrival,HeatRetrival> pair = new Pair<>(null,null);
+			Pair<HeatRetrival,HeatRetrival> pairRef = new Pair<>(null,null);
+			for (int bin2 = 0b01; bin2 <= 0b10; bin2++) {
+				final Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new HashMap<>();
+				List<RangeInt> areas = new ArrayList<>();
+				areas.add(range.clone());
+				Set<Integer> moderatedRows = new HashSet<>();
+				int xMul = bin2>>1;
+				int zMul = bin2&1;
+				linetraceNeutrons(pos.add((((bin>>1)&1)*2-1)*xMul,0,((bin&1)*2-1)*zMul),areas,controls,moderatedRows,new MapConsumer() {
+					@Override
+					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
+						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
+						retrival.entity = TileEntityPWRElement.this;
+						if (pairRef.getA() == null)
+							pairRef.setA(retrival);
+						else {
+							pairRef.setB(retrival);
+							cornerFuelMap.add(pairRef);
+						}
+						return retrival;
+					}
+				});
+				searchFuelAndAdd(pos.add(((bin>>1)&1)*2-1,0,(bin&1)*2-1),areas,controls,moderatedRows,new MapConsumer() {
+					@Override
+					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
+						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
+						retrival.entity = TileEntityPWRElement.this;
+						if (pair.getA() == null)
+							pair.setA(retrival);
+						else {
+							pair.setB(retrival);
+							cornerFuelMap.add(pair);
+						}
+						return retrival;
+					}
+				});
+			}
 		}
 		Tracker._endProfile(this);
 	}
@@ -121,7 +145,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		linearFuelMap.clear();
 		RangeInt range = new RangeInt(0,height-1);
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			final LeafiaMap<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls = new LeafiaMap<>();
+			final LeafiaMap<BlockPos,Pair<RangeDouble,RangeDouble>> controls = new LeafiaMap<>();
 			List<RangeInt> areas = new ArrayList<>();
 			areas.add(range.clone());
 			showRangesInt(pos.add(facing.getDirectionVec()),areas,"areas start");
@@ -130,11 +154,19 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				BlockPos basePos = pos.add(facing.getFrontOffsetX()*i,0,facing.getFrontOffsetZ()*i);
 				if (!world.isValid(basePos)) break;
 				Tracker._tracePosition(this,basePos,"basePos");
-				linetraceNeutrons(basePos,areas,controls,moderatedRows);
+				linetraceNeutrons(basePos,areas,controls,moderatedRows,new MapConsumer(i) {
+					@Override
+					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
+						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas,this.i);
+						retrival.entity = TileEntityPWRElement.this;
+						linearFuelMap.add(retrival);
+						return retrival;
+					}
+				});
 				showRangesInt(basePos,areas,"areas");
 				searchFuelAndAdd(basePos,new ArrayList<>(areas),controls.clone(),moderatedRows,new MapConsumer(i) {
 					@Override
-					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> areas) {
+					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas,this.i);
 						retrival.entity = TileEntityPWRElement.this;
 						linearFuelMap.add(retrival);
@@ -145,7 +177,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		}
 		Tracker._endProfile(this);
 	}
-	Set<RangeDouble> intersectRanges(Set<RangeDouble> a,Set<RangeDouble> b) {
+	static Set<RangeDouble> intersectRanges(Set<RangeDouble> a,Set<RangeDouble> b) {
 		Set<RangeDouble> intersection = new HashSet<>();
 		for (RangeDouble rangeA : a) {
 			for (RangeDouble rangeB : b) {
@@ -166,7 +198,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		for (RangeInt area : areas)
 			Tracker._traceLine(this,base.addVector(0,1-area.min,0),base.addVector(0,-area.max,0),name);
 	}
-	void searchFuelAndAdd(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<Integer> moderatedRows,MapConsumer callback) {
+	void searchFuelAndAdd(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<Integer> moderatedRows,MapConsumer callback) {
 		Tracker._startProfile(this,"searchFuelAndAdd");
 		Tracker._tracePosition(this,basePos,"basePos");
 		Set<RangeDouble> scaledAreas = new HashSet<>();
@@ -181,8 +213,6 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		List<Integer> blocked = new ArrayList<>();
 		//int neutronSources = 0; The "Heat Function" is DESIGNED to omit the need of neutron sources.
 		//                        Yeah, there's no way this is getting along.
-		boolean[] reflectors = new boolean[height];
-		boolean doReflect = false;
 		for (RangeInt area : areas) {
 			for (Integer depth : area) {
 				int curDepth = depth;
@@ -224,50 +254,25 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						break;
 					curDepth--;
 				}
-				BlockPos movePos = basePos.down(depth);
-				if (world.isValid(movePos)) {
-					Block block = world.getBlockState(movePos).getBlock();
-					if (block instanceof MachinePWRSource) {
-						// nope
-					} else if (block instanceof MachinePWRReflector) {
-						reflectors[depth] = true;
-						doReflect = true;
-						Tracker._tracePosition(this,movePos,"Detected reflector");
-					}
-				}
 			}
-		}
-		if (doReflect) {
-			int moderation = 0;
-			int totalReflectors = 0;
-			List<RangeInt> reflect = new ArrayList<>();
-			boolean create = true;
-			for (int depth = 0; depth < height; depth++) {
-				boolean ref = reflectors[depth];
-				if (ref) {
-					totalReflectors++;
-					if (moderatedRows.contains(depth))
-						moderation++;
-					if (create) {
-						reflect.add(new RangeInt(depth,depth));
-						create = false;
-					} else
-						reflect.get(reflect.size() - 1).max = depth;
-				} else
-					create = true;
-			}
-			Set<RangeDouble> reflectSet = new HashSet<>(); // have to create again because modifying elements of Set corrupts it >:// (Java moment)
-			for (RangeInt ref : reflect) {
-				reflectSet.add(new RangeDouble(ref.min / (double) height,ref.max / (double) height));
-			}
-			callback.accept(pos,controls,intersectRanges(scaledAreas,reflectSet)).moderation = moderation/(double)totalReflectors;
 		}
 		Tracker._endProfile(this);
 	}
-	void linetraceNeutrons(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<Integer> moderatedRows) {
+	void linetraceNeutrons(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<Integer> moderatedRows,MapConsumer reflectionCall) {
 		Tracker._startProfile(this,"linetraceNeutrons");
 		Tracker._tracePosition(this,basePos,"basePos");
 		RangeInt range = new RangeInt(0,height-1);
+		Set<RangeDouble> reflectAreas = new HashSet<>();
+		for (RangeInt area : areas) {
+			/* Add 1 basically because:
+			For example we had 3 blocks,
+			With integers, the range would be 1 <= x <= 3
+			But with doubles, the range should be 1 <= x < 4 because 3.99 is also within block 3's area
+			 */
+			reflectAreas.add(new RangeDouble(area.min / (double) height,(area.max+1) / (double) height));
+		}
+		boolean doReflect = false;
+		boolean[] reflectors = new boolean[height];
 		/* carving out neutron rays */ {
 			for (Integer depth : range) {
 				BlockPos searchPos = basePos.down(depth);
@@ -284,6 +289,11 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						if (("_"+block.getRegistryName().getResourcePath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
 							moderatedRows.add(depth);
 					}
+				}
+				if (block instanceof MachinePWRReflector) {
+					Tracker._tracePosition(this,searchPos,"Detected reflector");
+					reflectors[depth] = true;
+					doReflect = true;
 				}
 
 				if (block instanceof IRadResistantBlock) {
@@ -314,6 +324,28 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				}
 				showRangesInt(basePos,areas,"carved areas");
 			}
+		}
+
+		/* handle reflectors */ if (doReflect) {
+			// this runs before detecting rods but those rods that's ignored are just the rods in the same column so we're fine with that
+			LeafiaSet<RangeDouble> ranges = new LeafiaSet<>();
+			int moderation = 0;
+			boolean nextCreate = true;
+			for (Integer depth : range) {
+				if (!reflectors[depth])
+					nextCreate = true;
+				else  {
+					if (nextCreate) {
+						ranges.add(0,new RangeDouble(depth/(double)height,(depth+1d)/height));
+						nextCreate = false;
+					}
+					ranges.get(0).max = (depth+1d)/height;
+					if (moderatedRows.contains(depth))
+						moderation++;
+				}
+			}
+			if (ranges.size() > 0)
+				reflectionCall.accept(getPos(),controls,intersectRanges(reflectAreas,ranges)).moderation = moderation/(double)height;
 		}
 
 		/* detect rods */ {
@@ -366,7 +398,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 									new Vec3d(basePos.down(rodBottom)).addVector(0.5,rangeTop.max*rodHeight,0.5),
 									"rangeTop",String.format("%01.2f%% ~ %01.2f%%",rangeTop.min*100,rangeTop.max*100)
 							);
-							controls.put(new BlockPos(basePos.getX(),basePos.getY() - rodTop,basePos.getZ()),new Triplet<>(rangeBottom,rangeTop,Math.min(1,rodHeight/height)));
+							controls.put(new BlockPos(basePos.getX(),basePos.getY() - rodTop,basePos.getZ()),new Pair<>(rangeBottom,rangeTop));
 						}
 						rodTop = null;
 					}
@@ -377,33 +409,38 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		Tracker._endProfile(this);
 	}
 	public static class HeatRetrival {
-		public final Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls;
+		public final Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls;
 		public final BlockPos fuelPos;
 		public final double divisor;
 		public final Set<RangeDouble> areas;
 		public double moderation;
 		TileEntityPWRElement entity;
-		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> copiedAreas,int distance) {
+		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> copiedAreas,int distance) {
 			this.fuelPos = fuelPos;
 			this.divisor = Math.pow(2,distance/2d-1);
 			this.areas = copiedAreas;
 			this.controls = copyControlMap(controls);
 		}
-		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls,Set<RangeDouble> copiedAreas) {
+		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> copiedAreas) {
 			this.fuelPos = fuelPos;
 			this.divisor = 2;
 			this.areas = copiedAreas;
 			this.controls = copyControlMap(controls);
 		}
-		Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> copyControlMap(Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> controls) {
-			Map<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> copiedControls = new LeafiaMap<>();
-			for (Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
+		Map<BlockPos,Pair<RangeDouble,RangeDouble>> copyControlMap(Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls) {
+			Map<BlockPos,Pair<RangeDouble,RangeDouble>> copiedControls = new LeafiaMap<>();
+			for (Entry<BlockPos,Pair<RangeDouble,RangeDouble>> entry : controls.entrySet()) {
 				copiedControls.put(
 						entry.getKey(),
-						new Triplet<>(entry.getValue().getA().clone(),entry.getValue().getB().clone(),entry.getValue().getC())
+						new Pair<>(entry.getValue().getA().clone(),entry.getValue().getB().clone())
 				);
 			}
 			return copiedControls;
+		}
+		void traceAreas(Vec3d vec,Set<RangeDouble> ranges,Object... messages) {
+			double h = entity.height;
+			for (RangeDouble range : ranges)
+				Tracker._traceLine(entity,vec.subtract(0,range.min*h,0),vec.subtract(0,range.max*h,0),messages);
 		}
 		public double getControlMin(World world) {
 			/*double control = 1;
@@ -411,55 +448,39 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				control = Math.min(control,getControl(world,pos));
 			}*/
 			Tracker._startProfile(entity,"getControlMin");
-			double control = 0;
+			Set<RangeDouble> intersection = new LeafiaSet<>();
+			double h = entity.height;
+			Vec3d midPos = (new Vec3d(entity.getPos()).add(new Vec3d(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()))).scale(0.5).addVector(0.5,1,0.5);
 			for (RangeDouble area : areas) {
-				double h = entity.height;
-				Vec3d midPos = (new Vec3d(entity.getPos()).add(new Vec3d(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()))).scale(0.5).addVector(0.5,1,0.5);
 				Tracker._traceLine(entity,midPos.subtract(0,area.min*h,0),midPos.subtract(0,area.max*h,0),"areaTest");
-				double localRatioB = 1;
-				double localRatioT = 1;
-				for (Map.Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
-					Tracker._tracePosition(entity,entry.getKey(),"Accounting control...");
-					Vec3d vec = new Vec3d(entry.getKey().getX()+0.5,entity.getPos().getY()+1,entry.getKey().getZ()+0.5);
-					double rodPos = getControl(world,entry.getKey());
-					double normalizedPosB = Math.max(entry.getValue().getA().ratio(rodPos),0);
-					double normalizedPosT = Math.max(entry.getValue().getB().ratio(rodPos),0);
-					Tracker._traceLine(entity,vec.subtract(0,(1-normalizedPosB)*h,0),vec.subtract(0,(normalizedPosT)*h,0),"Blockage test","Bottom: "+normalizedPosB,"Top: "+normalizedPosT);
-					double surface = entry.getValue().getC();
-					localRatioB = Math.min(localRatioB,MathHelper.clamp(normalizedPosB,0,1)*surface+(1-surface));
-					localRatioT = Math.min(localRatioT,MathHelper.clamp(normalizedPosT,0,1)*surface+(1-surface));
-				}
-				control += Math.min(localRatioB+localRatioT,1)*(area.max-area.min);
+				intersection.add(area.clone());
 			}
+			for (Map.Entry<BlockPos,Pair<RangeDouble,RangeDouble>> entry : controls.entrySet()) {
+				Tracker._tracePosition(entity,entry.getKey(),"Accounting control...");
+				Vec3d vec = new Vec3d(entry.getKey().getX()+0.5,entity.getPos().getY()+1,entry.getKey().getZ()+0.5);
+				double rodPos = getControl(world,entry.getKey());
+				double normalizedPosB = Math.max(entry.getValue().getA().ratio(rodPos),0);
+				double normalizedPosT = Math.max(entry.getValue().getB().ratio(rodPos),0);Tracker._traceLine(entity,vec.subtract(0,(1-normalizedPosB)*h,0),vec.subtract(0,(normalizedPosT)*h,0),"Blockage test","Bottom: "+normalizedPosB,"Top: "+normalizedPosT);
+
+				Set<RangeDouble> openAreas = new LeafiaSet<>();
+				if (normalizedPosT > 0)
+					openAreas.add(new RangeDouble(0,normalizedPosT));
+				if (normalizedPosB > 0)
+					openAreas.add(new RangeDouble(1-normalizedPosB,1));
+				traceAreas(vec,openAreas,"openAreas");
+				if (openAreas.size() <= 0) return 0;
+				else intersection = intersectRanges(intersection,openAreas);
+			}
+			traceAreas(midPos,intersection,"Final intersection");
+			double control = 0;
+			for (RangeDouble range : intersection)
+				control += Math.abs(range.max-range.min);
 			Tracker._tracePosition(entity,new BlockPos(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()),"Final control: "+control);
 			Tracker._endProfile(entity);
 			return control;
 		}
 		public double getControlAvg(World world) {
-			/*
-			double control = 0;
-			for (BlockPos pos : controls) {
-				control += getControl(world,pos);
-			}*/
-			double control = 0;
-			for (RangeDouble area : areas) {
-				double localRatio = 0;
-				int cnt = 0;
-				for (Map.Entry<BlockPos,Triplet<RangeDouble,RangeDouble,Double>> entry : controls.entrySet()) {
-					cnt++;
-					double rodPos = getControl(world,entry.getKey());
-					double normalizedPosA = entry.getValue().getA().ratio(rodPos);
-					double normalizedPosB = entry.getValue().getB().ratio(rodPos);
-					double surface = entry.getValue().getC();
-					localRatio += MathHelper.clamp(Math.max(normalizedPosA,normalizedPosB)*surface+(1-surface),0,1);
-				}
-				if (cnt <= 0) {
-					localRatio = 1;
-					cnt = 1;
-				}
-				control += localRatio/cnt*(area.max-area.min);
-			}
-			return control;
+			throw new LeafiaDevFlaw("getControlAvg is scrapped");
 		}
 		public double getControl(World world,BlockPos pos) {
 			TileEntity entity = world.getTileEntity(pos);
@@ -652,19 +673,26 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double coolin = 0;
 					PWRData gathered = gatherData();
 					if (gathered != null) {
+						// TODO: make it account exchangers instead of channels
+						// TODO: and make it detect only nearby channels and scale cooling rate depending on the distance instead of tank capacity
+						// TODO: exchangers would act like a relay; it would draw and transfer heats from fuels to nearby channels in a larger radius
 						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
-								*(gathered.tanks[0].getCapacity()/128_000d);
+								*(gathered.tanks[0].getCapacity()/1250d);
 					}
 					ItemLeafiaRod rod = (ItemLeafiaRod)(stack.getItem());
 					double heatDetection = 0;
-					for (HeatRetrival retrival : cornerFuelMap)
-						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlAvg(world)*height;
+					for (Pair<HeatRetrival,HeatRetrival> pair : cornerFuelMap) {
+						// getControlAvg is scrapped
+						heatDetection += getHeatFromHeatRetrival(pair.getA(),rod)*pair.getA().getControlMin(world)*height/2;
+						heatDetection += getHeatFromHeatRetrival(pair.getB(),rod)*pair.getB().getControlMin(world)*height/2;
+					}
 					for (HeatRetrival retrival : linearFuelMap)
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlMin(world)*height;
 					double rad = Math.pow(heatDetection,0.65)/2;
 					RadiationSavedData.incrementRad(world,pos,(float)rad/8,(float)rad);
-
-					rod.HeatFunction(stack,true,heatDetection,coolin,20,400);
+					double heat = (stack.getTagCompound() != null) ? stack.getTagCompound().getDouble("heat") : 20;
+					double coolingCap = MathHelper.clamp(heat,20,400+Math.pow(Math.max(heat-400,0),0.5));
+					rod.HeatFunction(stack,true,heatDetection,coolin,coolingCap,coolingCap);
 					rod.decay(stack,inventory,0);
 					NBTTagCompound data = stack.getTagCompound();
 					double cooled = 0;
@@ -691,19 +719,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						}
 						cooled = data.getDouble("cooled");
 					}
-					if (gathered != null)
-						cooled += Math.pow(gathered.coriums*2727,0.1);
 					if (cooled > 0 && gathered != null) {
-						int hotType = 1;
-						int drain = (int)Math.ceil(cooled/10000*gathered.tanks[0].getCapacity());
-						if (gathered.tanks[0].getFluidAmount() > 0) {
-							if (gathered.tanks[1].getFluidAmount() >= gathered.tanks[1].getCapacity())
-								hotType = 2;
-							gathered.tanks[hotType].fill(new FluidStack(gathered.tankTypes[hotType],drain),true);
-							if (gathered.tanks[2].getFluidAmount() >= gathered.tanks[2].getCapacity())
-								gathered.explode(world,stack);
-						}
-						gathered.tanks[0].drain(drain,true);
+						gathered.spendCoolant(cooled,stack);
 					}
 					NBTTagCompound nbt = stack.getTagCompound();
 					LeafiaPacket packet = LeafiaPacket._start(this);

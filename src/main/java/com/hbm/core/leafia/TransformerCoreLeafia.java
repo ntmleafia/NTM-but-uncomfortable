@@ -1,15 +1,19 @@
 package com.hbm.core.leafia;
 
-import com.leafia.transformer.LeafiaOverlayDebug;
+import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
+import com.leafia.transformer.LeafiaGeneralLocal;
 import com.leafia.transformer.WorldServerLeafia;
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.*;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -20,7 +24,8 @@ public class TransformerCoreLeafia implements IClassTransformer {
 	public static final String[] classesBeingTransformed = {
 			"net.minecraft.client.renderer.GlStateManager",
 			"net.minecraft.world.WorldServer",
-			"net.minecraft.client.gui.GuiMainMenu"
+			"net.minecraft.client.gui.GuiMainMenu",
+			"net.minecraft.client.renderer.EntityRenderer"
 	};
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] classBeingTransformed) {
@@ -48,8 +53,8 @@ public class TransformerCoreLeafia implements IClassTransformer {
 				case 1:
 					doTransform(classNode,isObfuscated,WorldServerLeafia.class,index);
 					break;
-				case 2:
-					doTransform(classNode,isObfuscated,LeafiaOverlayDebug.class,index);// fuck you.period.
+				case 2: case 3:
+					doTransform(classNode,isObfuscated,LeafiaGeneralLocal.class,index);// fuck you.period.
 					break;
 				default:
 					throw new LeafiaDevErrorGls("#Leaf: Unexpected index "+index);
@@ -69,7 +74,14 @@ public class TransformerCoreLeafia implements IClassTransformer {
 		return classBeingTransformed;
 	}
 	static final Map<String,String> furtherDeobf = new HashMap<>();
+	static final Map<Integer,String> opcodeMap = new HashMap<>();
 	static {
+		for (Field field : Opcodes.class.getFields()) {
+			try {
+				if (field.getType().getTypeName().equals("int"))
+					opcodeMap.put(field.getInt(null),field.getName());
+			} catch (IllegalAccessException ignored) {};
+		}
 		//furtherDeobf.put();
 		{
 			furtherDeobf.put("func_179082_a","clearColor");
@@ -147,25 +159,69 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			furtherDeobf.put("func_179198_a","setDisabled");
 			furtherDeobf.put("func_179199_a","setState");
 			furtherDeobf.put("func_179200_b","setEnabled");
+			furtherDeobf.put("func_187402_b","glFog");
+			furtherDeobf.put("func_187412_c","glFogi");
 
 			furtherDeobf.put("func_148821_a","blendFunc");
 			furtherDeobf.put("func_179112_b","blendFunc");
 			furtherDeobf.put("func_179120_a","tryBlendFuncSeparate");
 			furtherDeobf.put("func_187401_a","blendFunc");
 			furtherDeobf.put("func_187428_a","tryBlendFuncSeparate");
-
+		}
+		{
 			furtherDeobf.put("func_180798_a","renderDebugInfoLeft");
+			furtherDeobf.put("func_78474_d","renderRainSnow");
+
+			furtherDeobf.put("func_78484_h","addRainParticles");
+
+			// (func_\w+),(\w+),.,(.*)
+			// furtherDeobf.put("$1","$2"); // $3
+
+			furtherDeobf.put("func_177855_a","setBlockState"); //
+			furtherDeobf.put("func_177856_a","getBlockState"); //
+			furtherDeobf.put("func_177865_a","jsonToFactory"); //
+			furtherDeobf.put("func_177951_i","distanceSq"); // Calculate squared distance to the given Vector
+			furtherDeobf.put("func_177952_p","getZ"); // Get the Z coordinate
+			furtherDeobf.put("func_177954_c","distanceSq"); // Calculate squared distance to the given coordinates
+			furtherDeobf.put("func_177955_d","crossProduct"); // Calculate the cross product of this and the given Vector
+			furtherDeobf.put("func_177956_o","getY"); // Get the Y coordinate
+			furtherDeobf.put("func_177957_d","distanceSqToCenter"); // "Compute square of distance from point x, y, z to center of this Block"
+			furtherDeobf.put("func_177958_n","getX"); // Get the X coordinate
+			furtherDeobf.put("func_177963_a","add"); // Add the given coordinates to the coordinates of this BlockPos
+			furtherDeobf.put("func_177964_d","north"); // Offset this BlockPos n blocks in northern direction
+			furtherDeobf.put("func_177965_g","east"); // Offset this BlockPos n blocks in eastern direction
+			furtherDeobf.put("func_177967_a","offset"); // Offsets this BlockPos n blocks in the given direction
+			furtherDeobf.put("func_177968_d","south"); // Offset this BlockPos 1 block in southern direction
+			furtherDeobf.put("func_177969_a","fromLong"); // Create a BlockPos from a serialized long value (created by toLong)
+			furtherDeobf.put("func_177970_e","south"); // Offset this BlockPos n blocks in southern direction
+			furtherDeobf.put("func_177971_a","add"); // Add the given Vector to this BlockPos
+			furtherDeobf.put("func_177972_a","offset"); // Offset this BlockPos 1 block in the given direction
+			furtherDeobf.put("func_177973_b","subtract"); // Subtract the given Vector from this BlockPos
+			furtherDeobf.put("func_177974_f","east"); // Offset this BlockPos 1 block in eastern direction
+			furtherDeobf.put("func_177975_b","getAllInBoxMutable"); // "Like getAllInBox but reuses a single MutableBlockPos instead. If this method is used, the resulting BlockPos instances can only be used inside the iteration loop."
+			furtherDeobf.put("func_177976_e","west"); // Offset this BlockPos 1 block in western direction
+			furtherDeobf.put("func_177977_b","down"); // Offset this BlockPos 1 block down
+			furtherDeobf.put("func_177978_c","north"); // Offset this BlockPos 1 block in northern direction
+			furtherDeobf.put("func_177979_c","down"); // Offset this BlockPos n blocks down
+			furtherDeobf.put("func_177980_a","getAllInBox"); // Create an Iterable that returns all positions in the box specified by the given corners
+			furtherDeobf.put("func_177981_b","up"); // Offset this BlockPos n blocks up
+			furtherDeobf.put("func_177982_a","add"); // Add the given coordinates to the coordinates of this BlockPos
+			furtherDeobf.put("func_177984_a","up"); // Offset this BlockPos 1 block up
+			furtherDeobf.put("func_177985_f","west"); // Offset this BlockPos n blocks in western direction
+			furtherDeobf.put("func_177986_g","toLong"); // Serialize this BlockPos into a long value
 		}
 		furtherDeobf.put("func_73044_a","saveAllChunks");
 	}
 	public static class Helper {
 		MethodNode method;
+		ClassNode target;
 		public List<AbstractInsnNode> instructions;
 		Class<?> listener;
-		public Helper(MethodNode mthd, Class<?> listener) {
+		public Helper(MethodNode mthd, Class<?> listener,ClassNode target) {
 			method = mthd;
 			instructions = new ArrayList<>();
 			this.listener = listener;
+			this.target = target;
 		}
 		public void stackManipulateStore(int op,int index) {
 			instructions.add(new VarInsnNode(op,index));
@@ -234,9 +290,35 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			this.stackCall(name,"("+descArgs+")V");
 		}
 	}
+	static void printBytecodes(InsnList codes) {
+		FMLDeobfuscatingRemapper pain = FMLDeobfuscatingRemapper.INSTANCE;
+		for (AbstractInsnNode node : codes.toArray()) {
+			// sneaky sneaky
+			if (node instanceof LineNumberNode)// {
+				System.out.println("#    Line " + ((LineNumberNode) node).line);
+			String s = "#      "+String.format("%02Xh : ",node.getOpcode()&0xFF)+(opcodeMap.containsKey(node.getOpcode()&0xFF) ? opcodeMap.get(node.getOpcode()&0xFF) : node.getClass().getSimpleName())+" >> ";
+			if (node instanceof MethodInsnNode) {
+				String ass = pain.mapMethodName(((MethodInsnNode)node).owner,((MethodInsnNode)node).name,((MethodInsnNode)node).desc);
+				s = s + pain.map(((MethodInsnNode)node).owner)+"."+furtherDeobf.getOrDefault(ass,ass)+pain.mapMethodDesc(((MethodInsnNode)node).desc);
+			} else if (node instanceof VarInsnNode)
+				s = s +((VarInsnNode)node).var;
+			else if (node instanceof FieldInsnNode)
+				s = s + pain.mapDesc(((FieldInsnNode)node).desc)+" : "+pain.map(((FieldInsnNode)node).owner)+"."+pain.mapFieldName(((FieldInsnNode)node).owner,((FieldInsnNode)node).name,((FieldInsnNode)node).desc);
+			else if (node instanceof LabelNode && ((LabelNode) node).getLabel() != null)
+				s = s + ((LabelNode) node).getLabel().toString();
+			else if (node instanceof JumpInsnNode && ((JumpInsnNode) node).label != null && ((JumpInsnNode) node).label.getLabel() != null)
+				s = s + ((JumpInsnNode) node).label.getLabel().toString();
+			else if (node instanceof LdcInsnNode && ((LdcInsnNode) node).cst != null)
+				s = s + ((LdcInsnNode) node).cst.toString();
+			System.out.println(s);
+		}
+	}
 	private static boolean tryBind(String name,String desc,Helper helper,int transformerIndex) {
+		FMLDeobfuscatingRemapper pain = FMLDeobfuscatingRemapper.INSTANCE;
 		switch(transformerIndex) {
 			case 0: {
+				if ((helper.method.access&ACC_PUBLIC) == 0)
+					return false;
 				if (name.startsWith("enable") || name.startsWith("disable")) {
 					for (String s : new String[]{
 							"Blend","Alpha","Fog","Lighting","ColorMaterial","Texture2D", // shader.preInit
@@ -275,8 +357,8 @@ public class TransformerCoreLeafia implements IClassTransformer {
 							helper.stackCall("tryBlendFuncSeparate","(IIII)V");
 							return true;
 						} else break;
-					case "alphaFunc":
-					case "shadeModel":
+					case "alphaFunc": case "shadeModel":
+					case "setFog": case "setFogStart": case "setFogEnd": case "setFogDensity": case "glFogi": //case "glFog":
 						helper.bindDirectly(name,desc);
 						return true;
 
@@ -310,10 +392,43 @@ public class TransformerCoreLeafia implements IClassTransformer {
 				}
 				break;
 			case 2:
-				for (AbstractInsnNode node : helper.method.instructions.toArray()) {
-					// sneaky sneaky
-					if (node instanceof LineNumberNode) {
-						System.out.println("#    Line " + ((LineNumberNode) node).line);
+				if (name.equals("<init>")) {
+					for (FieldNode node : helper.target.fields) {
+						//System.out.println("#      Field "+node.desc+" >> "+node.name);
+					}
+					int lastALOAD = -1;
+					Integer confirmedListIndex = null;
+					Integer possibleListIndex = null;
+					boolean randmark = false;
+					for (AbstractInsnNode node : helper.method.instructions.toArray()) {
+						if (node instanceof MethodInsnNode) {
+							MethodInsnNode mthd = (MethodInsnNode)node;
+							if (mthd.getOpcode() == INVOKEVIRTUAL) {
+								if (mthd.owner.equals("java/util/Random") && mthd.name.equals("nextInt") && mthd.desc.equals("(I)I")) {
+									randmark = true;
+								}
+							} else if (mthd.getOpcode() == INVOKEINTERFACE) {
+								if (mthd.owner.equals("java/util/List") && mthd.name.equals("get") && mthd.desc.equals("(I)Ljava/lang/Object;") && randmark) {
+									randmark = false;
+									possibleListIndex = lastALOAD;
+								}
+							}
+						} else if (node instanceof FieldInsnNode) {
+							FieldInsnNode field = (FieldInsnNode)node;
+							if (field.getOpcode() == PUTFIELD) {
+								if (field.desc.equals("Ljava/lang/String;") && field.owner.equals(helper.target.name) && (possibleListIndex != null)) {
+									confirmedListIndex = possibleListIndex;
+									break;
+								}
+							}
+						} else if (node instanceof VarInsnNode) {
+							VarInsnNode var = (VarInsnNode)node;
+							if (var.getOpcode() == ALOAD) {
+								lastALOAD = var.var;
+							}
+						}
+
+						/*
 						if (((LineNumberNode) node).line == 99) {
 							helper.method.instructions.insert(
 									node,
@@ -325,14 +440,46 @@ public class TransformerCoreLeafia implements IClassTransformer {
 							helper.method.instructions.insert(node,new VarInsnNode(ALOAD,2));
 							System.out.println("#      Added method call injectWackySplashes : (Ljava/util/List;)V");
 							return true;
+						}*/
+						//}
+						/*
+						// sneaky sneaky
+						if (node instanceof LineNumberNode)// {
+							System.out.println("#    Line " + ((LineNumberNode) node).line);
+						String s = "#      "+String.format("%02Xh : ",node.getOpcode()&0xFF)+(opcodeMap.containsKey(node.getOpcode()&0xFF) ? opcodeMap.get(node.getOpcode()&0xFF) : node.getClass().getSimpleName())+" >> ";
+						if (node instanceof MethodInsnNode)
+							s = s + ((MethodInsnNode)node).owner+"."+((MethodInsnNode)node).name+((MethodInsnNode)node).desc;
+						else if (node instanceof VarInsnNode)
+							s = s +((VarInsnNode)node).var;
+						else if (node instanceof FieldInsnNode)
+							s = s + ((FieldInsnNode)node).desc+" : "+((FieldInsnNode)node).owner+"."+((FieldInsnNode)node).name;
+						else if (node instanceof LabelNode && ((LabelNode) node).getLabel() != null)
+							s = s + ((LabelNode) node).getLabel().toString();
+						else if (node instanceof JumpInsnNode && ((JumpInsnNode) node).label != null && ((JumpInsnNode) node).label.getLabel() != null)
+							s = s + ((JumpInsnNode) node).label.getLabel().toString();
+						System.out.println(s);*/
+					}
+					if (confirmedListIndex != null) {
+						for (AbstractInsnNode node : helper.method.instructions.toArray()) {
+							if (node instanceof VarInsnNode) {
+								VarInsnNode var = (VarInsnNode)node;
+								if (var.getOpcode() == ASTORE) {
+									if (var.var == confirmedListIndex) {
+										helper.method.instructions.insert(
+												node,
+												new MethodInsnNode(
+														INVOKESTATIC,Type.getInternalName(helper.listener),
+														"injectWackySplashes","(Ljava/util/List;)V",false
+												)
+										);
+										helper.method.instructions.insert(node,new VarInsnNode(ALOAD,confirmedListIndex));
+										System.out.println("#      Added method call injectWackySplashes : (Ljava/util/List;)V");
+										return true;
+									}
+								}
+							}
 						}
 					}
-					/*
-					System.out.println("#      Node: "+Integer.toHexString(node.getOpcode()&0xFF)+" : "+node.getType()+" ["+node.getClass().getSimpleName()+"]");
-					if (node instanceof MethodInsnNode)
-						System.out.println("#      Method: "+((MethodInsnNode)node).owner+":"+((MethodInsnNode)node).name+"("+((MethodInsnNode)node).desc+")");
-					else if (node instanceof VarInsnNode)
-						System.out.println("#      Type: "+((VarInsnNode)node).getType()+", Var: "+((VarInsnNode)node).var);*/
 				}
 				/*
 				if (name.equals("renderDebugInfoLeft")) {
@@ -374,6 +521,189 @@ public class TransformerCoreLeafia implements IClassTransformer {
 				// it was possible to modify using events from forge, in the most confusing name of just "Text" Bruh bro
 				// Searchability -32768/10
 				break;
+			case 3:
+				if (name.equals("addRainParticles")) {
+					//printBytecodes(helper.method.instructions);
+					int progress = -10;
+					int entityLocation = 0;
+					int biomeLocation = 0;
+					int posLocation = 0;
+					int stateLocation = 0;
+					int rxLocation = 0;
+					int ryLocation = 0;
+					int alignBBLocation = 0;
+					LabelNode skip = null;
+					LabelNode finalLabel = null;
+					for (AbstractInsnNode node : helper.method.instructions.toArray()) {
+						if (node instanceof MethodInsnNode) {
+							MethodInsnNode insn = (MethodInsnNode)node;
+							String ds = pain.mapMethodDesc(insn.desc);
+							String nm = pain.mapMethodName(insn.owner,insn.name,insn.desc);
+							if (insn.getOpcode() == INVOKEVIRTUAL) {
+								if (ds.matches(".*\\)L.*Entity;.*") && progress == -10)
+									progress = -11;
+								else if (ds.matches(".*\\(L.*BlockPos;\\)L.*Biome;.*") && progress == 0)
+									progress = 1;
+								else if (furtherDeobf.getOrDefault(nm,nm).equals("down") && progress == 10)
+									progress = 11;
+								else if (ds.matches(".*\\)L.*IBlockState;.*") && progress == 20)
+									progress = 21;
+								else if (furtherDeobf.getOrDefault(nm,nm).equals("nextDouble") && progress >= 30 && progress < 40 && progress%2 == 0)
+									progress++;
+							} else if (insn.getOpcode() == INVOKEINTERFACE && ds.matches(".*\\)L.*AxisAlignedBB;.*") && progress == 40)
+								progress = 41;
+						} else if (progress > 0 || progress == -11) { // potato coding :D
+							if (node instanceof VarInsnNode) {
+								VarInsnNode insn = (VarInsnNode)node;
+								if (insn.getOpcode() == ASTORE) {
+									if (progress == -11) {
+										progress = 0;
+										entityLocation = insn.var;
+									} else if (progress == 1) {
+										progress = 10;
+										biomeLocation = insn.var;
+									} else if (progress == 11) {
+										progress = 20;
+										posLocation = insn.var;
+									} else if (progress == 21) {
+										progress = 30;
+										stateLocation = insn.var;
+									} else if (progress == 41) {
+										progress = 50;
+										alignBBLocation = insn.var;
+									}
+								} else if (insn.getOpcode() == DSTORE) {
+									if (progress == 31) {
+										progress = 32;
+										rxLocation = insn.var;
+									} else if (progress == 33) {
+										progress = 40;
+										ryLocation = insn.var;
+									}
+								}
+							} else if (node instanceof JumpInsnNode) {
+								JumpInsnNode insn = (JumpInsnNode)node;
+								if (opcodeMap.getOrDefault(insn.getOpcode(),"unknown").startsWith("IF")) {
+									if (progress == 30)
+										skip = insn.label;
+									else if (progress == 60) {
+										progress = 70;
+										finalLabel = insn.label;
+									}
+								}
+							} else if (node instanceof IincInsnNode && progress == 50)
+								progress = 60;
+							else if (node instanceof LabelNode) {
+								if (progress == 70 && finalLabel == node) {
+									progress = 80;
+									if (skip != null) {
+										System.out.println("#      Injecting branch for wasteland biomes");
+										MethodInsnNode callback = new MethodInsnNode(
+												INVOKESTATIC,
+												Type.getInternalName(LeafiaGeneralLocal.class),
+												"acidRainParticles",
+												"(Lnet/minecraft/entity/Entity;Lnet/minecraft/world/biome/Biome;Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/util/math/BlockPos;DDLnet/minecraft/util/math/AxisAlignedBB;)Z",
+												false
+										);
+										helper.method.instructions.insert(node,callback);
+										helper.method.instructions.insert(callback,new JumpInsnNode(IFEQ,skip));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(ALOAD,entityLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(ALOAD,biomeLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(ALOAD,stateLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(ALOAD,posLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(DLOAD,rxLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(DLOAD,ryLocation));
+										helper.method.instructions.insertBefore(callback,new VarInsnNode(ALOAD,alignBBLocation));
+										return true;
+									}
+								}
+							}
+						}
+					}
+				} else if (name.equals("renderRainSnow")) {
+					FieldNode resourceNode = null;
+					for (FieldNode node : helper.target.fields) {
+						String deobfName = pain.mapFieldName(helper.target.name,node.name,node.desc);
+						if ((node.access&ACC_STATIC) > 0) {
+							if (deobfName.equals("field_110924_q") || deobfName.equals("RAIN_TEXTURES") || deobfName.equals("locationRainPng")) {
+								resourceNode = node;
+								System.out.println("#      Field RAIN_TEXTURES successfully found >> " + node.name);
+							}
+						}
+					}
+					if (resourceNode != null) {
+						int biomeVarCreationCheck = 0;
+						Integer biomeVarStoreId = null;
+						FieldInsnNode queryNode = null;
+						for (AbstractInsnNode node : helper.method.instructions.toArray()) {
+							if (node instanceof MethodInsnNode) {
+								MethodInsnNode insn = (MethodInsnNode)node;
+								if (insn.getOpcode() == INVOKEVIRTUAL) {
+									String deobfDesc = pain.mapMethodDesc(insn.desc);
+									System.out.println("#      INVOKEVIRTUAL -> "+deobfDesc);
+									if (deobfDesc.matches("\\(L[^;]+;\\)L"+Type.getInternalName(Biome.class)+";")) {
+										System.out.println("#      Type biome");
+										biomeVarCreationCheck = 2;//1;
+										continue;
+									}
+								}/*
+							} else if (node instanceof InsnNode) {
+								if (biomeVarCreationCheck == 1) {
+									if (node.getOpcode() == DUP) {
+										biomeVarCreationCheck = 2;
+									}
+								}*/
+							} else if (node instanceof VarInsnNode) {
+								VarInsnNode insn = (VarInsnNode)node;
+								if (insn.getOpcode() == ASTORE && biomeVarCreationCheck == 2) {
+									biomeVarStoreId = insn.var;
+									biomeVarCreationCheck = 3; // complete
+									System.out.println("#      Detected biome var location: "+biomeVarStoreId);
+								}
+							} else if (node instanceof FieldInsnNode) {
+								FieldInsnNode insn = (FieldInsnNode)node;
+								if (insn.owner.equals(helper.target.name) && insn.name.equals(resourceNode.name) && insn.desc.equals(resourceNode.desc)) {
+									if (insn.getOpcode() == GETSTATIC && biomeVarStoreId != null) {
+										System.out.println("#      Reference to RAIN_TEXTURES successfully found");
+										queryNode = insn;
+										break;
+									}
+								}
+							}
+							if (biomeVarCreationCheck < 2)
+								biomeVarCreationCheck = 0;
+						}
+						if (queryNode != null) {
+							System.out.println("#      Injecting branch for wasteland biomes");
+							FieldInsnNode acidNode = new FieldInsnNode(GETSTATIC,Type.getInternalName(LeafiaGeneralLocal.class),"acidRain",resourceNode.desc);
+							LabelNode skipNode = new LabelNode();
+							LabelNode elseNode = new LabelNode();
+							helper.method.instructions.insert(queryNode,skipNode);
+							helper.method.instructions.insertBefore(queryNode,elseNode);
+							helper.method.instructions.insertBefore(elseNode,acidNode);
+							helper.method.instructions.insert(acidNode,new JumpInsnNode(GOTO,skipNode));
+							helper.method.instructions.insertBefore(acidNode,new VarInsnNode(ALOAD,biomeVarStoreId));
+							helper.method.instructions.insertBefore(acidNode,new TypeInsnNode(INSTANCEOF,Type.getInternalName(HasAcidicRain.class)));
+							helper.method.instructions.insertBefore(acidNode,new JumpInsnNode(IFEQ,elseNode));
+							// this translates to:
+							/* ...getstatic RAIN_TEXTURES... transform to:
+								...
+								aload biome
+								^^ instanceof HasAcidicRain
+								^^ ifeq (0/false) :: (goto) elseNode
+								getstatic acidRain
+								goto skipNode
+								[elseNode]
+								getstatic RAIN_TEXTURES
+								[skipNode]
+								...
+							 */
+							// *(brackets) mean that they're not arguments and instead some note
+							return true;
+						}
+					}
+				}
+				break;
 		}
 		return false;
 	}
@@ -389,7 +719,7 @@ public class TransformerCoreLeafia implements IClassTransformer {
 		List<String> attempt = new ArrayList<>();
 		for (MethodNode method : profilerClass.methods) {
 			attempt.clear();
-			Helper helper = new Helper(method,listener);
+			Helper helper = new Helper(method,listener,profilerClass);
 			System.out.println("#Leaf: Iterating "+method.name+" : "+ method.desc);
 			String deobf = pain.mapMethodName(profilerClass.name,method.name,method.desc);
 			if (deobf != null)

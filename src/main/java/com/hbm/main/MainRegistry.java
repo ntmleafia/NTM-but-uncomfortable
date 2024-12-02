@@ -14,6 +14,9 @@ import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckE
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.worldgen.ModBiomes;
+import com.leafia.contents.worldgen.ModBiomesGenerator;
+import com.leafia.contents.worldgen.biomes.Barrens;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaServerListener;
 import com.leafia.passive.DispenserBullet;
@@ -23,6 +26,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileE
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
@@ -481,6 +485,11 @@ public class MainRegistry {
 		MinecraftForge.ORE_GEN_BUS.register(new ModEventHandler());
 
 		MinecraftForge.EVENT_BUS.register(new LeafiaServerListener());
+		{
+			ModBiomesGenerator gen = new ModBiomesGenerator();
+			MinecraftForge.EVENT_BUS.register(gen);
+			MinecraftForge.TERRAIN_GEN_BUS.register(gen);
+		}
 		
 		if(event.getSide() == Side.CLIENT) {
 			HbmKeybinds keyHandler = new HbmKeybinds();
@@ -511,7 +520,7 @@ public class MainRegistry {
 		rendererWaiting.add(new TileEntityMachineAcidizer());
 
 		proxy.registerRenderInfo();
-		HbmWorld.mainRegistry();
+		//HbmWorld.mainRegistry();
 		proxy.preInit(event);
 		Library.initSuperusers();
 		
@@ -1021,6 +1030,7 @@ public class MainRegistry {
 		registerReactorFuels();
 		ControlRegistry.init();
 		OreDictManager.registerOres();
+		ModBiomes.init();
 	}
 
 	@EventHandler
@@ -1080,7 +1090,7 @@ public class MainRegistry {
 		//Drillgon200: expand the max entity radius for the hunter chopper
 		if(World.MAX_ENTITY_RADIUS < 5)
 			World.MAX_ENTITY_RADIUS = 5;
-		MinecraftForge.EVENT_BUS.register(new SchistStratum()); //DecorateBiomeEvent.Pre
+		//MinecraftForge.EVENT_BUS.register(new SchistStratum()); //DecorateBiomeEvent.Pre
 		
 		NTMCraftTweaker.applyPostInitActions();
 		AssemblerRecipes.generateList();

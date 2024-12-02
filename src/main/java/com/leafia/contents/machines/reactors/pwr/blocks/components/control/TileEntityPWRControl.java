@@ -126,10 +126,10 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
 
     @Override
     public void invalidate() {
-        if (sound != null) {
+        if (sound != null && playing) {
             sound.stopSound();
-            sound = null;
         }
+        sound = null;
         super.invalidate();
         if (this.data != null)
             this.data.invalidate(world);
@@ -147,10 +147,10 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
 
     @Override
     public void onChunkUnload() {
-        if (sound != null) {
+        if (sound != null && playing) {
             sound.stopSound();
-            sound = null;
         }
+        sound = null;
         super.onChunkUnload();
     }
 
@@ -167,7 +167,7 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
             }
             if (!(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl)) {
                 if (sound == null)
-                    sound = MainRegistry.proxy.getLoopedSoundStartStop(world,HBMSoundHandler.pwrRodLoop,HBMSoundHandler.pwrRodStart,HBMSoundHandler.pwrRodStop,SoundCategory.BLOCKS,pos.getX(),pos.getY(),pos.getZ(),0.175f,0.98f);
+                    sound = MainRegistry.proxy.getLoopedSoundStartStop(world,HBMSoundHandler.pwrRodLoop,HBMSoundHandler.pwrRodStart,HBMSoundHandler.pwrRodStop,SoundCategory.BLOCKS,pos.getX(),pos.getY(),pos.getZ(),0.0175f,0.75f);
                 if (playing) {
                     if (targetPosition == position) {
                         sound.stopSound();

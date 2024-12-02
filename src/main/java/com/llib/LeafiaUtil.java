@@ -1,5 +1,7 @@
 package com.llib;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.text.TextFormatting;
 
 public class LeafiaUtil {
@@ -10,5 +12,8 @@ public class LeafiaUtil {
 				+ ((index>>2 &1)*0xAA<<16) // r
 				+ ((index>>1 &1)*0xAA<<8) // g
 				+ ((index &1)*0xAA); // b
+	}
+	public static boolean isSolidVisibleCube(IBlockState state) {
+		return state.isFullCube() && state.getMaterial().isSolid() && !state.getMaterial().isReplaceable() && state.getRenderType().equals(EnumBlockRenderType.MODEL);
 	}
 }

@@ -647,19 +647,24 @@ public class PWRTerminalUI extends GuiInfoContainer {
 		LeafiaGls.popMatrix();
 		FFUtils.drawLiquid(core.tanks[0],guiLeft,guiTop+containerOffset+80,zLevel,16,52,5,61);
 		FFUtils.drawLiquid(core.tanks[1],guiLeft,guiTop+containerOffset+80,zLevel,16,52,23,61);
-		FFUtils.drawLiquid(core.tanks[2],guiLeft,guiTop+containerOffset+80,zLevel,16,26,23,32);
+		FFUtils.drawLiquid(core.tanks[2],guiLeft,guiTop+containerOffset+54,zLevel,16,26,23,32);
+
+		LeafiaGls.color(1,1,1,1); // for some reason without this the entire thing turns red lol
+		tex.bindTexture(texture);
+		if (core.tanks[2].getFluidAmount() > 0) {
+			if (core.warnTicks >= 3)
+				drawTexturedModalRect(guiLeft+18,guiTop+containerOffset,42,120,26,26);
+		}
 
 		if (core.tanks[3].getCapacity() > 0) {
-			LeafiaGls.color(1,1,1,1); // for some reason without this the entire thing turns red lol
-			tex.bindTexture(texture);
 			drawTexturedModalRect(guiLeft - 27,guiTop + containerOffset - 9,69,120,38,127);
 			drawTexturedModalRect(guiLeft - 22,guiTop + containerOffset - 4,14*core.compression,238,14,18);
 			if (isPointInRegion(-22,containerOffset-4,14,18,mouseX,mouseY)) {
 				tip = I18nUtil.leafia.statusDecimals("desc.leafia._repeated.reactors.compression",Math.pow(10,core.compression),0);
 				compressionHover = true;
 			}
-			FFUtils.drawLiquid(core.tanks[3],guiLeft,guiTop + containerOffset + 80,zLevel,16,52,-22,61);
-			FFUtils.drawLiquid(core.tanks[4],guiLeft,guiTop + containerOffset + 80,zLevel,10,16,-5,-3);
+			FFUtils.drawLiquid(core.tanks[3],guiLeft,guiTop + containerOffset + 80,zLevel,16,52,-22,25);
+			FFUtils.drawLiquid(core.tanks[4],guiLeft,guiTop + containerOffset + 80,zLevel,10,16,-5,-39);
 		}
 		LeafiaGls._pop();
 	}
