@@ -8,7 +8,10 @@ import com.hbm.render.tileentity.RenderPylonConnector;
 import com.hbm.tileentity.network.energy.TileEntityPylonBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +54,8 @@ public class TileEntityPylonConnector extends TileEntityPylonBase implements Lea
 	}
 
 	@Override
-	public TileEntitySpecialRenderer _renderer() {
+	@SideOnly(Side.CLIENT)
+	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new RenderPylonConnector();
 	}
 

@@ -9,6 +9,7 @@ import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
@@ -113,7 +114,7 @@ public class ItemUnstable extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if(stack.getItemDamage() != 0)
     		return;
-    	tooltip.add("§4[Unstable]§r");
+    	tooltip.add("§4["+ I18nUtil.resolveKey("trait._hazarditem.unstable") +"]§r");
 		tooltip.add("§cDecay Time: " + (int)timer/20 + "s - Explosion Radius: "+ radius+"m§r");
 		tooltip.add("§cDecay: " + (getTimer(stack) * 100 / timer) + "%§r");
 	}

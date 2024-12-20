@@ -5,6 +5,8 @@ import com.hbm.blocks.fluid.BlockLiquidCorium;
 import com.hbm.items.ModItems;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
@@ -21,7 +23,7 @@ import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
-import com.llib.LeafiaUtil;
+import com.leafia.dev.LeafiaUtil;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
@@ -74,6 +76,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public int coriums = 0;
 	public double masterControl = 1;
 	public final Map<String,Double> controlDemand = new HashMap<>();
+	public int toughness = 16_000;
 
 	PWRComponentBlock getPWRBlock(World world,BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
@@ -210,6 +213,19 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				tanks[4].drain(tanks[4].getCapacity(),true);
 			tankTypes[4] = ModForgeFluids.superhotsteam;
 		}
+	}
+	protected void resizeTank(FluidTank tank,int newCapacity) {
+		int drain = tank.getFluidAmount()-newCapacity;
+		if (drain > 0)
+			tank.drain(drain,true);
+		tank.setCapacity(newCapacity);
+	}
+	public void resizeTanks(int channels,int conductors) {
+		resizeTank(tanks[0],800*channels); // coolant
+		resizeTank(tanks[1],800*channels); // hot coolant
+		resizeTank(tanks[2],toughness); // emergency buffer
+		resizeTank(tanks[3],400*conductors); // water
+		resizeTank(tanks[4],200*conductors); // steam
 	}
 	public PWRData readFromNBT(NBTTagCompound nbt) {
 		nbt = nbt.getCompoundTag("data");
@@ -397,6 +413,10 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			if (tanks[1].getFluidAmount() >= tanks[1].getCapacity())
 				hotType = 2;
 			tanks[hotType].fill(new FluidStack(tankTypes[hotType],drain/hotType),true);
+			//TODO: make it so both hot coolant buffer and emergency buffer are scaled by blast resistances of surrounding blocks
+			//TODO: lower blast res. would result in easier failure but less destructive
+			//TODO: resistance would be determined by average resistance of surrounding blocks with little more distribution to the stronger blocks
+			//TODO: weak blocks surrounded by strong blocks wouldn't explode this way as individual resistances are not taken into account
 			if (tanks[2].getFluidAmount() >= tanks[2].getCapacity())
 				explode(getWorld(),stack);
 		}
@@ -423,6 +443,321 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	}
 	double signedPow(double x,double y) {
 		return Math.pow(Math.abs(x),y)*Math.signum(x);
+	}
+	protected class PWRExplosion {
+		final World world;
+		final Vec3d centerPoint;
+		final int minX; final int minY; final int minZ;
+		final int maxX; final int maxY; final int maxZ;
+		public PWRExplosion(World world,Vec3d centerPoint,int minX,int minY,int minZ,int maxX,int maxY,int maxZ) {
+			this.world = world;
+			this.centerPoint = centerPoint;
+			this.minX = minX;
+			this.minY = minY;
+			this.minZ = minZ;
+			this.maxX = maxX;
+			this.maxY = maxY;
+			this.maxZ = maxZ;
+		}
+		protected void explodeLv1() {
+			for (BlockPos member : members) {
+				Block block = world.getBlockState(member).getBlock();
+				if (block instanceof MachinePWRChannel || block instanceof MachinePWRConductor) {
+					world.setBlockToAir(member);
+					for (EnumFacing face : EnumFacing.values()) {
+						BlockPos offs = member.offset(face);
+						if (world.isValid(offs) && world.getBlockState(offs).getBlock() instanceof PWRComponentBlock) {
+							if (world.rand.nextInt(5) == 0)
+								world.setBlockToAir(offs);
+						}
+					}
+				}
+			}
+			world.createExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,8.0F,true);
+		}
+		protected void explodeLv2() {
+			for (BlockPos member : members) {
+				if (world.getBlockState(member).getBlock() instanceof PWRComponentBlock)
+					world.setBlockToAir(member);
+			}
+			world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
+		}
+		protected void explodeLv3() {
+			double reactorSize = (maxX-minX+1+2+4+maxY-minY+1+2+4+maxZ-minZ+1+2+4)/3d;
+			for (EntityPlayer plr : world.playerEntities) {
+				if (plr.getHeldItem(EnumHand.OFF_HAND).getItem() == ModItems.wand_d) {
+					plr.sendMessage(new TextComponentString("PWR Exploded"));
+					plr.sendMessage(new TextComponentString("  Size: " + reactorSize));
+					plr.sendMessage(new TextComponentString("  x: " + minX + " : " + maxX));
+					plr.sendMessage(new TextComponentString("  y: " + minY + " : " + maxY));
+					plr.sendMessage(new TextComponentString("  z: " + minZ + " : " + maxZ));
+				}
+			}
+			// mmm this is gonna be crispy computer
+			growMembers(growMembers(growMembers(growMembers(members))));
+
+			// HashSet is one giant dick. It randomly doesn't detect its OWN element by contains(). You just wasted my precious time a LOT
+			// Don't believe me? Try replacing all "motherfucker" occurrences to original "members" (which is a Set) and boom IT BREAKS SOMEHOW
+			List<BlockPos> motherfucker = new ArrayList<>();
+			motherfucker.addAll(members);
+			world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
+			List<BlockPos> placeWrecks = new ArrayList<>();
+			List<BlockPos> vaporized = new ArrayList<>();
+			List<BlockPos> remains = new ArrayList<>();
+			List<BlockPos> allDebris = new ArrayList<>();
+			Vec3d pressure = new Vec3d(0,0,0);
+			for (BlockPos member : motherfucker) {
+				Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+				if (!world.getBlockState(member).getMaterial().isSolid()) {
+					pressure = pressure.add(ray.scale(2d/motherfucker.size()));
+					continue;
+				}
+				IBlockState state = world.getBlockState(member);
+				Block block = state.getBlock();
+				if (block instanceof BlockFire) continue;
+				if (block instanceof BlockLiquidCorium) continue;
+				if (block instanceof MachinePWRElement) {
+					//world.newExplosion(null,member.getX()+0.5,member.getY()+0.5,member.getZ()+0.5,11,true,true);
+					//world.setBlockState(member,ModBlocks.corium_block.getDefaultState());
+					world.setBlockToAir(member);
+					continue;
+				}
+				//Block fuckyou = Blocks.BLACK_GLAZED_TERRACOTTA;
+
+				boolean destroyed = false;
+				int counter = 0;
+				int threshold = 7+world.rand.nextInt(3);
+				for (double s = 0; s <= 2; s+=0.2) {
+					BlockPos rayHit = new BlockPos(centerPoint.add(ray.scale(Math.pow(s,1.5)+1))/*.add(ray.normalize().scale(1.732/1.5))*/);
+					//member;//new BlockPos(centerPoint.add(ray.scale(s) ));
+					if (!world.isValid(rayHit) || world.isAirBlock(rayHit) || motherfucker.contains(rayHit)) {
+					/*
+					switch (counter+2) {
+						case 0: fuckyou = Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA; break;
+						case 1: fuckyou = Blocks.BLUE_GLAZED_TERRACOTTA; break;
+						case 2: fuckyou = Blocks.GREEN_GLAZED_TERRACOTTA; break;
+						case 3: fuckyou = Blocks.LIME_GLAZED_TERRACOTTA; break;
+						case 4: fuckyou = Blocks.YELLOW_GLAZED_TERRACOTTA; break;
+						case 5: fuckyou = Blocks.ORANGE_GLAZED_TERRACOTTA; break;
+						case 6: fuckyou = Blocks.RED_GLAZED_TERRACOTTA; break;
+					}*/
+						if (++counter >= threshold) {
+							//world.setBlockToAir(member);
+							vaporized.add(member);
+							destroyed = true;
+							pressure = pressure.add(ray.scale(1d/motherfucker.size()));
+							break;
+						}
+					}
+				}
+				//if (motherfucker.contains(member)) { The line that proves the fact HashSet sometimes doesn't detect its own elements
+				// This looks like always "true" if branch, except it is not for HashSet. Bruh.
+				//	fuckyou = Blocks.LIME_GLAZED_TERRACOTTA;
+				//}
+				if (!destroyed) {
+					// myaaaaa
+					if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member)) || block instanceof PWRComponentBlock)
+						remains.add(member);
+					pressure = pressure.subtract(ray.scale(1d/motherfucker.size()));
+				/*
+				if (block instanceof PWRComponentBlock) {
+					world.setBlockState(member,((world.rand.nextInt(3) == 0) ? ModBlocks.pribris_burning : ModBlocks.pribris).getDefaultState());
+				} else if (block.isFullBlock(state) && !block.isPassable(world,member)) {
+					// almost broken
+					if (counter >= threshold-2) {
+						//world.setBlockState(member,ModBlocks.pribris_radiating.getDefaultState()); // Test
+						placeWrecks.add(member);
+					}
+				}*/
+					//world.setBlockState(member,fuckyou.getDefaultState());
+				}
+			}
+			for (BlockPos pos : vaporized) {
+				if (placeWrecks.contains(pos)) continue; // Somehow
+				boolean converted = false;
+				for (EnumFacing face : EnumFacing.values()) {
+					if (remains.contains(pos.offset(face))) {
+						if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos)) || world.getBlockState(pos).getBlock() instanceof PWRComponentBlock) {
+							placeWrecks.add(pos);
+							allDebris.add(pos);
+							converted = true;
+						}
+						break;
+					}
+				}
+				if (!converted) {
+					Block block = world.getBlockState(pos).getBlock();
+					if (!(block instanceof IFluidBlock) && LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
+						if (world.getBlockState(pos).getBlockHardness(world,pos) >= 1) {
+							Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
+							EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
+							debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.x,0.8)/2;
+							debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.y,0.8)/2;
+							debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.z,0.8)/2;
+							world.spawnEntity(debris);
+						}
+					}
+					world.setBlockToAir(pos);
+				}
+			}
+			// TODO: add cam shake
+			for (BlockPos pos : remains) {
+				boolean buried = true;
+				for (EnumFacing face : EnumFacing.values()) {
+					if (vaporized.contains(pos.offset(face)) || !LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos.offset(face)))) {
+						buried = false;
+						break;
+					}
+				}
+				if (!buried)
+					allDebris.add(pos);
+			}
+			for (BlockPos member : allDebris) {
+				IBlockState state = world.getBlockState(member);
+				Block block = state.getBlock();
+				SoundType soundType = block.getSoundType();
+				Material material = block.getMaterial(state);
+				Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+
+				if (block instanceof MachinePWRControl) {
+					world.setBlockState(member,ModBlocks.block_electrical_scrap.getDefaultState());
+					//continue;
+				}
+				double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.lengthVector()/(reactorSize/2),0,1),0.45)*8,0,7);
+				int heat = (int)heatBase;
+				int heatRand = world.rand.nextInt(3);
+				if (heatRand == 1)
+					heat = (int)Math.round(heatBase);
+				else if (heatRand == 2)
+					heat = (int)Math.ceil(heatBase);
+				boolean defaultPlacement = true;
+				if (placeWrecks.contains(member)) {
+					defaultPlacement = false;
+					EnumFacing face = EnumFacing.UP;
+					double absX = Math.abs(ray.x);
+					double absY = Math.abs(ray.y);
+					double absZ = Math.abs(ray.z);
+					if ((absX > absY) && (absX > absZ))
+						face = (ray.x > 0) ? EnumFacing.WEST : EnumFacing.EAST;
+					else if ((absY > absX) && (absY > absZ))
+						face = (ray.y > 0) ? EnumFacing.DOWN : EnumFacing.UP;
+					else if ((absZ > absX) && (absZ > absY))
+						face = (ray.z > 0) ? EnumFacing.NORTH : EnumFacing.SOUTH;
+					EnumFacing most = null;
+					int spaces = -1;
+					int reliableSurround = 0;
+					boolean surrounded = false;
+					for (int i = 0; i < 7; i++) {
+						EnumFacing curFace = (i > 0) ? EnumFacing.values()[i-1] : face;
+						if (i > 0 && curFace.equals(face)) continue; // skip if duplicate
+						if (!world.getBlockState(member.offset(curFace,-1)).isFullBlock()) continue;
+						if (placeWrecks.contains(member.offset(curFace,-1))) continue;
+						if (!world.getBlockState(member.offset(curFace)).getBlock().isPassable(world,member.offset(curFace))) continue;
+						if (placeWrecks.contains(member.offset(curFace))) continue;
+						int mySpaces = 0;
+						EnumFacing[] sides = null;
+						switch(curFace.getAxis()) {
+							case X: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.NORTH,EnumFacing.SOUTH}; break;
+							case Y: sides = EnumFacing.HORIZONTALS; break;
+							case Z: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.EAST,EnumFacing.WEST}; break;
+						}
+						if (sides == null) continue;
+						int surround = 0;
+						int reliable = 0;
+						for (EnumFacing side : sides) {
+							if (placeWrecks.contains(member.offset(side)))
+								surround++;
+							else if (world.getBlockState(member.offset(side)).isFullBlock()) {
+								surround++;
+								reliable++;
+							}
+							if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member.offset(curFace).offset(side)))) continue;
+							if (placeWrecks.contains(member.offset(curFace).offset(side))) continue;
+							mySpaces++;
+						}
+						if (mySpaces > spaces) {
+							spaces = mySpaces;
+							most = curFace;
+							surrounded = surround >= 4;
+							reliableSurround = reliable;
+						}
+					}
+					if (most != null) {
+						// TODO: make RUBBLE model
+						// RUBBLE should be used when (most != face)
+						// Actually use it when (!surrounded)
+						// TODO: use SLIGHT if verysurrounded
+						Erosion erosion = PWRMeshedWreck.Erosion.NORMAL;
+						if (reliableSurround >= 2) erosion = Erosion.SLIGHT;
+						else if (!surrounded) erosion = Erosion.RUBBLE;
+						if (material.equals(Material.IRON)) {
+							if (soundType.equals(SoundType.STONE))
+								ModBlocks.PWR.wreck_stone.create(world,member,most,state,erosion,heat);
+							else
+								ModBlocks.PWR.wreck_metal.create(world,member,most,state,erosion,heat);
+						} else
+							defaultPlacement = true;
+					}
+				}
+				if (defaultPlacement) {
+					Block[] sellafieldLevels = new Block[]{
+							ModBlocks.sellafield_slaked,
+							ModBlocks.sellafield_0,
+							ModBlocks.sellafield_1,
+							ModBlocks.sellafield_2,
+							ModBlocks.sellafield_3,
+							ModBlocks.sellafield_4,
+							ModBlocks.sellafield_core
+					};
+					if (heat > 0) {
+						if (block instanceof BlockGrass)
+							world.setBlockState(member,ModBlocks.waste_earth.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockGravel)
+							world.setBlockState(member,ModBlocks.waste_gravel.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockDirt || block == Blocks.FARMLAND)
+							world.setBlockState(member,ModBlocks.waste_dirt.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockSnow)
+							world.setBlockState(member,ModBlocks.waste_snow.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockSnowBlock)
+							world.setBlockState(member,ModBlocks.waste_snow_block.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockMycelium)
+							world.setBlockState(member,ModBlocks.waste_mycelium.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockRedSandstone)
+							world.setBlockState(member,ModBlocks.waste_sandstone_red.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockSandStone)
+							world.setBlockState(member,ModBlocks.waste_sandstone.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockHardenedClay || block instanceof BlockStainedHardenedClay)
+							world.setBlockState(member,ModBlocks.waste_terracotta.getStateFromMeta(Math.min(heat,6)));
+						else if (block instanceof BlockSand) {
+							BlockSand.EnumType meta = state.getValue(BlockSand.VARIANT);
+							world.setBlockState(member,((meta == BlockSand.EnumType.SAND) ? ModBlocks.waste_sand : ModBlocks.waste_sand_red).getStateFromMeta(Math.min(heat,6)));
+						}
+						else {
+							int level = -1;
+							if (block == Blocks.COBBLESTONE || block == Blocks.STONE || block instanceof BlockStone || block == sellafieldLevels[0])
+								level = 0;
+							else {
+								for (int i = 1; i < sellafieldLevels.length; i++) {
+									if (block == sellafieldLevels[i]) {
+										level = i;
+										break;
+									}
+								}
+							}
+							if ((level >= 0) && (heat >= level))
+								world.setBlockState(member,sellafieldLevels[Math.min(heat,6)].getStateFromMeta(world.rand.nextInt(4)));
+							else
+								ModBlocks.PWR.wreck_stone.create(world,member,EnumFacing.UP,state,Erosion.NONE,heat);
+						}
+					}
+				}
+			}
+			NBTTagCompound data = new NBTTagCompound();
+			data.setString("type", "rbmkmush");
+			data.setFloat("scale", 4);
+			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5, 250));
+			world.playSound(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,50.0F,1.0F);
+		}
 	}
 	public void explode(World world,@Nullable ItemStack prevStack) {
 		if (exploded) return;
@@ -462,278 +797,14 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				//world.setBlockToAir(member);
 			}
 		}
-		double reactorSize = (maxX-minX+1+2+4+maxY-minY+1+2+4+maxZ-minZ+1+2+4)/3d;
-		for (EntityPlayer plr : world.playerEntities) {
-			if (plr.getHeldItem(EnumHand.OFF_HAND).getItem() == ModItems.wand_d) {
-				plr.sendMessage(new TextComponentString("PWR Exploded"));
-				plr.sendMessage(new TextComponentString("  Size: " + reactorSize));
-				plr.sendMessage(new TextComponentString("  x: " + minX + " : " + maxX));
-				plr.sendMessage(new TextComponentString("  y: " + minY + " : " + maxY));
-				plr.sendMessage(new TextComponentString("  z: " + minZ + " : " + maxZ));
-			}
-		}
-		// mmm this is gonna be crispy computer
-		growMembers(growMembers(growMembers(growMembers(members))));
 
-		// HashSet is one giant dick. It randomly doesn't detect its OWN element by contains(). You just wasted my precious time a LOT
-		// Don't believe me? Try replacing all "motherfucker" occurrences to original "members" (which is a Set) and boom IT BREAKS SOMEHOW
-		List<BlockPos> motherfucker = new ArrayList<>();
-		motherfucker.addAll(members);
-		world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
-		List<BlockPos> placeWrecks = new ArrayList<>();
-		List<BlockPos> vaporized = new ArrayList<>();
-		List<BlockPos> remains = new ArrayList<>();
-		List<BlockPos> allDebris = new ArrayList<>();
-		Vec3d pressure = new Vec3d(0,0,0);
-		for (BlockPos member : motherfucker) {
-			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
-			if (!world.getBlockState(member).getMaterial().isSolid()) {
-				pressure = pressure.add(ray.scale(2d/motherfucker.size()));
-				continue;
-			}
-			IBlockState state = world.getBlockState(member);
-			Block block = state.getBlock();
-			if (block instanceof BlockFire) continue;
-			if (block instanceof BlockLiquidCorium) continue;
-			if (block instanceof MachinePWRElement) {
-				//world.newExplosion(null,member.getX()+0.5,member.getY()+0.5,member.getZ()+0.5,11,true,true);
-				//world.setBlockState(member,ModBlocks.corium_block.getDefaultState());
-				world.setBlockToAir(member);
-				continue;
-			}
-			//Block fuckyou = Blocks.BLACK_GLAZED_TERRACOTTA;
-
-			boolean destroyed = false;
-			int counter = 0;
-			int threshold = 7+world.rand.nextInt(3);
-			for (double s = 0; s <= 2; s+=0.2) {
-				BlockPos rayHit = new BlockPos(centerPoint.add(ray.scale(Math.pow(s,1.5)+1))/*.add(ray.normalize().scale(1.732/1.5))*/);
-						//member;//new BlockPos(centerPoint.add(ray.scale(s) ));
-				if (!world.isValid(rayHit) || world.isAirBlock(rayHit) || motherfucker.contains(rayHit)) {
-					/*
-					switch (counter+2) {
-						case 0: fuckyou = Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA; break;
-						case 1: fuckyou = Blocks.BLUE_GLAZED_TERRACOTTA; break;
-						case 2: fuckyou = Blocks.GREEN_GLAZED_TERRACOTTA; break;
-						case 3: fuckyou = Blocks.LIME_GLAZED_TERRACOTTA; break;
-						case 4: fuckyou = Blocks.YELLOW_GLAZED_TERRACOTTA; break;
-						case 5: fuckyou = Blocks.ORANGE_GLAZED_TERRACOTTA; break;
-						case 6: fuckyou = Blocks.RED_GLAZED_TERRACOTTA; break;
-					}*/
-					if (++counter >= threshold) {
-						//world.setBlockToAir(member);
-						vaporized.add(member);
-						destroyed = true;
-						pressure = pressure.add(ray.scale(1d/motherfucker.size()));
-						break;
-					}
-				}
-			}
-			//if (motherfucker.contains(member)) { The line that proves the fact HashSet sometimes doesn't detect its own elements
-			// This looks like always "true" if branch, except it is not for HashSet. Bruh.
-			//	fuckyou = Blocks.LIME_GLAZED_TERRACOTTA;
-			//}
-			if (!destroyed) {
-				// myaaaaa
-				if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member)))
-					remains.add(member);
-				pressure = pressure.subtract(ray.scale(1d/motherfucker.size()));
-				/*
-				if (block instanceof PWRComponentBlock) {
-					world.setBlockState(member,((world.rand.nextInt(3) == 0) ? ModBlocks.pribris_burning : ModBlocks.pribris).getDefaultState());
-				} else if (block.isFullBlock(state) && !block.isPassable(world,member)) {
-					// almost broken
-					if (counter >= threshold-2) {
-						//world.setBlockState(member,ModBlocks.pribris_radiating.getDefaultState()); // Test
-						placeWrecks.add(member);
-					}
-				}*/
-				//world.setBlockState(member,fuckyou.getDefaultState());
-			}
-		}
-		for (BlockPos pos : vaporized) {
-			if (placeWrecks.contains(pos)) continue; // Somehow
-			boolean converted = false;
-			for (EnumFacing face : EnumFacing.values()) {
-				if (remains.contains(pos.offset(face))) {
-					if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
-						placeWrecks.add(pos);
-						allDebris.add(pos);
-						converted = true;
-					}
-					break;
-				}
-			}
-			if (!converted) {
-				Block block = world.getBlockState(pos).getBlock();
-				if (!(block instanceof IFluidBlock) && LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
-					Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
-					EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
-					debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.x,0.8)/2;
-					debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.y,0.8)/2;
-					debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.z,0.8)/2;
-					world.spawnEntity(debris);
-				}
-				world.setBlockToAir(pos);
-			}
-		}
-		// TODO: add cam shake
-		for (BlockPos pos : remains) {
-			boolean buried = true;
-			for (EnumFacing face : EnumFacing.values()) {
-				if (vaporized.contains(pos.offset(face)) || !LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos.offset(face)))) {
-					buried = false;
-					break;
-				}
-			}
-			if (!buried)
-				allDebris.add(pos);
-		}
-		for (BlockPos member : allDebris) {
-			IBlockState state = world.getBlockState(member);
-			Block block = state.getBlock();
-			SoundType soundType = block.getSoundType();
-			Material material = block.getMaterial(state);
-			Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
-
-			if (block instanceof MachinePWRControl) {
-				world.setBlockState(member,ModBlocks.block_electrical_scrap.getDefaultState());
-				//continue;
-			}
-			double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.lengthVector()/(reactorSize/2),0,1),0.45)*8,0,7);
-			int heat = (int)heatBase;
-			int heatRand = world.rand.nextInt(3);
-			if (heatRand == 1)
-				heat = (int)Math.round(heatBase);
-			else if (heatRand == 2)
-				heat = (int)Math.ceil(heatBase);
-			boolean defaultPlacement = true;
-			if (placeWrecks.contains(member)) {
-				defaultPlacement = false;
-				EnumFacing face = EnumFacing.UP;
-				double absX = Math.abs(ray.x);
-				double absY = Math.abs(ray.y);
-				double absZ = Math.abs(ray.z);
-				if ((absX > absY) && (absX > absZ))
-					face = (ray.x > 0) ? EnumFacing.WEST : EnumFacing.EAST;
-				else if ((absY > absX) && (absY > absZ))
-					face = (ray.y > 0) ? EnumFacing.DOWN : EnumFacing.UP;
-				else if ((absZ > absX) && (absZ > absY))
-					face = (ray.z > 0) ? EnumFacing.NORTH : EnumFacing.SOUTH;
-				EnumFacing most = null;
-				int spaces = -1;
-				int reliableSurround = 0;
-				boolean surrounded = false;
-				for (int i = 0; i < 7; i++) {
-					EnumFacing curFace = (i > 0) ? EnumFacing.values()[i-1] : face;
-					if (i > 0 && curFace.equals(face)) continue; // skip if duplicate
-					if (!world.getBlockState(member.offset(curFace,-1)).isFullBlock()) continue;
-					if (placeWrecks.contains(member.offset(curFace,-1))) continue;
-					if (!world.getBlockState(member.offset(curFace)).getBlock().isPassable(world,member.offset(curFace))) continue;
-					if (placeWrecks.contains(member.offset(curFace))) continue;
-					int mySpaces = 0;
-					EnumFacing[] sides = null;
-					switch(curFace.getAxis()) {
-						case X: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.NORTH,EnumFacing.SOUTH}; break;
-						case Y: sides = EnumFacing.HORIZONTALS; break;
-						case Z: sides = new EnumFacing[]{EnumFacing.UP,EnumFacing.DOWN,EnumFacing.EAST,EnumFacing.WEST}; break;
-					}
-					if (sides == null) continue;
-					int surround = 0;
-					int reliable = 0;
-					for (EnumFacing side : sides) {
-						if (placeWrecks.contains(member.offset(side)))
-							surround++;
-						else if (world.getBlockState(member.offset(side)).isFullBlock()) {
-							surround++;
-							reliable++;
-						}
-						if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member.offset(curFace).offset(side)))) continue;
-						if (placeWrecks.contains(member.offset(curFace).offset(side))) continue;
-						mySpaces++;
-					}
-					if (mySpaces > spaces) {
-						spaces = mySpaces;
-						most = curFace;
-						surrounded = surround >= 4;
-						reliableSurround = reliable;
-					}
-				}
-				if (most != null) {
-					// TODO: make RUBBLE model
-					// RUBBLE should be used when (most != face)
-					// Actually use it when (!surrounded)
-					// TODO: use SLIGHT if verysurrounded
-					Erosion erosion = PWRMeshedWreck.Erosion.NORMAL;
-					if (reliableSurround >= 2) erosion = Erosion.SLIGHT;
-					else if (!surrounded) erosion = Erosion.RUBBLE;
-					if (material.equals(Material.IRON)) {
-						if (soundType.equals(SoundType.STONE))
-							ModBlocks.PWR.wreck_stone.create(world,member,most,state,erosion,heat);
-						else
-							ModBlocks.PWR.wreck_metal.create(world,member,most,state,erosion,heat);
-					} else
-						defaultPlacement = true;
-				}
-			}
-			if (defaultPlacement) {
-				Block[] sellafieldLevels = new Block[]{
-						ModBlocks.sellafield_slaked,
-						ModBlocks.sellafield_0,
-						ModBlocks.sellafield_1,
-						ModBlocks.sellafield_2,
-						ModBlocks.sellafield_3,
-						ModBlocks.sellafield_4,
-						ModBlocks.sellafield_core
-				};
-				if (heat > 0) {
-					if (block instanceof BlockGrass)
-						world.setBlockState(member,ModBlocks.waste_earth.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockGravel)
-						world.setBlockState(member,ModBlocks.waste_gravel.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockDirt || block == Blocks.FARMLAND)
-						world.setBlockState(member,ModBlocks.waste_dirt.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockSnow)
-						world.setBlockState(member,ModBlocks.waste_snow.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockSnowBlock)
-						world.setBlockState(member,ModBlocks.waste_snow_block.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockMycelium)
-						world.setBlockState(member,ModBlocks.waste_mycelium.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockRedSandstone)
-						world.setBlockState(member,ModBlocks.waste_sandstone_red.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockSandStone)
-						world.setBlockState(member,ModBlocks.waste_sandstone.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockHardenedClay || block instanceof BlockStainedHardenedClay)
-						world.setBlockState(member,ModBlocks.waste_terracotta.getStateFromMeta(Math.min(heat,6)));
-					else if (block instanceof BlockSand) {
-						BlockSand.EnumType meta = state.getValue(BlockSand.VARIANT);
-						world.setBlockState(member,((meta == BlockSand.EnumType.SAND) ? ModBlocks.waste_sand : ModBlocks.waste_sand_red).getStateFromMeta(Math.min(heat,6)));
-					}
-					else {
-						int level = -1;
-						if (block == Blocks.COBBLESTONE || block == Blocks.STONE || block instanceof BlockStone || block == sellafieldLevels[0])
-							level = 0;
-						else {
-							for (int i = 1; i < sellafieldLevels.length; i++) {
-								if (block == sellafieldLevels[i]) {
-									level = i;
-									break;
-								}
-							}
-						}
-						if ((level >= 0) && (heat >= level))
-							world.setBlockState(member,sellafieldLevels[Math.min(heat,6)].getStateFromMeta(world.rand.nextInt(4)));
-						else
-							ModBlocks.PWR.wreck_stone.create(world,member,EnumFacing.UP,state,Erosion.NONE,heat);
-					}
-				}
-			}
-		}
-		NBTTagCompound data = new NBTTagCompound();
-		data.setString("type", "rbmkmush");
-		data.setFloat("scale", 4);
-		PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5, 250));
-		world.playSound(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,50.0F,1.0F);
+		PWRExplosion boom = new PWRExplosion(world,centerPoint,minX,minY,minZ,maxX,maxY,maxZ);
+		if (toughness >= 15_000)
+			boom.explodeLv3();
+		else if (toughness >= 10_000)
+			boom.explodeLv2();
+		else
+			boom.explodeLv1();
 
 		boolean nope = true;
 		if (prevStack != null) {

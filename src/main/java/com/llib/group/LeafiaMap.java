@@ -77,6 +77,9 @@ public class LeafiaMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Clonea
 		else
 			return (K)set.contents[index];
 	}
+	public int indexOf(K key) {
+		return set.indexOf(key);
+	}
 	@Override
 	public boolean containsValue(Object value) {
 		return keyIndexFor(value) >= 0;

@@ -10,5 +10,6 @@ public class ItemBlades extends ItemHazard {
 		this.setMaxStackSize(1);
 		this.setUnlocalizedName(s);
 		this.setMaxDamage(i);
+		this.addSharp(40);
 	}
 }

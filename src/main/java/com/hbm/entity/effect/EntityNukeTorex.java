@@ -39,12 +39,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Tor                            Ex
  */
 public class EntityNukeTorex extends Entity implements IConstantRenderer {
-	@SideOnly(Side.CLIENT)
+	//@SideOnly(Side.CLIENT) Using these on fields are forced crashes on servers??? Fuck off.
 	static final Set<EntityNukeTorex> waitingTorexes = new HashSet<>();
 
 	public static Entity bindMe = null;
 
-	@SideOnly(Side.CLIENT)
+	//@SideOnly(Side.CLIENT)
 	public boolean reachedPlayer = false;
 	public boolean sound = true;
 
@@ -276,14 +276,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 				heat = maxHeat - Math.pow((maxHeat * (this.ticksExisted - subt)) / maxAge,0.6);
 				heatScaled = (maxHeat - Math.pow((maxHeat * this.ticksExisted) / maxAge,0.6))/maxHeat;
 
-				EntityPlayer player = Minecraft.getMinecraft().player;
-				if (player.getHeldItemMainhand().getItem() == ModItems.wand_d) {
-					player.sendMessage(new TextComponentString("spawn: " + doSpawn));
-					player.sendMessage(new TextComponentString("height: " + coreHeight));
-					player.sendMessage(new TextComponentString("width: " + torusWidth));
-					player.sendMessage(new TextComponentString("scale: " + scaleCurrent));
-					player.sendMessage(new TextComponentString("sim: " + simSpeed));
-				}
+				localSendMessage(doSpawn,simSpeed);
 			}
 		}
 		if(/*!world.isRemote && */this.ticksExisted-subt > maxAge) {
@@ -294,6 +287,17 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 				if (this.isDead)
 					waitingTorexes.remove(this);
 			}
+		}
+	}
+	@SideOnly(Side.CLIENT)
+	void localSendMessage(boolean doSpawn,double simSpeed) { // stupid minecraft needs this as separate method
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.getHeldItemMainhand().getItem() == ModItems.wand_d) {
+			player.sendMessage(new TextComponentString("spawn: " + doSpawn));
+			player.sendMessage(new TextComponentString("height: " + coreHeight));
+			player.sendMessage(new TextComponentString("width: " + torusWidth));
+			player.sendMessage(new TextComponentString("scale: " + scaleCurrent));
+			player.sendMessage(new TextComponentString("sim: " + simSpeed));
 		}
 	}
 

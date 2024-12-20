@@ -257,7 +257,7 @@ public class ItemDrop extends Item {
 		if(this == ModItems.detonator_de) {
 			tooltip.add("Explodes when dropped!");
 		}
-		tooltip.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait.drop") + "]");
+		tooltip.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.drop") + "]");
 	}
 
 	@Override

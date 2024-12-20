@@ -2,6 +2,7 @@ package com.leafia.contents.machines.reactors.pwr.blocks.components.channel;
 
 import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.blocks.ModBlocks;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
@@ -21,7 +22,7 @@ public class MachinePWRConductor extends BlockBase implements ITooltipProvider, 
     public MachinePWRConductor() {
         super(Material.IRON,"reactor_conductor");
         this.setUnlocalizedName("pwr_conductor");
-        setSoundType(SoundType.METAL);
+        this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
     }
     @Override
     public boolean shouldRenderOnGUI() {

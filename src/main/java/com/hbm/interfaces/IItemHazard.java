@@ -13,6 +13,11 @@ public interface IItemHazard {
 		this.getModule().addRadiation(radiation);
 		return this;
 	}
+
+	public default IItemHazard addAlpha(float radiation) { this.getModule().radiation.setAlpha(radiation); return this; }
+	public default IItemHazard addBeta(float radiation) { this.getModule().radiation.setBeta(radiation); return this; }
+	public default IItemHazard addGamma(float radiation) { this.getModule().radiation.setGamma(radiation); return this; }
+	public default IItemHazard addNeutrons(float radiation) { this.getModule().radiation.setNeutrons(radiation); return this; }
 	
 	public default IItemHazard addDigamma(float digamma) {
 		this.getModule().addDigamma(digamma);
@@ -56,6 +61,16 @@ public interface IItemHazard {
 	
 	public default IItemHazard addExplosive(float bang) {
 		this.getModule().addExplosive(bang);
+		return this;
+	}
+
+	public default IItemHazard addSharp(float sharpness) {
+		this.getModule().addSharp(sharpness/100);
+		return this;
+	}
+
+	public default IItemHazard addSharpUnscaled(float sharpness) {
+		this.getModule().addSharp(sharpness);
 		return this;
 	}
 

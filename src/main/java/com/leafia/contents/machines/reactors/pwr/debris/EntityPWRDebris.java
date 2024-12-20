@@ -6,6 +6,7 @@ import com.hbm.entity.projectile.EntityDebrisBase;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.main.MainRegistry;
 import com.hbm.saveddata.RadiationSavedData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
@@ -14,24 +15,31 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType.*;
 
 public class EntityPWRDebris extends EntityDebrisBase {
 	public static final DataParameter<String> BLOCK_RSC = EntityDataManager.createKey(EntityPWRDebris.class, DataSerializers.STRING);
 	public static final DataParameter<Integer> BLOCK_META = EntityDataManager.createKey(EntityPWRDebris.class, DataSerializers.VARINT);
+	public static final DataParameter<Integer> FLAMMABILITY = EntityDataManager.createKey(EntityPWRDebris.class,DataSerializers.VARINT);
+	public static final DataParameter<Integer> COMBUSTION = EntityDataManager.createKey(EntityPWRDebris.class,DataSerializers.VARINT);
+	public static final DataParameter<Boolean> EXTINGUISHED = EntityDataManager.createKey(EntityPWRDebris.class,DataSerializers.BOOLEAN);
 
 	public EntityPWRDebris(World world){
 		super(world);
@@ -41,6 +49,10 @@ public class EntityPWRDebris extends EntityDebrisBase {
 		super(world, x, y, z);
 		DebrisType type = DebrisType.BLANK;
 		Block block = state.getBlock();
+		int encouragement = block.getFireSpreadSpeed(world,new BlockPos(x,y,z),EnumFacing.UP);
+		int flammability = block.getFlammability(world,new BlockPos(x,y,z),EnumFacing.UP);
+		if (encouragement > 0)
+			this.getDataManager().set(FLAMMABILITY,(int)Math.max(Math.pow(300-flammability-190,3),600));
 		this.getDataManager().set(BLOCK_RSC,block.getRegistryName().toString());
 		this.getDataManager().set(BLOCK_META,block.getMetaFromState(state));
 		if (block instanceof MachinePWRControl)
@@ -62,17 +74,75 @@ public class EntityPWRDebris extends EntityDebrisBase {
 			type = CONCRETE;
 		this.setType(type);
 	}
-
+	@SideOnly(Side.CLIENT)
+	boolean wasExtinguished = true;
 	@Override
 	public void onUpdate() {
+		int flammability = this.dataManager.get(FLAMMABILITY);
+		int combustion = this.dataManager.get(COMBUSTION);
+		boolean extinguished = this.dataManager.get(EXTINGUISHED);
+		BlockPos pos = getPosition();
 		if (!world.isRemote) {
 			/*
 			if (this.getType() == DebrisType.ELEMENT) {
 				BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
 				RadiationSavedData.incrementRad(world, pos, 20, 150);
 			}*/
-		}
+			if (flammability > 0) {
+				if (combustion < flammability && !extinguished) {
+					if (world.rand.nextInt(10) > 0)
+						this.getDataManager().set(COMBUSTION,combustion+1);
+					if (world.isValid(pos)) {
+						IBlockState state = world.getBlockState(pos);
+						if (state.getMaterial().equals(Material.WATER)) {
+							this.dataManager.set(EXTINGUISHED,true);
+							world.playSound(null,pos,SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE,SoundCategory.BLOCKS,1,1);
+						}
+					}
+				}
+			}
+		} else
+			remoteUpdate(flammability,combustion,extinguished,pos);
 		super.onUpdate();
+	}
+	@SideOnly(Side.CLIENT)
+	public void remoteUpdate(int flammability,int combustion,boolean extinguished,BlockPos pos) { // stupid minecraft needs this as separate method
+		if (extinguished && !wasExtinguished) {
+			for (int i = world.rand.nextInt(3); i < 5; i++) {
+				world.spawnParticle(EnumParticleTypes.CLOUD,posX,posY,posZ,0,0,0);
+				world.spawnParticle(EnumParticleTypes.WATER_BUBBLE,posX,posY,posZ,0,0,0);
+			}
+		}
+		wasExtinguished = extinguished;
+		if (flammability > 0 && !extinguished) {
+			if (world.rand.nextInt(50) == 0) {
+				if (flammability >= 1000000) {
+					if (world.rand.nextInt(5) == 0) {
+						NBTTagCompound data = new NBTTagCompound();
+						data.setString("type","rbmkflame");
+						data.setInteger("maxAge",300);
+						data.setDouble("posX",posX);
+						data.setDouble("posY",posY+1.75);
+						data.setDouble("posZ",posZ+0.5);
+						MainRegistry.proxy.effectNT(data);
+					}
+				} else {
+					for (int i = world.rand.nextInt(2); i < 3; i++)
+						world.spawnParticle(EnumParticleTypes.FLAME,posX,posY,posZ,0,0,0);
+					for (int i = world.rand.nextInt(2); i < 2; i++)
+						world.spawnParticle(EnumParticleTypes.LAVA,posX,posY,posZ,0,0,0);
+				}
+				world.playSound(Minecraft.getMinecraft().player,pos.getX() + 0.5F,pos.getY() + 0.5,pos.getZ() + 0.5,SoundEvents.BLOCK_FIRE_AMBIENT,SoundCategory.BLOCKS,1.0F + rand.nextFloat(),rand.nextFloat() * 0.7F + 0.3F);
+			}
+		}
+	}
+
+	@Override
+	public boolean isBurning() {
+		int flammability = this.dataManager.get(FLAMMABILITY);
+		int combustion = this.dataManager.get(COMBUSTION);
+		boolean extinguished = this.dataManager.get(EXTINGUISHED);
+		return flammability > 0 /*&& flammability < 1000000*/ && combustion < flammability && !extinguished;
 	}
 
 	@Override
@@ -108,6 +178,26 @@ public class EntityPWRDebris extends EntityDebrisBase {
 								this.setDead();
 						}
 					}
+					if (this.isEntityAlive()) {
+						Item item;
+						switch(this.getType()) {
+							case BLANK: case SHRAPNEL:
+								item = ModItems.pwr_shrapnel;
+								break;
+							case CONCRETE: default:
+								item = ModItems.pwr_piece;
+								break;
+						}
+						if (getDataManager().get(BLOCK_RSC).contains("glass"))
+							item = ModItems.pwr_shard;
+						ItemStack out = new ItemStack(item);
+						NBTTagCompound nbt = new NBTTagCompound();
+						nbt.setString("block",getDataManager().get(BLOCK_RSC));
+						nbt.setInteger("meta",getDataManager().get(BLOCK_META));
+						out.setTagCompound(nbt);
+						if(player.inventory.addItemStackToInventory(out))
+							this.setDead();
+					}
 			}
 			player.inventoryContainer.detectAndSendChanges();
 		}
@@ -118,7 +208,7 @@ public class EntityPWRDebris extends EntityDebrisBase {
 	public void setSize() {
 		switch(this.getType()){
 			case BLANK: this.setSize(0.5F, 0.5F); break;
-			case CONCRETE: this.setSize(0.75F, 0.5F); break;
+			case CONCRETE: this.setSize(0.5F, 0.5F); break;
 			case GRAPHITE: this.setSize(0.25F, 0.25F); break;
 			case SHRAPNEL: this.setSize(0.5F, 0.5F); break;
 
@@ -137,18 +227,31 @@ public class EntityPWRDebris extends EntityDebrisBase {
 		super.entityInit();
 		this.getDataManager().register(BLOCK_RSC, "minecraft:tnt");
 		this.getDataManager().register(BLOCK_META, 0);
+		this.getDataManager().register(FLAMMABILITY, 0);
+		this.getDataManager().register(COMBUSTION, 0);
+		this.getDataManager().register(EXTINGUISHED, false);
 	}
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		this.getDataManager().set(BLOCK_RSC, nbt.getString("block_rsc"));
 		this.getDataManager().set(BLOCK_META, nbt.getInteger("block_meta"));
+		if (nbt.hasKey("flammability")) {
+			this.getDataManager().set(FLAMMABILITY, nbt.getInteger("flammability"));
+			this.getDataManager().set(COMBUSTION, nbt.getInteger("combustion"));
+			this.getDataManager().set(EXTINGUISHED, nbt.getBoolean("extinguished"));
+		}
 	}
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setString("block_rsc", this.getDataManager().get(BLOCK_RSC));
 		nbt.setInteger("block_meta", this.getDataManager().get(BLOCK_META));
+		if (this.getDataManager().get(FLAMMABILITY) > 0) {
+			nbt.setInteger("flammability", this.getDataManager().get(FLAMMABILITY));
+			nbt.setInteger("combustion", this.getDataManager().get(COMBUSTION));
+			nbt.setBoolean("extinguished",this.dataManager.get(EXTINGUISHED));
+		}
 	}
 
 	public void setType(DebrisType type){

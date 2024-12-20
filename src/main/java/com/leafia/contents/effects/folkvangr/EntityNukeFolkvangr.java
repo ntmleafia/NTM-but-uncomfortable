@@ -497,6 +497,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
                 });
                 return null;
             }
+            @SideOnly(Side.CLIENT)
             public static void localTick() {
                 EntityPlayer player = Minecraft.getMinecraft().player;
                 if (player != null) {

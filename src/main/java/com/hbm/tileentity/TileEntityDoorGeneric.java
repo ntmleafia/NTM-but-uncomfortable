@@ -58,6 +58,10 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 			return true;
 		else if (doorType == DoorDecl.QE_SLIDING)
 			return true;
+		else if (doorType == DoorDecl.SLIDING_SEAL_DOOR)
+			return true;
+		else if (doorType == DoorDecl.SLIDING_GATE_DOOR)
+			return true;
 		else
 			return false;
 	}

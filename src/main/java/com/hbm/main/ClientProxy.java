@@ -13,7 +13,12 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.RenderPWRVentElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.RenderPWRVentOutlet;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.ItemRenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.debris.RenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
@@ -803,6 +808,8 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorGeneric.class, new RenderDoorGeneric());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRControl.class, new RenderPWRControl());
 		ClientRegistry.bindTileEntitySpecialRenderer(PWRMeshedWreckEntity.class, new RenderPWRMeshedWreck());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentElement.class, new RenderPWRVentElement());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentOutlet.class, new RenderPWRVentOutlet());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());
@@ -2358,6 +2365,11 @@ public class ClientProxy extends ServerProxy {
 		ModItems.ore_bedrock_enriched.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x55595D, 1F));
 
         ModItems.detonator_laser.setTileEntityItemStackRenderer(new ItemRenderLaserDetonator());
+
+		ModItems.pwr_piece.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
+		ModItems.pwr_shrapnel.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
+		ModItems.pwr_shard.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
+
 		for(Entry<Item, ItemRenderBase> entry : ItemRenderLibrary.renderers.entrySet()){
 			entry.getKey().setTileEntityItemStackRenderer(entry.getValue());
 		}

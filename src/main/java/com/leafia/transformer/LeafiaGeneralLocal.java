@@ -71,6 +71,6 @@ public class LeafiaGeneralLocal {
 		splash.add("Is playing fire as a grasstype ethically wrong");
 		splash.add("As one born with fur, I can confirm furry haters are basically racists.");
 		splash.add("Extra information on F3 debug screen! Did you know?");
-		splash.add("This mod sends string characters in 5 bits!");
+		splash.add("This mod sends string characters in just 5 bits!");
 	}
 }

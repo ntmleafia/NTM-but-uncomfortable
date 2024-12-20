@@ -74,7 +74,7 @@ public class TileEntityStorageDrum extends TileEntityMachineBase implements ITic
 					Item item = inventory.getStackInSlot(i).getItem();
 					
 					if(item instanceof IItemHazard && world.getTotalWorldTime() % 20 == 0) {
-						rad += ((IItemHazard)item).getModule().radiation;
+						rad += ((IItemHazard)item).getModule().radiation.total();
 					}
 
 					int[] wasteData = StorageDrumRecipes.getWaste(inventory.getStackInSlot(i));

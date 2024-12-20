@@ -6,6 +6,7 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.dev.LeafiaDebug.Tracker.LeafiaTrackerPacket;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
+import com.leafia.dev.optimization.LeafiaParticlePacket;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.hbm.lib.RefStrings;
@@ -97,6 +98,8 @@ public class PacketDispatcher {
 		wrapper.registerMessage(LeafiaPacket.Handler.class, LeafiaPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(LeafiaCustomPacket.Handler.class, LeafiaCustomPacket.class, i++, Side.SERVER);
 		wrapper.registerMessage(LeafiaCustomPacket.Handler.class, LeafiaCustomPacket.class, i++, Side.CLIENT);
+
+		wrapper.registerMessage(LeafiaParticlePacket.Handler.class, LeafiaParticlePacket.class, i++, Side.CLIENT);
 
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactPacket.Handler.class, IdkWhereThisShitBelongs.TomImpactPacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(IdkWhereThisShitBelongs.TomImpactCollapsePacket.Handler.class, IdkWhereThisShitBelongs.TomImpactCollapsePacket.class, i++, Side.CLIENT);

@@ -2,10 +2,11 @@ package com.leafia.contents.machines.reactors.pwr.blocks.wreckage;
 
 import com.hbm.blocks.BlockBase;
 import com.hbm.hfr.render.loader.HFRWavefrontObject;
+import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
+import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.llib.exceptions.LeafiaDevFlaw;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -18,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -44,6 +46,42 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 		super(m,sound,s);
 		this.setHardness(5);
 	}
+
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops,IBlockAccess world,BlockPos pos,IBlockState state,int fortune) {
+		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
+		TileEntity entity = world.getTileEntity(pos);
+		if (entity instanceof PWRMeshedWreckEntity) {
+			PWRMeshedWreckEntity wreck = (PWRMeshedWreckEntity)entity;
+			String resource = wreck.resourceLocation;
+			Item item;
+			if (resource.contains("glass"))
+				item = ModItems.pwr_shard;
+			else
+				item = getDebrisItem();
+			ItemStack stack = new ItemStack(item);
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setString("block",resource);
+			nbt.setInteger("meta",wreck.meta);
+			//nbt.setBoolean("ntmPyrophoric",wreck.scorch > 4);
+			stack.setTagCompound(nbt);
+			for (int i = rand.nextInt(3); i < 5+fortune; i++)
+				drops.add(stack);
+		}
+	}
+
+	@Override
+	public void onEntityWalk(World world,BlockPos pos,Entity entityIn) {
+		TileEntity entity = world.getTileEntity(pos);
+		if (entity instanceof PWRMeshedWreckEntity) {
+			PWRMeshedWreckEntity wreck = (PWRMeshedWreckEntity) entity;
+			if (wreck.scorch > 4)
+				entityIn.setFire(4);
+		}
+	}
+
+	public abstract Item getDebrisItem();
+
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
@@ -124,7 +162,10 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 
 	abstract public VariationGroup getVariations();
 	public static HFRWavefrontObject meshFromString(String name) {
-		return new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/leafia/pwrwreck/"+name+".obj"));
+		if (MainRegistry.proxy instanceof ClientProxy)
+			return new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/leafia/pwrwreck/"+name+".obj"));
+		else
+			return null;
 	}
 
 

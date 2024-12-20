@@ -13,7 +13,6 @@ import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.leafia.passive.rendering.TopRender.Highlight;
-import com.llib.LeafiaUtil;
 import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
 import com.llib.technical.FifthString;
@@ -73,7 +72,7 @@ public class LeafiaDebug {
 						buf.writeByte(message.length);
 						for (String s : message)
 							buf.writeFifthString(new FifthString(s));
-						buf.writePos(pos);
+						buf.writeVec3i(pos);
 					};
 				}
 				LeafiaPacket._sendToClient(packet,plr);

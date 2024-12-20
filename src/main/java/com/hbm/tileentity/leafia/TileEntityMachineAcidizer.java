@@ -7,6 +7,8 @@ import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityMachineAcidizer extends CrystallizerCopyBase implements LeafiaQuickModel {
 	public TileEntityMachineAcidizer() {
@@ -24,6 +26,7 @@ public class TileEntityMachineAcidizer extends CrystallizerCopyBase implements L
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new RenderAcidizer();
 	}

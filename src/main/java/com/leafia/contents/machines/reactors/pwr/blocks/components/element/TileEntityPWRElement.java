@@ -673,9 +673,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double coolin = 0;
 					PWRData gathered = gatherData();
 					if (gathered != null) {
-						// TODO: make it account exchangers instead of channels
-						// TODO: and make it detect only nearby channels and scale cooling rate depending on the distance instead of tank capacity
-						// TODO: exchangers would act like a relay; it would draw and transfer heats from fuels to nearby channels in a larger radius
+						// TODO: make it detect only nearby channels
+						// TODO: exchangers would increase coolant consumption rate
 						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
 								*(gathered.tanks[0].getCapacity()/1250d);
 					}

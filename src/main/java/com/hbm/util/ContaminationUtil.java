@@ -7,14 +7,13 @@ import com.hbm.capability.HbmLivingCapability;
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.GeneralConfig;
-import com.hbm.entity.mob.EntityNuclearCreeper;
+import com.hbm.config.RadiationConfig;
 import com.hbm.entity.mob.EntityQuackos;
 import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.entity.projectile.EntityExplosiveBeam;
 import com.hbm.entity.projectile.EntityMiniMIRV;
 import com.hbm.entity.projectile.EntityMiniNuke;
 import com.hbm.entity.effect.EntityNukeTorex;
-import com.hbm.entity.effect.EntityBlackHole;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.entity.grenade.EntityGrenadeASchrab;
 import com.hbm.entity.grenade.EntityGrenadeNuclear;
@@ -29,7 +28,6 @@ import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.ArmorRegistry.HazardClass;
-import com.hbm.util.BobMathUtil;
 import com.hbm.potion.HbmPotion;
 import com.hbm.saveddata.RadiationSavedData;
 
@@ -42,9 +40,7 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.passive.EntitySkeletonHorse;
-import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.nbt.NBTTagCompound;
@@ -173,9 +169,9 @@ public class ContaminationUtil {
 		//a *functioning* painful mess, nonetheless
 		player.sendMessage(new TextComponentString("===== ☢ ").appendSibling(new TextComponentTranslation("geiger.title")).appendSibling(new TextComponentString(" ☢ =====")).setStyle(new Style().setColor(TextFormatting.GOLD)));
 		player.sendMessage(new TextComponentTranslation("geiger.chunkRad").appendSibling(new TextComponentString(" " + chunkPrefix + rads + " RAD/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
-		player.sendMessage(new TextComponentTranslation("geiger.envRad").appendSibling(new TextComponentString(" " + envPrefix + env + " RAD/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
-		player.sendMessage(new TextComponentTranslation("geiger.recievedRad").appendSibling(new TextComponentString(" " + recPrefix + rec + " RAD/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
-		player.sendMessage(new TextComponentTranslation("geiger.playerRad").appendSibling(new TextComponentString(" " + radPrefix + eRad + " RAD")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+		player.sendMessage(new TextComponentTranslation("geiger.envRad").appendSibling(new TextComponentString(" " + envPrefix + (RadiationConfig.enableHealthMod ? env/100+" Sv" : env+" RAD")+"/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+		player.sendMessage(new TextComponentTranslation("geiger.recievedRad").appendSibling(new TextComponentString(" " + recPrefix + (RadiationConfig.enableHealthMod ? rec/100+" Sv" : rec+" RAD")+"/s")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+		player.sendMessage(new TextComponentTranslation("geiger.playerRad").appendSibling(new TextComponentString(" " + radPrefix + (RadiationConfig.enableHealthMod ? eRad/100+" Sv" : eRad+" RAD"))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 		player.sendMessage(new TextComponentTranslation("geiger.playerRes").appendSibling(new TextComponentString(" " + resPrefix + String.format("%.6f", res) + "% (" + resKoeff + ")")).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 		player.sendMessage(new TextComponentTranslation("geiger.sealed."+(sealed ? "true" : "false")).setStyle(new Style().setColor(sealed ? TextFormatting.AQUA : TextFormatting.GOLD)));
 	}
@@ -262,11 +258,11 @@ public class ContaminationUtil {
 		double rads = 0;
 		
 		if(item instanceof IItemHazard){
-			rads += ((IItemHazard)item).getModule().radiation;
+			rads += ((IItemHazard)item).getModule().radiation.total();
 		}
 
 		if(item instanceof ItemBlockHazard){
-			rads += ((ItemBlockHazard)item).getModule().radiation;
+			rads += ((ItemBlockHazard)item).getModule().radiation.total();
 		}
 
 		if(stack.hasTagCompound()){
@@ -316,7 +312,7 @@ public class ContaminationUtil {
 			return true;
 		}
 
-		if(stack.getItem() instanceof ItemBlockHazard && ((ItemBlockHazard)stack.getItem()).getModule().radiation > 0){
+		if(stack.getItem() instanceof ItemBlockHazard && ((ItemBlockHazard)stack.getItem()).getModule().radiation.total() > 0){
 			return true;
 		}
 
@@ -703,7 +699,7 @@ public class ContaminationUtil {
 	public static enum HazardType {
 		MONOXIDE,
 		RADIATION,
-		NEUTRON,
+		ACTIVATION,
 		DIGAMMA
 	}
 	
@@ -746,7 +742,7 @@ public class ContaminationUtil {
 			}
 			
 			if(player.capabilities.isCreativeMode && cont != ContaminationType.NONE){
-				if(hazard == HazardType.NEUTRON)
+				if(hazard == HazardType.ACTIVATION)
 					HbmLivingProps.setNeutron(entity, amount);
 				return false;
 			}
@@ -755,14 +751,14 @@ public class ContaminationUtil {
 				return false;
 		}
 		
-		if((hazard == HazardType.RADIATION || hazard == HazardType.NEUTRON) && isRadImmune(entity)){
+		if((hazard == HazardType.RADIATION || hazard == HazardType.ACTIVATION) && isRadImmune(entity)){
 			return false;
 		}
 		
 		switch(hazard) {
 		case MONOXIDE: entity.attackEntityFrom(ModDamageSource.monoxide, amount); break;
 		case RADIATION: HbmLivingProps.incrementRadiation(entity, amount * (cont == ContaminationType.RAD_BYPASS ? 1 : calculateRadiationMod(entity))); break;
-		case NEUTRON: HbmLivingProps.incrementRadiation(entity, amount * (cont == ContaminationType.RAD_BYPASS ? 1 : calculateRadiationMod(entity))); HbmLivingProps.setNeutron(entity, amount); break;
+		case ACTIVATION: HbmLivingProps.incrementRadiation(entity, amount * (cont == ContaminationType.RAD_BYPASS ? 1 : calculateRadiationMod(entity))); HbmLivingProps.setNeutron(entity, amount); break;
 		case DIGAMMA: applyDigammaData(entity, amount); break;
 		}
 		

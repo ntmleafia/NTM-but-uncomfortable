@@ -1,9 +1,11 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.wreckage;
 
+import com.hbm.items.ModItems;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +32,12 @@ public class PWRWreckMetal extends PWRMeshedWreck {
 		super(Material.IRON,SoundType.METAL,"pwrwreck_metal");
 		setCreativeTab(null);
 	}
+
+	@Override
+	public Item getDebrisItem() {
+		return ModItems.pwr_shrapnel;
+	}
+
 	@Override
 	public VariationGroup getVariations() {
 		return variations;

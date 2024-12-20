@@ -282,6 +282,8 @@ public final class HBMSoundHandler {
 	public static SoundEvent pwrRodLoop;
 	public static SoundEvent pwrRodStop;
 
+	public static SoundEvent pointed;
+
 	
 	
 	public static void init() {
@@ -516,6 +518,8 @@ public final class HBMSoundHandler {
 		pwrRodStart = register("external.pwrcontrolstart");
 		pwrRodLoop = register("external.pwrcontrol");
 		pwrRodStop = register("external.pwrcontrolstop");
+
+		pointed = register("item.pointed");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

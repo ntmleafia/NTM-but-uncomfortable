@@ -48,21 +48,10 @@ public class RenderPWRDebris extends Render<EntityPWRDebris> {
 		super(renderManager);
 	}
 
-	@Override
-	public void doRender(EntityPWRDebris entity,double x,double y,double z,float entityYaw,float partialTicks){
-		GL11.glPushMatrix();
-		GL11.glTranslated(x, y + 0.125D, z);
-
-		EntityPWRDebris debris = (EntityPWRDebris)entity;
-
-		GL11.glRotatef(debris.getEntityId() % 360, 0, 1, 0); //rotate based on entity ID to add unique randomness
-		GL11.glRotatef(debris.lastRot + (debris.rot - debris.lastRot) * partialTicks, 1, 1, 1);
-		
-		DebrisType type = debris.getType();
-		Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(entity.getDataManager().get(EntityPWRDebris.BLOCK_RSC)));
-		IBlockState display = block.getStateFromMeta(entity.getDataManager().get(EntityPWRDebris.BLOCK_META));
+	public void drawModel(DebrisType type,String block_rsc,int meta) {
+		Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(block_rsc));
+		IBlockState display = block.getStateFromMeta(meta);
 		IBakedModel baked = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(display);
-
 		switch(type) {
 			case BLANK: drawAll(Meshes.blank,display,baked); break;
 			case CONCRETE: drawAll(Meshes.concrete,display,baked); break;
@@ -73,6 +62,19 @@ public class RenderPWRDebris extends Render<EntityPWRDebris> {
 			case CONTROL_FRAME: draw(Meshes.control_frame,display,baked); break;
 			case CONTROL_ROD: draw(Meshes.control_rod,display,baked); break;
 		}
+	}
+
+	@Override
+	public void doRender(EntityPWRDebris entity,double x,double y,double z,float entityYaw,float partialTicks){
+		GL11.glPushMatrix();
+		GL11.glTranslated(x, y + 0.125D, z);
+
+		EntityPWRDebris debris = (EntityPWRDebris)entity;
+
+		GL11.glRotatef(debris.getEntityId() % 360, 0, 1, 0); //rotate based on entity ID to add unique randomness
+		GL11.glRotatef(debris.lastRot + (debris.rot - debris.lastRot) * partialTicks, 1, 1, 1);
+
+		drawModel(debris.getType(),entity.getDataManager().get(EntityPWRDebris.BLOCK_RSC),entity.getDataManager().get(EntityPWRDebris.BLOCK_META));
 
 		GL11.glPopMatrix();
 	}

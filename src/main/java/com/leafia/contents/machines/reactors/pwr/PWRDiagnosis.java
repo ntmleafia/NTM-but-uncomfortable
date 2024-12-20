@@ -20,6 +20,8 @@ import com.hbm.packet.AuxParticlePacketNT;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
 import com.llib.math.range.RangeInt;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -27,6 +29,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
@@ -73,6 +76,9 @@ public class PWRDiagnosis {
 	public final LeafiaMap<Pair<Integer,Integer>,Pair<Integer,Boolean>> projected = new LeafiaMap<>();
 	RangeInt rangeX = new RangeInt(Integer.MAX_VALUE,Integer.MIN_VALUE);
 	RangeInt rangeZ = new RangeInt(Integer.MAX_VALUE,Integer.MIN_VALUE);
+	float maxHardness = 0;
+	float sumHardness = 0;
+	float divide = 0;
 	void gridFill() {
 		for (Entry<Pair<Integer,Integer>,Pair<Integer,Boolean>> entry : projected.entrySet()) {
 			int fromHeight = entry.getValue().getA();
@@ -156,19 +162,33 @@ public class PWRDiagnosis {
 		if (closure) return;
 		activePos.add(pos);
 		for (EnumFacing facing : EnumFacing.values()) {
-			BlockPos neighbor = pos.add(facing.getFrontOffsetX(),facing.getFrontOffsetY(),facing.getFrontOffsetZ());
-			Block block = world.getBlockState(neighbor).getBlock();
-			if (block instanceof PWRComponentBlock) {
-				addPosition(neighbor);
-			} else if (block instanceof BlockLiquidCorium) {
-				if (!coriums.contains(pos)) {
-					coriums.add(pos);
-					explorePosition(pos);
+			for (int i = 0; i <= 1; i++) {
+				BlockPos neighbor = pos.offset(facing,i+1);
+				IBlockState state = world.getBlockState(neighbor);
+				Block block = state.getBlock();
+				if (i == 0) {
+					if (block instanceof PWRComponentBlock) {
+						addPosition(neighbor);
+					} else if (block instanceof BlockLiquidCorium) {
+						if (!coriums.contains(pos)) {
+							coriums.add(pos);
+							explorePosition(pos);
+						}
+					} else if (block == ModBlocks.block_corium)
+						addPosition(neighbor);
+					else if (block == ModBlocks.block_corium_cobble)
+						addPosition(neighbor);
 				}
-			} else if (block == ModBlocks.block_corium)
-				addPosition(neighbor);
-			else if (block == ModBlocks.block_corium_cobble)
-				addPosition(neighbor);
+				if (!world.isValid(neighbor)) break;
+				if (block instanceof PWRComponentBlock) continue;
+				Material material = state.getMaterial();
+				divide++;
+				if (material.isSolid()) {
+					float strength = block.getExplosionResistance(null);
+					sumHardness += strength;
+					maxHardness = Math.max(strength,maxHardness);
+				}
+			}
 		}
 		activePos.remove(pos);
 		//for (EntityPlayer player : world.playerEntities) {
@@ -308,11 +328,11 @@ public class PWRDiagnosis {
 					core.fuels = fuelPositions;
 				}
 				if (!world.isRemote) {
-					core.tanks[0].setCapacity(800*channels);
-					core.tanks[1].setCapacity(800*channels);
-					core.tanks[3].setCapacity(400*conductors);
-					core.tanks[4].setCapacity(200*conductors);
 					core.coriums = this.coriums.size();
+					float avg = sumHardness/Math.max(divide,1);
+					float hardness = avg*0.8f+maxHardness*0.2f;
+					core.toughness = (int)(Math.pow(hardness,0.25)*4800);
+					core.resizeTanks(channels,conductors);
 					gridFill();
 					LeafiaSet<BlockPos> projection = new LeafiaSet<>();
 					for (Entry<Pair<Integer,Integer>,Pair<Integer,Boolean>> entry : projected.entrySet())

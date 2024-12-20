@@ -111,11 +111,13 @@ public class RenderPWRMeshedWreck extends TileEntitySpecialRenderer<PWRMeshedWre
 		LeafiaGls._pop();
 	}
 	void tryBindQuads(IBakedModel baked,IBlockState display,EnumFacing face) {
-		List<BakedQuad> quads = baked.getQuads(display,face,0);
-		if (quads.size() > 0)
-			bindByIconName(quads.get(0).getSprite().getIconName());
-		else
-			bindByIconName(baked.getParticleTexture().getIconName());
+		try {
+			List<BakedQuad> quads = baked.getQuads(display,face,0);
+			if (quads.size() > 0)
+				bindByIconName(quads.get(0).getSprite().getIconName());
+			else
+				bindByIconName(baked.getParticleTexture().getIconName());
+		} catch (IllegalArgumentException ignored) {} // FUCK YOUU
 	}
 	void bindByIconName(String resource) {
 		// convert format like "hbm:         blocks/brick_concrete    "

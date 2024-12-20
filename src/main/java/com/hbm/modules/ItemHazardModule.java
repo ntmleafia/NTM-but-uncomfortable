@@ -2,12 +2,13 @@ package com.hbm.modules;
 
 import java.util.List;
 
-import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.GeneralConfig;
+import com.hbm.config.RadiationConfig;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
+import com.hbm.potion.HbmPotion;
 import com.hbm.util.ArmorRegistry;
 import com.hbm.util.ArmorRegistry.HazardClass;
 import com.hbm.util.ContaminationUtil;
@@ -15,6 +16,8 @@ import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
 import com.hbm.util.I18nUtil;
 
+import com.leafia.dev.MultiRad;
+import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,8 +39,7 @@ public class ItemHazardModule {
 	 * -it's agnositc and also works with ItemBlocks or whatever implementation I want it to work
 	 * -it makes the system truly centralized and I don't have to add new cases to 5 different classes when adding a new hazard
 	 */
-
-	public float radiation;
+	public MultiRad radiation = new MultiRad();
 	public float digamma;
 	public int fire;
 	public int cryogenic;
@@ -47,6 +49,7 @@ public class ItemHazardModule {
 	public int coal;
 	public boolean hydro;
 	public float explosive;
+	public float sharp;
 	
 	public float tempMod = 1F;
 
@@ -55,11 +58,12 @@ public class ItemHazardModule {
 	}
 	
 	public boolean isRadioactive() {
-		return this.radiation > 0;
+		return this.radiation.isRadioactive();
 	}
-	
+
+	@Deprecated
 	public void addRadiation(float radiation) {
-		this.radiation = radiation;
+		this.radiation.neutrons = radiation;
 	}
 	
 	public void addDigamma(float digamma) {
@@ -93,6 +97,8 @@ public class ItemHazardModule {
 	public void addHydroReactivity() {
 		this.hydro = true;
 	}
+
+	public void addSharp(float sharpness) { this.sharp = sharpness; }
 	
 	public void addExplosive(float bang) {
 		this.explosive = bang;
@@ -105,13 +111,25 @@ public class ItemHazardModule {
 		if(entity instanceof EntityPlayer && !GeneralConfig.enable528)
 			reacher = Library.checkForHeld((EntityPlayer) entity, ModItems.reacher);
 			
-		if(this.radiation * tempMod > 0) {
-			float rad = this.radiation * tempMod * mod / 20F;
+		if(this.radiation.total() * tempMod > 0) {
+			float total = this.radiation.total();
+			float rad = total * tempMod * mod / 20F;
 			
 			if(reacher)
 				rad = (float) Math.min(Math.sqrt(rad), rad); //to prevent radiation from going up when being <1
-			
-			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.CREATIVE, rad);
+
+			float finalRad = rad;
+
+			float health = entity.getHealth()/entity.getMaxHealth();
+
+			this.radiation.forEach((type,value)->{
+				ContaminationUtil.contaminate(
+						entity,
+						type.equals(RadiationType.NEUTRONS) ? HazardType.RADIATION : HazardType.ACTIVATION,
+						ContaminationType.CREATIVE,
+						finalRad*(value/total)*type.modFunction.apply(entity,value) //*(RadiationConfig.enableHealthMod ? type.healthMod : 1)
+				);
+			});
 		}
 
 		if(this.digamma * tempMod > 0)
@@ -232,63 +250,74 @@ public class ItemHazardModule {
 			return I18nUtil.resolveKey("desc.bil");
 		}
 	}
+
+	public static float sharpStackNerf = 0.75f;
 	
 	public void addInformation(ItemStack stack, List<String> list, ITooltipFlag flagIn) {
 		
-		if(this.radiation * tempMod > 0) {
-			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait.radioactive") + "]");
-			float itemRad = radiation * tempMod;
-			list.add(TextFormatting.YELLOW + (Library.roundFloat(getNewValue(itemRad), 3)+ getSuffix(itemRad) + " " + I18nUtil.resolveKey("desc.rads")));
-			
+		if(this.radiation.total() * tempMod > 0) {
+			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.radioactive") + "]");
+			radiation.forEach((type,rad)->{
+				if (rad > 0)
+					list.add(type.color + I18nUtil.resolveKey(type.translationKey) + " " + (Library.roundFloat(getNewValue(rad), 3)+ getSuffix(rad) + " " + I18nUtil.resolveKey("desc.rads")));
+			});
 			if(stack.getCount() > 1) {
-				float stackRad = radiation * tempMod * stack.getCount();
-				list.add(TextFormatting.YELLOW + I18nUtil.resolveKey("desc.stack")+" " + Library.roundFloat(getNewValue(stackRad), 3) + getSuffix(stackRad) + " " + I18nUtil.resolveKey("desc.rads"));
+				float stackRad = radiation.total() * tempMod * stack.getCount();
+				list.add(TextFormatting.GOLD + I18nUtil.resolveKey("desc.stack")+" " + Library.roundFloat(getNewValue(stackRad), 3) + getSuffix(stackRad) + " " + I18nUtil.resolveKey("desc.rads"));
 			}
 		}
 		
 		if(this.fire > 0) {
-			list.add(TextFormatting.GOLD + "[" + I18nUtil.resolveKey("trait.hot") + "]");
+			list.add(TextFormatting.GOLD + "[" + I18nUtil.resolveKey("trait._hazarditem.hot") + "]");
 		}
 
 		if(this.cryogenic > 0) {
-			list.add(TextFormatting.AQUA + "[" + I18nUtil.resolveKey("trait.cryogenic") + "]");
+			list.add(TextFormatting.AQUA + "[" + I18nUtil.resolveKey("trait._hazarditem.cryogenic") + "]");
 		}
 
 		if(this.toxic > 0) {
 			if(this.toxic > 16)
-				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("adjective.extreme") + " " + I18nUtil.resolveKey("trait.toxic") + "]");
+				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.max") + "]");
 			else if(this.toxic > 8)
-				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("adjective.veryhigh") + " " + I18nUtil.resolveKey("trait.toxic") + "]");
+				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.16") + "]");
 			else if(this.toxic > 4)
-				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("adjective.high") + " " + I18nUtil.resolveKey("trait.toxic") + "]");
+				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.8") + "]");
 			else if(this.toxic > 2)
-				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("adjective.medium") + " " + I18nUtil.resolveKey("trait.toxic") + "]");
+				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.4") + "]");
 			else
-				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("adjective.little") + " " + I18nUtil.resolveKey("trait.toxic") + "]");
+				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.2") + "]");
 		}
 		
 		if(this.blinding) {
-			list.add(TextFormatting.DARK_AQUA + "[" + I18nUtil.resolveKey("trait.blinding") + "]");
+			list.add(TextFormatting.DARK_AQUA + "[" + I18nUtil.resolveKey("trait._hazarditem.blinding") + "]");
+		}
+
+		if (this.sharp > 0) {
+			list.add(TextFormatting.DARK_RED + "[" + I18nUtil.resolveKey("trait._hazarditem.sharp") + "]");
+			list.add(TextFormatting.RED + "" + I18nUtil.resolveKey("trait._hazarditem.sharp.add",Math.round(sharp*100)+"%"));
+			if(stack.getCount() > 1) {
+				list.add(TextFormatting.RED + I18nUtil.resolveKey("desc.stack") + " " + Math.round((sharp*stack.getCount()*(1-sharpStackNerf)+sharp*sharpStackNerf)*100)+"%");
+			}
 		}
 		
 		if(this.asbestos > 0 && GeneralConfig.enableAsbestos) {
-			list.add(TextFormatting.WHITE + "[" + I18nUtil.resolveKey("trait.asbestos") + "]");
+			list.add(TextFormatting.WHITE + "[" + I18nUtil.resolveKey("trait._hazarditem.asbestos") + "]");
 		}
 		
 		if(this.coal > 0 && GeneralConfig.enableCoal) {
-			list.add(TextFormatting.DARK_GRAY + "[" + I18nUtil.resolveKey("trait.coal") + "]");
+			list.add(TextFormatting.DARK_GRAY + "[" + I18nUtil.resolveKey("trait._hazarditem.coal") + "]");
 		}
 		
 		if(this.hydro) {
-			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait.hydro") + "]");
+			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.hydro") + "]");
 		}
 		
 		if(this.explosive > 0) {
-			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait.explosive") + "]");
+			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.explosive") + "]");
 		}
 		
 		if(this.digamma * tempMod > 0) {
-			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait.digamma") + "]");
+			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.digamma") + "]");
 			list.add(TextFormatting.DARK_RED + "" + Library.roundFloat(digamma * tempMod * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));
 			if(stack.getCount() > 1) {
 				list.add(TextFormatting.DARK_RED + I18nUtil.resolveKey("desc.stack") + " " + Library.roundFloat(digamma * tempMod * stack.getCount() * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));

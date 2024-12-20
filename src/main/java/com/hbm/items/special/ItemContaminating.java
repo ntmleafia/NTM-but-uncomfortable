@@ -72,8 +72,8 @@ public class ItemContaminating extends ItemHazard {
 	public void addInformation(ItemStack stack, World world, List<String> list, ITooltipFlag flagIn){
 		super.addInformation(stack, world, list, flagIn);
 		if(falloutBallRadius > 1){
-			list.add("§2["+I18nUtil.resolveKey("trait.contaminating")+"§2]");
-			list.add(" §a"+I18nUtil.resolveKey("trait.contaminating.radius", falloutBallRadius));
+			list.add("§2["+I18nUtil.resolveKey("trait._hazarditem.contaminating")+"§2]");
+			list.add(" §a"+I18nUtil.resolveKey("trait._hazarditem.contaminating.radius", falloutBallRadius));
 		}
 	}
 

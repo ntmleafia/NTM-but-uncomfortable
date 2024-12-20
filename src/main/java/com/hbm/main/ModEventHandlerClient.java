@@ -17,7 +17,7 @@ import com.leafia.transformer.LeafiaGls.LeafiaGlStack;
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
-import com.llib.LeafiaUtil;
+import com.leafia.dev.LeafiaUtil;
 import com.leafia.shit.leafiashader.BigBruh;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.leafia.passive.effects.LeafiaShakecam;
@@ -677,6 +677,10 @@ public class ModEventHandlerClient {
 		swapModels(ModItems.ore_bedrock_perfect, reg);
 
 		swapModels(ModItems.detonator_laser, reg);
+
+		swapModels(ModItems.pwr_piece, reg);
+		swapModels(ModItems.pwr_shrapnel, reg);
+		swapModels(ModItems.pwr_shard, reg);
 		
 		for(Entry<Item, ItemRenderBase> entry : ItemRenderLibrary.renderers.entrySet()){
 			swapModels(entry.getKey(), reg);
@@ -2456,13 +2460,17 @@ public class ModEventHandlerClient {
 		/// NEUTRON RADS ///
 		float activationRads = ContaminationUtil.getNeutronRads(stack);
 		if(activationRads > 0) {
-			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait.radioactive") + "]");
+			ItemHazardModule module = new ItemHazardModule();
+			module.addRadiation(activationRads);
+			module.addInformation(stack,list,event.getFlags());
+			/* Why are we still using those
+			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.radioactive") + "]");
 			float stackRad = activationRads / stack.getCount();
 			list.add(TextFormatting.YELLOW + (Library.roundFloat(ItemHazardModule.getNewValue(stackRad), 3) + ItemHazardModule.getSuffix(stackRad) + " RAD/s"));
 			
 			if(stack.getCount() > 1) {
 				list.add(TextFormatting.YELLOW + ("Stack: " + Library.roundFloat(ItemHazardModule.getNewValue(activationRads), 3) + ItemHazardModule.getSuffix(activationRads) + " RAD/s"));
-			}
+			}*/
 		}
 
 		//MKU

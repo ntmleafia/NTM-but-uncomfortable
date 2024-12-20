@@ -6,13 +6,20 @@ import com.llib.math.MathLeafia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LeafiaPassiveLocal {
+	static final List<Runnable> queue = new ArrayList<>();
 	// "LeaviaPassiveLoval" (my typing is awesome)
 	static short t0 = 0;
 	static int packetRecordTimer1s = 1_000;
 	static int packetRecordTimer1m = 60;
 	public static void onTick(World world) {
 		TrackerLocal.localTick(Minecraft.getMinecraft().player);
+		for (Runnable callback : queue)
+			callback.run();
+		queue.clear();
 	}
 	public static void priorTick(World world) {
 		RecordablePacket.previousByteUsage = RecordablePacket.bytesUsage;
@@ -32,5 +39,8 @@ public class LeafiaPassiveLocal {
 				RecordablePacket.bytesUsageMin = 0;
 			}
 		}
+	}
+	public static void queueFunctionPost(Runnable callback) {
+		queue.add(callback);
 	}
 }

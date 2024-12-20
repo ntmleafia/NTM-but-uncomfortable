@@ -5,6 +5,7 @@ import java.util.List;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
 
+import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -156,23 +157,35 @@ public class ItemHazard extends ItemCustomLore implements IItemHazard {
 		 * DEPRECATED CTORS
 		 */
 		@Deprecated()
-		public ItemHazard(float radiation, String s) {
+		public ItemHazard(RadiationType type,float radiation,String s) {
 			this(s);
-			this.module.addRadiation(radiation);
+			this.module.radiation.set(radiation,type);
 		}
 
 		@Deprecated()
-		public ItemHazard(float radiation, boolean fire, String s) {
+		public ItemHazard(RadiationType type,float radiation,boolean fire, String s) {
 			this(s);
-			this.module.addRadiation(radiation);
+			this.module.radiation.set(radiation,type);
 			if(fire) this.module.addFire(5);
 		}
 
 		@Deprecated()
-		public ItemHazard(float radiation, boolean fire, boolean blinding, String s) {
+		public ItemHazard(RadiationType type,float radiation,boolean fire, boolean blinding, String s) {
 			this(s);
-			this.module.addRadiation(radiation);
+			this.module.radiation.set(radiation,type);
 			if(blinding) this.module.addBlinding();
 			if(fire) this.module.addFire(5);
+		}
+		@Deprecated()
+		public ItemHazard(float radiation,String s) {
+			this(RadiationType.ACTIVATION,radiation,s);
+		}
+		@Deprecated()
+		public ItemHazard(float radiation,boolean fire,String s) {
+			this(RadiationType.ACTIVATION,radiation,fire,s);
+		}
+		@Deprecated()
+		public ItemHazard(float radiation,boolean fire, boolean blinding,String s) {
+			this(RadiationType.ACTIVATION,radiation,fire,blinding,s);
 		}
 }

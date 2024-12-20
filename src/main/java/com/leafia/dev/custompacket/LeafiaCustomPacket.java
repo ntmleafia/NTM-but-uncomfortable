@@ -1,6 +1,12 @@
 package com.leafia.dev.custompacket;
 
+import com.hbm.items.tool.ItemWandS;
+import com.hbm.items.tool.ItemWandS.WandStructurePacket;
 import com.hbm.packet.PacketDispatcher;
+import com.leafia.contents.gear.wands.ItemWandSaving;
+import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandProduct;
+import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandRemove;
+import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandSave;
 import com.leafia.dev.LeafiaDebug.Tracker.VisualizerPacket;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
@@ -22,6 +28,10 @@ public class LeafiaCustomPacket extends RecordablePacket {
 	public enum CustomPacketType {
 		NONE,
 		VISUALIZER_TRACE(new VisualizerPacket()),
+		HIGHLIGHT_SAVING_SAVE(new HighlightSavingWandSave()),
+		HIGHLIGHT_SAVING_REMOVE(new HighlightSavingWandRemove()),
+		HIGHLIGHT_SAVING_PRODUCT(new HighlightSavingWandProduct()),
+		WAND_STRUCTURE(new WandStructurePacket()),
 		;
 		final LeafiaCustomPacketEncoder encoder;
 		CustomPacketType() { encoder = null; }
@@ -74,7 +84,7 @@ public class LeafiaCustomPacket extends RecordablePacket {
 						)
 						.appendSibling(new TextComponentString("\n\nPossible reasons are:").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)))
 						.appendSibling(
-								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idk")
+								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idfk")
 						);
 				if (ctx.side.isClient())
 					Minecraft.getMinecraft().player.connection.getNetworkManager().closeChannel(reason);

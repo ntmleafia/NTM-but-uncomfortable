@@ -43,18 +43,12 @@ import java.util.*;
 
 public class IdkWhereThisShitBelongs {
     // I JUST SUCK.
-    @SideOnly(Side.CLIENT)
     static final Random rand = new Random();
-    @SideOnly(Side.CLIENT)
     public static float fovM = 1.0F;
     static int ticks = 0;
-    @SideOnly(Side.CLIENT)
     public static double infernal;
-    @SideOnly(Side.CLIENT)
     public static double quake;
-    @SideOnly(Side.CLIENT)
     public static double darkness;
-    @SideOnly(Side.CLIENT)
     public static boolean evacuated = false;
     public static double getTomImpactLargest(World world,String key,int dimension) {
         AuxSavedData data = AuxSavedData.getData(world);
@@ -149,11 +143,8 @@ public class IdkWhereThisShitBelongs {
             }
         }
     }
-    @SideOnly(Side.CLIENT)
     static float shakeX = 0;
-    @SideOnly(Side.CLIENT)
     static float shakeY = 0;
-    @SideOnly(Side.CLIENT)
     public static int dustDisplayTicks = 0;
     @SideOnly(Side.CLIENT)
     public static void localTick() {

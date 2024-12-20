@@ -9,6 +9,8 @@ import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
@@ -442,7 +444,6 @@ public class MainRegistry {
 	public static ToolMaterial matHS = EnumHelper.addToolMaterial("CRUCIBLE", 3, 10000, 50.0F, 100.0F, 200);
 	public static ToolMaterial matHF = EnumHelper.addToolMaterial("CRUCIBLE", 3, 10000, 50.0F, 100.0F, 200);
 
-	@SideOnly(Side.CLIENT)
 	public static final List<LeafiaQuickModel> rendererWaiting = new ArrayList<>();
 
 	Random rand = new Random();
@@ -516,8 +517,10 @@ public class MainRegistry {
 		HazardRegistry.registerItems();
 		PotionRecipes.registerPotionRecipes();
 
-		rendererWaiting.add(new TileEntityPylonConnector());
-		rendererWaiting.add(new TileEntityMachineAcidizer());
+		if (proxy instanceof ClientProxy) {
+			rendererWaiting.add(new TileEntityPylonConnector());
+			rendererWaiting.add(new TileEntityMachineAcidizer());
+		}
 
 		proxy.registerRenderInfo();
 		//HbmWorld.mainRegistry();
@@ -703,6 +706,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityFFFluidSuccMk2.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_succ_mk2"));
 		GameRegistry.registerTileEntity(TileEntityFFFluidSuccMk2Solid.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_succ_mk2_solid"));
 		GameRegistry.registerTileEntity(TileEntityMachineCrystallizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_acidomatic"));
+		GameRegistry.registerTileEntity(TileEntityMachineAcidizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_acidizer"));
 		GameRegistry.registerTileEntity(TileEntitySoyuzStruct.class, new ResourceLocation(RefStrings.MODID, "tileentity_soyuz_struct"));
 		GameRegistry.registerTileEntity(TileEntityITERStruct.class, new ResourceLocation(RefStrings.MODID, "tileentity_iter_struct"));
 		GameRegistry.registerTileEntity(TileEntityMachineMiningLaser.class, new ResourceLocation(RefStrings.MODID, "tileentity_mining_laser"));
@@ -979,6 +983,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
 		GameRegistry.registerTileEntity(TileEntityPWRPort.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_port"));
 		GameRegistry.registerTileEntity(TileEntityPWRTerminal.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
+		GameRegistry.registerTileEntity(TileEntityPWRVentElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
+		GameRegistry.registerTileEntity(TileEntityPWRVentOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
 
 		GameRegistry.registerTileEntity(PWRMeshedWreckEntity.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwrwreck_base"));
 

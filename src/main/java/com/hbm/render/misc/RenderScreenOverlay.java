@@ -85,11 +85,11 @@ public class RenderScreenOverlay {
         }
 		
 		if(radiation > 1000) {
-			Minecraft.getMinecraft().fontRenderer.drawString(">1000 RAD/s", posX, posY - 8, 0xFF0000);
-		} else if(radiation >= 1) {
-			Minecraft.getMinecraft().fontRenderer.drawString(((int)Math.round(radiation)) + " RAD/s", posX, posY - 8, 0xFFFF00);
+			Minecraft.getMinecraft().fontRenderer.drawString(RadiationConfig.enableHealthMod ? ">10 Sv/s" : ">1000 RAD/s", posX, posY - 8, 0xFF0000);
+		} else if(radiation >= (RadiationConfig.enableHealthMod ? 0.01 : 1)) {
+			Minecraft.getMinecraft().fontRenderer.drawString((Math.round(radiation))/(RadiationConfig.enableHealthMod ? 100f : 1) + (RadiationConfig.enableHealthMod ? " Sv" : " RAD") +"/s", posX, posY - 8, 0xFFFF00);
 		} else if(radiation > 0) {
-			Minecraft.getMinecraft().fontRenderer.drawString("<1 RAD/s", posX, posY - 8, 0x00FF00);
+			Minecraft.getMinecraft().fontRenderer.drawString(RadiationConfig.enableHealthMod ? "<0.01 Sv/s" : "<1 RAD/s", posX, posY - 8, 0x00FF00);
 		}
 
         GlStateManager.enableDepth();

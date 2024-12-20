@@ -32,6 +32,7 @@ import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.util.EnchantmentUtil;
 
+import com.leafia.contents.machines.reactors.pwr.debris.CraftingPWRDebris;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -72,6 +73,7 @@ public class CraftingManager {
 		hack.getRegistry().register(new SmallReactorFuelCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "reactor_fuel_crafting_handler")));
 		hack.getRegistry().register(new RBMKFuelCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "rbmk_fuel_crafting_handler")));
 		hack.getRegistry().register(new MKUCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "mku_crafting_handler")));
+		hack.getRegistry().register(new CraftingPWRDebris().setRegistryName(new ResourceLocation(RefStrings.MODID, "pwr_debris_crafting_handler")));
 	}
 
 	public static void addCrafting(){

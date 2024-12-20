@@ -1,6 +1,7 @@
 package com.leafia;
 
 import com.hbm.entity.effect.EntityNukeTorex;
+import com.hbm.items.ModItems;
 import com.hbm.items.tool.ItemWandD;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
@@ -200,11 +201,19 @@ public class CommandLeaf extends CommandBase {
 							}
 						}
 						break;
+					case "wand":
+						args = shiftArgs(args,1);
+						if (args.length-1 <= 0) {
+							list.add("save");
+							list.add("remove");
+						}
+						break;
 				}
 			} else {
 				list.add("eases");
 				list.add("shake");
 				list.add("torex");
+				list.add("wand");
 				list.add("AAvisualizer");
 			}
 			if(list.size() > 1 && !nosort)
@@ -230,6 +239,40 @@ public class CommandLeaf extends CommandBase {
 			Style header = new Style().setColor(TextFormatting.LIGHT_PURPLE);
 			darkRow = false;
 			switch(args[0]) {
+				case "wand": {
+					args = shiftArgs(args,1);
+					if (args.length < 1)
+						throw new WrongUsageException("/hbmleaf wand save|remove", new Object[0]);
+					switch(args[0]) {
+						case "save":
+							args = shiftArgs(args,1);
+							if (args.length < 1)
+								throw new WrongUsageException("/hbmleaf wand save <name>", new Object[0]);
+							int status = ModItems.wand_leaf.trySave(getCommandSenderAsPlayer(sender),args[0]);
+							switch(status) {
+								case 0:
+									notifyCommandListener(sender, this, "Saving structure! This might lag af", new Object[0]);
+									break;
+								case 1:
+									throw new CommandException("You must have Saving Wand in either mainhand or offhand to use this command",new Object[0]);
+								case 2:
+									throw new CommandException("You must have area selected with your Saving Wand",new Object[0]);
+								case 3:
+									throw new CommandException("Server error",new Object[0]);
+								default:
+									throw new CommandException("Unknown error!! myaw",new Object[0]);
+							}
+							break;
+						case "remove":
+							if (ModItems.wand_leaf.tryRemove(getCommandSenderAsPlayer(sender)))
+								notifyCommandListener(sender, this, "Successfully removed selection area", new Object[0]);
+							else
+								throw new CommandException("You must have Saving Wand in either mainhand or offhand to use this command",new Object[0]);
+							break;
+						default:
+							throw new WrongUsageException("/hbmleaf wand save|remove", new Object[0]);
+					}
+				} break;
 				case "visualizer": {
 					args = shiftArgs(args,1);
 					if (args.length < 1)

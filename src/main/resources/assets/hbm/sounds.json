@@ -289,5 +289,6 @@
     "block.rbmk_az5_cover": {"subtitle": "subtitles.block.rbmk_az5_cover", "category": "block", "sounds": [{"name": "hbm:block/rbmk_az5_cover", "stream": false}]},
     "block.chungusLever": {"subtitle": "subtitles.block.chungusLever", "category": "block", "sounds": [{"name": "hbm:block/chungusLever", "stream": false}]},
 	"item.upgradePlug": {"subtitle": "subtitles.item.upgradePlug", "category": "player", "sounds": [{"name": "hbm:tool/upgradePlug", "stream": false}]},
-	"item.battery": {"category": "player", "sounds": [{"name": "hbm:tool/battery", "stream": false}]}
+	"item.battery": {"category": "player", "sounds": [{"name": "hbm:tool/battery", "stream": false}]},
+  "item.pointed": {"subtitle": "subtitles.item.pointed", "category": "neutral", "sounds": ["hbm:entity/slicer3","hbm:weapon/hit_metal0"]}
 }

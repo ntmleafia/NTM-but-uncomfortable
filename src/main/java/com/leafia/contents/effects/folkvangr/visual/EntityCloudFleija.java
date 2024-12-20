@@ -129,8 +129,8 @@ public class EntityCloudFleija extends Entity {
 		return 1.0F;
 	}
 	int lastMillis = -1;
-	@SideOnly(Side.CLIENT)
 	public int remoteTicks = 0;
+	@SideOnly(Side.CLIENT)
 	void spawnParticle(double radius) {
 		double speed = EntityNukeFolkvangr.getPreferredSpeedMultiplier((short)Math.floor(radius/16));
 		float yaw = rand.nextFloat() * 360;
@@ -152,49 +152,52 @@ public class EntityCloudFleija extends Entity {
 			}
 		}
 	}
-	@SideOnly(Side.CLIENT)
 	int didInitialEffects = 0;
 	int finishTimer = 0;
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		if (world.isRemote) {
-			isAntischrab = this.dataManager.get(ANTISCHRAB);
-			tickrate = this.dataManager.get(TICKRATE);
-			remoteTicks+=tickrate;
-			float getSc = this.dataManager.get(SCALE);
-			if (getSc > this.scale)
-				remoteTicks = 0;
-			this.scale = getSc;
-			if (world.rand.nextInt(16) == 0)
-				spawnParticle(this.scale*0.75);
-			if (isAntischrab && (didInitialEffects < 5)) {
-				didInitialEffects++;
-				int angRand = rand.nextInt(360);
-				for (int i = 0; i < 360; i+=5) {
+	@SideOnly(Side.CLIENT)
+	public void remoteUpdate() { // stupid minecraft needs this as separate method
+		isAntischrab = this.dataManager.get(ANTISCHRAB);
+		tickrate = this.dataManager.get(TICKRATE);
+		remoteTicks+=tickrate;
+		float getSc = this.dataManager.get(SCALE);
+		if (getSc > this.scale)
+			remoteTicks = 0;
+		this.scale = getSc;
+		if (world.rand.nextInt(16) == 0)
+			spawnParticle(this.scale*0.75);
+		if (isAntischrab && (didInitialEffects < 5)) {
+			didInitialEffects++;
+			int angRand = rand.nextInt(360);
+			for (int i = 0; i < 360; i+=5) {
+				Minecraft.getMinecraft().effectRenderer.addEffect(
+						new ParticleFleijaAntischrabA(
+								world,
+								posX,posY,posZ,
+								i+angRand
+						)
+				);
+			}
+		}
+		if (isAntischrab && (ticksExisted == 5)) {
+			int addRand = rand.nextInt(360);
+			for (int i = addRand; i < 360+addRand; i+=10) {
+				for (float i2 = 1; i2 <= 6; i2+=0.5) {
 					Minecraft.getMinecraft().effectRenderer.addEffect(
-							new ParticleFleijaAntischrabA(
+							new ParticleFleijaAntischrabB(
 									world,
 									posX,posY,posZ,
-									i+angRand
+									(float) Math.cos(i / 180d * Math.PI) * i2 * 1.414f,(float) Math.sin(i / 180d * Math.PI) * i2 * 1.414f
 							)
 					);
 				}
 			}
-			if (isAntischrab && (ticksExisted == 5)) {
-				int addRand = rand.nextInt(360);
-				for (int i = addRand; i < 360+addRand; i+=10) {
-					for (float i2 = 1; i2 <= 6; i2+=0.5) {
-						Minecraft.getMinecraft().effectRenderer.addEffect(
-								new ParticleFleijaAntischrabB(
-										world,
-										posX,posY,posZ,
-										(float) Math.cos(i / 180d * Math.PI) * i2 * 1.414f,(float) Math.sin(i / 180d * Math.PI) * i2 * 1.414f
-								)
-						);
-					}
-				}
-			}
+		}
+	}
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (world.isRemote) {
+			remoteUpdate();
 		} else {
 			if (!CompatibilityConfig.isWarDim(world)) {
 				this.setDead();

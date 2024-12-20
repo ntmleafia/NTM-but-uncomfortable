@@ -13,12 +13,12 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
 public class LeafiaBuf extends BitByteBuf {
 	public static class Config {
@@ -174,6 +174,9 @@ public class LeafiaBuf extends BitByteBuf {
 	public BlockPos readPos() {
 		return new BlockPos(readInt(),readInt(),readInt());
 	}
+	public Vec3i readVec3i() {
+		return new Vec3i(readInt(),readInt(),readInt());
+	}
 	public long readUnsignedInt() {
 		return (long)extract(32)&0xFFFFFFFFL;
 	}
@@ -230,10 +233,10 @@ public class LeafiaBuf extends BitByteBuf {
 		insert(value,32);
 		return this;
 	}
-	public LeafiaBuf writePos(BlockPos pos) {
-		writeInt(pos.getX());
-		writeInt(pos.getY());
-		writeInt(pos.getZ());
+	public LeafiaBuf writeVec3i(Vec3i vec) {
+		writeInt(vec.getX());
+		writeInt(vec.getY());
+		writeInt(vec.getZ());
 		return this;
 	}
 	public LeafiaBuf writeLong(long value) {

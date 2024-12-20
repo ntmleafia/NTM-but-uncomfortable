@@ -61,51 +61,57 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 	}
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote) {
-			int distance = 128; // vanilla raytrace (which it used to use) has force max range of 200 and even less depending on angle
-			if (player.isSneaking()) {
-				if (player.getHeldItemMainhand().isEmpty() != player.getHeldItemOffhand().isEmpty())
-					distance = 512;
-			}
-			EnumHandSide side = player.getPrimaryHand();
-			if (hand == EnumHand.OFF_HAND)
-				side = side.opposite();
-			Vec3d startPos = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
-			Vec3d vecLook = player.getLook(1);
-			// thanks https://www.geogebra.org/m/psMTGDgc
-			Vec3d vecRight = Vec3d.fromPitchYaw(0,player.rotationYawHead).crossProduct(new Vec3d(0,1,0));
-			Vec3d vecUp = vecLook.crossProduct(vecRight.scale(-1));
-			Vec3d rayStart = startPos.add(vecLook.scale(0.5)).add(vecRight.scale((distance < 200) ? (side == EnumHandSide.RIGHT) ? 0.1 : -0.1 : 0)).add(vecUp.scale(-0.16));
-			RayTraceResult ray = Library.leafiaRayTraceBlocks(
-					world,
-					rayStart,
-					startPos.add(vecLook.scale(distance)),
-					false,false,true
-			); //Library.rayTrace(player, distance, 1);
-			if (ray != null) {
-				BlockPos pos = ray.getBlockPos();
-				Vec3 vec = Vec3.createVectorHelper(pos.getX() + 0.5 - rayStart.x,pos.getY() + 0.5 - rayStart.y,pos.getZ() + 0.5 - rayStart.z);
-				PacketDispatcher.wrapper.sendToAllAround(
-						new LaserDetonatorPacket().set(new Vec3(rayStart),vec),
-						new NetworkRegistry.TargetPoint(player.dimension,pos.getX(),pos.getY(),pos.getZ(),distance * 2)
-				);
-				if (world.getBlockState(pos).getBlock() instanceof IBomb) {
+		boolean rem = world.isRemote;
+		int distance = 128; // vanilla raytrace (which it used to use) has force max range of 200 and even less depending on angle
+		if (player.isSneaking()) {
+			if (player.getHeldItemMainhand().isEmpty() != player.getHeldItemOffhand().isEmpty())
+				distance = 512;
+		}
+		EnumHandSide side = player.getPrimaryHand();
+		if (hand == EnumHand.OFF_HAND)
+			side = side.opposite();
+		Vec3d startPos = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+		Vec3d vecLook = player.getLook(1);
+		// thanks https://www.geogebra.org/m/psMTGDgc
+		Vec3d vecRight = Vec3d.fromPitchYaw(0,player.rotationYawHead).crossProduct(new Vec3d(0,1,0));
+		Vec3d vecUp = vecLook.crossProduct(vecRight.scale(-1));
+		Vec3d rayStart = startPos.add(vecLook.scale(0.5)).add(vecRight.scale((distance < 200) ? (side == EnumHandSide.RIGHT) ? 0.1 : -0.1 : 0)).add(vecUp.scale(-0.16));
+		RayTraceResult ray = Library.leafiaRayTraceBlocks(
+				world,
+				rayStart,
+				startPos.add(vecLook.scale(distance)),
+				false,false,true
+		); //Library.rayTrace(player, distance, 1);
+		if (ray != null) {
+			BlockPos pos = ray.getBlockPos();
+			Vec3 vec = Vec3.createVectorHelper(pos.getX() + 0.5 - rayStart.x,pos.getY() + 0.5 - rayStart.y,pos.getZ() + 0.5 - rayStart.z);
+			PacketDispatcher.wrapper.sendToAllAround(
+					new LaserDetonatorPacket().set(new Vec3(rayStart),vec),
+					new NetworkRegistry.TargetPoint(player.dimension,pos.getX(),pos.getY(),pos.getZ(),distance * 2)
+			);
+			if (world.getBlockState(pos).getBlock() instanceof IBomb) {
+				if (!rem)
 					((IBomb) world.getBlockState(pos).getBlock()).explode(world,pos);
 
-					if (GeneralConfig.enableExtendedLogging)
-						MainRegistry.logger.log(Level.INFO,"[DET] Tried to detonate block at " + pos.getX() + " / " + pos.getY() + " / " + pos.getZ() + " by " + player.getDisplayName() + "!");
+				if (GeneralConfig.enableExtendedLogging)
+					MainRegistry.logger.log(Level.INFO,"[DET] Tried to detonate block at " + pos.getX() + " / " + pos.getY() + " / " + pos.getZ() + " by " + player.getDisplayName() + "!");
 
+				if (rem)
 					player.sendMessage(new TextComponentString("§2[" + I18nUtil.resolveKey("chat.detonated") + "]" + "§r"));
+				else
 					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.AMBIENT,1.0F,1.0F);
 
-				} else {
-					player.sendMessage(new TextComponentString("§c" + I18nUtil.resolveKey("chat.posbadrror") + "§r"));
-					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.AMBIENT,1.0F,1.0F);
-				}
 			} else {
-				player.sendMessage(new TextComponentString("§c" + I18nUtil.resolveKey("chat.postoofarerror") + "§r"));
-				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.AMBIENT,1.0F,1.0F);
+				if (rem)
+					player.sendMessage(new TextComponentString("§c" + I18nUtil.resolveKey("chat.posbadrror") + "§r"));
+				else
+					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.AMBIENT,1.0F,1.0F);
 			}
+		} else {
+			if (rem)
+				player.sendMessage(new TextComponentString("§c" + I18nUtil.resolveKey("chat.postoofarerror") + "§r"));
+			else
+				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.AMBIENT,1.0F,1.0F);
 		}
 		return super.onItemRightClick(world, player, hand);
 	}

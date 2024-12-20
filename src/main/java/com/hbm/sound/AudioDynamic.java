@@ -58,7 +58,9 @@ public class AudioDynamic extends MovingSound {
 	}
 	
 	public void start() {
-		Minecraft.getMinecraft().getSoundHandler().playSound(this);
+		try {
+			Minecraft.getMinecraft().getSoundHandler().playSound(this);
+		} catch (IllegalArgumentException ignored) {} // seriously fuck you
 	}
 	
 	public void stop() {
