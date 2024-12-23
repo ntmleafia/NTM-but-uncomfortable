@@ -2,6 +2,7 @@ package com.leafia.passive;
 
 import com.hbm.items.ModItems;
 import com.leafia.contents.machines.reactors.pwr.PWRDiagnosis;
+import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.eventbuses.LeafiaServerListener;
 import net.minecraft.world.World;
@@ -14,6 +15,7 @@ public class LeafiaPassiveServer {
 	public static void onTick(World world) {
 		PWRDiagnosis.preventScan.clear();
 		Tracker.postTick(world);
+		PWRMeshedWreck.rmCache.clear();
 	}
 	public static void priorTick(World world) {
 		if (ModItems.wand_leaf.darnit != null)

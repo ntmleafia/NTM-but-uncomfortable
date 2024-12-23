@@ -170,6 +170,17 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 		}
 		return detonateRadius;
 	}
+
+	/**
+	 * Do nuclear fissions
+	 * @param stack The fuel rod stack to cause fission reaction
+	 * @param updateHeat true for fission reaction, false for item tooltip
+	 * @param x Incoming heat
+	 * @param cool Should represent coolant %, range 0~1
+	 * @param desiredTemp Temperature of coolant
+	 * @param coolingRate Temperature of hot coolant
+	 * @return Tooltip message
+	 */
 	public String HeatFunction(@Nullable ItemStack stack, boolean updateHeat, double x, double cool, double desiredTemp, double coolingRate) {
 		NBTTagCompound data = null;
 		String flux = TextFormatting.RED+"0°C"+TextFormatting.YELLOW;
@@ -325,7 +336,12 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				data.setDouble("depletion", curDepletion);
 			}
 			double newTemp = heat+heatMg;
-			double cooled = (Math.pow(Math.max(newTemp-desiredTemp,0)+1,Math.pow(coolingRate,0.5)/100)-1)*cool;
+			double cooled = (
+					Math.pow(
+							Math.max(newTemp-desiredTemp,0)+1,
+							Math.pow(coolingRate,0.5)/100
+					)-1
+			)*cool;
 			double newCooledTemp = Math.max(newTemp-cooled,20);
 			data.setDouble("cooled",cooled);
 			data.setDouble(

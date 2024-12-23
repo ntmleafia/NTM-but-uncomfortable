@@ -81,7 +81,7 @@ public class EntityCloudFleija extends Entity {
 				new CommandLeaf.ShakecamPacket(new String[]{
 						"type=smooth","duration=2",
 						"speed=8","ease=expoOut","intensity=12",
-						"range="+dataManager.get(MAXAGE)
+						"range="+dataManager.get(MAXAGE)*2
 				}).setPos(getPosition()),
 				new NetworkRegistry.TargetPoint(dimension,posX,posY,posZ,dataManager.get(MAXAGE)*1.25)
 		);

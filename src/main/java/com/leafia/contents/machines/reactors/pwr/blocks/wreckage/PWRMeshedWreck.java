@@ -7,6 +7,7 @@ import com.hbm.lib.RefStrings;
 import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.llib.exceptions.LeafiaDevFlaw;
+import com.llib.group.LeafiaMap;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -18,6 +19,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -47,10 +49,11 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 		this.setHardness(5);
 	}
 
+	public static final Map<BlockPos,TileEntity> rmCache = new LeafiaMap<>();
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops,IBlockAccess world,BlockPos pos,IBlockState state,int fortune) {
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-		TileEntity entity = world.getTileEntity(pos);
+		TileEntity entity = rmCache.getOrDefault(pos,world.getTileEntity(pos));
 		if (entity instanceof PWRMeshedWreckEntity) {
 			PWRMeshedWreckEntity wreck = (PWRMeshedWreckEntity)entity;
 			String resource = wreck.resourceLocation;
@@ -68,6 +71,15 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 			for (int i = rand.nextInt(3); i < 5+fortune; i++)
 				drops.add(stack);
 		}
+	}
+	@Override
+	public void onBlockHarvested(World world,BlockPos pos,IBlockState state,EntityPlayer player) {
+		if (!world.isRemote) {
+			TileEntity entity = world.getTileEntity(pos);
+			if (entity != null)
+				rmCache.put(pos,entity);
+		}
+		super.onBlockHarvested(world,pos,state,player);
 	}
 
 	@Override

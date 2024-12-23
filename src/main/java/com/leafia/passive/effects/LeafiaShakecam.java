@@ -41,8 +41,9 @@ public class LeafiaShakecam {
                 dist = Math.sqrt(instance.position.distanceSqToCenter(pos.x,pos.y,pos.z));
             }
             double n = instance.render(dist);
-            sumBlur += (Math.pow(n/16,2)*0.005);
-            sumBloom += (Math.pow(n/16/5,6)*0.25);
+
+            sumBlur += (Math.pow(n/instance.blurDulling,instance.blurExponent)*0.005);
+            sumBloom += (Math.pow(n/instance.bloomDulling/5,instance.bloomExponent)*0.25);
         }
         blurSum = (float)sumBlur;
         bloomSum = (float)sumBloom;
@@ -59,6 +60,10 @@ public class LeafiaShakecam {
         public float curve = 2;
         public float speed = 4;
         public float duration = 5;
+        public double blurExponent = 2;
+        public double blurDulling = 16;
+        public double bloomExponent = 6;
+        public double bloomDulling = 16;
         public LeafiaEase.Ease ease = LeafiaEase.Ease.EXPO;
         public LeafiaEase.Direction direction = LeafiaEase.Direction.O;
         public LeafiaEase easeInstance;

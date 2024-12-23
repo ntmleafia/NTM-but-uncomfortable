@@ -111,7 +111,7 @@ public class CommandLeaf extends CommandBase {
 								for (LeafiaShakecam.Preset preset : LeafiaShakecam.Preset.values()) {
 									list.add("preset="+preset.name());
 								}
-								for (String s : new String[]{"range","intensity","curve","speed","duration"}) {
+								for (String s : new String[]{"range","intensity","curve","speed","duration","blurDulling","blurExponent","bloomDulling","bloomExponent"}) {
 									list.add(s+"=");
 									list.add(s+"+");
 									list.add(s+"-");
@@ -652,14 +652,14 @@ public class CommandLeaf extends CommandBase {
 			return this;
 		}
 		public static class Handler implements IMessageHandler<ShakecamPacket, IMessage> {
-			static final String[] numerics = new String[]{"range","intensity","curve","speed","duration"};
+			static final String[] numerics = new String[]{"range","intensity","curve","speed","duration","blurDulling","blurExponent","bloomDulling","bloomExponent"};
 			@Override
 			@SideOnly(Side.CLIENT)
 			public IMessage onMessage(ShakecamPacket message, MessageContext ctx) {
 				Minecraft.getMinecraft().addScheduledTask(() -> {
-					Float[] params = {null,null,null,null,null};
-					float[] adds = {0,0,0,0,0};
-					float[] multipliers = {1,1,1,1,1};
+					Float[] params = {null,null,null,null,null,null,null,null,null};
+					float[] adds = {0,0,0,0,0,0,0,0,0};
+					float[] multipliers = {1,1,1,1,1,1,1,1,1};
 					LeafiaEase.Ease ease = null;
 					LeafiaEase.Direction direction = null;
 					String type = "simple";
@@ -736,16 +736,35 @@ public class CommandLeaf extends CommandBase {
 					if (preset != null)
 						shake.loadPreset(preset);
 					shake.configure(params[0],params[1],params[2],params[3]);
+					if (params[5] != null)
+						shake.blurDulling = params[5];
+					if (params[6] != null)
+						shake.blurExponent = params[6];
+					if (params[7] != null)
+						shake.bloomDulling = params[7];
+					if (params[8] != null)
+						shake.bloomExponent = params[8];
+
 					shake.range *= multipliers[0];
 					shake.intensity *= multipliers[1];
 					shake.curve *= multipliers[2];
 					shake.speed *= multipliers[3];
 					shake.duration *= multipliers[4];
+					shake.blurDulling *= multipliers[5];
+					shake.blurExponent *= multipliers[6];
+					shake.bloomDulling *= multipliers[7];
+					shake.bloomExponent *= multipliers[8];
+
 					shake.range += adds[0];
 					shake.intensity += adds[1];
 					shake.curve += adds[2];
 					shake.speed += adds[3];
 					shake.duration += adds[4];
+					shake.blurDulling += adds[5];
+					shake.blurExponent += adds[6];
+					shake.bloomDulling += adds[7];
+					shake.bloomExponent += adds[8];
+
 					if (removeEase)
 						shake.easeInstance = null;
 					LeafiaShakecam._addShake(message.pos,shake);

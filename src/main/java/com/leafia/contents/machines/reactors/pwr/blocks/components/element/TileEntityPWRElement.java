@@ -661,6 +661,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		return null;*/
 		return this.getLinkedCore();
 	}
+	public float channelScale = 0;
+	public float exchangerScale = 1;
 	@Override
 	public void update() {
 		if (this.data != null)
@@ -676,7 +678,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 						// TODO: make it detect only nearby channels
 						// TODO: exchangers would increase coolant consumption rate
 						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
-								*(gathered.tanks[0].getCapacity()/1250d);
+								;//*(gathered.tanks[0].getCapacity()/1250d);
 					}
 					ItemLeafiaRod rod = (ItemLeafiaRod)(stack.getItem());
 					double heatDetection = 0;
@@ -690,8 +692,10 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double rad = Math.pow(heatDetection,0.65)/2;
 					RadiationSavedData.incrementRad(world,pos,(float)rad/8,(float)rad);
 					double heat = (stack.getTagCompound() != null) ? stack.getTagCompound().getDouble("heat") : 20;
-					double coolingCap = MathHelper.clamp(heat,20,400+Math.pow(Math.max(heat-400,0),0.5));
-					rod.HeatFunction(stack,true,heatDetection,coolin,coolingCap,coolingCap);
+					//double coolingCap = MathHelper.clamp(heat,20,400+Math.pow(Math.max(heat-400,0),0.5));
+
+
+					rod.HeatFunction(stack,true,heatDetection,channelScale*coolin,400,400*exchangerScale);
 					rod.decay(stack,inventory,0);
 					NBTTagCompound data = stack.getTagCompound();
 					double cooled = 0;

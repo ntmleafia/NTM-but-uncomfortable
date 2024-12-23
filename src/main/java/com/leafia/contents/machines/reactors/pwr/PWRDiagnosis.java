@@ -6,9 +6,11 @@ import com.hbm.blocks.fluid.CoriumFluid;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRExchanger;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.items.ModItems;
@@ -30,6 +32,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
@@ -282,7 +285,9 @@ public class PWRDiagnosis {
 		}
 
 		// iterate over all members (blocks)
-		int channels = 0;
+		Set<BlockPos> channels = new LeafiaSet<>();
+		Set<BlockPos> exchangers = new LeafiaSet<>();
+		Set<TileEntityPWRElement> teElements = new LeafiaSet<>();
 		int conductors = 0;
 		for (BlockPos pos : members) {
 			boolean shouldHaveCoreCoords = false;
@@ -291,11 +296,13 @@ public class PWRDiagnosis {
 			if (pwr != null) {
 				shouldHaveCoreCoords = pwr.tileEntityShouldCreate(world,pos);
 				if (pwr instanceof MachinePWRChannel)
-					channels++;
+					channels.add(pos);
 				if (pwr instanceof MachinePWRConductor) {
-					channels++;
+					channels.add(pos);
 					conductors++;
 				}
+				if (pwr instanceof MachinePWRExchanger)
+					exchangers.add(pos);
 			}
 			PWRComponentEntity entity = getPWREntity(pos);
 			if (entity != null) { // give coordinates of the core for each valid blocks
@@ -309,6 +316,8 @@ public class PWRDiagnosis {
 							}
 						}
 					}
+					if (entity instanceof TileEntityPWRElement)
+						teElements.add((TileEntityPWRElement)entity);
 				}
 				entity.setCoreLink(shouldHaveCoreCoords ? outCorePos : null);
 			}
@@ -332,7 +341,7 @@ public class PWRDiagnosis {
 					float avg = sumHardness/Math.max(divide,1);
 					float hardness = avg*0.8f+maxHardness*0.2f;
 					core.toughness = (int)(Math.pow(hardness,0.25)*4800);
-					core.resizeTanks(channels,conductors);
+					core.resizeTanks(channels.size(),conductors);
 					gridFill();
 					LeafiaSet<BlockPos> projection = new LeafiaSet<>();
 					for (Entry<Pair<Integer,Integer>,Pair<Integer,Boolean>> entry : projected.entrySet())
@@ -347,6 +356,28 @@ public class PWRDiagnosis {
 				PWRComponentEntity entity = getPWREntity(pos);
 				if (entity != null)
 					entity.onDiagnosis();
+			}
+		}
+		float channelRange = 3f;
+		float channelExponent = 0.2f;
+		for (TileEntityPWRElement elm : teElements) {
+			if (!elm.isInvalid()) {
+				BlockPos pos = elm.getPos();
+				int height = elm.getHeight();
+				float ch = 0;
+				float ex = 0;
+				for (BlockPos channel : channels) {
+					BlockPos local = channel.subtract(pos);
+					local = local.up(MathHelper.clamp(-local.getY(),0,height));
+					ch += Math.pow(Math.max(1-local.getDistance(0,0,0)/channelRange,0),channelExponent);
+				}
+				for (BlockPos exchanger : exchangers) {
+					BlockPos local = exchanger.subtract(pos);
+					local = local.up(MathHelper.clamp(-local.getY(),0,height));
+					ex += Math.pow(Math.max(1-local.getDistance(0,0,0)/channelRange,0),channelExponent);
+				}
+				elm.channelScale = (float)(Math.pow(ch,0.35)/Math.pow(height,0.35));
+				elm.exchangerScale = 1+ex/height; //(float)Math.pow(height,0.5);
 			}
 		}
 		LeafiaDebug.debugLog(world,"PWR Diagnosis complete, core position "+((outCorePos == null) ? "removed" : "set"));

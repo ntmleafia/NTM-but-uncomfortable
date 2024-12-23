@@ -74,7 +74,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public int compression = 0;
 	//public double heat = 20;
 	public int coriums = 0;
-	public double masterControl = 1;
+	public double masterControl = 0.25;
 	public final Map<String,Double> controlDemand = new HashMap<>();
 	public int toughness = 16_000;
 
@@ -221,11 +221,11 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		tank.setCapacity(newCapacity);
 	}
 	public void resizeTanks(int channels,int conductors) {
-		resizeTank(tanks[0],800*channels); // coolant
-		resizeTank(tanks[1],800*channels); // hot coolant
+		resizeTank(tanks[0],3200*channels); // coolant
+		resizeTank(tanks[1],3200*channels); // hot coolant
 		resizeTank(tanks[2],toughness); // emergency buffer
-		resizeTank(tanks[3],400*conductors); // water
-		resizeTank(tanks[4],200*conductors); // steam
+		resizeTank(tanks[3],25600*conductors); // water
+		resizeTank(tanks[4],12800*conductors); // steam
 	}
 	public PWRData readFromNBT(NBTTagCompound nbt) {
 		nbt = nbt.getCompoundTag("data");
@@ -341,6 +341,22 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	@SideOnly(Side.CLIENT)
 	public int warnTicks = 0;
 	public double stressTimer = 300;
+
+	protected boolean inputValidForTank(int tank, int slot){
+		if(!resourceContainer.getStackInSlot(slot).isEmpty() && tanks[tank] != null){
+			if(resourceContainer.getStackInSlot(slot).getItem() == ModItems.fluid_barrel_infinite || isValidFluidForTank(tank, FluidUtil.getFluidContained(resourceContainer.getStackInSlot(slot)))){
+				return true;
+			}
+		}
+		return false;
+	}
+	private boolean isValidFluidForTank(int tank, FluidStack stack) {
+		if(stack == null || tanks[tank] == null)
+			return false;
+		return stack.getFluid() == tankTypes[tank];
+	}
+
+	double spendAccum = 0;
 	@Override
 	public void update() {
 		if (!valid) {
@@ -363,12 +379,15 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			//for (EntityPlayer player : getWorld().playerEntities) {
 			//    player.sendMessage(new TextComponentString("" + getWorld().isRemote + "! Im at " + companion.getPos()));
 			//}
+			if(this.inputValidForTank(3,1))
+				FFUtils.fillFromFluidContainer(resourceContainer, tanks[3], 1, 2);
+
 			if (coriums > 0)
 				spendCoolant(Math.pow(coriums*2727,0.414),null);
 			if (tanks[2].getFluidAmount() > 0) {
-				int decr = tanks[2].getCapacity()*64/Math.round(timeToDrainMalcoolant*20);
-				if (tanks[1].getCapacity()-tanks[1].getFluidAmount() >= decr) {
-					tanks[1].fill(new FluidStack(tankTypes[1],decr),true);
+				int decr = Math.min(tanks[2].getFluidAmount(),tanks[2].getCapacity()/Math.round(timeToDrainMalcoolant*20));
+				if (tanks[1].getCapacity()-tanks[1].getFluidAmount() >= decr*4) {
+					tanks[1].fill(new FluidStack(tankTypes[1],decr*4),true);
 					tanks[2].drain(decr,true);
 				}
 				// directly copied from zirnox port lmfao
@@ -380,15 +399,16 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				}
 			}
 			if (tanks[3].getCapacity() > 0) {
-				int consumption = (int)Math.round(Math.pow(tanks[3].getFluidAmount()/(double)Math.max(tanks[1].getCapacity(),1),0.4)*200);
-				FluidStack stack = tanks[1].drain(consumption/3,false);
+				int conversionRate = 8;
+				int consumption = (int)Math.round(Math.pow(tanks[1].getFluidAmount()/(double)Math.max(tanks[3].getCapacity(),1)*4,0.4)*80*conversionRate);
+				FluidStack stack = tanks[1].drain(consumption/conversionRate,false);
 				FluidStack stack2 = tanks[3].drain(consumption,false);
 				if (stack != null && stack2 != null) {
-					int boilAmt = Math.min(stack.amount*3,stack2.amount);
+					int boilAmt = Math.min(stack.amount*conversionRate,stack2.amount);
 					int division = (int)Math.pow(10,compression);
-					int filled = tanks[4].fill(new FluidStack(tankTypes[4],boilAmt/division),true);
-					tanks[1].drain(Math.min(boilAmt,filled*division)/3,true);
-					tanks[3].drain(Math.min(boilAmt,filled*division),true);
+					int filled = tanks[4].fill(new FluidStack(tankTypes[4],boilAmt*10/division),true);
+					tanks[1].drain(Math.min(boilAmt,filled*division/10)/conversionRate,true);
+					tanks[3].drain(Math.min(boilAmt,filled*division/10),true);
 				}
 			}
 			LeafiaPacket._start(companion).__write(30,new int[]{
@@ -406,21 +426,52 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			}).__sendToAffectedClients();
 		}
 	}
+	int boilingAccum = 0;
 	public void spendCoolant(double cooled,@Nullable ItemStack stack) {
-		int hotType = 1;
-		int drain = (int)Math.ceil(cooled/12500*tanks[0].getCapacity());
+		double drainD = cooled*8;
+		int drain = (int)Math.floor(drainD);///12500*tanks[0].getCapacity());
+
+		double accum = drainD-drain;
+		spendAccum += accum;
+		int add = (int)Math.floor(spendAccum);
+		spendAccum -= add;
+		drain += add;
+
+		FluidStack fs = tanks[0].drain(drain,true);
+		if (fs != null) {
+			int drained = fs.amount;
+			for (int tank = 1; drained > 0; tank++) {
+				switch(tank) {
+					case 1: {
+						int filled = tanks[tank].fill(new FluidStack(tankTypes[tank],drained),true);
+						drained -= filled;
+					} break;
+					case 2: {
+						int fill = drained/4;
+						boilingAccum += Math.floorMod(drained,4);
+						int fillAdd = boilingAccum/4;
+						boilingAccum -= fillAdd;
+						int filled = tanks[tank].fill(new FluidStack(tankTypes[tank],fill+fillAdd),true);
+						drained -= filled*4;
+					} break;
+					default:
+						if (tanks[2].getFluidAmount() >= tanks[2].getCapacity())
+							explode(getWorld(),stack); // Blowout
+						return;
+				}
+			}
+		}
+		/*
 		if (tanks[0].getFluidAmount() > 0) {
-			if (tanks[1].getFluidAmount() >= tanks[1].getCapacity())
+			if ()
 				hotType = 2;
-			tanks[hotType].fill(new FluidStack(tankTypes[hotType],drain/hotType),true);
+			tanks[hotType].fill(new FluidStack(tankTypes[hotType],drain),true);
 			//TODO: make it so both hot coolant buffer and emergency buffer are scaled by blast resistances of surrounding blocks
 			//TODO: lower blast res. would result in easier failure but less destructive
 			//TODO: resistance would be determined by average resistance of surrounding blocks with little more distribution to the stronger blocks
 			//TODO: weak blocks surrounded by strong blocks wouldn't explode this way as individual resistances are not taken into account
 			if (tanks[2].getFluidAmount() >= tanks[2].getCapacity())
-				explode(getWorld(),stack);
-		}
-		tanks[0].drain(drain,true);
+		}*/
 	}
 
 	boolean exploded = false;
@@ -591,9 +642,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 						if (world.getBlockState(pos).getBlockHardness(world,pos) >= 1) {
 							Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
 							EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
-							debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.x,0.8)/2;
-							debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.y,0.8)/2;
-							debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()) + signedPow(pressure.z,0.8)/2;
+							debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.x,0.8)/2;
+							debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.y,0.8)/2;
+							debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.z,0.8)/2;
 							world.spawnEntity(debris);
 						}
 					}
