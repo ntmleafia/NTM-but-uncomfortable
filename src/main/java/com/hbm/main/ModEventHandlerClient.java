@@ -2461,7 +2461,7 @@ public class ModEventHandlerClient {
 		float activationRads = ContaminationUtil.getNeutronRads(stack);
 		if(activationRads > 0) {
 			ItemHazardModule module = new ItemHazardModule();
-			module.addRadiation(activationRads);
+			module.radiation.setActivation(activationRads);
 			module.addInformation(stack,list,event.getFlags());
 			/* Why are we still using those
 			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.radioactive") + "]");

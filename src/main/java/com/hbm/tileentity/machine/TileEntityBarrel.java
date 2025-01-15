@@ -14,6 +14,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -123,12 +124,12 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	}
 	
 	public void fillFluidInit(FluidTank tank) {
-		fillFluid(pos.east(), tank);
-		fillFluid(pos.west(), tank);
+		//fillFluid(pos.east(), tank);
+		//fillFluid(pos.west(), tank);
 		fillFluid(pos.up(), tank);
 		fillFluid(pos.down(), tank);
-		fillFluid(pos.south(), tank);
-		fillFluid(pos.north(), tank);
+		//fillFluid(pos.south(), tank);
+		//fillFluid(pos.north(), tank);
 	}
 
 	public void fillFluid(BlockPos pos1, FluidTank tank) {
@@ -186,14 +187,15 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY){
-			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+			//if (facing.getAxis().equals(Axis.Y)) // mwhahahaha!!!!!
+				return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
 		}
 		return super.getCapability(capability, facing);
 	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+		return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && (facing == null || facing.getAxis().equals(Axis.Y))) || super.hasCapability(capability, facing);
 	}
 
 	@Override

@@ -68,9 +68,9 @@ public class LeafiaGeneralLocal {
 		splash.add("Imagine being scared by splash texts!");
 		splash.add("Redditors aren't people!");
 		splash.add("Can someone tell me what corrosive fumes the people on Reddit are huffing so I can avoid those more effectively?");
-		splash.add("Is playing fire as a grasstype ethically wrong");
-		splash.add("As one born with fur, I can confirm furry haters are basically racists.");
 		splash.add("Extra information on F3 debug screen! Did you know?");
 		splash.add("This mod sends string characters in just 5 bits!");
+		splash.add("zally jumpscare");
+		splash.add("Computer core community nowadays is really toxic, wtf happened while I was gone?/");
 	}
 }

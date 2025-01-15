@@ -1,5 +1,6 @@
 package com.hbm.packet;
 
+import com.hbm.items.tool.ItemGeigerCounter.GeigerLeakPacket;
 import com.leafia.CommandLeaf;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
@@ -113,6 +114,7 @@ public class PacketDispatcher {
 		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaRecipePacket.Handler.class, LeafiaRecipeBookServer.LeafiaRecipePacket.class, i++, Side.CLIENT);
 		wrapper.registerMessage(LeafiaRecipeBookServer.LeafiaTransferItemPacket.Handler.class, LeafiaRecipeBookServer.LeafiaTransferItemPacket.class, i++, Side.SERVER);
 		wrapper.registerMessage(LeafiaTrackerPacket.Handler.class, LeafiaTrackerPacket.class, i++, Side.CLIENT);
+		wrapper.registerMessage(GeigerLeakPacket.Handler.class, GeigerLeakPacket.class, i++, Side.CLIENT);
 
 		//Packet to send missile multipart information to TEs
 		wrapper.registerMessage(TEMissileMultipartPacket.Handler.class, TEMissileMultipartPacket.class, i++, Side.CLIENT);

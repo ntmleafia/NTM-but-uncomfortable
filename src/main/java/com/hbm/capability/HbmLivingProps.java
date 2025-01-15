@@ -21,6 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
@@ -160,7 +161,7 @@ public class HbmLivingProps {
 	public static void incrementAsbestos(EntityLivingBase entity, int asbestos){
 		setAsbestos(entity, getAsbestos(entity) + asbestos);
 		if (entity instanceof EntityPlayer) {
-			((EntityPlayer)entity).sendStatusMessage(new TextComponentString("My lungs are burning.").setStyle(new Style().setColor(TextFormatting.RED)),true);
+			((EntityPlayer)entity).sendStatusMessage(new TextComponentTranslation("").setStyle(new Style().setColor(TextFormatting.RED)),true);
 		}
 	}
 

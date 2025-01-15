@@ -57,5 +57,15 @@ public abstract class MachinePWRVentBase extends BlockBase implements PWRCompone
 	@Override
 	public void onBlockPlacedBy(World worldIn,BlockPos pos,IBlockState state,EntityLivingBase placer,ItemStack stack) {
 		worldIn.setBlockState(pos, state.withProperty(FACING,EnumFacing.getDirectionFromEntityLiving(pos,placer)));
+		correctDirection(worldIn,pos);
 	}
+	protected final void rotateTarget(World world,BlockPos pos,EnumFacing newDirection) {
+		if (!world.isValid(pos)) return;
+		IBlockState state = world.getBlockState(pos);
+		if (!(state.getBlock() instanceof MachinePWRVentBase)) return;
+		if (state.getValue(FACING).equals(newDirection)) return;
+		state = state.withProperty(FACING,newDirection);
+		world.setBlockState(pos,state);
+	}
+	public abstract boolean correctDirection(World world,BlockPos pos);
 }

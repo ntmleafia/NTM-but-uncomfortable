@@ -48,6 +48,7 @@ public class HbmPotion extends Potion {
 	public static HbmPotion stability;
 	public static HbmPotion potionsickness;
 	public static HbmPotion skindamage;
+	public static HbmPotion frigid;
 	
 	public HbmPotion(boolean isBad, int color, String name, int x, int y){
 		super(isBad, color);
@@ -99,6 +100,7 @@ public class HbmPotion extends Potion {
 		stability = registerPotion(false, 0xD0D0D0, "potion.hbm_stability", 2, 1);
 		potionsickness = registerPotion(false, 0xFF8080, "potion.hbm_potionsickness", 3, 1);
 		skindamage = registerPotion(true, 0xe11313, "potion.hbm_skindamage", 4, 1);
+		frigid = registerPotion(true, /*0x65d3ff*/0xFFFFFF, "potion.hbm_frigid", 0, 2);
 	}
 
 	public static HbmPotion registerPotion(boolean isBad, int color, String name, int x, int y) {
@@ -107,6 +109,13 @@ public class HbmPotion extends Potion {
 		ForgeRegistries.POTIONS.register(effect);
 		
 		return effect;
+	}
+
+	@Override
+	public String getName() {
+		if (this == frigid)
+			return MobEffects.SLOWNESS.getName();
+		return super.getName();
 	}
 
 	PotionEffect lastEffect = null;

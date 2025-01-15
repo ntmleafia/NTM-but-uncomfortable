@@ -77,14 +77,6 @@ public class EntityCloudFleija extends Entity {
 	public EntityCloudFleija setAntischrab() {
 		this.isAntischrab = true;
 		this.dataManager.set(ANTISCHRAB,true);
-		PacketDispatcher.wrapper.sendToAllAround(
-				new CommandLeaf.ShakecamPacket(new String[]{
-						"type=smooth","duration=2",
-						"speed=8","ease=expoOut","intensity=12",
-						"range="+dataManager.get(MAXAGE)*2
-				}).setPos(getPosition()),
-				new NetworkRegistry.TargetPoint(dimension,posX,posY,posZ,dataManager.get(MAXAGE)*1.25)
-		);
 		return this;
 	}
 	public EntityCloudFleija(World p_i1582_1_, int maxAge) {
@@ -94,13 +86,6 @@ public class EntityCloudFleija extends Entity {
 		this.setMaxAge(maxAge);
 		if (!p_i1582_1_.isRemote) {
 			tryBindAuto();
-			PacketDispatcher.wrapper.sendToAllAround(
-					new CommandLeaf.ShakecamPacket(new String[]{
-							"duration="+maxAge,
-							"range="+maxAge
-					}).setPos(getPosition()),
-					new NetworkRegistry.TargetPoint(dimension,posX,posY,posZ,maxAge*1.25)
-			);
 		}
 	}
 

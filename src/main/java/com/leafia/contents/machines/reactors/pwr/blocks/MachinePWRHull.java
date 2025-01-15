@@ -18,8 +18,6 @@ public class MachinePWRHull extends BlockRadResistant implements ITooltipProvide
     }
     @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
-        MachineTooltip.addMultiblock(tooltip);
-        MachineTooltip.addModular(tooltip);
         addStandardInfo(tooltip);
         super.addInformation(stack,player,tooltip,advanced);
     }

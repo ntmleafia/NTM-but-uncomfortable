@@ -194,7 +194,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		};
 		this.companion = entity;
 		this.corePos = companion.getPos();
-		valid = !entity.isInvalid();
+		//valid = !entity.isInvalid(); im fucking stupid
 	}
 	public World getWorld() {
 		return this.companion.getWorld();

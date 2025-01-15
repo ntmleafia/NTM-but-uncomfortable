@@ -12,8 +12,10 @@ import com.hbm.items.special.ItemCustomLore;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
+import com.hbm.modules.ItemHazardModule;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.items.LeafiaDynamicHazard;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -34,7 +36,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
+public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, LeafiaDynamicHazard {
+	@Override
+	public ItemHazardModule getHazards(ItemHazardModule hazards,ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt != null) {
+			if (nbt.hasKey("incoming")) {
+				double rad = Math.pow(nbt.getDouble("incoming"),0.65)/2;
+				hazards.radiation.neutrons += rad;
+			}
+		}
+		return hazards;
+	}
+
 	public enum ItemType {
 		VOID,
 		BILLET
@@ -324,11 +338,12 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				data.setInteger("spillage",data.getInteger("spillage")+1);
 			}
 			heat = data.getDouble("heat");
+			double heatX = Math.max(heat,20);
 			double heatMg = Math.pow(Math.abs((20+y)-heat)+1,0.25)-1;
-			if (heat > 20+y)
+			if (heatX > 20+y)
 				heatMg = heatMg * -1;
-			else if ((heat >= meltingPoint) && (meltingPoint != 0) && !meltdown)
-				heatMg = heatMg * Math.max(lerp(1,0,(heat-meltingPoint)/(Math.pow(meltingPoint,0.75)+200)),0);
+			else if ((heatX >= meltingPoint) && (meltingPoint != 0) && !meltdown)
+				heatMg = heatMg * Math.max(lerp(1,0,(heatX-meltingPoint)/(Math.pow(meltingPoint,0.75)+200)),0);
 			if (Math.abs(heatMg) < 0.00001)
 				heatMg = 0;
 			if (!meltdown && (heatMg != 0)) {
@@ -342,7 +357,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 							Math.pow(coolingRate,0.5)/100
 					)-1
 			)*cool;
-			double newCooledTemp = Math.max(newTemp-cooled,20);
+			double newCooledTemp = Math.max(newTemp-cooled,-273.15/*20*/);
 			data.setDouble("cooled",cooled);
 			data.setDouble(
 					"heat",
@@ -352,7 +367,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				int timer = data.getInteger("generosityTimer");
 				int initial = timer;
 				if (newCooledTemp >= meltingPoint) { // oh no!
-					if (newCooledTemp - heat >= 0)
+					if (newCooledTemp - heatX >= 0)
 						timer = timer - 1;
 					else
 						timer = Math.min(timer + 20, 90);
@@ -386,7 +401,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				compat = 2;
 			NBTTagCompound data = stack.getTagCompound();
 			if (data != null)
-				return data.getDouble("heat")*compat;
+				return Math.max(data.getDouble("heat"),20)*compat;
 		}
 		return 0;
 	}
@@ -399,7 +414,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				compat = 2;
 			NBTTagCompound data = stack.getTagCompound();
 			if (data != null)
-				return data.getDouble("heat")*compat;
+				return Math.max(data.getDouble("heat"),20)*compat;
 		}
 		return 0;
 	}
@@ -472,10 +487,11 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 			int barLength = 60;
 			String bar = "";
 			boolean dark = false;
+			double barPercent = (heat >= 0) ? percent : 1-heat/-273.15;
 			for (int i = 0; i < barLength; i++) {
-				if ((i >= Math.floor(barLength*percent)) && !dark) {
+				if ((i >= Math.floor(barLength*barPercent)) && !dark) {
 					dark = true;
-					bar = bar + TextFormatting.DARK_GRAY;
+					bar = bar + ((heat >= 0) ? TextFormatting.DARK_GRAY : TextFormatting.WHITE);
 				}
 				bar = bar + "|";
 			}
@@ -484,12 +500,14 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 				status = 1;
 			if (percent > 0.65)
 				status = 2;
+			if (heat < 0)
+				status = -1;
 			if (meltdown)
 				status = 3;
 			switch(status) {
 				case 0:
 					list.add(TextFormatting.LIGHT_PURPLE+"["+bar+TextFormatting.LIGHT_PURPLE+"]");
-					list.add(TextFormatting.LIGHT_PURPLE+"  UNOPTIMAL");
+					list.add(TextFormatting.LIGHT_PURPLE+"  SUBOPTIMAL");
 					break;
 				case 1:
 					list.add(TextFormatting.GREEN+"["+bar+TextFormatting.GREEN+"]");
@@ -503,6 +521,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel {
 					list.add(TextFormatting.DARK_RED+"["+bar+TextFormatting.DARK_RED+"]");
 					meltdownFlash = Math.floorMod(meltdownFlash+1,20);
 					list.add((meltdownFlash >= 11) ? "" : TextFormatting.DARK_RED +"  MELTDOWN");
+					break;
+				case -1:
+					list.add(TextFormatting.DARK_AQUA+"["+TextFormatting.DARK_GRAY+bar+TextFormatting.DARK_AQUA+"]");
+					list.add(TextFormatting.AQUA+"  FRIGID");
 					break;
 			}
 		}

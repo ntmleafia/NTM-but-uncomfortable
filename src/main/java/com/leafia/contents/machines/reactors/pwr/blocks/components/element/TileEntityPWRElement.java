@@ -661,6 +661,25 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		return null;*/
 		return this.getLinkedCore();
 	}
+	public double getHeat() {
+		ItemStack stack = this.inventory.getStackInSlot(0);
+		if (!stack.isEmpty()) {
+			if (stack.getItem() instanceof ItemLeafiaRod) {
+				if (stack.getTagCompound() != null)
+					return stack.getTagCompound().getDouble("heat");
+			}
+		}
+		return 20;
+	}
+	public void setHeat(double heat) {
+		ItemStack stack = this.inventory.getStackInSlot(0);
+		if (!stack.isEmpty()) {
+			if (stack.getItem() instanceof ItemLeafiaRod) {
+				if (stack.getTagCompound() != null)
+					stack.getTagCompound().setDouble("heat",heat);
+			}
+		}
+	}
 	public float channelScale = 0;
 	public float exchangerScale = 1;
 	@Override
@@ -675,8 +694,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					double coolin = 0;
 					PWRData gathered = gatherData();
 					if (gathered != null) {
-						// TODO: make it detect only nearby channels
-						// TODO: exchangers would increase coolant consumption rate
+						// DONE PROBABLY: make it detect only nearby channels
+						// DONE PROBABLY: exchangers would increase coolant consumption rate
 						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
 								;//*(gathered.tanks[0].getCapacity()/1250d);
 					}
@@ -689,13 +708,15 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					}
 					for (HeatRetrival retrival : linearFuelMap)
 						heatDetection += getHeatFromHeatRetrival(retrival,rod)*retrival.getControlMin(world)*height;
-					double rad = Math.pow(heatDetection,0.65)/2;
-					RadiationSavedData.incrementRad(world,pos,(float)rad/8,(float)rad);
 					double heat = (stack.getTagCompound() != null) ? stack.getTagCompound().getDouble("heat") : 20;
 					//double coolingCap = MathHelper.clamp(heat,20,400+Math.pow(Math.max(heat-400,0),0.5));
 
 
 					rod.HeatFunction(stack,true,heatDetection,channelScale*coolin,400,400*exchangerScale);
+					double rad = Math.pow(heatDetection,0.65)/2;
+					RadiationSavedData.incrementRad(world,pos,(float)rad/8,(float)rad);
+					//DONE PROBABLY: add neutron radiations to indicate emitted chunk radiations
+
 					rod.decay(stack,inventory,0);
 					NBTTagCompound data = stack.getTagCompound();
 					double cooled = 0;

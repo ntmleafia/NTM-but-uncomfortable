@@ -10,6 +10,8 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentDuct;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentInlet;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
@@ -487,9 +489,9 @@ public class MainRegistry {
 
 		MinecraftForge.EVENT_BUS.register(new LeafiaServerListener());
 		{
-			ModBiomesGenerator gen = new ModBiomesGenerator();
-			MinecraftForge.EVENT_BUS.register(gen);
-			MinecraftForge.TERRAIN_GEN_BUS.register(gen);
+			//ModBiomesGenerator gen = new ModBiomesGenerator();
+			//MinecraftForge.EVENT_BUS.register(gen);
+			//MinecraftForge.TERRAIN_GEN_BUS.register(gen);
 		}
 		
 		if(event.getSide() == Side.CLIENT) {
@@ -985,6 +987,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityPWRTerminal.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
 		GameRegistry.registerTileEntity(TileEntityPWRVentElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
 		GameRegistry.registerTileEntity(TileEntityPWRVentOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
+		GameRegistry.registerTileEntity(TileEntityPWRVentInlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_inlet"));
+		GameRegistry.registerTileEntity(TileEntityPWRVentDuct.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
 
 		GameRegistry.registerTileEntity(PWRMeshedWreckEntity.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwrwreck_base"));
 

@@ -1257,9 +1257,9 @@ public class ModItems {
 	public static final Item billet_les = new ItemHazard(ALPHA,ItemHazard.les * ItemHazard.billet, "billet_les").addBlinding().toItem().setCreativeTab(MainRegistry.partsTab);
 	public static final Item billet_schrabidium_fuel = new ItemHazard(ALPHA,ItemHazard.saf * ItemHazard.billet, false, true, "billet_schrabidium_fuel").setCreativeTab(MainRegistry.partsTab);
 	public static final Item billet_hes = new ItemHazard(ALPHA,ItemHazard.hes * ItemHazard.billet, "billet_hes").addBlinding().toItem().setCreativeTab(MainRegistry.partsTab);
-	public static final Item billet_po210be = new ItemHazard(ALPHA,ItemHazard.pobe, "billet_po210be").setCreativeTab(MainRegistry.partsTab);
-	public static final Item billet_ra226be = new ItemHazard(ALPHA,ItemHazard.rabe, "billet_ra226be").setCreativeTab(MainRegistry.partsTab);
-	public static final Item billet_pu238be = new ItemHazard(ALPHA,ItemHazard.pube, "billet_pu238be").setCreativeTab(MainRegistry.partsTab);
+	public static final Item billet_po210be = new ItemHazard(NEUTRONS,ItemHazard.pobe, "billet_po210be").setCreativeTab(MainRegistry.partsTab);
+	public static final Item billet_ra226be = new ItemHazard(NEUTRONS,ItemHazard.rabe, "billet_ra226be").setCreativeTab(MainRegistry.partsTab);
+	public static final Item billet_pu238be = new ItemHazard(NEUTRONS,ItemHazard.pube, "billet_pu238be").setCreativeTab(MainRegistry.partsTab);
 	public static final Item billet_australium = new ItemCustomLore("billet_australium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item billet_australium_lesser = new ItemCustomLore("billet_australium_lesser").setCreativeTab(MainRegistry.partsTab);
 	public static final Item billet_australium_greater = new ItemCustomLore("billet_australium_greater").setCreativeTab(MainRegistry.partsTab);
@@ -1522,127 +1522,127 @@ public class ModItems {
 			leafRodU38
 			= new ItemLeafiaRod("U-238",95000, 2865)
 			.setAppearance(billet_u238, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.u238 * ItemHazard.billet)
+			.addAlpha(ItemHazard.u238 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodNU
 			= new ItemLeafiaRod("NU",60000, 2865)
 			.setAppearance(billet_uranium, BILLET, RAW)
-			.addRadiation(ItemHazard.u * ItemHazard.billet)
+			.addAlpha(ItemHazard.u * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMEU235
 			= new ItemLeafiaRod("MEU-235",40000, 2865)
 			.setAppearance(billet_uranium_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.uf * ItemHazard.billet)
+			.addAlpha(ItemHazard.uf * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEU233
 			= new ItemLeafiaRod("HEU-233",10000, 2865)
 			.setAppearance(billet_u233, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.u233 * ItemHazard.billet)
+			.addAlpha(ItemHazard.u233 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEU235
 			= new ItemLeafiaRod("HEU-235",30000, 2865)
 			.setAppearance(billet_u235, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.u235 * ItemHazard.billet)
+			.addAlpha(ItemHazard.u235 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodTHMEU
 			= new ItemLeafiaRod("ThMEU",6000, 3350)
 			.setAppearance(billet_thorium_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.thf * ItemHazard.billet)
+			.addAlpha(ItemHazard.thf * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLEP239
 			= new ItemLeafiaRod("LEPu-239",50000, 2744)
 			.setAppearance(billet_plutonium_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.puf * ItemHazard.billet)
+			.addAlpha(ItemHazard.puf * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMEP239
 			= new ItemLeafiaRod("MEPu-239",50000, 2744)
 			.setAppearance(billet_pu_mix, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.purg * ItemHazard.billet)
+			.addAlpha(ItemHazard.purg * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEP239
 			= new ItemLeafiaRod("HEPu-239",50000, 2744)
 			.setAppearance(billet_pu239, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.pu239 * ItemHazard.billet)
+			.addAlpha(ItemHazard.pu239 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEP241
 			= new ItemLeafiaRod("HEPu-241",180000, 2744)
 			.setAppearance(billet_pu241, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.pu241 * ItemHazard.billet)
+			.addBeta(ItemHazard.pu241 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLEA242
 			= new ItemLeafiaRod("LEAm-242",180000, 3986)
 			.setAppearance(billet_americium_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.amf * ItemHazard.billet)
+			.addAlpha(ItemHazard.amf * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMEA242
 			= new ItemLeafiaRod("MEAm-242",180000, 3986)
 			.setAppearance(billet_am_mix, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.amrg * ItemHazard.billet)
+			.addBeta(ItemHazard.amrg * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEA241
 			= new ItemLeafiaRod("HEAm-241",180000, 3986)
 			.setAppearance(billet_am241, BILLET, ISOTOPE)
 			.preferFast()
-			.addRadiation(ItemHazard.am241 * ItemHazard.billet)
+			.addAlpha(ItemHazard.am241 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEA242
 			= new ItemLeafiaRod("HEAm-242",180000, 3986)
 			.setAppearance(billet_am242, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.am242 * ItemHazard.billet)
+			.addBeta(ItemHazard.am242 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMEN237
 			= new ItemLeafiaRod("MENp-237",52000, 2800)
 			.setAppearance(billet_neptunium_fuel, BILLET, FUEL)
 			.preferAny()
-			.addRadiation(ItemHazard.npf * ItemHazard.billet)
+			.addAlpha(ItemHazard.npf * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHEN237
 			= new ItemLeafiaRod("HENp-237",32000, 2800)
 			.setAppearance(billet_neptunium, BILLET, RAW)
 			.preferFast()
-			.addRadiation(ItemHazard.np237 * ItemHazard.billet)
+			.addAlpha(ItemHazard.np237 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMOX
 			= new ItemLeafiaRod("MOX",60000, 2815)
 			.setAppearance(billet_mox_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.mox * ItemHazard.billet)
+			.addAlpha(ItemHazard.mox * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLES236
 			= new ItemLeafiaRod("LESa-326",35000, 2500)
 			.setAppearance(billet_les, BILLET, FUEL)
 			.setModerated()
-			.addRadiation(ItemHazard.les * ItemHazard.billet)
+			.addAlpha(ItemHazard.les * ItemHazard.billet)
 			.addBlinding()
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodMES326
 			= new ItemLeafiaRod("MESa-326",30000, 2750)
 			.setAppearance(billet_schrabidium_fuel, BILLET, FUEL)
-			.addRadiation(ItemHazard.saf * ItemHazard.billet)
+			.addAlpha(ItemHazard.saf * ItemHazard.billet)
 			.addBlinding()
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodHES326
 			= new ItemLeafiaRod("HESa-326",25000, 3000)
 			.setAppearance(billet_hes, BILLET, FUEL)
-			.addRadiation(ItemHazard.hes * ItemHazard.billet)
+			.addAlpha(ItemHazard.hes * ItemHazard.billet)
 			.addBlinding()
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
@@ -1666,33 +1666,33 @@ public class ModItems {
 			= new ItemLeafiaRod("Ra-226Be",4000, 700)
 			.setAppearance(billet_ra226be, BILLET, SOURCE)
 			.setModerated()
-			.addRadiation(ItemHazard.rabe * ItemHazard.billet)
+			.addNeutrons(ItemHazard.rabe * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodPo210Be
 			= new ItemLeafiaRod("Po-210Be",20000, 1287)
 			.setAppearance(billet_po210be, BILLET, SOURCE)
 			.setModerated()
-			.addRadiation(ItemHazard.pobe * ItemHazard.billet)
+			.addNeutrons(ItemHazard.pobe * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodPu238Be
 			= new ItemLeafiaRod("Pu-238Be",20000, 1287)
 			.setAppearance(billet_pu238be, BILLET, SOURCE)
 			.setModerated()
-			.addRadiation(ItemHazard.pube * ItemHazard.billet)
+			.addNeutrons(ItemHazard.pube * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodFlashgold
 			= new ItemLeafiaRod("Flashgold",180000, 5000)
 			.setAppearance(billet_balefire_gold, BILLET, RAW)
-			.addRadiation(ItemHazard.au198 * ItemHazard.billet)
+			.addBeta(ItemHazard.au198 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodFlashlead
 			= new ItemLeafiaRod("Flashlead",220000, 5050)
 			.setAppearance(billet_flashlead, BILLET, RAW)
-			.addRadiation(ItemHazard.aupb * ItemHazard.billet)
+			.addBeta(ItemHazard.aupb * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodBi209ZFB
@@ -1717,19 +1717,19 @@ public class ModItems {
 			leafRodPu238
 			= new ItemLeafiaRod("Pu-238",35000, 2744)
 			.setAppearance(billet_pu238, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.pu238 * ItemHazard.billet)
+			.addAlpha(ItemHazard.pu238 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodPo210
 			= new ItemLeafiaRod("Po-210",30000, 1287)
 			.setAppearance(billet_polonium, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.po210 * ItemHazard.billet)
+			.addAlpha(ItemHazard.po210 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodSa327
 			= new ItemLeafiaRod("Sa-327",80000, 2250)
 			.setAppearance(billet_solinium, BILLET, RAW)
-			.addRadiation(ItemHazard.sa327 * ItemHazard.billet)
+			.addAlpha(ItemHazard.sa327 * ItemHazard.billet)
 			.addBlinding()
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
@@ -1741,26 +1741,26 @@ public class ModItems {
 	public static final Item
 			leafRodPu240
 			= new ItemLeafiaRod("Pu-240",650000, 2744)
-			.setAppearance(billet_plutonium, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.pu240 * ItemHazard.billet)
+			.setAppearance(billet_pu240, BILLET, ISOTOPE)
+			.addAlpha(ItemHazard.pu240 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodWasteUranium
 			= new ItemLeafiaRod("Depleted Uranium",0, 0)
 			.setAppearance(waste_uranium_hot, BILLET, RAW)
-			.addRadiation(12F)
+			.addAlpha(12F)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodWastePlutonium
 			= new ItemLeafiaRod("Depleted Plutonium",0, 0)
 			.setAppearance(waste_plutonium_hot, BILLET, RAW)
-			.addRadiation(19F)
+			.addAlpha(19F)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodWasteSchrabidium
 			= new ItemLeafiaRod("Depleted Schrabidium",0, 0)
 			.setAppearance(waste_schrabidium_hot, BILLET, RAW)
-			.addRadiation(35F)
+			.addAlpha(35F)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLead
@@ -1773,13 +1773,13 @@ public class ModItems {
 			leafRodNPu
 			= new ItemLeafiaRod("NPu",26000, 2744)
 			.setAppearance(billet_plutonium, BILLET, RAW)
-			.addRadiation(ItemHazard.pu * ItemHazard.billet)
+			.addAlpha(ItemHazard.pu * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodTh232
 			= new ItemLeafiaRod("Th-232",45000, 3510)
 			.setAppearance(billet_th232, BILLET, RAW)
-			.addRadiation(ItemHazard.th232 * ItemHazard.billet)
+			.addAlpha(ItemHazard.th232 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodBi209
@@ -1790,13 +1790,13 @@ public class ModItems {
 			leafRodGold198
 			= new ItemLeafiaRod("Au-198",90000, 3850)
 			.setAppearance(billet_au198, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.au198 * ItemHazard.billet)
+			.addBeta(ItemHazard.au198 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item
 			leafRodLead209
 			= new ItemLeafiaRod("Pb-209",60000, 4300)
 			.setAppearance(billet_pb209, BILLET, ISOTOPE)
-			.addRadiation(ItemHazard.pb209 * ItemHazard.billet)
+			.addBeta(ItemHazard.pb209 * ItemHazard.billet)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 
 	//That's a lot of rods

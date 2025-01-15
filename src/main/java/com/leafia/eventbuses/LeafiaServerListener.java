@@ -6,6 +6,7 @@ import com.hbm.lib.ModDamageSource;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentInlet;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.optimization.LeafiaParticlePacket;
 import com.leafia.dev.optimization.LeafiaParticlePacket.Sweat;
@@ -45,6 +46,14 @@ public class LeafiaServerListener {
 				}
 				if (entry.getValue().contains(evt.getPos()))
 					entry.getKey().updateObstacleMappings();
+			}
+			for (Entry<TileEntityPWRVentInlet,LeafiaSet<BlockPos>> entry : TileEntityPWRVentInlet.listeners.entrySet()) {
+				if (entry.getKey().isInvalid()) {
+					TileEntityPWRVentInlet.listeners.remove(entry.getKey());
+					continue;
+				}
+				if (entry.getValue().contains(evt.getPos()))
+					entry.getKey().rebuildMap();
 			}
 		}
 	}

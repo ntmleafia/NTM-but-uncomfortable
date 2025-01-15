@@ -18,6 +18,7 @@ import com.hbm.util.I18nUtil;
 
 import com.leafia.dev.MultiRad;
 import com.leafia.dev.MultiRad.RadiationType;
+import com.leafia.dev.items.LeafiaDynamicHazard;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,7 +57,29 @@ public class ItemHazardModule {
 	public void setMod(float tempMod) {
 		this.tempMod = tempMod;
 	}
-	
+
+	static ItemHazardModule bufferModule = new ItemHazardModule();
+
+	public ItemHazardModule reflect(ItemHazardModule copyFrom) {
+		this.radiation.alpha = copyFrom.radiation.alpha;
+		this.radiation.beta = copyFrom.radiation.beta;
+		this.radiation.gamma = copyFrom.radiation.gamma;
+		this.radiation.neutrons = copyFrom.radiation.neutrons;
+		this.radiation.activation = copyFrom.radiation.activation;
+		this.digamma = copyFrom.digamma;
+		this.fire = copyFrom.fire;
+		this.cryogenic = copyFrom.cryogenic;
+		this.toxic = copyFrom.toxic;
+		this.blinding = copyFrom.blinding;
+		this.asbestos = copyFrom.asbestos;
+		this.coal = copyFrom.coal;
+		this.hydro = copyFrom.hydro;
+		this.explosive = copyFrom.explosive;
+		this.sharp = copyFrom.sharp;
+		this.tempMod = copyFrom.tempMod;
+		return this;
+	}
+
 	public boolean isRadioactive() {
 		return this.radiation.isRadioactive();
 	}
@@ -254,73 +277,79 @@ public class ItemHazardModule {
 	public static float sharpStackNerf = 0.75f;
 	
 	public void addInformation(ItemStack stack, List<String> list, ITooltipFlag flagIn) {
-		
-		if(this.radiation.total() * tempMod > 0) {
+		bufferModule.reflect(this);
+		ItemHazardModule module = bufferModule;
+
+		if (stack.getItem() instanceof LeafiaDynamicHazard) {
+			module = ((LeafiaDynamicHazard)stack.getItem()).getHazards(module,stack);
+		}
+
+		if(module.radiation.total() * module.tempMod > 0) {
 			list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.radioactive") + "]");
-			radiation.forEach((type,rad)->{
+			module.radiation.forEach((type,rad)->{
 				if (rad > 0)
-					list.add(type.color + I18nUtil.resolveKey(type.translationKey) + " " + (Library.roundFloat(getNewValue(rad), 3)+ getSuffix(rad) + " " + I18nUtil.resolveKey("desc.rads")));
+					list.add(TextFormatting.GREEN+" -::" + type.color + I18nUtil.resolveKey(type.translationKey) + " " + (Library.roundFloat(getNewValue(rad), 3)+ getSuffix(rad) + " " + I18nUtil.resolveKey("desc.rads")));
 			});
 			if(stack.getCount() > 1) {
-				float stackRad = radiation.total() * tempMod * stack.getCount();
-				list.add(TextFormatting.GOLD + I18nUtil.resolveKey("desc.stack")+" " + Library.roundFloat(getNewValue(stackRad), 3) + getSuffix(stackRad) + " " + I18nUtil.resolveKey("desc.rads"));
+				float stackRad = module.radiation.total() * module.tempMod * stack.getCount();
+				list.add(TextFormatting.GREEN+" -::" + TextFormatting.GOLD + I18nUtil.resolveKey("desc.stack")+" " + Library.roundFloat(getNewValue(stackRad), 3) + getSuffix(stackRad) + " " + I18nUtil.resolveKey("desc.rads"));
 			}
 		}
 		
-		if(this.fire > 0) {
+		if(module.fire > 0) {
 			list.add(TextFormatting.GOLD + "[" + I18nUtil.resolveKey("trait._hazarditem.hot") + "]");
 		}
 
-		if(this.cryogenic > 0) {
+		if(module.cryogenic > 0) {
 			list.add(TextFormatting.AQUA + "[" + I18nUtil.resolveKey("trait._hazarditem.cryogenic") + "]");
 		}
 
-		if(this.toxic > 0) {
-			if(this.toxic > 16)
+		if(module.toxic > 0) {
+			if(module.toxic > 16)
 				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.max") + "]");
-			else if(this.toxic > 8)
+			else if(module.toxic > 8)
 				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.16") + "]");
-			else if(this.toxic > 4)
+			else if(module.toxic > 4)
 				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.8") + "]");
-			else if(this.toxic > 2)
+			else if(module.toxic > 2)
 				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.4") + "]");
 			else
 				list.add(TextFormatting.GREEN + "[" + I18nUtil.resolveKey("trait._hazarditem.toxic.2") + "]");
 		}
 		
-		if(this.blinding) {
+		if(module.blinding) {
 			list.add(TextFormatting.DARK_AQUA + "[" + I18nUtil.resolveKey("trait._hazarditem.blinding") + "]");
 		}
 
-		if (this.sharp > 0) {
+		if (module.sharp > 0) {
 			list.add(TextFormatting.DARK_RED + "[" + I18nUtil.resolveKey("trait._hazarditem.sharp") + "]");
-			list.add(TextFormatting.RED + "" + I18nUtil.resolveKey("trait._hazarditem.sharp.add",Math.round(sharp*100)+"%"));
+			list.add(TextFormatting.DARK_RED+" -::" + TextFormatting.RED + "" + I18nUtil.resolveKey("trait._hazarditem.sharp.add",Math.round(module.sharp*100)+"%"));
 			if(stack.getCount() > 1) {
-				list.add(TextFormatting.RED + I18nUtil.resolveKey("desc.stack") + " " + Math.round((sharp*stack.getCount()*(1-sharpStackNerf)+sharp*sharpStackNerf)*100)+"%");
+				list.add(TextFormatting.DARK_RED+" -::" + TextFormatting.RED + I18nUtil.resolveKey("desc.stack") + " " + Math.round((module.sharp*stack.getCount()*(1-sharpStackNerf)+module.sharp*sharpStackNerf)*100)+"%");
 			}
 		}
 		
-		if(this.asbestos > 0 && GeneralConfig.enableAsbestos) {
+		if(module.asbestos > 0 && GeneralConfig.enableAsbestos) {
 			list.add(TextFormatting.WHITE + "[" + I18nUtil.resolveKey("trait._hazarditem.asbestos") + "]");
 		}
 		
-		if(this.coal > 0 && GeneralConfig.enableCoal) {
+		if(module.coal > 0 && GeneralConfig.enableCoal) {
 			list.add(TextFormatting.DARK_GRAY + "[" + I18nUtil.resolveKey("trait._hazarditem.coal") + "]");
 		}
 		
-		if(this.hydro) {
+		if(module.hydro) {
 			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.hydro") + "]");
 		}
 		
-		if(this.explosive > 0) {
+		if(module.explosive > 0) {
 			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.explosive") + "]");
 		}
 		
-		if(this.digamma * tempMod > 0) {
+		if(module.digamma * tempMod > 0) {
 			list.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait._hazarditem.digamma") + "]");
-			list.add(TextFormatting.DARK_RED + "" + Library.roundFloat(digamma * tempMod * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));
+			list.add(TextFormatting.RED+" -::" + TextFormatting.DARK_RED + "" + Library.roundFloat(module.digamma * module.tempMod * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));
 			if(stack.getCount() > 1) {
-				list.add(TextFormatting.DARK_RED + I18nUtil.resolveKey("desc.stack") + " " + Library.roundFloat(digamma * tempMod * stack.getCount() * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));
+				list.add(TextFormatting.RED+" -::" + TextFormatting.DARK_RED + I18nUtil.resolveKey("desc.stack") + " " + Library.roundFloat(module.digamma * module.tempMod * stack.getCount() * 1000F, 2) + " " + I18nUtil.resolveKey("desc.digammaed"));
 			}
 		}
 		

@@ -194,6 +194,8 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.element.Machi
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.MachinePWRPort;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.MachinePWRTerminal;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.MachinePWRVentElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.MachinePWRVentDuct;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.MachinePWRVentInlet;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.MachinePWRVentOutlet;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckMetal;
@@ -1414,6 +1416,8 @@ public class ModBlocks {
 
 		public static final Block ventElement = new MachinePWRVentElement().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 		public static final Block ventOutlet = new MachinePWRVentOutlet().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block ventInlet = new MachinePWRVentInlet().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block ventDuct = new MachinePWRVentDuct().setCreativeTab(null).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
 		public static final PWRMeshedWreck wreck_stone = new PWRWreckStone();
 		public static final PWRMeshedWreck wreck_metal = new PWRWreckMetal();

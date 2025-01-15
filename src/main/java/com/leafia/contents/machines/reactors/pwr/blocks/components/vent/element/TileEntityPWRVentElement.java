@@ -1,11 +1,13 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element;
 
+import com.hbm.forgefluid.ModForgeFluids;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.MachinePWRVentBase;
 import com.leafia.passive.LeafiaPassiveLocal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,6 +18,7 @@ public class TileEntityPWRVentElement extends TileEntity {
 	@SideOnly(Side.CLIENT) EnumFacing face = null;
 	@SideOnly(Side.CLIENT) public boolean topConnected = false;
 	@SideOnly(Side.CLIENT) public boolean btmConnected = false;
+	public Fluid fluid = ModForgeFluids.cryogel;
 	@Override
 	public void validate() {
 		super.validate();
