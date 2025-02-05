@@ -1,9 +1,8 @@
 package com.hbm.forgefluid;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.google.common.base.Predicate;
 import com.hbm.interfaces.IFluidPipe;
@@ -21,12 +20,18 @@ import com.hbm.items.special.ItemCell;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
+import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
 
-import com.hbm.util.BobMathUtil;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
+import com.leafia.dev.custompacket.LeafiaCustomPacket;
+import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.llib.exceptions.messages.TextWarningLeafia;
+import com.llib.technical.FifthString;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -37,12 +42,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -52,6 +59,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.lwjgl.input.Keyboard;
 
@@ -299,7 +307,32 @@ public class FFUtils {
 			texts.add(I18nUtil.resolveKey("desc.tooltip.hold", "LSHIFT"));
 		}
 	}
-
+	static boolean lastClicked = false;
+	public static class FuzzyIdentifierPacket implements LeafiaCustomPacketEncoder {
+		String fluidRsc;
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeFifthString(new FifthString(fluidRsc));
+		}
+		@Nullable
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			fluidRsc = buf.readFifthString().toString();
+			return (ctx)->{
+				ItemStack stack = ctx.getServerHandler().player.inventory.getItemStack();
+				if (stack != null && !stack.isEmpty()) {
+					if (stack.getItem() instanceof ItemFuzzyIdentifier) {
+						NBTTagCompound nbt = stack.getTagCompound();
+						if (nbt == null) nbt = new NBTTagCompound();
+						nbt.setString("fluidtype",fluidRsc);
+						stack.setTagCompound(nbt);
+						ctx.getServerHandler().player.updateHeldItem();
+						ctx.getServerHandler().player.world.playSound(null,ctx.getServerHandler().player.getPosition(),HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1,1);
+					}
+				}
+			};
+		}
+	}
 	private static void renderFluidInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, Fluid fluid, int amount, int capacity) {
 		if (x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			List<String> texts = new ArrayList<>();
@@ -307,12 +340,18 @@ public class FFUtils {
 				texts.add(fluid.getLocalizedName(new FluidStack(fluid, 1)));
 				texts.add(amount + "/" + capacity + "mB");
 				addFluidInfo(fluid, texts);
+				if (!lastClicked && gui.clickDown) {
+					FuzzyIdentifierPacket packet = new FuzzyIdentifierPacket();
+					packet.fluidRsc = fluid.getName();
+					LeafiaCustomPacket.__start(packet).__sendToServer();
+					Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+				}
 			} else {
 				texts.add(I18nUtil.resolveKey("desc.none"));
 				texts.add(amount + "/" + capacity + "mB");
 			}
-
 			gui.drawFluidInfo(texts, mouseX, mouseY);
+			lastClicked = gui.clickDown;
 		}
 	}
 

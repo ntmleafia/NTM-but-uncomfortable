@@ -72,7 +72,7 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 			ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - BlockDummyable.offset);
 			this.sendPower(world, pos.add(dir.offsetX * -4, 0, dir.offsetZ * -4), dir.getOpposite());
 			
-			if(inventory.getStackInSlot(0).getItem() == ModItems.forge_fluid_identifier && inventory.getStackInSlot(1).isEmpty()){
+			if(inventory.getStackInSlot(0).getItem() instanceof ItemForgeFluidIdentifier && inventory.getStackInSlot(1).isEmpty()){
 				Fluid f = ItemForgeFluidIdentifier.getType(inventory.getStackInSlot(0));
 				if(isValidFluidForTank(0, new FluidStack(f, 1000))){
 					types[0] = f;

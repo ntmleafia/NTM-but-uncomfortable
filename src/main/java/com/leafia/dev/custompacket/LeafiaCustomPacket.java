@@ -1,5 +1,7 @@
 package com.leafia.dev.custompacket;
 
+import com.hbm.forgefluid.FFUtils;
+import com.hbm.forgefluid.FFUtils.FuzzyIdentifierPacket;
 import com.hbm.items.tool.ItemWandS;
 import com.hbm.items.tool.ItemWandS.WandStructurePacket;
 import com.hbm.packet.PacketDispatcher;
@@ -32,6 +34,7 @@ public class LeafiaCustomPacket extends RecordablePacket {
 		HIGHLIGHT_SAVING_REMOVE(new HighlightSavingWandRemove()),
 		HIGHLIGHT_SAVING_PRODUCT(new HighlightSavingWandProduct()),
 		WAND_STRUCTURE(new WandStructurePacket()),
+		FUZZY_IDENTIFIER(new FuzzyIdentifierPacket()),
 		;
 		final LeafiaCustomPacketEncoder encoder;
 		CustomPacketType() { encoder = null; }

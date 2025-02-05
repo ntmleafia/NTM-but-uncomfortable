@@ -44,10 +44,11 @@ public abstract class GuiContainerLeafia extends GuiContainer {
 	protected int dragSplittingButton;
 	protected boolean ignoreMouseUp;
 	protected int dragSplittingRemnant;
-	protected long lastClickTime;
+	public long lastClickTime;
 	protected Slot lastClickSlot;
-	protected int lastClickButton;
-	protected boolean doubleClick;
+	public int lastClickButton;
+	public boolean clickDown = false;
+	public boolean doubleClick;
 	protected ItemStack shiftClickedSlot = ItemStack.EMPTY;
 
 	public GuiContainerLeafia(Container inventorySlotsIn)
@@ -347,7 +348,7 @@ public abstract class GuiContainerLeafia extends GuiContainer {
 	}
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-
+		clickDown = true;
 		superMouseClicked(mouseX, mouseY, mouseButton);
 		boolean flag = this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100);
 		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
@@ -512,6 +513,7 @@ public abstract class GuiContainerLeafia extends GuiContainer {
 
 	protected void mouseReleased(int mouseX, int mouseY, int state)
 	{
+		clickDown = false;
 		superMouseReleased(mouseX, mouseY, state); //Forge, Call parent to release buttons
 		Slot slot = this.getSlotAtPosition(mouseX, mouseY);
 		int i = this.guiLeft;

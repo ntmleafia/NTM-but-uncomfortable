@@ -415,6 +415,7 @@ public class ItemRBMKRod extends Item implements IItemHazard {
 			}
 			
 			list.add(TextFormatting.GREEN + I18nUtil.resolveKey("trait.rbmx.depletion", ((int)(((yield - getYield(stack)) / yield) * 100000)) / 1000D + "%"));
+			list.add(TextFormatting.GOLD + I18nUtil.resolveKey("trait.rbmx.decay", 0 + "m"));
 			list.add(TextFormatting.DARK_PURPLE + I18nUtil.resolveKey("trait.rbmx.xenon", ((int)(getPoison(stack) * 1000D) / 1000D) + "%"));
 			list.add(TextFormatting.BLUE + I18nUtil.resolveKey("trait.rbmx.splitsWith", I18nUtil.resolveKey(nType.unlocalized + ".x")));
 			list.add(TextFormatting.BLUE + I18nUtil.resolveKey("trait.rbmx.splitsInto", I18nUtil.resolveKey(rType.unlocalized + ".x")));
@@ -436,6 +437,8 @@ public class ItemRBMKRod extends Item implements IItemHazard {
 			}
 			
 			list.add(TextFormatting.GREEN + I18nUtil.resolveKey("trait.rbmk.depletion", ((int)(((yield - getYield(stack)) / yield) * 100000D)) / 1000D + "%"));
+			list.add(TextFormatting.GOLD + I18nUtil.resolveKey("trait.rbmk.decay", 0 + "°C"));
+			//Ah fuck itlist.add(TextFormatting.GOLD + I18nUtil.resolveKey("trait.rbmk.decayTarget", TextFormatting.GRAY + "Caesium-137 [" + 0 + "°C]"));
 			list.add(TextFormatting.DARK_PURPLE + I18nUtil.resolveKey("trait.rbmk.xenon", ((int)(getPoison(stack) * 1000D) / 1000D) + "%"));
 			list.add(TextFormatting.BLUE + I18nUtil.resolveKey("trait.rbmk.splitsWith", I18nUtil.resolveKey(nType.unlocalized)));
 			list.add(TextFormatting.BLUE + I18nUtil.resolveKey("trait.rbmk.splitsInto", I18nUtil.resolveKey(rType.unlocalized)));

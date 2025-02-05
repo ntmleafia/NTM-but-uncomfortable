@@ -594,12 +594,15 @@ public class CommandLeaf extends CommandBase {
 						sender.sendMessage(new TextComponentString("  simple | smooth"));
 						sender.sendMessage(new TextComponentString(""));
 						sender.sendMessage(new TextComponentString("Available presets:").setStyle(header));
+						boolean isDarkRow = false;
 						for (LeafiaShakecam.Preset preset : LeafiaShakecam.Preset.values()) {
-							sender.sendMessage(new TextComponentString("  "+preset.name()).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE).setItalic(true)).appendSibling(new TextComponentString(String.format(" (r=%1.1f i=%1.1f c=%1.1f s=%1.1f)",preset.range,preset.intensity,preset.curve,preset.speed))));
+							sender.sendMessage(new TextComponentString("  "+preset.name()).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE).setItalic(true)).appendSibling(new TextComponentString(" ("+preset.paramString+")").setStyle(new Style().setColor(isDarkRow ? TextFormatting.GRAY : TextFormatting.DARK_GRAY))));
+							isDarkRow = !isDarkRow;
 						}
 						sender.sendMessage(new TextComponentString(""));
 						sender.sendMessage(new TextComponentString("Default parameters:").setStyle(header));
 						sender.sendMessage(new TextComponentString("  range=25 intensity=4 curve=2 speed=4 duration=5 ease=expoOut"));
+						sender.sendMessage(new TextComponentString("  blurExponent=2 blurDulling=16 bloomExponent=6 bloomDulling=16"));
 						sender.sendMessage(new TextComponentString(""));
 						sender.sendMessage(new TextComponentString("Use /hbmleaf eases to see all available eases.").setStyle(new Style().setColor(TextFormatting.GREEN)));
 						return;

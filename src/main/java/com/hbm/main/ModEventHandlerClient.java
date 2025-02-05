@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
+import com.leafia.contents.gear.utility.FuzzyIdentifierBakedModel;
+import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.worldgen.ModBiome;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -540,6 +542,12 @@ public class ModEventHandlerClient {
 			IBakedModel model = (IBakedModel) object9;
 			LeafiaRodRender.INSTANCE.itemModel = model;
 			evt.getModelRegistry().putObject(ItemLeafiaRod.rodModel, new LeafiaRodBakedModel());
+		}
+		Object objecta = evt.getModelRegistry().getObject(ItemFuzzyIdentifier.fuzzyModel);
+		if(objecta instanceof IBakedModel) {
+			IBakedModel model = (IBakedModel) objecta;
+			FFIdentifierRender.INSTANCE.itemModelFuzzy = model;
+			evt.getModelRegistry().putObject(ItemFuzzyIdentifier.fuzzyModel, new FuzzyIdentifierBakedModel());
 		}
 
 		IRegistry<ModelResourceLocation, IBakedModel> reg = evt.getModelRegistry();

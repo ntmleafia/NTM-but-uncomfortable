@@ -231,7 +231,7 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 
 	private void updateTankType() {
         ItemStack slotStack = inventory.getStackInSlot(1);
-        if(slotStack.getItem() == ModItems.forge_fluid_identifier) {
+        if(slotStack.getItem() instanceof ItemForgeFluidIdentifier) {
             Fluid fluid = ItemForgeFluidIdentifier.getType(slotStack);
 
             if(fluidType != fluid) {

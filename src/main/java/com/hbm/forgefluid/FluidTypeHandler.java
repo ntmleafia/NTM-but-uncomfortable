@@ -87,7 +87,7 @@ public class FluidTypeHandler {
 		fluidProperties.put(ModForgeFluids.ultrahotsteam.getName(), new FluidProperties(0, 0, 4, EnumSymbol.NONE, FluidTrait.HIGH_PRESSURE));
 		fluidProperties.put(ModForgeFluids.coolant.getName(), new FluidProperties(1, 0, 0, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.hotcoolant.getName(), new FluidProperties(1, 0, 4, EnumSymbol.NONE));
-		fluidProperties.put(ModForgeFluids.malcoolant.getName(), new FluidProperties(1, 0, 12, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
+		fluidProperties.put(ModForgeFluids.malcoolant.getName(), new FluidProperties(1, 0, 4, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
 		
 		fluidProperties.put(FluidRegistry.LAVA.getName(), new FluidProperties(4, 0, 0, EnumSymbol.NOWATER));
 		

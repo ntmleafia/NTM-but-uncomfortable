@@ -203,7 +203,7 @@ public class TileEntityMachineGasFlare extends TileEntityMachineBase implements 
 
 		ItemStack slotId = inventory.getStackInSlot(3);
 		Item itemId = slotId.getItem();
-		if (itemId == ModItems.forge_fluid_identifier) {
+		if (itemId instanceof ItemForgeFluidIdentifier) {
 			Fluid fluid = ItemForgeFluidIdentifier.getType(slotId);
 			int energy = FluidCombustionRecipes.getFlameEnergy(fluid);
 

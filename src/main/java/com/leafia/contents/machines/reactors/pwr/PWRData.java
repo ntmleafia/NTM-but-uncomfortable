@@ -2,8 +2,11 @@ package com.leafia.contents.machines.reactors.pwr;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.fluid.BlockLiquidCorium;
+import com.hbm.explosion.ExplosionNT;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.items.ModItems;
 import com.hbm.util.Tuple.Pair;
+import com.leafia.CommandLeaf;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
@@ -30,6 +33,7 @@ import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
 import com.llib.exceptions.messages.TextWarningLeafia;
+import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
@@ -395,7 +399,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				stressTimer -= Math.pow(stress,0.9)*64;
 				if (stressTimer <= 0) {
 					BlockPos pos = (BlockPos)members.toArray()[getWorld().rand.nextInt(members.size())];
-					getWorld().playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundHandler.stressSounds[getWorld().rand.nextInt(7)],SoundCategory.BLOCKS, (float)MathHelper.clampedLerp(0.25,4,Math.pow(stress,4)),1.0F);
+					getWorld().playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundHandler.stressSounds[getWorld().rand.nextInt(7)],SoundCategory.BLOCKS, (float)MathHelper.clampedLerp(0.25,14,Math.pow(stress,4)),1.0F);
 				}
 			}
 			if (tanks[3].getCapacity() > 0) {
@@ -533,6 +537,12 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			}
 			world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
 		}
+		protected IBlockState getBlockLv3(BlockPos pos,LeafiaMap<BlockPos,IBlockState> map,World world) {
+			if (map.containsKey(pos))
+				return map.get(pos);
+			else
+				return world.getBlockState(pos);
+		}
 		protected void explodeLv3() {
 			double reactorSize = (maxX-minX+1+2+4+maxY-minY+1+2+4+maxZ-minZ+1+2+4)/3d;
 			for (EntityPlayer plr : world.playerEntities) {
@@ -551,7 +561,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			// Don't believe me? Try replacing all "motherfucker" occurrences to original "members" (which is a Set) and boom IT BREAKS SOMEHOW
 			List<BlockPos> motherfucker = new ArrayList<>();
 			motherfucker.addAll(members);
-			world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24.0F,true,true);
+			//world.newExplosion(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24*(toughness/15_000f),true,true);
 			List<BlockPos> placeWrecks = new ArrayList<>();
 			List<BlockPos> vaporized = new ArrayList<>();
 			List<BlockPos> remains = new ArrayList<>();
@@ -623,6 +633,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					//world.setBlockState(member,fuckyou.getDefaultState());
 				}
 			}
+			LeafiaMap<BlockPos,IBlockState> placeMap = new LeafiaMap<>();
+			LeafiaSet<BlockPos> antiPlaceSet = new LeafiaSet<>();
+			List<EntityPWRDebris> entitiesToSpawn = new ArrayList<>();
 			for (BlockPos pos : vaporized) {
 				if (placeWrecks.contains(pos)) continue; // Somehow
 				boolean converted = false;
@@ -631,6 +644,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 						if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos)) || world.getBlockState(pos).getBlock() instanceof PWRComponentBlock) {
 							placeWrecks.add(pos);
 							allDebris.add(pos);
+							placeMap.put(pos,world.getBlockState(pos));
 							converted = true;
 						}
 						break;
@@ -645,17 +659,48 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 							debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.x,0.8)/2;
 							debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.y,0.8)/2;
 							debris.motionZ = signedPow(ray.z,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.z,0.8)/2;
-							world.spawnEntity(debris);
+							entitiesToSpawn.add(debris);
 						}
 					}
 					world.setBlockToAir(pos);
 				}
 			}
 			// TODO: add cam shake
+
+			for (BlockPos pos : remains) {
+				placeMap.put(pos,world.getBlockState(pos));
+				world.setBlockState(pos,Blocks.BEDROCK.getDefaultState());
+			}
+			ExplosionNT nt = new ExplosionNT(world,null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,24*(toughness/15_000f));
+			nt.addAttrib(ExAttrib.FIRE);
+			nt.addAttrib(ExAttrib.NODROP);
+			nt.overrideResolution(32);
+			nt.explode();
+			double shakeIntensity = toughness/10_000d;
+			PacketDispatcher.wrapper.sendToAllAround(
+					new CommandLeaf.ShakecamPacket(new String[]{
+							"type=smooth",
+							"preset=PWR_NEAR",
+							"bloomDulling*"+(0.8125-Math.pow(shakeIntensity,0.5)/20)/0.75,
+							"duration*"+Math.pow(shakeIntensity,0.5),
+							"range="+reactorSize*4
+					}).setPos(new BlockPos(centerPoint)),
+					new NetworkRegistry.TargetPoint(world.provider.getDimension(),centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,reactorSize*4.25)
+			);
+			PacketDispatcher.wrapper.sendToAllAround(
+					new CommandLeaf.ShakecamPacket(new String[]{
+							"type=smooth",
+							"preset=PWR_FAR",
+							"duration*"+Math.pow(shakeIntensity,0.5),
+							"range="+reactorSize*9
+					}).setPos(new BlockPos(centerPoint)),
+					new NetworkRegistry.TargetPoint(world.provider.getDimension(),centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,reactorSize*9.25)
+			);
+
 			for (BlockPos pos : remains) {
 				boolean buried = true;
 				for (EnumFacing face : EnumFacing.values()) {
-					if (vaporized.contains(pos.offset(face)) || !LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos.offset(face)))) {
+					if (vaporized.contains(pos.offset(face)) || !LeafiaUtil.isSolidVisibleCube(getBlockLv3(pos.offset(face),placeMap,world))) {
 						buried = false;
 						break;
 					}
@@ -664,7 +709,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					allDebris.add(pos);
 			}
 			for (BlockPos member : allDebris) {
-				IBlockState state = world.getBlockState(member);
+				IBlockState state = getBlockLv3(member,placeMap,world);
 				Block block = state.getBlock();
 				SoundType soundType = block.getSoundType();
 				Material material = block.getMaterial(state);
@@ -672,6 +717,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 
 				if (block instanceof MachinePWRControl) {
 					world.setBlockState(member,ModBlocks.block_electrical_scrap.getDefaultState());
+					antiPlaceSet.add(member);
 					//continue;
 				}
 				double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.lengthVector()/(reactorSize/2),0,1),0.45)*8,0,7);
@@ -681,9 +727,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					heat = (int)Math.round(heatBase);
 				else if (heatRand == 2)
 					heat = (int)Math.ceil(heatBase);
-				boolean defaultPlacement = true;
+				boolean noErosion = true;
 				if (placeWrecks.contains(member)) {
-					defaultPlacement = false;
+					noErosion = false;
 					EnumFacing face = EnumFacing.UP;
 					double absX = Math.abs(ray.x);
 					double absY = Math.abs(ray.y);
@@ -701,9 +747,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					for (int i = 0; i < 7; i++) {
 						EnumFacing curFace = (i > 0) ? EnumFacing.values()[i-1] : face;
 						if (i > 0 && curFace.equals(face)) continue; // skip if duplicate
-						if (!world.getBlockState(member.offset(curFace,-1)).isFullBlock()) continue;
+						if (!getBlockLv3(member.offset(curFace,-1),placeMap,world).isFullBlock()) continue;
 						if (placeWrecks.contains(member.offset(curFace,-1))) continue;
-						if (!world.getBlockState(member.offset(curFace)).getBlock().isPassable(world,member.offset(curFace))) continue;
+						if (!getBlockLv3(member.offset(curFace),placeMap,world).getBlock().isPassable(world,member.offset(curFace))) continue;
 						if (placeWrecks.contains(member.offset(curFace))) continue;
 						int mySpaces = 0;
 						EnumFacing[] sides = null;
@@ -718,11 +764,11 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 						for (EnumFacing side : sides) {
 							if (placeWrecks.contains(member.offset(side)))
 								surround++;
-							else if (world.getBlockState(member.offset(side)).isFullBlock()) {
+							else if (getBlockLv3(member.offset(side),placeMap,world).isFullBlock()) {
 								surround++;
 								reliable++;
 							}
-							if (LeafiaUtil.isSolidVisibleCube(world.getBlockState(member.offset(curFace).offset(side)))) continue;
+							if (LeafiaUtil.isSolidVisibleCube(getBlockLv3(member.offset(curFace).offset(side),placeMap,world))) continue;
 							if (placeWrecks.contains(member.offset(curFace).offset(side))) continue;
 							mySpaces++;
 						}
@@ -746,11 +792,12 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 								ModBlocks.PWR.wreck_stone.create(world,member,most,state,erosion,heat);
 							else
 								ModBlocks.PWR.wreck_metal.create(world,member,most,state,erosion,heat);
+							antiPlaceSet.add(member);
 						} else
-							defaultPlacement = true;
+							noErosion = true;
 					}
 				}
-				if (defaultPlacement) {
+				if (noErosion) {
 					Block[] sellafieldLevels = new Block[]{
 							ModBlocks.sellafield_slaked,
 							ModBlocks.sellafield_0,
@@ -800,12 +847,19 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 							else
 								ModBlocks.PWR.wreck_stone.create(world,member,EnumFacing.UP,state,Erosion.NONE,heat);
 						}
+						antiPlaceSet.add(member);
 					}
 				}
 			}
+			for (Entry<BlockPos,IBlockState> entry : placeMap.entrySet()) {
+				if (!antiPlaceSet.contains(entry.getKey()))
+					world.setBlockState(entry.getKey(),entry.getValue());
+			}
+			for (EntityPWRDebris debris : entitiesToSpawn)
+				world.spawnEntity(debris);
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "rbmkmush");
-			data.setFloat("scale", 4);
+			data.setFloat("scale", (float)reactorSize/3);
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5, 250));
 			world.playSound(null,centerPoint.x+0.5,centerPoint.y+0.5,centerPoint.z+0.5,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,50.0F,1.0F);
 		}

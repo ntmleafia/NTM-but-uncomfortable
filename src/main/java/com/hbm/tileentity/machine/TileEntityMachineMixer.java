@@ -171,7 +171,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ITi
 	private void updateTankType() {
         ItemStack slotId = inventory.getStackInSlot(2);
         Item itemId = slotId.getItem();
-        if(itemId == ModItems.forge_fluid_identifier) {
+        if(itemId instanceof ItemForgeFluidIdentifier) {
             Fluid fluid = ItemForgeFluidIdentifier.getType(slotId);
 
             if(outputFluid != fluid && ((uuMixer && MachineConfig.isFluidAllowed(fluid)) || MixerRecipes.hasMixerRecipe(fluid))) {
@@ -338,7 +338,7 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ITi
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemStack) {
 		if(i == 1) return MixerRecipes.matchesInputItem(outputFluid, itemStack);
-		if(i == 2) return itemStack.getItem() == ModItems.forge_fluid_identifier;
+		if(i == 2) return itemStack.getItem() instanceof ItemForgeFluidIdentifier;
 		return false;
 	}
 	

@@ -127,7 +127,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
 
     public void setFluidType(){
         ItemStack inFluid = this.inventory.getStackInSlot(0);
-        if(inFluid.getItem() == ModItems.forge_fluid_identifier) {
+        if(inFluid.getItem() instanceof ItemForgeFluidIdentifier) {
             setFluidTypes(ItemForgeFluidIdentifier.getType(inFluid));
         }
         if(tankTypes[0] == null) setFluidTypes(ModForgeFluids.hotcoolant);

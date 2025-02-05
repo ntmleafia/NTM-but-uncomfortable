@@ -315,12 +315,13 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				y = Math.pow(x,0.75)*12;
 				n = ""+flux+"^0.75 * 12 "+TextFormatting.GOLD+"(RISKY)";
 				break;
-			case "dante":
+			case "dante": case "potentialinstantblowoutapplicator":
 				y = Math.tan(Math.min(heat/400,0.5)*Math.PI)+x/4;
 				n = "tan(min("+temp+"/400,0.5)*PI)\n + "+flux+"/4 "+TextFormatting.DARK_RED+"(JUST NO)";
 				break;
 		}
 		if (updateHeat) {
+			double decay = 0;
 			if(data == null) {
 				data = new NBTTagCompound();
 				stack.setTagCompound(data);
@@ -329,6 +330,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				data.setBoolean("melting",false);
 				data.setInteger("generosityTimer",90);
 				data.setInteger("spillage",0);
+				data.setDouble("decay",decay);
 			}
 			boolean meltdown = data.getBoolean("melting");
 			data.setDouble("incoming",x);
@@ -338,6 +340,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				data.setInteger("spillage",data.getInteger("spillage")+1);
 			}
 			heat = data.getDouble("heat");
+			decay = data.getDouble("decay");
 			double heatX = Math.max(heat,20);
 			double heatMg = Math.pow(Math.abs((20+y)-heat)+1,0.25)-1;
 			if (heatX > 20+y)
@@ -351,6 +354,11 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				data.setDouble("depletion", curDepletion);
 			}
 			double newTemp = heat+heatMg;
+			if (heatMg*2 > decay)
+				decay += (heatMg*2-decay)*0.01;
+			decay *= 0.99992694932; // this is f*cked lmao //0.99854;
+			data.setDouble("decay",decay);
+			newTemp += decay * Math.pow(Math.max(1-Math.max(newTemp,20)/1000,0),0.2);
 			double cooled = (
 					Math.pow(
 							Math.max(newTemp-desiredTemp,0)+1,
@@ -456,11 +464,13 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		NBTTagCompound data = stack.getTagCompound();
 		double heat = 20;
 		double depletion = 0;
+		double decay = 0;
 		boolean meltdown = false;
 		if(data != null) {
 			heat = data.getDouble("heat");
 			depletion = data.getDouble("depletion");
 			meltdown = data.getBoolean("melting");
+			decay = data.getDouble("decay");
 		}
 		list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getUnlocalizedName()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
 		if (newFuel != null) {
@@ -469,8 +479,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 			else
 				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getUnlocalizedName()+".name"));
 		}
-		if (life != 0)
+		if (life != 0) {
 			list.add(TextFormatting.DARK_GREEN + "  Life: About "+life+"°C");
+			list.add(TextFormatting.GOLD + "  Fission Product Decay Heat: +"+String.format("%01.3f",decay*20)+"°C/s");
+		}
 		if (splitWithAny)
 			list.add(TextFormatting.AQUA + "  Prefers all neutrons");
 		else if (splitWithFast)

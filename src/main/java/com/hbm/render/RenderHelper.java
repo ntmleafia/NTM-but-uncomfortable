@@ -185,27 +185,44 @@ public class RenderHelper {
 	public static TextureAtlasSprite getItemTexture(ItemStack item){
 		return Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(item, null, null).getParticleTexture();
 	}
-	
-	public static void addVertexWithUV(double x, double y, double z, double u, double v){
-		addVertexWithUV(x, y, z, u, v, Tessellator.getInstance());
-	}
+
 	public static void addVertex(double x, double y, double z){
 		Tessellator.getInstance().getBuffer().pos(x, y, z).endVertex();
 	}
-	
+
+	public static void addVertexWithUV(double x, double y, double z, double u, double v){
+		addVertexWithUV(x, y, z, u, v, Tessellator.getInstance());
+	}
 	public static void addVertexWithUV(double x, double y, double z, double u, double v, Tessellator tes){
 		BufferBuilder buf = tes.getBuffer();
 		buf.pos(x, y, z).tex(u, v).endVertex();
 	}
 
-	public static void startDrawingTexturedQuads(){
-		startDrawingTexturedQuads(Tessellator.getInstance());
+	public static void addVertexColorWithUV(double x, double y, double z, double u, double v, float red, float green, float blue, float alpha){
+		addVertexColorWithUV(x, y, z, u, v, red, green, blue, alpha, Tessellator.getInstance());
 	}
+	public static void addVertexColorWithUV(double x, double y, double z, double u, double v, float red, float green, float blue, float alpha, Tessellator tes){
+		BufferBuilder buf = tes.getBuffer();
+		buf.pos(x, y, z).tex(u, v).color(red, green, blue, alpha).endVertex();
+	}
+
 	public static void startDrawingQuads(){
 		Tessellator.getInstance().getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 	}
+	public static void startDrawingColoredQuads(){
+		Tessellator.getInstance().getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+	}
+	public static void startDrawingTexturedQuads(){
+		startDrawingTexturedQuads(Tessellator.getInstance());
+	}
 	public static void startDrawingTexturedQuads(Tessellator tes){
 		tes.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+	}
+	public static void startDrawingColoredTexturedQuads(){
+		startDrawingColoredTexturedQuads(Tessellator.getInstance());
+	}
+	public static void startDrawingColoredTexturedQuads(Tessellator tes){
+		tes.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 	}
 	public static void startDrawingColoredTriangles(Tessellator tes){
 		tes.getBuffer().begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);

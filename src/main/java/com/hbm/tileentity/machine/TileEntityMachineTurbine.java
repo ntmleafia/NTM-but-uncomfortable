@@ -61,7 +61,7 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 			@Override
 			public boolean isItemValid(int slot, ItemStack stack) {
 				if(slot == 0)
-					return stack != null && stack.getItem() == ModItems.forge_fluid_identifier;
+					return stack != null && stack.getItem() instanceof ItemForgeFluidIdentifier;
 				if(slot == 4)
 					if(stack != null && stack.getItem() instanceof IBatteryItem)
 						return true;
@@ -89,7 +89,7 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 	public void update() {
 		if(!world.isRemote) {
 			
-			if(inventory.getStackInSlot(0).getItem() == ModItems.forge_fluid_identifier && inventory.getStackInSlot(1).isEmpty()){
+			if(inventory.getStackInSlot(0).getItem() instanceof ItemForgeFluidIdentifier && inventory.getStackInSlot(1).isEmpty()){
 				Fluid f = ItemForgeFluidIdentifier.getType(inventory.getStackInSlot(0));
 				if(isValidFluidForTank(0, new FluidStack(f, 1000))){
 					if(tankTypes[0] != f){

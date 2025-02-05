@@ -285,6 +285,7 @@ import com.hbm.potion.HbmPotion;
 import com.hbm.tileentity.machine.rbmk.IRBMKFluxReceiver.NType;
 
 import api.hbm.block.IToolable.ToolType;
+import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.gear.wands.ItemWandSaving;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType;
 import com.leafia.contents.machines.reactors.pwr.debris.ItemPWRDebris;
@@ -2551,6 +2552,7 @@ public class ModItems {
 	public static final Item chemistry_template = new ItemChemistryTemplate("chemistry_template").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
 	public static final Item chemistry_icon = new ItemChemistryIcon("chemistry_icon").setMaxStackSize(1).setCreativeTab(null);
 	public static final Item forge_fluid_identifier = new ItemForgeFluidIdentifier("forge_fluid_identifier").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
+	public static final Item fuzzy_identifier = new ItemFuzzyIdentifier("fuzzy_identifier").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	public static final Item ff_fluid_duct = new ItemFFFluidDuct("ff_fluid_duct").setCreativeTab(MainRegistry.templateTab);
 	
 	//Plates
@@ -3832,7 +3834,13 @@ public class ModItems {
 	public static final Item defuser = new ItemTooling(ToolType.DEFUSER, 100, "defuser").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);
 	public static final Item defuser_desh = new ItemTooling(ToolType.DEFUSER, -1, "defuser_desh").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);
 	public static final Item meltdown_tool = new ItemDyatlov("meltdown_tool").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
-	
+
+	public static final Item
+			leafRodDyatlov
+			= new ItemLeafiaRod("Potential Instant Blowout Applicator",95000000, 650000000)
+			.setAppearance(meltdown_tool, BILLET, UNSTABLE)
+			.toItem().setCreativeTab(MainRegistry.controlTab);
+
 	//Chopper
 	public static final Item chopper_head = new ItemBase("chopper_head").setCreativeTab(MainRegistry.partsTab);
 	public static final Item chopper_gun = new ItemBase("chopper_gun").setCreativeTab(MainRegistry.partsTab);

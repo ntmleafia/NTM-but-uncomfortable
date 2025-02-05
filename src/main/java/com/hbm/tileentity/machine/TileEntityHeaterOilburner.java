@@ -117,7 +117,7 @@ public class TileEntityHeaterOilburner extends TileEntityMachineBase implements 
     private void updateTankType() {
         ItemStack slotId = inventory.getStackInSlot(2);
         Item itemId = slotId.getItem();
-        if(itemId == ModItems.forge_fluid_identifier) {
+        if(itemId instanceof ItemForgeFluidIdentifier) {
             Fluid fluid = ItemForgeFluidIdentifier.getType(slotId);
             int energy = FluidCombustionRecipes.getFlameEnergy(fluid);
 

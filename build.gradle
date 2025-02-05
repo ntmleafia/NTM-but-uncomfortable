@@ -26,7 +26,7 @@ apply plugin: 'maven-publish'
 
 //version = '2.0.1'
 group = 'com.hbm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'NTM Cursed Edition 1.12.2-Forge-Optifine'
+archivesBaseName = 'NTM_Cursed_Edition_1.12.2-Forge-Optifine'
 
 compileJava.options.encoding = 'UTF-8'
 tasks.withType(JavaCompile) {
