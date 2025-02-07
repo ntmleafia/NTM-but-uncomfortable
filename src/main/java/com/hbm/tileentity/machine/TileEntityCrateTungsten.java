@@ -3,6 +3,7 @@ package com.hbm.tileentity.machine;
 import java.util.Random;
 
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.tool.ItemKeyPin;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.interfaces.ILaserable;
@@ -125,7 +126,7 @@ public class TileEntityCrateTungsten extends TileEntityLockableBase implements I
 				}
 			}
 			
-			if(inventory.getStackInSlot(i).getItem() == ModItems.crucible && ItemCrucible.getCharges(inventory.getStackInSlot(i)) < 3 && energy > 10000000)
+			if(inventory.getStackInSlot(i).getItem() == Armory.crucible && ItemCrucible.getCharges(inventory.getStackInSlot(i)) < 3 && energy > 10000000)
 				ItemCrucible.charge(inventory.getStackInSlot(i));
 			
 			if(result != null && !result.isEmpty()){

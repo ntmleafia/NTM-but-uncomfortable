@@ -4,8 +4,8 @@ import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFuel;
-import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Materials.Ingots;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -48,7 +48,7 @@ public class BlockGraphiteDrilledBase extends BlockHazardFuel {
 	
 	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-		drops.add(new ItemStack(ModItems.ingot_graphite, 8));
+		drops.add(new ItemStack(Ingots.ingot_graphite, 8));
 	}
 	
 	@Override

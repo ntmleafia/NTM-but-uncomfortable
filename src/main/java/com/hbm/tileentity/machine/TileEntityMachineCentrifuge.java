@@ -1,7 +1,7 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.items.ModItems;
 import com.hbm.inventory.CentrifugeRecipes;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
@@ -12,7 +12,6 @@ import com.hbm.tileentity.TileEntityMachineBase;
 import api.hbm.energy.IEnergyUser;
 import api.hbm.energy.IBatteryItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -192,13 +191,13 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 		int level = 0;
 		for(int i = 6; i <= 7; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_1)
 				level += 1;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_2)
 				level += 2;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_3)
 				level +=3;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_screm)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_screm)
 				level +=6;
 		}
 		return Math.min(level, 6);
@@ -208,11 +207,11 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 		int level = 0;
 		for(int i = 6; i <= 7; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_1)
 				level += 1;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_2)
 				level += 2;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_3)
 				level +=3;
 		}
 		return Math.min(level, 3);
@@ -222,11 +221,11 @@ public class TileEntityMachineCentrifuge extends TileEntityMachineBase implement
 		int level = 0;
 		for(int i = 6; i <= 7; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_1)
 				level += 1;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_2)
 				level += 2;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_3)
 				level +=3;
 		}
 		return Math.min(level, 3);

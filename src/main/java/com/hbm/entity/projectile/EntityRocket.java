@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.explosion.ExplosionLarge;
-import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Armory;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -500,7 +500,7 @@ public class EntityRocket extends Entity implements IProjectile {
         {
             boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && entityIn.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(ModItems.gun_rpg_ammo, 1)))
+            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(Armory.gun_rpg_ammo, 1)))
             {
                 flag = false;
             }

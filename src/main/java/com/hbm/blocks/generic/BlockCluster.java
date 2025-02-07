@@ -7,6 +7,7 @@ import com.hbm.items.ModItems;
 
 import api.hbm.block.IDrillInteraction;
 import api.hbm.block.IMiningDrill;
+import com.hbm.items.ModItems.Materials.Crystals;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -62,13 +63,13 @@ public class BlockCluster extends BlockOre implements IDrillInteraction {
 	private Item getDrop() {
 
 		if(this == ModBlocks.cluster_iron)
-			return ModItems.crystal_iron;
+			return Crystals.crystal_iron;
 		if(this == ModBlocks.cluster_titanium)
-			return ModItems.crystal_titanium;
+			return Crystals.crystal_titanium;
 		if(this == ModBlocks.cluster_aluminium)
-			return ModItems.crystal_aluminium;
+			return Crystals.crystal_aluminium;
 		if(this == ModBlocks.cluster_copper)
-			return ModItems.crystal_copper;
+			return Crystals.crystal_copper;
 		if(this == ModBlocks.basalt_gem)
 			return ModItems.gem_volcanic;
 		

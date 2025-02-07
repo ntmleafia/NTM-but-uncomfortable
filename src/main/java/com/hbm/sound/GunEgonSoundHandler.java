@@ -1,6 +1,7 @@
 package com.hbm.sound;
 
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemGunEgon;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -26,7 +27,7 @@ public class GunEgonSoundHandler {
 	}
 	
 	public void update(){
-		boolean firing = player.getHeldItemMainhand().getItem() == ModItems.gun_egon && (player == Minecraft.getMinecraft().player ? ItemGunEgon.m1 && Library.countInventoryItem(player.inventory, ItemGunEgon.getBeltType(player, player.getHeldItemMainhand(), true)) >= 2 : ItemGunEgon.getIsFiring(player.getHeldItemMainhand()));
+		boolean firing = player.getHeldItemMainhand().getItem() == Armory.gun_egon && (player == Minecraft.getMinecraft().player ? ItemGunEgon.m1 && Library.countInventoryItem(player.inventory, ItemGunEgon.getBeltType(player, player.getHeldItemMainhand(), true)) >= 2 : ItemGunEgon.getIsFiring(player.getHeldItemMainhand()));
 		if(ticks < 0 && firing)
 			ticks = 0;
 		if(ticks >= 0){

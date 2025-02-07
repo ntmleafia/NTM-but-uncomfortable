@@ -1,12 +1,12 @@
 package com.hbm.tileentity.network;
 
 import api.hbm.block.IConveyorBelt;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.lib.Library;
 import com.hbm.entity.item.EntityMovingItem;
 import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.container.ContainerCraneExtractor;
 import com.hbm.inventory.gui.GUICraneExtractor;
-import com.hbm.items.ModItems;
 import com.hbm.modules.ModulePatternMatcher;
 import com.hbm.tileentity.IGUIProvider;
 
@@ -24,14 +24,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandlerModifiable;
-
-import javax.annotation.Nonnull;
 
 public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGUIProvider, IControlReceiver {
     public boolean isWhitelist = false;
@@ -62,11 +58,11 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
             int zCoord = pos.getZ();
             int delay = 20;
             if(inventory.getStackInSlot(19) != null && inventory.getStackInSlot(19) != ItemStack.EMPTY){
-                if(inventory.getStackInSlot(19).getItem() == ModItems.upgrade_ejector_1) {
+                if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_1) {
                     delay = 10;
-                } else if(inventory.getStackInSlot(19).getItem() == ModItems.upgrade_ejector_2){
+                } else if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_2){
                     delay = 5;
-                } else if(inventory.getStackInSlot(19).getItem() == ModItems.upgrade_ejector_3){
+                } else if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_3){
                     delay = 2;
                 }
             }
@@ -76,11 +72,11 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
                 int amount = 1;
 
                 if(inventory.getStackInSlot(18)!=null && inventory.getStackInSlot(18) != ItemStack.EMPTY){
-                    if(inventory.getStackInSlot(18).getItem() == ModItems.upgrade_stack_1) {
+                    if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_1) {
                         amount = 4;
-                    } else if(inventory.getStackInSlot(18).getItem() == ModItems.upgrade_stack_2){
+                    } else if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_2){
                         amount = 16;
-                    } else if(inventory.getStackInSlot(18).getItem() == ModItems.upgrade_stack_3){
+                    } else if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_3){
                         amount = 64;
                     }
                 }

@@ -7,12 +7,10 @@ import com.google.common.collect.Multimap;
 import com.hbm.capability.HbmCapability;
 import com.hbm.capability.HbmCapability.IHBMData;
 import com.hbm.handler.ArmorUtil;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.gear.ArmorFSB;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.packet.AuxParticlePacketNT;
-import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.model.ModelArmorDNT;
 import com.hbm.util.I18nUtil;
 
@@ -26,14 +24,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -66,7 +62,7 @@ public class ArmorDNT extends ArmorFSBPowered {
 
 		super.onArmorTick(world, player, stack);
 		
-		if(this != ModItems.dns_plate)
+		if(this != ArmorSets.dns_plate)
 			return;
 
 		IHBMData props = HbmCapability.getData(player);

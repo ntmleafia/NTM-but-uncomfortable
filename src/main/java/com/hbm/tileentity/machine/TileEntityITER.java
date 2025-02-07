@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineITER;
-import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityBalefire;
 import com.hbm.forgefluid.FFUtils;
@@ -14,6 +13,7 @@ import com.hbm.inventory.BreederRecipes;
 import com.hbm.inventory.BreederRecipes.BreederRecipe;
 import com.hbm.inventory.FusionRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.special.ItemFusionShield;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -217,11 +217,11 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 
 		BreederRecipe out = BreederRecipes.getOutput(inventory.getStackInSlot(1));
 		
-		if(inventory.getStackInSlot(1).getItem() == ModItems.meteorite_sword_irradiated)
-			out = new BreederRecipe(ModItems.meteorite_sword_fused, 1);
+		if(inventory.getStackInSlot(1).getItem() == ToolSets.meteorite_sword_irradiated)
+			out = new BreederRecipe(ToolSets.meteorite_sword_fused, 1);
 
-		if(inventory.getStackInSlot(1).getItem() == ModItems.meteorite_sword_fused)
-			out = new BreederRecipe(ModItems.meteorite_sword_baleful, 4);
+		if(inventory.getStackInSlot(1).getItem() == ToolSets.meteorite_sword_fused)
+			out = new BreederRecipe(ToolSets.meteorite_sword_baleful, 4);
 
 		if(out == null) {
 			this.progress = 0;

@@ -9,7 +9,8 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -88,7 +89,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = new BulletConfiguration();
 
-		bullet.ammo = ModItems.gun_emp_ammo;
+		bullet.ammo = Armory.gun_emp_ammo;
 
 		bullet.velocity = 1F;
 		bullet.spread = 0.0F;
@@ -268,7 +269,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = new BulletConfiguration();
 
-		bullet.ammo = ModItems.ammo_fuel;
+		bullet.ammo = Armory.ammo_fuel;
 		bullet.ammoCount = 100;
 
 		bullet.velocity = 0.75F;
@@ -328,7 +329,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = getFlameConfig();
 
-		bullet.ammo = ModItems.ammo_fuel_napalm;
+		bullet.ammo = Armory.ammo_fuel_napalm;
 		bullet.wear = 2;
 		bullet.dmgMin = 4;
 		bullet.dmgMax = 6;
@@ -341,7 +342,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = getFlameConfig();
 
-		bullet.ammo = ModItems.ammo_fuel_phosphorus;
+		bullet.ammo = Armory.ammo_fuel_phosphorus;
 		bullet.wear = 2;
 		bullet.spread = 0.0F;
 		bullet.bulletsMin = 1;
@@ -360,7 +361,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = getFlameConfig();
 
-		bullet.ammo = ModItems.ammo_fuel_vaporizer;
+		bullet.ammo = Armory.ammo_fuel_vaporizer;
 		bullet.wear = 4;
 		bullet.spread = 0.25F;
 		bullet.bulletsMin = 8;
@@ -383,7 +384,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = getFlameConfig();
 
-		bullet.ammo = ModItems.ammo_fuel_gas;
+		bullet.ammo = Armory.ammo_fuel_gas;
 		bullet.wear = 1;
 		bullet.spread = 0.05F;
 		bullet.gravity = 0D;
@@ -403,7 +404,7 @@ public class GunEnergyFactory {
 
 		BulletConfiguration bullet = new BulletConfiguration();
 
-		bullet.ammo = ModItems.nugget_euphemium;
+		bullet.ammo = Nuggies.nugget_euphemium;
 		bullet.ammoCount = 1000;
 		bullet.wear = 1;
 		bullet.velocity = 1F;

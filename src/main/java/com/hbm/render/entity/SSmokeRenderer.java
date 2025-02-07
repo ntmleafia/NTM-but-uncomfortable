@@ -1,10 +1,10 @@
 package com.hbm.render.entity;
 
+import com.hbm.items.ModItems.DummyTexs;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.hbm.entity.particle.EntitySSmokeFX;
-import com.hbm.items.ModItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -48,35 +48,35 @@ public class SSmokeRenderer extends Render<EntitySSmokeFX> {
 
 
 			if (fx.particleAge <= fx.maxAge && fx.particleAge >= fx.maxAge / 8 * 7) {
-				item = ModItems.smoke8;
+				item = DummyTexs.smoke8;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 7 && fx.particleAge >= fx.maxAge / 8 * 6) {
-				item = ModItems.smoke7;
+				item = DummyTexs.smoke7;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 6 && fx.particleAge >= fx.maxAge / 8 * 5) {
-				item = ModItems.smoke6;
+				item = DummyTexs.smoke6;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 5 && fx.particleAge >= fx.maxAge / 8 * 4) {
-				item = ModItems.smoke5;
+				item = DummyTexs.smoke5;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 4 && fx.particleAge >= fx.maxAge / 8 * 3) {
-				item = ModItems.smoke4;
+				item = DummyTexs.smoke4;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 3 && fx.particleAge >= fx.maxAge / 8 * 2) {
-				item = ModItems.smoke3;
+				item = DummyTexs.smoke3;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 * 2 && fx.particleAge >= fx.maxAge / 8 * 1) {
-				item = ModItems.smoke2;
+				item = DummyTexs.smoke2;
 			}
 
 			if (fx.particleAge < fx.maxAge / 8 && fx.particleAge >= 0) {
-				item = ModItems.smoke1;
+				item = DummyTexs.smoke1;
 			}
 
 			TextureAtlasSprite tex = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(new ItemStack(item, 1, meta), null, null).getParticleTexture();

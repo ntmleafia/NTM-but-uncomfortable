@@ -4,18 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.machine.MachineChemplant;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.ChemplantRecipes;
 import com.hbm.inventory.RecipesCommon.AStack;
-import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.ToolSets;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemChemistryTemplate;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxParticlePacket;
 import com.hbm.packet.FluidTankPacket;
@@ -203,27 +202,27 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 			ItemStack stack = inventory.getStackInSlot(i);
 
 			if(!stack.isEmpty()) {
-				if(stack.getItem() == ModItems.upgrade_speed_1) {
+				if(stack.getItem() == Upgrades.upgrade_speed_1) {
 					s *= 0.75;
 					c *= 3;
 				}
-				if(stack.getItem() == ModItems.upgrade_speed_2) {
+				if(stack.getItem() == Upgrades.upgrade_speed_2) {
 					s *= 0.65;
 					c *= 6;
 				}
-				if(stack.getItem() == ModItems.upgrade_speed_3) {
+				if(stack.getItem() == Upgrades.upgrade_speed_3) {
 					s *= 0.5;
 					c *= 9;
 				}
-				if(stack.getItem() == ModItems.upgrade_power_1) {
+				if(stack.getItem() == Upgrades.upgrade_power_1) {
 					c *= 0.8;
 					s *= 1.25;
 				}
-				if(stack.getItem() == ModItems.upgrade_power_2) {
+				if(stack.getItem() == Upgrades.upgrade_power_2) {
 					c *= 0.4;
 					s *= 1.5;
 				}
-				if(stack.getItem() == ModItems.upgrade_power_3) {
+				if(stack.getItem() == Upgrades.upgrade_power_3) {
 					c *= 0.2;
 					s *= 2;
 				}
@@ -305,8 +304,8 @@ public class TileEntityMachineChemplant extends TileEntityMachineBase implements
 
 								removeItems(itemInputs, inventory);
 								removeFluids(fluidInputs);
-								if(inventory.getStackInSlot(0).getItem() == ModItems.meteorite_sword_machined)
-									inventory.setStackInSlot(0, new ItemStack(ModItems.meteorite_sword_treated));
+								if(inventory.getStackInSlot(0).getItem() == ToolSets.meteorite_sword_machined)
+									inventory.setStackInSlot(0, new ItemStack(ToolSets.meteorite_sword_treated));
 							}
 
 							power -= consumption;

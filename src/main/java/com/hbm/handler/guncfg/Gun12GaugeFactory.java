@@ -8,6 +8,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHurtBehavior;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.anim.BusAnimation;
@@ -163,7 +164,7 @@ public class Gun12GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_12gauge;
+		bullet.ammo = Armory.ammo_12gauge;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 4;
 		
@@ -174,7 +175,7 @@ public class Gun12GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_12gauge_incendiary;
+		bullet.ammo = Armory.ammo_12gauge_incendiary;
 		bullet.wear = 15;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 4;
@@ -187,7 +188,7 @@ public class Gun12GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_12gauge_shrapnel;
+		bullet.ammo = Armory.ammo_12gauge_shrapnel;
 		bullet.wear = 15;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 6;
@@ -202,7 +203,7 @@ public class Gun12GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_12gauge_du;
+		bullet.ammo = Armory.ammo_12gauge_du;
 		bullet.wear = 20;
 		bullet.dmgMin = 3;
 		bullet.dmgMax = 8;
@@ -216,7 +217,7 @@ public class Gun12GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_12gauge_marauder;
+		bullet.ammo = Armory.ammo_12gauge_marauder;
 		bullet.wear = 20;
 		bullet.dmgMin = 100;
 		bullet.dmgMax = 500;
@@ -239,7 +240,7 @@ public class Gun12GaugeFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardAirstrikeConfig();
 
-		bullet.ammo = ModItems.ammo_12gauge_sleek;
+		bullet.ammo = Armory.ammo_12gauge_sleek;
 
 		return bullet;
 	}

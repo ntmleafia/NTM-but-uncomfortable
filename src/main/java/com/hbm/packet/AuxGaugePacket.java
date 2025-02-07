@@ -119,6 +119,8 @@ public class AuxGaugePacket extends RecordablePacket {
 							base.efficiency = m.value;
 						else if(m.id == 3)
 							base.field = m.value;
+						else if(m.id == 4)
+							base.syncResonators = m.value == 1;
 					} else if(te instanceof TileEntityTurretCIWS) {
 						TileEntityTurretCIWS cwis = (TileEntityTurretCIWS) te;
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import com.hbm.items.ModItems.Armory;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.config.CompatibilityConfig;
@@ -185,7 +186,7 @@ public class ItemGunEgon extends ItemGunBase {
 	}
 	
 	public static float getFirstPersonAnimFade(EntityPlayer ent){
-		if(ent.getHeldItemMainhand().getItem() != ModItems.gun_egon)
+		if(ent.getHeldItemMainhand().getItem() != Armory.gun_egon)
 			return 0;
 		return MathHelper.clamp((m1 && Library.countInventoryItem(ent.inventory, getBeltType(ent, ent.getHeldItemMainhand(), true)) >= 2 ? activeTicks + MainRegistry.proxy.partialTicks() : activeTicks - MainRegistry.proxy.partialTicks() )/5F, 0, 1);
 	}

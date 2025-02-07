@@ -8,7 +8,7 @@ import com.hbm.items.ModItems;
 import com.hbm.blocks.ModBlocks;
 
 import com.google.common.collect.Sets;
-import com.hbm.main.MainRegistry;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.init.Blocks;
@@ -42,26 +42,26 @@ public class ItemMachineUpgrade extends Item {
 	}
 
 	public int getSpeed(){
-		if(this == ModItems.upgrade_speed_1) return 1;
-		if(this == ModItems.upgrade_speed_2) return 2;
-		if(this == ModItems.upgrade_speed_3) return 3;
-		if(this == ModItems.upgrade_overdrive_1) return 4;
-		if(this == ModItems.upgrade_overdrive_2) return 6;
-		if(this == ModItems.upgrade_overdrive_3) return 8;
-		if(this == ModItems.upgrade_screm) return 10;
+		if(this == Upgrades.upgrade_speed_1) return 1;
+		if(this == Upgrades.upgrade_speed_2) return 2;
+		if(this == Upgrades.upgrade_speed_3) return 3;
+		if(this == Upgrades.upgrade_overdrive_1) return 4;
+		if(this == Upgrades.upgrade_overdrive_2) return 6;
+		if(this == Upgrades.upgrade_overdrive_3) return 8;
+		if(this == Upgrades.upgrade_screm) return 10;
 		return 0;
 	}
 
 	public static int getSpeed(ItemStack stack){
 		if(stack == null || stack.isEmpty()) return 0;
 		Item upgrade = stack.getItem();
-		if(upgrade == ModItems.upgrade_speed_1) return 1;
-		if(upgrade == ModItems.upgrade_speed_2) return 2;
-		if(upgrade == ModItems.upgrade_speed_3) return 3;
-		if(upgrade == ModItems.upgrade_overdrive_1) return 4;
-		if(upgrade == ModItems.upgrade_overdrive_2) return 6;
-		if(upgrade == ModItems.upgrade_overdrive_3) return 8;
-		if(upgrade == ModItems.upgrade_screm) return 10;
+		if(upgrade == Upgrades.upgrade_speed_1) return 1;
+		if(upgrade == Upgrades.upgrade_speed_2) return 2;
+		if(upgrade == Upgrades.upgrade_speed_3) return 3;
+		if(upgrade == Upgrades.upgrade_overdrive_1) return 4;
+		if(upgrade == Upgrades.upgrade_overdrive_2) return 6;
+		if(upgrade == Upgrades.upgrade_overdrive_3) return 8;
+		if(upgrade == Upgrades.upgrade_screm) return 10;
 		return 0;
 	}
 	private static void writeUpgrade(List<String> list,String category,String key) {
@@ -102,7 +102,7 @@ public class ItemMachineUpgrade extends Item {
 				writeUpgrade(list,"tile.machine_turbofan.name","afterburner");
 				return; // why
 		}
-		if(this == ModItems.upgrade_radius)
+		if(this == Upgrades.upgrade_radius)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade7"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgraderd"));
@@ -110,7 +110,7 @@ public class ItemMachineUpgrade extends Item {
 			list.add(" "+I18nUtil.resolveKey("desc.upgradestack"));
 		}
 
-		if(this == ModItems.upgrade_health)
+		if(this == Upgrades.upgrade_health)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade8"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeht"));
@@ -118,38 +118,38 @@ public class ItemMachineUpgrade extends Item {
 			list.add(" "+I18nUtil.resolveKey("desc.upgradestack"));
 		}
 		
-		if(this == ModItems.upgrade_smelter)
+		if(this == Upgrades.upgrade_smelter)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade9"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgrade12"));
 		}
 
-		if(this == ModItems.upgrade_shredder)
+		if(this == Upgrades.upgrade_shredder)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade9"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgrade13"));
 		}
 
-		if(this == ModItems.upgrade_centrifuge)
+		if(this == Upgrades.upgrade_centrifuge)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade9"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgrade21"));
 		}
 
-		if(this == ModItems.upgrade_crystallizer)
+		if(this == Upgrades.upgrade_crystallizer)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade9"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgrade14"));
 		}
 
-		if(this == ModItems.upgrade_screm)
+		if(this == Upgrades.upgrade_screm)
 		{
 			list.add(I18nUtil.resolveKey("desc.upgrade15"));
 			list.add(I18nUtil.resolveKey("desc.upgrade16"));
 			list.add(I18nUtil.resolveKey("desc.upgrade17"));
 		}
 
-		if(this == ModItems.upgrade_nullifier)
+		if(this == Upgrades.upgrade_nullifier)
 		{
 			String[] duh = I18nUtil.resolveKey("jei.upg.nullify").split("__");
 			list.add(duh[0]);
@@ -157,37 +157,37 @@ public class ItemMachineUpgrade extends Item {
 				list.add(duh[1]);
 		}
 
-		if(this == ModItems.upgrade_ejector_1)
+		if(this == Upgrades.upgrade_ejector_1)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej1"));
 		}
 
-		if(this == ModItems.upgrade_ejector_2)
+		if(this == Upgrades.upgrade_ejector_2)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej2"));
 		}
 
-		if(this == ModItems.upgrade_ejector_3)
+		if(this == Upgrades.upgrade_ejector_3)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej3"));
 		}
 
-		if(this == ModItems.upgrade_stack_1)
+		if(this == Upgrades.upgrade_stack_1)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej4"));
 		}
 
-		if(this == ModItems.upgrade_stack_2)
+		if(this == Upgrades.upgrade_stack_2)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej5"));
 		}
 
-		if(this == ModItems.upgrade_stack_3)
+		if(this == Upgrades.upgrade_stack_3)
 		{
 			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("desc.upgrade22"));
 			list.add(" "+I18nUtil.resolveKey("desc.upgradeej6"));

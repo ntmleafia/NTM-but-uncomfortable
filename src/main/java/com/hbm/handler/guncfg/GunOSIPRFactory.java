@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
@@ -64,7 +65,7 @@ public class GunOSIPRFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_osipr_ammo;
+		bullet.ammo = Armory.gun_osipr_ammo;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 3;
 		bullet.dmgMax = 5;
@@ -77,7 +78,7 @@ public class GunOSIPRFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.gun_osipr_ammo2;
+		bullet.ammo = Armory.gun_osipr_ammo2;
 
 		return bullet;
 	}

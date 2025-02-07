@@ -4,7 +4,7 @@ import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.CrystallizerRecipes;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -224,11 +224,11 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 
 		for(int i = 5; i <= 6; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_1)
 				extra += acidRequired * 3;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_2)
 				extra += acidRequired * 4;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_3)
 				extra += acidRequired * 5;
 		}
 
@@ -241,11 +241,11 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 
 		for(int i = 5; i <= 6; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_1)
 				chance += 0.05F;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_2)
 				chance += 0.1F;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_3)
 				chance += 0.15F;
 		}
 
@@ -258,13 +258,13 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 
 		for(int i = 5; i <= 6; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_1)
 				durationMod *= 0.75F;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_2)
 				durationMod *= 0.5F;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_3)
 				durationMod *= 0.25F;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_screm)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_screm)
 				durationMod *= 0.1F;
 		}
 
@@ -277,13 +277,13 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 
 		for(int i = 5; i <= 6; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_1)
 				consumption += 1000;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_2)
 				consumption += 2000;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_3)
 				consumption += 3000;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_screm)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_screm)
 				consumption += 6000;
 		}
 
@@ -296,11 +296,11 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 
 		for(int i = 5; i <= 6; i++) {
 
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_1)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_1)
 				cycles += 2;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_2)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_2)
 				cycles += 4;
-			if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_3)
+			if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_3)
 				cycles += 6;
 		}
 

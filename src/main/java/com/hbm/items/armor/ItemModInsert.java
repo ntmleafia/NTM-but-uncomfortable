@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.common.collect.Multimap;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.interfaces.IItemHazard;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Inserts;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
@@ -52,7 +52,7 @@ public class ItemModInsert extends ItemArmorMod implements IItemHazard {
 		if(speed != 1F)
 			list.add(TextFormatting.BLUE + "-" + Math.round((1F - speed) * 100) + "% Speed");
 		
-		if(this == ModItems.insert_polonium)
+		if(this == Inserts.insert_polonium)
 			list.add(TextFormatting.DARK_RED + "+100 RAD/s");
 		
 		list.add((stack.getMaxDamage() - stack.getItemDamage()) + "/" + stack.getMaxDamage() + "HP");
@@ -76,7 +76,7 @@ public class ItemModInsert extends ItemArmorMod implements IItemHazard {
 		if(explosionMod != 1F)
 			desc.add("-" + Math.round((1F - speed) * 100) + "% speed");
 
-		if(this == ModItems.insert_polonium)
+		if(this == Inserts.insert_polonium)
 			desc.add("+100 RAD/s");
 		
 		String join = String.join(" / ", desc);
@@ -101,7 +101,7 @@ public class ItemModInsert extends ItemArmorMod implements IItemHazard {
 		
 		insert.setItemDamage(insert.getItemDamage() + 1);
 		
-		if(!event.getEntity().world.isRemote && this == ModItems.insert_era) {
+		if(!event.getEntity().world.isRemote && this == Inserts.insert_era) {
 			event.getEntity().world.newExplosion(event.getEntity(), event.getEntity().posX, event.getEntity().posY - event.getEntity().getYOffset() + event.getEntity().height * 0.5, event.getEntity().posZ, 0.05F, false, false);
 		}
 		
@@ -114,7 +114,7 @@ public class ItemModInsert extends ItemArmorMod implements IItemHazard {
 	
 	@Override
 	public void modUpdate(EntityLivingBase entity, ItemStack armor){
-		if(!entity.world.isRemote && this == ModItems.insert_polonium) {
+		if(!entity.world.isRemote && this == Inserts.insert_polonium) {
 			ContaminationUtil.contaminate(entity, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 5.0F);
 		}
 	}

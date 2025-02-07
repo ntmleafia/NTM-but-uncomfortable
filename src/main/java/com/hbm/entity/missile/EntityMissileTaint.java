@@ -7,6 +7,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.BlockTaint;
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
@@ -45,7 +46,7 @@ public class EntityMissileTaint extends EntityMissileBaseAdvanced {
 		list.add(new ItemStack(ModItems.wire_aluminium, 4));
 		list.add(new ItemStack(ModItems.plate_titanium, 4));
 		list.add(new ItemStack(ModItems.hull_small_aluminium, 2));
-		list.add(new ItemStack(ModItems.powder_magic, 1));
+		list.add(new ItemStack(Powders.powder_magic, 1));
 		list.add(new ItemStack(ModItems.circuit_targeting_tier1, 1));
 
 		return list;
@@ -53,7 +54,7 @@ public class EntityMissileTaint extends EntityMissileBaseAdvanced {
 
 	@Override
 	public ItemStack getDebrisRareDrop() {
-		return new ItemStack(ModItems.powder_spark_mix, 1);
+		return new ItemStack(Powders.powder_spark_mix, 1);
 	}
 
 	@Override

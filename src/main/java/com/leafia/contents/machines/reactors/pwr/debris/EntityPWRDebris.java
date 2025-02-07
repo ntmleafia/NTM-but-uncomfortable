@@ -6,8 +6,8 @@ import com.hbm.entity.projectile.EntityDebrisBase;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.main.MainRegistry;
-import com.hbm.saveddata.RadiationSavedData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
@@ -154,7 +154,7 @@ public class EntityPWRDebris extends EntityDebrisBase {
 						this.setDead();
 					break;
 				case CONTROL_ROD:
-					if(player.inventory.addItemStackToInventory((world.rand.nextInt(20) == 0 ? new ItemStack(ModItems.nugget_pb209) : new ItemStack(ModItems.nugget_lead,4))))
+					if(player.inventory.addItemStackToInventory((world.rand.nextInt(20) == 0 ? new ItemStack(Nuggies.nugget_pb209) : new ItemStack(Nuggies.nugget_lead,4))))
 						this.setDead();
 					break;
 				case GRAPHITE:

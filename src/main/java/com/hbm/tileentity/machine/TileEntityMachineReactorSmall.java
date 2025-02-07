@@ -10,7 +10,7 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.IRadResistantBlock;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.machine.ItemFuelRod;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.lib.HBMSoundHandler;
@@ -589,50 +589,50 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 		Item item = inventory.getStackInSlot(id).getItem();
 
-		if(item == ModItems.rod_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_uranium_fuel_depleted));
+		if(item == RetroRods.rod_uranium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_uranium_fuel_depleted));
 
-		} else if(item == ModItems.rod_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_thorium_fuel_depleted));
+		} else if(item == RetroRods.rod_thorium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_thorium_fuel_depleted));
 
-		} else if(item == ModItems.rod_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_plutonium_fuel_depleted));
+		} else if(item == RetroRods.rod_plutonium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_plutonium_fuel_depleted));
 
-		} else if(item == ModItems.rod_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_mox_fuel_depleted));
+		} else if(item == RetroRods.rod_mox_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_mox_fuel_depleted));
 
-		} else if(item == ModItems.rod_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_schrabidium_fuel_depleted));
+		} else if(item == RetroRods.rod_schrabidium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_schrabidium_fuel_depleted));
 
-		} else if(item == ModItems.rod_dual_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_uranium_fuel_depleted));
+		} else if(item == RetroRods.rod_dual_uranium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_dual_uranium_fuel_depleted));
 
-		} else if(item == ModItems.rod_dual_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_thorium_fuel_depleted));
+		} else if(item == RetroRods.rod_dual_thorium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_dual_thorium_fuel_depleted));
 
-		} else if(item == ModItems.rod_dual_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_plutonium_fuel_depleted));
+		} else if(item == RetroRods.rod_dual_plutonium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_dual_plutonium_fuel_depleted));
 
-		} else if(item == ModItems.rod_dual_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_mox_fuel_depleted));
+		} else if(item == RetroRods.rod_dual_mox_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_dual_mox_fuel_depleted));
 
-		} else if(item == ModItems.rod_dual_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_schrabidium_fuel_depleted));
+		} else if(item == RetroRods.rod_dual_schrabidium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_dual_schrabidium_fuel_depleted));
 
-		} else if(item == ModItems.rod_quad_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_uranium_fuel_depleted));
+		} else if(item == RetroRods.rod_quad_uranium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_quad_uranium_fuel_depleted));
 
-		} else if(item == ModItems.rod_quad_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_thorium_fuel_depleted));
+		} else if(item == RetroRods.rod_quad_thorium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_quad_thorium_fuel_depleted));
 
-		} else if(item == ModItems.rod_quad_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_plutonium_fuel_depleted));
+		} else if(item == RetroRods.rod_quad_plutonium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_quad_plutonium_fuel_depleted));
 
-		} else if(item == ModItems.rod_quad_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_mox_fuel_depleted));
+		} else if(item == RetroRods.rod_quad_mox_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_quad_mox_fuel_depleted));
 
-		} else if(item == ModItems.rod_quad_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_schrabidium_fuel_depleted));
+		} else if(item == RetroRods.rod_quad_schrabidium_fuel) {
+			inventory.setStackInSlot(id, new ItemStack(RetroRods.rod_quad_schrabidium_fuel_depleted));
 		}
 	}
 

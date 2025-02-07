@@ -6,6 +6,8 @@ import com.hbm.config.CompatibilityConfig;
 import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionThermo;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
@@ -525,7 +527,7 @@ public class EntityPlasmaBeam extends Entity implements IProjectile {
     }
     
     private boolean surviveImmolation(EntityPlayer player) {
-    	if(player instanceof EntityPlayerMP && Library.hasInventoryItem(player.inventory, ModItems.gun_revolver_pip) && Library.hasInventoryItem(player.inventory, ModItems.bottle_rad) && Library.hasInventoryItem(player.inventory, ModItems.geiger_counter)) {
+    	if(player instanceof EntityPlayerMP && Library.hasInventoryItem(player.inventory, Armory.gun_revolver_pip) && Library.hasInventoryItem(player.inventory, Foods.bottle_rad) && Library.hasInventoryItem(player.inventory, ModItems.geiger_counter)) {
     		AdvancementManager.grantAchievement((EntityPlayerMP) player, AdvancementManager.achSacrifice);
     		player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 3 * 20, 6));
     		return true;

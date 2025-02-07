@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.missile.EntityBombletSelena;
 import com.hbm.entity.projectile.EntityRocket;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 
 import com.hbm.util.I18nUtil;
@@ -56,7 +57,7 @@ public class GunDampfmaschine extends Item {
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
 		World world = player.world;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_dampfmaschine){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_dampfmaschine){
 			player.getHeldItemOffhand().getItem().onUsingTick(player.getHeldItemOffhand(), player, count);
 		}
 		if (true) {

@@ -7,7 +7,8 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHurtBehavior;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.weapon.ItemGunDart;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -56,7 +57,7 @@ public class GunDartFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_dart;
+		bullet.ammo = Armory.ammo_dart;
 		bullet.velocity = 5.0F;
 		bullet.spread = 0;
 		bullet.dmgMin = 1;
@@ -78,7 +79,7 @@ public class GunDartFactory {
 
 				if(hit instanceof EntityPlayer) {
 
-					if(Library.hasInventoryItem(((EntityPlayer) hit).inventory, ModItems.ingot_meteorite_forged))
+					if(Library.hasInventoryItem(((EntityPlayer) hit).inventory, Ingots.ingot_meteorite_forged))
 						return;
 
 					if(bullet.shooter instanceof EntityPlayer) {
@@ -86,7 +87,7 @@ public class GunDartFactory {
 						EntityPlayer shooter = (EntityPlayer) bullet.shooter;
 
 						for(EnumHand hand : EnumHand.values())
-							if(shooter.getHeldItem(hand) != null && shooter.getHeldItem(hand).getItem() == ModItems.gun_darter) {
+							if(shooter.getHeldItem(hand) != null && shooter.getHeldItem(hand).getItem() == Armory.gun_darter) {
 								ItemGunDart.writePlayer(shooter.getHeldItem(hand), (EntityPlayer)hit);
 								shooter.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
 							}

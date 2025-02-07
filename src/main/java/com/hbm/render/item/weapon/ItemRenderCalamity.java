@@ -1,5 +1,6 @@
 package com.hbm.render.item.weapon;
 
+import com.hbm.items.ModItems.Armory;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.items.ModItems;
@@ -48,7 +49,7 @@ public class ItemRenderCalamity extends TEISRBase {
 				GL11.glRotated(40, 0, 0, 1);
 			}
 			
-			if(item.getItem() == ModItems.gun_calamity) {
+			if(item.getItem() == Armory.gun_calamity) {
 				GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
 				GL11.glRotatef(5.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glTranslatef(-0.2F, 0.0F, -0.2F);
@@ -58,7 +59,7 @@ public class ItemRenderCalamity extends TEISRBase {
 				Minecraft.getMinecraft().renderEngine.bindTexture(stock_rl);
 				stock.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 			}
-			if(item.getItem() == ModItems.gun_calamity_dual) {
+			if(item.getItem() == Armory.gun_calamity_dual) {
 				GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
 				GL11.glRotatef(-5.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glTranslatef(-0.5F, 0F, -0.2F);
@@ -79,21 +80,21 @@ public class ItemRenderCalamity extends TEISRBase {
 			GL11.glTranslated(0.4, 0.4, -0.3);
 			GL11.glRotated(-90, 0, 1, 0);
 			GL11.glRotated(180, 1, 0, 0);
-			if(item.getItem() == ModItems.gun_calamity) {
+			if(item.getItem() == Armory.gun_calamity) {
 				GL11.glScalef(0.75F, 0.75F, 0.75F);
 				GL11.glTranslatef(0.5F, 0.0F, 0.0F);
 			}
-			if(item.getItem() == ModItems.gun_calamity_dual) {
+			if(item.getItem() == Armory.gun_calamity_dual) {
 				GL11.glScalef(0.75F, 0.75F, 0.75F);
 				GL11.glTranslatef(0.5F, 0.0F, 0.0F);
 			}
-			if(item.getItem() == ModItems.gun_calamity) {
+			if(item.getItem() == Armory.gun_calamity) {
 				Minecraft.getMinecraft().renderEngine.bindTexture(barrel_rl);
 				barrel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				Minecraft.getMinecraft().renderEngine.bindTexture(stock_rl);
 				stock.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 			}
-			if(item.getItem() == ModItems.gun_calamity_dual) {
+			if(item.getItem() == Armory.gun_calamity_dual) {
 				Minecraft.getMinecraft().renderEngine.bindTexture(dualStock_rl);
 				saddle.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				Minecraft.getMinecraft().renderEngine.bindTexture(barrel_rl);
@@ -108,19 +109,19 @@ public class ItemRenderCalamity extends TEISRBase {
 		case GROUND:
 			GL11.glTranslated(0.5, 0.5, 0.5);
 			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
-			if(item.getItem() == ModItems.gun_calamity) {
+			if(item.getItem() == Armory.gun_calamity) {
 				GL11.glScalef(0.75F, 0.75F, 0.75F);
 			}
-			if(item.getItem() == ModItems.gun_calamity_dual) {
+			if(item.getItem() == Armory.gun_calamity_dual) {
 				GL11.glScalef(0.75F, 0.75F, 0.75F);
 			}
-			if(item.getItem() == ModItems.gun_calamity) {
+			if(item.getItem() == Armory.gun_calamity) {
 				Minecraft.getMinecraft().renderEngine.bindTexture(barrel_rl);
 				barrel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				Minecraft.getMinecraft().renderEngine.bindTexture(stock_rl);
 				stock.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 			}
-			if(item.getItem() == ModItems.gun_calamity_dual) {
+			if(item.getItem() == Armory.gun_calamity_dual) {
 				Minecraft.getMinecraft().renderEngine.bindTexture(dualStock_rl);
 				saddle.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				Minecraft.getMinecraft().renderEngine.bindTexture(barrel_rl);

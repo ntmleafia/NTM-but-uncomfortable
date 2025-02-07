@@ -9,14 +9,12 @@ import com.hbm.blocks.BlockDummyable;
 import com.hbm.inventory.ChemplantRecipes;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.ToolSets;
 import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.handler.MultiblockHandler;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.InventoryUtil;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,12 +30,10 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class TileEntityMachineChemplantBase extends TileEntityMachineBase implements IEnergyUser, ITickable, IFluidHandler {
 	public long power;
@@ -248,8 +244,8 @@ public abstract class TileEntityMachineChemplantBase extends TileEntityMachineBa
 		this.power -= this.consumption;
 		this.progress[index]++;
 
-		if(inventory.getStackInSlot(0).getItem() == ModItems.meteorite_sword_machined) {
-			inventory.setStackInSlot(0, new ItemStack(ModItems.meteorite_sword_machined));
+		if(inventory.getStackInSlot(0).getItem() == ToolSets.meteorite_sword_machined) {
+			inventory.setStackInSlot(0, new ItemStack(ToolSets.meteorite_sword_machined));
 		}
 
 		int templateIdx = getTemplateIndex(index);

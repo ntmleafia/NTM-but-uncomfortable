@@ -2,6 +2,7 @@ package com.hbm.items.weapon;
 
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.Library;
 import com.hbm.packet.GunAnimationPacket;
 import com.hbm.packet.MeathookResetStrafePacket;
@@ -181,7 +182,7 @@ public class ItemGunShotty extends ItemGunBase {
 	}
 	
 	public static boolean hasHookedEntity(World w, ItemStack stack){
-		if(stack == null || stack.getItem() != ModItems.gun_supershotgun)
+		if(stack == null || stack.getItem() != Armory.gun_supershotgun)
 			return false;
 		int timeout = getTimeout(stack);
 		return timeout > 0 && getHookedEntity(w, stack) != null;	

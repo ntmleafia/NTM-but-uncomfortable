@@ -2,12 +2,13 @@ package com.hbm.items.armor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.hbm.items.ModItems.ArmorSets;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.collect.Multimap;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.handler.ArmorUtil;
-import com.hbm.items.ModItems;
 import com.hbm.items.gear.ArmorFSB;
 import com.hbm.lib.RefStrings;
 import com.hbm.render.model.ModelM65;
@@ -50,7 +51,7 @@ public class ArmorLiquidator extends ArmorFSB implements IGasMask {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default) {
-		if (this == ModItems.liquidator_helmet) {
+		if (this == ArmorSets.liquidator_helmet) {
 			if (armorSlot == EntityEquipmentSlot.HEAD) {
 				if (this.model == null) {
 					this.model = new ModelM65();
@@ -97,7 +98,7 @@ public class ArmorLiquidator extends ArmorFSB implements IGasMask {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn){
 		super.addInformation(stack, worldIn, list, flagIn);
-		if (this == ModItems.liquidator_helmet)
+		if (this == ArmorSets.liquidator_helmet)
 			ArmorUtil.addGasMaskTooltip(stack, worldIn, list, flagIn);
 	}
 
@@ -128,7 +129,7 @@ public class ArmorLiquidator extends ArmorFSB implements IGasMask {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		if (this == ModItems.liquidator_helmet){
+		if (this == ArmorSets.liquidator_helmet){
 			if(player.isSneaking()) {
 				ItemStack stack = player.getHeldItem(hand);
 				ItemStack filter = this.getFilter(stack);

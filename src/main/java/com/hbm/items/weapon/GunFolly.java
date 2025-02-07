@@ -5,6 +5,7 @@ import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.interfaces.IHoldableWeapon;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
@@ -47,10 +48,10 @@ public class GunFolly extends Item implements IHoldableWeapon {
 			
 		} else if(state == 1) {
 			
-			if(Library.hasInventoryItem(player.inventory, ModItems.ammo_folly)) {
+			if(Library.hasInventoryItem(player.inventory, Armory.ammo_folly)) {
 
 				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.follyReload, SoundCategory.PLAYERS, 1.0F, 1.0F);
-				Library.consumeInventoryItem(player.inventory, ModItems.ammo_folly);
+				Library.consumeInventoryItem(player.inventory, Armory.ammo_folly);
 				setState(stack, 2);
 			} else {
 				

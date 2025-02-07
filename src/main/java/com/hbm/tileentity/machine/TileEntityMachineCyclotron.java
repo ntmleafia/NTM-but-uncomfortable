@@ -1,6 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.blocks.ModBlocks;
 import com.hbm.config.BombConfig;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.inventory.RecipesCommon.AStack;
@@ -15,6 +14,8 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.CyclotronRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Powders;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -543,11 +544,11 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_1)
 					speed += 1;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_2)
 					speed += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_3)
 					speed += 3;
 			}
 		}
@@ -563,11 +564,11 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_1)
 					speed += 1;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_2)
 					speed += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_power_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_power_3)
 					speed += 3;
 			}
 		}
@@ -583,11 +584,11 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_1)
 					speed += 1;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_2)
 					speed += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_3)
 					speed += 3;
 			}
 		}
@@ -642,7 +643,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 	public static Item getItemForPlug(int i) {
 
 		switch(i) {
-		case 0: return ModItems.powder_balefire;
+		case 0: return Powders.powder_balefire;
 		case 1: return ModItems.book_of_;
 		case 2: return ModItems.diamond_gavel;
 		case 3: return ModItems.coin_maskman;

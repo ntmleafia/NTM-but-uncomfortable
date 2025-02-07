@@ -2,15 +2,13 @@ package com.hbm.blocks.machine.pile;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFuel;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.ParticleBurstPacket;
 
 import api.hbm.block.IToolable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -40,7 +38,7 @@ public class BlockGraphite extends BlockHazardFuel implements IToolable {
 			PacketDispatcher.wrapper.sendToAllAround(new ParticleBurstPacket(x, y, z, Block.getIdFromBlock(this), 0), new TargetPoint(world.provider.getDimension(), x, y, z, 50));
 			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, this.blockSoundType.getStepSound(), SoundCategory.BLOCKS, (this.blockSoundType.getVolume() + 1.0F) / 2.0F, this.blockSoundType.pitch * 0.8F);
 
-			BlockGraphiteRod.ejectItem(world, x, y, z, side, new ItemStack(ModItems.powder_coal));
+			BlockGraphiteRod.ejectItem(world, x, y, z, side, new ItemStack(Powders.powder_coal));
 		}
 		
 		return true;

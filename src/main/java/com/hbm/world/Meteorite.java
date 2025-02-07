@@ -12,6 +12,7 @@ import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
 
@@ -128,7 +129,7 @@ public class Meteorite {
 			case 12:
 				//Star Blaster
 				world.createExplosion(null, x + 0.5, y + 0.5, z + 0.5, 10F, true);
-				ItemStack stack = new ItemStack(ModItems.gun_b92);
+				ItemStack stack = new ItemStack(Armory.gun_b92);
 				stack.setStackDisplayName("§9Star Blaster§r");
 				EntityItem blaster = new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, stack);
 				world.spawnEntity(blaster);

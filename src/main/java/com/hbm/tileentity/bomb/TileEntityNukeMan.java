@@ -2,6 +2,7 @@ package com.hbm.tileentity.bomb;
 
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Materials.Nuggies;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -81,7 +82,7 @@ public class TileEntityNukeMan extends TileEntity {
 					if (amt <= 5)
 						return true;
 					else
-						inventory.setStackInSlot(5,new ItemStack(ModItems.nugget_pu239,amt));
+						inventory.setStackInSlot(5,new ItemStack(Nuggies.nugget_pu239,amt));
 				}
 			}
 		}

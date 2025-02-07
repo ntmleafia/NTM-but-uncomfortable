@@ -7,6 +7,8 @@ import java.util.Random;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.missile.EntityMinerRocket;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Crystals;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.machine.ItemSatChip;
 import com.hbm.saveddata.satellites.Satellite;
 import com.hbm.saveddata.satellites.SatelliteMiner;
@@ -19,14 +21,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -157,42 +157,42 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 	}
 
 	private WeightedRandomObject[] cargo = new WeightedRandomObject[] { 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_aluminium, 3), 10), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_iron, 3), 10), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_titanium, 2), 8), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_coal, 4), 15), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_uranium, 2), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_plutonium, 1), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_thorium, 2), 7), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_desh_mix, 3), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_diamond, 2), 7), 
+		new WeightedRandomObject(new ItemStack(Powders.powder_aluminium, 3), 10),
+		new WeightedRandomObject(new ItemStack(Powders.powder_iron, 3), 10),
+		new WeightedRandomObject(new ItemStack(Powders.powder_titanium, 2), 8),
+		new WeightedRandomObject(new ItemStack(Powders.powder_coal, 4), 15),
+		new WeightedRandomObject(new ItemStack(Powders.powder_uranium, 2), 5),
+		new WeightedRandomObject(new ItemStack(Powders.powder_plutonium, 1), 5),
+		new WeightedRandomObject(new ItemStack(Powders.powder_thorium, 2), 7),
+		new WeightedRandomObject(new ItemStack(Powders.powder_desh_mix, 3), 5),
+		new WeightedRandomObject(new ItemStack(Powders.powder_diamond, 2), 7),
 		new WeightedRandomObject(new ItemStack(Items.REDSTONE, 5), 15), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_nitan_mix, 2), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_power, 2), 5),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_copper, 5), 15), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_lead, 3), 10), 
+		new WeightedRandomObject(new ItemStack(Powders.powder_nitan_mix, 2), 5),
+		new WeightedRandomObject(new ItemStack(Powders.powder_power, 2), 5),
+		new WeightedRandomObject(new ItemStack(Powders.powder_copper, 5), 15),
+		new WeightedRandomObject(new ItemStack(Powders.powder_lead, 3), 10),
 		new WeightedRandomObject(new ItemStack(ModItems.fluorite, 4), 15), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_lapis, 4), 10), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_combine_steel, 1), 1), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_aluminium, 1), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_gold, 1), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_phosphorus, 1), 10), 
+		new WeightedRandomObject(new ItemStack(Powders.powder_lapis, 4), 10),
+		new WeightedRandomObject(new ItemStack(Powders.powder_combine_steel, 1), 1),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_aluminium, 1), 5),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_gold, 1), 5),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_phosphorus, 1), 10),
 		new WeightedRandomObject(new ItemStack(ModBlocks.gravel_diamond, 1), 3), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_uranium, 1), 3), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_plutonium, 1), 3), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_trixite, 1), 1), 
-		new WeightedRandomObject(new ItemStack(ModItems.crystal_starmetal, 1), 1)
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_uranium, 1), 3),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_plutonium, 1), 3),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_trixite, 1), 1),
+		new WeightedRandomObject(new ItemStack(Crystals.crystal_starmetal, 1), 1)
 	};
 
 	private WeightedRandomObject[] cargoGerald = new WeightedRandomObject[] { 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_meteorite, 12), 128),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_plutonium, 4), 64), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_combine_steel, 6), 64), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_tektite, 16), 32), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_tantalium, 1), 16),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_schrabidium, 1), 8),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_bismuth, 1), 4),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_radspice, 1), 1)
+		new WeightedRandomObject(new ItemStack(Powders.powder_meteorite, 12), 128),
+		new WeightedRandomObject(new ItemStack(Powders.powder_plutonium, 4), 64),
+		new WeightedRandomObject(new ItemStack(Powders.powder_combine_steel, 6), 64),
+		new WeightedRandomObject(new ItemStack(Powders.powder_tektite, 16), 32),
+		new WeightedRandomObject(new ItemStack(Powders.powder_tantalium, 1), 16),
+		new WeightedRandomObject(new ItemStack(Powders.powder_schrabidium, 1), 8),
+		new WeightedRandomObject(new ItemStack(Powders.powder_bismuth, 1), 4),
+		new WeightedRandomObject(new ItemStack(Powders.powder_radspice, 1), 1)
 	};
 
 	private void addToInv(ItemStack stack){

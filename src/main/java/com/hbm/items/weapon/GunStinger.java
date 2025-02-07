@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityRocketHoming;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -34,9 +35,9 @@ public class GunStinger extends Item {
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.maxStackSize = 1;
-        if(this == ModItems.gun_stinger)
+        if(this == Armory.gun_stinger)
         	this.setMaxDamage(500);
-        if(this == ModItems.gun_skystinger)
+        if(this == Armory.gun_skystinger)
         	this.setMaxDamage(1000);
 		
 		ModItems.ALL_ITEMS.add(this);
@@ -48,12 +49,12 @@ public class GunStinger extends Item {
 			return;
 		
 		EntityPlayer player = (EntityPlayer)entityLiving;
-		if(player.getHeldItemMainhand() == stack && (player.getHeldItemOffhand().getItem() == ModItems.gun_stinger || player.getHeldItemOffhand().getItem() == ModItems.gun_skystinger)){
+		if(player.getHeldItemMainhand() == stack && (player.getHeldItemOffhand().getItem() == Armory.gun_stinger || player.getHeldItemOffhand().getItem() == Armory.gun_skystinger)){
 			player.getHeldItemOffhand().onPlayerStoppedUsing(worldIn, entityLiving, timeLeft);
 		}
 		int j = this.getMaxItemUseDuration(stack) - timeLeft;
 
-		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, worldIn, j, Library.hasInventoryItem(player.inventory, ModItems.gun_stinger_ammo));
+		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, worldIn, j, Library.hasInventoryItem(player.inventory, Armory.gun_stinger_ammo));
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
 			return;
@@ -63,7 +64,7 @@ public class GunStinger extends Item {
 		boolean flag = player.capabilities.isCreativeMode
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 
-		if (flag || Library.hasInventoryItem(player.inventory, ModItems.gun_stinger_ammo)) {
+		if (flag || Library.hasInventoryItem(player.inventory, Armory.gun_stinger_ammo)) {
 			float f = j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -77,23 +78,23 @@ public class GunStinger extends Item {
 
 			stack.damageItem(1, player);
 			
-			if(this == ModItems.gun_stinger)
+			if(this == Armory.gun_stinger)
 				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.rpgShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
-			if(this == ModItems.gun_skystinger)
+			if(this == Armory.gun_skystinger)
 				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.rpgShoot, SoundCategory.PLAYERS, 1.0F, 0.5F);
 
-			Library.consumeInventoryItem(player.inventory, ModItems.gun_stinger_ammo);
+			Library.consumeInventoryItem(player.inventory, Armory.gun_stinger_ammo);
 
 			if (!worldIn.isRemote) {
 				EnumHand hand = player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
-				if(this == ModItems.gun_stinger) {
+				if(this == Armory.gun_stinger) {
 					EntityRocketHoming entityarrow = new EntityRocketHoming(worldIn, player, 1.0F, hand);
 					if(player.isSneaking())
 						entityarrow.homingRadius = 0;
 					worldIn.spawnEntity(entityarrow);
 				}
 				
-				if(this == ModItems.gun_skystinger) {
+				if(this == Armory.gun_skystinger) {
 					
 					if(player.isSneaking()) {
 						EntityRocketHoming entityarrow = new EntityRocketHoming(worldIn, player, 1.5F, hand);
@@ -134,7 +135,7 @@ public class GunStinger extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
-		if(this == ModItems.gun_stinger) {
+		if(this == Armory.gun_stinger) {
         	list.add("Woosh, beep-beep-beep!");
 			list.add("");
 			list.add("Ammo: §eStinger Rockets");
@@ -142,7 +143,7 @@ public class GunStinger extends Item {
 			list.add(" Projectiles explode on impact.");
 			list.add(" Alt-fire disables homing effect.");
         }
-        if(this == ModItems.gun_skystinger) {
+        if(this == Armory.gun_skystinger) {
         	list.add("Oh, I get it, because of the...nyeees!");
         	list.add("It all makes sense now!");
 			list.add("");
@@ -157,7 +158,7 @@ public class GunStinger extends Item {
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		ArrowNockEvent event = new ArrowNockEvent(playerIn, playerIn.getHeldItem(handIn), handIn, worldIn, Library.hasInventoryItem(playerIn.inventory, ModItems.gun_stinger_ammo));
+		ArrowNockEvent event = new ArrowNockEvent(playerIn, playerIn.getHeldItem(handIn), handIn, worldIn, Library.hasInventoryItem(playerIn.inventory, Armory.gun_stinger_ammo));
 		MinecraftForge.EVENT_BUS.post(event);
 		playerIn.setActiveHand(handIn);
 		

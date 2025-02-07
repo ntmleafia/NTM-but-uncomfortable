@@ -6,6 +6,7 @@ import java.util.Random;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityPlasmaBeam;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -59,14 +60,14 @@ public class GunHP extends Item {
 		if(!(player1 instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer) player1;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_hp){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_hp){
 			player.getHeldItemOffhand().getItem().onUsingTick(player.getHeldItemOffhand(), player, count);
 		}
 		World world = player.world;
 		
 		boolean flag = player.capabilities.isCreativeMode
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, ModItems.gun_hp_ammo))) {
+		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_hp_ammo))) {
 
 			EnumHand hand = player.getHeldItem(EnumHand.MAIN_HAND) == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
 			EntityPlasmaBeam plasma = new EntityPlasmaBeam(world, player, 1F, hand);
@@ -91,7 +92,7 @@ public class GunHP extends Item {
 				plasma.canBePickedUp = 2;
 			} else {
 				if (count % 20 == 0)
-					Library.consumeInventoryItem(player.inventory, ModItems.gun_hp_ammo);
+					Library.consumeInventoryItem(player.inventory, Armory.gun_hp_ammo);
 			}
 
 			if (count == this.getMaxItemUseDuration(stack))

@@ -2,6 +2,7 @@ package com.hbm.blocks;
 
 import com.hbm.blocks.machine.pile.BlockGraphiteDrilledBase;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.lib.HBMSoundHandler;
 
 import net.minecraft.block.Block;
@@ -34,7 +35,7 @@ public class BlockGraphiteDrilled extends BlockGraphiteDrilledBase {
 				if(checkInteraction(world, x, y, z, axis, player, hand, ModItems.pile_rod_plutonium, ModBlocks.block_graphite_plutonium)) return true;
 				if(checkInteraction(world, x, y, z, axis, player, hand, ModItems.pile_rod_source, ModBlocks.block_graphite_source)) return true;
 				if(checkInteraction(world, x, y, z, axis, player, hand, ModItems.pile_rod_boron, ModBlocks.block_graphite_rod)) return true;
-				if(checkInteraction(world, x, y, z, null, player, hand, ModItems.ingot_graphite, ModBlocks.block_graphite)) return true;
+				if(checkInteraction(world, x, y, z, null, player, hand, Ingots.ingot_graphite, ModBlocks.block_graphite)) return true;
 			}
 		}
 		

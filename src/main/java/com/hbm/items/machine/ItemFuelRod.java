@@ -2,8 +2,9 @@ package com.hbm.items.machine;
 
 import java.util.List;
 
+import com.hbm.items.ModItems.Materials.Billets;
+import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.special.ItemHazard;
-import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
 
 import com.hbm.util.I18nUtil;
@@ -81,25 +82,25 @@ public class ItemFuelRod extends ItemHazard {
     }
 
     public ItemStack getUncrafting(){
-    	if(this == ModItems.rod_uranium_fuel) return new ItemStack(ModItems.billet_uranium_fuel);
-    	if(this == ModItems.rod_dual_uranium_fuel) return new ItemStack(ModItems.billet_uranium_fuel, 2);
-    	if(this == ModItems.rod_quad_uranium_fuel) return new ItemStack(ModItems.billet_uranium_fuel, 4);
+    	if(this == RetroRods.rod_uranium_fuel) return new ItemStack(Billets.billet_uranium_fuel);
+    	if(this == RetroRods.rod_dual_uranium_fuel) return new ItemStack(Billets.billet_uranium_fuel, 2);
+    	if(this == RetroRods.rod_quad_uranium_fuel) return new ItemStack(Billets.billet_uranium_fuel, 4);
     	
-    	if(this == ModItems.rod_thorium_fuel) return new ItemStack(ModItems.billet_thorium_fuel);
-    	if(this == ModItems.rod_dual_thorium_fuel) return new ItemStack(ModItems.billet_thorium_fuel, 2);
-    	if(this == ModItems.rod_quad_thorium_fuel) return new ItemStack(ModItems.billet_thorium_fuel, 4);
+    	if(this == RetroRods.rod_thorium_fuel) return new ItemStack(Billets.billet_thorium_fuel);
+    	if(this == RetroRods.rod_dual_thorium_fuel) return new ItemStack(Billets.billet_thorium_fuel, 2);
+    	if(this == RetroRods.rod_quad_thorium_fuel) return new ItemStack(Billets.billet_thorium_fuel, 4);
     	
-    	if(this == ModItems.rod_plutonium_fuel) return new ItemStack(ModItems.billet_plutonium_fuel);
-    	if(this == ModItems.rod_dual_plutonium_fuel) return new ItemStack(ModItems.billet_plutonium_fuel, 2);
-    	if(this == ModItems.rod_quad_plutonium_fuel) return new ItemStack(ModItems.billet_plutonium_fuel, 4);
+    	if(this == RetroRods.rod_plutonium_fuel) return new ItemStack(Billets.billet_plutonium_fuel);
+    	if(this == RetroRods.rod_dual_plutonium_fuel) return new ItemStack(Billets.billet_plutonium_fuel, 2);
+    	if(this == RetroRods.rod_quad_plutonium_fuel) return new ItemStack(Billets.billet_plutonium_fuel, 4);
     	
-    	if(this == ModItems.rod_mox_fuel) return new ItemStack(ModItems.billet_mox_fuel);
-    	if(this == ModItems.rod_dual_mox_fuel) return new ItemStack(ModItems.billet_mox_fuel, 2);
-    	if(this == ModItems.rod_quad_mox_fuel) return new ItemStack(ModItems.billet_mox_fuel, 4);
+    	if(this == RetroRods.rod_mox_fuel) return new ItemStack(Billets.billet_mox_fuel);
+    	if(this == RetroRods.rod_dual_mox_fuel) return new ItemStack(Billets.billet_mox_fuel, 2);
+    	if(this == RetroRods.rod_quad_mox_fuel) return new ItemStack(Billets.billet_mox_fuel, 4);
     	
-    	if(this == ModItems.rod_schrabidium_fuel) return new ItemStack(ModItems.billet_schrabidium_fuel);
-    	if(this == ModItems.rod_dual_schrabidium_fuel) return new ItemStack(ModItems.billet_schrabidium_fuel, 2);
-    	if(this == ModItems.rod_quad_schrabidium_fuel) return new ItemStack(ModItems.billet_schrabidium_fuel, 4);
+    	if(this == RetroRods.rod_schrabidium_fuel) return new ItemStack(Billets.billet_schrabidium_fuel);
+    	if(this == RetroRods.rod_dual_schrabidium_fuel) return new ItemStack(Billets.billet_schrabidium_fuel, 2);
+    	if(this == RetroRods.rod_quad_schrabidium_fuel) return new ItemStack(Billets.billet_schrabidium_fuel, 4);
     	return ItemStack.EMPTY;
     }
 }

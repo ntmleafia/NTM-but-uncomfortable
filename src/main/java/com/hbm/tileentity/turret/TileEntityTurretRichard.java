@@ -7,6 +7,7 @@ import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.amlfrom1710.Vec3;
 
@@ -121,7 +122,7 @@ public class TileEntityTurretRichard extends TileEntityTurretBaseNT {
 				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.richard_fire, SoundCategory.BLOCKS, 2.0F, 1.0F);
 				this.loaded--;
 				
-				if(conf.ammo == ModItems.ammo_rocket_nuclear)
+				if(conf.ammo == Armory.ammo_rocket_nuclear)
 					timer = -50;
 				
 			} else {

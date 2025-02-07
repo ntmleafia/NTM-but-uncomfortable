@@ -8,7 +8,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHitBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -152,7 +152,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_556;
+		bullet.ammo = Armory.ammo_556;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 4;
@@ -164,7 +164,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_566_gold;
+		bullet.ammo = Armory.ammo_566_gold;
 		bullet.spread = 0.0F;
 
 		return bullet;
@@ -174,7 +174,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_phosphorus;
+		bullet.ammo = Armory.ammo_556_phosphorus;
 		bullet.wear = 15;
 		bullet.incendiary = 5;
 		bullet.doesPenetrate = false;
@@ -206,7 +206,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_ap;
+		bullet.ammo = Armory.ammo_556_ap;
 		bullet.dmgMin = 4;
 		bullet.dmgMax = 6;
 		bullet.wear = 15;
@@ -219,7 +219,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_du;
+		bullet.ammo = Armory.ammo_556_du;
 		bullet.dmgMin = 8;
 		bullet.dmgMax = 10;
 		bullet.wear = 25;
@@ -232,7 +232,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_star;
+		bullet.ammo = Armory.ammo_556_star;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 20;
 		bullet.wear = 25;
@@ -245,7 +245,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_tracer;
+		bullet.ammo = Armory.ammo_556_tracer;
 		bullet.vPFX = "reddust";
 
 		return bullet;
@@ -255,7 +255,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_sleek;
+		bullet.ammo = Armory.ammo_556_sleek;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 20;
 		bullet.wear = 10;
@@ -304,7 +304,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556FlechetteConfig();
 
-		bullet.ammo = ModItems.ammo_556_flechette_sleek;
+		bullet.ammo = Armory.ammo_556_flechette_sleek;
 		bullet.dmgMin = 12;
 		bullet.dmgMax = 16;
 		bullet.wear = 10;
@@ -353,7 +353,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556Config();
 
-		bullet.ammo = ModItems.ammo_556_flechette;
+		bullet.ammo = Armory.ammo_556_flechette;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 8;
 		bullet.HBRC = 2;
@@ -369,7 +369,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556FlechetteConfig();
 
-		bullet.ammo = ModItems.ammo_556_flechette_incendiary;
+		bullet.ammo = Armory.ammo_556_flechette_incendiary;
 		bullet.incendiary = 5;
 
 		return bullet;
@@ -379,7 +379,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556FlechetteConfig();
 
-		bullet.ammo = ModItems.ammo_556_flechette_phosphorus;
+		bullet.ammo = Armory.ammo_556_flechette_phosphorus;
 		bullet.incendiary = 5;
 
 		PotionEffect eff = new PotionEffect(HbmPotion.phosphorus, 20 * 20, 0, true, false);
@@ -409,7 +409,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = get556FlechetteConfig();
 
-		bullet.ammo = ModItems.ammo_556_flechette_du;
+		bullet.ammo = Armory.ammo_556_flechette_du;
 		bullet.dmgMin = 12;
 		bullet.dmgMax = 16;
 		bullet.wear = 25;
@@ -423,7 +423,7 @@ public class Gun556mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_556_k;
+		bullet.ammo = Armory.ammo_556_k;
 		bullet.dmgMin = 0;
 		bullet.dmgMax = 0;
 		bullet.maxAge = 0;

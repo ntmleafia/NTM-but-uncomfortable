@@ -3,10 +3,9 @@ package com.hbm.tileentity.machine;
 import java.util.List;
 
 import com.hbm.entity.particle.EntitySSmokeFX;
-import com.hbm.entity.particle.EntityTSmokeFX;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.main.MainRegistry;
 import com.hbm.inventory.EngineRecipes;
 import com.hbm.lib.Library;
@@ -17,7 +16,6 @@ import com.hbm.sound.AudioWrapper;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
-import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TETurbofanPacket;
 import com.hbm.tileentity.TileEntityLoadedBase;
@@ -31,7 +29,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
@@ -129,13 +126,13 @@ public class TileEntityMachineTurbofan extends TileEntityLoadedBase implements I
 			
 			afterburner = 0;
 			if(!inventory.getStackInSlot(2).isEmpty()) {
-				if(inventory.getStackInSlot(2).getItem() == ModItems.upgrade_afterburn_1) {
+				if(inventory.getStackInSlot(2).getItem() == Upgrades.upgrade_afterburn_1) {
 					afterburner = 1;
 				}
-				if(inventory.getStackInSlot(2).getItem() == ModItems.upgrade_afterburn_2) {
+				if(inventory.getStackInSlot(2).getItem() == Upgrades.upgrade_afterburn_2) {
 					afterburner = 2;
 				}
-				if(inventory.getStackInSlot(2).getItem() == ModItems.upgrade_afterburn_3) {
+				if(inventory.getStackInSlot(2).getItem() == Upgrades.upgrade_afterburn_3) {
 					afterburner = 3;
 				}
 			}

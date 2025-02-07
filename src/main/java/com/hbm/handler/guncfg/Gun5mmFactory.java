@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
@@ -82,7 +83,7 @@ public static GunConfiguration getMinigunConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_5mm;
+		bullet.ammo = Armory.ammo_5mm;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 3;
 		bullet.dmgMax = 5;
@@ -94,7 +95,7 @@ public static GunConfiguration getMinigunConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_5mm_explosive;
+		bullet.ammo = Armory.ammo_5mm_explosive;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 4;
 		bullet.dmgMax = 7;
@@ -108,7 +109,7 @@ public static GunConfiguration getMinigunConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_5mm_du;
+		bullet.ammo = Armory.ammo_5mm_du;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 10;
@@ -122,7 +123,7 @@ public static GunConfiguration getMinigunConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_5mm_star;
+		bullet.ammo = Armory.ammo_5mm_star;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 12;
 		bullet.dmgMax = 20;

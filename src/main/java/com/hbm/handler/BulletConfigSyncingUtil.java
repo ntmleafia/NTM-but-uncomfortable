@@ -27,6 +27,7 @@ import com.hbm.handler.guncfg.GunNPCFactory;
 import com.hbm.handler.guncfg.GunOSIPRFactory;
 import com.hbm.handler.guncfg.GunRocketFactory;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 
 public class BulletConfigSyncingUtil {
 
@@ -457,16 +458,16 @@ private static HashMap<Integer, BulletConfiguration> configSet = new HashMap<Int
 		
 		configSet.put(ZOMG_BOLT, GunEnergyFactory.getZOMGBoltConfig());
 
-		configSet.put(CHL_LR22, Gun22LRFactory.get22LRConfig().setToHoming(ModItems.ammo_22lr_chlorophyte));
-		configSet.put(CHL_LR22_FIRE, Gun22LRFactory.get22LRConfig().setToFire(3).setToHoming(ModItems.ammo_22lr_chlorophyte));
-		configSet.put(CHL_M44, Gun44MagnumFactory.getNoPipConfig().setToHoming(ModItems.ammo_44_chlorophyte));
-		configSet.put(CHL_P9, Gun9mmFactory.get9mmConfig().setToHoming(ModItems.ammo_9mm_chlorophyte));
-		configSet.put(CHL_BMG50, Gun50BMGFactory.get50BMGConfig().setToHoming(ModItems.ammo_50bmg_chlorophyte));
-		configSet.put(CHL_R5, Gun5mmFactory.get5mmConfig().setToHoming(ModItems.ammo_5mm_chlorophyte));
-		configSet.put(CHL_R5_BOLT, Gun5mmFactory.get5mmConfig().setToBolt(BulletConfiguration.BOLT_LACUNAE).setToHoming(ModItems.ammo_5mm_chlorophyte));
-		configSet.put(CHL_AE50, Gun50AEFactory.get50AEConfig().setToHoming(ModItems.ammo_50ae_chlorophyte));
-		configSet.put(CHL_R556, Gun556mmFactory.get556Config().setToHoming(ModItems.ammo_556_chlorophyte));
-		configSet.put(CHL_R556_FLECHETTE, Gun556mmFactory.get556FlechetteConfig().setToHoming(ModItems.ammo_556_flechette_chlorophyte));
+		configSet.put(CHL_LR22, Gun22LRFactory.get22LRConfig().setToHoming(Armory.ammo_22lr_chlorophyte));
+		configSet.put(CHL_LR22_FIRE, Gun22LRFactory.get22LRConfig().setToFire(3).setToHoming(Armory.ammo_22lr_chlorophyte));
+		configSet.put(CHL_M44, Gun44MagnumFactory.getNoPipConfig().setToHoming(Armory.ammo_44_chlorophyte));
+		configSet.put(CHL_P9, Gun9mmFactory.get9mmConfig().setToHoming(Armory.ammo_9mm_chlorophyte));
+		configSet.put(CHL_BMG50, Gun50BMGFactory.get50BMGConfig().setToHoming(Armory.ammo_50bmg_chlorophyte));
+		configSet.put(CHL_R5, Gun5mmFactory.get5mmConfig().setToHoming(Armory.ammo_5mm_chlorophyte));
+		configSet.put(CHL_R5_BOLT, Gun5mmFactory.get5mmConfig().setToBolt(BulletConfiguration.BOLT_LACUNAE).setToHoming(Armory.ammo_5mm_chlorophyte));
+		configSet.put(CHL_AE50, Gun50AEFactory.get50AEConfig().setToHoming(Armory.ammo_50ae_chlorophyte));
+		configSet.put(CHL_R556, Gun556mmFactory.get556Config().setToHoming(Armory.ammo_556_chlorophyte));
+		configSet.put(CHL_R556_FLECHETTE, Gun556mmFactory.get556FlechetteConfig().setToHoming(Armory.ammo_556_flechette_chlorophyte));
 		
 		configSet.put(MASKMAN_BULLET, GunNPCFactory.getMaskmanBullet());
 		configSet.put(MASKMAN_ORB, GunNPCFactory.getMaskmanOrb());

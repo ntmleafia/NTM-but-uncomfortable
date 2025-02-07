@@ -185,6 +185,7 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 
+import com.leafia.contents.building.BlockPinkDoor;
 import com.leafia.contents.machines.reactors.pwr.blocks.*;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
@@ -354,6 +355,14 @@ public class ModBlocks {
 	public static final Block concrete_red = new BlockBase(Material.ROCK, "concrete_red").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
 	public static final Block concrete_black = new BlockBase(Material.ROCK, "concrete_black").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
 	public static final Block concrete_hazard = new BlockBase(Material.ROCK, "concrete_hazard").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+
+	public static final Block concrete__ext_bronze = new BlockBase(Material.ROCK, "concrete__ext_bronze").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_indigo = new BlockBase(Material.ROCK, "concrete__ext_indigo").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_machine = new BlockBase(Material.ROCK, "concrete__ext_machine").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_machine_stripe = new BlockBase(Material.ROCK, "concrete__ext_machine_stripe").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_pink = new BlockBase(Material.ROCK, "concrete__ext_pink").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_purple = new BlockBase(Material.ROCK, "concrete__ext_purple").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+	public static final Block concrete__ext_sand = new BlockBase(Material.ROCK, "concrete__ext_sand").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
 
 	public static final Block concrete_asbestos = new BlockOutgas(true, 20, true, "concrete_asbestos").addAsbestos(6).toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(ASB_CONCRETE.v);
 	public static final Block concrete_pillar = new BlockRotatablePillar(Material.ROCK, "concrete_pillar").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(REBARPILLAR.v);
@@ -1026,7 +1035,8 @@ public class ModBlocks {
 	public static final Block door_metal = new BlockModDoor(Material.IRON, "door_metal").setHardness(5.0F).setResistance(5.0F);
 	public static final Block door_office = new BlockModDoor(Material.IRON, "door_office").setHardness(10.0F).setResistance(10.0F);
 	public static final Block door_bunker = new BlockModDoor(Material.IRON, "door_bunker").setHardness(10.0F).setResistance(100.0F);
-	
+	public static final Block door_fuckoff = new BlockPinkDoor(Material.WOOD, "door_fuckoff").setHardness(3);
+
 	public static final Block barbed_wire = new BarbedWire(Material.IRON, "barbed_wire").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.blockTab);
 	public static final Block barbed_wire_fire = new BarbedWire(Material.IRON, "barbed_wire_fire").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.blockTab);
 	public static final Block barbed_wire_poison = new BarbedWire(Material.IRON, "barbed_wire_poison").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.blockTab);
@@ -1710,12 +1720,14 @@ public class ModBlocks {
 	public static final Block ntm_dirt = new BlockNTMDirt("ntm_dirt").setSoundType(SoundType.GROUND).setHardness(0.5F).setCreativeTab(null);
 	
 	public static final Block pink_log = new BlockPinkLog("pink_log").setSoundType(SoundType.WOOD).setHardness(0.5F).setCreativeTab(null);
-	public static final Block pink_planks = new BlockBase(Material.WOOD, "pink_planks").setSoundType(SoundType.WOOD).setCreativeTab(null);
+	public static final Block pink_planks = new BlockBase(Material.WOOD, "pink_planks").setSoundType(SoundType.WOOD).setCreativeTab(null).setHardness(2).setResistance(5);
 	public static final Block pink_slab = new BlockGenericSlab(Material.WOOD, false, "pink_slab").setSoundType(SoundType.WOOD).setCreativeTab(null);
 	public static final Block pink_double_slab = new BlockGenericSlab(Material.WOOD, true, "pink_double_slab").setSoundType(SoundType.WOOD).setCreativeTab(null);
 	public static final Block pink_stairs = new BlockGenericStairs(pink_planks.getDefaultState(), "pink_stairs").setSoundType(SoundType.WOOD).setCreativeTab(null);
 	
 	public static void preInit(){
+		MainRegistry._initMemberClasses(ModBlocks.class);
+
 		for(Block block : ALL_BLOCKS){
 			ForgeRegistries.BLOCKS.register(block);
 		}

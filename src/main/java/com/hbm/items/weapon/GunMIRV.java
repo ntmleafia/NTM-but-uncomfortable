@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityMiniMIRV;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
@@ -54,7 +55,7 @@ public class GunMIRV extends Item {
 		boolean flag = player.capabilities.isCreativeMode
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 
-		if (flag || Library.hasInventoryItem(player.inventory, ModItems.ammo_mirv)) {
+		if (flag || Library.hasInventoryItem(player.inventory, Armory.ammo_mirv)) {
 			float f = j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -76,7 +77,7 @@ public class GunMIRV extends Item {
 			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 			if (!flag) {
-				Library.consumeInventoryItem(player.inventory, ModItems.ammo_mirv);
+				Library.consumeInventoryItem(player.inventory, Armory.ammo_mirv);
 			}
 
 			if (!worldIn.isRemote) {

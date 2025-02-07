@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.IItemAbility;
 import com.hbm.lib.HBMSoundHandler;
@@ -183,30 +184,30 @@ public abstract class WeaponAbility {
 				if(living.getHealth() <= 0.0F) {
 
 					WeightedRandomObject[] ammo = new WeightedRandomObject[] {
-							new WeightedRandomObject(ModItems.ammo_12gauge, 10),
-							new WeightedRandomObject(ModItems.ammo_12gauge_shrapnel, 5),
-							new WeightedRandomObject(ModItems.ammo_12gauge_du, 3),
-							new WeightedRandomObject(ModItems.ammo_20gauge, 10),
-							new WeightedRandomObject(ModItems.ammo_20gauge_flechette, 5),
-							new WeightedRandomObject(ModItems.ammo_20gauge_slug, 5),
-							new WeightedRandomObject(ModItems.ammo_9mm, 10),
-							new WeightedRandomObject(ModItems.ammo_9mm_ap, 5),
-							new WeightedRandomObject(ModItems.ammo_5mm, 10),
-							new WeightedRandomObject(ModItems.ammo_5mm_du, 3),
-							new WeightedRandomObject(ModItems.ammo_556, 10),
-							new WeightedRandomObject(ModItems.ammo_556_phosphorus, 5),
-							new WeightedRandomObject(ModItems.ammo_556_flechette, 10),
-							new WeightedRandomObject(ModItems.ammo_556_flechette_phosphorus, 5),
-							new WeightedRandomObject(ModItems.ammo_50bmg, 10),
-							new WeightedRandomObject(ModItems.ammo_50bmg_incendiary, 5),
-							new WeightedRandomObject(ModItems.ammo_50bmg_ap, 5),
-							new WeightedRandomObject(ModItems.ammo_grenade, 5),
-							new WeightedRandomObject(ModItems.ammo_grenade_concussion, 3),
-							new WeightedRandomObject(ModItems.ammo_grenade_phosphorus, 3),
-							new WeightedRandomObject(ModItems.ammo_rocket, 5),
-							new WeightedRandomObject(ModItems.ammo_rocket_glare, 5),
-							new WeightedRandomObject(ModItems.ammo_rocket_phosphorus, 5),
-							new WeightedRandomObject(ModItems.ammo_rocket_rpc, 1),
+							new WeightedRandomObject(Armory.ammo_12gauge, 10),
+							new WeightedRandomObject(Armory.ammo_12gauge_shrapnel, 5),
+							new WeightedRandomObject(Armory.ammo_12gauge_du, 3),
+							new WeightedRandomObject(Armory.ammo_20gauge, 10),
+							new WeightedRandomObject(Armory.ammo_20gauge_flechette, 5),
+							new WeightedRandomObject(Armory.ammo_20gauge_slug, 5),
+							new WeightedRandomObject(Armory.ammo_9mm, 10),
+							new WeightedRandomObject(Armory.ammo_9mm_ap, 5),
+							new WeightedRandomObject(Armory.ammo_5mm, 10),
+							new WeightedRandomObject(Armory.ammo_5mm_du, 3),
+							new WeightedRandomObject(Armory.ammo_556, 10),
+							new WeightedRandomObject(Armory.ammo_556_phosphorus, 5),
+							new WeightedRandomObject(Armory.ammo_556_flechette, 10),
+							new WeightedRandomObject(Armory.ammo_556_flechette_phosphorus, 5),
+							new WeightedRandomObject(Armory.ammo_50bmg, 10),
+							new WeightedRandomObject(Armory.ammo_50bmg_incendiary, 5),
+							new WeightedRandomObject(Armory.ammo_50bmg_ap, 5),
+							new WeightedRandomObject(Armory.ammo_grenade, 5),
+							new WeightedRandomObject(Armory.ammo_grenade_concussion, 3),
+							new WeightedRandomObject(Armory.ammo_grenade_phosphorus, 3),
+							new WeightedRandomObject(Armory.ammo_rocket, 5),
+							new WeightedRandomObject(Armory.ammo_rocket_glare, 5),
+							new WeightedRandomObject(Armory.ammo_rocket_phosphorus, 5),
+							new WeightedRandomObject(Armory.ammo_rocket_rpc, 1),
 							new WeightedRandomObject(ModItems.syringe_metal_stimpak, 25),
 					};
 

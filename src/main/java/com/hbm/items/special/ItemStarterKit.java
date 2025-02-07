@@ -2,12 +2,17 @@ package com.hbm.items.special;
 
 import java.util.List;
 
+import com.hbm.items.ModItems.ArmorSets;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Batteries;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.Materials.Powders;
+import com.hbm.items.ModItems.RetroRods;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemBattery;
-import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.handler.ArmorUtil;
@@ -47,31 +52,31 @@ public class ItemStarterKit extends Item {
     	}
     	switch(tier) {
     	case 0:
-    		ItemStack mask1 = new ItemStack(ModItems.hazmat_helmet);
+    		ItemStack mask1 = new ItemStack(ArmorSets.hazmat_helmet);
 			ArmorUtil.installGasMaskFilter(mask1, new ItemStack(ModItems.gas_mask_filter));
 			
 	    	p.inventory.armorInventory.set(3, mask1);
-	    	p.inventory.armorInventory.set(2, new ItemStack(ModItems.hazmat_plate));
-	    	p.inventory.armorInventory.set(1, new ItemStack(ModItems.hazmat_legs));
-	    	p.inventory.armorInventory.set(0, new ItemStack(ModItems.hazmat_boots));
+	    	p.inventory.armorInventory.set(2, new ItemStack(ArmorSets.hazmat_plate));
+	    	p.inventory.armorInventory.set(1, new ItemStack(ArmorSets.hazmat_legs));
+	    	p.inventory.armorInventory.set(0, new ItemStack(ArmorSets.hazmat_boots));
 	    	break;
     	case 1:
-    		ItemStack mask2 = new ItemStack(ModItems.hazmat_helmet_red);
+    		ItemStack mask2 = new ItemStack(ArmorSets.hazmat_helmet_red);
 			ArmorUtil.installGasMaskFilter(mask2, new ItemStack(ModItems.gas_mask_filter));
 			
 	    	p.inventory.armorInventory.set(3, mask2);
-	    	p.inventory.armorInventory.set(2, new ItemStack(ModItems.hazmat_plate_red));
-	    	p.inventory.armorInventory.set(1, new ItemStack(ModItems.hazmat_legs_red));
-	    	p.inventory.armorInventory.set(0, new ItemStack(ModItems.hazmat_boots_red));
+	    	p.inventory.armorInventory.set(2, new ItemStack(ArmorSets.hazmat_plate_red));
+	    	p.inventory.armorInventory.set(1, new ItemStack(ArmorSets.hazmat_legs_red));
+	    	p.inventory.armorInventory.set(0, new ItemStack(ArmorSets.hazmat_boots_red));
 	    	break;
     	case 2:
-    		ItemStack mask3 = new ItemStack(ModItems.hazmat_helmet_grey);
+    		ItemStack mask3 = new ItemStack(ArmorSets.hazmat_helmet_grey);
 			ArmorUtil.installGasMaskFilter(mask3, new ItemStack(ModItems.gas_mask_filter_combo));
 			
 	    	p.inventory.armorInventory.set(3, mask3);
-	    	p.inventory.armorInventory.set(2, new ItemStack(ModItems.hazmat_plate_grey));
-	    	p.inventory.armorInventory.set(1, new ItemStack(ModItems.hazmat_legs_grey));
-	    	p.inventory.armorInventory.set(0, new ItemStack(ModItems.hazmat_boots_grey));
+	    	p.inventory.armorInventory.set(2, new ItemStack(ArmorSets.hazmat_plate_grey));
+	    	p.inventory.armorInventory.set(1, new ItemStack(ArmorSets.hazmat_legs_grey));
+	    	p.inventory.armorInventory.set(0, new ItemStack(ArmorSets.hazmat_boots_grey));
 	    	break;
     	}
     }
@@ -98,10 +103,10 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.stamp_titanium_flat, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.stamp_titanium_plate, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.stamp_titanium_wire, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_steel, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_lead, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_copper, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_uranium, 32));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_steel, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_lead, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_copper, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_uranium, 32));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.geiger_counter, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.radaway, 8));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.radx, 2));
@@ -112,13 +117,13 @@ public class ItemStarterKit extends Item {
 		
 		if(this == ModItems.nuke_advanced_kit)
 		{
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_plutonium, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_steel, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_copper, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_tungsten, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_lead, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_aluminium, 64));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.ingot_polymer, 32));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_plutonium, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_steel, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_copper, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_tungsten, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_lead, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_aluminium, 64));
+			player.inventory.addItemStackToInventory(new ItemStack(Ingots.ingot_polymer, 32));
 			player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.machine_difurnace_off, 3));
 			player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.machine_gascent, 3));
 			player.inventory.addItemStackToInventory(new ItemStack(ModBlocks.machine_centrifuge, 2));
@@ -135,7 +140,7 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.pellet_rtg, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.pellet_rtg, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.pellet_rtg, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_empty, 32));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_empty, 32));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.radaway_strong, 4));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.radx, 4));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.geiger_counter, 1));
@@ -147,34 +152,34 @@ public class ItemStarterKit extends Item {
 		
 		if(this == ModItems.grenade_kit)
 		{
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_generic, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_strong, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_frag, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_fire, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_shrapnel, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_cluster, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_flare, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_electric, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_poison, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_gas, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_cloud, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_pink_cloud, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_smart, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_mirv, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_breach, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_burst, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_pulse, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_plasma, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_tau, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_schrabidium, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_lemon, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_gascan, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_mk2, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_aschrab, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_nuke, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_nuclear, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_zomg, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_black_hole, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_generic, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_strong, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_frag, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_fire, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_shrapnel, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_cluster, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_flare, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_electric, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_poison, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_gas, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_cloud, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_pink_cloud, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_smart, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_mirv, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_breach, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_burst, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_pulse, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_plasma, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_tau, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_schrabidium, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_lemon, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_gascan, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_mk2, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_aschrab, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_nuke, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_nuclear, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_zomg, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_black_hole, 16));
 		}
 		
 		if(this == ModItems.gadget_kit)
@@ -252,8 +257,8 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(Item.getItemFromBlock(Blocks.TNT), 26));
 			player.inventory.addItemStackToInventory(new ItemStack(Items.GUNPOWDER, 2));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.pellet_cluster, 2));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.powder_fire, 2));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.powder_poison, 2));
+			player.inventory.addItemStackToInventory(new ItemStack(Powders.powder_fire, 2));
+			player.inventory.addItemStackToInventory(new ItemStack(Powders.powder_poison, 2));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.pellet_gas, 2));
 		}
 		
@@ -289,7 +294,7 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.designator, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.designator_range, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.designator_manual, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.battery_schrabidium_cell_4, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(Batteries.battery_schrabidium_cell_4, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.missile_generic, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.missile_strong, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.missile_burst, 1));
@@ -318,10 +323,10 @@ public class ItemStarterKit extends Item {
 		
 		if(this == ModItems.t45_kit)
 		{
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.t45_helmet, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.t45_plate, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.t45_legs, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.t45_boots, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.t45_helmet, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.t45_plate, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.t45_legs, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.t45_boots, 1));
 			player.inventory.addItemStackToInventory(ItemBattery.getFullBattery(ModItems.fusion_core));
 			player.inventory.addItemStackToInventory(ItemBattery.getFullBattery(ModItems.fusion_core));
 			player.inventory.addItemStackToInventory(ItemBattery.getFullBattery(ModItems.fusion_core));
@@ -333,34 +338,34 @@ public class ItemStarterKit extends Item {
 		
 		if(this == ModItems.grenade_kit)
 		{
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_generic, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_strong, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_frag, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_fire, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_shrapnel, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_cluster, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_flare, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_electric, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_poison, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_gas, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_cloud, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_pink_cloud, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_smart, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_mirv, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_breach, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_burst, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_pulse, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_plasma, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_tau, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_schrabidium, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_lemon, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_gascan, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_mk2, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_aschrab, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_nuke, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_nuclear, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_zomg, 16));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.grenade_black_hole, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_generic, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_strong, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_frag, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_fire, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_shrapnel, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_cluster, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_flare, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_electric, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_poison, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_gas, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_cloud, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_pink_cloud, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_smart, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_mirv, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_breach, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_burst, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_pulse, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_plasma, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_tau, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_schrabidium, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_lemon, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_gascan, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_mk2, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_aschrab, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_nuke, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_nuclear, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_zomg, 16));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.grenade_black_hole, 16));
 		}
 		
 		if(this == ModItems.fleija_kit)
@@ -403,16 +408,16 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.igniter, 1));
 			for(int i = 0; i < 4; i ++)
 				player.inventory.addItemStackToInventory(ItemCell.getFullCell(ModForgeFluids.sas3));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_uranium, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_uranium, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_lead, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_lead, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_neptunium, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_neptunium, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_lead, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_lead, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_uranium, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.rod_quad_uranium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_lead, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_lead, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_neptunium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_neptunium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_lead, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_lead, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
 			
 			giveHaz(world, player, 2);
 		}
@@ -438,12 +443,12 @@ public class ItemStarterKit extends Item {
 		
 		if(this == ModItems.euphemium_kit)
 		{
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.euphemium_helmet, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.euphemium_plate, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.euphemium_legs, 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.euphemium_boots, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.euphemium_helmet, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.euphemium_plate, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.euphemium_legs, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(ArmorSets.euphemium_boots, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(Item.getItemFromBlock(ModBlocks.statue_elb), 1));
-			player.inventory.addItemStackToInventory(new ItemStack(ModItems.gun_revolver_cursed, 1));
+			player.inventory.addItemStackToInventory(new ItemStack(Armory.gun_revolver_cursed, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.watch, 1));
 		}
 		

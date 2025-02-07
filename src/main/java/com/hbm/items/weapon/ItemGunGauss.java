@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.hbm.items.ModItems.Armory;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.config.CompatibilityConfig;
@@ -188,7 +189,7 @@ public class ItemGunGauss extends ItemGunBase {
 	@Override
 	public void startAction(ItemStack stack, World world, EntityPlayer player, boolean main, EnumHand hand) {
 		super.startAction(stack, world, player, main, hand);
-		if(!main && getItemWear(stack) < mainConfig.durability && Library.hasInventoryItem(player.inventory, ModItems.gun_xvl1456_ammo)) {
+		if(!main && getItemWear(stack) < mainConfig.durability && Library.hasInventoryItem(player.inventory, Armory.gun_xvl1456_ammo)) {
 			PacketDispatcher.sendTo(new GunAnimationPacket(AnimType.SPINUP.ordinal(), hand), (EntityPlayerMP) player);
 		}
 	}
@@ -369,7 +370,7 @@ public class ItemGunGauss extends ItemGunBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void startActionClient(ItemStack stack, World world, EntityPlayer player, boolean main, EnumHand hand) {
-		if(!main && getItemWear(stack) < mainConfig.durability && Library.hasInventoryItem(player.inventory, ModItems.gun_xvl1456_ammo)) {
+		if(!main && getItemWear(stack) < mainConfig.durability && Library.hasInventoryItem(player.inventory, Armory.gun_xvl1456_ammo)) {
 			chargeLoop = MainRegistry.proxy.getLoopedSound(HBMSoundHandler.tauChargeLoop2, SoundCategory.PLAYERS, (float)player.posX, (float)player.posY, (float)player.posZ, 1.0F, 0.75F);
 			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.tauChargeLoop2, SoundCategory.PLAYERS, 1.0F, 0.75F);
 			firstPersonFireCounter = 0;
@@ -401,8 +402,8 @@ public class ItemGunGauss extends ItemGunBase {
 				setCharge(stack, c + 1);
 				
 				if(c % 10 == 1 && c < 140 && c > 2) {
-					if(Library.hasInventoryItem(player.inventory, ModItems.gun_xvl1456_ammo)) {
-						Library.consumeInventoryItem(player.inventory, ModItems.gun_xvl1456_ammo);
+					if(Library.hasInventoryItem(player.inventory, Armory.gun_xvl1456_ammo)) {
+						Library.consumeInventoryItem(player.inventory, Armory.gun_xvl1456_ammo);
 						setStored(stack, getStored(stack) + 1);
 					} else {
 						setCharge(stack, 0);

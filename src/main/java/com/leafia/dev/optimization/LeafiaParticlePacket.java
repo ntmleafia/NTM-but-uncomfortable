@@ -2,6 +2,7 @@ package com.leafia.dev.optimization;
 
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
+import com.hbm.particle.ParticleRBMKMush;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.llib.exceptions.LeafiaDevFlaw;
@@ -16,12 +17,17 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class LeafiaParticlePacket extends RecordablePacket {
+	/**
+	 * The particle's NBT data buffer.
+	 * <br>Position and motion information are written automatically and does not need manual setting.
+	 */
 	NBTTagCompound nbt = new NBTTagCompound();
 	LeafiaParticle particle = null;
 	static final LeafiaSet<LeafiaParticle> registry = new LeafiaSet<>();
@@ -123,6 +129,24 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			buf.writeInt(count);
 		}
 	}
+	public static class PinkRBMK extends LeafiaParticle {
+		@Override
+		protected LeafiaParticle fromBits(LeafiaBuf buf,NBTTagCompound nbt) { return new PinkRBMK(); }
+		@Override
+		protected void toBits(LeafiaBuf buf) {}
+		@Override
+		protected void emit(NBTTagCompound nbt) {
+			World world = Minecraft.getMinecraft().world;
+			ParticleRBMKMush mush = new ParticleRBMKMush(
+					world,
+					nbt.getDouble("posX"),nbt.getDouble("posY"),nbt.getDouble("posZ"),
+					12
+			);
+			mush.isPink = true;
+			Minecraft.getMinecraft().effectRenderer.addEffect(mush);
+		}
+	}
+
 	static {
 		for (Class<?> cl : LeafiaParticlePacket.class.getClasses()) {
 			if (LeafiaParticle.class.isAssignableFrom(cl)) {
@@ -170,7 +194,18 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		throw new LeafiaDevFlaw("Invalid particle "+this.particle.getClass().getName());
 	}
 	private static abstract class LeafiaParticle {
+		/**
+		 * Method used for retrieving data from encoded packet
+		 * @param buf The buffer to read data from
+		 * @param nbt NBT data buffer. By default, this will be used for proxy.effectNT
+		 * @return The particle type itself, required for identification
+		 * <h3>Should NOT return <tt>this</tt>, because <tt>this</tt> is the one in the registry table
+		 */
 		protected abstract LeafiaParticle fromBits(LeafiaBuf buf,NBTTagCompound nbt);
+		/**
+		 * Used to write all customization into packet buffer.
+		 * @param buf The buffer to write into
+		 */
 		protected abstract void toBits(LeafiaBuf buf);
 		public final LeafiaParticlePacket packet(Vec3d pos,Vec3d motion) {
 			LeafiaParticlePacket packet = new LeafiaParticlePacket();
@@ -183,11 +218,20 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			packet.particle = this;
 			return packet;
 		}
+
+		/**
+		 * @return The maximum distance for the particle to render. Default is 340
+		 */
 		public double getDefaultRange() { return 340; }
 		public final void emit(Vec3d pos,Vec3d motion,int dimension) { emit(pos,motion,dimension,getDefaultRange()); }
 		public final void emit(Vec3d pos,Vec3d motion,int dimension,double range) {
 			PacketDispatcher.wrapper.sendToAllAround(packet(pos,motion),new TargetPoint(dimension,pos.x,pos.y,pos.z,range));
 		}
+		/**
+		 * Method used for how the particle is spawned.
+		 * By default, it just uses proxy.effectNT
+		 * @param nbt NBT data buffer
+		 */
 		protected void emit(NBTTagCompound nbt) {
 			MainRegistry.proxy.effectNT(nbt);
 		}
@@ -197,7 +241,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		public IMessage onMessage(LeafiaParticlePacket message,MessageContext ctx) {
 			if (message.nbt == null) {
 				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.RED))
-						.appendSibling(new TextComponentString(" NTM:LCF FATAL ERROR "))
+						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR "))
 						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaParticlePacket").setStyle(new Style().setColor(TextFormatting.RED)))
 						.appendSibling(
 								new TextComponentString("\nThe server supports "+message.supports+" particles. Your client supports "+ registry.size())

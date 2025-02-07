@@ -7,10 +7,12 @@ import java.util.Random;
 
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Inserts;
+import com.hbm.items.ModItems.Materials.Nuggies;
+import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.HbmWorldUtility;
 import net.minecraft.world.World;
 
@@ -53,11 +55,11 @@ public class MKUCraftingHandler extends net.minecraftforge.registries.IForgeRegi
 		lastSeed = world.getSeed();
 		
 		List<ItemStack> list = Arrays.asList(new ItemStack[] {
-				new ItemStack(ModItems.powder_iodine),
-				new ItemStack(ModItems.powder_fire),
+				new ItemStack(Powders.powder_iodine),
+				new ItemStack(Powders.powder_fire),
 				new ItemStack(ModItems.dust),
-				new ItemStack(ModItems.nugget_mercury),
-				new ItemStack(ModItems.morning_glory),
+				new ItemStack(Nuggies.nugget_mercury),
+				new ItemStack(Inserts.morning_glory),
 				new ItemStack(ModItems.syringe_metal_empty),
 				null,
 				null,

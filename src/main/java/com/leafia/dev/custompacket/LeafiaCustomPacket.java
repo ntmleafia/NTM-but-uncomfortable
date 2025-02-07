@@ -80,7 +80,7 @@ public class LeafiaCustomPacket extends RecordablePacket {
 			packetType = CustomPacketType.NONE;
 			callback = (ctx)->{
 				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.RED))
-						.appendSibling(new TextComponentString(" NTM:LCF FATAL ERROR "))
+						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR "))
 						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaCustomPacket").setStyle(new Style().setColor(TextFormatting.RED)))
 						.appendSibling(
 								new TextComponentString("\nThe server supports "+(protocol&0xFF)+" custom packet variations. Your client supports "+CustomPacketType.values().length)

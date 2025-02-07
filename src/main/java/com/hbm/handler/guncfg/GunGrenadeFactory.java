@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
@@ -54,7 +55,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade;
+		bullet.ammo = Armory.ammo_grenade;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
@@ -68,7 +69,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_he;
+		bullet.ammo = Armory.ammo_grenade_he;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 20;
 		bullet.dmgMax = 15;
@@ -83,7 +84,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_incendiary;
+		bullet.ammo = Armory.ammo_grenade_incendiary;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 15;
@@ -98,7 +99,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_toxic;
+		bullet.ammo = Armory.ammo_grenade_toxic;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
@@ -114,7 +115,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_sleek;
+		bullet.ammo = Armory.ammo_grenade_sleek;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
@@ -130,7 +131,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_concussion;
+		bullet.ammo = Armory.ammo_grenade_concussion;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 20;
@@ -145,7 +146,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = getGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_finned;
+		bullet.ammo = Armory.ammo_grenade_finned;
 		bullet.gravity = 0.02;
 		bullet.explosive = 1.5F;
 		bullet.trail = 5;
@@ -157,7 +158,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = getGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_nuclear;
+		bullet.ammo = Armory.ammo_grenade_nuclear;
 		bullet.velocity = 4;
 		bullet.explosive = 0.0F;
 		bullet.nuke = 15;
@@ -169,7 +170,7 @@ public class GunGrenadeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 		
-		bullet.ammo = ModItems.ammo_grenade_phosphorus;
+		bullet.ammo = Armory.ammo_grenade_phosphorus;
 		bullet.velocity = 2.0F;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 15;
@@ -186,7 +187,7 @@ public class GunGrenadeFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardGrenadeConfig();
 
-		bullet.ammo = ModItems.ammo_grenade_tracer;
+		bullet.ammo = Armory.ammo_grenade_tracer;
 		bullet.velocity = 2.0F;
 		bullet.wear = 10;
 		bullet.explosive = 0F;
@@ -200,7 +201,7 @@ public class GunGrenadeFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardRocketConfig();
 
-		bullet.ammo = ModItems.ammo_grenade_kampf;
+		bullet.ammo = Armory.ammo_grenade_kampf;
 		bullet.spread = 0.0F;
 		bullet.gravity = 0.0D;
 		bullet.wear = 15;

@@ -1,7 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
@@ -11,6 +9,7 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.machine.ItemCapacitor;
 import com.hbm.items.special.WatzFuel;
 import com.hbm.lib.Library;
@@ -234,7 +233,7 @@ public class TileEntityWatzCore extends TileEntityLoadedBase implements ITickabl
 			if(WatzFuel.getLifeTime(inventory.getStackInSlot(i)) >= fuel.lifeTime)
 			{
 				if(inventory.getStackInSlot(i).getItem() == ModItems.pellet_lead)
-					inventory.setStackInSlot(i, new ItemStack(ModItems.powder_lead));
+					inventory.setStackInSlot(i, new ItemStack(Powders.powder_lead));
 				else
 					inventory.setStackInSlot(i, new ItemStack(ModItems.pellet_lead));
 			}

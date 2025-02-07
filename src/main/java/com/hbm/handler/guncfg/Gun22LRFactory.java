@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
@@ -64,7 +65,7 @@ public class Gun22LRFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_22lr;
+		bullet.ammo = Armory.ammo_22lr;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 4;
@@ -76,7 +77,7 @@ public class Gun22LRFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_22lr_ap;
+		bullet.ammo = Armory.ammo_22lr_ap;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 8;

@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
@@ -91,7 +92,7 @@ public class Gun9mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_9mm;
+		bullet.ammo = Armory.ammo_9mm;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 4;
@@ -103,7 +104,7 @@ public class Gun9mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_9mm_ap;
+		bullet.ammo = Armory.ammo_9mm_ap;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 8;
@@ -117,7 +118,7 @@ public class Gun9mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_9mm_du;
+		bullet.ammo = Armory.ammo_9mm_du;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 8;
@@ -131,7 +132,7 @@ public class Gun9mmFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardRocketConfig();
 
-		bullet.ammo = ModItems.ammo_9mm_rocket;
+		bullet.ammo = Armory.ammo_9mm_rocket;
 		bullet.velocity = 5;
 		bullet.explosive = 7.5F;
 		bullet.trail = 5;

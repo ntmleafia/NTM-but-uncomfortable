@@ -1,6 +1,9 @@
 package com.leafia.unsorted.recipe_book;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.items.ModItems.ArmorSets;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.ToolSets;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
 import com.hbm.items.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,19 +29,19 @@ public class LeafiaRecipeUnlocker {
                 //break;
             /*case (ModBlocks.guiID_test_difurnace):
             case (ModBlocks.guiID_rtg_difurnace):*/
-        else if (stack.getItem() == ModItems.ingot_steel) {
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.ingot_red_copper);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.ingot_advanced_alloy);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_axe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_boots);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_helmet);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_plate);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_legs);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_hoe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_pickaxe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_shovel);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.steel_sword);
-        } else if (stack.getItem() == ModItems.ingot_red_copper) {
+        else if (stack.getItem() == Ingots.ingot_steel) {
+            LeafiaRecipeBookServer.unlockRecipe(player,Ingots.ingot_red_copper);
+            LeafiaRecipeBookServer.unlockRecipe(player,Ingots.ingot_advanced_alloy);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.steel_axe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.steel_boots);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.steel_helmet);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.steel_plate);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.steel_legs);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.steel_hoe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.steel_pickaxe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.steel_shovel);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.steel_sword);
+        } else if (stack.getItem() == Ingots.ingot_red_copper) {
             LeafiaRecipeBookServer.unlockRecipe(player,ModItems.wire_red_copper);
         } else if (stack.getItem() == ModItems.wire_red_copper) {
             LeafiaRecipeBookServer.unlockRecipe(player,ModItems.plate_iron);
@@ -53,16 +56,16 @@ public class LeafiaRecipeUnlocker {
         } else if (stack.getItem() == ModItems.wire_aluminium) {
             LeafiaRecipeBookServer.unlockRecipe(player,ModItems.circuit_raw);
             LeafiaRecipeBookServer.unlockRecipe(player,ModItems.circuit_aluminium);
-        } else if (stack.getItem() == ModItems.ingot_advanced_alloy) {
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_axe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_boots);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_helmet);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_hoe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_legs);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_pickaxe);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_sword);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_shovel);
-            LeafiaRecipeBookServer.unlockRecipe(player,ModItems.alloy_plate);
+        } else if (stack.getItem() == Ingots.ingot_advanced_alloy) {
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.alloy_axe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.alloy_boots);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.alloy_helmet);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.alloy_hoe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.alloy_legs);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.alloy_pickaxe);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.alloy_sword);
+            LeafiaRecipeBookServer.unlockRecipe(player,ToolSets.alloy_shovel);
+            LeafiaRecipeBookServer.unlockRecipe(player,ArmorSets.alloy_plate);
         }
                 //break;
         //}

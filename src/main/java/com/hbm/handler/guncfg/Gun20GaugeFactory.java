@@ -6,6 +6,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
@@ -206,7 +207,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge;
+		bullet.ammo = Armory.ammo_20gauge;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 3;
 		
@@ -217,7 +218,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_slug;
+		bullet.ammo = Armory.ammo_20gauge_slug;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
 		bullet.wear = 7;
@@ -230,7 +231,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_flechette;
+		bullet.ammo = Armory.ammo_20gauge_flechette;
 		bullet.dmgMin = 3;
 		bullet.dmgMax = 6;
 		bullet.wear = 15;
@@ -245,7 +246,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_incendiary;
+		bullet.ammo = Armory.ammo_20gauge_incendiary;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 4;
 		bullet.wear = 15;
@@ -258,7 +259,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_shrapnel;
+		bullet.ammo = Armory.ammo_20gauge_shrapnel;
 		bullet.wear = 15;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 6;
@@ -273,7 +274,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_explosive;
+		bullet.ammo = Armory.ammo_20gauge_explosive;
 		bullet.dmgMin = 6;
 		bullet.dmgMax = 8;
 		bullet.wear = 25;
@@ -286,7 +287,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_caustic;
+		bullet.ammo = Armory.ammo_20gauge_caustic;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 6;
 		bullet.wear = 25;
@@ -305,7 +306,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_shock;
+		bullet.ammo = Armory.ammo_20gauge_shock;
 		bullet.dmgMin = 4;
 		bullet.dmgMax = 8;
 		bullet.wear = 25;
@@ -325,7 +326,7 @@ public class Gun20GaugeFactory {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBuckshotConfig();
 		
-		bullet.ammo = ModItems.ammo_20gauge_wither;
+		bullet.ammo = Armory.ammo_20gauge_wither;
 		bullet.dmgMin = 4;
 		bullet.dmgMax = 8;
 		
@@ -339,7 +340,7 @@ public class Gun20GaugeFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardAirstrikeConfig();
 
-		bullet.ammo = ModItems.ammo_20gauge_sleek;
+		bullet.ammo = Armory.ammo_20gauge_sleek;
 
 		return bullet;
 	}

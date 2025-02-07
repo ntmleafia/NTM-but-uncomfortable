@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hbm.config.VersatileConfig;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.main.MainRegistry;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -39,14 +40,14 @@ public class ItemCanteen extends Item {
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
 		stack.setItemDamage(stack.getMaxDamage());
 
-		if (this == ModItems.canteen_13) {
+		if (this == Foods.canteen_13) {
 			entityLiving.heal(5F);
 		}
-		if (this == ModItems.canteen_vodka) {
+		if (this == Foods.canteen_vodka) {
 			entityLiving.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 10 * 20, 0));
 			entityLiving.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 30 * 20, 2));
 		}
-		if (this == ModItems.canteen_fab) {
+		if (this == Foods.canteen_fab) {
 			entityLiving.heal(10F);
 			entityLiving.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 15 * 20, 0));
 			entityLiving.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 60 * 20, 2));
@@ -80,7 +81,7 @@ public class ItemCanteen extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if(this == ModItems.canteen_13)
+		if(this == Foods.canteen_13)
     	{
 			tooltip.add("Cooldown: 1 minute");
 			tooltip.add("Restores 2.5 hearts");
@@ -91,7 +92,7 @@ public class ItemCanteen extends Item {
     		else
     			tooltip.add("You take a sip from your trusty Vault 13 canteen.");
     	}
-    	if(this == ModItems.canteen_vodka)
+    	if(this == Foods.canteen_vodka)
     	{
     		tooltip.add("Cooldown: 3 minutes");
     		tooltip.add("Nausea I for 10 seconds");
@@ -104,7 +105,7 @@ public class ItemCanteen extends Item {
     		else
     			tooltip.add("Smells like disinfectant, tastes like disinfectant.");
     	}
-    	if(this == ModItems.canteen_fab)
+    	if(this == Foods.canteen_fab)
     	{
     		tooltip.add("Cooldown: 2 minutes");
     		tooltip.add("Engages the fab drive");

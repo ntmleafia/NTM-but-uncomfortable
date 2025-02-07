@@ -11,6 +11,7 @@ import com.hbm.inventory.CentrifugeRecipes;
 import com.hbm.inventory.CrystallizerRecipes;
 import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
@@ -439,11 +440,11 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 			
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_1)
 					speed += 1;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_2)
 					speed += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_overdrive_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_overdrive_3)
 					speed += 3;
 			}
 		}
@@ -458,11 +459,11 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_1)
 					speed += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_2)
 					speed += 4;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_speed_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_speed_3)
 					speed += 6;
 			}
 		}
@@ -478,11 +479,11 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 				
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_1)
 					range += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_2)
 					range += 4;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_effect_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_effect_3)
 					range += 6;
 			}
 		}
@@ -498,11 +499,11 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_fortune_1)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_fortune_1)
 					fortune += 1;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_fortune_2)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_fortune_2)
 					fortune += 2;
-				else if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_fortune_3)
+				else if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_fortune_3)
 					fortune += 3;
 			}
 		}
@@ -516,7 +517,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_nullifier)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_nullifier)
 					return true;
 			}
 		}
@@ -530,7 +531,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_smelter)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_smelter)
 					return true;
 			}
 		}
@@ -544,7 +545,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_shredder)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_shredder)
 					return true;
 			}
 		}
@@ -558,7 +559,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_centrifuge)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_centrifuge)
 					return true;
 			}
 		}
@@ -572,7 +573,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_crystallizer)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_crystallizer)
 					return true;
 			}
 		}
@@ -586,7 +587,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 			if(!inventory.getStackInSlot(i).isEmpty()) {
 
-				if(inventory.getStackInSlot(i).getItem() == ModItems.upgrade_screm)
+				if(inventory.getStackInSlot(i).getItem() == Upgrades.upgrade_screm)
 					return true;
 			}
 		}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.explosion.ExplosionChaos;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.ModDamageSource;
 
 import net.minecraft.block.Block;
@@ -460,7 +460,7 @@ public class EntityFire extends Entity implements IProjectile {
         {
             boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && entityIn.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(ModItems.gun_rpg_ammo, 1)))
+            if (this.canBePickedUp == 1 && !entityIn.inventory.addItemStackToInventory(new ItemStack(Armory.gun_rpg_ammo, 1)))
             {
                 flag = false;
             }

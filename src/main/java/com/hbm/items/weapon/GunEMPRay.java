@@ -7,6 +7,7 @@ import com.hbm.entity.effect.EntityEMPBlast;
 import com.hbm.entity.projectile.EntityDischarge;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -59,12 +60,12 @@ public class GunEMPRay extends Item {
 		if(!(entityLiving instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer)entityLiving;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_emp){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_emp){
 			player.getHeldItemOffhand().onPlayerStoppedUsing(worldIn, entityLiving, timeLeft);
 		}
 		int j = this.getMaxItemUseDuration(stack) - timeLeft;
 
-		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, worldIn, j, Library.hasInventoryItem(player.inventory, ModItems.gun_emp_ammo));
+		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, worldIn, j, Library.hasInventoryItem(player.inventory, Armory.gun_emp_ammo));
 		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) {
 			return;
@@ -75,7 +76,7 @@ public class GunEMPRay extends Item {
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 
 		if (!player.isSneaking()) {
-			if (flag || Library.hasInventoryItem(player.inventory, ModItems.gun_emp_ammo)) {
+			if (flag || Library.hasInventoryItem(player.inventory, Armory.gun_emp_ammo)) {
 				float f = j / 20.0F;
 				f = (f * f + f * 2.0F) / 3.0F;
 
@@ -97,7 +98,7 @@ public class GunEMPRay extends Item {
 				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 				if (!flag) {
-					Library.consumeInventoryItem(player.inventory, ModItems.gun_emp_ammo);
+					Library.consumeInventoryItem(player.inventory, Armory.gun_emp_ammo);
 				}
 
 				if (!worldIn.isRemote) {
@@ -105,14 +106,14 @@ public class GunEMPRay extends Item {
 				}
 			}
 		} else {
-			if (flag || Library.hasInventoryItem(player.inventory, ModItems.gun_emp_ammo)) {
+			if (flag || Library.hasInventoryItem(player.inventory, Armory.gun_emp_ammo)) {
 
 				if (j < 25.0D) {
 					return;
 				}
 				
 				if (!flag) {
-					Library.consumeInventoryItem(player.inventory, ModItems.gun_emp_ammo);
+					Library.consumeInventoryItem(player.inventory, Armory.gun_emp_ammo);
 				}
 	    		
 	    		EntityEMPBlast cloud = new EntityEMPBlast(player.world, 25);

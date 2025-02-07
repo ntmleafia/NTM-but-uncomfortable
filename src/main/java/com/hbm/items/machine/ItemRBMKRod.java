@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.RBMKFuel;
 import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.tileentity.machine.rbmk.IRBMKFluxReceiver.NType;
@@ -82,7 +83,7 @@ public class ItemRBMKRod extends Item implements IItemHazard {
 		
 		this.fullName = fullName;
 		
-		this.setContainerItem(ModItems.rbmk_fuel_empty);
+		this.setContainerItem(RBMKFuel.rbmk_fuel_empty);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(MainRegistry.controlTab);
 		
@@ -408,7 +409,7 @@ public class ItemRBMKRod extends Item implements IItemHazard {
 		
 		list.add(TextFormatting.ITALIC + this.fullName);
 		
-		if(this == ModItems.rbmk_fuel_drx) {
+		if(this == RBMKFuel.rbmk_fuel_drx) {
 			
 			if(selfRate > 0 || this.function == EnumBurnFunc.SIGMOID) {
 				list.add(TextFormatting.RED + I18nUtil.resolveKey("trait.rbmx.source"));

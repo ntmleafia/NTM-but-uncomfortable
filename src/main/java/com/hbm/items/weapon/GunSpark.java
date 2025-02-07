@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.hbm.entity.projectile.EntitySparkBeam;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
@@ -60,7 +61,7 @@ public class GunSpark extends Item {
 			if(((EntityPlayer)entityLiving).capabilities.isCreativeMode){
 				creative = true;
 			}
-			hasAmmo = Library.hasInventoryItem(((EntityPlayer) entityLiving).inventory, ModItems.gun_spark_ammo);
+			hasAmmo = Library.hasInventoryItem(((EntityPlayer) entityLiving).inventory, Armory.gun_spark_ammo);
 		}
 		boolean flag = creative || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 		if (flag || hasAmmo) {
@@ -82,7 +83,7 @@ public class GunSpark extends Item {
 			if (flag) {
 			} else {
 				if(entityLiving instanceof EntityPlayer)
-					Library.consumeInventoryItem(((EntityPlayer) entityLiving).inventory, ModItems.gun_spark_ammo);
+					Library.consumeInventoryItem(((EntityPlayer) entityLiving).inventory, Armory.gun_spark_ammo);
 			}
 
 			EntitySparkBeam beam = new EntitySparkBeam(world, entityLiving, 3F, entityLiving.getHeldItem(EnumHand.MAIN_HAND) == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);

@@ -6,6 +6,7 @@ import com.hbm.entity.missile.EntityBobmazon;
 import com.hbm.handler.BobmazonOfferFactory;
 import com.hbm.inventory.gui.GUIScreenBobmazon.Offer;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.ModDamageSource;
 
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -130,14 +131,14 @@ public class ItemBobmazonPacket extends RecordablePacket {
 					
 					Item item = stack.getItem();
 					
-					if(item == ModItems.cap_fritz ||
-							item == ModItems.cap_korl ||
-							item == ModItems.cap_nuka ||
-							item == ModItems.cap_quantum ||
-							item == ModItems.cap_rad ||
-							item == ModItems.cap_sparkle ||
-							item == ModItems.cap_star ||
-							item == ModItems.cap_sunset)
+					if(item == Foods.cap_fritz ||
+							item == Foods.cap_korl ||
+							item == Foods.cap_nuka ||
+							item == Foods.cap_quantum ||
+							item == Foods.cap_rad ||
+							item == Foods.cap_sparkle ||
+							item == Foods.cap_star ||
+							item == Foods.cap_sunset)
 						count += stack.getCount();
 					
 				}
@@ -159,14 +160,14 @@ public class ItemBobmazonPacket extends RecordablePacket {
 					
 					Item item = stack.getItem();
 					
-					if(item == ModItems.cap_fritz ||
-							item == ModItems.cap_korl ||
-							item == ModItems.cap_nuka ||
-							item == ModItems.cap_quantum ||
-							item == ModItems.cap_rad ||
-							item == ModItems.cap_sparkle ||
-							item == ModItems.cap_star ||
-							item == ModItems.cap_sunset) {
+					if(item == Foods.cap_fritz ||
+							item == Foods.cap_korl ||
+							item == Foods.cap_nuka ||
+							item == Foods.cap_quantum ||
+							item == Foods.cap_rad ||
+							item == Foods.cap_sparkle ||
+							item == Foods.cap_star ||
+							item == Foods.cap_sunset) {
 						
 						int size = stack.getCount();
 						for(int j = 0; j < size; j++) {

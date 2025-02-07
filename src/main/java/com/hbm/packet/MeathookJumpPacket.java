@@ -1,6 +1,7 @@
 package com.hbm.packet;
 
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemGunShotty;
 
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -28,7 +29,7 @@ public class MeathookJumpPacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(MeathookJumpPacket message, MessageContext ctx) {
 			EntityPlayer p = ctx.getServerHandler().player;
-			if(p.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(p.world, p.getHeldItemMainhand())){
+			if(p.getHeldItemMainhand().getItem() == Armory.gun_supershotgun && ItemGunShotty.hasHookedEntity(p.world, p.getHeldItemMainhand())){
 				ItemGunShotty.setHookedEntity(p, p.getHeldItemMainhand(), null);
 			}
 			return null;

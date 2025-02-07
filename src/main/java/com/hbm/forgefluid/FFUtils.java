@@ -14,6 +14,8 @@ import com.hbm.inventory.HeatRecipes;
 import com.hbm.inventory.EngineRecipes;
 import com.hbm.inventory.gui.GuiInfoContainer;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Nuggies;
+import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.armor.JetpackBase;
 import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.special.ItemCell;
@@ -30,7 +32,6 @@ import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
-import com.llib.exceptions.messages.TextWarningLeafia;
 import com.llib.technical.FifthString;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -539,7 +540,7 @@ public class FFUtils {
 
 		//Mercury override
 		//Oh god, these overrides are getting worse and worse, but it would take a large amount of effort to make the code good
-		if(in.getItem() == ModItems.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.mercury, 100), false) == 100){
+		if(in.getItem() == Nuggies.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.mercury, 100), false) == 100){
 			tank.fill(new FluidStack(ModForgeFluids.mercury, 100), true);
 			in.shrink(1);
 			return true;
@@ -767,15 +768,15 @@ public class FFUtils {
 
 		// Rod override (extra messy because I don't feel like restarting
 		// minecraft to make a helper method)
-		if(in.getItem() == ModItems.rod_empty) {
+		if(in.getItem() == RetroRods.rod_empty) {
 			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 1000 && out.isEmpty()) {
 				tank.drain(1000, true);
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_coolant));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_coolant));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_coolant));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_coolant));
 				}
 				return true;
 			}
@@ -784,9 +785,9 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_tritium));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_tritium));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_tritium));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_tritium));
 				}
 				return true;
 			}
@@ -795,22 +796,22 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_water));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_water));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_water));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_water));
 				}
 				return true;
 			}
 		}
-		if(in.getItem() == ModItems.rod_dual_empty) {
+		if(in.getItem() == RetroRods.rod_dual_empty) {
 			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 2000 && out.isEmpty()) {
 				tank.drain(2000, true);
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_dual_coolant));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_dual_coolant));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_dual_coolant));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_dual_coolant));
 				}
 				return true;
 			}
@@ -819,9 +820,9 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_dual_tritium));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_dual_tritium));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_dual_tritium));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_dual_tritium));
 				}
 				return true;
 			}
@@ -830,22 +831,22 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_dual_water));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_dual_water));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_dual_water));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_dual_water));
 				}
 				return true;
 			}
 		}
-		if(in.getItem() == ModItems.rod_quad_empty) {
+		if(in.getItem() == RetroRods.rod_quad_empty) {
 			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 4000 && out.isEmpty()) {
 				tank.drain(4000, true);
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_quad_coolant));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_quad_coolant));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_quad_coolant));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_quad_coolant));
 				}
 				return true;
 			}
@@ -854,9 +855,9 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_quad_tritium));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_quad_tritium));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_quad_tritium));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_quad_tritium));
 				}
 				return true;
 			}
@@ -865,9 +866,9 @@ public class FFUtils {
 
 				in.shrink(1);
 				if(out.isEmpty()) {
-					slots.setStackInSlot(slot2, new ItemStack(ModItems.rod_quad_water));
+					slots.setStackInSlot(slot2, new ItemStack(RetroRods.rod_quad_water));
 				} else {
-					slots.setStackInSlot(slot1, new ItemStack(ModItems.rod_quad_water));
+					slots.setStackInSlot(slot1, new ItemStack(RetroRods.rod_quad_water));
 				}
 				return true;
 			}

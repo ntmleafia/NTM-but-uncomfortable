@@ -6,6 +6,7 @@ import java.util.List;
 import com.hbm.entity.effect.EntityBlackHole;
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Armory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -50,7 +51,7 @@ public class EntityMissileBHole extends EntityMissileBaseAdvanced {
 
 	@Override
 	public ItemStack getDebrisRareDrop() {
-		return new ItemStack(ModItems.grenade_black_hole, 1);
+		return new ItemStack(Armory.grenade_black_hole, 1);
 	}
 
 	@Override

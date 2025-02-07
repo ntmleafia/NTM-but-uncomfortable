@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
@@ -195,7 +195,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_iron_ammo;
+		bullet.ammo = Armory.gun_revolver_iron_ammo;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 4;
 		
@@ -206,7 +206,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_ammo;
+		bullet.ammo = Armory.gun_revolver_ammo;
 		bullet.dmgMin = 3;
 		bullet.dmgMax = 5;
 		
@@ -217,7 +217,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_lead_ammo;
+		bullet.ammo = Armory.gun_revolver_lead_ammo;
 		bullet.dmgMin = 2;
 		bullet.dmgMax = 3;
 		
@@ -231,7 +231,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_gold_ammo;
+		bullet.ammo = Armory.gun_revolver_gold_ammo;
 		bullet.dmgMin = 10;
 		bullet.dmgMax = 15;
 		
@@ -242,7 +242,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.ammo_357_desh;
+		bullet.ammo = Armory.ammo_357_desh;
 		bullet.dmgMin = 15;
 		bullet.dmgMax = 17;
 		
@@ -253,7 +253,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_schrabidium_ammo;
+		bullet.ammo = Armory.gun_revolver_schrabidium_ammo;
 		bullet.dmgMin = 1000000;
 		bullet.dmgMax = 10000000;
 		// bullet.instakill = true;
@@ -265,7 +265,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_cursed_ammo;
+		bullet.ammo = Armory.gun_revolver_cursed_ammo;
 		bullet.dmgMin = 12;
 		bullet.dmgMax = 15;
 		
@@ -276,7 +276,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_nightmare_ammo;
+		bullet.ammo = Armory.gun_revolver_nightmare_ammo;
 		bullet.dmgMin = 1;
 		bullet.dmgMax = 50;
 		
@@ -287,7 +287,7 @@ public static GunConfiguration getBaseConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 		
-		bullet.ammo = ModItems.gun_revolver_nightmare2_ammo;
+		bullet.ammo = Armory.gun_revolver_nightmare2_ammo;
 		bullet.spread *= 10;
 		bullet.bulletsMin = 4;
 		bullet.bulletsMax = 6;

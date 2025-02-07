@@ -6,6 +6,7 @@ import java.util.Random;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -55,19 +56,19 @@ public class GunBoltAction extends Item {
 		if(!(entityLiving instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer)entityLiving;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_bolt_action_saturnite){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_bolt_action_saturnite){
 			player.getHeldItemOffhand().onPlayerStoppedUsing(world, entityLiving, timeLeft);
 		}
 		int j = this.getMaxItemUseDuration(stack) - timeLeft;
 
-		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, world, j, Library.hasInventoryItem(player.inventory, ModItems.ammo_20gauge_slug));
+		ArrowLooseEvent event = new ArrowLooseEvent(player, stack, world, j, Library.hasInventoryItem(player.inventory, Armory.ammo_20gauge_slug));
 		MinecraftForge.EVENT_BUS.post(event);
 		j = event.getCharge();
 
 		boolean flag = player.capabilities.isCreativeMode
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 
-		if (flag || Library.hasInventoryItem(player.inventory, ModItems.ammo_20gauge_slug)) {
+		if (flag || Library.hasInventoryItem(player.inventory, Armory.ammo_20gauge_slug)) {
 			float f = j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;
 
@@ -89,7 +90,7 @@ public class GunBoltAction extends Item {
 			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.revolverShoot, SoundCategory.PLAYERS, 5.0F, 0.75F);
 
 			if (flag) { } else {
-				Library.consumeInventoryItem(player.inventory, ModItems.ammo_20gauge_slug);
+				Library.consumeInventoryItem(player.inventory, Armory.ammo_20gauge_slug);
 			}
 
 			if (!world.isRemote) {
@@ -128,7 +129,7 @@ public class GunBoltAction extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		ArrowNockEvent event = new ArrowNockEvent(playerIn, stack, handIn, worldIn, Library.hasInventoryItem(playerIn.inventory, ModItems.ammo_20gauge_slug));
+		ArrowNockEvent event = new ArrowNockEvent(playerIn, stack, handIn, worldIn, Library.hasInventoryItem(playerIn.inventory, Armory.ammo_20gauge_slug));
 		MinecraftForge.EVENT_BUS.post(event);
 
 		if(getAnim(stack) == 0)

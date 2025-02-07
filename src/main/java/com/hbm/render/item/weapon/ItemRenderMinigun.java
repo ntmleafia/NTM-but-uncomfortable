@@ -1,8 +1,8 @@
 package com.hbm.render.item.weapon;
 
+import com.hbm.items.ModItems.Armory;
 import org.lwjgl.opengl.GL11;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.weapon.ItemGunBase;
 import com.hbm.lib.RefStrings;
 import com.hbm.render.item.TEISRBase;
@@ -28,11 +28,11 @@ public class ItemRenderMinigun extends TEISRBase {
 	@Override
 	public void renderByItem(ItemStack item) {
 		float f = ItemGunBase.readNBT(item, "rot");
-		if(item.getItem() == ModItems.gun_minigun)
+		if(item.getItem() == Armory.gun_minigun)
 			Minecraft.getMinecraft().renderEngine.bindTexture(minigun_rl);
-		if(item.getItem() == ModItems.gun_avenger)
+		if(item.getItem() == Armory.gun_avenger)
 			Minecraft.getMinecraft().renderEngine.bindTexture(avenger_rl);
-		if(item.getItem() == ModItems.gun_lacunae)
+		if(item.getItem() == Armory.gun_lacunae)
 			Minecraft.getMinecraft().renderEngine.bindTexture(lacunae_rl);
 		
 		switch(type){

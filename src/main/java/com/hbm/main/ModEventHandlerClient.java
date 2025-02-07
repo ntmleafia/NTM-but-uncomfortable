@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonSyntaxException;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.ToolSets;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.gear.utility.FuzzyIdentifierBakedModel;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
@@ -413,7 +416,7 @@ public class ModEventHandlerClient {
 			for(int i = 0; i < TrackType.values().length; i++) {
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			}
-		} else if(item == ModItems.ingot_u238m2) {
+		} else if(item == Ingots.ingot_u238m2) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 1, new ModelResourceLocation(RefStrings.MODID + ":hs-elements", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 2, new ModelResourceLocation(RefStrings.MODID + ":hs-arsenic", "inventory"));
@@ -551,65 +554,65 @@ public class ModEventHandlerClient {
 		}
 
 		IRegistry<ModelResourceLocation, IBakedModel> reg = evt.getModelRegistry();
-		swapModelsNoGui(ModItems.gun_revolver_nightmare, reg);
-		swapModelsNoGui(ModItems.gun_revolver_nightmare2, reg);
-		swapModels(ModItems.gun_revolver, reg);
-		swapModels(ModItems.gun_revolver_iron, reg);
-		swapModels(ModItems.gun_revolver_gold, reg);
-		swapModels(ModItems.gun_revolver_lead, reg);
-		swapModels(ModItems.gun_revolver_saturnite, reg);
-		swapModels(ModItems.gun_revolver_schrabidium, reg);
-		swapModelsNoGui(ModItems.gun_revolver_cursed, reg);
-		swapModelsNoGui(ModItems.gun_revolver_pip, reg);
-		swapModelsNoGui(ModItems.gun_revolver_nopip, reg);
-		swapModelsNoGui(ModItems.gun_revolver_blackjack, reg);
-		swapModelsNoGui(ModItems.gun_revolver_silver, reg);
-		swapModelsNoGui(ModItems.gun_revolver_red, reg);
-		swapModelsNoGui(ModItems.gun_lever_action, reg);
-		swapModelsNoGui(ModItems.gun_spark, reg);
-		swapModelsNoGui(ModItems.gun_b93, reg);
-		swapModelsNoGui(ModItems.gun_rpg, reg);
-		swapModelsNoGui(ModItems.gun_karl, reg);
-		swapModelsNoGui(ModItems.gun_panzerschreck, reg);
-		swapModels(ModItems.gun_hk69, reg);
-		swapModelsNoGui(ModItems.gun_deagle, reg);
-		swapModelsNoGui(ModItems.gun_supershotgun, reg);
-		swapModelsNoGui(ModItems.gun_fatman, reg);
-		swapModelsNoGui(ModItems.gun_proto, reg);
-		swapModelsNoGui(ModItems.gun_mirv, reg);
-		swapModelsNoGui(ModItems.gun_bf, reg);
-		swapModelsNoGui(ModItems.gun_zomg, reg);
-		swapModelsNoGui(ModItems.gun_xvl1456, reg);
-		swapModelsNoGui(ModItems.gun_hp, reg);
-		swapModelsNoGui(ModItems.gun_defabricator, reg);
-		swapModelsNoGui(ModItems.gun_uboinik, reg);
-		swapModelsNoGui(ModItems.gun_euthanasia, reg);
-		swapModelsNoGui(ModItems.gun_stinger, reg);
-		swapModelsNoGui(ModItems.gun_skystinger, reg);
-		swapModelsNoGui(ModItems.gun_mp, reg);
-		swapModelsNoGui(ModItems.gun_cryolator, reg);
-		swapModelsNoGui(ModItems.gun_jack, reg);
-		swapModelsNoGui(ModItems.gun_immolator, reg);
-		swapModelsNoGui(ModItems.gun_osipr, reg);
-		swapModelsNoGui(ModItems.gun_emp, reg);
-		swapModels(ModItems.gun_revolver_inverted, reg);
-		swapModelsNoGui(ModItems.gun_lever_action_sonata, reg);
-		swapModelsNoGui(ModItems.gun_bolt_action_saturnite, reg);
-		swapModelsNoGui(ModItems.gun_folly, reg);
-		swapModelsNoGui(ModItems.gun_dampfmaschine, reg);
-		swapModelsNoGui(ModItems.gun_calamity, reg);
-		swapModelsNoGui(ModItems.gun_calamity_dual, reg);
-		swapModelsNoGui(ModItems.gun_minigun, reg);
-		swapModelsNoGui(ModItems.gun_avenger, reg);
-		swapModelsNoGui(ModItems.gun_lacunae, reg);
-		swapModelsNoGui(ModItems.gun_lever_action_dark, reg);
-		swapModelsNoGui(ModItems.gun_bolt_action, reg);
-		swapModelsNoGui(ModItems.gun_bolt_action_green, reg);
-		swapModelsNoGui(ModItems.gun_uzi, reg);
-		swapModelsNoGui(ModItems.gun_uzi_silencer, reg);
-		swapModelsNoGui(ModItems.gun_uzi_saturnite, reg);
-		swapModelsNoGui(ModItems.gun_uzi_saturnite_silencer, reg);
-		swapModelsNoGui(ModItems.gun_mp40, reg);
+		swapModelsNoGui(Armory.gun_revolver_nightmare, reg);
+		swapModelsNoGui(Armory.gun_revolver_nightmare2, reg);
+		swapModels(Armory.gun_revolver, reg);
+		swapModels(Armory.gun_revolver_iron, reg);
+		swapModels(Armory.gun_revolver_gold, reg);
+		swapModels(Armory.gun_revolver_lead, reg);
+		swapModels(Armory.gun_revolver_saturnite, reg);
+		swapModels(Armory.gun_revolver_schrabidium, reg);
+		swapModelsNoGui(Armory.gun_revolver_cursed, reg);
+		swapModelsNoGui(Armory.gun_revolver_pip, reg);
+		swapModelsNoGui(Armory.gun_revolver_nopip, reg);
+		swapModelsNoGui(Armory.gun_revolver_blackjack, reg);
+		swapModelsNoGui(Armory.gun_revolver_silver, reg);
+		swapModelsNoGui(Armory.gun_revolver_red, reg);
+		swapModelsNoGui(Armory.gun_lever_action, reg);
+		swapModelsNoGui(Armory.gun_spark, reg);
+		swapModelsNoGui(Armory.gun_b93, reg);
+		swapModelsNoGui(Armory.gun_rpg, reg);
+		swapModelsNoGui(Armory.gun_karl, reg);
+		swapModelsNoGui(Armory.gun_panzerschreck, reg);
+		swapModels(Armory.gun_hk69, reg);
+		swapModelsNoGui(Armory.gun_deagle, reg);
+		swapModelsNoGui(Armory.gun_supershotgun, reg);
+		swapModelsNoGui(Armory.gun_fatman, reg);
+		swapModelsNoGui(Armory.gun_proto, reg);
+		swapModelsNoGui(Armory.gun_mirv, reg);
+		swapModelsNoGui(Armory.gun_bf, reg);
+		swapModelsNoGui(Armory.gun_zomg, reg);
+		swapModelsNoGui(Armory.gun_xvl1456, reg);
+		swapModelsNoGui(Armory.gun_hp, reg);
+		swapModelsNoGui(Armory.gun_defabricator, reg);
+		swapModelsNoGui(Armory.gun_uboinik, reg);
+		swapModelsNoGui(Armory.gun_euthanasia, reg);
+		swapModelsNoGui(Armory.gun_stinger, reg);
+		swapModelsNoGui(Armory.gun_skystinger, reg);
+		swapModelsNoGui(Armory.gun_mp, reg);
+		swapModelsNoGui(Armory.gun_cryolator, reg);
+		swapModelsNoGui(Armory.gun_jack, reg);
+		swapModelsNoGui(Armory.gun_immolator, reg);
+		swapModelsNoGui(Armory.gun_osipr, reg);
+		swapModelsNoGui(Armory.gun_emp, reg);
+		swapModels(Armory.gun_revolver_inverted, reg);
+		swapModelsNoGui(Armory.gun_lever_action_sonata, reg);
+		swapModelsNoGui(Armory.gun_bolt_action_saturnite, reg);
+		swapModelsNoGui(Armory.gun_folly, reg);
+		swapModelsNoGui(Armory.gun_dampfmaschine, reg);
+		swapModelsNoGui(Armory.gun_calamity, reg);
+		swapModelsNoGui(Armory.gun_calamity_dual, reg);
+		swapModelsNoGui(Armory.gun_minigun, reg);
+		swapModelsNoGui(Armory.gun_avenger, reg);
+		swapModelsNoGui(Armory.gun_lacunae, reg);
+		swapModelsNoGui(Armory.gun_lever_action_dark, reg);
+		swapModelsNoGui(Armory.gun_bolt_action, reg);
+		swapModelsNoGui(Armory.gun_bolt_action_green, reg);
+		swapModelsNoGui(Armory.gun_uzi, reg);
+		swapModelsNoGui(Armory.gun_uzi_silencer, reg);
+		swapModelsNoGui(Armory.gun_uzi_saturnite, reg);
+		swapModelsNoGui(Armory.gun_uzi_saturnite_silencer, reg);
+		swapModelsNoGui(Armory.gun_mp40, reg);
 		swapModels(ModItems.cell, reg);
 		swapModels(ModItems.gas_canister, reg);
 		swapModelsNoGui(ModItems.multitool_dig, reg);
@@ -627,49 +630,49 @@ public class ModEventHandlerClient {
 		swapModelsNoGui(ModItems.shimmer_axe, reg);
 		swapModels(ModItems.ff_fluid_duct, reg);
 		swapModels(ModItems.fluid_icon, reg);
-		swapModelsNoGui(ModItems.gun_brimstone, reg);
+		swapModelsNoGui(Armory.gun_brimstone, reg);
 		swapModelsNoGui(ModItems.stopsign, reg);
 		swapModelsNoGui(ModItems.sopsign, reg);
-		swapModels(ModItems.gun_ks23, reg);
-		swapModels(ModItems.gun_flamer, reg);
-		swapModels(ModItems.gun_flechette, reg);
-		swapModels(ModItems.gun_quadro, reg);
-		swapModels(ModItems.gun_sauer, reg);
+		swapModels(Armory.gun_ks23, reg);
+		swapModels(Armory.gun_flamer, reg);
+		swapModels(Armory.gun_flechette, reg);
+		swapModels(Armory.gun_quadro, reg);
+		swapModels(Armory.gun_sauer, reg);
 		swapModelsNoGui(ModItems.chernobylsign, reg);
 		swapModels(Item.getItemFromBlock(ModBlocks.radiorec), reg);
-		swapModels(ModItems.gun_vortex, reg);
-		swapModels(ModItems.gun_thompson, reg);
+		swapModels(Armory.gun_vortex, reg);
+		swapModels(Armory.gun_thompson, reg);
 		swapModelsNoGui(ModItems.wood_gavel, reg);
 		swapModelsNoGui(ModItems.lead_gavel, reg);
 		swapModelsNoGui(ModItems.diamond_gavel, reg);
 		swapModelsNoGui(ModItems.mese_gavel, reg);
-		swapModels(ModItems.gun_bolter, reg);
-		swapModels(ModItems.ingot_steel_dusted, reg);
-		swapModels(ModItems.ingot_chainsteel, reg);
-		swapModels(ModItems.ingot_meteorite, reg);
-		swapModels(ModItems.ingot_meteorite_forged, reg);
+		swapModels(Armory.gun_bolter, reg);
+		swapModels(Ingots.ingot_steel_dusted, reg);
+		swapModels(Ingots.ingot_chainsteel, reg);
+		swapModels(Ingots.ingot_meteorite, reg);
+		swapModels(Ingots.ingot_meteorite_forged, reg);
 		swapModels(ModItems.blade_meteorite, reg);
-		swapModels(ModItems.crucible, reg);
-		swapModels(ModItems.hs_sword, reg);
-		swapModels(ModItems.hf_sword, reg);
-		swapModels(ModItems.cc_plasma_gun, reg);
-		swapModels(ModItems.gun_egon, reg);
-		swapModels(ModItems.jshotgun, reg);
-		swapModels(ModItems.gun_ar15, reg);
+		swapModels(Armory.crucible, reg);
+		swapModels(Armory.hs_sword, reg);
+		swapModels(Armory.hf_sword, reg);
+		swapModels(Armory.cc_plasma_gun, reg);
+		swapModels(Armory.gun_egon, reg);
+		swapModels(Armory.jshotgun, reg);
+		swapModels(Armory.gun_ar15, reg);
 		
-		swapModels(ModItems.meteorite_sword_seared, reg);
-		swapModels(ModItems.meteorite_sword_reforged, reg);
-		swapModels(ModItems.meteorite_sword_hardened, reg);
-		swapModels(ModItems.meteorite_sword_alloyed, reg);
-		swapModels(ModItems.meteorite_sword_machined, reg);
-		swapModels(ModItems.meteorite_sword_treated, reg);
-		swapModels(ModItems.meteorite_sword_etched, reg);
-		swapModels(ModItems.meteorite_sword_bred, reg);
-		swapModels(ModItems.meteorite_sword_irradiated, reg);
-		swapModels(ModItems.meteorite_sword_fused, reg);
-		swapModels(ModItems.meteorite_sword_baleful, reg);
-		swapModels(ModItems.meteorite_sword_warped, reg);
-		swapModels(ModItems.meteorite_sword_demonic, reg);
+		swapModels(ToolSets.meteorite_sword_seared, reg);
+		swapModels(ToolSets.meteorite_sword_reforged, reg);
+		swapModels(ToolSets.meteorite_sword_hardened, reg);
+		swapModels(ToolSets.meteorite_sword_alloyed, reg);
+		swapModels(ToolSets.meteorite_sword_machined, reg);
+		swapModels(ToolSets.meteorite_sword_treated, reg);
+		swapModels(ToolSets.meteorite_sword_etched, reg);
+		swapModels(ToolSets.meteorite_sword_bred, reg);
+		swapModels(ToolSets.meteorite_sword_irradiated, reg);
+		swapModels(ToolSets.meteorite_sword_fused, reg);
+		swapModels(ToolSets.meteorite_sword_baleful, reg);
+		swapModels(ToolSets.meteorite_sword_warped, reg);
+		swapModels(ToolSets.meteorite_sword_demonic, reg);
 
 		swapModels(ModItems.ore_bedrock, reg);
 		swapModels(ModItems.ore_bedrock_centrifuged, reg);
@@ -1216,7 +1219,7 @@ public class ModEventHandlerClient {
 	public void fovUpdate(FOVUpdateEvent e){
 		EntityPlayer player = e.getEntity();
 		float multiplier = 1.0F;
-		if(player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
+		if(player.getHeldItemMainhand().getItem() == Armory.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
 			multiplier *= 1.1F;
 		}
 		float viewADS = getViewADS(player);
@@ -1234,7 +1237,7 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void inputUpdate(InputUpdateEvent e) {
 		EntityPlayer player = e.getEntityPlayer();
-		if(player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
+		if(player.getHeldItemMainhand().getItem() == Armory.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
 			MovementInput m = e.getMovementInput();
 			//To make it extra responsive, swings faster if the player is swinging in the opposite direction.
 			float coeff = 0.25F;
@@ -1371,7 +1374,7 @@ public class ModEventHandlerClient {
 			}
 			EntityPlayer player = Minecraft.getMinecraft().player;
 			if(player != null) {
-				boolean isHooked = player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand());
+				boolean isHooked = player.getHeldItemMainhand().getItem() == Armory.gun_supershotgun && ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand());
 				if(isHooked)
 					player.distanceWalkedModified = player.prevDistanceWalkedModified; //Stops the held shotgun from bobbing when hooked
 			}
@@ -1382,7 +1385,7 @@ public class ModEventHandlerClient {
 				LeafiaPassiveLocal.onTick(Minecraft.getMinecraft().world);
 				//Drillgon200: If I add more guns like this, I'll abstract it.
 				for(EntityPlayer player : Minecraft.getMinecraft().world.playerEntities){
-					if(player.getHeldItemMainhand().getItem() == ModItems.gun_egon && !ItemGunEgon.soundsByPlayer.containsKey(player)){
+					if(player.getHeldItemMainhand().getItem() == Armory.gun_egon && !ItemGunEgon.soundsByPlayer.containsKey(player)){
 						boolean firing = player == Minecraft.getMinecraft().player ? ItemGunEgon.m1 && Library.countInventoryItem(player.inventory, ItemGunEgon.getBeltType(player, player.getHeldItemMainhand(), true)) >= 2 : ItemGunEgon.getIsFiring(player.getHeldItemMainhand());
 						if(firing){
 							ItemGunEgon.soundsByPlayer.put(player, new GunEgonSoundHandler(player));
@@ -1482,7 +1485,7 @@ public class ModEventHandlerClient {
 	
 	@SubscribeEvent
 	public void renderSpecificHand(RenderSpecificHandEvent e){
-		if(Minecraft.getMinecraft().player.getHeldItem(e.getHand()).getItem() == ModItems.crucible){
+		if(Minecraft.getMinecraft().player.getHeldItem(e.getHand()).getItem() == Armory.crucible){
 			e.setCanceled(true);
 			Minecraft.getMinecraft().getItemRenderer().renderItemInFirstPerson(Minecraft.getMinecraft().player, e.getPartialTicks(), e.getInterpolatedPitch(), EnumHand.MAIN_HAND, 0, Minecraft.getMinecraft().player.getHeldItem(e.getHand()), 0);
 		} else if(e.getHand() == EnumHand.MAIN_HAND && Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemSwordCutter){
@@ -1771,7 +1774,7 @@ public class ModEventHandlerClient {
 			GL11.glPopMatrix();*/
 			
 			//GLUON GUN//
-			if(player.getHeldItemMainhand().getItem() == ModItems.gun_egon && ItemGunEgon.activeTicks > 0 && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0){
+			if(player.getHeldItemMainhand().getItem() == Armory.gun_egon && ItemGunEgon.activeTicks > 0 && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0){
 				GL11.glPushMatrix();
 				float[] angles = ItemGunEgon.getBeamDirectionOffset(player.world.getTotalWorldTime()+partialTicks);
 				Vec3d look = Library.changeByAngle(player.getLook(partialTicks), angles[0], angles[1]);
@@ -1821,7 +1824,7 @@ public class ModEventHandlerClient {
 			}
 			
 			//Gluon gun world rendering
-			if(player.getHeldItemMainhand().getItem() != ModItems.gun_egon){
+			if(player.getHeldItemMainhand().getItem() != Armory.gun_egon){
 				ItemGunEgon.activeTrailParticles.remove(player);
 				continue;
 			}
@@ -1941,7 +1944,7 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void onOverlayRender(RenderGameOverlayEvent.Pre event) {
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(event.getType() == ElementType.CROSSHAIRS && player.getHeldItemMainhand().getItem() == ModItems.gun_supershotgun && !ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
+		if(event.getType() == ElementType.CROSSHAIRS && player.getHeldItemMainhand().getItem() == Armory.gun_supershotgun && !ItemGunShotty.hasHookedEntity(player.world, player.getHeldItemMainhand())) {
 			float x1 = ItemGunShotty.prevScreenPos.x + (ItemGunShotty.screenPos.x - ItemGunShotty.prevScreenPos.x) * event.getPartialTicks();
 			float y1 = ItemGunShotty.prevScreenPos.y + (ItemGunShotty.screenPos.y - ItemGunShotty.prevScreenPos.y) * event.getPartialTicks();
 			float x = BobMathUtil.remap(x1, 0, Minecraft.getMinecraft().displayWidth, 0, event.getResolution().getScaledWidth());
@@ -2154,7 +2157,7 @@ public class ModEventHandlerClient {
 			renderer.leftArmPose = ArmPose.BOW_AND_ARROW;
 		}
 		JetpackHandler.preRenderPlayer(player);
-		if(player.getHeldItemMainhand().getItem() == ModItems.gun_egon){
+		if(player.getHeldItemMainhand().getItem() == Armory.gun_egon){
 			EgonBackpackRenderer.showBackpack = true;
 		}
 		
@@ -2192,7 +2195,7 @@ public class ModEventHandlerClient {
 		//GLUON GUN//
 		boolean firing = player == Minecraft.getMinecraft().player ? ItemGunEgon.m1 && Library.countInventoryItem(player.inventory, ItemGunEgon.getBeltType(player, player.getHeldItemMainhand(), true)) >= 2 : ItemGunEgon.getIsFiring(player.getHeldItemMainhand());
 		EgonBackpackRenderer.showBackpack = false;
-		if(player.getHeldItemMainhand().getItem() == ModItems.gun_egon && firing){
+		if(player.getHeldItemMainhand().getItem() == Armory.gun_egon && firing){
 			GL11.glPushMatrix();
 			float partialTicks = event.getPartialRenderTick();
 			float[] angles = ItemGunEgon.getBeamDirectionOffset(player.world.getTotalWorldTime()+partialTicks);

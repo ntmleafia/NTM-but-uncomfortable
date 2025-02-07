@@ -8,6 +8,7 @@ import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.LeafiaRods;
 import com.hbm.items.special.ItemCustomLore;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.Library;
@@ -583,7 +584,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		this.life = heatGenerated*10;
 		this.meltingPoint = meltingPoint;
 
-		this.setContainerItem(ModItems.leafRod);
+		this.setContainerItem(LeafiaRods.leafRod);
 
 		detonate(null,null);
 	}

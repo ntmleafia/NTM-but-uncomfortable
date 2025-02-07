@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.google.common.collect.Multimap;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
@@ -37,7 +38,7 @@ public class GunSuicide extends Item {
     	this.setRegistryName(s);
     	this.maxStackSize = 1;
     	this.setMaxDamage(500);
-    	this.ammo = ModItems.gun_revolver_ammo;
+    	this.ammo = Armory.gun_revolver_ammo;
     	
     	ModItems.ALL_ITEMS.add(this);
 	}
@@ -47,7 +48,7 @@ public class GunSuicide extends Item {
     	if(!(entityLiving instanceof EntityPlayer))
     		return;
     	if(this.ammo == null)
-    		this.ammo = ModItems.gun_revolver_ammo;
+    		this.ammo = Armory.gun_revolver_ammo;
     	EntityPlayer player = (EntityPlayer)entityLiving;
     	int j = this.getMaxItemUseDuration(stack) - timeLeft;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hbm.config.BombConfig;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.items.ModItems;
@@ -63,7 +64,7 @@ public class EntityMissileSchrabidium extends EntityMissileBaseAdvanced {
 
 	@Override
 	public ItemStack getDebrisRareDrop() {
-		return new ItemStack(ModItems.powder_schrabidium, 1);
+		return new ItemStack(Powders.powder_schrabidium, 1);
 	}
 
 	@Override

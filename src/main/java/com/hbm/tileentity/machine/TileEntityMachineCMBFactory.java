@@ -3,7 +3,8 @@ package com.hbm.tileentity.machine;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.FluidTankPacket;
@@ -13,7 +14,6 @@ import com.hbm.tileentity.TileEntityMachineBase;
 import api.hbm.energy.IBatteryItem;
 import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,8 +29,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityMachineCMBFactory extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
@@ -88,11 +86,11 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 		case 0:
 			return (stack.getItem() instanceof IBatteryItem);
 		case 1:
-			return (stack.getItem() == ModItems.ingot_magnetized_tungsten || stack.getItem() == ModItems.powder_magnetized_tungsten);
+			return (stack.getItem() == Ingots.ingot_magnetized_tungsten || stack.getItem() == Powders.powder_magnetized_tungsten);
 		case 2:
 			return (FFUtils.containsFluid(stack, ModForgeFluids.watz));
 		case 3:
-			return (stack.getItem() == ModItems.ingot_advanced_alloy || stack.getItem() == ModItems.powder_advanced_alloy);
+			return (stack.getItem() == Ingots.ingot_advanced_alloy || stack.getItem() == Powders.powder_advanced_alloy);
 		}
 		return true;
 	}
@@ -136,8 +134,8 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 		
 		if(tank.getFluidAmount() >= 1 && power >= 100000 && !inventory.getStackInSlot(1).isEmpty() && !inventory.getStackInSlot(3).isEmpty() && (inventory.getStackInSlot(4).isEmpty() || inventory.getStackInSlot(4).getCount() <= 60))
 		{
-			boolean flag0 = inventory.getStackInSlot(1).getItem() == ModItems.ingot_magnetized_tungsten || inventory.getStackInSlot(1).getItem() == ModItems.powder_magnetized_tungsten;
-			boolean flag1 = inventory.getStackInSlot(3).getItem() == ModItems.ingot_advanced_alloy || inventory.getStackInSlot(3).getItem() == ModItems.powder_advanced_alloy;
+			boolean flag0 = inventory.getStackInSlot(1).getItem() == Ingots.ingot_magnetized_tungsten || inventory.getStackInSlot(1).getItem() == Powders.powder_magnetized_tungsten;
+			boolean flag1 = inventory.getStackInSlot(3).getItem() == Ingots.ingot_advanced_alloy || inventory.getStackInSlot(3).getItem() == Powders.powder_advanced_alloy;
 			
 			b = flag0 && flag1;
 		}
@@ -170,7 +168,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 			
 			if(inventory.getStackInSlot(4).isEmpty())
 			{
-				inventory.setStackInSlot(4, new ItemStack(ModItems.ingot_combine_steel, 4));
+				inventory.setStackInSlot(4, new ItemStack(Ingots.ingot_combine_steel, 4));
 			} else {
 				//Possible dupe glitch? Check later.
 				inventory.getStackInSlot(4).grow(4);

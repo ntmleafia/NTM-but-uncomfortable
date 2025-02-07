@@ -1,6 +1,7 @@
 package com.hbm.sound;
 
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemCrucible;
 import com.hbm.lib.HBMSoundHandler;
 
@@ -30,7 +31,7 @@ public class SoundLoopCrucible extends MovingSound {
 		this.xPosF = (float) player.posX;
 		this.yPosF = (float) player.posY;
 		this.zPosF = (float) player.posZ;
-		if(start != null && (player.isDead || player.getHeldItemMainhand().getItem() != ModItems.crucible || ItemCrucible.getCharges(player.getHeldItemMainhand()) == 0)){
+		if(start != null && (player.isDead || player.getHeldItemMainhand().getItem() != Armory.crucible || ItemCrucible.getCharges(player.getHeldItemMainhand()) == 0)){
 			this.donePlaying = true;
 			Minecraft.getMinecraft().getSoundHandler().stopSound(start);
 			start = null;

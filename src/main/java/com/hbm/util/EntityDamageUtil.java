@@ -3,8 +3,8 @@ package com.hbm.util;
 import java.lang.reflect.Field;
 
 import com.hbm.handler.ArmorModHandler;
-import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Inserts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,7 +60,7 @@ public class EntityDamageUtil {
 				if(chestplate != null && ArmorModHandler.hasMods(chestplate)) {
 					ItemStack[] mods = ArmorModHandler.pryMods(chestplate);
 					
-					if(mods[ArmorModHandler.extra] != null && mods[ArmorModHandler.extra].getItem() == ModItems.v1) {
+					if(mods[ArmorModHandler.extra] != null && mods[ArmorModHandler.extra].getItem() == Inserts.v1) {
 						return true;
 					}
 				}

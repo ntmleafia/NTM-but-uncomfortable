@@ -12,6 +12,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.machine.ItemFuelRod;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
@@ -454,8 +455,8 @@ public class TileEntityMachineReactorLarge extends TileEntity implements ITickab
 			}
 			
 			//Meteorite sword
-			if(coreHeat > 0 && inventory.getStackInSlot(4).getItem() == ModItems.meteorite_sword_bred)
-				inventory.setStackInSlot(4, new ItemStack(ModItems.meteorite_sword_irradiated));
+			if(coreHeat > 0 && inventory.getStackInSlot(4).getItem() == ToolSets.meteorite_sword_bred)
+				inventory.setStackInSlot(4, new ItemStack(ToolSets.meteorite_sword_irradiated));
 			
 			//Load fuel
 			if(getFuelContent(inventory.getStackInSlot(4), type) > 0) {

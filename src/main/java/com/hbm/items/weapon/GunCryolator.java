@@ -6,6 +6,7 @@ import java.util.Random;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityLN2;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -58,20 +59,20 @@ public class GunCryolator extends Item {
 		if(!(player1 instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer) player1;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_cryolator){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_cryolator){
 			player.getHeldItemOffhand().getItem().onUsingTick(player.getHeldItemOffhand(), player, count);
 		}
 		World world = player.world;
 
 		boolean flag = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, ModItems.gun_cryolator_ammo))) {
+		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_cryolator_ammo))) {
 			EntityLN2 entityarrow = new EntityLN2(world, player, 3.0F, player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 
 			if (flag) {
 				entityarrow.canBePickedUp = 2;
 			} else {
 				if (count % 10 == 0)
-					Library.consumeInventoryItem(player.inventory, ModItems.gun_cryolator_ammo);
+					Library.consumeInventoryItem(player.inventory, Armory.gun_cryolator_ammo);
 			}
 
 			if (count % 5 == 0)

@@ -9,6 +9,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
@@ -115,7 +116,7 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 			FFUtils.fillFromFluidContainer(inventory, tank, 5, 9);
 			PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos, tank), new TargetPoint(world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 10));
 			for(int i = 1; i < 10; i++) {
-				if(inventory.getStackInSlot(i).getItem() == ModItems.ammo_fuel) {
+				if(inventory.getStackInSlot(i).getItem() == Armory.ammo_fuel) {
 					if((this.tank.getFluid() == null || tank.getFluid().getFluid() == ModForgeFluids.diesel) && this.tank.getFluidAmount() + 1000 <= this.tank.getCapacity()) {
 						this.tank.fill(new FluidStack(ModForgeFluids.diesel, 1000), true);
 						inventory.getStackInSlot(i).shrink(1);

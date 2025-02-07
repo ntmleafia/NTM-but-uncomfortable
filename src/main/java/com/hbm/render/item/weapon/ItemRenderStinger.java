@@ -1,5 +1,6 @@
 package com.hbm.render.item.weapon;
 
+import com.hbm.items.ModItems.Armory;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.items.ModItems;
@@ -25,9 +26,9 @@ public class ItemRenderStinger extends TEISRBase {
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
 		GL11.glPushMatrix();
-		if(itemStackIn.getItem() == ModItems.gun_stinger)
+		if(itemStackIn.getItem() == Armory.gun_stinger)
 			Minecraft.getMinecraft().renderEngine.bindTexture(stinger_rl);
-		if(itemStackIn.getItem() == ModItems.gun_skystinger)
+		if(itemStackIn.getItem() == Armory.gun_skystinger)
 			Minecraft.getMinecraft().renderEngine.bindTexture(skystinger_rl);
 		switch(type){
 		case FIRST_PERSON_LEFT_HAND:

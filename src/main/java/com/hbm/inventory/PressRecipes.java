@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.hbm.inventory.OreDictManager.*;
+
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.Materials.Powders;
+import com.hbm.items.ModItems.ToolSets;
 import com.hbm.util.Tuple.Pair;
 import com.hbm.items.ModItems;
 import com.hbm.inventory.RecipesCommon.AStack;
-import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 
@@ -51,9 +55,9 @@ public class PressRecipes {
 		addRecipe(PressType.FLAT, new OreDictStack(EMERALD.dust()), new ItemStack(Items.EMERALD)); 
 		addRecipe(PressType.FLAT, new ComparableStack(ModItems.pellet_coal), new ItemStack(Items.DIAMOND)); 
 		addRecipe(PressType.FLAT, new ComparableStack(ModItems.biomass), new ItemStack(ModItems.biomass_compressed)); 
-		addRecipe(PressType.FLAT, new ComparableStack(ModItems.powder_lignite), new ItemStack(ModItems.briquette_lignite)); 
-		addRecipe(PressType.FLAT, new ComparableStack(ModItems.meteorite_sword_reforged), new ItemStack(ModItems.meteorite_sword_hardened)); 
-		addRecipe(PressType.FLAT, new OreDictStack("fuelCoke"), new ItemStack(ModItems.ingot_graphite));
+		addRecipe(PressType.FLAT, new ComparableStack(Powders.powder_lignite), new ItemStack(ModItems.briquette_lignite));
+		addRecipe(PressType.FLAT, new ComparableStack(ToolSets.meteorite_sword_reforged), new ItemStack(ToolSets.meteorite_sword_hardened));
+		addRecipe(PressType.FLAT, new OreDictStack("fuelCoke"), new ItemStack(Ingots.ingot_graphite));
 		addRecipe(PressType.FLAT, new OreDictStack("sugarcane"), new ItemStack(Items.PAPER, 2));
 		addRecipe(PressType.FLAT, new ComparableStack(Blocks.LOG, 1, 3), new ItemStack(ModItems.ball_resin, 1));
 
@@ -85,25 +89,25 @@ public class PressRecipes {
 		addRecipe(PressType.CIRCUIT, new ComparableStack(ModItems.circuit_arsenic_raw), new ItemStack(ModItems.circuit_arsenic));
 		addRecipe(PressType.CIRCUIT, new ComparableStack(ModItems.circuit_tantalium_raw), new ItemStack(ModItems.circuit_tantalium));
 
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_iron), new ItemStack(ModItems.gun_revolver_iron_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_steel), new ItemStack(ModItems.gun_revolver_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_lead), new ItemStack(ModItems.gun_revolver_lead_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_gold), new ItemStack(ModItems.gun_revolver_gold_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_schrabidium), new ItemStack(ModItems.gun_revolver_schrabidium_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_nightmare), new ItemStack(ModItems.gun_revolver_nightmare_ammo));
-		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(ModItems.assembly_desh), new ItemStack(ModItems.ammo_357_desh));
-		addRecipe(PressType.THREEFIFESEVEN, new OreDictStack(STEEL.ingot()), new ItemStack(ModItems.gun_revolver_cursed_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_iron), new ItemStack(Armory.gun_revolver_iron_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_steel), new ItemStack(Armory.gun_revolver_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_lead), new ItemStack(Armory.gun_revolver_lead_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_gold), new ItemStack(Armory.gun_revolver_gold_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_schrabidium), new ItemStack(Armory.gun_revolver_schrabidium_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_nightmare), new ItemStack(Armory.gun_revolver_nightmare_ammo));
+		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_desh), new ItemStack(Armory.ammo_357_desh));
+		addRecipe(PressType.THREEFIFESEVEN, new OreDictStack(STEEL.ingot()), new ItemStack(Armory.gun_revolver_cursed_ammo));
 
-		addRecipe(PressType.FOURFOUR, new ComparableStack(ModItems.assembly_nopip), new ItemStack(ModItems.ammo_44));
+		addRecipe(PressType.FOURFOUR, new ComparableStack(Armory.assembly_nopip), new ItemStack(Armory.ammo_44));
 
-		addRecipe(PressType.NINE, new ComparableStack(ModItems.assembly_smg), new ItemStack(ModItems.ammo_9mm));
-		addRecipe(PressType.NINE, new ComparableStack(ModItems.assembly_uzi), new ItemStack(ModItems.ammo_22lr));
-		addRecipe(PressType.NINE, new OreDictStack(GOLD.ingot()), new ItemStack(ModItems.ammo_566_gold));
-		addRecipe(PressType.NINE, new ComparableStack(ModItems.assembly_lacunae), new ItemStack(ModItems.ammo_5mm));
-		addRecipe(PressType.NINE, new ComparableStack(ModItems.assembly_556), new ItemStack(ModItems.ammo_556));
+		addRecipe(PressType.NINE, new ComparableStack(Armory.assembly_smg), new ItemStack(Armory.ammo_9mm));
+		addRecipe(PressType.NINE, new ComparableStack(Armory.assembly_uzi), new ItemStack(Armory.ammo_22lr));
+		addRecipe(PressType.NINE, new OreDictStack(GOLD.ingot()), new ItemStack(Armory.ammo_566_gold));
+		addRecipe(PressType.NINE, new ComparableStack(Armory.assembly_lacunae), new ItemStack(Armory.ammo_5mm));
+		addRecipe(PressType.NINE, new ComparableStack(Armory.assembly_556), new ItemStack(Armory.ammo_556));
 
-		addRecipe(PressType.FIVEZERO, new ComparableStack(ModItems.assembly_calamity), new ItemStack(ModItems.ammo_50bmg));
-		addRecipe(PressType.FIVEZERO, new ComparableStack(ModItems.assembly_actionexpress), new ItemStack(ModItems.ammo_50ae));
+		addRecipe(PressType.FIVEZERO, new ComparableStack(Armory.assembly_calamity), new ItemStack(Armory.ammo_50bmg));
+		addRecipe(PressType.FIVEZERO, new ComparableStack(Armory.assembly_actionexpress), new ItemStack(Armory.ammo_50ae));
 	}
 
 

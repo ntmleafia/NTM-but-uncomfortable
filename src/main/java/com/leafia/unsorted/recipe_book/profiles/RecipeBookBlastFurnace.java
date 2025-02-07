@@ -2,6 +2,7 @@ package com.leafia.unsorted.recipe_book.profiles;
 
 import com.hbm.inventory.DiFurnaceRecipes;
 import com.hbm.inventory.RecipesCommon.*;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
 import com.hbm.items.ModItems;
@@ -19,8 +20,8 @@ public class RecipeBookBlastFurnace extends LeafiaRecipeBookProfile {
     @Override
     public List<RecipeCategory> getCategories() {
         List<RecipeCategory> cats = new ArrayList<>();
-        cats.add(new RecipeCategory("Basic Alloys",ModItems.ingot_steel,ModItems.ingot_advanced_alloy));
-        cats.add(new RecipeCategory("Hazardous Alloys",ModItems.ingot_magnetized_tungsten));
+        cats.add(new RecipeCategory("Basic Alloys",Ingots.ingot_steel,Ingots.ingot_advanced_alloy));
+        cats.add(new RecipeCategory("Hazardous Alloys",Ingots.ingot_magnetized_tungsten));
         cats.add(new RecipeCategory("Machine Parts",ModItems.neutron_reflector));
         cats.add(new RecipeCategory("Miscellaneous",Items.LAVA_BUCKET));
         Set<Pair<AStack,AStack>> blockedPairs = new HashSet<>();

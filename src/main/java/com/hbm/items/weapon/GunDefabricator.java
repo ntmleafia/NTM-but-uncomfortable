@@ -6,6 +6,7 @@ import java.util.Random;
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
@@ -60,14 +61,14 @@ public class GunDefabricator extends Item {
 		if(!(player1 instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer) player1;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_defabricator){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_defabricator){
 			player.getHeldItemOffhand().getItem().onUsingTick(player.getHeldItemOffhand(), player, count);
 		}
 		World world = player.world;
 
 		boolean flag = player.capabilities.isCreativeMode
 				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, ModItems.gun_defabricator_ammo))
+		if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_defabricator_ammo))
 				&& count % 2 == 0) {
 			EntityBullet entitybullet = new EntityBullet(world, player, 3.0F, 40, 120, false, "tauDay", player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 			entitybullet.setDamage(40 + rand.nextInt(120 - 40));
@@ -78,7 +79,7 @@ public class GunDefabricator extends Item {
 				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.defabSpinup, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 			if(count % 20 == 0 && !flag)
-				Library.consumeInventoryItem(player.inventory, ModItems.gun_defabricator_ammo);
+				Library.consumeInventoryItem(player.inventory, Armory.gun_defabricator_ammo);
 
 			if (!world.isRemote) {
 				world.spawnEntity(entitybullet);

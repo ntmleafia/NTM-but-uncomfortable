@@ -16,6 +16,7 @@ import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlEventSystem;
 import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.machine.ItemTurretBiometry;
 import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
@@ -363,7 +364,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	 */
 	public List<String> getWhitelist() {
 		
-		if(inventory.getStackInSlot(0).getItem() == ModItems.turret_chip) {
+		if(inventory.getStackInSlot(0).getItem() == Armory.turret_chip) {
 			
 			String[] array = ItemTurretBiometry.getNames(inventory.getStackInSlot(0));
 			
@@ -382,7 +383,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	 */
 	public void addName(String name) {
 		
-		if(inventory.getStackInSlot(0).getItem() == ModItems.turret_chip) {
+		if(inventory.getStackInSlot(0).getItem() == Armory.turret_chip) {
 			ItemTurretBiometry.addName(inventory.getStackInSlot(0), name);
 		}
 	}
@@ -393,7 +394,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	 */
 	public void removeName(int index) {
 		
-		if(inventory.getStackInSlot(0).getItem() == ModItems.turret_chip) {
+		if(inventory.getStackInSlot(0).getItem() == Armory.turret_chip) {
 			
 			String[] array = ItemTurretBiometry.getNames(inventory.getStackInSlot(0));
 			

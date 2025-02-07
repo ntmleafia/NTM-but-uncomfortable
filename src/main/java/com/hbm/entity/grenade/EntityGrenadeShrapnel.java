@@ -2,6 +2,7 @@ package com.hbm.entity.grenade;
 
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemGrenade;
 
 import net.minecraft.entity.Entity;
@@ -43,7 +44,7 @@ public class EntityGrenadeShrapnel extends EntityGrenadeBouncyBase
 
 	@Override
 	protected int getMaxTimer() {
-		return ItemGrenade.getFuseTicks(ModItems.grenade_shrapnel);
+		return ItemGrenade.getFuseTicks(Armory.grenade_shrapnel);
 	}
 
 	@Override

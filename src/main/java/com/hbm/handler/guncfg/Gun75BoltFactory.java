@@ -9,6 +9,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHurtBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.AuxParticlePacketNT;
@@ -89,7 +90,7 @@ public class Gun75BoltFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_75bolt;
+		bullet.ammo = Armory.ammo_75bolt;
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 24;
@@ -124,7 +125,7 @@ public class Gun75BoltFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_75bolt_incendiary;
+		bullet.ammo = Armory.ammo_75bolt_incendiary;
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 26;
@@ -162,7 +163,7 @@ public class Gun75BoltFactory {
 
 		BulletConfiguration bullet = BulletConfigFactory.standardBulletConfig();
 
-		bullet.ammo = ModItems.ammo_75bolt_he;
+		bullet.ammo = Armory.ammo_75bolt_he;
 		bullet.ammoCount = 30;
 		bullet.spread *= inaccuracy;
 		bullet.dmgMin = 32;

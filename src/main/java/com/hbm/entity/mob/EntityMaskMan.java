@@ -8,6 +8,7 @@ import com.hbm.entity.mob.ai.EntityAIMaskmanMinigun;
 import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems;
 import com.hbm.handler.ArmorUtil;
+import com.hbm.items.ModItems.Inserts;
 import com.hbm.main.AdvancementManager;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -147,7 +148,7 @@ public class EntityMaskMan extends EntityMob implements IRadiationImmune {
 			
 			this.entityDropItem(mask, 0F);
 			this.dropItem(ModItems.coin_maskman, 1);
-			this.dropItem(ModItems.v1, 1);
+			this.dropItem(Inserts.v1, 1);
 			this.dropItem(Items.SKULL, 1);
 		}
 	}

@@ -14,6 +14,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -125,7 +126,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukeConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke;
+		bullet.ammo = Armory.ammo_nuke;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {
 
@@ -141,7 +142,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukeLowConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke_low;
+		bullet.ammo = Armory.ammo_nuke_low;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {
 
@@ -157,7 +158,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukeHighConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke_high;
+		bullet.ammo = Armory.ammo_nuke_high;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {
 
@@ -173,7 +174,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukeTotsConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke_tots;
+		bullet.ammo = Armory.ammo_nuke_tots;
 		bullet.bulletsMin = 8;
 		bullet.bulletsMax = 8;
 		bullet.spread = 0.1F;
@@ -193,7 +194,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukeSafeConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke_safe;
+		bullet.ammo = Armory.ammo_nuke_safe;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {
 
@@ -209,7 +210,7 @@ public static GunConfiguration getFatmanConfig() {
 	public static BulletConfiguration getNukePumpkinConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
-		bullet.ammo = ModItems.ammo_nuke_pumpkin;
+		bullet.ammo = Armory.ammo_nuke_pumpkin;
 		bullet.explosive = 10F;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {
@@ -241,7 +242,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = getNukeConfig();
 		
-		bullet.ammo = ModItems.ammo_mirv;
+		bullet.ammo = Armory.ammo_mirv;
 		bullet.style = BulletConfiguration.STYLE_MIRV;
 		bullet.velocity *= 3;
 		
@@ -278,7 +279,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = getNukeLowConfig();
 		
-		bullet.ammo = ModItems.ammo_mirv_low;
+		bullet.ammo = Armory.ammo_mirv_low;
 		bullet.style = BulletConfiguration.STYLE_MIRV;
 		bullet.velocity *= 3;
 		
@@ -315,7 +316,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = getNukeHighConfig();
 		
-		bullet.ammo = ModItems.ammo_mirv_high;
+		bullet.ammo = Armory.ammo_mirv_high;
 		bullet.style = BulletConfiguration.STYLE_MIRV;
 		bullet.velocity *= 3;
 		
@@ -352,7 +353,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = getNukeSafeConfig();
 		
-		bullet.ammo = ModItems.ammo_mirv_safe;
+		bullet.ammo = Armory.ammo_mirv_safe;
 		bullet.style = BulletConfiguration.STYLE_MIRV;
 		bullet.velocity *= 3;
 		
@@ -389,7 +390,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = getNukeConfig();
 		
-		bullet.ammo = ModItems.ammo_mirv_special;
+		bullet.ammo = Armory.ammo_mirv_special;
 		bullet.style = BulletConfiguration.STYLE_MIRV;
 		bullet.velocity *= 3;
 		
@@ -437,7 +438,7 @@ public static GunConfiguration getFatmanConfig() {
 		
 		BulletConfiguration bullet = BulletConfigFactory.standardNukeConfig();
 		
-		bullet.ammo = ModItems.gun_bf_ammo;
+		bullet.ammo = Armory.gun_bf_ammo;
 		bullet.style = BulletConfiguration.STYLE_BF;
 		
 		bullet.bImpact = new IBulletImpactBehavior() {

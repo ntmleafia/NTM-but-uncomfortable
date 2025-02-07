@@ -16,6 +16,7 @@ import com.hbm.blocks.generic.BlockStorageCrate;
 import com.hbm.blocks.machine.MachineBattery;
 import com.hbm.blocks.machine.MachineFENSU;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.tool.IItemAbility;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.EnchantmentUtil;
@@ -474,7 +475,7 @@ public abstract class ToolAbility {
 
 			if(mercury > 0) {
 				world.setBlockToAir(new BlockPos(x, y, z));
-				world.spawnEntity(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, new ItemStack(ModItems.nugget_mercury, mercury)));
+				world.spawnEntity(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, new ItemStack(Nuggies.nugget_mercury, mercury)));
 			}
 		}
 

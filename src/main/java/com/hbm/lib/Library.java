@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.annotation.Nullable;
 
+import com.hbm.items.ModItems.Batteries;
 import net.minecraft.block.material.Material;
 import org.apache.logging.log4j.Level;
 import org.apache.commons.lang3.tuple.Pair;
@@ -53,7 +54,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
@@ -240,7 +240,7 @@ public class Library {
 	// Drillgon200: Just realized I copied the wrong method. God dang it.
 	// It works though. Not sure why, but it works.
 	public static long chargeTEFromItems(IItemHandlerModifiable inventory, int index, long power, long maxPower) {
-		if(inventory.getStackInSlot(index).getItem() == ModItems.battery_creative)
+		if(inventory.getStackInSlot(index).getItem() == Batteries.battery_creative)
 		{
 			return maxPower;
 		}

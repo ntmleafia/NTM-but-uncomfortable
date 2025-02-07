@@ -5,6 +5,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Materials.Billets;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.Materials.Nuggies;
+import com.hbm.items.ModItems.RetroRods;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
@@ -19,8 +24,6 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.contents.worldgen.ModBiomes;
-import com.leafia.contents.worldgen.ModBiomesGenerator;
-import com.leafia.contents.worldgen.biomes.Barrens;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaServerListener;
 import com.leafia.passive.DispenserBullet;
@@ -29,9 +32,8 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileE
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
+import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 import com.hbm.blocks.ModBlocks;
@@ -204,7 +206,6 @@ import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlRegistry;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
-import com.hbm.lib.HbmWorld;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.PacketDispatcher;
@@ -299,7 +300,6 @@ import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 import com.hbm.tileentity.network.TileEntityCraneExtractor;
 import com.hbm.tileentity.network.TileEntityCraneInserter;
-import com.hbm.world.feature.SchistStratum;
 import com.hbm.world.generator.CellularDungeonFactory;
 
 import net.minecraft.block.BlockDispenser;
@@ -354,6 +354,19 @@ public class MainRegistry {
 	public static MainRegistry instance;
 
 	public static Logger logger;
+
+	public static void _initMemberClasses(Class<?> c) {
+		for (Class<?> cl : c.getClasses()) { // stupid solution to initialize the stupid fields
+			try {
+				Class.forName(cl.getName());
+				System.out.println("Initialized member class "+cl.getSimpleName());
+			} catch (ClassNotFoundException exception) {
+				LeafiaDevFlaw flaw = new LeafiaDevFlaw("ModItems failed to initialize member class "+cl.getSimpleName());
+				flaw.setStackTrace(exception.getStackTrace());
+				throw flaw;
+			}
+		}
+	}
 
 	public static List<FFPipeNetwork> allPipeNetworks = new ArrayList<FFPipeNetwork>();
 
@@ -529,7 +542,7 @@ public class MainRegistry {
 		proxy.preInit(event);
 		Library.initSuperusers();
 		
-		enumArmorMaterialSchrabidium.setRepairItem(new ItemStack(ModItems.ingot_schrabidium));
+		enumArmorMaterialSchrabidium.setRepairItem(new ItemStack(Ingots.ingot_schrabidium));
 		enumArmorMaterialHazmat.setRepairItem(new ItemStack(ModItems.hazmat_cloth));
 		enumArmorMaterialHazmat2.setRepairItem(new ItemStack(ModItems.hazmat_cloth_red));
 		enumArmorMaterialHazmat3.setRepairItem(new ItemStack(ModItems.hazmat_cloth_grey));
@@ -537,22 +550,22 @@ public class MainRegistry {
 		aMatBJ.setRepairItem(new ItemStack(ModItems.plate_armor_lunar));
 		aMatAJR.setRepairItem(new ItemStack(ModItems.plate_armor_ajr));
 		aMatHEV.setRepairItem(new ItemStack(ModItems.plate_armor_hev));
-		enumArmorMaterialTitanium.setRepairItem(new ItemStack(ModItems.ingot_titanium));
-		enumArmorMaterialSteel.setRepairItem(new ItemStack(ModItems.ingot_steel));
-		enumArmorMaterialAlloy.setRepairItem(new ItemStack(ModItems.ingot_advanced_alloy));
+		enumArmorMaterialTitanium.setRepairItem(new ItemStack(Ingots.ingot_titanium));
+		enumArmorMaterialSteel.setRepairItem(new ItemStack(Ingots.ingot_steel));
+		enumArmorMaterialAlloy.setRepairItem(new ItemStack(Ingots.ingot_advanced_alloy));
 		enumArmorMaterialPaa.setRepairItem(new ItemStack(ModItems.plate_paa));
-		enumArmorMaterialCmb.setRepairItem(new ItemStack(ModItems.ingot_combine_steel));
-		enumArmorMaterialAusIII.setRepairItem(new ItemStack(ModItems.ingot_australium));
+		enumArmorMaterialCmb.setRepairItem(new ItemStack(Ingots.ingot_combine_steel));
+		enumArmorMaterialAusIII.setRepairItem(new ItemStack(Ingots.ingot_australium));
 		enumArmorMaterialSecurity.setRepairItem(new ItemStack(ModItems.plate_kevlar));
-		enumToolMaterialSchrabidium.setRepairItem(new ItemStack(ModItems.ingot_schrabidium));
+		enumToolMaterialSchrabidium.setRepairItem(new ItemStack(Ingots.ingot_schrabidium));
 		enumToolMaterialHammer.setRepairItem(new ItemStack(Item.getItemFromBlock(ModBlocks.block_schrabidium)));
-		enumToolMaterialChainsaw.setRepairItem(new ItemStack(ModItems.ingot_steel));
-		enumToolMaterialTitanium.setRepairItem(new ItemStack(ModItems.ingot_titanium));
-		enumToolMaterialSteel.setRepairItem(new ItemStack(ModItems.ingot_steel));
-		enumToolMaterialAlloy.setRepairItem(new ItemStack(ModItems.ingot_advanced_alloy));
-		enumToolMaterialCmb.setRepairItem(new ItemStack(ModItems.ingot_combine_steel));
+		enumToolMaterialChainsaw.setRepairItem(new ItemStack(Ingots.ingot_steel));
+		enumToolMaterialTitanium.setRepairItem(new ItemStack(Ingots.ingot_titanium));
+		enumToolMaterialSteel.setRepairItem(new ItemStack(Ingots.ingot_steel));
+		enumToolMaterialAlloy.setRepairItem(new ItemStack(Ingots.ingot_advanced_alloy));
+		enumToolMaterialCmb.setRepairItem(new ItemStack(Ingots.ingot_combine_steel));
 		enumToolMaterialBottleOpener.setRepairItem(new ItemStack(ModItems.plate_steel));
-		enumToolMaterialDesh.setRepairItem(new ItemStack(ModItems.ingot_desh));
+		enumToolMaterialDesh.setRepairItem(new ItemStack(Ingots.ingot_desh));
 		enumArmorMaterialAsbestos.setRepairItem(new ItemStack(ModItems.asbestos_cloth));
 		matMeteorite.setRepairItem(new ItemStack(ModItems.plate_paa));
 		aMatLiquidator.setRepairItem(new ItemStack(ModItems.plate_lead));
@@ -1090,7 +1103,7 @@ public class MainRegistry {
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.pink_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.kerosene, 10000));
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.red_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.diesel, 10000));
 		FluidContainerRegistry.registerContainer(ModItems.iv_xp, ModItems.iv_xp_empty, new FluidStack(ModForgeFluids.experience, 100));
-		FluidContainerRegistry.registerContainer(ModItems.nugget_mercury, null, new FluidStack(ModForgeFluids.mercury, 100));
+		FluidContainerRegistry.registerContainer(Nuggies.nugget_mercury, null, new FluidStack(ModForgeFluids.mercury, 100));
 		FluidContainerRegistry.registerContainer(ModItems.bottle_mercury, Items.GLASS_BOTTLE, new FluidStack(ModForgeFluids.mercury, 1000));
 		FluidContainerRegistry.registerContainer(ModItems.particle_hydrogen, ModItems.particle_empty, new FluidStack(ModForgeFluids.hydrogen, 1000));
 		FluidContainerRegistry.registerContainer(ModItems.particle_amat, ModItems.particle_empty, new FluidStack(ModForgeFluids.amat, 1000));
@@ -1109,12 +1122,12 @@ public class MainRegistry {
 			BedrockOreRegistry.registerOreColors();
 			ModForgeFluids.registerFluidColors();
 		}
-		DispenserBullet.register(ModItems.ammo_nuke,BulletConfigSyncingUtil.NUKE_NORMAL);
-		DispenserBullet.register(ModItems.ammo_nuke_low,BulletConfigSyncingUtil.NUKE_LOW);
-		DispenserBullet.register(ModItems.ammo_nuke_high,BulletConfigSyncingUtil.NUKE_HIGH);
-		DispenserBullet.register(ModItems.ammo_nuke_pumpkin,BulletConfigSyncingUtil.NUKE_PUMPKIN);
-		DispenserBullet.register(ModItems.ammo_nuke_safe,BulletConfigSyncingUtil.NUKE_SAFE);
-		DispenserBullet.register(ModItems.ammo_nuke_tots,BulletConfigSyncingUtil.NUKE_TOTS);
+		DispenserBullet.register(Armory.ammo_nuke,BulletConfigSyncingUtil.NUKE_NORMAL);
+		DispenserBullet.register(Armory.ammo_nuke_low,BulletConfigSyncingUtil.NUKE_LOW);
+		DispenserBullet.register(Armory.ammo_nuke_high,BulletConfigSyncingUtil.NUKE_HIGH);
+		DispenserBullet.register(Armory.ammo_nuke_pumpkin,BulletConfigSyncingUtil.NUKE_PUMPKIN);
+		DispenserBullet.register(Armory.ammo_nuke_safe,BulletConfigSyncingUtil.NUKE_SAFE);
+		DispenserBullet.register(Armory.ammo_nuke_tots,BulletConfigSyncingUtil.NUKE_TOTS);
 		proxy.postInit(event);
 	}
 
@@ -1131,350 +1144,350 @@ public class MainRegistry {
 	}
 
 	private void registerReactorFuels(){
-		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.URANIUM, ModItems.nugget_uranium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.URANIUM, ModItems.ingot_uranium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.URANIUM, Nuggies.nugget_uranium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.URANIUM, Ingots.ingot_uranium_fuel);
 		TileEntityMachineReactorLarge.registerFuelEntry(81, ReactorFuelType.URANIUM, Item.getItemFromBlock(ModBlocks.block_uranium_fuel));
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.URANIUM, ModItems.billet_uranium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.URANIUM, ModItems.rod_uranium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.URANIUM, ModItems.rod_dual_uranium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.URANIUM, ModItems.rod_quad_uranium_fuel);
-		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.URANIUM, ModItems.rod_empty, ModItems.rod_uranium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.URANIUM, ModItems.rod_dual_empty, ModItems.rod_dual_uranium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.URANIUM, ModItems.rod_quad_empty, ModItems.rod_quad_uranium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.URANIUM, Billets.billet_uranium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.URANIUM, RetroRods.rod_uranium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.URANIUM, RetroRods.rod_dual_uranium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.URANIUM, RetroRods.rod_quad_uranium_fuel);
+		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.URANIUM, RetroRods.rod_empty, RetroRods.rod_uranium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.URANIUM, RetroRods.rod_dual_empty, RetroRods.rod_dual_uranium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.URANIUM, RetroRods.rod_quad_empty, RetroRods.rod_quad_uranium_fuel_depleted);
 
-		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.PLUTONIUM, ModItems.nugget_plutonium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.PLUTONIUM, ModItems.ingot_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.PLUTONIUM, Nuggies.nugget_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.PLUTONIUM, Ingots.ingot_plutonium_fuel);
 		TileEntityMachineReactorLarge.registerFuelEntry(81, ReactorFuelType.PLUTONIUM, Item.getItemFromBlock(ModBlocks.block_plutonium_fuel));
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.PLUTONIUM, ModItems.billet_plutonium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.PLUTONIUM, ModItems.rod_plutonium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.PLUTONIUM, ModItems.rod_dual_plutonium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.PLUTONIUM, ModItems.rod_quad_plutonium_fuel);
-		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.PLUTONIUM, ModItems.rod_empty, ModItems.rod_plutonium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.PLUTONIUM, ModItems.rod_dual_empty, ModItems.rod_dual_plutonium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.PLUTONIUM, ModItems.rod_quad_empty, ModItems.rod_quad_plutonium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.PLUTONIUM, Billets.billet_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.PLUTONIUM, RetroRods.rod_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.PLUTONIUM, RetroRods.rod_dual_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.PLUTONIUM, RetroRods.rod_quad_plutonium_fuel);
+		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.PLUTONIUM, RetroRods.rod_empty, RetroRods.rod_plutonium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.PLUTONIUM, RetroRods.rod_dual_empty, RetroRods.rod_dual_plutonium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.PLUTONIUM, RetroRods.rod_quad_empty, RetroRods.rod_quad_plutonium_fuel_depleted);
 
-		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.MOX, ModItems.nugget_mox_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.MOX, ModItems.ingot_mox_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.MOX, ModItems.billet_mox_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.MOX, ModItems.rod_mox_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.MOX, ModItems.rod_dual_mox_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.MOX, ModItems.rod_quad_mox_fuel);
-		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.MOX, ModItems.rod_empty, ModItems.rod_mox_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.MOX, ModItems.rod_dual_empty, ModItems.rod_dual_mox_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.MOX, ModItems.rod_quad_empty, ModItems.rod_quad_mox_fuel_depleted);
+		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.MOX, Nuggies.nugget_mox_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.MOX, Ingots.ingot_mox_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.MOX, Billets.billet_mox_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.MOX, RetroRods.rod_mox_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.MOX, RetroRods.rod_dual_mox_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.MOX, RetroRods.rod_quad_mox_fuel);
+		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.MOX, RetroRods.rod_empty, RetroRods.rod_mox_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.MOX, RetroRods.rod_dual_empty, RetroRods.rod_dual_mox_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.MOX, RetroRods.rod_quad_empty, RetroRods.rod_quad_mox_fuel_depleted);
 
-		TileEntityMachineReactorLarge.registerFuelEntry(10, ReactorFuelType.SCHRABIDIUM, ModItems.nugget_schrabidium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(90, ReactorFuelType.SCHRABIDIUM, ModItems.ingot_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(10, ReactorFuelType.SCHRABIDIUM, Nuggies.nugget_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(90, ReactorFuelType.SCHRABIDIUM, Ingots.ingot_schrabidium_fuel);
 		TileEntityMachineReactorLarge.registerFuelEntry(810, ReactorFuelType.SCHRABIDIUM, Item.getItemFromBlock(ModBlocks.block_schrabidium_fuel));
-		TileEntityMachineReactorLarge.registerFuelEntry(60, ReactorFuelType.SCHRABIDIUM, ModItems.billet_schrabidium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(60, ReactorFuelType.SCHRABIDIUM, ModItems.rod_schrabidium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(120, ReactorFuelType.SCHRABIDIUM, ModItems.rod_dual_schrabidium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(240, ReactorFuelType.SCHRABIDIUM, ModItems.rod_quad_schrabidium_fuel);
-		TileEntityMachineReactorLarge.registerWasteEntry(60, ReactorFuelType.SCHRABIDIUM, ModItems.rod_empty, ModItems.rod_schrabidium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(120, ReactorFuelType.SCHRABIDIUM, ModItems.rod_dual_empty, ModItems.rod_dual_schrabidium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(240, ReactorFuelType.SCHRABIDIUM, ModItems.rod_quad_empty, ModItems.rod_quad_schrabidium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerFuelEntry(60, ReactorFuelType.SCHRABIDIUM, Billets.billet_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(60, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(120, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_dual_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(240, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_quad_schrabidium_fuel);
+		TileEntityMachineReactorLarge.registerWasteEntry(60, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_empty, RetroRods.rod_schrabidium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(120, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_dual_empty, RetroRods.rod_dual_schrabidium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(240, ReactorFuelType.SCHRABIDIUM, RetroRods.rod_quad_empty, RetroRods.rod_quad_schrabidium_fuel_depleted);
 
-		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.THORIUM, ModItems.nugget_thorium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.THORIUM, ModItems.ingot_thorium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(1, ReactorFuelType.THORIUM, Nuggies.nugget_thorium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(9, ReactorFuelType.THORIUM, Ingots.ingot_thorium_fuel);
 		TileEntityMachineReactorLarge.registerFuelEntry(81, ReactorFuelType.THORIUM, Item.getItemFromBlock(ModBlocks.block_thorium_fuel));
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.THORIUM, ModItems.billet_thorium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.THORIUM, ModItems.rod_thorium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.THORIUM, ModItems.rod_dual_thorium_fuel);
-		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.THORIUM, ModItems.rod_quad_thorium_fuel);
-		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.THORIUM, ModItems.rod_empty, ModItems.rod_thorium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.THORIUM, ModItems.rod_dual_empty, ModItems.rod_dual_thorium_fuel_depleted);
-		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.THORIUM, ModItems.rod_quad_empty, ModItems.rod_quad_thorium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.THORIUM, Billets.billet_thorium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(6, ReactorFuelType.THORIUM, RetroRods.rod_thorium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(12, ReactorFuelType.THORIUM, RetroRods.rod_dual_thorium_fuel);
+		TileEntityMachineReactorLarge.registerFuelEntry(24, ReactorFuelType.THORIUM, RetroRods.rod_quad_thorium_fuel);
+		TileEntityMachineReactorLarge.registerWasteEntry(6, ReactorFuelType.THORIUM, RetroRods.rod_empty, RetroRods.rod_thorium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(12, ReactorFuelType.THORIUM, RetroRods.rod_dual_empty, RetroRods.rod_dual_thorium_fuel_depleted);
+		TileEntityMachineReactorLarge.registerWasteEntry(24, ReactorFuelType.THORIUM, RetroRods.rod_quad_empty, RetroRods.rod_quad_thorium_fuel_depleted);
 	}
 	
 	private void registerDispenserBehaviors(){
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_generic, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_generic, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeGeneric(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_strong, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_strong, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeStrong(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_frag, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_frag, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeFrag(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_fire, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_fire, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeFire(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_cluster, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_cluster, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeCluster(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_flare, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_flare, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeFlare(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_electric, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_electric, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeElectric(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_poison, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_poison, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadePoison(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_gas, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_gas, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeGas(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_schrabidium, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_schrabidium, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeSchrabidium(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_nuke, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_nuke, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeNuke(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_nuclear, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_nuclear, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeNuclear(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_pulse, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_pulse, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadePulse(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_plasma, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_plasma, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadePlasma(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_tau, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_tau, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeTau(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_lemon, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_lemon, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeLemon(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_mk2, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_mk2, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeMk2(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_aschrab, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_aschrab, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeASchrab(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_zomg, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_zomg, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeZOMG(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_solinium, new BehaviorProjectileDispense() {
+        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_solinium, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeSolinium(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_shrapnel, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_shrapnel, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeShrapnel(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_black_hole, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_black_hole, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeBlackHole(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_gascan, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_gascan, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeGascan(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_cloud, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_cloud, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeCloud(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_pink_cloud, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_pink_cloud, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadePC(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_smart, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_smart, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeSmart(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_mirv, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_mirv, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeMIRV(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_breach, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_breach, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeBreach(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_burst, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_burst, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeBurst(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_generic, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_generic, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFGeneric(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_he, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_he, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFHE(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_bouncy, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_bouncy, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFBouncy(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_sticky, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_sticky, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFSticky(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_impact, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_impact, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFImpact(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_incendiary, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_incendiary, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFIncendiary(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_toxic, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_toxic, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFToxic(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_concussion, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_concussion, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFConcussion(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_brimstone, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_brimstone, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFBrimstone(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_mystery, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_mystery, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFMystery(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_spark, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_spark, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFSpark(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_hopwire, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_hopwire, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {
                 return new EntityGrenadeIFHopwire(p_82499_1_, p_82499_2_.getX(), p_82499_2_.getY(), p_82499_2_.getZ());
             }
         });
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ModItems.grenade_if_null, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(Armory.grenade_if_null, new BehaviorProjectileDispense() {
 			@Override
             protected IProjectile getProjectileEntity(World p_82499_1_, IPosition p_82499_2_, ItemStack stack)
             {

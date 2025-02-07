@@ -3,6 +3,7 @@ package com.hbm.tileentity.bomb;
 import com.hbm.config.RadiationConfig;
 import com.hbm.entity.projectile.EntityRailgunBlast;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
@@ -197,7 +198,7 @@ public class TileEntityRailgun extends TileEntityLoadedBase implements ITickable
 		
 		int required = RadiationConfig.railgunUse;
 		
-		if(inventory.getStackInSlot(2).getItem() == ModItems.charge_railgun && power >= required) {
+		if(inventory.getStackInSlot(2).getItem() == Armory.charge_railgun && power >= required) {
 			return true;
 		}
 		

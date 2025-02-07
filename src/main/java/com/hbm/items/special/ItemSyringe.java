@@ -3,11 +3,11 @@ package com.hbm.items.special;
 import java.util.List;
 import java.util.Random;
 
-import com.hbm.capability.HbmCapability;
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.VersatileConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.items.armor.JetpackBase;
 import com.hbm.items.weapon.ItemGunBase;
 import com.hbm.lib.HBMSoundHandler;
@@ -228,9 +228,9 @@ public class ItemSyringe extends Item {
         		player.dropItem(new ItemStack(ModItems.syringe_metal_empty, 1, 0), false);
         	}
 
-        	if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.bottle2_empty)))
+        	if (!player.inventory.addItemStackToInventory(new ItemStack(Foods.bottle2_empty)))
         	{
-        		player.dropItem(new ItemStack(ModItems.bottle2_empty, 1, 0), false);
+        		player.dropItem(new ItemStack(Foods.bottle2_empty, 1, 0), false);
         	}
 		}
 		
@@ -506,9 +506,9 @@ public class ItemSyringe extends Item {
             		{
             			player.dropItem(new ItemStack(ModItems.syringe_metal_empty, 1, 0), false);
             		}
-            		if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.bottle2_empty)))
+            		if (!player.inventory.addItemStackToInventory(new ItemStack(Foods.bottle2_empty)))
             		{
-            			player.dropItem(new ItemStack(ModItems.bottle2_empty, 1, 0), false);
+            			player.dropItem(new ItemStack(Foods.bottle2_empty, 1, 0), false);
             		}
             	}
             }

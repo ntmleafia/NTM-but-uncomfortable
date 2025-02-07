@@ -1,6 +1,6 @@
 package com.leafia.contents.control.fuel.nuclearfuel;
 
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.LeafiaRods;
 import com.hbm.render.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -622,7 +622,7 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 					GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
 					GlStateManager.disableLighting();
 					GlStateManager.color(1F, 1F, 1F, (float) Math.min(opacity, 1F));
-					IBakedModel overlay = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(new ItemStack(ModItems.leafRod, 1, 15), Minecraft.getMinecraft().world, null);
+					IBakedModel overlay = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(new ItemStack(LeafiaRods.leafRod, 1, 15), Minecraft.getMinecraft().world, null);
 					TextureAtlasSprite icon = overlay.getParticleTexture();
 					float up = icon.getInterpolatedV(16);
 					float down = icon.getInterpolatedV(0);

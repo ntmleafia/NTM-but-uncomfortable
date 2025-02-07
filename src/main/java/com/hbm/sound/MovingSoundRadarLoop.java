@@ -1,7 +1,7 @@
 package com.hbm.sound;
 
-import com.hbm.items.ModItems;
 import com.hbm.handler.ArmorModHandler;
+import com.hbm.items.ModItems.Inserts;
 import net.minecraft.entity.player.EntityPlayer;
 
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class MovingSoundRadarLoop extends MovingSoundPlayerLoop {
 			if(!ArmorModHandler.hasMods(helmet))
 				this.stop();
 			ItemStack radar = ArmorModHandler.pryMod(helmet, 7);
-			if(radar == null || radar.isEmpty() || radar.getItem() != ModItems.pocket_ptsd)
+			if(radar == null || radar.isEmpty() || radar.getItem() != Inserts.pocket_ptsd)
 				this.stop();
 		} else {
 			this.stop();

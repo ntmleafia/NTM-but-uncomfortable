@@ -3,7 +3,7 @@ package com.hbm.blocks.leafia;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFallingLeafia;
 import com.hbm.entity.Bruh;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Powders;
 import com.leafia.unsorted.ParticleBalefire;
 import com.leafia.unsorted.ParticleBalefireLava;
 import com.hbm.potion.HbmPotion;
@@ -127,7 +127,7 @@ public class AshBalefire extends BlockHazardFallingLeafia {
                 } else
                     entity.entityDropItem(
                             new ItemStack(
-                                    ModItems.powder_balefire,
+                                    Powders.powder_balefire,
                                     drops(layer-8,rand
                                     )
                             ), 1.0F);
@@ -135,7 +135,7 @@ public class AshBalefire extends BlockHazardFallingLeafia {
             } else {
                 entity.entityDropItem(
                         new ItemStack(
-                                ModItems.powder_balefire,
+                                Powders.powder_balefire,
                                 quantityDropped(block, 0, rand
                                 )
                         ), 0.0F);
@@ -144,7 +144,7 @@ public class AshBalefire extends BlockHazardFallingLeafia {
         } else
             entity.entityDropItem(
                     new ItemStack(
-                            ModItems.powder_balefire,
+                            Powders.powder_balefire,
                             quantityDropped(block,0,rand
                             )
                     ), 0.0F);
@@ -155,7 +155,7 @@ public class AshBalefire extends BlockHazardFallingLeafia {
     }
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return ModItems.powder_balefire;
+        return Powders.powder_balefire;
     }
 
     @Override

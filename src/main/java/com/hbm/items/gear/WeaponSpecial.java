@@ -11,6 +11,7 @@ import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.entity.projectile.EntityRubble;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
@@ -75,7 +76,7 @@ public class WeaponSpecial extends ItemSword {
         	}
         	world.playSound(null, target.posX, target.posY, target.posZ, HBMSoundHandler.bonk, SoundCategory.PLAYERS, 3.0F, 0.1F);
 		}
-		if(this == ModItems.bottle_opener) {
+		if(this == Foods.bottle_opener) {
 			if (!target.world.isRemote)
         	{
 				int i = rand.nextInt(7);
@@ -254,7 +255,7 @@ public class WeaponSpecial extends ItemSword {
 			list.add("Even though it says \"+1000000000");
 			list.add("damage\", it's actually \"onehit anything\"");
 		}
-		if(this == ModItems.bottle_opener) {
+		if(this == Foods.bottle_opener) {
 			list.add("My very own bottle opener.");
 			list.add("Use with caution!");
 		}

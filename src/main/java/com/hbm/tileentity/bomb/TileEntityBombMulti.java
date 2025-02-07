@@ -2,6 +2,7 @@ package com.hbm.tileentity.bomb;
 
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -98,12 +99,12 @@ public class TileEntityBombMulti extends TileEntity {
 			return 3;
 		}
 		
-		if(inventory.getStackInSlot(2).getItem() == ModItems.powder_fire)
+		if(inventory.getStackInSlot(2).getItem() == Powders.powder_fire)
 		{
 			return 4;
 		}
 		
-		if(inventory.getStackInSlot(2).getItem() == ModItems.powder_poison)
+		if(inventory.getStackInSlot(2).getItem() == Powders.powder_poison)
 		{
 			return 5;
 		}
@@ -135,12 +136,12 @@ public class TileEntityBombMulti extends TileEntity {
 			return 3;
 		}
 		
-		if(inventory.getStackInSlot(5).getItem() == ModItems.powder_fire)
+		if(inventory.getStackInSlot(5).getItem() == Powders.powder_fire)
 		{
 			return 4;
 		}
 		
-		if(inventory.getStackInSlot(5).getItem() == ModItems.powder_poison)
+		if(inventory.getStackInSlot(5).getItem() == Powders.powder_poison)
 		{
 			return 5;
 		}

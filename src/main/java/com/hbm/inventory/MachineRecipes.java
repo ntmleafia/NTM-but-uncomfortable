@@ -1,28 +1,17 @@
 package com.hbm.inventory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static com.hbm.inventory.OreDictManager.*;
-import com.google.common.collect.Lists;
-import com.hbm.blocks.ModBlocks;
-import com.hbm.config.GeneralConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemBattery;
-import com.hbm.items.special.ItemCell;
-import com.hbm.items.tool.ItemFluidCanister;
+import com.hbm.items.ModItems.Materials.Nuggies;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 //TODO: clean this shit up
 //Alcater: on it
@@ -52,26 +41,26 @@ public class MachineRecipes {
 		if(fluid == null){
 			return null;
 		} else if(fluid == ModForgeFluids.uf6){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_u235), 1));
-			list.add(new GasCentOutput(19, new ItemStack(ModItems.nugget_u238), 2));
-			list.add(new GasCentOutput(7, new ItemStack(ModItems.nugget_uranium_fuel), 3));
+			list.add(new GasCentOutput(1, new ItemStack(Nuggies.nugget_u235), 1));
+			list.add(new GasCentOutput(19, new ItemStack(Nuggies.nugget_u238), 2));
+			list.add(new GasCentOutput(7, new ItemStack(Nuggies.nugget_uranium_fuel), 3));
 			list.add(new GasCentOutput(9, new ItemStack(ModItems.fluorite), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.puf6){
-			list.add(new GasCentOutput(3, new ItemStack(ModItems.nugget_pu238), 1));
-			list.add(new GasCentOutput(2, new ItemStack(ModItems.nugget_pu239), 2));
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_pu240), 3));
+			list.add(new GasCentOutput(3, new ItemStack(Nuggies.nugget_pu238), 1));
+			list.add(new GasCentOutput(2, new ItemStack(Nuggies.nugget_pu239), 2));
+			list.add(new GasCentOutput(4, new ItemStack(Nuggies.nugget_pu240), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.fluorite), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.watz){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_solinium), 1));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_uranium), 2));
-			list.add(new GasCentOutput(5, new ItemStack(ModItems.powder_lead), 3));
+			list.add(new GasCentOutput(1, new ItemStack(Nuggies.nugget_solinium), 1));
+			list.add(new GasCentOutput(1, new ItemStack(Nuggies.nugget_uranium), 2));
+			list.add(new GasCentOutput(5, new ItemStack(Powders.powder_lead), 3));
 			list.add(new GasCentOutput(10, new ItemStack(ModItems.dust), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.sas3){
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 1));
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 2));
+			list.add(new GasCentOutput(4, new ItemStack(Nuggies.nugget_schrabidium), 1));
+			list.add(new GasCentOutput(4, new ItemStack(Nuggies.nugget_schrabidium), 2));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 4));
 			return list;
@@ -82,22 +71,22 @@ public class MachineRecipes {
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.cryogel){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_ice), 1));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_ice), 2));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_ice), 1));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_ice), 2));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.niter), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.nitan){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 1));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 2));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 3));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_nitan_mix), 4));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_nitan_mix), 1));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_nitan_mix), 2));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_nitan_mix), 3));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_nitan_mix), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.liquid_osmiridium){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_impure_osmiridium), 1));
-			list.add(new GasCentOutput(2, new ItemStack(ModItems.powder_meteorite), 2));
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.powder_meteorite_tiny), 3));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.powder_paleogenite_tiny), 4));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_impure_osmiridium), 1));
+			list.add(new GasCentOutput(2, new ItemStack(Powders.powder_meteorite), 2));
+			list.add(new GasCentOutput(4, new ItemStack(Powders.powder_meteorite_tiny), 3));
+			list.add(new GasCentOutput(1, new ItemStack(Powders.powder_paleogenite_tiny), 4));
 			return list;
 		}
 		

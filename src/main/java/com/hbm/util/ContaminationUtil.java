@@ -22,8 +22,9 @@ import com.hbm.handler.ArmorUtil;
 import com.hbm.handler.HazmatRegistry;
 import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.interfaces.IItemHazard;
-import com.hbm.items.ModItems;
 import com.hbm.blocks.items.ItemBlockHazard;
+import com.hbm.items.ModItems.ArmorSets;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.render.amlfrom1710.Vec3;
@@ -642,12 +643,12 @@ public class ContaminationUtil {
 					if(fireDmg > 0.1 && e instanceof EntityPlayer) {
 						EntityPlayer p = (EntityPlayer) e;
 						
-						if(p.getHeldItemMainhand().getItem() == ModItems.marshmallow && p.getRNG().nextInt((int)len) == 0) {
-							p.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ModItems.marshmallow_roasted));
+						if(p.getHeldItemMainhand().getItem() == Foods.marshmallow && p.getRNG().nextInt((int)len) == 0) {
+							p.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Foods.marshmallow_roasted));
 						}
 
-						if(p.getHeldItemOffhand().getItem() == ModItems.marshmallow && p.getRNG().nextInt((int)len) == 0) {
-							p.setHeldItem(EnumHand.OFF_HAND, new ItemStack(ModItems.marshmallow_roasted));
+						if(p.getHeldItemOffhand().getItem() == Foods.marshmallow && p.getRNG().nextInt((int)len) == 0) {
+							p.setHeldItem(EnumHand.OFF_HAND, new ItemStack(Foods.marshmallow_roasted));
 						}
 					}
 					e.attackEntityFrom(DamageSource.IN_FIRE, fireDmg);
@@ -684,7 +685,7 @@ public class ContaminationUtil {
 				e instanceof EntityExplosiveBeam ||
 				e instanceof EntityBulletBase ||
 				(e instanceof EntityPlayer &&
-				ArmorUtil.checkArmor((EntityPlayer) e, ModItems.euphemium_helmet, ModItems.euphemium_plate, ModItems.euphemium_legs, ModItems.euphemium_boots))) {
+				ArmorUtil.checkArmor((EntityPlayer) e, ArmorSets.euphemium_helmet, ArmorSets.euphemium_plate, ArmorSets.euphemium_legs, ArmorSets.euphemium_boots))) {
 			return true;
 		}
 

@@ -39,6 +39,7 @@ public class BlockAMSEmitter extends BlockContainer implements IMultiBlock {
 	@Override
 	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
 		MachineTooltip.addShit(tooltip);
+		MachineTooltip.addMultiblock(tooltip);
 		super.addInformation(stack,player,tooltip,advanced);
 	}
 

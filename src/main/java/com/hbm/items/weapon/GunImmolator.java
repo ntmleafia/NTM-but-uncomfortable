@@ -7,6 +7,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityFire;
 import com.hbm.entity.projectile.EntityPlasmaBeam;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 
@@ -59,7 +60,7 @@ public class GunImmolator extends Item {
 		if(!(player1 instanceof EntityPlayer))
 			return;
 		EntityPlayer player = (EntityPlayer) player1;
-		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == ModItems.gun_immolator){
+		if(player.getHeldItemMainhand() == stack && player.getHeldItemOffhand().getItem() == Armory.gun_immolator){
 			player.getHeldItemOffhand().getItem().onUsingTick(player.getHeldItemOffhand(), player, count);
 		}
 		World world = player.world;
@@ -67,7 +68,7 @@ public class GunImmolator extends Item {
 		if (!player.isSneaking()) {
 			boolean flag = player.capabilities.isCreativeMode
 					|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-			if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, ModItems.gun_immolator_ammo))) {
+			if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_immolator_ammo))) {
 				EntityFire entityarrow = new EntityFire(world, player, 3.0F, player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 				entityarrow.setDamage(6 + rand.nextInt(5));
 
@@ -75,7 +76,7 @@ public class GunImmolator extends Item {
 					entityarrow.canBePickedUp = 2;
 				} else {
 					if(count % 10 == 0)
-						Library.consumeInventoryItem(player.inventory, ModItems.gun_immolator_ammo);
+						Library.consumeInventoryItem(player.inventory, Armory.gun_immolator_ammo);
 				}
 
 				if(count == this.getMaxItemUseDuration(stack))
@@ -90,7 +91,7 @@ public class GunImmolator extends Item {
 		} else {
 			boolean flag = player.capabilities.isCreativeMode
 					|| EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-			if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, ModItems.gun_immolator_ammo))) {
+			if ((player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_immolator_ammo))) {
 
 				EntityPlasmaBeam plasma = new EntityPlasmaBeam(world, player, 1F, player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 				
@@ -98,7 +99,7 @@ public class GunImmolator extends Item {
 					plasma.canBePickedUp = 2;
 				} else {
 					if(count % 4 == 0)
-						Library.consumeInventoryItem(player.inventory, ModItems.gun_immolator_ammo);
+						Library.consumeInventoryItem(player.inventory, Armory.gun_immolator_ammo);
 				}
 
 				if(count == this.getMaxItemUseDuration(stack))
