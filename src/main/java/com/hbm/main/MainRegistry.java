@@ -30,6 +30,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckE
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.network.computers.cable.ComputerCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaServerListener;
@@ -606,6 +607,9 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCableBaseNT.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable"));
 		GameRegistry.registerTileEntity(TileEntityDiode.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_diode"));
 		GameRegistry.registerTileEntity(TileEntityCableGauge.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_gauge"));
+
+		GameRegistry.registerTileEntity(ComputerCableTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_integ_cable_oc"));
+
 		GameRegistry.registerTileEntity(TileEntityBedrockOre.class, new ResourceLocation(RefStrings.MODID, "tileentity_ore_bedrock"));
 		GameRegistry.registerTileEntity(TileEntityMachineBattery.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_battery"));
 		GameRegistry.registerTileEntity(TileEntityMachineTransformer.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_transformer"));

@@ -186,7 +186,7 @@ public class HbmLivingProps {
 	public static void incrementBlackLung(EntityLivingBase entity, int blacklung){
 		setBlackLung(entity, getBlackLung(entity) + blacklung);
 		if (entity instanceof EntityPlayer) {
-			((EntityPlayer)entity).sendStatusMessage(new TextComponentString("My lungs are burning.").setStyle(new Style().setColor(TextFormatting.RED)),true);
+			((EntityPlayer)entity).sendStatusMessage(new TextComponentTranslation("chat.lungs").setStyle(new Style().setColor(TextFormatting.RED)),true);
 		}
 	}
 

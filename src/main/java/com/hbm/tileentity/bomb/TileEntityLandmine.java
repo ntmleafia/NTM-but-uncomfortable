@@ -29,7 +29,7 @@ public class TileEntityLandmine extends TileEntity implements ITickable {
 			double height = 1;
 
 			if (block == ModBlocks.mine_ap) {
-				range = 1.5D;
+				range = 0.5D;
 			}
 			if (block == ModBlocks.mine_he) {
 				range = 2;

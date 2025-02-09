@@ -56,6 +56,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -712,6 +713,13 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.missile_emp, 1), new Object[] { ModItems.missile_assembly, ModItems.ducttape, ModBlocks.emp_bomb, ModItems.circuit_targeting_tier3 });
 		addShapelessAuto(new ItemStack(ModItems.missile_anti_ballistic, 1), new Object[] { ModItems.missile_generic, ModItems.circuit_targeting_tier3 });
 
+		if (ModBlocks.oc_cable != null) {
+			addRecipeAuto(new ItemStack(ModBlocks.oc_cable, 4), new Object[] { "ICI", "CRC", "ICI", 'I', ModItems.plate_polymer, 'R', REDSTONE.dust(), 'C',ForgeRegistries.ITEMS.getValue(new ResourceLocation("opencomputers","cable"))});
+		}
+		if (ModBlocks.audio_cable != null) {
+			addRecipeAuto(new ItemStack(ModBlocks.audio_cable, 4), new Object[] { "SCS", "CIC", "SCS", 'S', ModBlocks.concrete_smooth, 'I', IRON.ingot(), 'C',ForgeRegistries.ITEMS.getValue(new ResourceLocation("computronics","audio_cable"))});
+		}
+
 		addRecipeAuto(new ItemStack(ModBlocks.machine_difurnace_ext, 1), new Object[] { " C ", "BGB", "BGB", 'C', CU.plate(), 'B', Ingots.ingot_firebrick, 'G', ModBlocks.steel_grate });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_uf6_tank, 1), new Object[] { "WTW", "WTW", "SRS", 'S', IRON.plate(), 'W', ModItems.coil_tungsten, 'T', ModItems.tank_steel, 'W', ModItems.coil_tungsten, 'R', MINGRADE.ingot() });
 		addRecipeAuto(new ItemStack(ModBlocks.machine_puf6_tank, 1), new Object[] { "WTW", "WTW", "SRS", 'S', STEEL.plate(), 'W', ModItems.coil_tungsten, 'T', ModItems.tank_steel, 'W', ModItems.coil_tungsten, 'R', MINGRADE.ingot() });
@@ -892,6 +900,9 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_sand, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeYellow", '2', "dyeGray" });
 		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_bronze, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeOrange", '2', "dyeBrown" });
 		addShapelessAuto(new ItemStack(ModBlocks.concrete_smooth, 6), new Object[] { ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard });
+
+		addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_solid_tinge, 6), new Object[] { "DDD", "1 2", "DDD", 'D', ModBlocks.fluid_duct_solid, '1', "dyeBrown", '2', "dyeGray" });
+		addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_solid_stripe, 6), new Object[] { "DDD", "1 2", "DDD", 'D', ModBlocks.fluid_duct_solid, '1', "dyeBrown", '2', "dyeBlack" });
 
 		addRecipeAuto(new ItemStack(ModBlocks.concrete_pillar, 8), new Object[] { "CBC", "CBC", "CBC", 'C', ModBlocks.concrete_smooth, 'B', Blocks.IRON_BARS });
 		addRecipeAuto(new ItemStack(ModBlocks.brick_concrete, 4), new Object[] { " C ", "CBC", " C ", 'C', ModBlocks.concrete_smooth, 'B', Items.CLAY_BALL });

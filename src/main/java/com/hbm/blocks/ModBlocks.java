@@ -209,6 +209,8 @@ import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckMetal;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckStone;
 import com.leafia.contents.machines.reactors.zirnox.ReactorZirnox;
 import com.leafia.contents.machines.reactors.zirnox.ReactorZirnoxDestroyed;
+import com.leafia.contents.network.computers.audiocable.AudioCableBlock;
+import com.leafia.contents.network.computers.cable.ComputerCableBlock;
 import com.leafia.shit.BlockFallingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -219,6 +221,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import static com.hbm.blocks.ModBlocks.GenericBlockResistance.*;
 
@@ -930,6 +933,9 @@ public class ModBlocks {
 	public static final Block substation = new Substation(Material.IRON,"substation").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block red_connec = new PylonConnector(Material.IRON, "red_connec").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 
+	public static Block oc_cable;
+	public static Block audio_cable;
+
 	//Tanks
 	public static final Block barrel_plastic = new BlockFluidBarrel(Material.IRON, 12000, "barrel_plastic").setSoundType(SoundType.STONE).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block barrel_corroded = new BlockFluidBarrel(Material.IRON, 6000, "barrel_corroded").setSoundType(SoundType.METAL).setHardness(2.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
@@ -1611,7 +1617,9 @@ public class ModBlocks {
 	public static final Block fluid_duct_mk2 = new BlockFluidPipeMk2(Material.IRON, "fluid_duct_mk2").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
 	public static final Block fluid_duct_solid = new BlockFluidPipeSolid(Material.IRON, "fluid_duct_solid").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
 	public static final Block fluid_duct_solid_sealed = new BlockFluidPipeSolidRadResistant(Material.IRON, "fluid_duct_solid_sealed").setHardness(15.0F).setResistance(10000.0F).setCreativeTab(MainRegistry.templateTab);
-	
+	public static final Block fluid_duct_solid_tinge = new BlockFluidPipeSolid(Material.IRON, "fluid_duct_solid_tinge").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
+	public static final Block fluid_duct_solid_stripe = new BlockFluidPipeSolid(Material.IRON, "fluid_duct_solid_stripe").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
+
 	public static final Block chain = new BlockChain(Material.IRON, "dungeon_chain").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
 	
 	public static final Block ladder_sturdy = new BlockNTMLadder("ladder_sturdy").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
@@ -1745,7 +1753,16 @@ public class ModBlocks {
 	public static final Block pink_slab = new BlockGenericSlab(Material.WOOD, false, "pink_slab").setSoundType(SoundType.WOOD).setCreativeTab(null);
 	public static final Block pink_double_slab = new BlockGenericSlab(Material.WOOD, true, "pink_double_slab").setSoundType(SoundType.WOOD).setCreativeTab(null);
 	public static final Block pink_stairs = new BlockGenericStairs(pink_planks.getDefaultState(), "pink_stairs").setSoundType(SoundType.WOOD).setCreativeTab(null);
-	
+
+	static {
+		if (Loader.isModLoaded("opencomputers")) {
+			oc_cable = new ComputerCableBlock(Material.IRON, "integ_cable_oc").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		}
+		if (Loader.isModLoaded("computronics")) {
+			audio_cable = new AudioCableBlock(Material.IRON, "integ_cable_audio").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		}
+	}
+
 	public static void preInit(){
 		MainRegistry._initMemberClasses(ModBlocks.class);
 
