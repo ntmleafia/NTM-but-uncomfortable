@@ -1,5 +1,6 @@
 package com.hbm.blocks.gas;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockGasExplosive extends BlockGasFlammable {
@@ -11,6 +12,6 @@ public class BlockGasExplosive extends BlockGasFlammable {
 	@Override
 	protected void combust(World world, int x, int y, int z) {
 		super.combust(world, x, y, z);
-		world.newExplosion(null, x + 0.5, y + 0.5, z + 0.5, 3F, true, false);
+		world.newExplosion(null, x + 0.5, y + 0.5, z + 0.5, 2F, true, world.rand.nextBoolean());
 	}
 }

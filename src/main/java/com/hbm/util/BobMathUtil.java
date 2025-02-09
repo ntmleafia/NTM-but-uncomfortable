@@ -350,6 +350,11 @@ public class BobMathUtil {
 			return input[4]+ "s";
 	}
 
+	/** Soft peak sine */
+	public static double sps(double x) {
+		return Math.sin(Math.PI / 2D * Math.cos(x));
+	}
+
 	public static int interpolateColor(int colorA, int colorB, float percentB) {
 		float rA = (colorA >> 16 & 0xFF);
 		float gA = (colorA >> 8 & 0xFF);

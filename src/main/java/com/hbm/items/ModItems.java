@@ -212,6 +212,7 @@ import com.hbm.items.tool.ItemDigammaDiagnostic;
 import com.hbm.items.tool.ItemLungDiagnostic;
 import com.hbm.items.tool.ItemGuideBook;
 import com.hbm.items.tool.ItemKey;
+import com.leafia.contents.gear.ItemGasSensor;
 import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.hbm.items.tool.ItemLeadBox;
 import com.hbm.items.tool.ItemLock;
@@ -498,6 +499,7 @@ public class ModItems {
 		public static final Item v1 = new ItemModV1("v1").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 		public static final Item protection_charm = new ItemModCharm("protection_charm").setCreativeTab(MainRegistry.consumableTab);
 		public static final Item meteor_charm = new ItemModCharm("meteor_charm").setCreativeTab(MainRegistry.consumableTab);
+		public static final Item gasSensor = new ItemGasSensor("gas_sensor").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);
 	}
 
 	//Stamps
@@ -2454,6 +2456,20 @@ public class ModItems {
 	public static final Item circuit_targeting_tier5 = new ItemBase("circuit_targeting_tier5").setCreativeTab(MainRegistry.partsTab);
 	public static final Item circuit_targeting_tier6 = new ItemBase("circuit_targeting_tier6").setCreativeTab(MainRegistry.partsTab);
 
+	public static class CircuitV2 {
+		public static final Item analog = new ItemBase("circuitv2_analog").setCreativeTab(MainRegistry.partsTab);
+		public static final Item integrated = new ItemBase("circuitv2_integrated").setCreativeTab(MainRegistry.partsTab);
+		public static final Item military = new ItemBase("circuitv2_military").setCreativeTab(MainRegistry.partsTab);
+		public static final Item versatile = new ItemBase("circuitv2_versatile").setCreativeTab(MainRegistry.partsTab);
+
+		public static final Item tube = new ItemBase("circuitv2_tube").setCreativeTab(MainRegistry.partsTab);
+		public static final Item pcb = new ItemBase("circuitv2_pcb").setCreativeTab(MainRegistry.partsTab);
+		public static final Item capacitor = new ItemBase("circuitv2_capacitor").setCreativeTab(MainRegistry.partsTab);
+		public static final Item chip = new ItemBase("circuitv2_chip").setCreativeTab(MainRegistry.partsTab);
+		public static final Item capacitor_tantalium = new ItemBase("circuitv2_capacitor_tantalium").setCreativeTab(MainRegistry.partsTab);
+		public static final Item capacitor_board = new ItemBase("circuitv2_capacitor_board").setCreativeTab(MainRegistry.partsTab);
+	}
+
 	//Wires and things
 	public static final Item wire_advanced_alloy = new ItemBase("wire_advanced_alloy").setCreativeTab(MainRegistry.partsTab);
 	public static final Item coil_advanced_alloy = new ItemBase("coil_advanced_alloy").setCreativeTab(MainRegistry.partsTab);
@@ -2463,6 +2479,7 @@ public class ModItems {
 	public static final Item coil_gold_torus = new ItemBase("coil_gold_torus").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_red_copper = new ItemBase("wire_red_copper").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_tungsten = new ItemCustomLore("wire_tungsten").setCreativeTab(MainRegistry.partsTab);
+	public static final Item wire_carbon = new ItemCustomLore("wire_carbon").setCreativeTab(MainRegistry.partsTab);
 	public static final Item coil_tungsten = new ItemBase("coil_tungsten").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_aluminium = new ItemBase("wire_aluminium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_copper = new ItemBase("wire_copper").setCreativeTab(MainRegistry.partsTab);

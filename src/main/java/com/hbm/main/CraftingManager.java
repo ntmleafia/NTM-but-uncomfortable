@@ -884,6 +884,13 @@ public class CraftingManager {
 
 		addRecipeAuto(new ItemStack(ModBlocks.concrete_hazard, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeYellow", '2', "dyeBlack" });
 		addRecipeAuto(new ItemStack(ModBlocks.concrete_hazard, 6), new Object[] { "CCC", "2 1", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeYellow", '2', "dyeBlack" });
+
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_machine, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeBrown", '2', "dyeGray" });
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_machine_stripe, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeBrown", '2', "dyeBlack" });
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_indigo, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeBlue", '2', "dyePurple" });
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_pink, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyePink", '2', "dyeRed" });
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_sand, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeYellow", '2', "dyeGray" });
+		addRecipeAuto(new ItemStack(ModBlocks.concrete__ext_bronze, 6), new Object[] { "CCC", "1 2", "CCC", 'C', ModBlocks.concrete_smooth, '1', "dyeOrange", '2', "dyeBrown" });
 		addShapelessAuto(new ItemStack(ModBlocks.concrete_smooth, 6), new Object[] { ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard, ModBlocks.concrete_hazard });
 
 		addRecipeAuto(new ItemStack(ModBlocks.concrete_pillar, 8), new Object[] { "CBC", "CBC", "CBC", 'C', ModBlocks.concrete_smooth, 'B', Blocks.IRON_BARS });
@@ -1571,7 +1578,18 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.digamma_diagnostic), new Object[] { "GPP", "WCS", "WBB", 'W', ModItems.wire_tungsten, 'P', REIIUM.ingot(), 'C', ModItems.circuit_schrabidium, 'G', CS.ingot(), 'S', ModItems.plate_desh, 'B', I131.ingot() });
 		addRecipeAuto(new ItemStack(ModItems.lung_diagnostic, 1), new Object[] { "WGW", "WCW", "WBW", 'W', AL.ingot(), 'G', ModItems.gas_mask_filter, 'C', ASBESTOS.ingot(), 'B', ModItems.circuit_red_copper });
 		addRecipeAuto(new ItemStack(ModItems.fuzzy_identifier, 1), new Object[] { "=  ", "@CS", "@MP", '@', ModItems.wire_gold, 'P', ANY_PLASTIC.ingot(), '=', ModItems.circuit_targeting_tier4, 'M', ModItems.motor_desh, 'C', ModItems.coil_gold, 'S', ModItems.screwdriver_desh });
-		
+
+		addRecipeAuto(new ItemStack(CircuitV2.tube, 1), new Object[] { "G", "W", "I", 'G', KEY_ANYPANE, 'W', ModItems.wire_tungsten, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.tube, 1), new Object[] { "G", "W", "I", 'G', KEY_ANYPANE, 'W', ModItems.wire_carbon, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor, 2), new Object[] { "IAI", "W W", 'A', AL.dust(), 'W', ModItems.wire_aluminium, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor, 2), new Object[] { "IAI", "W W", 'A', AL.dust(), 'W', ModItems.wire_copper, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor, 1), new Object[] { "I", "N", "W", 'N', NB.nugget(), 'W', ModItems.wire_aluminium, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor, 1), new Object[] { "I", "N", "W", 'N', NB.nugget(), 'W', ModItems.wire_copper, 'I', ModItems.plate_polymer });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor_tantalium, 1), new Object[] { "I", "T", "W", 'I', ModItems.plate_polymer, 'T', TA.nugget(), 'W', ModItems.wire_aluminium });
+		addRecipeAuto(new ItemStack(CircuitV2.capacitor_tantalium, 1), new Object[] { "I", "T", "W", 'I', ModItems.plate_polymer, 'T', TA.nugget(), 'W', ModItems.wire_copper });
+
+		addRecipeAuto(new ItemStack(Inserts.gasSensor, 1), new Object[] { "G", "T", "I", 'G', GOLD.plate(), 'T', CircuitV2.tube, 'I', IRON.plate() });
+
 
 		addRecipeAuto(new ItemStack(ModItems.key, 1), new Object[] { "  B", " B ", "P  ", 'P', STEEL.plate(), 'B', ModItems.bolt_tungsten });
 		addRecipeAuto(new ItemStack(ModItems.key_kit, 1), new Object[] { "PKP", "DTD", "PKP", 'P', GOLD.plate(), 'K', ModItems.key, 'D', DIAMOND.dust(), 'T', ModItems.screwdriver });

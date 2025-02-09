@@ -10,10 +10,17 @@ import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
+import com.hbm.lib.HbmWorld;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
+import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
+import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
+import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
+import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
+import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentDuct;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentInlet;
@@ -535,10 +542,17 @@ public class MainRegistry {
 		if (proxy instanceof ClientProxy) {
 			rendererWaiting.add(new TileEntityPylonConnector());
 			rendererWaiting.add(new TileEntityMachineAcidizer());
+
+			rendererWaiting.add(new ArcWelderTE());
+			rendererWaiting.add(new SolderingTE());
+			rendererWaiting.add(new ElectrolyzerTE());
+			rendererWaiting.add(new LiquefactorTE());
+			rendererWaiting.add(new PyroOvenTE());
+			rendererWaiting.add(new SolidifierTE());
 		}
 
 		proxy.registerRenderInfo();
-		//HbmWorld.mainRegistry();
+		HbmWorld.mainRegistry();
 		proxy.preInit(event);
 		Library.initSuperusers();
 		
@@ -813,6 +827,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityRadioTorchReceiver.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_receiver"));
 		GameRegistry.registerTileEntity(TileEntityCraneExtractor.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneejector"));
 		GameRegistry.registerTileEntity(TileEntityCraneInserter.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneinserter"));
+
 		for (LeafiaQuickModel te : rendererWaiting) {
 			LeafiaQuickModel._loadResources(te,te._assetPath());
 			GameRegistry.registerTileEntity(((TileEntity)te).getClass(),new ResourceLocation(RefStrings.MODID,"tileentity_"+te._resourcePath()));

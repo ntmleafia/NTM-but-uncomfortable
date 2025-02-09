@@ -41,11 +41,9 @@ public class MachineCrystallizer extends BlockDummyable {
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(world.isRemote)
-		{
+		if(world.isRemote) {
 			return true;
-		} else if(!player.isSneaking())
-		{
+		} else if(!player.isSneaking()) {
 			int[] pos1 = this.findCore(world, pos.getX(), pos.getY(), pos.getZ());
 
 			if(pos1 == null)

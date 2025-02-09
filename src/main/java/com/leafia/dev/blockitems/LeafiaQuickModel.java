@@ -26,12 +26,27 @@ public interface LeafiaQuickModel {
     Map<String,IModelCustom> mdlMap = new HashMap<>();
 
 
+    /**
+     * @return Should return the path for the TE to be registered.
+     */
     @SideOnly(Side.CLIENT)
     String _resourcePath();
+
+    /**
+     * @return Should return the path for assets, both textures and model assuming they're in the same location.
+     */
     @SideOnly(Side.CLIENT)
     String _assetPath();
+
+    /**
+     * @return Just return a new instance of corresponding renderer.
+     */
     @SideOnly(Side.CLIENT)
     TileEntitySpecialRenderer<TileEntity> _renderer();
+
+    /**
+     * @return Should return the block under ModBlocks.
+     */
     Block _block();
 
     @SideOnly(Side.CLIENT)

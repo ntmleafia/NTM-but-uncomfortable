@@ -5,6 +5,7 @@ import java.util.Random;
 import com.hbm.interfaces.Untested;
 import com.hbm.lib.ForgeDirection;
 
+import com.leafia.passive.LeafiaPassiveServer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -43,9 +44,12 @@ public class BlockGasFlammable extends BlockGasBase {
 				IBlockState b = world.getBlockState(new BlockPos(pos.getX() + dir.offsetX, pos.getY() + dir.offsetY, pos.getZ() + dir.offsetZ));
 				
 				if(isFireSource(b)) {
-					((WorldServer)world).addScheduledTask(() -> {
+					LeafiaPassiveServer.queueFunction(()->{
 						combust(world, pos.getX(), pos.getY(), pos.getZ());
 					});
+					//((WorldServer)world).addScheduledTask(() -> {
+					//	combust(world, pos.getX(), pos.getY(), pos.getZ());
+					//});
 					return;
 				}
 			}
