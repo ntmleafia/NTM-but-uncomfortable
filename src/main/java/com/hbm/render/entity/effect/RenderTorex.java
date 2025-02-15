@@ -109,7 +109,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 						evt = HBMSoundHandler.nuke_far;
 				} else
 					evt = HBMSoundHandler.nuke_smol;
-				cloud.world.playSound(player,cloud.initPosX,cloud.initPosY,cloud.initPosZ,evt,SoundCategory.AMBIENT,amplitude * 10F,0.8F + cloud.world.rand.nextFloat() * 0.2F);
+				cloud.world.playSound(player,cloud.initPosX,cloud.initPosY,cloud.initPosZ,evt,SoundCategory.AMBIENT,amplitude * 15F,0.8F + cloud.world.rand.nextFloat() * 0.2F);
 				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSimple(8f * (amplitude / 100),LeafiaEase.Ease.BACK,LeafiaEase.Direction.I).configure(amplitude * 12F,24f,0.5f,null));
 				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSmooth(15f * (amplitude / 100),LeafiaEase.Ease.QUAD,LeafiaEase.Direction.I).configure(amplitude * 5F,12f,1.8f,8f));
 				LeafiaShakecam._addShake(cloud.getInitialPosition(),new LeafiaShakecam.shakeSmooth(30f * (amplitude / 100),null,null).configure(amplitude * 4F,2f,1.5f,3.5f));

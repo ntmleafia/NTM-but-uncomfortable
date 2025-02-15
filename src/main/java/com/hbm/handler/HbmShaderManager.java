@@ -258,9 +258,9 @@ public class HbmShaderManager {
 			hGauss = createShader("vGauss.frag", "vGauss.vert");
 			vGauss = createShader("hGauss.frag", "hGauss.vert");
 			combine = createShader("combine.frag", "combine.vert");
-			flashlightBeam = createShader("flashlightbeam.frag", "flashlightbeam.vert");
-			flashlightWorld = createShader("flashlightworld.frag", "flashlightworld.vert");
-			deferredFlashlight = createShader("deferredflashlight.frag", "deferredflashlight.vert");
+			//flashlightBeam = createShader("flashlightbeam.frag", "flashlightbeam.vert");
+			//flashlightWorld = createShader("flashlightworld.frag", "flashlightworld.vert");
+			//deferredFlashlight = createShader("deferredflashlight.frag", "deferredflashlight.vert");
 		}
 		if(GeneralConfig.useShaders2){
 			dissolve = createShader("dissolve.frag", "dissolve.vert");

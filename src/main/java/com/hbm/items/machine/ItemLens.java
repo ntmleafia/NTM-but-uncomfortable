@@ -18,13 +18,15 @@ public class ItemLens extends Item {
 	public long maxDamage;
 	public float fieldMod;
 	public float drainMod;
+	public float energyMod;
 	
-	public ItemLens(long maxDamage, float fieldMod, float drainMod, String s) {
+	public ItemLens(long maxDamage, float fieldMod, float drainMod, float energyMod, String s) {
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.maxDamage = maxDamage;
 		this.fieldMod = fieldMod;
 		this.drainMod = drainMod;
+		this.energyMod = energyMod;
 		
 		ModItems.ALL_ITEMS.add(this);
 	}
@@ -40,6 +42,7 @@ public class ItemLens extends Item {
 
 		tooltip.add(TextFormatting.YELLOW+I18nUtil.resolveKey("desc.fieldmodifier")+" " + (fieldMod >= 1 ? "§a+" : "§c") + (Math.round(fieldMod * 1000) * .10 - 100) + "%");
 		tooltip.add(TextFormatting.YELLOW+I18nUtil.resolveKey("desc.powdrainmodifier")+" " + (drainMod >= 1 ? "§c+" : "§a") + (Math.round(drainMod * 1000) * .10 - 100) + "%");
+		tooltip.add(TextFormatting.YELLOW+I18nUtil.resolveKey("desc.energymodifier")+" " + (energyMod > 1 ? "§6+" : ("§8"+(energyMod<=1 ? "+" : ""))) + (Math.round(energyMod * 1000) * .10 - 100) + "%");
 	}
 	
 	@Override

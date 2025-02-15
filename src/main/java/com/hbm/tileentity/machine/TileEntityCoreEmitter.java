@@ -29,6 +29,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -66,8 +67,8 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 			
 			this.updateStandardConnections(world, pos);
 			
-			watts = MathHelper.clamp(watts, 1, 100);
-			long demand = maxPower * watts / 2000;
+			watts = MathHelper.clamp(watts, 1, 999999100);
+			long demand = maxPower * Math.min(watts,100) / 2000;
 
 			beam = 0;
 			
@@ -119,8 +120,10 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 						}
 						
 						if(te instanceof TileEntityCore) {
-							out = Math.max(0, ((TileEntityCore)te).burn(out));
-							continue;
+							//out = Math.max(0, ((TileEntityCore)te).burn(out));
+							((TileEntityCore) te).incomingSpk += out/100d;
+							//continue;
+							break;
 						}
 						
 						IBlockState b = world.getBlockState(pos1);
@@ -135,9 +138,10 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 							
 							@SuppressWarnings("deprecation")
 							float hardness = b.getBlock().getExplosionResistance(null);
-							if(hardness < 10000 && world.rand.nextDouble() < (out * 0.00000001F)/hardness) {
+							if(hardness < 10000 && world.rand.nextDouble()/2 < (out * 0.00000001F)/hardness) {
 								world.playSound(null, x + 0.5, y + 0.5, z + 0.5, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-								world.destroyBlock(pos1, false);
+								world.getBlockState(pos1).getBlock().onBlockExploded(world,pos1,new Explosion(world,null,pos1.getX(),pos1.getY(),pos1.getZ(),5,false,false));
+								//world.destroyBlock(pos1, false);
 							}
 							
 							break;

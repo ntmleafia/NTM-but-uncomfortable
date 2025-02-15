@@ -31,7 +31,9 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.contents.network.computers.cable.ComputerCableTE;
+import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
+import com.leafia.contents.worldgen.ModBiomesGenerator;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaServerListener;
 import com.leafia.passive.DispenserBullet;
@@ -170,7 +172,7 @@ import com.hbm.entity.siege.SiegeTier;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.forgefluid.FFPipeNetwork;
 import com.hbm.forgefluid.FluidContainerRegistry;
-import com.hbm.forgefluid.FluidTypeHandler;
+import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.handler.BobmazonOfferFactory;
@@ -508,11 +510,19 @@ public class MainRegistry {
 		MinecraftForge.TERRAIN_GEN_BUS.register(new ModEventHandler());
 		MinecraftForge.ORE_GEN_BUS.register(new ModEventHandler());
 
-		MinecraftForge.EVENT_BUS.register(new LeafiaServerListener());
+		for (Class<?> cl : LeafiaServerListener.class.getClasses()) {
+			try {
+				MinecraftForge.EVENT_BUS.register(cl.newInstance());
+			} catch (InstantiationException | IllegalAccessException e) {
+				LeafiaDevFlaw flaw = new LeafiaDevFlaw(e.getMessage());
+				flaw.setStackTrace(e.getStackTrace());
+				throw flaw;
+			}
+		}
 		{
-			//ModBiomesGenerator gen = new ModBiomesGenerator();
-			//MinecraftForge.EVENT_BUS.register(gen);
-			//MinecraftForge.TERRAIN_GEN_BUS.register(gen);
+			ModBiomesGenerator gen = new ModBiomesGenerator();
+			MinecraftForge.EVENT_BUS.register(gen);
+			MinecraftForge.TERRAIN_GEN_BUS.register(gen);
 		}
 		
 		if(event.getSide() == Side.CLIENT) {
@@ -734,6 +744,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCoreInjector.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_injector"));
 		GameRegistry.registerTileEntity(TileEntityCoreStabilizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_stabilizer"));
 		GameRegistry.registerTileEntity(TileEntityCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_core"));
+		GameRegistry.registerTileEntity(SPKCableTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_spk"));
+
 		GameRegistry.registerTileEntity(TileEntitySoyuzCapsule.class, new ResourceLocation(RefStrings.MODID, "tileentity_soyuz_capsule"));
 		GameRegistry.registerTileEntity(TileEntitySoyuzLauncher.class, new ResourceLocation(RefStrings.MODID, "tileentity_soyuz_launcher"));
 		GameRegistry.registerTileEntity(TileEntityFFFluidSuccMk2.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_succ_mk2"));
@@ -1081,7 +1093,7 @@ public class MainRegistry {
 		ModBlocks.postInit();
 		BlockCrate.setDrops();
 		BedrockOreRegistry.registerBedrockOres();
-		FluidTypeHandler.registerFluidProperties();
+		ModFluidProperties.registerFluidProperties();
 		CraftingManager.addBedrockOreSmelting();
 		ShredderRecipes.registerShredder();
 		ShredderRecipes.registerOverrides();

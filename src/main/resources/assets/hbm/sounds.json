@@ -47,7 +47,8 @@
 
   "weapon.nuke": {"subtitle": "subtitles.weapon.nuke", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearExplosion", "stream": false}]},
   "weapon.nuke_n": {"subtitle": "subtitles.weapon.nuke_n", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearexplosion_louder", "stream": false}]},
-  "weapon.nuke_d": {"subtitle": "subtitles.weapon.nuke_d", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant", "stream": false}]},
+  "weapon.nuke_d": {"subtitle": "subtitles.weapon.nuke_d", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant_mix", "stream": false}]},
+  "weapon.nuke_a": {"category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant", "stream": false}]},
   "weapon.nuke_s": {"subtitle": "subtitles.weapon.nuke_s", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_mini", "stream": false}]},
   "weapon.nuke_folkvangr": {"subtitle": "subtitles.weapon.nuke_folkvangr", "category": "player", "sounds": [{"name": "hbm:weapon/nuke_folkvangr", "stream": false}]},
 

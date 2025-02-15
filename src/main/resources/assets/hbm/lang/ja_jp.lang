@@ -276,6 +276,7 @@ chat.crate.needcrowbar=I'll need a crate opening device to get the loot, smashin
 chat.curver=§e現在プレイ中のバージョンは §7%s§r
 chat.detonated=Detonated
 chat.detonatedmulti=[Detonated] (%s/%s)
+chat.digital=デジタルロックはコンピューターでしか開けられません！
 chat.duck=Oキーを押すと いいカモが 出現します
 chat.factory.corebad=[Basic Factory] Error: Factory Core not found!
 chat.factory.structurebad=[Basic Factory] Error: Factory Structure not valid!

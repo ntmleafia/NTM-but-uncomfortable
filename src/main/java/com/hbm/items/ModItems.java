@@ -3316,28 +3316,28 @@ public class ModItems {
 
 	//AMS Catalysts
 	public static final Item ams_catalyst_blank = new ItemBase("ams_catalyst_blank").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_iron = new ItemCatalyst(0xFF7E22, 10, 0.50F, 1.50F, 1.50F, "ams_catalyst_iron").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_copper = new ItemCatalyst(0xAADE29, 100, 0.60F, 1.20F, 0.60F, "ams_catalyst_copper").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_aluminium = new ItemCatalyst(0xCCCCCC, 250, 0.70F, 0.85F, 0.85F, "ams_catalyst_aluminium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_lithium = new ItemCatalyst(0xFF2727, 500, 0.80F, 0.75F, 1.15F, "ams_catalyst_lithium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_beryllium = new ItemCatalyst(0x97978B, 1000, 0.90F, 1.15F, 0.75F, "ams_catalyst_beryllium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_tungsten = new ItemCatalyst(0xF5FF48, 5000, 1.00F, 1.00F, 0.95F, "ams_catalyst_tungsten").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_cobalt = new ItemCatalyst(0x789BBE, 10000, 1.02F, 0.95F, 1.00F, "ams_catalyst_cobalt").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_niobium = new ItemCatalyst(0x3BF1B6, 25000, 1.05F, 1.15F, 1.00F, "ams_catalyst_niobium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_cerium = new ItemCatalyst(0x1D3FFF, 50000, 1.05F, 1.00F, 1.15F, "ams_catalyst_cerium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_thorium = new ItemCatalyst(0x653B22, 100000, 1.10F, 0.95F, 1.20F, "ams_catalyst_thorium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_strontium = new ItemCatalyst(0xDD0D35, 200000, 1.15F, 0.90F, 1.30F, "ams_catalyst_strontium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_caesium = new ItemCatalyst(0x6400FF, 400000, 1.20F, 0.85F, 1.40F, "ams_catalyst_caesium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_schrabidium = new ItemCatalyst(0x32FFFF, 600000, 1.30F, 0.70F, 1.25F, "ams_catalyst_schrabidium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_euphemium = new ItemCatalyst(0xFF9CD2, 800000, 1.50F, 1.25F, 0.70F, "ams_catalyst_euphemium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
-	public static final Item ams_catalyst_dineutronium = new ItemCatalyst(0x334077, 1000000, 2.00F, 1.50F, 2.00F, "ams_catalyst_dineutronium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_iron = new ItemCatalyst(0xFF7E22, 2900, 10, 0.50F, 1.50F, 1.50F, "ams_catalyst_iron").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_copper = new ItemCatalyst(0xAADE29, 2250, 100, 0.60F, 1.20F, 0.60F, "ams_catalyst_copper").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_aluminium = new ItemCatalyst(0xCCCCCC, 2250, 250, 0.70F, 0.85F, 0.85F, "ams_catalyst_aluminium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_lithium = new ItemCatalyst(0xFF2727, 600, 500, 0.80F, 0.75F, 1.15F, "ams_catalyst_lithium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_beryllium = new ItemCatalyst(0x97978B, 1287, 1000, 0.90F, 1.15F, 0.75F, "ams_catalyst_beryllium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_tungsten = new ItemCatalyst(0xF5FF48, 3422, 5000, 1.00F, 1.00F, 0.95F, "ams_catalyst_tungsten").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_cobalt = new ItemCatalyst(0x789BBE, 1495, 10000, 1.02F, 0.95F, 1.00F, "ams_catalyst_cobalt").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_niobium = new ItemCatalyst(0x3BF1B6, 2900, 25000, 1.05F, 1.15F, 1.00F, "ams_catalyst_niobium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_cerium = new ItemCatalyst(0x1D3FFF, 2900, 50000, 1.05F, 1.00F, 1.15F, "ams_catalyst_cerium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_thorium = new ItemCatalyst(0x653B22, 800, 100000, 1.10F, 0.95F, 1.20F, "ams_catalyst_thorium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_strontium = new ItemCatalyst(0xDD0D35, 3200, 200000, 1.15F, 0.90F, 1.30F, "ams_catalyst_strontium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_caesium = new ItemCatalyst(0x6400FF, 1952, 400000, 1.20F, 0.85F, 1.40F, "ams_catalyst_caesium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_schrabidium = new ItemCatalyst(0x32FFFF, 3000, 600000, 1.30F, 0.70F, 1.25F, "ams_catalyst_schrabidium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_euphemium = new ItemCatalyst(0xFF9CD2, 4000, 800000, 1.50F, 1.25F, 0.70F, "ams_catalyst_euphemium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
+	public static final Item ams_catalyst_dineutronium = new ItemCatalyst(0x334077, 6000, 1000000, 2.00F, 1.50F, 2.00F, "ams_catalyst_dineutronium").setCreativeTab(MainRegistry.controlTab).setMaxStackSize(1);
 	
 	//AMS
-	public static final Item ams_focus_blank = new ItemLens(400000L, 0.5F, 1.75F, "ams_focus_blank").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
-	public static final Item ams_lens = new ItemLens(500000000L, 1.0F, 1.0F, "ams_lens").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
-	public static final Item ams_focus_limiter = new ItemLens(2500000000L, 0.8F, 0.5F, "ams_focus_limiter").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
-	public static final Item ams_focus_booster = new ItemLens(100000000L, 1.5F, 1.75F, "ams_focus_booster").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
-	public static final Item ams_focus_omega = new ItemLens(1000000000L, 5.0F, 10.0F, "ams_focus_omega").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item ams_focus_blank = new ItemLens(400000L, 0.5F, 1.75F, 1, "ams_focus_blank").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item ams_lens = new ItemLens(500000000L, 1.0F, 1.0F, 1, "ams_lens").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item ams_focus_limiter = new ItemLens(2500000000L, 1.5F, 1.75F, 0.8F, "ams_focus_limiter").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item ams_focus_booster = new ItemLens(100000000L, 0.8F, 0.5F, 1.35F, "ams_focus_booster").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item ams_focus_omega = new ItemLens(1000000000L, 5.0F, 10.0F, 3.5F, "ams_focus_omega").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 	public static final Item ams_core_sing = new ItemAMSCore(500, 0.8F, 1.5F, "ams_core_sing").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 	public static final Item ams_core_wormhole = new ItemAMSCore(650, 1.05F, 0.8F, "ams_core_wormhole").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 	public static final Item ams_core_eyeofharmony = new ItemAMSCore(900, 2.25F, 2.0F, "ams_core_eyeofharmony").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
