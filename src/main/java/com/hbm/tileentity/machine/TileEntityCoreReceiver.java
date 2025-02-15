@@ -11,6 +11,7 @@ import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyGenerator;
+import com.hbm.util.Tuple.Pair;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -60,12 +61,34 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 			}
 		}
 		if(!world.isRemote) {
+			updateSPKConnections(world,pos);
 			if(Long.MAX_VALUE-power < joules * 5000L)
 				power = Long.MAX_VALUE;
 			else
 				power += joules * 5000L;
 
 			this.sendPower(world, pos);
+
+			long remaining = power/5000L;
+			if (remaining > 0) {
+				List<Pair<ILaserable,EnumFacing>> targets = new ArrayList<>();
+				for (EnumFacing outFace : EnumFacing.values()) {
+					if (outFace.getAxis().equals(facing.getAxis())) continue;
+					TileEntity te = world.getTileEntity(pos.offset(outFace));
+					if (te instanceof ILaserable) {
+						ILaserable thing = (ILaserable)te;
+						if (thing.isInputPreferable(outFace))
+							targets.add(new Pair<>(thing,outFace));
+					}
+				}
+				if (targets.size() > 0) {
+					long transfer = remaining/targets.size();
+					for (Pair<ILaserable,EnumFacing> target : targets)
+						target.getA().addEnergy(transfer,target.getB());
+
+					power -= transfer*targets.size()*5000L;
+				}
+			}
 
 			if(joules > 0) {
 
@@ -122,6 +145,11 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 			world.destroyBlock(pos, false);
 			world.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 2.5F, true);
 		}
+	}
+
+	@Override
+	public boolean isInputPreferable(EnumFacing dir) {
+		return dir.getOpposite().ordinal() == this.getBlockMetadata();
 	}
 
 	@Override

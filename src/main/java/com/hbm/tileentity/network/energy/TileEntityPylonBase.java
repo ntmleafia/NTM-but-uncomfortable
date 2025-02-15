@@ -13,7 +13,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.WorldServer;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
@@ -50,8 +49,8 @@ public abstract class TileEntityPylonBase extends TileEntityCableBaseNT {
 			return;
 		connected.add(targetPos);
 		
-		if(this.getPowerNet() != null) {
-			this.getPowerNet().reevaluate();
+		if(this.getNetwork() != null) {
+			this.getNetwork().reevaluate();
 			this.network = null;
 		}
 		
@@ -101,12 +100,12 @@ public abstract class TileEntityPylonBase extends TileEntityCableBaseNT {
 				
 				IEnergyConductor conductor = (IEnergyConductor) te;
 				
-				if(this.getPowerNet() == null && conductor.getPowerNet() != null) {
-					conductor.getPowerNet().joinLink(this);
+				if(this.getNetwork() == null && conductor.getNetwork() != null) {
+					conductor.getNetwork().assignConductor(this);
 				}
 				
-				if(this.getPowerNet() != null && conductor.getPowerNet() != null && this.getPowerNet() != conductor.getPowerNet()) {
-					conductor.getPowerNet().joinNetworks(this.getPowerNet());
+				if(this.getNetwork() != null && conductor.getNetwork() != null && this.getNetwork() != conductor.getNetwork()) {
+					conductor.getNetwork().assert_joinFrom(this.getNetwork());
 				}
 			}
 		}

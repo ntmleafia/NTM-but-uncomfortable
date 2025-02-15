@@ -1,14 +1,10 @@
 package api.hbm.energy;
 
-import com.hbm.packet.AuxParticlePacketNT;
-import com.hbm.packet.PacketDispatcher;
 import com.hbm.lib.ForgeDirection;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 /**
  * For machines and things that have an energy buffer and are affected by EMPs
@@ -60,8 +56,8 @@ public interface IEnergyUser extends IEnergyConnector {
 		if(te instanceof IEnergyConductor) {
 			IEnergyConductor con = (IEnergyConductor) te;
 			
-			if(con.canConnect(dir.getOpposite()) && con.getPowerNet() != null && con.getPowerNet().isSubscribed(this)) {
-				con.getPowerNet().unsubscribe(this);
+			if(con.canConnect(dir.getOpposite()) && con.getNetwork() != null && con.getNetwork().containsMember(this)) {
+				con.getNetwork().removeMember(this);
 				wasSubscribed = true;
 			}
 		}
@@ -82,8 +78,8 @@ public interface IEnergyUser extends IEnergyConnector {
 		if(wasSubscribed && te instanceof IEnergyConductor) {
 			IEnergyConductor con = (IEnergyConductor) te;
 			
-			if(con.getPowerNet() != null && !con.getPowerNet().isSubscribed(this)) {
-				con.getPowerNet().subscribe(this);
+			if(con.getNetwork() != null && !con.getNetwork().containsMember(this)) {
+				con.getNetwork().addMember(this);
 			}
 		}
 		

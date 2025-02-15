@@ -2,16 +2,38 @@ package api.hbm.energy.network;
 
 import api.hbm.energy.IEnergyConductor;
 import com.hbm.lib.ForgeDirection;
+import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public interface NTMNetworkConductor<T extends NTMNetworkInstance<? extends NTMNetworkConductor<T>,? extends NTMNetworkMember>> {
+public interface NTMNetworkConductor<T extends NTMNetworkInstance<? extends NTMNetworkConductor<T>,? extends NTMNetworkMember>> extends NTMNetworkMember {
 	T getNetwork();
 	NTMNetworkConductor<T> setNetwork(T network);
+
+	// fuck off
+	default NTMNetworkConductor<T> assert_setNetwork(NTMNetworkInstance<?,?> network) { return setNetwork(_assertNetwork(network)); }
+	@Nullable
+	default T _castNetwork(NTMNetworkInstance<?,?> network) {
+		try {
+			return (T)network;
+		} catch (ClassCastException e) {
+			return null;
+			//throw new LeafiaDevFlaw(this.getClass().getName()+": _castMember failed",e);
+		}
+	}
+	default T _assertNetwork(NTMNetworkInstance<?,?> network) {
+		try {
+			return (T)network;
+		} catch (ClassCastException e) {
+			throw new LeafiaDevFlaw(this.getClass().getName()+": _assertNetwork failed",e);
+		}
+	}
+
 	default int generateId() {
 		return NTMNetworkInstance.generateIdFromTE((TileEntity)this);
 	}
@@ -59,6 +81,7 @@ public interface NTMNetworkConductor<T extends NTMNetworkInstance<? extends NTMN
 			}
 		}
 	}
+	default void assert_reevaluate(NTMNetworkInstance<?,?> network) { reevaluate(_assertNetwork(network)); }
 	/**
 	 * Creates a list of positions for the re-eval process. In short - what positions should be considered as connected.
 	 * Also used by pylons to quickly figure out what positions to connect to.

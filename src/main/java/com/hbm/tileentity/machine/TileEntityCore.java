@@ -161,7 +161,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 				ticks++;
 				//LeafiaDebug.debugLog(world,"incomingSpk: "+incomingSpk);
-				containedEnergy += Math.pow(Math.pow(incomingSpk/100,0.5)+1,0.5)*5;
+				containedEnergy += (Math.pow(Math.pow(incomingSpk,0.666)+1,0.4)-1)*6.666;
 				double multiplier = (1 + world.rand.nextGaussian()*0.75/getStabilizationDivAlt())
 						*(1 + Math.sin(ticks*Math.PI)*0.75/getStabilizationDivAlt());
 

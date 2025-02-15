@@ -62,17 +62,17 @@ public class TileEntitySubstation extends TileEntityPylonBase {
 	}
 
 	@Override
-	public boolean hasProxies() {
+	public boolean needsRedirectionMap() {
 		return true;
 	}
 
 	@Override
-	public List<Integer> getProxies() {
-		List<Integer> proxies = new ArrayList();
-		proxies.add(IEnergyConductor.getIdentityFromPos(pos.add(1, 0, 1)));
-		proxies.add(IEnergyConductor.getIdentityFromPos(pos.add(1, 0, -1)));
-		proxies.add(IEnergyConductor.getIdentityFromPos(pos.add(-1, 0, 1)));
-		proxies.add(IEnergyConductor.getIdentityFromPos(pos.add(-1, 0, -1)));
-		return proxies;
+	public List<BlockPos> getMultiblockPositions() {
+		List<BlockPos> positions = new ArrayList<>();
+		positions.add(pos.add(1, 0, 1));
+		positions.add(pos.add(1, 0, -1));
+		positions.add(pos.add(-1, 0, 1));
+		positions.add(pos.add(-1, 0, -1));
+		return positions;
 	}
 }

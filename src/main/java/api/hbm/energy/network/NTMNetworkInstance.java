@@ -1,8 +1,5 @@
 package api.hbm.energy.network;
 
-import api.hbm.energy.IEnergyConductor;
-import api.hbm.energy.IEnergyConnector;
-import api.hbm.energy.PowerNet;
 import com.hbm.config.GeneralConfig;
 import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class NTMNetworkInstance<C extends NTMNetworkConductor<NTMNetworkInstance<C,M>>,M extends NTMNetworkMember> {
+public abstract class NTMNetworkInstance<C extends NTMNetworkConductor<? extends NTMNetworkInstance<C,M>>,M extends NTMNetworkMember> {
 
 	protected boolean valid = true;
 
@@ -45,6 +42,11 @@ public abstract class NTMNetworkInstance<C extends NTMNetworkConductor<NTMNetwor
 	}
 
 	protected final List<M> members = new ArrayList<>();
+	public void cleanup() {
+		getMembers().removeIf(x ->
+				x == null || !(x instanceof TileEntity) || ((TileEntity)x).isInvalid()
+		);
+	}
 
 	/**
 	 * Joins the <tt>other</tt> network into <tt>this</tt> network.
@@ -77,7 +79,7 @@ public abstract class NTMNetworkInstance<C extends NTMNetworkConductor<NTMNetwor
 		if (conductor.getNetwork() != null)
 			conductor.getNetwork().removeConductor(conductor);
 
-		conductor.setNetwork(this);
+		conductor.assert_setNetwork(this);
 		int identity = conductor.generateId();
 		getConductorMap().put(identity, conductor);
 
@@ -156,10 +158,10 @@ public abstract class NTMNetworkInstance<C extends NTMNetworkConductor<NTMNetwor
 
 		for (C conductor : snapshot.getConductors()) {
 			conductor.setNetwork(null); // just to be safe, although removeConductor already does it
-			conductor.reevaluate(snapshot);
+			conductor.assert_reevaluate(snapshot);
 			if (conductor.getNetwork() == null) {
 				try {
-					conductor.setNetwork(this.getClass().newInstance().assignConductor(conductor));
+					conductor.assert_setNetwork(this.getClass().newInstance().assignConductor(conductor));
 				} catch (IllegalAccessException | InstantiationException | RuntimeException exception) {
 					throw new LeafiaDevFlaw(this.getClass().getName(),exception);
 				}

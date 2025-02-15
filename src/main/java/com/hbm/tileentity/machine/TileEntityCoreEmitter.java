@@ -66,6 +66,7 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 		if (!world.isRemote) {
 			
 			this.updateStandardConnections(world, pos);
+			this.updateSPKConnections(world,pos);
 			
 			watts = MathHelper.clamp(watts, 1, 999999100);
 			long demand = maxPower * Math.min(watts,100) / 2000;
