@@ -190,7 +190,9 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 				isOn = true;
 				TileEntityCore core = getCore();
 				if (core != null) {
-					core.field += (int)(watts * lens.fieldMod);
+					//core.field += (int)(watts * lens.fieldMod);
+					core.stabilization += lens.fieldMod*(watts/100d);
+					core.energyMod += lens.energyMod;
 					this.power -= (long)(demand * lens.drainMod);
 
 					long dmg = ItemLens.getLensDamage(inventory.getStackInSlot(0));

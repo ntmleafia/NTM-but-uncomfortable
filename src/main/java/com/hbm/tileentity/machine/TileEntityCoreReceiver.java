@@ -41,6 +41,7 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 	public long syncJoules;
 	public FluidTank tank;
 
+	public TileEntityCore core = null;
 	public TileEntityCoreReceiver() {
 		super(0);
 		tank = new FluidTank(64000);
@@ -48,8 +49,17 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 
 	@Override
 	public void update() {
+		core = null;
+		EnumFacing facing = EnumFacing.getFront(this.getBlockMetadata());
+		for(int i = 1; i <= TileEntityCoreEmitter.range; i++) {
+			BlockPos offs = pos.offset(facing,i);
+			TileEntity te = world.getTileEntity(offs);
+			if (te instanceof TileEntityCore) {
+				core = (TileEntityCore)te;
+				core.absorbers.add(this);
+			}
+		}
 		if(!world.isRemote) {
-
 			if(Long.MAX_VALUE-power < joules * 5000L)
 				power = Long.MAX_VALUE;
 			else

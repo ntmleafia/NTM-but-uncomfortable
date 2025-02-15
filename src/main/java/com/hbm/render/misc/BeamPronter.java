@@ -77,18 +77,23 @@ public class BeamPronter {
 		double lastZ = 0;
 		
 		for(int i = 0; i <= segments; i++) {
+			boolean firstSegment = i == 0;
+			boolean lastSegment = i == segments;
 
 			double pX = unit.xCoord * segLength * i;
 			double pY = unit.yCoord * segLength * i;
 			double pZ = unit.zCoord * segLength * i;
 			
-			if(wave != EnumWaveType.STRAIGHT) {
+			if(wave != EnumWaveType.STRAIGHT && !(wave == EnumWaveType.RANDOM && (firstSegment || lastSegment))) {
 				Vec3 spinner = Vec3.createVectorHelper(spinRadius, 0, 0);
 				if(wave == EnumWaveType.SPIRAL) {
 					spinner.rotateAroundY((float)Math.PI * (float)start / 180F);
 					spinner.rotateAroundY((float)Math.PI * 45F / 180F * i);
 				} else if(wave == EnumWaveType.RANDOM) {
+					spinner.mult(rand.nextFloat());
 					spinner.rotateAroundY((float)Math.PI * 2 * rand.nextFloat());
+					if (rand.nextInt(3) == 0)
+						continue;
 				}
 				pX += spinner.xCoord;
 				pY += spinner.yCoord;

@@ -2,7 +2,7 @@ package com.hbm.render.tileentity;
 
 import org.lwjgl.opengl.GL11;
 
-import com.hbm.forgefluid.FluidTypeHandler;
+import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.render.misc.DiamondPronter;
 import com.hbm.tileentity.machine.TileEntityBarrel;
 
@@ -20,7 +20,7 @@ public class RenderFluidBarrel extends TileEntitySpecialRenderer<TileEntityBarre
 
 		if(barrel.tank.getFluid() != null) {
 			FluidStack type = barrel.tank.getFluid();
-			FluidTypeHandler.FluidProperties p = FluidTypeHandler.getProperties(type);
+			ModFluidProperties.FluidProperties p = ModFluidProperties.getProperties(type);
 
 			for(int j = 0; j < 4; j++) {
 

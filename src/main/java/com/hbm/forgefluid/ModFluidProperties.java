@@ -11,7 +11,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidTypeHandler {
+public class ModFluidProperties {
+	// formerly FluidTypeHandler
+	// renamed to ModFluidProperties to better hit the search results
 
 	private static Map<String, FluidProperties> fluidProperties = new HashMap<String, FluidProperties>();
 	public static final FluidProperties NONE = new FluidProperties(0, 0, 0, EnumSymbol.NONE);
@@ -85,9 +87,11 @@ public class FluidTypeHandler {
 		fluidProperties.put(ModForgeFluids.hotsteam.getName(), new FluidProperties(0, 0 ,2, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.superhotsteam.getName(), new FluidProperties(0, 0 ,3, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.ultrahotsteam.getName(), new FluidProperties(0, 0, 4, EnumSymbol.NONE, FluidTrait.HIGH_PRESSURE));
+		fluidProperties.put(ModForgeFluids.deathsteam.getName(), new FluidProperties(0, 0, 5, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
+
 		fluidProperties.put(ModForgeFluids.coolant.getName(), new FluidProperties(1, 0, 0, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.hotcoolant.getName(), new FluidProperties(1, 0, 4, EnumSymbol.NONE));
-		fluidProperties.put(ModForgeFluids.malcoolant.getName(), new FluidProperties(1, 0, 4, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
+		fluidProperties.put(ModForgeFluids.malcoolant.getName(), new FluidProperties(1, 0, 5, EnumSymbol.NONE, FluidTrait.EXTREME_PRESSURE));
 		
 		fluidProperties.put(FluidRegistry.LAVA.getName(), new FluidProperties(4, 0, 0, EnumSymbol.NOWATER));
 		

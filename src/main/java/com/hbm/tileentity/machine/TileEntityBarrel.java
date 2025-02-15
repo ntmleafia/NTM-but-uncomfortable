@@ -2,8 +2,8 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.FluidTypeHandler;
-import com.hbm.forgefluid.FluidTypeHandler.FluidTrait;
+import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.forgefluid.ModFluidProperties.FluidTrait;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -79,19 +79,19 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		Fluid f = tank.getFluid().getFluid();
 		
 		//for when you fill antimatter into a matter tank
-		if(b != ModBlocks.barrel_antimatter && FluidTypeHandler.containsTrait(f, FluidTrait.AMAT)) {
+		if(b != ModBlocks.barrel_antimatter && ModFluidProperties.containsTrait(f, FluidTrait.AMAT)) {
 			world.destroyBlock(pos, false);
 			world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, true, true);
 		}
 		
 		//for when you fill hot or corrosive liquids into a plastic tank
-		if(b == ModBlocks.barrel_plastic && (FluidTypeHandler.isCorrosivePlastic(f) || FluidTypeHandler.isHot(f))) {
+		if(b == ModBlocks.barrel_plastic && (ModFluidProperties.isCorrosivePlastic(f) || ModFluidProperties.isHot(f))) {
 			world.destroyBlock(pos, false);
 			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 		
 		//for when you fill corrosive liquid into an iron tank
-		if((b == ModBlocks.barrel_iron && FluidTypeHandler.isCorrosivePlastic(f)) || (b == ModBlocks.barrel_steel && FluidTypeHandler.isCorrosiveIron(f))) {
+		if((b == ModBlocks.barrel_iron && ModFluidProperties.isCorrosivePlastic(f)) || (b == ModBlocks.barrel_steel && ModFluidProperties.isCorrosiveIron(f))) {
 			
 			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			world.setBlockState(pos, ModBlocks.barrel_corroded.getDefaultState());
@@ -106,17 +106,17 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		}
 
 		if (b == ModBlocks.barrel_steel) {
-			if (FluidTypeHandler.explodeTier1(f)) {
+			if (ModFluidProperties.explodeTier1(f)) {
 				world.destroyBlock(pos, false);
 				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
 			}
 		} else if (b == ModBlocks.barrel_tcalloy) {
-			if (FluidTypeHandler.explodeTier2(f)) {
+			if (ModFluidProperties.explodeTier2(f)) {
 				world.destroyBlock(pos, false);
 				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
 			}
 		} else {
-			if (FluidTypeHandler.explodeTier0(f)) {
+			if (ModFluidProperties.explodeTier0(f)) {
 				world.destroyBlock(pos, false);
 				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
 			}

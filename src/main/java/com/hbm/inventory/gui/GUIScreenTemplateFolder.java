@@ -6,10 +6,9 @@ import java.util.List;
 
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.PressRecipes;
-import com.hbm.forgefluid.FluidTypeHandler;
+import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCassette;
-import com.hbm.items.machine.ItemChemistryTemplate;
 import com.hbm.inventory.ChemplantRecipes;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.items.machine.ItemCassette.TrackType;
@@ -99,7 +98,7 @@ public class GUIScreenTemplateFolder extends GuiScreen {
 			allStacks.add(new ItemStack(ModItems.siren_track, 1, i));
     	//Fluid IDs
     	for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()){
-    		if(FluidTypeHandler.noID(fluid)) continue;
+    		if(ModFluidProperties.noID(fluid)) continue;
 			allStacks.add(ItemForgeFluidIdentifier.getStackFromFluid(fluid));
     	}
     	//Assembly Templates
