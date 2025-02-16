@@ -92,7 +92,7 @@ public class GUIMachineFluidTank extends GuiInfoContainer {
 	public void renderTankInfo(int mouseX, int mouseY, int x, int y, int width, int height) {
 		if(x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			/*if(tank.tank.getFluid() != null) {
-				this.drawFluidInfo(new String[] { I18n.format(tank.tank.getInfo().fluid.getUnlocalizedName()), tank.tank.getFluidAmount() + "/" + tank.tank.getCapacity() + "mB" }, mouseX, mouseY);
+				this.drawFluidInfo(new String[] { I18n.format(tank.tank.getInfo().fluid.getTranslationKey()), tank.tank.getFluidAmount() + "/" + tank.tank.getCapacity() + "mB" }, mouseX, mouseY);
 			} else {
 				this.drawFluidInfo(new String[] { I18n.format("None"), "0/" + tank.tank.getCapacity() + "mB" }, mouseX, mouseY);
 			}*/

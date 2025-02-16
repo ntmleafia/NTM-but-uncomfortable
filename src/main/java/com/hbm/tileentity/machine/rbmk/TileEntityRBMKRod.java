@@ -373,7 +373,7 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 		if(inventory.getStackInSlot(0).getItem() instanceof ItemRBMKRod) {
 			
 			ItemRBMKRod rod = ((ItemRBMKRod)inventory.getStackInSlot(0).getItem());
-			data.setString("rod_name", rod.getUnlocalizedName());
+			data.setString("rod_name", rod.getTranslationKey());
 			data.setDouble("enrichment", ItemRBMKRod.getEnrichment(inventory.getStackInSlot(0)));
 			data.setDouble("xenon", ItemRBMKRod.getPoison(inventory.getStackInSlot(0)));
 			data.setDouble("c_heat", ItemRBMKRod.getHullHeat(inventory.getStackInSlot(0)));
@@ -420,7 +420,7 @@ public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBM
 
 		if (inventory.getStackInSlot(0).getItem() instanceof ItemRBMKRod) {
 			ItemRBMKRod rod = ((ItemRBMKRod)inventory.getStackInSlot(0).getItem());
-			data.put("rod_name", new DataValueString(rod.getUnlocalizedName()));
+			data.put("rod_name", new DataValueString(rod.getTranslationKey()));
 			data.put("enrichment", new DataValueFloat((float) ItemRBMKRod.getEnrichment(inventory.getStackInSlot(0))));
 			data.put("xenon", new DataValueFloat((float) ItemRBMKRod.getPoison(inventory.getStackInSlot(0))));
 			data.put("c_heat", new DataValueFloat((float) ItemRBMKRod.getHullHeat(inventory.getStackInSlot(0))));

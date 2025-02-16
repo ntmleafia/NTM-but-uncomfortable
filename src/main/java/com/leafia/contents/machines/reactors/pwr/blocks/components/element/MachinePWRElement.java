@@ -39,7 +39,7 @@ import java.util.List;
 public class MachinePWRElement extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
 	public MachinePWRElement() {
 		super(Material.IRON,-1,"reactor_element");
-		this.setUnlocalizedName("pwr_element");
+		this.setTranslationKey("pwr_element");
 		this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
 	}
 	@Override
@@ -47,7 +47,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 		return true;
 	}
 	public void check(World world,BlockPos pos) { // Called only on server
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 		TileEntity entity = chunk.getTileEntity(pos,Chunk.EnumCreateEntityType.CHECK);
 		if (entity != null) {
 			if (entity instanceof TileEntityPWRElement) {
@@ -162,7 +162,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 			}
 		}
 
-		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getUnlocalizedName() + ".name"), 0xFF55FF, 0x3F153F, texts);
+		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
 	}
 
 	@Override

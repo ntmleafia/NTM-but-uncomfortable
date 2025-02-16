@@ -30,7 +30,7 @@ public class WasteLog extends BlockRotatedPillar implements IItemHazard {
 	
 	public WasteLog(Material mat, SoundType type, String s) {
 		super(mat);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setHarvestLevel("axe", 0);
 		this.setCreativeTab(MainRegistry.controlTab);

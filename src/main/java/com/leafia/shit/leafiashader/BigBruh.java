@@ -112,7 +112,7 @@ public class BigBruh
         catch (Exception exception2)
         {
             JsonException jsonexception = JsonException.forException(exception2);
-            jsonexception.setFilenameAndFlush(p_152765_2_.getResourcePath());
+            jsonexception.setFilenameAndFlush(p_152765_2_.getPath());
             throw jsonexception;
         }
         finally

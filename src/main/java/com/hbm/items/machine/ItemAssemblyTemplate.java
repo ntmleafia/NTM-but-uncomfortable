@@ -41,7 +41,7 @@ public class ItemAssemblyTemplate extends Item implements IHasCustomModel {
 	
 
 	public ItemAssemblyTemplate(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
@@ -53,10 +53,10 @@ public class ItemAssemblyTemplate extends Item implements IHasCustomModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + I18n.format(this.getUnlocalizedName() + ".name")).trim();
+		String s = ("" + I18n.format(this.getTranslationKey() + ".name")).trim();
 		int damage = getTagWithRecipeNumber(stack).getInteger("type");
 		ItemStack out = damage < AssemblerRecipes.recipeList.size() ? AssemblerRecipes.recipeList.get(damage).toStack() : ItemStack.EMPTY;
-		String s1 = ("" + I18n.format((out != ItemStack.EMPTY ? out.getUnlocalizedName() : "") + ".name")).trim();
+		String s1 = ("" + I18n.format((out != ItemStack.EMPTY ? out.getTranslationKey() : "") + ".name")).trim();
 
 		if (s1 != null) {
 			s = s + " " + s1;

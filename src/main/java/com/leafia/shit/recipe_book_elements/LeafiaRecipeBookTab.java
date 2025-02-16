@@ -28,7 +28,7 @@ public class LeafiaRecipeBookTab extends GuiButtonToggle
     public LeafiaRecipeBookTab(int buttonId,LeafiaRecipeBookProfile.RecipeCategory category,CreativeTabs tab) {
         super(buttonId, 0, 0, 35, 27, false);
         this.category = category;
-        this.icon = new Item[]{tab.getTabIconItem().getItem()};
+        this.icon = new Item[]{tab.createIcon().getItem()};
         this.initTextureValues(153, 2, 35, 0, LeafiaRecipeBook.RECIPE_BOOK);
     }
     public LeafiaRecipeBookTab(int buttonId,LeafiaRecipeBookProfile.RecipeCategory category,Item... items) {

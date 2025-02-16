@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemFFFluidDuct extends Item {
 
 	public ItemFFFluidDuct(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModItems.ALL_ITEMS.add(this);
@@ -52,7 +52,7 @@ public class ItemFFFluidDuct extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + I18n.format(this.getUnlocalizedName() + ".name")).trim();
+		String s = ("" + I18n.format(this.getTranslationKey() + ".name")).trim();
 		Fluid f = getFluidFromStack(stack);
 		String s1 = null;
 		if(f != null)

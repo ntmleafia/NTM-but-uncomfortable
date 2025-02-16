@@ -143,7 +143,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		EnumFacing face = terminal.getValue(BlockHorizontal.FACING).getOpposite();
 		Vec3d lookVector = new Vec3d(face.getDirectionVec()); // amazingly, Vec3i does not has .scale() method LMAO
 		Vec3d rightVector = lookVector.crossProduct(new Vec3d(0,1,0));
-		return new BlockPos(new Vec3d(terminalPos).addVector(0.5,0.5+pos.getY(),0.5).add(lookVector.scale(-pos.getZ())).add(rightVector.scale(pos.getX())));
+		return new BlockPos(new Vec3d(terminalPos).add(0.5,0.5+pos.getY(),0.5).add(lookVector.scale(-pos.getZ())).add(rightVector.scale(pos.getX())));
 	}
 	public BlockPos terminal_toLocal(IBlockState terminal,BlockPos terminalPos,BlockPos pos) {
 		EnumFacing face = terminal.getValue(BlockHorizontal.FACING).getOpposite();
@@ -484,7 +484,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		Set<BlockPos> offsets = new HashSet<>();
 		for (BlockPos member : set) {
 			for (EnumFacing facing : EnumFacing.values()) {
-				BlockPos offset = member.add(facing.getFrontOffsetX(),facing.getFrontOffsetY(),facing.getFrontOffsetZ());
+				BlockPos offset = member.add(facing.getXOffset(),facing.getYOffset(),facing.getZOffset());
 				//if (!members.contains(offset)) {
 					//if (explodeWorld.getBlockState(offset).getBlock().getExplosionResistance(null) >= 50)
 						offsets.add(offset);
@@ -568,7 +568,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			List<BlockPos> allDebris = new ArrayList<>();
 			Vec3d pressure = new Vec3d(0,0,0);
 			for (BlockPos member : motherfucker) {
-				Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+				Vec3d ray = new Vec3d(member).add(0.5,0.5,0.5).subtract(centerPoint);
 				if (!world.getBlockState(member).getMaterial().isSolid()) {
 					pressure = pressure.add(ray.scale(2d/motherfucker.size()));
 					continue;
@@ -654,7 +654,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					Block block = world.getBlockState(pos).getBlock();
 					if (!(block instanceof IFluidBlock) && LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
 						if (world.getBlockState(pos).getBlockHardness(world,pos) >= 1) {
-							Vec3d ray = new Vec3d(pos).addVector(0.5,0.5,0.5).subtract(centerPoint);
+							Vec3d ray = new Vec3d(pos).add(0.5,0.5,0.5).subtract(centerPoint);
 							EntityPWRDebris debris = new EntityPWRDebris(world,pos.getX() + 0.5D,pos.getY() + 0.5,pos.getZ() + 0.5D,world.getBlockState(pos));
 							debris.motionX = signedPow(ray.x,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.x,0.8)/2;
 							debris.motionY = signedPow(ray.y,1)/reactorSize*(1+world.rand.nextDouble()*4) + signedPow(pressure.y,0.8)/2;
@@ -713,14 +713,14 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				Block block = state.getBlock();
 				SoundType soundType = block.getSoundType();
 				Material material = block.getMaterial(state);
-				Vec3d ray = new Vec3d(member).addVector(0.5,0.5,0.5).subtract(centerPoint);
+				Vec3d ray = new Vec3d(member).add(0.5,0.5,0.5).subtract(centerPoint);
 
 				if (block instanceof MachinePWRControl) {
 					world.setBlockState(member,ModBlocks.block_electrical_scrap.getDefaultState());
 					antiPlaceSet.add(member);
 					//continue;
 				}
-				double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.lengthVector()/(reactorSize/2),0,1),0.45)*8,0,7);
+				double heatBase = MathHelper.clamp(Math.pow(MathHelper.clamp(1-ray.length()/(reactorSize/2),0,1),0.45)*8,0,7);
 				int heat = (int)heatBase;
 				int heatRand = world.rand.nextInt(3);
 				if (heatRand == 1)

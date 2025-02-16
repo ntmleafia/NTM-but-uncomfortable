@@ -31,7 +31,7 @@ public class BlockGasCoal extends BlockGasBase {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity){
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity){
 		ContaminationUtil.applyCoal(entity, 5, 1, 5);
 		if (entity instanceof EntityPlayer) {
 			LeafiaRecipeBookServer.unlockRecipe((EntityPlayer)entity,ModItems.rag);

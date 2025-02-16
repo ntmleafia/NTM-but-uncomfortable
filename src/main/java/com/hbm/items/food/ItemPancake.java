@@ -22,7 +22,7 @@ public class ItemPancake extends ItemFood {
 
 	public ItemPancake(int amount, float saturation, boolean isWolfFood, String s) {
 		super(amount, saturation, isWolfFood);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setAlwaysEdible();
 		

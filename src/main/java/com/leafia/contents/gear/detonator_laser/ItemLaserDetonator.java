@@ -45,7 +45,7 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 	}
 	public ItemLaserDetonator(String s) {
 		this.setRegistryName(s);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		
 		ModItems.ALL_ITEMS.add(this);
@@ -70,7 +70,7 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 		EnumHandSide side = player.getPrimaryHand();
 		if (hand == EnumHand.OFF_HAND)
 			side = side.opposite();
-		Vec3d startPos = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+		Vec3d startPos = player.getPositionVector().add(0,player.getEyeHeight(),0);
 		Vec3d vecLook = player.getLook(1);
 		// thanks https://www.geogebra.org/m/psMTGDgc
 		Vec3d vecRight = Vec3d.fromPitchYaw(0,player.rotationYawHead).crossProduct(new Vec3d(0,1,0));
@@ -144,7 +144,7 @@ public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 			@SideOnly(Side.CLIENT)
 			public IMessage onMessage(LaserDetonatorPacket message,MessageContext ctx) {
 				Minecraft.getMinecraft().addScheduledTask(() -> {
-					double length = message.direction.lengthVector();
+					double length = message.direction.length();
 					Vec3 unit = message.direction.normalize();
 					Random rand = Minecraft.getMinecraft().world.rand;
 					for (int i = 0; i <= 1; i++) {

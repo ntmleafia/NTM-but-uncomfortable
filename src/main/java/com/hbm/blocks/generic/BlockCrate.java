@@ -43,7 +43,7 @@ public class BlockCrate extends BlockFalling {
 	
 	public BlockCrate(Material material, String s) {
 		super(material);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);

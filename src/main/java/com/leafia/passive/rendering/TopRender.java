@@ -55,7 +55,7 @@ public class TopRender {
 					highlight.draw(pos,new Vec3d(0,0,-1),new Vec3d(0,1,0));
 					highlight.draw(pos,new Vec3d(1,0,0),new Vec3d(0,1,0));
 					highlight.draw(pos,new Vec3d(0,-1,0),new Vec3d(0,0,-1));
-					if (highlight.ray.lengthVector() <= highlight.size.lengthVector()) {
+					if (highlight.ray.length() <= highlight.size.length()) {
 						brush.setColorHex(highlight.colorTop);
 						brush.addVertex(highlight.center.subtract(pos));
 						brush.addVertex(highlight.center.subtract(pos).add(highlight.ray));
@@ -102,10 +102,10 @@ public class TopRender {
 		public Object[] label = new Object[0];
 		public double textSize = 1;
 		public Highlight() { center = new Vec3d(0,0,0); }
-		public Highlight(BlockPos pos) { center = new Vec3d(pos).addVector(0.5,0.5,0.5); }
+		public Highlight(BlockPos pos) { center = new Vec3d(pos).add(0.5,0.5,0.5); }
 		public Highlight(Vec3d vec) { center = vec; }
 		public Highlight setBlock(BlockPos pos) {
-			center = new Vec3d(pos).addVector(0.5,0.5,0.5);
+			center = new Vec3d(pos).add(0.5,0.5,0.5);
 			size = new Vec3d(1,1,1);
 			return this;
 		}
@@ -118,8 +118,8 @@ public class TopRender {
 		}
 		public Highlight setArea(BlockPos posA,BlockPos posB) {
 			setArea(new Vec3d(posA),new Vec3d(posB));
-			size = size.addVector(1,1,1);
-			center = center.addVector(0.5,0.5,0.5);
+			size = size.add(1,1,1);
+			center = center.add(0.5,0.5,0.5);
 			return this;
 		}
 		public Highlight setLabel(Object... newLabel) {
@@ -148,13 +148,13 @@ public class TopRender {
 				for (int dz = -1; dz <= 1; dz+=2) {
 					Vec3d vector = (rightVector.scale(dx)).add(upVector.scale(dy)).add(lookVector.scale(dz));
 					brush.setColorHex((vector.y > 0) ? colorTop : color);
-					brush.addVertex(center.addVector(vector.x*size.x/2,vector.y*size.y/2,vector.z*size.z/2).subtract(viewPos));
+					brush.addVertex(center.add(vector.x*size.x/2,vector.y*size.y/2,vector.z*size.z/2).subtract(viewPos));
 				}
-				if (ray.lengthVector() > size.lengthVector()) {
+				if (ray.length() > size.length()) {
 					for (int dz = -1; dz <= 1; dz+=2) {
 						Vec3d vector = (rightVector.scale(dx)).add(upVector.scale(dy)).add(lookVector.scale(dz));
 						brush.setColorHex(colorTop);
-						brush.addVertex(center.addVector(vector.x*size.x/2,vector.y*size.y/2,vector.z*size.z/2).subtract(viewPos));
+						brush.addVertex(center.add(vector.x*size.x/2,vector.y*size.y/2,vector.z*size.z/2).subtract(viewPos));
 						brush.addVertex(center.subtract(viewPos).add(ray));
 					}
 				}

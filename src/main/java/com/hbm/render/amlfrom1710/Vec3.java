@@ -189,7 +189,7 @@ public class Vec3
     /**
      * Returns the length of the vector.
      */
-    public double lengthVector()
+    public double length()
     {
         return (double)MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
     }

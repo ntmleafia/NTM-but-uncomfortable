@@ -29,8 +29,8 @@ public class DispenserBullet extends BehaviorProjectileDispense {
         IPosition iposition = BlockDispenser.getDispensePosition(source);
         EnumFacing enumfacing = (EnumFacing)source.getBlockState().getValue(BlockDispenser.FACING);
         EntityBulletBase iprojectile = (EntityBulletBase)this.getProjectileEntity(world, iposition, stack);
-        iprojectile.setPosition(iprojectile.posX+enumfacing.getFrontOffsetX()*1.25,iprojectile.posY+enumfacing.getFrontOffsetY()*1.25,iprojectile.posZ+enumfacing.getFrontOffsetZ()*1.25);
-        iprojectile.shoot((double)enumfacing.getFrontOffsetX(), (double)((float)enumfacing.getFrontOffsetY() + 0.1F), (double)enumfacing.getFrontOffsetZ(), this.getProjectileVelocity(), this.getProjectileInaccuracy());
+        iprojectile.setPosition(iprojectile.posX+enumfacing.getXOffset()*1.25,iprojectile.posY+enumfacing.getYOffset()*1.25,iprojectile.posZ+enumfacing.getZOffset()*1.25);
+        iprojectile.shoot((double)enumfacing.getXOffset(), (double)((float)enumfacing.getYOffset() + 0.1F), (double)enumfacing.getZOffset(), this.getProjectileVelocity(), this.getProjectileInaccuracy());
         world.spawnEntity((Entity)iprojectile);
         stack.shrink(1);
         return stack;

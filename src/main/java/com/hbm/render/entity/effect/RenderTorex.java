@@ -117,7 +117,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 			} else {
 				cloud.world.playSound(player,cloud.getInitialPosition(),HBMSoundHandler.mukeExplosion,SoundCategory.BLOCKS,15,1);
 			}
-			Vec3d force = ContaminationUtil.getKnockback(player.getPositionVector().addVector(0,player.eyeHeight,0),cloud.getPositionVector(),amplitude);
+			Vec3d force = ContaminationUtil.getKnockback(player.getPositionVector().add(0,player.eyeHeight,0),cloud.getPositionVector(),amplitude);
 			player.motionX += force.x;
 			player.motionY += force.y;
 			player.motionZ += force.z;

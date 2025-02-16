@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class ItemMan extends Item {
 
 	public ItemMan(String s){
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.nukeTab);
 		

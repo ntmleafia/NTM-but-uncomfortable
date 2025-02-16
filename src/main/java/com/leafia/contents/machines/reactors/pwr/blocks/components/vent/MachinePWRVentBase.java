@@ -35,7 +35,7 @@ public abstract class MachinePWRVentBase extends BlockBase implements PWRCompone
 	}
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 		return this.getDefaultState().withProperty(FACING, enumfacing);
 	}
 	@Override

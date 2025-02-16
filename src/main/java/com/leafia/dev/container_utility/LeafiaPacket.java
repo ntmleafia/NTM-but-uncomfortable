@@ -279,7 +279,7 @@ public class LeafiaPacket extends RecordablePacket {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				World world = Minecraft.getMinecraft().world;
 				BlockPos pos = new BlockPos(m.x,m.y,m.z);
-				Chunk chunk = world.getChunkFromBlockCoords(pos);
+				Chunk chunk = world.getChunk(pos);
 				TileEntity LocalEntity = chunk.getTileEntity(pos,m.checkType);
 				if (LocalEntity == null) return;
 				if (LocalEntity instanceof LeafiaPacketReceiver) {
@@ -302,7 +302,7 @@ public class LeafiaPacket extends RecordablePacket {
 					BlockPos pos = new BlockPos(m.x,m.y,m.z);
 					if(!p.world.isBlockLoaded(pos))
 						return;
-					Chunk chunk = p.world.getChunkFromBlockCoords(pos);
+					Chunk chunk = p.world.getChunk(pos);
 					TileEntity ServerEntity = chunk.getTileEntity(pos,m.checkType);
 					if (ServerEntity == null) return;
 					if (ServerEntity instanceof LeafiaPacketReceiver) {

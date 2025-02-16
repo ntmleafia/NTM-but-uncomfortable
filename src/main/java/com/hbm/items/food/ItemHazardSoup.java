@@ -29,7 +29,7 @@ public class ItemHazardSoup extends ItemSoup implements IItemHazard {
 
 	public ItemHazardSoup(int i, String s) {
 		super(i);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.module = new ItemHazardModule();
 		

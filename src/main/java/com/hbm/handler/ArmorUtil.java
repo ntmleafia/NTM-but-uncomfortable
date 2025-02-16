@@ -95,7 +95,7 @@ public class ArmorUtil {
 
 	public static boolean isFaradayArmor(ItemStack item) {
 		
-		String name = item.getUnlocalizedName();
+		String name = item.getTranslationKey();
 		
 		if(HazmatRegistry.getCladding(item) > 0)
 			return true;
@@ -330,7 +330,7 @@ public class ArmorUtil {
 			return;
 		
 		mask.getTagCompound().removeTag(FILTERK_KEY);
-		if(mask.getTagCompound().hasNoTags())
+		if(mask.getTagCompound().isEmpty())
 			mask.setTagCompound(null);
 	}
 	

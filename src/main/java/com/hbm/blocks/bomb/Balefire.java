@@ -21,7 +21,7 @@ public class Balefire extends BlockFire {
 
 	public Balefire(String s) {
 		super();
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(null);
 
@@ -67,7 +67,7 @@ public class Balefire extends BlockFire {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		entityIn.setFire(10);
 
 		if (entityIn instanceof EntityLivingBase)
@@ -101,7 +101,7 @@ public class Balefire extends BlockFire {
 
 			if (iblockstate.getBlock() == Blocks.TNT)
 			{
-				Blocks.TNT.onBlockDestroyedByPlayer(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
+				Blocks.TNT.onPlayerDestroy(worldIn, pos, iblockstate.withProperty(BlockTNT.EXPLODE, Boolean.valueOf(true)));
 			}
 		}
 	}
@@ -219,7 +219,7 @@ public class Balefire extends BlockFire {
 
 								if (k1 > 0)
 								{
-									int l1 = (k1 + 40 + worldIn.getDifficulty().getDifficultyId() * 7) / (i + 30);
+									int l1 = (k1 + 40 + worldIn.getDifficulty().getId() * 7) / (i + 30);
 
 									if (flag1)
 									{

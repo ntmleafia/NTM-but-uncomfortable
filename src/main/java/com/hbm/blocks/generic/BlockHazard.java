@@ -49,7 +49,7 @@ public class BlockHazard extends Block implements IItemHazard {
 	
 	public BlockHazard(Material mat, String s) {
 		super(mat);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.module = new ItemHazardModule();
 		
@@ -212,7 +212,7 @@ public class BlockHazard extends Block implements IItemHazard {
 	}
 
 	@Override
-	public void onBlockDestroyedByPlayer(World world, BlockPos pos, IBlockState state) {
+	public void onPlayerDestroy(World world, BlockPos pos, IBlockState state) {
 		if(this == ModBlocks.block_meteor_molten) {
         	if(!world.isRemote)
         		world.setBlockState(pos, Blocks.LAVA.getDefaultState());
@@ -241,7 +241,7 @@ public class BlockHazard extends Block implements IItemHazard {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity){
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity){
 		if(entity instanceof EntityLivingBase)
 			this.module.applyEffects((EntityLivingBase)entity, 0.5F, 0, false, EnumHand.MAIN_HAND);
 

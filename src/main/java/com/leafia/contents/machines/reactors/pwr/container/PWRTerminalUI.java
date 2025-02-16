@@ -221,7 +221,7 @@ public class PWRTerminalUI extends GuiInfoContainer {
 	static class ColumnVector {
 		final int x;
 		final int y;
-		ColumnVector(EnumFacing facing) { x = facing.getFrontOffsetX(); y = -facing.getFrontOffsetZ(); }
+		ColumnVector(EnumFacing facing) { x = facing.getXOffset(); y = -facing.getZOffset(); }
 		ColumnVector(ColumnPos pos) { x = pos.x; y = -pos.y; }
 		ColumnVector(int x,int y) { this.x = x; this.y = y; }
 		ColumnVector right() { return new ColumnVector(y,-x); }

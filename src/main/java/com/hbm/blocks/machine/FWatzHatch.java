@@ -39,7 +39,7 @@ public class FWatzHatch extends BlockContainer implements IEnergyConnectorBlock 
 	
 	public FWatzHatch(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -152,7 +152,7 @@ public class FWatzHatch extends BlockContainer implements IEnergyConnectorBlock 
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

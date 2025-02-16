@@ -31,7 +31,7 @@ public class ItemMachineUpgrade extends Item {
 	}
 
 	public ItemMachineUpgrade(String s, UpgradeType type, int tier) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 
 		this.type = type;
@@ -76,7 +76,7 @@ public class ItemMachineUpgrade extends Item {
 	}
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
-		String res = this.getRegistryName().getResourcePath();
+		String res = this.getRegistryName().getPath();
 		switch(res.substring(0,res.length()-2)) {
 			case "upgrade_speed":
 				writeUpgrade(list,"desc.upgradenew.general","speed");

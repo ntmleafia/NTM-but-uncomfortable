@@ -48,7 +48,7 @@ public class MachineBoiler extends BlockContainer {
 
 	public MachineBoiler(Material materialIn, boolean active, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.machineTab);
 		this.isActive = active;
@@ -319,7 +319,7 @@ public class MachineBoiler extends BlockContainer {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
 		if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
 			enumfacing = EnumFacing.NORTH;

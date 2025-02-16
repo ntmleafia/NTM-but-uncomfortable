@@ -24,7 +24,7 @@ public class ItemPWRDebris extends Item implements IItemHazard {
 	final String typeNameKey;
 	public boolean canBeCraftedBack = true;
 	public ItemPWRDebris(String s,DebrisType type) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.hazard = new ItemHazardModule();
 		this.type = type;

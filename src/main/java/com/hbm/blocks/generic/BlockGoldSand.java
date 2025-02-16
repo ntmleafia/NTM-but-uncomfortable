@@ -29,7 +29,7 @@ public class BlockGoldSand extends BlockFallingBase implements IItemHazard {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity){
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity){
 		if(entity instanceof EntityLivingBase)
 			this.module.applyEffects((EntityLivingBase)entity, 0.5F, 0, false, EnumHand.MAIN_HAND);
 	}

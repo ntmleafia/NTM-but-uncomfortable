@@ -30,7 +30,7 @@ import java.util.List;
 public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProvider, PWRComponentBlock, IRadResistantBlock {
 	public MachinePWRTerminal() {
 		super(Material.IRON,ModBlocks.PWR.guiID,"reactor_hatch");
-		this.setUnlocalizedName("pwr_terminal");
+		this.setTranslationKey("pwr_terminal");
 		this.setCreativeTab(MainRegistry.machineTab);
 	}
 

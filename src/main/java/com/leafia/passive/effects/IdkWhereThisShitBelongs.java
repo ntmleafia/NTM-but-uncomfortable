@@ -263,7 +263,7 @@ public class IdkWhereThisShitBelongs {
         if (state.getMaterial().getCanBurn()) {
             if (world.rand.nextInt(100) == 0) {
                 EnumFacing face = EnumFacing.random(world.rand);
-                BlockPos pos1 = pos.add(face.getFrontOffsetX(), face.getFrontOffsetY(), face.getFrontOffsetZ());
+                BlockPos pos1 = pos.add(face.getXOffset(), face.getYOffset(), face.getZOffset());
                 if (world.isValid(pos1))
                     if (world.isAirBlock(pos1))
                         world.setBlockState(pos, Blocks.FIRE.getDefaultState());

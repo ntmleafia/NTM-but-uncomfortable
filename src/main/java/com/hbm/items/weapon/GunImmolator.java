@@ -32,7 +32,7 @@ public class GunImmolator extends Item {
 	Random rand = new Random();
 	
 	public GunImmolator(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.maxStackSize = 1;
 		

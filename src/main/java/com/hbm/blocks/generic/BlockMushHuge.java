@@ -24,7 +24,7 @@ public class BlockMushHuge extends Block implements IItemHazard {
 
 	public BlockMushHuge(Material mat, String s) {
 		super(mat);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setSoundType(SoundType.PLANT);

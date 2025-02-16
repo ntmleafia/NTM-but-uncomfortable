@@ -23,7 +23,7 @@ public class MachineMiniRTG extends BlockContainer {
 
 	public MachineMiniRTG(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -46,7 +46,7 @@ public class MachineMiniRTG extends BlockContainer {
 	}
 	
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 	

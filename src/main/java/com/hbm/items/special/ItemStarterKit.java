@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 public class ItemStarterKit extends Item {
 
 	public ItemStarterKit(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.maxStackSize = 1;
 		

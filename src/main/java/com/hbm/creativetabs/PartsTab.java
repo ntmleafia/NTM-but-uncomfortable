@@ -12,7 +12,7 @@ public class PartsTab extends CreativeTabs {
 	}
 
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		if(Ingots.ingot_uranium != null){
 			return new ItemStack(Ingots.ingot_uranium);
 		}

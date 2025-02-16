@@ -175,7 +175,7 @@ public class LeafiaRecipeBookServer {
                                 if (container.inventorySlots.size() > triplet.getC()) {
                                     if (container.getSlot(triplet.getA()).getHasStack()) {
                                         ItemStack copyStack = container.getSlot(triplet.getA()).getStack().copy();
-                                        //player.sendMessage(new TextComponentString("Stack: "+copyStack.getUnlocalizedName()));
+                                        //player.sendMessage(new TextComponentString("Stack: "+copyStack.getTranslationKey()));
                                         if (copyStack.getCount() < triplet.getB()) continue;
                                         copyStack.setCount(triplet.getB());
                                         if (container.getSlot(triplet.getC()).getHasStack()) {

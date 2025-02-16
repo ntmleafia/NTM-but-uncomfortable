@@ -21,7 +21,7 @@ import java.util.List;
 public class MachinePWRConductor extends BlockBase implements ITooltipProvider, PWRComponentBlock {
     public MachinePWRConductor() {
         super(Material.IRON,"reactor_conductor");
-        this.setUnlocalizedName("pwr_conductor");
+        this.setTranslationKey("pwr_conductor");
         this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
     }
     @Override

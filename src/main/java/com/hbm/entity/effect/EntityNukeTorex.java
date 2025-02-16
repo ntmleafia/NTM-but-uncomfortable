@@ -476,7 +476,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			this.prevPosZ = this.initPosZ;
 			
 			Vec3 simPos = Vec3.createVectorHelper(EntityNukeTorex.this.initPosX - this.initPosX, 0, EntityNukeTorex.this.initPosZ - this.initPosZ);
-			double simPosX = EntityNukeTorex.this.initPosX + simPos.lengthVector();
+			double simPosX = EntityNukeTorex.this.initPosX + simPos.length();
 			double simPosZ = EntityNukeTorex.this.initPosZ + 0D;
 
 			double mult = this.motionMult;
@@ -549,7 +549,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			/* the distance this cloudlet wants to achieve to the torus' ring center */
 			double roller = EntityNukeTorex.this.rollerSize * this.rangeMod * 0.25;
 			/* the distance between this cloudlet and the torus' outer ring perimeter */
-			double dist = delta.lengthVector() / roller - 1D;
+			double dist = delta.length() / roller - 1D;
 			
 			/* euler function based on how far the cloudlet is away from the perimeter */
 			double func = 1D - Math.pow(Math.E, -dist); // [0;1]
@@ -595,7 +595,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			/* the distance this cloudlet wants to achieve to the torus' ring center */
 			double roller = EntityNukeTorex.this.rollerSize * this.rangeMod;
 			/* the distance between this cloudlet and the torus' outer ring perimeter */
-			double dist = delta.lengthVector() / roller - 1D;
+			double dist = delta.length() / roller - 1D;
 			
 			/* euler function based on how far the cloudlet is away from the perimeter */
 			double func = 1D - Math.pow(Math.E, -dist); // [0;1]

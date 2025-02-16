@@ -21,7 +21,7 @@ public class ItemLens extends Item {
 	public float energyMod;
 	
 	public ItemLens(long maxDamage, float fieldMod, float drainMod, float energyMod, String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.maxDamage = maxDamage;
 		this.fieldMod = fieldMod;

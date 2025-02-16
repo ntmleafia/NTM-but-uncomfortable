@@ -33,7 +33,7 @@ public class RecipeBookBlastFurnace extends LeafiaRecipeBookProfile {
             Item item = stack.getItem();
             int index = -1;
             if (item.getCreativeTab() == MainRegistry.partsTab) {
-                if (item.getRegistryName().getResourcePath().startsWith("ingot_")) {
+                if (item.getRegistryName().getPath().startsWith("ingot_")) {
                     if (item instanceof ItemHazard)
                         index = 1;
                     else

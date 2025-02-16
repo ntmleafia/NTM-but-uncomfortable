@@ -34,7 +34,7 @@ public class GunSuicide extends Item {
 	private Item ammo;
     Random rand = new Random();
     public GunSuicide(String s) {
-    	this.setUnlocalizedName(s);
+    	this.setTranslationKey(s);
     	this.setRegistryName(s);
     	this.maxStackSize = 1;
     	this.setMaxDamage(500);

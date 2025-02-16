@@ -110,7 +110,7 @@ public class TileEntityNukeBoy extends TileEntity implements LeafiaPacketReceive
 		}
 		if (!detonated && willExplode) {
 			detonated = true;
-			ModBlocks.nuke_boy.onBlockDestroyedByPlayer(world, pos, world.getBlockState(pos));
+			ModBlocks.nuke_boy.onPlayerDestroy(world, pos, world.getBlockState(pos));
 			this.clearSlots();
 			world.setBlockToAir(pos);
 			((NukeBoy) ModBlocks.nuke_boy).igniteTestBomb(world, pos.getX(), pos.getY(), pos.getZ());

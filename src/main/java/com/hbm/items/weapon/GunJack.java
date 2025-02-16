@@ -38,7 +38,7 @@ public class GunJack extends Item {
 	public int dmgMax = 24;
 	
 	public GunJack(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.maxStackSize = 1;
 		

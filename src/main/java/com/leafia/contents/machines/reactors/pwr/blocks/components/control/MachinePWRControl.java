@@ -40,7 +40,7 @@ import java.util.List;
 public class MachinePWRControl extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRComponentBlock {
     public MachinePWRControl() {
         super(Material.IRON,"reactor_control");
-        this.setUnlocalizedName("pwr_control");
+        this.setTranslationKey("pwr_control");
         setSoundType(SoundType.METAL);
     }
     @Override
@@ -149,7 +149,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
         texts.add("§8"+control.name);
         texts.add("Use name tag to label rods for group control");
 
-        ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getUnlocalizedName() + ".name"), 0xFF55FF, 0x3F153F, texts);
+        ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
     }
 
     @Override

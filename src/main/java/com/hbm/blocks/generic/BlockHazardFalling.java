@@ -30,7 +30,7 @@ public class BlockHazardFalling extends BlockFalling implements IItemHazard {
 
 	public BlockHazardFalling(Material mat, String s, SoundType type) {
 		this(mat);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setSoundType(type);
 		this.setHarvestLevel("shovel", 0);

@@ -28,7 +28,7 @@ public class BlockMush extends BlockBush implements IGrowable, IItemHazard {
 	
 	public BlockMush(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setTickRandomly(true);

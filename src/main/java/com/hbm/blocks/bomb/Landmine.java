@@ -51,7 +51,7 @@ public class Landmine extends BlockContainer implements IBomb {
 	
 	public Landmine(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -89,7 +89,7 @@ public class Landmine extends BlockContainer implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (world.isBlockIndirectlyGettingPowered(pos) > 0)
+		if (world.getRedstonePowerFromNeighbors(pos) > 0)
         {
         	explode(world, pos);
         }

@@ -28,7 +28,7 @@ public class ItemUnstable extends Item {
 	int timer;
 
 	public ItemUnstable(int radius, int timer, String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.radius = radius;
 		this.timer = timer;
@@ -106,7 +106,7 @@ public class ItemUnstable extends Item {
 		case 3:
 			return "VAULT";
 		default:
-			return ("" + I18n.format(this.getUnlocalizedName() + ".name")).trim();
+			return ("" + I18n.format(this.getTranslationKey() + ".name")).trim();
 		}
 	}
 	

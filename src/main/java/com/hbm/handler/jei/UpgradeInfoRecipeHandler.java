@@ -30,7 +30,7 @@ public class UpgradeInfoRecipeHandler implements IRecipeCategory<UpgradeInfoReci
 
 	public UpgradeInfoRecipeHandler(IGuiHelper help, Block machine) {
 		this.machine = machine;
-		this.resPath = machine.getRegistryName().getResourcePath();
+		this.resPath = machine.getRegistryName().getPath();
 		UpgradeDetailsDatabase.init();
 		this.tabdats = UpgradeDetailsDatabase.supportedMachines.get(machine);
 

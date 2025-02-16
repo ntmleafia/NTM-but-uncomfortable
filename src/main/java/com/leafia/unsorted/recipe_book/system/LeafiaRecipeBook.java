@@ -243,7 +243,7 @@ public class LeafiaRecipeBook extends Gui implements IRecipeUpdateListener
         /*
         for (Slot inventorySlot : container.inventorySlots) {
             if (inventorySlot.getHasStack())
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": "+inventorySlot.getStack().getUnlocalizedName()));
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": "+inventorySlot.getStack().getTranslationKey()));
             else
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": Empty"));
         }

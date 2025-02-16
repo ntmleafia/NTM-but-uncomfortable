@@ -16,7 +16,7 @@ import pl.asie.computronics.tile.TileAudioCable;
 public class AudioCableBlock extends BlockContainer {
 	public AudioCableBlock(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.blockTab);
 

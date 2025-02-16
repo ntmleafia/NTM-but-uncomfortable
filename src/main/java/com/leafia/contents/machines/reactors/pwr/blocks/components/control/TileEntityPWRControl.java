@@ -37,7 +37,7 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
 
     public void updateHeight() {
         if (!this.isInvalid() && world.isBlockLoaded(pos)) {
-            Chunk chunk = world.getChunkFromBlockCoords(pos);
+            Chunk chunk = world.getChunk(pos);
             BlockPos downPos = pos.down();
             height = 1;
             while (world.isValid(downPos)) {

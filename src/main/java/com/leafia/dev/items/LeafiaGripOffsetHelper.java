@@ -132,23 +132,23 @@ public class LeafiaGripOffsetHelper {
                 offset.scale-=incrementScale;
             {
                 if (inputs[0])
-                    offset.position = offset.position.addVector(0,damn ? 0 : increment,damn ? increment : 0);
+                    offset.position = offset.position.add(0,damn ? 0 : increment,damn ? increment : 0);
                 if (inputs[2])
-                    offset.position = offset.position.addVector(0,damn ? 0 : -increment,damn ? -increment : 0);
+                    offset.position = offset.position.add(0,damn ? 0 : -increment,damn ? -increment : 0);
                 if (inputs[1])
-                    offset.position = offset.position.addVector(-increment,0,0);
+                    offset.position = offset.position.add(-increment,0,0);
                 if (inputs[3])
-                    offset.position = offset.position.addVector(increment,0,0);
+                    offset.position = offset.position.add(increment,0,0);
             }
             {
                 if (inputs[4])
-                    offset.rotation = offset.rotation.addVector(incrementAngle,0,0);
+                    offset.rotation = offset.rotation.add(incrementAngle,0,0);
                 if (inputs[6])
-                    offset.rotation = offset.rotation.addVector(-incrementAngle,0,0);
+                    offset.rotation = offset.rotation.add(-incrementAngle,0,0);
                 if (inputs[5])
-                    offset.rotation = offset.rotation.addVector(0,damn ? 0 : -incrementAngle,damn ? incrementAngle : 0);
+                    offset.rotation = offset.rotation.add(0,damn ? 0 : -incrementAngle,damn ? incrementAngle : 0);
                 if (inputs[7])
-                    offset.rotation = offset.rotation.addVector(0,damn ? 0 : incrementAngle,damn ? -incrementAngle : 0);
+                    offset.rotation = offset.rotation.add(0,damn ? 0 : incrementAngle,damn ? -incrementAngle : 0);
             }
         }
     }

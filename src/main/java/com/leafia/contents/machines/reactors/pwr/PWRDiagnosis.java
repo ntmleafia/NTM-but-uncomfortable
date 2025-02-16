@@ -88,7 +88,7 @@ public class PWRDiagnosis {
 			for (EnumFacing face : EnumFacing.HORIZONTALS) {
 				List<Pair<Integer,Integer>> buffer = new ArrayList<>();
 				for (int i = 1; true; i++) {
-					Pair<Integer,Integer> offset = new Pair<>(entry.getKey().getA()+face.getFrontOffsetX()*i,entry.getKey().getB()+face.getFrontOffsetZ()*i);
+					Pair<Integer,Integer> offset = new Pair<>(entry.getKey().getA()+face.getXOffset()*i,entry.getKey().getB()+face.getZOffset()*i);
 					if (!rangeX.isInRange(offset.getA()) || !rangeZ.isInRange(offset.getB()))
 						break;
 					if (projected.containsKey(offset)) {

@@ -46,7 +46,7 @@ public class JetpackSyncPacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(JetpackSyncPacket message, MessageContext ctx) {
 			if(ctx.side == Side.SERVER) {
-				ctx.getServerHandler().player.mcServer.addScheduledTask(() -> {
+				ctx.getServerHandler().player.server.addScheduledTask(() -> {
 					EntityPlayer player = ctx.getServerHandler().player;
 					JetpackInfo info = JetpackHandler.get(player);
 					if(info == null) {

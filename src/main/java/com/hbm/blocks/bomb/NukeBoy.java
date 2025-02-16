@@ -43,7 +43,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 
 	public NukeBoy(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -79,7 +79,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		TileEntityNukeBoy entity = (TileEntityNukeBoy) worldIn.getTileEntity(pos);
-		if(worldIn.isBlockIndirectlyGettingPowered(pos) > 0) {
+		if(worldIn.getRedstonePowerFromNeighbors(pos) > 0) {
 			entity.tryDetonate(true);
 		}
 	}
@@ -150,7 +150,7 @@ public class NukeBoy extends BlockContainer implements IBomb {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

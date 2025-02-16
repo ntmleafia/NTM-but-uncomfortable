@@ -15,7 +15,7 @@ public class RBMKDebris extends Block implements IItemHazard {
 
 	public RBMKDebris(String s) {
 		super(Material.IRON);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.module = new ItemHazardModule();
 		

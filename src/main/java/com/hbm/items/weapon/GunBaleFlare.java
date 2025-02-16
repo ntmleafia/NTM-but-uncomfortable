@@ -33,7 +33,7 @@ import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 public class GunBaleFlare extends Item {
 
 	public GunBaleFlare(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.weaponTab);
 		this.maxStackSize = 1;

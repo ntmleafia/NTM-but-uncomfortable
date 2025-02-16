@@ -38,7 +38,7 @@ public class RenderPWRMeshedWreck extends TileEntitySpecialRenderer<PWRMeshedWre
 			if (state.getBlock() instanceof PWRMeshedWreck) {
 				EnumFacing face = state.getValue(PWRMeshedWreck.FACING);
 				// rotation algorithm parity to PWRMeshedWreck
-				if (face.getFrontOffsetY() != 0) {
+				if (face.getYOffset() != 0) {
 					if (face.equals(EnumFacing.DOWN)) LeafiaGls.rotate(-180,1,0,0);
 				} else {
 					LeafiaGls.rotate(180-face.getHorizontalAngle(),0,1,0);

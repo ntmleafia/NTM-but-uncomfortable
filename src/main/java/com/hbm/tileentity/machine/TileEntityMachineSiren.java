@@ -123,7 +123,7 @@ public class TileEntityMachineSiren extends TileEntity implements IAudioReceiver
 				return;
 			}
 			
-			boolean active = ctrlActive || world.isBlockIndirectlyGettingPowered(pos) > 0;
+			boolean active = ctrlActive || world.getRedstonePowerFromNeighbors(pos) > 0;
 			if (speakerMode)
 				active = false;
 			

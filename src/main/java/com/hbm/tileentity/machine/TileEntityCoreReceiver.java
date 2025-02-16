@@ -51,7 +51,7 @@ public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITi
 	@Override
 	public void update() {
 		core = null;
-		EnumFacing facing = EnumFacing.getFront(this.getBlockMetadata());
+		EnumFacing facing = EnumFacing.byIndex(this.getBlockMetadata());
 		for(int i = 1; i <= TileEntityCoreEmitter.range; i++) {
 			BlockPos offs = pos.offset(facing,i);
 			TileEntity te = world.getTileEntity(offs);

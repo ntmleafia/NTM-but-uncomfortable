@@ -67,7 +67,7 @@ public class BlockPinkDoor extends BlockModDoor implements IBomb {
 				new NetworkRegistry.TargetPoint(world.provider.getDimension(),pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,350)
 		);
 		world.createExplosion(null,pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,15,true);
-		new PinkRBMK().emit(new Vec3d(pos).addVector(.5,-1,.5),new Vec3d(0,0,0),world.provider.getDimension());
+		new PinkRBMK().emit(new Vec3d(pos).add(.5,-1,.5),new Vec3d(0,0,0),world.provider.getDimension());
 		world.playSound(null,pos,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,30,1);
 		for (int i = 0; i < 15; i++) spawnDebris(world,pos,DebrisType.BLANK);
 		for (int i = 0; i < 10; i++) spawnDebris(world,pos,DebrisType.GRAPHITE);

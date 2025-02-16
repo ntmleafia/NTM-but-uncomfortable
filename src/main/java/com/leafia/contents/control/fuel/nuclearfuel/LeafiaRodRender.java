@@ -168,7 +168,7 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = Tessellator.getInstance().getBuffer();
 
-		ItemLeafiaRod rod = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getResourcePath());
+		ItemLeafiaRod rod = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getPath());
 
 		ItemStack renderStack = new ItemStack(rod.baseItem, 1, 0);
 		IBakedModel submodel = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(renderStack, Minecraft.getMinecraft().world, Minecraft.getMinecraft().player);
@@ -610,7 +610,7 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 
 		NBTTagCompound data = stack.getTagCompound();
 		if (data != null) {
-			double meltingPoint = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getResourcePath()).meltingPoint;
+			double meltingPoint = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getPath()).meltingPoint;
 			if (meltingPoint != 0) {
 				double heat = data.getDouble("heat");
 				double opacity = (heat-meltingPoint/2)/(meltingPoint/2);

@@ -41,7 +41,7 @@ public class WasteEarth extends Block implements IItemHazard {
 	
 	public WasteEarth(Material materialIn, boolean tick, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setTickRandomly(tick);
