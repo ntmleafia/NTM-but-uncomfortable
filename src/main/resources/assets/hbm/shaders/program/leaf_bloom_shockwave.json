@@ -4,7 +4,7 @@
         "srcrgb": "one",
         "dstrgb": "zero"
     },
-    "vertex": "blit",
+    "vertex": "hbm:ass",
     "fragment": "hbm:leaf_bloom_shockwave",
     "attributes": [ "Position" ],
     "samplers": [

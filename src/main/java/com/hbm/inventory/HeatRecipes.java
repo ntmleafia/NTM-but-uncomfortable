@@ -33,10 +33,11 @@ public class HeatRecipes {
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.steam, 10), new FluidStack(ModForgeFluids.hotsteam, 1), 15);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.hotsteam, 10), new FluidStack(ModForgeFluids.superhotsteam, 1), 30);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.superhotsteam, 10), new FluidStack(ModForgeFluids.ultrahotsteam, 1), 120);
+		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.ultrahotsteam, 10), new FluidStack(ModForgeFluids.deathsteam, 1), 960);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.oil, 1), new FluidStack(ModForgeFluids.hotoil, 1), 300);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.crackoil, 1), new FluidStack(ModForgeFluids.hotcrackoil, 1), 300);
 		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.coolant, 1), new FluidStack(ModForgeFluids.hotcoolant, 1), 500);
-		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.hotcoolant, 1), new FluidStack(ModForgeFluids.malcoolant, 2), 500);
+		addBoilAndCoolRecipe(new FluidStack(ModForgeFluids.hotcoolant, 1), new FluidStack(ModForgeFluids.malcoolant, 1), 1000);
 
 		//Compat
 		addBoilRecipe("crude_oil", 1, "hotoil", 1, 300); //thermalfoundation

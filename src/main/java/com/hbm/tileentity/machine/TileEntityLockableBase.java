@@ -16,6 +16,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 public class TileEntityLockableBase extends TileEntity {
 	protected int lock;
@@ -85,12 +88,22 @@ public class TileEntityLockableBase extends TileEntity {
 		} else {
 			ItemStack stack = player.getHeldItemMainhand();
 			
-			if(stack.getItem() instanceof ItemKeyPin && ItemKeyPin.getPins(stack) == this.lock) {
-	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
-				return true;
+			if(stack.getItem() instanceof ItemKeyPin) {
+				if (lock < 0) {
+					player.sendStatusMessage(new TextComponentTranslation("chat.digital").setStyle(new Style().setColor(TextFormatting.RED)),true);
+					return false;
+				}
+				if (ItemKeyPin.getPins(stack) == this.lock) {
+					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.lockOpen,SoundCategory.BLOCKS,1.0F,1.0F);
+					return true;
+				}
 			}
 			
 			if(stack.getItem() == ModItems.key_red) {
+				if (lock < 0) {
+					player.sendStatusMessage(new TextComponentTranslation("chat.digital").setStyle(new Style().setColor(TextFormatting.RED)),true);
+					return false;
+				}
 	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return true;
 			}

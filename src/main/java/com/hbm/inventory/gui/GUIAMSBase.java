@@ -29,10 +29,10 @@ public class GUIAMSBase extends GuiInfoContainer {
 	public void drawScreen(int mouseX, int mouseY, float f) {
 		super.drawScreen(mouseX, mouseY, f);
 
-		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 26, guiTop + 70 - 52, 16, 52, base.tanks[0]);
-		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 134, guiTop + 70 - 52, 16, 52, base.tanks[1]);
-		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 26, guiTop + 124 - 52, 16, 52, base.tanks[2]);
-		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 134, guiTop + 124 - 52, 16, 52, base.tanks[3]);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 26, guiTop + 70 - 52, 16, 52, base.tanks[0], base.tankTypes[0]);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 134, guiTop + 70 - 52, 16, 52, base.tanks[1], base.tankTypes[1]);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 26, guiTop + 124 - 52, 16, 52, base.tanks[2], base.tankTypes[2]);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 134, guiTop + 124 - 52, 16, 52, base.tanks[3], base.tankTypes[3]);
 		this.drawElectricityInfo(this, mouseX, mouseY, guiLeft + 116, guiTop + 124 - 104, 7, 104, base.power, TileEntityAMSBase.maxPower);
 		this.drawCustomInfo(this, mouseX, mouseY, guiLeft + 44, guiTop + 124 - 106, 7, 106, new String[] { "Restriction Field:", base.field + "%" });
 		this.drawCustomInfo(this, mouseX, mouseY, guiLeft + 53, guiTop + 124 - 106, 7, 106, new String[] { "Efficiency:", base.efficiency + "%" });

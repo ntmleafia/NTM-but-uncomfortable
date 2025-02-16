@@ -1906,6 +1906,8 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_receiver, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.ingot(), 'D', ModItems.plate_desh, 'T', ModBlocks.machine_transformer_dnt, 'X', new ItemStack(ModBlocks.sellafield_core), 'L', ModItems.hull_small_steel });
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_injector, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.ingot(), 'D', CMB.plate(), 'T', ModBlocks.machine_fluidtank, 'X', ModItems.motor, 'L', ModItems.pipes_steel });
 		addRecipeAuto(new ItemStack(ModBlocks.dfc_stabilizer, 1), new Object[] { "SDS", "TXL", "SDS", 'S', OSMIRIDIUM.ingot(), 'D', ModItems.plate_desh, 'T', ModItems.singularity_spark, 'X', ModItems.magnet_circular, 'L', ModItems.crystal_xen });
+		addRecipeAuto(new ItemStack(ModBlocks.spk_cable, 16), new Object[] { " W ", "RRR", " W ", 'W', ModItems.plate_dineutronium, 'R', ModItems.wire_magnetized_tungsten });
+
 		addRecipeAuto(new ItemStack(ModBlocks.barrel_plastic, 1), new Object[] { "IPI", "I I", "IPI", 'I', ModItems.plate_polymer, 'P', AL.plate() });
 		addRecipeAuto(new ItemStack(ModBlocks.barrel_iron, 1), new Object[] { "IPI", "I I", "IPI", 'I', IRON.plate(), 'P', IRON.ingot() });
 		addRecipeAuto(new ItemStack(ModBlocks.barrel_steel, 1), new Object[] { "IPI", "IOI", "IPI", 'I', STEEL.plate(), 'P', STEEL.ingot(), 'O', ModItems.oil_tar });
@@ -2827,6 +2829,7 @@ public class CraftingManager {
 
 		addShapelessAuto(new ItemStack(ModItems.drillbit_dnt_diamond, 1), new Object[] { ModItems.drillbit_dnt, new ItemStack(ModItems.ore_bedrock, 1, 3) });
 
+		addRecipeAuto(new ItemStack(LeafiaRods.leafRod,4),new Object[] {"O","I","O", 'O',ZR.billet(),'I',ZR.nugget()});
 		for (ItemLeafiaRod rod : ItemLeafiaRod.fromResourceMap.values()) {
 			addShapelessAuto(new ItemStack(rod, 1), new Object[] { LeafiaRods.leafRod, rod.baseItem });
 			addShapelessAuto(new ItemStack(rod.baseItem, 1), new Object[] { rod });

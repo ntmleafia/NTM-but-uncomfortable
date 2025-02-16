@@ -1,7 +1,7 @@
 package com.hbm.render.item;
 
-import com.hbm.forgefluid.FluidTypeHandler;
-import com.hbm.forgefluid.FluidTypeHandler.FluidProperties;
+import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.forgefluid.ModFluidProperties.FluidProperties;
 import com.hbm.render.misc.EnumSymbol;
 import org.lwjgl.opengl.GL11;
 
@@ -195,7 +195,7 @@ public class FFIdentifierRender extends TileEntityItemStackRenderer {
 				GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
 				GlStateManager.color(1.0F, 1.0F,1.0F,1.0F);
 				GlStateManager.disableTexture2D();
-				FluidProperties prop = FluidTypeHandler.getProperties(fluid);
+				FluidProperties prop = ModFluidProperties.getProperties(fluid);
 				RenderHelper.startDrawingColoredQuads();
 				for (int type = 0; type < 4; type++) {
 					int x = 3;

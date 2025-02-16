@@ -79,6 +79,7 @@ public class TileEntityCrateTungsten extends TileEntityLockableBase implements I
 	public void update() {
 		
 		if(!world.isRemote) {
+			this.updateSPKConnections(world,pos);
 			if(heatTimer > 0)
 				heatTimer--;
 	

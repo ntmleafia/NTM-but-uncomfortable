@@ -460,7 +460,7 @@ public class ModEventHandlerClient {
 			}
 		} else if (item instanceof ItemLeafiaRod.EmptyLeafiaRod) {
 			ModelLoader.setCustomModelResourceLocation(item, 15, new ModelResourceLocation(item.getRegistryName() + "_overlay", "inventory"));
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName() + "_empty", "inventory"));
 		} else if(item instanceof IHasCustomModel) {
 			ModelLoader.setCustomModelResourceLocation(item, meta, ((IHasCustomModel) item).getResourceLocation());
 		} else {

@@ -49,7 +49,7 @@ public class GUICoreEmitter extends GuiInfoContainer {
         this.field.setTextColor(0x5BBC00);
         this.field.setDisabledTextColour(0x499500);
         this.field.setEnableBackgroundDrawing(false);
-        this.field.setMaxStringLength(3);
+        this.field.setMaxStringLength(30);
         this.field.setText(String.valueOf(emitter.watts));
 	}
 	
@@ -76,7 +76,7 @@ public class GUICoreEmitter extends GuiInfoContainer {
     	if(guiLeft + 124 <= x && guiLeft + 124 + 18 > x && guiTop + 56 < y && guiTop + 56 + 18 >= y) {
     		
     		if(saveButtonCoolDown == 0 && NumberUtils.isCreatable(field.getText())) {
-    			int j = MathHelper.clamp(Integer.parseInt(field.getText()), 1, 100);
+    			int j = MathHelper.clamp(Integer.parseInt(field.getText()), 1, 999999100);
     			field.setText(j + "");
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 	    		PacketDispatcher.wrapper.sendToServer(new AuxButtonPacket(emitter.getPos(), j, 0));

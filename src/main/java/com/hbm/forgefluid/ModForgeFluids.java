@@ -37,6 +37,8 @@ public class ModForgeFluids {
 	public static Fluid hotsteam = new Fluid("hotsteam", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/hotsteam_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/hotsteam_flowing"), null, Color.WHITE).setTemperature(300 + 273).setGaseous(true).setDensity(3000/2);
 	public static Fluid superhotsteam = new Fluid("superhotsteam", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/superhotsteam_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/superhotsteam_flowing"), null, Color.WHITE).setTemperature(450 + 273).setGaseous(true).setDensity(4500/2);
 	public static Fluid ultrahotsteam = new Fluid("ultrahotsteam", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_flowing"), Color.WHITE).setTemperature(600 + 273).setGaseous(true).setDensity(6000/2);
+	public static Fluid deathsteam = new Fluid("deathsteam", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_flowing"), Color.RED).setTemperature(900 + 273).setGaseous(true).setDensity(9000/2);
+
 	public static Fluid coolant = new Fluid("coolant", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/coolant_flowing"), null, Color.WHITE);//.setTemperature(203);
 	public static Fluid hotcoolant = new Fluid("hotcoolant", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/hotcoolant_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/hotcoolant_flowing"), null, Color.WHITE).setTemperature(400 + 273);
 	public static Fluid malcoolant = new Fluid("malcoolant", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/ultrahotsteam_flowing"), null, Color.RED).setTemperature(1000 + 273).setGaseous(true).setDensity(10000);
@@ -148,6 +150,8 @@ public class ModForgeFluids {
 			superhotsteam = FluidRegistry.getFluid("superhotsteam");
 		if(!FluidRegistry.registerFluid(ultrahotsteam))
 			ultrahotsteam = FluidRegistry.getFluid("ultrahotsteam");
+		if(!FluidRegistry.registerFluid(deathsteam))
+			deathsteam = FluidRegistry.getFluid("deathsteam");
 		if(!FluidRegistry.registerFluid(coolant))
 			coolant = FluidRegistry.getFluid("coolant");
 		if(!FluidRegistry.registerFluid(hotcoolant))

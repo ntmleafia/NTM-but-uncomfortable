@@ -44,6 +44,18 @@ public class LeafiaGls extends GlStateManager {
 		//public float fogIndex = 0.0f;
 		//public FloatBuffer fogColor = r,g,b,a: 0,0,0,0; just for in case we wanted it but then forgor
 
+		/*int[] attribs = new int[0];
+
+		public void tryAddAttrib(int attrib) {
+			for (int i : attribs) {
+				if (i == attrib) return;
+			}
+			int[] newAttribs = new int[attribs.length+1];
+			System.arraycopy(attribs,0,newAttribs,0,attribs.length);
+			newAttribs[newAttribs.length-1] = attrib;
+			attribs = newAttribs;
+		}*/ // fuck off what the fuck is this
+
 		public void commit() {
 			LeafiaGls.preventStackSyncing = true;
 			{
@@ -236,6 +248,7 @@ public class LeafiaGls extends GlStateManager {
 		preventStackSyncing = false;
 	}
 	public static void _push() {
+		//GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS); let me see if this is the proper way
 		stacks.add(new LeafiaGlStack().reflect(record));
 	}
 	public static void _pop() {
@@ -244,6 +257,7 @@ public class LeafiaGls extends GlStateManager {
 			throw new TransformerCoreLeafia.LeafiaDevErrorGls("Attempted to pop the first Gls stack. Something definitely went wrong here.");
 		stacks.remove(stacks.size()-1);
 		getLastStack().commit();
+		//GL11.glPopAttrib(); nooo! it made it WORSE
 		preventStackSyncing = false;
 	}
 	public static void resetEffects() {

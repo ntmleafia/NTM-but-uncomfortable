@@ -5,6 +5,7 @@ import com.hbm.render.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
@@ -619,9 +620,10 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 
 					GlStateManager.enableBlend();
 					GlStateManager.alphaFunc(GL11.GL_GREATER, 0.0F);
-					GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+					GlStateManager.blendFunc(SourceFactor.DST_COLOR, GlStateManager.DestFactor.ONE);
 					GlStateManager.disableLighting();
-					GlStateManager.color(1F, 1F, 1F, (float) Math.min(opacity, 1F));
+					float col = (float) Math.min(opacity, 1F);
+					GlStateManager.color(col,col,col,col);
 					IBakedModel overlay = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(new ItemStack(LeafiaRods.leafRod, 1, 15), Minecraft.getMinecraft().world, null);
 					TextureAtlasSprite icon = overlay.getParticleTexture();
 					float up = icon.getInterpolatedV(16);

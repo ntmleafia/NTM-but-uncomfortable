@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 public class ItemCatalyst extends Item {
 
 	int color;
+	int meltingPoint;
 	long powerAbs;
 	float powerMod;
 	float heatMod;
@@ -30,8 +31,9 @@ public class ItemCatalyst extends Item {
 		ModItems.ALL_ITEMS.add(this);
 	}
 	
-	public ItemCatalyst(int color, long powerAbs, float powerMod, float heatMod, float fuelMod, String s) {
+	public ItemCatalyst(int color, int meltingPoint, long powerAbs, float powerMod, float heatMod, float fuelMod, String s) {
 		this.color = color;
+		this.meltingPoint = meltingPoint;
 		this.powerAbs = powerAbs;
 		this.powerMod = powerMod;
 		this.heatMod = heatMod;
@@ -48,6 +50,7 @@ public class ItemCatalyst extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("§6Melting Point: §8" + meltingPoint + "°C");
 		tooltip.add("Absolute Energy Bonus: " + (powerAbs >= 0 ? "§a+" : "§c") + Library.getShortNumber(powerAbs) + "HE");
 		tooltip.add("Energy Modifier:           " + (powerMod >= 1 ? "§a+" : "§c") + (Math.round(powerMod * 1000) * .10 - 100) + "%");
 		tooltip.add("Heat Modifier:               " + (heatMod > 1 ? "§c+" : "§a") + (Math.round(heatMod * 1000) * .10 - 100) + "%");
@@ -76,5 +79,10 @@ public class ItemCatalyst extends Item {
 		if(stack == null || !(stack.getItem() instanceof ItemCatalyst))
 			return 1F;
 		return ((ItemCatalyst)stack.getItem()).fuelMod;
+	}
+	public static int getMelting(ItemStack stack) {
+		if(stack == null || !(stack.getItem() instanceof ItemCatalyst))
+			return 1500000;
+		return ((ItemCatalyst)stack.getItem()).meltingPoint;
 	}
 }

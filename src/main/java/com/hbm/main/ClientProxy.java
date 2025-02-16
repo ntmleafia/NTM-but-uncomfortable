@@ -27,6 +27,8 @@ import com.leafia.contents.machines.reactors.pwr.debris.RenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.network.spk_cable.SPKCableRender;
+import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaClientListener;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
@@ -732,6 +734,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreInjector.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreStabilizer.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCore.class, new RenderCore());
+		ClientRegistry.bindTileEntitySpecialRenderer(SPKCableTE.class, new SPKCableRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoyuzCapsule.class, new RenderCapsule());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoyuzStruct.class, new RenderSoyuzMultiblock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineMiningLaser.class, new RenderLaserMiner());

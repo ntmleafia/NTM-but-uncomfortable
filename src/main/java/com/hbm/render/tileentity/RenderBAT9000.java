@@ -3,8 +3,8 @@ package com.hbm.render.tileentity;
 import org.lwjgl.opengl.GL11;
 
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.FluidTypeHandler;
-import com.hbm.forgefluid.FluidTypeHandler.FluidProperties;
+import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.forgefluid.ModFluidProperties.FluidProperties;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.misc.DiamondPronter;
 import com.hbm.render.misc.EnumSymbol;
@@ -50,7 +50,7 @@ public class RenderBAT9000 extends TileEntitySpecialRenderer<TileEntityMachineBA
 
 			RenderHelper.disableStandardItemLighting();
 			GL11.glPushMatrix();
-			FluidProperties props = FluidTypeHandler.getProperties(type);
+			FluidProperties props = ModFluidProperties.getProperties(type);
 			int poison = props.poison;
 			int flammability = props.flammability;
 			int reactivity = props.reactivity;

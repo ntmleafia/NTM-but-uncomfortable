@@ -227,28 +227,28 @@ public class FFUtils {
 		boolean hasInfo = false;
 		boolean isKeyPressed = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
-		if (FluidTypeHandler.containsTrait(fluid,FluidTypeHandler.FluidTrait.HIGH_PRESSURE)) {
+		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.HIGH_PRESSURE)) {
 			if(isKeyPressed){
 				texts.add("§c["+I18n.format("trait.pressure.high")+"]");
 			}
 			hasInfo = true;
 		}
-		if (FluidTypeHandler.containsTrait(fluid,FluidTypeHandler.FluidTrait.EXTREME_PRESSURE)) {
+		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.EXTREME_PRESSURE)) {
 			if(isKeyPressed){
 				texts.add("§4["+I18n.format("trait.pressure.extreme")+"]");
 			}
 			hasInfo = true;
 		}
 
-		if (FluidTypeHandler.isAntimatter(fluid)) {
+		if (ModFluidProperties.isAntimatter(fluid)) {
 			if(isKeyPressed){
 				texts.add("§4["+I18n.format("trait.antimatter")+"]");
 			}
 			hasInfo = true;
 		}
 
-		if (FluidTypeHandler.isCorrosivePlastic(fluid)) {
-			if (FluidTypeHandler.isCorrosiveIron(fluid)) {
+		if (ModFluidProperties.isCorrosivePlastic(fluid)) {
+			if (ModFluidProperties.isCorrosiveIron(fluid)) {
 				if(isKeyPressed){
 					texts.add("§2["+I18n.format("trait.corrosiveIron")+"]");
 				}
@@ -293,7 +293,7 @@ public class FFUtils {
 			hasInfo = true;
 		}
 
-		float dfcEff = FluidTypeHandler.getDFCEfficiency(fluid);
+		float dfcEff = ModFluidProperties.getDFCEfficiency(fluid);
 
 		if(dfcEff >= 1){
 			if(isKeyPressed){

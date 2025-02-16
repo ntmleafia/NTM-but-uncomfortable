@@ -72,9 +72,9 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 	        bindTexture(ResourceManager.dfc_stabilizer_tex);
 	        ResourceManager.dfc_injector.renderAll();
 	    }
+		GL11.glTranslated(0, 0.5, 0);
 	    
         if(tileEntity instanceof TileEntityCoreStabilizer) {
-	        GL11.glTranslated(0, 0.5, 0);
 	        int range = ((TileEntityCoreStabilizer)tileEntity).beam;
 			int outerColor = ((TileEntityCoreStabilizer)tileEntity).outerColor;
 			int innerColor = ((TileEntityCoreStabilizer)tileEntity).innerColor;
@@ -87,7 +87,6 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
         }
 
         if(tileEntity instanceof TileEntityCoreEmitter) {
-	        GL11.glTranslated(0, 0.5, 0);
 	        int range = ((TileEntityCoreEmitter)tileEntity).beam;
 	        
 	        if(range > 0) {
@@ -98,8 +97,7 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 	        }
         }
 
-        if(tileEntity instanceof TileEntityCoreInjector) {      
-	        GL11.glTranslated(0, 0.5, 0);
+        if(tileEntity instanceof TileEntityCoreInjector) {
 	        TileEntityCoreInjector injector = (TileEntityCoreInjector)tileEntity;
 	        int range = injector.beam;
 	        
@@ -111,6 +109,32 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 	        		BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, range), EnumWaveType.SPIRAL, EnumBeamType.SOLID, ModForgeFluids.getFluidColor(injector.tanks[1].getFluid().getFluid()), 0x7F7F7F, (int)tileEntity.getWorld().getTotalWorldTime() * -2 % 360 + 180, range, 0.09F, 3, 0.0625F);
 	        }
         }
+
+		if (tileEntity instanceof TileEntityCoreReceiver) {
+			GL11.glRotated(180, 0, 1, 0);
+			TileEntityCoreReceiver absorber = (TileEntityCoreReceiver)tileEntity;
+			if (absorber.core != null) {
+				double mspk = absorber.core.expellingSpk*20/absorber.core.absorbers.size();// /10;
+				mspk = Math.min(100000,mspk);
+				int distance = (int)Math.round(Math.sqrt(absorber.getPos().distanceSq(absorber.core.getPos())));
+				GL11.glTranslated(0,0,-distance);
+				if (mspk > 0) {
+					for (int i = 0; i < (int)Math.pow(mspk/200,0.5)+1; i++) {
+						BeamPronter.prontBeam(
+								Vec3.createVectorHelper(0,0,distance-0.5),
+								EnumWaveType.RANDOM,
+								EnumBeamType.SOLID,
+								0x5B1D00,0x7F7F7F,
+								(int)Math.floorMod(absorber.getWorld().getTotalWorldTime()*3+(int)(partialTicks/7)+i+33,1500),
+								distance*(i+1),
+								0.2F+(float)(Math.pow(mspk/200,0.75)-1)*0.05F,
+								3,
+								(mspk < 100) ? 0.1F : 0.25F
+						);
+					}
+				}
+			}
+		}
         
         GlStateManager.enableLighting();
         GL11.glPopMatrix();

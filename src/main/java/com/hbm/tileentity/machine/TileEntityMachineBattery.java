@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.hbm.items.ModItems;
 import com.hbm.blocks.machine.MachineBattery;
 import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
@@ -15,10 +14,7 @@ import api.hbm.energy.IBatteryItem;
 import api.hbm.energy.IEnergyConductor;
 import api.hbm.energy.IEnergyConnector;
 import api.hbm.energy.IEnergyUser;
-import api.hbm.energy.IPowerNet;
 import api.hbm.energy.PowerNet;
-import api.hbm.energy.IBatteryItem;
-import net.minecraft.item.Item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,8 +22,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.Optional;
 
 import li.cil.oc.api.machine.Arguments;
@@ -246,7 +240,7 @@ public class TileEntityMachineBattery extends TileEntityMachineBase implements I
 		short mode = (short) this.getRelevantMode();
 		
 		//HasSets to we don't have any duplicates
-		Set<IPowerNet> nets = new HashSet();
+		Set<PowerNet> nets = new HashSet();
 		Set<IEnergyConnector> consumers = new HashSet();
 		
 		//iterate over all sides
@@ -257,10 +251,10 @@ public class TileEntityMachineBattery extends TileEntityMachineBase implements I
 			//if it's a cable, buffer both the network and all subscribers of the net
 			if(te instanceof IEnergyConductor) {
 				IEnergyConductor con = (IEnergyConductor) te;
-				if(con.canConnect(dir.getOpposite()) && con.getPowerNet() != null) {
-					nets.add(con.getPowerNet());
-					con.getPowerNet().unsubscribe(this);
-					consumers.addAll(con.getPowerNet().getSubscribers());
+				if(con.canConnect(dir.getOpposite()) && con.getNetwork() != null) {
+					nets.add(con.getNetwork());
+					con.getNetwork().removeMember(this);
+					consumers.addAll(con.getNetwork().getMembers());
 				}
 				
 			//if it's just a consumer, buffer it as a subscriber
@@ -294,7 +288,7 @@ public class TileEntityMachineBattery extends TileEntityMachineBase implements I
 		
 		//resubscribe to buffered nets, if necessary
 		if(mode == mode_buffer || mode == mode_input) {
-			nets.forEach(x -> x.subscribe(this));
+			nets.forEach(x -> x.addMember(this));
 		}
 	}
 

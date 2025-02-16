@@ -46,6 +46,8 @@ public class CoreComponent extends BlockContainer {
 
 	@Override
 	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
+		MachineTooltip.addMultiblock(tooltip);
+		MachineTooltip.addModular(tooltip);
 		if (this == ModBlocks.dfc_receiver)
 			MachineTooltip.addGenerator(tooltip);
 		super.addInformation(stack,player,tooltip,advanced);

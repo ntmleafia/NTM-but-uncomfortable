@@ -359,7 +359,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				decay += (heatMg*2-decay)*0.01;
 			decay *= 0.99992694932; // this is f*cked lmao //0.99854;
 			data.setDouble("decay",decay);
-			newTemp += decay * Math.pow(Math.max(1-Math.max(newTemp,20)/1000,0),0.2);
+			newTemp += decay * Math.pow(Math.max(1-Math.max(newTemp,20)/1300,0),0.2);
 			double cooled = (
 					Math.pow(
 							Math.max(newTemp-desiredTemp,0)+1,

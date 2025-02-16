@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import api.hbm.energy.IEnergyConductor;
-import api.hbm.energy.IPowerNet;
+import api.hbm.energy.PowerNet;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 
@@ -47,25 +47,26 @@ public class TileEntityProxyConductor extends TileEntityProxyBase implements IEn
 	}
 
 	@Override
-	public IPowerNet getPowerNet() {
+	public PowerNet getNetwork() {
 		
 		TileEntity te = this.getTE();
 		
 		if(te instanceof IEnergyConductor) {
-			return ((IEnergyConductor)te).getPowerNet();
+			return ((IEnergyConductor)te).getNetwork();
 		}
 		
 		return null;
 	}
 
 	@Override
-	public void setPowerNet(IPowerNet network) {
+	public TileEntityProxyConductor setNetwork(PowerNet network) {
 		
 		TileEntity te = this.getTE();
 		
 		if(te instanceof IEnergyConductor) {
-			((IEnergyConductor)te).setPowerNet(network);
+			((IEnergyConductor)te).setNetwork(network);
 		}
+		return this;
 	}
 	
 	@Override

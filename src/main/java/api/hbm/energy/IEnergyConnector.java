@@ -1,22 +1,19 @@
 package api.hbm.energy;
 
-import com.hbm.packet.AuxParticlePacketNT;
-import com.hbm.packet.PacketDispatcher;
+import api.hbm.energy.network.NTMNetworkMember;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.lib.ForgeDirection;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 /**
  * For anything that connects to power and can be transferred power to, the bottom-level interface.
  * This is mean for TILE ENTITIES
  * @author hbm
  */
-public interface IEnergyConnector extends ILoadedTile {
+public interface IEnergyConnector extends ILoadedTile, NTMNetworkMember {
 	
 	/**
 	 * Returns the amount of power that remains in the source after transfer
@@ -69,10 +66,10 @@ public interface IEnergyConnector extends ILoadedTile {
 			if(!con.canConnect(dir.getOpposite()))
 				return;
 			
-			if(con.getPowerNet() != null && !con.getPowerNet().isSubscribed(this))
-				con.getPowerNet().subscribe(this);
+			if(con.getNetwork() != null && !con.getNetwork().containsMember(this))
+				con.getNetwork().addMember(this);
 			
-			if(con.getPowerNet() != null)
+			if(con.getNetwork() != null)
 				red = true;
 		}
 		
@@ -97,8 +94,8 @@ public interface IEnergyConnector extends ILoadedTile {
 		if(te instanceof IEnergyConductor) {
 			IEnergyConductor con = (IEnergyConductor) te;
 			
-			if(con.getPowerNet() != null && con.getPowerNet().isSubscribed(this))
-				con.getPowerNet().unsubscribe(this);
+			if(con.getNetwork() != null && con.getNetwork().containsMember(this))
+				con.getNetwork().removeMember(this);
 		}
 	}
 	

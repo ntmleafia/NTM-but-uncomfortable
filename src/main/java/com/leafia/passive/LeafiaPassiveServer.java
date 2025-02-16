@@ -21,7 +21,7 @@ public class LeafiaPassiveServer {
 		if (ModItems.wand_leaf.darnit != null)
 			ModItems.wand_leaf.darnit.run();
 		Tracker.preTick(world);
-		LeafiaServerListener.damageCache.clear();
+		LeafiaServerListener.SharpEdges.damageCache.clear();
 		List<Runnable> running = new ArrayList<>(queue);
 		queue.clear();
 		for (Runnable callback : running)
