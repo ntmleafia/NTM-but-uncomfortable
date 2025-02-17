@@ -64,6 +64,10 @@ minecraft {
                     source sourceSets.main
                 }
             }
+
+            accessTransformers(
+                    file("${projectDir}/Assets/jei_at.cfg"),
+                    file("${projectDir}/Assets/oc_at.cfg"))
         }
 
         server {
