@@ -11,6 +11,7 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.lib.HbmWorld;
+import com.hbm.oc.HBMDrivers;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
@@ -1085,6 +1086,8 @@ public class MainRegistry {
 		ControlRegistry.init();
 		OreDictManager.registerOres();
 		ModBiomes.init();
+
+		HBMDrivers.init();
 	}
 
 	@EventHandler
