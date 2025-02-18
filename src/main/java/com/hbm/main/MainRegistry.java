@@ -2,6 +2,7 @@ package com.hbm.main;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
@@ -11,7 +12,6 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.lib.HbmWorld;
-import com.hbm.oc.HBMDrivers;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
@@ -45,6 +45,9 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEnti
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
 import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import com.hbm.blocks.ModBlocks;
@@ -1087,7 +1090,16 @@ public class MainRegistry {
 		OreDictManager.registerOres();
 		ModBiomes.init();
 
-		HBMDrivers.init();
+		if(Loader.isModLoaded("opencomputers")) {
+			try {
+				Class<?> clazz = Class.forName("com.hbm.oc.HBMDrivers");
+				Method method = clazz.getMethod("init");
+				method.invoke(null);
+			}
+			catch (Exception x) {
+				logger.log(Level.ERROR, "Failed to load OpenComputers drivers!", x);
+			}
+		}
 	}
 
 	@EventHandler
