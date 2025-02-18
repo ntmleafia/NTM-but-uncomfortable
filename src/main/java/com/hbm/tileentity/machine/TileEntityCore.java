@@ -1,8 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.handler.ArmorUtil;
@@ -12,8 +9,6 @@ import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import net.minecraft.entity.Entity;
@@ -26,6 +21,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityCore extends TileEntityMachineBase implements ITickable, LeafiaPacketReceiver {
 

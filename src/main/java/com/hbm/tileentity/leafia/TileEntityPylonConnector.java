@@ -2,10 +2,10 @@ package com.hbm.tileentity.leafia;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.ForgeDirection;
-import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.tileentity.RenderPylonConnector;
 import com.hbm.tileentity.network.energy.TileEntityPylonBase;
+import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

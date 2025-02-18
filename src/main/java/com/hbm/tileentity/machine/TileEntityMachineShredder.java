@@ -1,5 +1,7 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.interfaces.Untested;
 import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.machine.ItemBlades;
@@ -7,9 +9,6 @@ import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -17,10 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityMachineShredder extends TileEntityMachineBase implements ITickable, IEnergyUser {
 

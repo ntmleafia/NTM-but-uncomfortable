@@ -1,11 +1,11 @@
 package com.leafia.unsorted.recipe_book;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.ToolSets;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBookServer;
-import com.hbm.items.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

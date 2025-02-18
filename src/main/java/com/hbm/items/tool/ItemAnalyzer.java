@@ -1,14 +1,11 @@
 package com.hbm.items.tool;
 
-import java.util.List;
-
+import api.hbm.energy.IEnergyConnector;
 import com.hbm.interfaces.IFluidPipe;
 import com.hbm.items.ModItems;
 import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.tileentity.machine.TileEntityLockableBase;
 import com.hbm.tileentity.network.energy.TileEntityPylonBase;
-
-import api.hbm.energy.IEnergyConnector;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +18,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemAnalyzer extends Item {
 

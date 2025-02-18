@@ -7,7 +7,6 @@ import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.TileEntityProxyInventory;
 import com.hbm.tileentity.leafia.TileEntityMachineCrystallizer;
-
 import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

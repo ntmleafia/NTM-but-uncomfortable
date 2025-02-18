@@ -1,6 +1,5 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.wreckage;
 
-import com.hbm.hfr.render.loader.HFRWavefrontObject;
 import com.hbm.items.ModItems;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

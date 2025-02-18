@@ -1,9 +1,6 @@
 package com.hbm.entity.projectile;
 
-import java.util.List;
-
 import com.hbm.explosion.ExplosionLarge;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,6 +8,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EntityAAShell extends Entity {
 

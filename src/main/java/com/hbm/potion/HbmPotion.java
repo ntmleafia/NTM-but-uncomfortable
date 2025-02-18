@@ -3,9 +3,8 @@ package com.hbm.potion;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.BlockTaint;
 import com.hbm.capability.HbmLivingCapability;
-import com.hbm.config.GeneralConfig;
-import com.hbm.config.PotionConfig;
 import com.hbm.config.CompatibilityConfig;
+import com.hbm.config.GeneralConfig;
 import com.hbm.entity.mob.EntityTaintedCreeper;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.lib.HBMSoundHandler;
@@ -14,7 +13,6 @@ import com.hbm.lib.RefStrings;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
 import com.leafia.dev.optimization.LeafiaParticlePacket;
 import com.leafia.dev.optimization.LeafiaParticlePacket.Sweat;
 import com.leafia.passive.LeafiaPassiveServer;

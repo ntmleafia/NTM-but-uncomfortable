@@ -1,12 +1,9 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
 import com.hbm.entity.mob.EntityHunterChopper;
 import com.hbm.entity.mob.EntityUFO;
 import com.hbm.entity.mob.botprime.EntityBOTPrimeHead;
 import com.hbm.items.ModItems;
-
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -25,6 +22,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemChopper extends Item {
 

@@ -1,16 +1,12 @@
 package com.hbm.inventory.control_panel;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.inventory.control_panel.nodes.Node;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-
-import java.util.function.Consumer;
+import org.lwjgl.opengl.GL11;
 
 public class NodeButton extends NodeElement {
 

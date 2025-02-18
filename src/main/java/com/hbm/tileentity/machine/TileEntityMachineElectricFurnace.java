@@ -1,14 +1,13 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.machine.MachineElectricFurnace;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;

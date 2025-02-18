@@ -1,20 +1,15 @@
 package com.hbm.items.gear;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import api.hbm.item.IGasMask;
+import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.lib.RefStrings;
-import com.hbm.handler.ArmorUtil;
 import com.hbm.render.RenderHelper;
 import com.hbm.render.model.ModelGasMask;
 import com.hbm.render.model.ModelM65;
-import com.hbm.util.I18nUtil;
 import com.hbm.util.ArmorRegistry.HazardClass;
-
-import api.hbm.item.IGasMask;
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
@@ -25,14 +20,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ArmorGasMask extends ItemArmor implements IGasMask {
 

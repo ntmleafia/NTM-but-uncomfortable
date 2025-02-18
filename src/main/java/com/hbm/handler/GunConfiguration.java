@@ -1,15 +1,14 @@
 package com.hbm.handler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.HbmAnimations.AnimType;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
-
 import net.minecraft.util.SoundEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GunConfiguration {
 

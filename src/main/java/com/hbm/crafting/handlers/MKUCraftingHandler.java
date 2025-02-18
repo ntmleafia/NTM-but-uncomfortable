@@ -1,12 +1,6 @@
 package com.hbm.crafting.handlers;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Inserts;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
@@ -15,6 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.HbmWorldUtility;
 import net.minecraft.world.World;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class MKUCraftingHandler extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 	

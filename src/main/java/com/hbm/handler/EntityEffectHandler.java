@@ -1,9 +1,5 @@
 package com.hbm.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.capability.HbmLivingCapability.EntityHbmProps;
 import com.hbm.capability.HbmLivingCapability.IEntityHbmProps;
 import com.hbm.capability.HbmLivingProps;
@@ -13,8 +9,6 @@ import com.hbm.config.RadiationConfig;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
-import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
-import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.ExtPropPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -24,16 +18,18 @@ import com.hbm.util.ArmorRegistry;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
+import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
+import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -41,9 +37,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static com.hbm.capability.HbmLivingCapability.EntityHbmProps.maxBlacklung;
 

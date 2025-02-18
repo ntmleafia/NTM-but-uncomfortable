@@ -1,12 +1,11 @@
 package com.hbm.hazard;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.hazard.type.HazardTypeBase;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HazardEntry {
 

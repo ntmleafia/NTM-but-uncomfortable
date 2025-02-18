@@ -1,15 +1,11 @@
 package com.hbm.blocks;
 
-import java.util.List;
-
+import com.hbm.util.I18nUtil;
+import net.minecraft.block.Block;
+import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
-import com.hbm.util.I18nUtil;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import java.util.List;
 
 public interface ITooltipProvider {
 

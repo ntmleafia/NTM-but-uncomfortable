@@ -1,22 +1,8 @@
 package com.hbm.util;
 
-import java.lang.reflect.Field;
-import java.nio.FloatBuffer;
-import java.util.Random;
-import java.text.NumberFormat;
-
-import javax.annotation.Nullable;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Quat4f;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
-
 import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.entity.Entity;
@@ -25,6 +11,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
+
+import javax.annotation.Nullable;
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Quat4f;
+import java.lang.reflect.Field;
+import java.nio.FloatBuffer;
+import java.text.NumberFormat;
+import java.util.Random;
 
 public class BobMathUtil {
 

@@ -1,9 +1,6 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -12,6 +9,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemWasteShort extends ItemContaminating {
 

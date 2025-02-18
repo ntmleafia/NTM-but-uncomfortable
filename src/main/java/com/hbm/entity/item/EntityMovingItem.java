@@ -2,8 +2,6 @@ package com.hbm.entity.item;
 
 import api.hbm.block.IConveyorItem;
 import api.hbm.block.IEnterableBlock;
-
-import com.hbm.lib.ForgeDirection;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

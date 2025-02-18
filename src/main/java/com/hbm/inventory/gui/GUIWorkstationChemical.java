@@ -1,19 +1,17 @@
 package com.hbm.inventory.gui;
 
-import com.hbm.util.I18nUtil;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.inventory.container.ContainerMachineChemplant;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityMachineChemplant;
-
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class GUIWorkstationChemical extends GuiInfoContainer {
 

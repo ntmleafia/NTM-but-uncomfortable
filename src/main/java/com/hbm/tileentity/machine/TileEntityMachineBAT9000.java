@@ -3,7 +3,6 @@ package com.hbm.tileentity.machine;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.forgefluid.ModFluidProperties.FluidTrait;
-
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidTank;

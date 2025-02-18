@@ -11,7 +11,6 @@ import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.inventory.UpgradeManager;
 import com.hbm.inventory.container.ContainerMachineGasFlare;
 import com.hbm.inventory.gui.GUIMachineGasFlare;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.HBMSoundHandler;
@@ -21,7 +20,6 @@ import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

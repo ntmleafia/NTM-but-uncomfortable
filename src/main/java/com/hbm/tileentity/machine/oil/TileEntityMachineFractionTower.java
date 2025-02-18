@@ -4,9 +4,8 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.RefineryRecipes;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.util.Tuple.Quartet;
 import com.hbm.tileentity.INBTPacketReceiver;
-
+import com.hbm.util.Tuple.Quartet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

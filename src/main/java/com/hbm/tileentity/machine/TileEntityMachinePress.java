@@ -6,7 +6,6 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEPressPacket;
 import com.hbm.tileentity.TileEntityMachineBase;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

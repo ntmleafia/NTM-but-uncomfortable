@@ -1,13 +1,9 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.blocks.ModBlocks;
-import com.hbm.lib.Library;
-import com.hbm.tileentity.TileEntityLoadedBase;
-
 import api.hbm.energy.IEnergyGenerator;
-import net.minecraft.init.Blocks;
+import com.hbm.blocks.ModBlocks;
+import com.hbm.tileentity.TileEntityLoadedBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 

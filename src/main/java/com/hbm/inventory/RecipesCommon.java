@@ -1,17 +1,16 @@
 package com.hbm.inventory;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class RecipesCommon {
 	

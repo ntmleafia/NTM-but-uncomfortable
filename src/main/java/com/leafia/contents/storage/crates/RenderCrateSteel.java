@@ -1,13 +1,13 @@
 package com.leafia.contents.storage.crates;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 import com.hbm.tileentity.machine.TileEntityCrateSteel;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.Arrays;
 import java.util.List;

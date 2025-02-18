@@ -1,18 +1,33 @@
 package com.leafia.contents.gear.detonator_laser;
 
-import java.util.List;
-import java.util.Random;
-
+import com.hbm.config.GeneralConfig;
+import com.hbm.interfaces.IBomb;
 import com.hbm.interfaces.IHoldableWeapon;
+import com.hbm.items.ModItems;
+import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.Library;
+import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.misc.RenderScreenOverlay;
+import com.hbm.util.I18nUtil;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -21,22 +36,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 
-import com.hbm.util.I18nUtil;
-import com.hbm.config.GeneralConfig;
-import com.hbm.interfaces.IBomb;
-import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
-import com.hbm.lib.Library;
-import com.hbm.main.MainRegistry;
-
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
+import java.util.List;
+import java.util.Random;
 
 public class ItemLaserDetonator extends Item implements IHoldableWeapon {
 	@Override

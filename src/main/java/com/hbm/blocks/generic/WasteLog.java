@@ -1,14 +1,10 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
-import com.hbm.items.ModItems;
 import com.hbm.interfaces.IItemHazard;
-import com.hbm.modules.ItemHazardModule;
+import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
-
-import net.minecraft.block.Block;
+import com.hbm.modules.ItemHazardModule;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.SoundType;
@@ -23,6 +19,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class WasteLog extends BlockRotatedPillar implements IItemHazard {
 

@@ -1,16 +1,9 @@
 package com.hbm.render.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.hbm.items.ModItems.DummyTexs;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.hbm.entity.particle.EntityGasFlameFX;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.DummyTexs;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -21,6 +14,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GasFlameRenderer extends Render<EntityGasFlameFX> {
 

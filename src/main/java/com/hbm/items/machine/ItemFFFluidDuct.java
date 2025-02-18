@@ -1,14 +1,11 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
-import com.hbm.lib.HBMSoundHandler;
-import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
-import com.hbm.items.ModItems;
 import com.hbm.config.GeneralConfig;
+import com.hbm.items.ModItems;
+import com.hbm.lib.HBMSoundHandler;
 import com.hbm.tileentity.conductor.TileEntityFFFluidDuctMk2;
-
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,12 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -29,6 +21,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemFFFluidDuct extends Item {
 

@@ -1,13 +1,10 @@
 package com.hbm.items.weapon;
 
-import java.util.List;
-
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityLaser;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.Library;
-
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -23,6 +20,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class GunBrimstone extends Item {
 

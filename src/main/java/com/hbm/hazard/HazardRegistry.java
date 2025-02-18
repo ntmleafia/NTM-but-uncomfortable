@@ -1,24 +1,15 @@
 package com.hbm.hazard;
 
-import static com.hbm.blocks.ModBlocks.*;
-import static com.hbm.items.ModItems.*;
-
 import com.hbm.hazard.transformer.HazardTransformerRadiationNBT;
-import com.hbm.hazard.type.HazardTypeAsbestos;
-import com.hbm.hazard.type.HazardTypeBase;
-import com.hbm.hazard.type.HazardTypeBlinding;
-import com.hbm.hazard.type.HazardTypeCoal;
-import com.hbm.hazard.type.HazardTypeDigamma;
-import com.hbm.hazard.type.HazardTypeExplosive;
-import com.hbm.hazard.type.HazardTypeHot;
-import com.hbm.hazard.type.HazardTypeHydroactive;
-import com.hbm.hazard.type.HazardTypeRadiation;
-
+import com.hbm.hazard.type.*;
 import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+
+import static com.hbm.blocks.ModBlocks.*;
+import static com.hbm.items.ModItems.*;
 
 public class HazardRegistry {
 

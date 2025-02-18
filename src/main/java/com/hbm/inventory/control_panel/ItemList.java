@@ -1,22 +1,20 @@
 package com.hbm.inventory.control_panel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public class ItemList {
 

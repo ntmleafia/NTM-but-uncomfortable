@@ -1,12 +1,7 @@
 package com.hbm.items.tool;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Materials.Ingots;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
@@ -18,6 +13,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ItemMS extends Item {
 

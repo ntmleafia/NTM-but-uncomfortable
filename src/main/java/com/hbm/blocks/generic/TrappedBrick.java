@@ -1,12 +1,9 @@
 package com.hbm.blocks.generic;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.tileentity.deco.TileEntityTrappedBrick;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -31,6 +28,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class TrappedBrick extends BlockContainer {
 

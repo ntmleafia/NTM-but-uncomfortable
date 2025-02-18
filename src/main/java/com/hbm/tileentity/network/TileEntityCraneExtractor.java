@@ -1,15 +1,14 @@
 package com.hbm.tileentity.network;
 
 import api.hbm.block.IConveyorBelt;
-import com.hbm.items.ModItems.Upgrades;
-import com.hbm.lib.Library;
 import com.hbm.entity.item.EntityMovingItem;
 import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.container.ContainerCraneExtractor;
 import com.hbm.inventory.gui.GUICraneExtractor;
+import com.hbm.items.ModItems.Upgrades;
+import com.hbm.lib.Library;
 import com.hbm.modules.ModulePatternMatcher;
 import com.hbm.tileentity.IGUIProvider;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,11 +22,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGUIProvider, IControlReceiver {
     public boolean isWhitelist = false;

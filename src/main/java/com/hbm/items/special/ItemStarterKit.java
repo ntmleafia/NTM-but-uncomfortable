@@ -1,22 +1,19 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
+import com.hbm.blocks.ModBlocks;
+import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.handler.ArmorUtil;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Batteries;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.ModItems.RetroRods;
-import com.hbm.util.I18nUtil;
-import com.hbm.blocks.ModBlocks;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemBattery;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.handler.ArmorUtil;
-
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +28,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemStarterKit extends Item {
 

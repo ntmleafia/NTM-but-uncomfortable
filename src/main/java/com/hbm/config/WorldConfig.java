@@ -1,7 +1,5 @@
 package com.hbm.config;
 
-import com.hbm.config.CompatibilityConfig;
-
 public class WorldConfig {
 
 	public static int uraniumSpawn = 6;

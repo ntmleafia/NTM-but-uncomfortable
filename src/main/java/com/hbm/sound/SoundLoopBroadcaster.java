@@ -1,16 +1,15 @@
 package com.hbm.sound;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.tileentity.machine.TileEntityBroadcaster;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SoundLoopBroadcaster extends SoundLoopMachine {
 	

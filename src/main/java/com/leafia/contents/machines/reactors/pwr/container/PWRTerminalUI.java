@@ -33,8 +33,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.opengl.GL11;
-//import static com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI.AdjacentType.*;
 
 import java.io.IOException;
 import java.util.*;

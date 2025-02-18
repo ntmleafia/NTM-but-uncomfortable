@@ -1,41 +1,34 @@
 package com.hbm.render.entity.effect;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Random;
-
-import com.hbm.lib.HBMSoundHandler;
-import com.llib.technical.LeafiaEase;
-import com.leafia.passive.effects.LeafiaShakecam;
-import com.hbm.util.ContaminationUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.effect.EntityNukeTorex.Cloudlet;
+import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
-
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager;
+import com.hbm.util.ContaminationUtil;
+import com.leafia.passive.effects.LeafiaShakecam;
+import com.llib.technical.LeafiaEase;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Random;
 
 
 public class RenderTorex extends Render<EntityNukeTorex> {

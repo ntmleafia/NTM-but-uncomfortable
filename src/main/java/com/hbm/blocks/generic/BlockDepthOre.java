@@ -1,15 +1,14 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Materials.Crystals;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+
+import java.util.Random;
 
 public class BlockDepthOre extends BlockDepth {
 	

@@ -1,7 +1,5 @@
 package com.hbm.lib;
 
-import java.util.Random;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -9,6 +7,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Random;
 
 public class InventoryHelper {
 	

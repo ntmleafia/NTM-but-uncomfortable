@@ -1,9 +1,9 @@
 package com.hbm.hfr.render.loader;
 
-import java.util.ArrayList;
-
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+
+import java.util.ArrayList;
 
 public class S_GroupObject {
 	public String name;

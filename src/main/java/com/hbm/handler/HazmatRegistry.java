@@ -1,21 +1,20 @@
 package com.hbm.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.armor.ItemModCladding;
 import com.hbm.lib.Library;
 import com.hbm.potion.HbmPotion;
-
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HazmatRegistry {
 	private static Map<Item, Double> entries = new HashMap<>();

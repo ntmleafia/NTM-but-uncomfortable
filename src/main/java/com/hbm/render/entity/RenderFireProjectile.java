@@ -1,10 +1,8 @@
 package com.hbm.render.entity;
 
-import com.hbm.items.ModItems.DummyTexs;
-import org.lwjgl.opengl.GL11;
 import com.hbm.entity.projectile.EntityFire;
+import com.hbm.items.ModItems.DummyTexs;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -15,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
 
 public class RenderFireProjectile extends Render<EntityFire> {
 

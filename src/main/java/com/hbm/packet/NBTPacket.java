@@ -1,15 +1,10 @@
 package com.hbm.packet;
 
-import java.io.IOException;
-
 import com.hbm.tileentity.INBTPacketReceiver;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

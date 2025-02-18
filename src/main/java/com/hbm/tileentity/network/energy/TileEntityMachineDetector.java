@@ -1,10 +1,8 @@
 package com.hbm.tileentity.network.energy;
 
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.network.energy.PowerDetector;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyUser;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
 public class TileEntityMachineDetector extends TileEntityLoadedBase implements ITickable, IEnergyUser {

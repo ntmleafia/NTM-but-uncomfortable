@@ -1,6 +1,5 @@
 package com.leafia.contents.worldgen;
 
-import com.leafia.contents.worldgen.ModBiomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 

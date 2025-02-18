@@ -1,12 +1,8 @@
 package com.hbm.entity.missile;
 
 import com.hbm.blocks.bomb.NukeCustom;
-import com.hbm.config.BombConfig;
-import com.hbm.entity.effect.EntityNukeTorex;
-import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.main.MainRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;

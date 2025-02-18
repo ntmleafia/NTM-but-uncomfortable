@@ -1,9 +1,8 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.interfaces.IFluidVisualConnectable;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

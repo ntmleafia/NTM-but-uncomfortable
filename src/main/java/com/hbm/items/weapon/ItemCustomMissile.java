@@ -1,18 +1,17 @@
 package com.hbm.items.weapon;
 
-import java.util.List;
-
 import com.hbm.handler.MissileStruct;
 import com.hbm.items.ModItems;
 import com.hbm.items.weapon.ItemMissile.FuelType;
 import com.hbm.items.weapon.ItemMissile.WarheadType;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemCustomMissile extends Item {
 

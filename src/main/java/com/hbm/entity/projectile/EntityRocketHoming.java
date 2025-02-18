@@ -1,18 +1,12 @@
 package com.hbm.entity.projectile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.missile.EntityMissileBaseAdvanced;
 import com.hbm.entity.particle.EntityTSmokeFX;
 import com.hbm.explosion.ExplosionLarge;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,12 +27,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EntityRocketHoming extends Entity implements IProjectile {
 

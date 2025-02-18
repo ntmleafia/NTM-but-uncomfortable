@@ -1,9 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlEventSystem;
 import com.hbm.inventory.control_panel.IControllable;
@@ -13,7 +9,6 @@ import com.hbm.items.machine.ItemCassette.TrackType;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TESirenPacket;
-
 import com.hbm.tileentity.leafia.TileEntityMachineSirenSounder;
 import gnu.trove.set.hash.TIntHashSet;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,13 +23,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-
-
 import pl.asie.computronics.api.audio.AudioPacket;
 import pl.asie.computronics.api.audio.IAudioReceiver;
 import pl.asie.computronics.audio.AudioUtils;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static pl.asie.computronics.reference.Capabilities.AUDIO_RECEIVER_CAPABILITY;
 @Optional.InterfaceList({

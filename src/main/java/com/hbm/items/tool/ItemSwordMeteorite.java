@@ -1,12 +1,12 @@
 package com.hbm.items.tool;
 
-import java.util.List;
-
 import com.hbm.items.ModItems.ToolSets;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemSwordMeteorite extends ItemSwordAbility {
 

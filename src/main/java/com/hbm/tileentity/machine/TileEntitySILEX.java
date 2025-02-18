@@ -1,7 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import java.util.HashMap;
-
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
@@ -9,14 +7,13 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.SILEXRecipes;
 import com.hbm.inventory.SILEXRecipes.SILEXRecipe;
+import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
 import com.hbm.items.machine.ItemFluidIcon;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.InventoryUtil;
 import com.hbm.util.WeightedRandomObject;
-import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,6 +31,8 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.HashMap;
 
 public class TileEntitySILEX extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor {
 

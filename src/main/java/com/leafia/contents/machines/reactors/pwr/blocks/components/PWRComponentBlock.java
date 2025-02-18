@@ -1,6 +1,5 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components;
 
-import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.PWRDiagnosis;
 import com.leafia.dev.LeafiaDebug;
 import net.minecraft.tileentity.TileEntity;

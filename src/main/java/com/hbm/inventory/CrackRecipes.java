@@ -1,12 +1,11 @@
 package com.hbm.inventory;
 
-import java.util.HashMap;
-
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.Spaghetti;
-
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.HashMap;
 
 //TODO: clean this shit up
 @Spaghetti("everything")

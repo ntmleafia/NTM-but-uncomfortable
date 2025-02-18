@@ -1,7 +1,5 @@
 package com.hbm.items.tool;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
@@ -14,7 +12,6 @@ import com.hbm.render.util.BakedModelUtil;
 import com.hbm.render.util.BakedModelUtil.DecalType;
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
 import com.hbm.tileentity.network.energy.TileEntityPylonBase;
-
 import com.hbm.util.I18nUtil;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
@@ -41,6 +38,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemWandD extends Item {
 	public static boolean remote = false;

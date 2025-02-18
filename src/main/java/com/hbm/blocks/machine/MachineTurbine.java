@@ -1,11 +1,10 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityMachineTurbine;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

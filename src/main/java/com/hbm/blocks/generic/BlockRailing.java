@@ -1,10 +1,7 @@
 package com.hbm.blocks.generic;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.Library;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -22,6 +19,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class BlockRailing extends Block {
 

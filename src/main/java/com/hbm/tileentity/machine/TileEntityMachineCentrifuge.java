@@ -1,5 +1,7 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.inventory.CentrifugeRecipes;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.lib.Library;
@@ -8,9 +10,6 @@ import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
-import api.hbm.energy.IBatteryItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

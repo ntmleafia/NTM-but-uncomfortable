@@ -1,15 +1,8 @@
 package com.hbm.items.weapon;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import com.hbm.items.ModItems.Armory;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.handler.GunConfiguration;
-import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
@@ -25,7 +18,6 @@ import com.hbm.render.RenderHelper;
 import com.hbm.render.item.weapon.ItemRenderGunEgon;
 import com.hbm.sound.GunEgonSoundHandler;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
@@ -45,6 +37,11 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class ItemGunEgon extends ItemGunBase {
 

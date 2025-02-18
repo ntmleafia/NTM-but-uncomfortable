@@ -1,11 +1,6 @@
 package com.hbm.capability;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import com.hbm.capability.HbmLivingProps.ContaminationEffect;
-
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -14,6 +9,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 public class HbmLivingCapability {
 	

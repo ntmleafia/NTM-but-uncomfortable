@@ -1,12 +1,9 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
-import com.hbm.blocks.ModBlocks;
-import com.hbm.items.ModItems;
-
 import api.hbm.block.IDrillInteraction;
 import api.hbm.block.IMiningDrill;
+import com.hbm.blocks.ModBlocks;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Crystals;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.state.IBlockState;
@@ -19,6 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
+
+import java.util.Random;
 
 public class BlockCluster extends BlockOre implements IDrillInteraction {
 

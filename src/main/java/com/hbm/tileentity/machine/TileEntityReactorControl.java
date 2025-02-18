@@ -5,7 +5,6 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.items.ModItems;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEControlPacket;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneComparator;
 import net.minecraft.entity.player.EntityPlayer;

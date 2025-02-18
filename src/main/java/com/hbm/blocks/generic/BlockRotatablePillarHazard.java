@@ -2,7 +2,6 @@ package com.hbm.blocks.generic;
 
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 

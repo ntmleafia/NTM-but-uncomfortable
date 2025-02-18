@@ -1,7 +1,5 @@
 package com.hbm.main;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.animloader.AnimatedModel;
 import com.hbm.animloader.Animation;
 import com.hbm.animloader.ColladaLoader;
@@ -18,11 +16,11 @@ import com.hbm.render.amlfrom1710.IModelCustom;
 import com.hbm.render.amlfrom1710.WavefrontObject;
 import com.hbm.render.misc.LensVisibilityHandler;
 import com.hbm.util.KeypadClient;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class ResourceManager {
 

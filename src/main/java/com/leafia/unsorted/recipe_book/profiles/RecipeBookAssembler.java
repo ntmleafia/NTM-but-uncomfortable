@@ -2,11 +2,11 @@ package com.leafia.unsorted.recipe_book.profiles;
 
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.RecipesCommon;
-import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
-import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
-import com.llib.math.range.RangeInt;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
+import com.llib.math.range.RangeInt;
 import net.minecraft.creativetab.CreativeTabs;
 
 import java.util.ArrayList;

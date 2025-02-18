@@ -1,16 +1,11 @@
 package com.hbm.handler.jei;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.jei.JeiRecipes.AssemblerRecipeWrapper;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
-
 import mezz.jei.api.recipe.IFocus;
 import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.api.recipe.IRecipeCategory;
@@ -18,6 +13,10 @@ import mezz.jei.api.recipe.IRecipeRegistryPlugin;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class HbmJeiRegistryPlugin implements IRecipeRegistryPlugin {
 

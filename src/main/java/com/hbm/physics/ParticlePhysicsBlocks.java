@@ -1,11 +1,6 @@
 package com.hbm.physics;
 
-import java.util.ArrayList;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.render.amlfrom1710.Vec3;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -23,6 +18,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class ParticlePhysicsBlocks extends Particle {
 

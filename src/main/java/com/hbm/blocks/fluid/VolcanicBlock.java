@@ -1,17 +1,14 @@
 package com.hbm.blocks.fluid;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -29,6 +26,8 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class VolcanicBlock extends BlockFluidClassic {
 

@@ -1,55 +1,52 @@
 package com.hbm.util;
 
-import java.util.List;
-
-import com.hbm.capability.HbmLivingCapability.EntityHbmProps;
+import com.hbm.blocks.items.ItemBlockHazard;
 import com.hbm.capability.HbmLivingCapability;
+import com.hbm.capability.HbmLivingCapability.EntityHbmProps;
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
+import com.hbm.entity.effect.EntityNukeTorex;
+import com.hbm.entity.grenade.EntityGrenadeASchrab;
+import com.hbm.entity.grenade.EntityGrenadeNuclear;
+import com.hbm.entity.logic.EntityNukeExplosionMK5;
+import com.hbm.entity.missile.EntityMIRV;
 import com.hbm.entity.mob.EntityQuackos;
 import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.entity.projectile.EntityExplosiveBeam;
 import com.hbm.entity.projectile.EntityMiniMIRV;
 import com.hbm.entity.projectile.EntityMiniNuke;
-import com.hbm.entity.effect.EntityNukeTorex;
-import com.hbm.entity.logic.EntityNukeExplosionMK5;
-import com.hbm.entity.grenade.EntityGrenadeASchrab;
-import com.hbm.entity.grenade.EntityGrenadeNuclear;
-import com.hbm.entity.missile.EntityMIRV;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.handler.HazmatRegistry;
-import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.interfaces.IItemHazard;
-import com.hbm.blocks.items.ItemBlockHazard;
+import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
-import com.hbm.render.amlfrom1710.Vec3;
-import com.hbm.util.ArmorRegistry.HazardClass;
 import com.hbm.potion.HbmPotion;
+import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.saveddata.RadiationSavedData;
-
+import com.hbm.util.ArmorRegistry.HazardClass;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.passive.EntitySkeletonHorse;
+import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -58,6 +55,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ContaminationUtil {
 

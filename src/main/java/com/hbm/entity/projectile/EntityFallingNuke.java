@@ -1,7 +1,6 @@
 package com.hbm.entity.projectile;
 
 import com.hbm.blocks.bomb.NukeCustom;
-
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;

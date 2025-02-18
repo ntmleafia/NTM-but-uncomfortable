@@ -1,21 +1,10 @@
 package com.hbm.physics;
 
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.vecmath.AxisAngle4f;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Quat4f;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ClientProxy;
 import com.hbm.physics.GJK.GJKInfo;
 import com.hbm.physics.GJK.Result;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -24,6 +13,14 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import javax.vecmath.AxisAngle4f;
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Quat4f;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RigidBody {
 

@@ -1,19 +1,17 @@
 package com.hbm.sound;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemGunEgon;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 
 public class GunEgonSoundHandler {
 

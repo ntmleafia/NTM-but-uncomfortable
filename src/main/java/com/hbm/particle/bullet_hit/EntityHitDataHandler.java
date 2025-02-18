@@ -1,19 +1,11 @@
 package com.hbm.particle.bullet_hit;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.PacketSpecialDeath;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,6 +13,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class EntityHitDataHandler {
 

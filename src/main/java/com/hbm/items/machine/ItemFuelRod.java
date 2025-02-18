@@ -1,12 +1,9 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
 import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.Library;
-
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -14,6 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+
+import java.util.List;
 
 public class ItemFuelRod extends ItemHazard {
 	

@@ -2,8 +2,8 @@ package com.hbm.inventory.control_panel.controls;
 
 import com.hbm.inventory.control_panel.*;
 import com.hbm.main.ResourceManager;
-import com.hbm.render.amlfrom1710.IModelCustom;
 import com.hbm.render.amlfrom1710.CompositeBrush;
+import com.hbm.render.amlfrom1710.IModelCustom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;

@@ -1,15 +1,14 @@
 package com.hbm.blocks.generic;
 
-import com.leafia.shit.BlockFallingBase;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
+import com.leafia.shit.BlockFallingBase;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumHand;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

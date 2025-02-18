@@ -1,19 +1,18 @@
 package com.leafia.contents.effects.folkvangr.visual;
 
-import com.llib.technical.LeafiaEase;
-import com.leafia.transformer.LeafiaGls;
-import net.minecraft.util.math.MathHelper;
-import org.lwjgl.opengl.GL11;
 import com.hbm.lib.RefStrings;
 import com.hbm.render.amlfrom1710.AdvancedModelLoader;
 import com.hbm.render.amlfrom1710.IModelCustom;
-
+import com.leafia.transformer.LeafiaGls;
+import com.llib.technical.LeafiaEase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
 
 public class RenderCloudFleija extends Render<EntityCloudFleija> {
 

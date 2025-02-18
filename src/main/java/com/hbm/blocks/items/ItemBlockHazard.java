@@ -1,11 +1,8 @@
 package com.hbm.blocks.items;
 
-import java.util.List;
-
+import com.hbm.blocks.generic.BlockHazardFuel;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-import com.hbm.blocks.generic.BlockHazardFuel;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -15,6 +12,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemBlockHazard extends ItemBlock {
 

@@ -1,44 +1,41 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.Math;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineSILEX;
 import com.hbm.items.machine.ItemFELCrystal;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
+import com.hbm.packet.LoopedSoundPacket;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-import com.hbm.packet.LoopedSoundPacket;
-import com.hbm.packet.PacketDispatcher;
-
-import api.hbm.energy.IEnergyUser;
-import net.minecraft.util.ITickable;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
-import com.hbm.lib.ForgeDirection;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityFEL extends TileEntityMachineBase implements ITickable, IEnergyUser {
 	

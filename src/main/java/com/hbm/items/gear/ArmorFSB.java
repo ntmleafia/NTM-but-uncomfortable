@@ -1,24 +1,14 @@
 package com.hbm.items.gear;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.annotation.Nullable;
-
+import com.hbm.config.PotionConfig;
 import com.hbm.items.ModItems;
 import com.hbm.items.tool.ItemGeigerCounter;
-import com.hbm.config.PotionConfig;
-import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.ClientProxy;
 import com.hbm.packet.KeybindPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.RenderHelper;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -31,14 +21,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -53,6 +42,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class ArmorFSB extends ItemArmor {
 

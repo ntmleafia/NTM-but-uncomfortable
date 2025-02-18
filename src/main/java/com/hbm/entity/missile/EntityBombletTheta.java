@@ -2,7 +2,6 @@ package com.hbm.entity.missile;
 
 import com.hbm.entity.particle.EntitySSmokeFX;
 import com.hbm.explosion.ExplosionLarge;
-
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

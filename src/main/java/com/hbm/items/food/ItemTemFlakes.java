@@ -1,15 +1,14 @@
 package com.hbm.items.food;
 
-import java.util.List;
-
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Foods;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemTemFlakes extends ItemFood {
 

@@ -1,15 +1,10 @@
 package com.hbm.render.tileentity;
 
-import java.io.IOException;
-
-import org.lwjgl.opengl.GL11;
-
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.forgefluid.FFUtils;
+import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.tileentity.machine.TileEntityMachineFluidTank;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -17,6 +12,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import org.lwjgl.opengl.GL11;
+
+import java.io.IOException;
 
 public class RenderFluidTank extends TileEntitySpecialRenderer<TileEntityMachineFluidTank> {
 	

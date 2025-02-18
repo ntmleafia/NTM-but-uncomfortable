@@ -4,7 +4,6 @@ import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.lib.RefStrings;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

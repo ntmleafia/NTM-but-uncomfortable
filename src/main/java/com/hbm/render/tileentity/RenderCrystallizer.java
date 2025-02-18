@@ -1,16 +1,14 @@
 package com.hbm.render.tileentity;
 
-import com.hbm.tileentity.machine.CrystallizerCopyBase;
-import org.lwjgl.opengl.GL11;
-
-import com.hbm.main.ResourceManager;
 import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderHelper;
-
+import com.hbm.tileentity.machine.CrystallizerCopyBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class RenderCrystallizer extends TileEntitySpecialRenderer<CrystallizerCopyBase> {
 

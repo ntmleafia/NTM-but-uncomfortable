@@ -1,11 +1,8 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.deco.TileEntityDecoBlock;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -27,6 +24,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class DecoBlock extends BlockContainer {
 

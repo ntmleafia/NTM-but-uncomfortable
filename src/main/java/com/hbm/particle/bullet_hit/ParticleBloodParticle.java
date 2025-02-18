@@ -1,7 +1,5 @@
 package com.hbm.particle.bullet_hit;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.config.GeneralConfig;
 import com.hbm.handler.HbmShaderManager2;
 import com.hbm.lib.HBMSoundHandler;
@@ -11,22 +9,22 @@ import com.hbm.particle.ParticleLayerBase;
 import com.hbm.particle.ParticleRenderLayer;
 import com.hbm.render.util.BakedModelUtil;
 import com.hbm.render.util.BakedModelUtil.DecalType;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class ParticleBloodParticle extends ParticleLayerBase {
 

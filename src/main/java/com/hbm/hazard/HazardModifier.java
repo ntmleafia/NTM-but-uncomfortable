@@ -1,9 +1,9 @@
 package com.hbm.hazard;
 
-import java.util.List;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public abstract class HazardModifier {
 

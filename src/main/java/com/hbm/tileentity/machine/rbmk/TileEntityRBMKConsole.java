@@ -1,19 +1,17 @@
 package com.hbm.tileentity.machine.rbmk;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.LinkedHashMap;
-
 import com.hbm.interfaces.IControlReceiver;
-import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.lib.Library;
+import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKControlManual.RBMKColor;
-import com.hbm.util.I18nUtil;
 import com.hbm.util.BobMathUtil;
-
+import com.hbm.util.I18nUtil;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -22,16 +20,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.fml.common.Optional;
 
-import li.cil.oc.api.machine.Arguments;
-import li.cil.oc.api.machine.Callback;
-import li.cil.oc.api.machine.Context;
-import li.cil.oc.api.network.SimpleComponent;
+import java.util.*;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
 public class TileEntityRBMKConsole extends TileEntityMachineBase implements IControlReceiver, ITickable, SimpleComponent {

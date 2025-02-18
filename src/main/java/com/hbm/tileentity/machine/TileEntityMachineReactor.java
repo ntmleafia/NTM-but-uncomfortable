@@ -2,16 +2,15 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.inventory.BreederRecipes.BreederRecipe;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.tileentity.TileEntityMachineBase;
-
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

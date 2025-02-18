@@ -2,10 +2,9 @@ package com.leafia.contents.machines.reactors.zirnox.container;
 
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.inventory.gui.GuiInfoContainer;
-import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.lib.RefStrings;
-import com.leafia.transformer.LeafiaGls;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.resources.I18n;

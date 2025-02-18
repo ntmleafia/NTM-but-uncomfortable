@@ -2,7 +2,6 @@ package com.hbm.packet;
 
 import com.hbm.handler.JetpackHandler;
 import com.hbm.handler.JetpackHandler.JetpackInfo;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;

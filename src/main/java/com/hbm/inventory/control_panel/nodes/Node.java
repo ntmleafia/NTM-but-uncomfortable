@@ -1,20 +1,16 @@
 package com.hbm.inventory.control_panel.nodes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.inventory.control_panel.*;
-import com.hbm.main.MainRegistry;
-import net.minecraft.util.math.BlockPos;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.nbt.NBTTagCompound;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Node {
 

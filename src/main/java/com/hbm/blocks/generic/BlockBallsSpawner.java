@@ -3,7 +3,6 @@ package com.hbm.blocks.generic;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.mob.botprime.EntityBOTPrimeHead;
 import com.hbm.items.ModItems;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

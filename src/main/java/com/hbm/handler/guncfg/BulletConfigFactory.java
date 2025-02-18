@@ -1,33 +1,29 @@
 package com.hbm.handler.guncfg;
 
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.config.CompatibilityConfig;
-import com.hbm.entity.particle.EntityBSmokeFX;
-import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
+import com.hbm.entity.particle.EntityBSmokeFX;
+import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.util.ArmorRegistry;
-import com.hbm.util.ArmorRegistry.HazardClass;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.amlfrom1710.Vec3;
+import com.hbm.util.ArmorRegistry;
+import com.hbm.util.ArmorRegistry.HazardClass;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -35,6 +31,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.List;
+import java.util.Random;
 
 public class BulletConfigFactory {
 

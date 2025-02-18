@@ -1,10 +1,7 @@
 package com.leafia.contents.effects.folkvangr.visual;
 
-import com.leafia.CommandLeaf;
 import com.hbm.config.CompatibilityConfig;
-
 import com.hbm.items.ModItems;
-import com.hbm.packet.PacketDispatcher;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaAntischrabA;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaAntischrabB;
@@ -22,7 +19,6 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

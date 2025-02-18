@@ -1,9 +1,8 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyUser;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;

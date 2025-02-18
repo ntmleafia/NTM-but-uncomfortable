@@ -1,12 +1,12 @@
 package com.leafia.transformer;
 
 import com.hbm.core.leafia.TransformerCoreLeafia;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import com.hbm.render.amlfrom1710.CompositeBrush;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 

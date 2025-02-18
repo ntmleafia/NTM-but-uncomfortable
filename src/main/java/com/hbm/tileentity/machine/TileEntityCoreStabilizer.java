@@ -1,12 +1,11 @@
 package com.hbm.tileentity.machine;
 
-import com.leafia.dev.container_utility.LeafiaPacket;
-import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemLens;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
+import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;

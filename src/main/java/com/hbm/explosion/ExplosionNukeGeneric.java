@@ -1,39 +1,16 @@
 package com.hbm.explosion;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.lang.NoClassDefFoundError;
-
-import com.hbm.items.ModItems.ArmorSets;
-import org.apache.logging.log4j.Level;
-
-import com.hbm.config.CompatibilityConfig;
+import api.hbm.energy.IEnergyUser;
+import cofh.redstoneflux.api.IEnergyProvider;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.WasteLog;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.VersatileConfig;
-import com.hbm.handler.ArmorUtil;
 import com.hbm.entity.effect.EntityBlackHole;
+import com.hbm.handler.ArmorUtil;
+import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.main.MainRegistry;
-import api.hbm.energy.IEnergyUser;
-
-import cofh.redstoneflux.api.IEnergyProvider;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockHugeMushroom;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockSand;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockIce;
-import net.minecraft.block.BlockSnow;
-import net.minecraft.block.BlockSnowBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -49,6 +26,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import org.apache.logging.log4j.Level;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class ExplosionNukeGeneric {
 

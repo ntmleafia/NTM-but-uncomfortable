@@ -1,7 +1,8 @@
 package com.hbm.tileentity.machine;
 
-import java.util.List;
-
+import api.hbm.block.IDrillInteraction;
+import api.hbm.block.IMiningDrill;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.gas.BlockGasBase;
 import com.hbm.forgefluid.FFUtils;
@@ -13,18 +14,14 @@ import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.packet.FluidTankPacket;
+import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.util.InventoryUtil;
-
-import api.hbm.energy.IEnergyUser;
-import api.hbm.block.IDrillInteraction;
-import api.hbm.block.IMiningDrill;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,12 +37,12 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -53,6 +50,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileEntityMachineMiningLaser extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor, IMiningDrill {
 

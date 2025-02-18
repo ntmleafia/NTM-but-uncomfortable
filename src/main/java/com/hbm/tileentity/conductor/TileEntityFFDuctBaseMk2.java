@@ -1,14 +1,10 @@
 package com.hbm.tileentity.conductor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.forgefluid.FFPipeNetworkMk2;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.IFluidPipeMk2;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.PipeUpdatePacket;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,6 +25,9 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityFFDuctBaseMk2 extends TileEntity implements IFluidPipeMk2, IFluidHandler {
 

@@ -1,25 +1,10 @@
 package com.hbm.lib;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.text.DecimalFormat;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.annotation.Nullable;
-
-import com.hbm.items.ModItems.Batteries;
-import net.minecraft.block.material.Material;
-import org.apache.logging.log4j.Level;
-import org.apache.commons.lang3.tuple.Pair;
-
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyConnector;
+import api.hbm.energy.IEnergyConnectorBlock;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Sets;
-import com.hbm.main.MainRegistry;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.capability.HbmLivingCapability.EntityHbmPropsProvider;
 import com.hbm.capability.HbmLivingCapability.IEntityHbmProps;
@@ -28,17 +13,16 @@ import com.hbm.entity.projectile.EntityChopperMine;
 import com.hbm.handler.WeightedRandomChestContentFrom1710;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Batteries;
+import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.BobMathUtil;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyConnector;
-import api.hbm.energy.IEnergyConnectorBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,23 +35,26 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.Level;
+
+import javax.annotation.Nullable;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Spaghetti("this whole class")
 public class Library {

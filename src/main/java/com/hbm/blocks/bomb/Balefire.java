@@ -1,10 +1,7 @@
 package com.hbm.blocks.bomb;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.potion.HbmPotion;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockTNT;
@@ -16,6 +13,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class Balefire extends BlockFire {
 

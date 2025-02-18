@@ -1,22 +1,17 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
-import com.hbm.config.CompatibilityConfig;
-import com.hbm.items.ModItems;
-import com.hbm.util.I18nUtil;
-import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockClean;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.effect.EntityFalloutUnderGround;
-
+import com.hbm.util.I18nUtil;
+import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemContaminating extends ItemHazard {
 	

@@ -14,7 +14,6 @@ import com.hbm.lib.Library;
 import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.IGUIProvider;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

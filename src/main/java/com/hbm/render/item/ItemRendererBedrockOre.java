@@ -1,16 +1,12 @@
 package com.hbm.render.item;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.items.special.ItemBedrockOre;
 import com.hbm.render.RenderHelper;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
 
 public class ItemRendererBedrockOre extends TEISRBase {
 

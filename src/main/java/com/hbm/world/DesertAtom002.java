@@ -1,7 +1,5 @@
 package com.hbm.world;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.DecoPoleSatelliteReceiver;
 import com.hbm.blocks.machine.MachineNukeFurnace;
@@ -9,15 +7,7 @@ import com.hbm.handler.WeightedRandomChestContentFrom1710;
 import com.hbm.lib.HbmChestContents;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.machine.TileEntityCrateSteel;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockHalfWoodSlab;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockVine;
+import net.minecraft.block.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.tileentity.TileEntityChest;
@@ -25,6 +15,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class DesertAtom002
 {

@@ -1,14 +1,13 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
-
 import com.hbm.items.ModItems.Foods;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+
+import java.util.Random;
 
 public class BlockCap extends BlockRotatablePillar {
 

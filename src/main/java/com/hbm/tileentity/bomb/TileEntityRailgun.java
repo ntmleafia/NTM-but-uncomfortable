@@ -1,20 +1,19 @@
 package com.hbm.tileentity.bomb;
 
+import api.hbm.energy.IEnergyUser;
 import com.hbm.config.RadiationConfig;
 import com.hbm.entity.projectile.EntityRailgunBlast;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.RailgunRotationPacket;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

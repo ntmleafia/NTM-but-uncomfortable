@@ -1,6 +1,5 @@
 package com.leafia.contents.effects.folkvangr.particles;
 
-import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -12,11 +11,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 

@@ -1,18 +1,17 @@
 package com.hbm.flashlight;
 
-import java.nio.IntBuffer;
-
+import com.hbm.handler.HbmShaderManager;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import com.hbm.handler.HbmShaderManager;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.client.shader.Framebuffer;
+import java.nio.IntBuffer;
 
 @Deprecated
 public class FlashlightFramebuffer extends Framebuffer {

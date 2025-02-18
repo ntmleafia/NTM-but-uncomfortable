@@ -1,13 +1,10 @@
 package com.hbm.blocks.machine;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.IDummy;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.tileentity.machine.TileEntityMachineCentrifuge;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +19,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class DummyBlockCentrifuge extends BlockContainer implements IDummy {
 

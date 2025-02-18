@@ -9,7 +9,6 @@ import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

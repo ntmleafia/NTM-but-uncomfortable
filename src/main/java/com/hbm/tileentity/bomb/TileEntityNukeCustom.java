@@ -1,9 +1,7 @@
 package com.hbm.tileentity.bomb;
 
-import java.util.HashMap;
-
-import com.hbm.config.BombConfig;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.config.BombConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
@@ -14,7 +12,6 @@ import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.ItemFluidCanister;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,6 +23,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.HashMap;
 
 public class TileEntityNukeCustom extends TileEntity implements ITickable {
 

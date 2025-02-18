@@ -1,28 +1,26 @@
 package com.hbm.blocks.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.leafia.dev.MachineTooltip;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.util.I18nUtil;
-import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.BlockDummyable;
+import com.hbm.blocks.ILookOverlay;
+import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntityTowerSmall;
-
+import com.hbm.util.I18nUtil;
+import com.leafia.dev.MachineTooltip;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MachineTowerSmall extends BlockDummyable implements ILookOverlay {
 

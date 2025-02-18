@@ -1,7 +1,5 @@
 package com.llib.math.range;
 
-import com.llib.math.range.RangeBase;
-
 import java.util.Iterator;
 
 public class RangeLong extends RangeBase implements Iterable<Long> {

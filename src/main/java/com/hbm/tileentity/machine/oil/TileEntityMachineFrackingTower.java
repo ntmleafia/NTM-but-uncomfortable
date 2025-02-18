@@ -5,15 +5,14 @@ import com.hbm.config.MachineConfig;
 import com.hbm.entity.particle.EntityGasFX;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.items.ModItems;
-import com.hbm.lib.Library;
 import com.hbm.inventory.UpgradeManager;
+import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
+import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.world.feature.OilSpot;
-
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -23,7 +22,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

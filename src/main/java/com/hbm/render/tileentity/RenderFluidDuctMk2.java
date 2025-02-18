@@ -1,18 +1,14 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.forgefluid.FFUtils;
-import com.hbm.main.ResourceManager;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.forgefluid.FFUtils;
+import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.main.ResourceManager;
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
 import com.hbm.tileentity.conductor.TileEntityFFFluidSuccMk2;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.Fluid;
+import org.lwjgl.opengl.GL11;
 
 public class RenderFluidDuctMk2<T extends TileEntityFFDuctBaseMk2> extends TileEntitySpecialRenderer<T> {
 	

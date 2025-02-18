@@ -1,5 +1,26 @@
 package com.hbm.inventory;
 
+import com.hbm.blocks.ModBlocks;
+import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.inventory.RecipesCommon.ComparableStack;
+import com.hbm.inventory.RecipesCommon.NbtComparableStack;
+import com.hbm.inventory.RecipesCommon.OreDictStack;
+import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Crystals;
+import com.hbm.items.ModItems.Materials.Ingots;
+import com.hbm.items.ModItems.Materials.Nuggies;
+import com.hbm.items.ModItems.Materials.Powders;
+import com.hbm.items.ModItems.RBMKFuel;
+import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
+import com.hbm.items.machine.ItemFluidIcon;
+import com.hbm.items.special.ItemWasteLong;
+import com.hbm.items.special.ItemWasteShort;
+import com.hbm.util.WeightedRandomObject;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,27 +28,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import static com.hbm.inventory.OreDictManager.*;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.inventory.RecipesCommon.ComparableStack;
-import com.hbm.inventory.RecipesCommon.NbtComparableStack;
-import com.hbm.inventory.RecipesCommon.OreDictStack;
-import com.hbm.items.ModItems.Materials.Crystals;
-import com.hbm.items.ModItems.Materials.Ingots;
-import com.hbm.items.ModItems.Materials.Nuggies;
-import com.hbm.items.ModItems.Materials.Powders;
-import com.hbm.items.ModItems.RBMKFuel;
-import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
-import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemFluidIcon;
-import com.hbm.items.special.ItemWasteLong;
-import com.hbm.items.special.ItemWasteShort;
-import com.hbm.blocks.ModBlocks;
-import com.hbm.util.WeightedRandomObject;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class SILEXRecipes {
 

@@ -1,8 +1,8 @@
 package com.hbm.core;
 
-import java.util.Map;
-
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+
+import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion("1.12.2")
 @IFMLLoadingPlugin.TransformerExclusions({"com.hbm.core","com.hbm.core.leafia"})

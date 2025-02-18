@@ -1,23 +1,18 @@
 package com.hbm.tileentity.machine.oil;
 
-import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachinePumpjack;
 import com.hbm.config.MachineConfig;
 import com.hbm.entity.particle.EntityGasFX;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.items.ModItems;
-import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.packet.FluidTankPacket;
+import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
+import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEPumpjackPacket;
-
-import net.minecraft.init.Blocks;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

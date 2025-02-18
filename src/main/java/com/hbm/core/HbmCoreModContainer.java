@@ -1,12 +1,11 @@
 package com.hbm.core;
 
-import java.util.Arrays;
-
 import com.google.common.eventbus.EventBus;
-
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.ModMetadata;
+
+import java.util.Arrays;
 
 public class HbmCoreModContainer extends DummyModContainer {
 

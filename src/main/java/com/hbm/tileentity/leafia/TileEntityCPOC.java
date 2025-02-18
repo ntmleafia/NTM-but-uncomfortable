@@ -1,13 +1,10 @@
 package com.hbm.tileentity.leafia;
 
-import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.control_panel.ControlEventSystem;
 import com.hbm.inventory.control_panel.DataValue;
 import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.tileentity.TileEntityMachineBase;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Optional;
 
 import java.util.ArrayList;

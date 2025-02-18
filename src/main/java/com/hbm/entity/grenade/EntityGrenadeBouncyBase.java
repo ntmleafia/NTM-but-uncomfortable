@@ -1,15 +1,10 @@
 package com.hbm.entity.grenade;
 
-import java.util.List;
-
-import org.apache.logging.log4j.Level;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -33,6 +28,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.logging.log4j.Level;
+
+import java.util.List;
 
 public abstract class EntityGrenadeBouncyBase extends Entity implements IProjectile {
 

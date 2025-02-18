@@ -1,17 +1,16 @@
 package com.hbm.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.hbm.inventory.AnvilRecipes.AnvilOutput;
 import com.hbm.inventory.RecipesCommon.AStack;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Arrays;
+import java.util.List;
 
 //'t was about time
 public class InventoryUtil {

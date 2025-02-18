@@ -1,19 +1,17 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
-
 import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityStructureMarker;
 import com.hbm.world.FWatz;
 import com.hbm.world.FactoryTitanium;
 import com.hbm.world.NuclearReactor;
 import com.hbm.world.Watz;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 
 public class RenderStructureMarker extends TileEntitySpecialRenderer<TileEntityStructureMarker> {
 

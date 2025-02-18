@@ -4,11 +4,10 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.world.generator.CellularDungeon;
 import com.hbm.world.generator.CellularDungeonRoom;
 import com.hbm.world.generator.DungeonToolbox;
-
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TestDungeonRoom1 extends CellularDungeonRoom {

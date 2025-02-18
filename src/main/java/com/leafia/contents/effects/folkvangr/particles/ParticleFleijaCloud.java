@@ -1,7 +1,7 @@
 package com.leafia.contents.effects.folkvangr.particles;
 
-import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.hbm.lib.RefStrings;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;

@@ -1,5 +1,7 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.inventory.NuclearTransmutationRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCapacitor;
@@ -8,17 +10,12 @@ import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineBase implements ITickable, IEnergyUser {
 

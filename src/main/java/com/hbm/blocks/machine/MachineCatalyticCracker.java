@@ -1,36 +1,34 @@
 package com.hbm.blocks.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ILookOverlay;
-import com.hbm.inventory.CrackRecipes;
+import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.MultiblockHandlerXR;
-import com.hbm.lib.ForgeDirection;
+import com.hbm.inventory.CrackRecipes;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.oil.TileEntityMachineCatalyticCracker;
 import com.hbm.util.I18nUtil;
-
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.EnumHand;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MachineCatalyticCracker extends BlockDummyable implements ILookOverlay {
 

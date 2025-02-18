@@ -1,7 +1,5 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderHelper;
@@ -14,9 +12,9 @@ import com.hbm.tileentity.machine.TileEntityCoreEmitter;
 import com.hbm.tileentity.machine.TileEntityCoreInjector;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMachineBase> {
 

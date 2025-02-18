@@ -4,7 +4,6 @@ import com.hbm.blocks.machine.MachineCrystallizer;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.leafia.TileEntityMachineAcidizer;
-import com.hbm.tileentity.leafia.TileEntityMachineCrystallizer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

@@ -1,19 +1,17 @@
 package com.hbm.blocks.gas;
 
-import java.util.Random;
-
-import com.hbm.lib.ForgeDirection;
 import com.hbm.config.GeneralConfig;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.util.ContaminationUtil;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockGasAsbestos extends BlockGasBase {
 

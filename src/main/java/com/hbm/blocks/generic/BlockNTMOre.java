@@ -1,9 +1,7 @@
 package com.hbm.blocks.generic;
 
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
+import com.hbm.interfaces.IItemHazard;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Batteries;
@@ -11,9 +9,7 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.main.MainRegistry;
-import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
@@ -21,12 +17,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.EnumHand;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockNTMOre extends BlockOre implements IItemHazard {
 	

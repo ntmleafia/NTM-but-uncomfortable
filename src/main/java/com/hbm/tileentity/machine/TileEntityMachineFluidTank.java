@@ -4,11 +4,9 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.control_panel.*;
-import com.hbm.main.MainRegistry;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -26,10 +24,11 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import scala.actors.threadpool.Arrays;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TileEntityMachineFluidTank extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor, IControllable {
 

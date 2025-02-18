@@ -1,17 +1,13 @@
 package com.hbm.blocks.gas;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,11 +15,12 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.HbmWorldUtility;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public abstract class BlockGasBase extends Block {
 	

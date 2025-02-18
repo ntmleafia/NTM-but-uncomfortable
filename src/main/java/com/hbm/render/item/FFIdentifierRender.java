@@ -1,15 +1,12 @@
 package com.hbm.render.item;
 
+import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.forgefluid.ModFluidProperties.FluidProperties;
-import com.hbm.render.misc.EnumSymbol;
-import org.lwjgl.opengl.GL11;
-
-import com.hbm.forgefluid.FFUtils;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.render.RenderHelper;
-
+import com.hbm.render.misc.EnumSymbol;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -18,6 +15,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import org.lwjgl.opengl.GL11;
 
 public class FFIdentifierRender extends TileEntityItemStackRenderer {
 
