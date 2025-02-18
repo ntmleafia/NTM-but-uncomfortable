@@ -1,7 +1,6 @@
 package com.hbm.world.generator;
 
 import com.hbm.world.generator.room.*;
-
 import net.minecraft.util.EnumFacing;
 
 public class CellularDungeonFactory {

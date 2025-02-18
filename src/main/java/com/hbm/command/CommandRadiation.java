@@ -1,19 +1,17 @@
 package com.hbm.command;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.capability.HbmLivingCapability;
 import com.hbm.saveddata.RadiationSavedData;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Well this class is a big mess. Needs some helper methods, should add later
 public class CommandRadiation extends CommandBase {

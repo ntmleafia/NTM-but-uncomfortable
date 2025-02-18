@@ -3,7 +3,6 @@ package com.hbm.blocks.generic;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

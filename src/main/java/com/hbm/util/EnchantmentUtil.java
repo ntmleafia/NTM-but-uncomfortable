@@ -1,7 +1,7 @@
 package com.hbm.util;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class EnchantmentUtil {

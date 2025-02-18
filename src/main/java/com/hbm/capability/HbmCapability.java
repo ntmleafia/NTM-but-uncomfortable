@@ -1,10 +1,7 @@
 package com.hbm.capability;
 
-import java.util.concurrent.Callable;
-
 import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +11,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+
+import java.util.concurrent.Callable;
 
 public class HbmCapability {
 

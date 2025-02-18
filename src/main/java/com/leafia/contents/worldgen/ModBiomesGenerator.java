@@ -1,14 +1,16 @@
 package com.leafia.contents.worldgen;
 
-import com.leafia.contents.worldgen.biomes.*;
+import com.leafia.contents.worldgen.biomes.Barrens;
+import com.leafia.contents.worldgen.biomes.Ruins;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate;
 import net.minecraftforge.event.terraingen.WorldTypeEvent.InitBiomeGens;
-import static net.minecraftforge.fml.common.eventhandler.Event.Result.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import static net.minecraftforge.fml.common.eventhandler.Event.Result.DENY;
 
 public class ModBiomesGenerator {
 	@SubscribeEvent

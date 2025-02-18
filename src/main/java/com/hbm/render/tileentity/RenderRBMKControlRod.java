@@ -1,17 +1,15 @@
 package com.hbm.render.tileentity;
 
-import com.hbm.render.amlfrom1710.CompositeBrush;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.blocks.machine.rbmk.RBMKBase;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
+import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKBase;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKControl;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class RenderRBMKControlRod extends TileEntitySpecialRenderer<TileEntityRBMKControl>{
 

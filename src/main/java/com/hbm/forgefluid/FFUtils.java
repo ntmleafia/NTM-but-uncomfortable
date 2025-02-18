@@ -1,17 +1,14 @@
 package com.hbm.forgefluid;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
 import com.google.common.base.Predicate;
+import com.hbm.handler.ArmorModHandler;
 import com.hbm.interfaces.IFluidPipe;
 import com.hbm.interfaces.IFluidPipeMk2;
 import com.hbm.interfaces.IFluidVisualConnectable;
 import com.hbm.interfaces.IItemFluidHandler;
+import com.hbm.inventory.EngineRecipes;
 import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.inventory.HeatRecipes;
-import com.hbm.inventory.EngineRecipes;
 import com.hbm.inventory.gui.GuiInfoContainer;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
@@ -19,14 +16,12 @@ import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.armor.JetpackBase;
 import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.special.ItemCell;
-import com.hbm.handler.ArmorModHandler;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
-
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
@@ -45,18 +40,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -65,6 +56,9 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 //Drillgon200: This is Library.java except for fluids
 //Drillgon200: Let's hope this works without bugs in 1.12.2...

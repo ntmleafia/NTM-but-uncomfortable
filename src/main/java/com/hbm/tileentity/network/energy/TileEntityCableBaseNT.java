@@ -1,11 +1,10 @@
 package com.hbm.tileentity.network.energy;
 
-import com.hbm.lib.ForgeDirection;
-
 import api.hbm.energy.IEnergyConductor;
 import api.hbm.energy.PowerNet;
-import net.minecraft.util.ITickable;
+import com.hbm.lib.ForgeDirection;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 
 public class TileEntityCableBaseNT extends TileEntity implements ITickable, IEnergyConductor {
 	

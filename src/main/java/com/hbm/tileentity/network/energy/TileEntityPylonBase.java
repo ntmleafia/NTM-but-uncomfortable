@@ -1,22 +1,21 @@
 package com.hbm.tileentity.network.energy;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.hbm.render.amlfrom1710.Vec3;
+import api.hbm.energy.IEnergyConductor;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEPylonSenderPacket;
-
-import api.hbm.energy.IEnergyConductor;
+import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TileEntityPylonBase extends TileEntityCableBaseNT {
 	

@@ -1,13 +1,9 @@
 package com.hbm.packet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.items.weapon.ItemCrucible;
 import com.hbm.items.weapon.ItemSwordCutter;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +16,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PacketMobSlicer extends RecordablePacket {
 

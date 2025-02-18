@@ -1,32 +1,30 @@
 package com.hbm.items.food;
 
-import java.util.List;
-
-import com.hbm.items.ModItems;
-import com.hbm.interfaces.IItemHazard;
-import com.hbm.items.ModItems.Foods;
-import com.hbm.modules.ItemHazardModule;
 import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
+import com.hbm.interfaces.IItemHazard;
+import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.ModDamageSource;
+import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
-
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import net.minecraft.item.ItemFood;
+import java.util.List;
 
 public class ItemFoodHazard extends ItemFood implements IItemHazard {
 

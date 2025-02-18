@@ -1,16 +1,12 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-import java.util.Map.Entry;
-
-import com.hbm.forgefluid.HbmFluidHandlerItemStack;
-import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.config.GeneralConfig;
+import com.hbm.forgefluid.HbmFluidHandlerItemStack;
+import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
-import com.hbm.forgefluid.ModFluidProperties;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,6 +23,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
+import java.util.Map.Entry;
 
 public class ItemFluidTank extends Item implements IHasCustomModel {
 

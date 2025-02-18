@@ -8,7 +8,6 @@ import com.hbm.interfaces.IAnimatedDoor;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEVaultPacket;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

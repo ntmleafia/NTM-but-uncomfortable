@@ -1,8 +1,5 @@
 package com.hbm.tileentity.turret;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.lib.HBMSoundHandler;
@@ -10,11 +7,13 @@ import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityTurretTauon extends TileEntityTurretBaseNT {
 	

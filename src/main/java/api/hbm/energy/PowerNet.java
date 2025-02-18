@@ -1,14 +1,12 @@
 package api.hbm.energy;
 
+import api.hbm.energy.IEnergyConnector.ConnectionPriority;
+import api.hbm.energy.network.NTMNetworkInstance;
+import net.minecraft.tileentity.TileEntity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import api.hbm.energy.network.NTMNetworkInstance;
-import com.hbm.config.GeneralConfig;
-
-import api.hbm.energy.IEnergyConnector.ConnectionPriority;
-import net.minecraft.tileentity.TileEntity;
 
 /**
  * Basic IPowerNet implementation. The behavior of this demo might change inbetween releases, but the API remains the same.

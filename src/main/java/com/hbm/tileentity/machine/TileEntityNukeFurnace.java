@@ -3,7 +3,6 @@ package com.hbm.tileentity.machine;
 import com.hbm.blocks.machine.MachineNukeFurnace;
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.util.ContaminationUtil;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;

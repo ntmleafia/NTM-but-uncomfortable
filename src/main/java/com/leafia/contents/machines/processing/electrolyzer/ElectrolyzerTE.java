@@ -8,7 +8,6 @@ import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidTank;
 
 public class ElectrolyzerTE extends TileEntityMachineBase implements LeafiaQuickModel {

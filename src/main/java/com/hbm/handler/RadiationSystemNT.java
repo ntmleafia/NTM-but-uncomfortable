@@ -1,18 +1,5 @@
 package com.hbm.handler;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
@@ -27,7 +14,6 @@ import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacket;
 import com.hbm.packet.PacketDispatcher;
-
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.ContaminationUtil;
@@ -38,7 +24,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityZombieVillager;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -65,6 +53,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 import javax.annotation.Nullable;
+import java.nio.ByteBuffer;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = RefStrings.MODID)
 public class RadiationSystemNT {

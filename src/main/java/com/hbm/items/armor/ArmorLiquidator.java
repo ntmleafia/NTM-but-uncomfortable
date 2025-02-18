@@ -1,20 +1,14 @@
 package com.hbm.items.armor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.hbm.items.ModItems.ArmorSets;
-import org.lwjgl.opengl.GL11;
-
+import api.hbm.item.IGasMask;
 import com.google.common.collect.Multimap;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.handler.ArmorUtil;
+import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.gear.ArmorFSB;
 import com.hbm.lib.RefStrings;
 import com.hbm.render.model.ModelM65;
 import com.hbm.util.ArmorRegistry.HazardClass;
-
-import api.hbm.item.IGasMask;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
@@ -31,12 +25,16 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArmorLiquidator extends ArmorFSB implements IGasMask {
 

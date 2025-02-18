@@ -1,10 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.inventory.AssemblerRecipes;
@@ -17,8 +13,6 @@ import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -36,6 +30,11 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TileEntityMachineAssembler extends TileEntityMachineBase implements ITickable, IEnergyUser {
 

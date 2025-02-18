@@ -1,7 +1,6 @@
 package com.hbm.tileentity.machine.rbmk;
 
 import com.hbm.config.GeneralConfig;
-
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;

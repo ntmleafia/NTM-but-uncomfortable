@@ -3,7 +3,6 @@ package com.hbm.blocks.machine.rbmk;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

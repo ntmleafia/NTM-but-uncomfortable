@@ -1,7 +1,5 @@
 package com.hbm.render.util;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -19,6 +17,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
+import org.lwjgl.opengl.GL11;
 
 public class RenderOverhead {
 

@@ -1,42 +1,40 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyUser;
 import com.hbm.config.MachineConfig;
+import com.hbm.forgefluid.FFUtils;
+import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.inventory.MixerRecipes;
 import com.hbm.inventory.UpgradeManager;
 import com.hbm.inventory.container.ContainerMixer;
 import com.hbm.inventory.gui.GUIMixer;
-import com.hbm.inventory.MixerRecipes;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.forgefluid.FFUtils;
-import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.lib.Library;
+import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.DirPos;
+import com.hbm.lib.Library;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraft.util.ITickable;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityMachineMixer extends TileEntityMachineBase implements ITickable, IGUIProvider, IFluidHandler, IEnergyUser, ITankPacketAcceptor {
 	

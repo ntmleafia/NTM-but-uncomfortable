@@ -2,8 +2,8 @@ package com.hbm.core.leafia;
 
 import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
 import com.leafia.transformer.LeafiaGeneralLocal;
-import com.leafia.transformer.WorldServerLeafia;
 import com.leafia.transformer.LeafiaGls;
+import com.leafia.transformer.WorldServerLeafia;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
@@ -17,7 +17,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import static org.objectweb.asm.Opcodes.*;
-import static org.objectweb.asm.Opcodes.ALOAD;
 
 public class TransformerCoreLeafia implements IClassTransformer {
 	// fuck you in particular

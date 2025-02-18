@@ -1,12 +1,9 @@
 package com.hbm.handler;
 
-import java.io.IOException;
-
 import com.hbm.items.weapon.ItemMissile;
 import com.hbm.items.weapon.ItemMissile.PartType;
 import com.hbm.render.misc.MissileMultipart;
 import com.hbm.render.misc.MissilePart;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,6 +12,8 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.io.IOException;
 
 public class MissileStruct {
 

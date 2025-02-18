@@ -6,12 +6,7 @@ import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAIAttackRanged;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIPanic;

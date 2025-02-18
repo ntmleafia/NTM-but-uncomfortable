@@ -1,16 +1,11 @@
 package com.hbm.packet;
 
-import java.io.IOException;
-
 import com.hbm.capability.HbmLivingCapability.IEntityHbmProps;
 import com.hbm.capability.HbmLivingProps;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

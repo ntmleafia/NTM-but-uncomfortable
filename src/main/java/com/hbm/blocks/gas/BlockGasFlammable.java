@@ -1,10 +1,7 @@
 package com.hbm.blocks.gas;
 
-import java.util.Random;
-
 import com.hbm.interfaces.Untested;
 import com.hbm.lib.ForgeDirection;
-
 import com.leafia.passive.LeafiaPassiveServer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,7 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+
+import java.util.Random;
 
 public class BlockGasFlammable extends BlockGasBase {
 

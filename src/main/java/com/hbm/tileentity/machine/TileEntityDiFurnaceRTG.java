@@ -3,10 +3,9 @@ package com.hbm.tileentity.machine;
 import com.hbm.blocks.machine.MachineDiFurnaceRTG;
 import com.hbm.inventory.DiFurnaceRecipes;
 import com.hbm.items.machine.ItemRTGPellet;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.RTGUtil;
-
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -1,16 +1,9 @@
 package com.hbm.render.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.hbm.items.ModItems.DummyTexs;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.hbm.entity.particle.EntityTSmokeFX;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.DummyTexs;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -18,6 +11,11 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TSmokeRenderer extends Render<EntityTSmokeFX> {
 

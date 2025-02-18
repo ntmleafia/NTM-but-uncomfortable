@@ -1,23 +1,20 @@
 package com.hbm.inventory.control_panel;
 
-import javax.annotation.Nonnull;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.inventory.control_panel.DataValue.DataType;
 import com.hbm.inventory.control_panel.nodes.Node;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
 
 public class NodeConnection extends NodeElement {
 

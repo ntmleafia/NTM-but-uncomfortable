@@ -1,7 +1,6 @@
 package com.hbm.tileentity;
 
 import api.hbm.energy.IEnergyUser;
-
 import api.hbm.tile.IHeatSource;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;

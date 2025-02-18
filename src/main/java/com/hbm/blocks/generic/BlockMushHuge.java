@@ -1,12 +1,9 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
-import com.hbm.main.MainRegistry;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -17,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockMushHuge extends Block implements IItemHazard {
 

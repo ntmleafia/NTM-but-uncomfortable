@@ -1,11 +1,6 @@
 package com.hbm.particle;
 
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ResourceManager;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -20,6 +15,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.List;
 
 public class ParticleSpark extends Particle {
 

@@ -1,7 +1,5 @@
 package com.hbm.packet;
 
-import java.io.IOException;
-
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemAssemblyTemplate;
 import com.hbm.items.machine.ItemCassette;
@@ -10,12 +8,9 @@ import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.Library;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

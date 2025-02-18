@@ -1,12 +1,11 @@
 package com.hbm.render.util;
 
-import java.util.Random;
-
+import com.hbm.render.amlfrom1710.CompositeBrush;
+import com.hbm.render.amlfrom1710.Vec3;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
-import com.hbm.render.amlfrom1710.CompositeBrush;
-import net.minecraft.util.math.MathHelper;
-import com.hbm.render.amlfrom1710.Vec3;
+import java.util.Random;
 
 public class BeamPronter {
 

@@ -1,15 +1,14 @@
 package com.hbm.creativetabs;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.hbm.items.ModItems;
-
 import api.hbm.energy.IBatteryItem;
+import com.hbm.items.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControlTab extends CreativeTabs {
 

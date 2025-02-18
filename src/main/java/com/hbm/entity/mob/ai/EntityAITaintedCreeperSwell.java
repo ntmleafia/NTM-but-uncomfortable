@@ -1,7 +1,6 @@
 package com.hbm.entity.mob.ai;
 
 import com.hbm.entity.mob.EntityTaintedCreeper;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 

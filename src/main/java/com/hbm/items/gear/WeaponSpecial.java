@@ -1,9 +1,5 @@
 package com.hbm.items.gear;
 
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-
 import com.google.common.collect.Multimap;
 import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
@@ -16,7 +12,6 @@ import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
 import com.hbm.potion.HbmPotion;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -39,6 +34,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class WeaponSpecial extends ItemSword {
 

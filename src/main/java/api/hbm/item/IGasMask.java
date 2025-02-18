@@ -1,10 +1,9 @@
 package api.hbm.item;
 
-import java.util.ArrayList;
-
 import com.hbm.util.ArmorRegistry.HazardClass;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 public interface IGasMask {
 	/**

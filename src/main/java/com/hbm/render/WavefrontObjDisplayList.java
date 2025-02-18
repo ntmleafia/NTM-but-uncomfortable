@@ -1,17 +1,16 @@
 package com.hbm.render;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hbm.hfr.render.loader.HFRWavefrontObject;
+import com.hbm.hfr.render.loader.S_GroupObject;
+import com.hbm.render.amlfrom1710.CompositeBrush;
+import com.hbm.render.amlfrom1710.GroupObject;
+import com.hbm.render.amlfrom1710.IModelCustom;
+import com.hbm.render.amlfrom1710.WavefrontObject;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
-import com.hbm.hfr.render.loader.HFRWavefrontObject;
-import com.hbm.hfr.render.loader.S_GroupObject;
-import com.hbm.render.amlfrom1710.GroupObject;
-import com.hbm.render.amlfrom1710.IModelCustom;
-import com.hbm.render.amlfrom1710.CompositeBrush;
-import com.hbm.render.amlfrom1710.WavefrontObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WavefrontObjDisplayList implements IModelCustom {
 

@@ -1,9 +1,10 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineBoiler;
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.lib.Library;
@@ -12,9 +13,6 @@ import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +20,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;

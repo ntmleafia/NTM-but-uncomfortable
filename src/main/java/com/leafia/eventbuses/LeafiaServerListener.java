@@ -19,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -34,8 +33,11 @@ import net.minecraftforge.fluids.FluidEvent.FluidMotionEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidSpilledEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 
 public class LeafiaServerListener {
 	public static class Unsorted {

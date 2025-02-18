@@ -2,13 +2,10 @@ package com.hbm.packet;
 
 import com.hbm.items.tool.ItemSatInterface;
 import com.hbm.saveddata.satellites.Satellite;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

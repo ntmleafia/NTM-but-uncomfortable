@@ -1,15 +1,14 @@
 package com.hbm.saveddata.satellites;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.hbm.items.ModItems;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class Satellite {
 	

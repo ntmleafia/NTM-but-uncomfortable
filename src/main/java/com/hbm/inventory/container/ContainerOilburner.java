@@ -1,6 +1,5 @@
 package com.hbm.inventory.container;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.tileentity.machine.TileEntityHeaterOilburner;
 import net.minecraft.entity.player.EntityPlayer;

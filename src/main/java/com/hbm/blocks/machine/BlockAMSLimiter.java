@@ -1,13 +1,12 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.handler.MultiblockHandler;
 import com.hbm.interfaces.IMultiBlock;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityAMSLimiter;
 import com.hbm.tileentity.machine.TileEntityDummy;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -20,11 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;

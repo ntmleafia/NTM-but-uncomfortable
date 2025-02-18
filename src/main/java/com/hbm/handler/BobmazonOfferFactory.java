@@ -1,8 +1,5 @@
 package com.hbm.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.gui.GUIScreenBobmazon.Offer;
@@ -15,8 +12,10 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.machine.ItemBattery;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BobmazonOfferFactory {
 

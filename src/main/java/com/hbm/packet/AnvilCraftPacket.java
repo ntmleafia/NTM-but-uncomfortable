@@ -6,7 +6,6 @@ import com.hbm.inventory.AnvilRecipes.AnvilConstructionRecipe;
 import com.hbm.inventory.container.ContainerAnvil;
 import com.hbm.main.AdvancementManager;
 import com.hbm.util.InventoryUtil;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.player.EntityPlayer;

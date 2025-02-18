@@ -1,10 +1,9 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.inventory.WasteDrumRecipes;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.tileentity.TileEntityMachineBase;
-
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

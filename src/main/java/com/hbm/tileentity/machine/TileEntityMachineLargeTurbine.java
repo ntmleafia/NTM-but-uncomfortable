@@ -1,12 +1,12 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.Untested;
 import com.hbm.inventory.MachineRecipes;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
@@ -14,8 +14,6 @@ import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.FluidTypePacketTest;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -24,11 +22,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;

@@ -1,7 +1,6 @@
 package com.hbm.render.util;
 
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 
 public class SmallBlockPronter {

@@ -1,30 +1,10 @@
 package com.hbm.handler;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Level;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.ARBFragmentShader;
-import org.lwjgl.opengl.ARBShaderObjects;
-import org.lwjgl.opengl.ARBVertexShader;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GLContext;
-
 import com.hbm.config.GeneralConfig;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -38,6 +18,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.Level;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 @Spaghetti("Oh god, 85% of this class is useless unused trash")

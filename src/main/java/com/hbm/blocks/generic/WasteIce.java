@@ -3,12 +3,11 @@ package com.hbm.blocks.generic;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.BlockIce;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

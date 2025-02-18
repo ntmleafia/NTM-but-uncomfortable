@@ -4,7 +4,6 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.effect.EntityCloudTom;
 import com.hbm.interfaces.IBomb;
 import com.hbm.tileentity.deco.TileEntityObjTester;
-
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;

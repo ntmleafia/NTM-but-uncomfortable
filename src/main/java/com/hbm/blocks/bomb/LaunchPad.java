@@ -1,24 +1,21 @@
 package com.hbm.blocks.bomb;
 
-import com.hbm.entity.missile.*;
-import net.minecraft.nbt.NBTTagCompound;
-import org.apache.logging.log4j.Level;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
+import com.hbm.entity.missile.*;
 import com.hbm.interfaces.IBomb;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.bomb.TileEntityLaunchPad;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -27,6 +24,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.Level;
 
 public class LaunchPad extends BlockContainer implements IBomb {
 

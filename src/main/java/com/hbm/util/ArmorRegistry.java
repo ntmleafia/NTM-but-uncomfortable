@@ -1,18 +1,17 @@
 package com.hbm.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
+import api.hbm.item.IGasMask;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.handler.ArmorUtil;
-
-import api.hbm.item.IGasMask;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class ArmorRegistry {
 

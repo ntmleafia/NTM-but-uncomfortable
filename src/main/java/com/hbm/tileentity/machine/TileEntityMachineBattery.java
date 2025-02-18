@@ -1,33 +1,27 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import api.hbm.energy.*;
 import com.hbm.blocks.machine.MachineBattery;
-import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
+import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyConductor;
-import api.hbm.energy.IEnergyConnector;
-import api.hbm.energy.IEnergyUser;
-import api.hbm.energy.PowerNet;
+import li.cil.oc.api.machine.Arguments;
+import li.cil.oc.api.machine.Callback;
+import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.Optional;
 
-import li.cil.oc.api.machine.Arguments;
-import li.cil.oc.api.machine.Callback;
-import li.cil.oc.api.machine.Context;
-import li.cil.oc.api.network.SimpleComponent;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
 public class TileEntityMachineBattery extends TileEntityMachineBase implements ITickable, IEnergyUser, SimpleComponent {

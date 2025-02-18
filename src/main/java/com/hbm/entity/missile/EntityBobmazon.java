@@ -3,7 +3,6 @@ package com.hbm.entity.missile;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

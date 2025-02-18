@@ -1,10 +1,7 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
-
 import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -13,6 +10,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 @Deprecated()
 public class ItemHazard extends ItemCustomLore implements IItemHazard {

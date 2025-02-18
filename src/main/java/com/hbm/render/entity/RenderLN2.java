@@ -1,15 +1,8 @@
 package com.hbm.render.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.hbm.items.ModItems.DummyTexs;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.hbm.entity.projectile.EntityLN2;
+import com.hbm.items.ModItems.DummyTexs;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
@@ -21,6 +14,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RenderLN2 extends Render<EntityLN2> {
 

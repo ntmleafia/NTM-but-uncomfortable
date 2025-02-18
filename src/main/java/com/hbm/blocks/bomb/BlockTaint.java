@@ -1,14 +1,9 @@
 package com.hbm.blocks.bomb;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.mob.EntityTaintedCreeper;
 import com.hbm.main.MainRegistry;
 import com.hbm.potion.HbmPotion;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -20,13 +15,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class BlockTaint extends Block {
 

@@ -1,7 +1,6 @@
 package com.hbm.items.food;
 
 import com.hbm.items.ModItems;
-
 import net.minecraft.item.ItemFood;
 
 public class ItemFoodBase extends ItemFood {

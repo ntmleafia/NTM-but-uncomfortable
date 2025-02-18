@@ -1,10 +1,8 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.main.ResourceManager;
 import com.hbm.tileentity.machine.TileEntityMachineAssembler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -15,6 +13,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.ForgeHooksClient;
+import org.lwjgl.opengl.GL11;
 
 public class RenderAssembler extends TileEntitySpecialRenderer<TileEntityMachineAssembler> {
 	

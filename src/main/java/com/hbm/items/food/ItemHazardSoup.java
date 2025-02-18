@@ -1,27 +1,26 @@
 package com.hbm.items.food;
 
-import java.util.List;
-
-import com.hbm.items.ModItems;
 import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityBalefire;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Foods;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
-
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemSoup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import net.minecraft.item.ItemSoup;
+
+import java.util.List;
 
 public class ItemHazardSoup extends ItemSoup implements IItemHazard {
 

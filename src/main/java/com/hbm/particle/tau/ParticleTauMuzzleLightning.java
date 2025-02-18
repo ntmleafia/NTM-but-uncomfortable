@@ -1,15 +1,9 @@
 package com.hbm.particle.tau;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.items.weapon.ItemGunGauss;
 import com.hbm.main.ResourceManager;
 import com.hbm.particle.ParticleFirstPerson;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,6 +16,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParticleTauMuzzleLightning extends ParticleFirstPerson {
 

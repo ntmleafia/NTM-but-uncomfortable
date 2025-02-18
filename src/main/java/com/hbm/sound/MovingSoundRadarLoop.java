@@ -2,11 +2,10 @@ package com.hbm.sound;
 
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.items.ModItems.Inserts;
-import net.minecraft.entity.player.EntityPlayer;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 

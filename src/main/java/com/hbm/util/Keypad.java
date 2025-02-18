@@ -3,7 +3,6 @@ package com.hbm.util;
 import com.hbm.interfaces.IKeypadHandler;
 import com.hbm.packet.KeypadClientPacket;
 import com.hbm.packet.PacketDispatcher;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;

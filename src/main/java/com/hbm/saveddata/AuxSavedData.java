@@ -1,15 +1,12 @@
 	package com.hbm.saveddata;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    import net.minecraft.nbt.*;
+    import net.minecraft.world.World;
+    import net.minecraft.world.storage.WorldSavedData;
 
-import net.minecraft.nbt.*;
-import net.minecraft.world.World;
-import net.minecraft.world.storage.WorldSavedData;
-
-import javax.annotation.Nullable;
+    import javax.annotation.Nullable;
+    import java.util.HashMap;
+    import java.util.Map;
 
 public class AuxSavedData extends WorldSavedData {
 	public Map<String,DataPair> data = new HashMap<>();

@@ -1,19 +1,13 @@
 package com.hbm.particle.gluon;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.items.weapon.ItemGunEgon;
 import com.hbm.lib.Library;
 import com.hbm.main.ClientProxy;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.misc.LensVisibilityHandler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -27,6 +21,7 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class ParticleGluonFlare extends Particle {
 

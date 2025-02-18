@@ -1,22 +1,18 @@
 package com.hbm.tileentity.machine.rbmk;
 
-import java.util.List;
-import java.util.Map;
-
-import com.hbm.config.MobConfig;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.rbmk.RBMKBase;
 import com.hbm.blocks.machine.rbmk.RBMKRod;
+import com.hbm.config.MobConfig;
 import com.hbm.entity.projectile.EntityRBMKDebris.DebrisType;
+import com.hbm.inventory.control_panel.DataValue;
+import com.hbm.inventory.control_panel.DataValueFloat;
+import com.hbm.inventory.control_panel.DataValueString;
 import com.hbm.items.ModItems.RBMKFuel;
 import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.saveddata.RadiationSavedData;
-import com.hbm.inventory.control_panel.DataValue;
-import com.hbm.inventory.control_panel.DataValueFloat;
-import com.hbm.inventory.control_panel.DataValueString;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole.ColumnType;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -26,6 +22,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+
+import java.util.List;
+import java.util.Map;
 
 public class TileEntityRBMKRod extends TileEntityRBMKSlottedBase implements IRBMKFluxReceiver, IRBMKLoadable {
 	

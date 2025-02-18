@@ -1,24 +1,21 @@
 package com.hbm.inventory.gui;
 
-import java.util.Iterator;
-import java.util.Arrays;
-import java.util.List;
-
-import com.leafia.shit.GuiContainerLeafia;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
-
+import com.leafia.shit.GuiContainerLeafia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class GuiInfoContainer extends GuiContainerLeafia {
 	

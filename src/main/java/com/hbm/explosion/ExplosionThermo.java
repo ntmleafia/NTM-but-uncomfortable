@@ -1,16 +1,13 @@
 package com.hbm.explosion;
 
-import java.util.List;
-
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.WasteLog;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.handler.ArmorUtil;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ExplosionThermo {
 

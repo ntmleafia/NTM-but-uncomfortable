@@ -1,16 +1,10 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ILaserable;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyGenerator;
 import com.hbm.util.Tuple.Pair;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -32,6 +26,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
 public class TileEntityCoreReceiver extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {

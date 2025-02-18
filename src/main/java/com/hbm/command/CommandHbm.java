@@ -1,38 +1,13 @@
 package com.hbm.command;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL20;
 import com.google.common.collect.Lists;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.HbmShaderManager2;
-import com.hbm.handler.HbmShaderManager2.Shader;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ModEventHandlerClient;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.GLCompat;
-import com.hbm.world.Antenna;
-import com.hbm.world.Barrel;
-import com.hbm.world.Bunker;
-import com.hbm.world.CrashedVertibird;
-import com.hbm.world.DesertAtom001;
-import com.hbm.world.Dud;
-import com.hbm.world.Factory;
-import com.hbm.world.Geyser;
-import com.hbm.world.GeyserLarge;
-import com.hbm.world.LibraryDungeon;
-import com.hbm.world.Radio01;
-import com.hbm.world.Relay;
-import com.hbm.world.Satellite;
-import com.hbm.world.Sellafield;
-import com.hbm.world.Silo;
-import com.hbm.world.Spaceship;
-import com.hbm.world.Vertibird;
-
+import com.hbm.world.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
@@ -49,6 +24,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class CommandHbm extends CommandBase {
 

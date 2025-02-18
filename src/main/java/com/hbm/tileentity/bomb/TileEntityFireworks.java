@@ -4,7 +4,6 @@ import com.hbm.entity.item.EntityFireworks;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;

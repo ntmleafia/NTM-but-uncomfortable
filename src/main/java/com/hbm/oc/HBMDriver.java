@@ -8,8 +8,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 public abstract class HBMDriver<TEntity extends TileEntity> extends AbstractManagedEnvironment implements NamedBlock {
 
     private Class<? extends TEntity> tileEntityClass;

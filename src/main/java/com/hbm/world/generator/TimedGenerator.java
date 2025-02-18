@@ -1,9 +1,9 @@
 package com.hbm.world.generator;
 
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import net.minecraft.world.World;
 
 public class TimedGenerator {
 

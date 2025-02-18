@@ -1,8 +1,7 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.blocks.machine.MachineCoal;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.ITankPacketAcceptor;
@@ -12,9 +11,6 @@ import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,18 +20,12 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityMachineCoal extends TileEntityMachineBase implements ITickable, ITankPacketAcceptor, IEnergyGenerator, IFluidHandler {
 	

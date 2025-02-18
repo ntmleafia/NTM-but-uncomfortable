@@ -1,10 +1,7 @@
 package com.hbm.hazard.type;
 
-import java.util.List;
-
 import com.hbm.hazard.HazardModifier;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -12,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+
+import java.util.List;
 
 public class HazardTypeHydroactive extends HazardTypeBase {
 

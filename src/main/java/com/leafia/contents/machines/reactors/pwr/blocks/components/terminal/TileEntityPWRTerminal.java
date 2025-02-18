@@ -2,13 +2,8 @@ package com.leafia.contents.machines.reactors.pwr.blocks.components.terminal;
 
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
-import com.hbm.main.MainRegistry;
-import li.cil.oc.api.machine.Callback;
-import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,10 +14,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.common.Optional;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEntity, IFluidHandler, LeafiaPacketReceiver {
 	//static {

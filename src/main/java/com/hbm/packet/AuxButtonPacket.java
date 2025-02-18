@@ -1,29 +1,17 @@
 package com.hbm.packet;
 
-import com.hbm.entity.mob.EntityDuck;
-import com.hbm.items.weapon.ItemMissile.PartSize;
-import com.hbm.items.weapon.ItemCrucible;
+import api.hbm.energy.IEnergyConnector.ConnectionPriority;
 import com.hbm.config.GeneralConfig;
+import com.hbm.entity.mob.EntityDuck;
+import com.hbm.items.weapon.ItemCrucible;
+import com.hbm.items.weapon.ItemMissile.PartSize;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.tileentity.bomb.TileEntityLaunchTable;
 import com.hbm.tileentity.bomb.TileEntityRailgun;
-import com.hbm.tileentity.machine.TileEntityBarrel;
-import com.hbm.tileentity.machine.TileEntityCoreEmitter;
-import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
-import com.hbm.tileentity.machine.TileEntityForceField;
-import com.hbm.tileentity.machine.TileEntityMachineBattery;
-import com.hbm.tileentity.machine.TileEntityMachineMiningLaser;
-import com.hbm.tileentity.machine.TileEntityMachineMissileAssembly;
-import com.hbm.tileentity.machine.TileEntityMachineReactorLarge;
-import com.hbm.tileentity.machine.TileEntityMachineReactorSmall;
-import com.hbm.tileentity.machine.TileEntityMachineRadar;
-import com.hbm.tileentity.machine.TileEntityReactorControl;
-import com.hbm.tileentity.machine.TileEntitySoyuzLauncher;
-
+import com.hbm.tileentity.machine.*;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import api.hbm.energy.IEnergyConnector.ConnectionPriority;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

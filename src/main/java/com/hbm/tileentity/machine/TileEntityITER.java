@@ -1,7 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import java.util.List;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineITER;
 import com.hbm.entity.effect.EntityNukeTorex;
@@ -15,18 +14,16 @@ import com.hbm.inventory.FusionRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.special.ItemFusionShield;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.main.AdvancementManager;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.FluidTypePacketTest;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
-import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.saveddata.RadiationSavedData;
-
-import api.hbm.energy.IEnergyUser;
+import com.hbm.tileentity.TileEntityMachineBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -46,6 +43,8 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class TileEntityITER extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 

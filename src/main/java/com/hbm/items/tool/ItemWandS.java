@@ -1,22 +1,8 @@
 package com.hbm.items.tool;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
-
 import com.hbm.items.ModItems;
 import com.hbm.util.I18nUtil;
-import com.hbm.world.FWatz;
-import com.hbm.world.FactoryAdvanced;
-import com.hbm.world.FactoryTitanium;
-import com.hbm.world.ParticleAccelerator;
-import com.hbm.world.NuclearReactor;
-import com.hbm.world.Watz;
-
+import com.hbm.world.*;
 import com.leafia.contents.worldgen.NTMStructBuffer;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
@@ -38,6 +24,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
 
 public class ItemWandS extends Item {
 

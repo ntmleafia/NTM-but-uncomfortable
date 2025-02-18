@@ -1,11 +1,10 @@
 package com.hbm.render.tileentity;
 
-import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.hbm.tileentity.network.energy.TileEntityPylonBase;
+import com.leafia.dev.blockitems.LeafiaQuickModel;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import org.lwjgl.opengl.GL11;
-
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 
 public class RenderPylonConnector extends TileEntitySpecialRenderer<TileEntity> {
 

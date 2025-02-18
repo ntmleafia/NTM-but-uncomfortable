@@ -1,19 +1,18 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.interfaces.IControlReceiver;
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.interfaces.IControlReceiver;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.SAFERecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.machine.ItemFWatzCore;
 import com.hbm.lib.Library;
-import com.hbm.world.FWatz;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyGenerator;
+import com.hbm.world.FWatz;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

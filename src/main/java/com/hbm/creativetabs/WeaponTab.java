@@ -1,7 +1,5 @@
 package com.hbm.creativetabs;
 
-import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Armory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;

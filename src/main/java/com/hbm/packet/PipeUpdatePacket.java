@@ -1,7 +1,6 @@
 package com.hbm.packet;
 
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;

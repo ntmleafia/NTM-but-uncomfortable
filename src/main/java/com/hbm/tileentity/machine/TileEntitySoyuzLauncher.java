@@ -1,8 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.entity.missile.EntitySoyuz;
 import com.hbm.forgefluid.FFUtils;
@@ -11,17 +9,15 @@ import com.hbm.handler.MissileStruct;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemSoyuz;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,6 +36,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 

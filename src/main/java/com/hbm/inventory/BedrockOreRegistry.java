@@ -1,27 +1,20 @@
 package com.hbm.inventory;
 
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
-
+import com.hbm.config.BedrockOreJsonConfig;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.lib.Library;
-import com.hbm.config.BedrockOreJsonConfig;
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.util.WeightedRandomObject;
-
-import net.minecraft.init.Items;
-import net.minecraft.init.Blocks;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.*;
 
 //TODO: clean this shit up
 @Spaghetti("everything")

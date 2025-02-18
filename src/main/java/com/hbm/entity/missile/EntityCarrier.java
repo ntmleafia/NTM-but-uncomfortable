@@ -6,7 +6,6 @@ import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemSatChip;
 import com.hbm.main.AdvancementManager;
 import com.hbm.saveddata.satellites.Satellite;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;

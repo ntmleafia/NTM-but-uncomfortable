@@ -1,5 +1,6 @@
 package com.llib.group;
-import com.llib.LLibRsc.*;
+
+import com.llib.LLibRsc.LeafiaVoid;
 import com.llib.exceptions.LeafiaDevFlaw;
 
 import java.util.*;

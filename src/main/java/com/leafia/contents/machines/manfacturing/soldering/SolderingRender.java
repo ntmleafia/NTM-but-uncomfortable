@@ -1,14 +1,10 @@
 package com.leafia.contents.machines.manfacturing.soldering;
 
 import com.hbm.blocks.BlockDummyable;
-import com.hbm.lib.RefStrings;
-import com.hbm.render.amlfrom1710.AdvancedModelLoader;
-import com.hbm.render.amlfrom1710.IModelCustom;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class SolderingRender extends TileEntitySpecialRenderer<TileEntity> {

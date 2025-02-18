@@ -1,10 +1,7 @@
 package com.hbm.blocks.machine.pile;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFuel;
-
 import com.hbm.items.ModItems.Materials.Ingots;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
@@ -19,6 +16,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockGraphiteDrilledBase extends BlockHazardFuel {
 

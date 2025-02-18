@@ -1,14 +1,12 @@
 package com.hbm.main;
 
-import org.apache.logging.log4j.Level;
-
 import com.hbm.lib.RefStrings;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.Level;
 
 public class AdvancementManager {
 

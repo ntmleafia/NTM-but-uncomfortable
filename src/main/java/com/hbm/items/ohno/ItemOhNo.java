@@ -3,7 +3,6 @@ package com.hbm.items.ohno;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.BlockTaint;
 import com.hbm.config.GeneralConfig;
-import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;

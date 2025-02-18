@@ -1,14 +1,12 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.render.misc.DiamondPronter;
 import com.hbm.tileentity.machine.TileEntityBarrel;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.fluids.FluidStack;
+import org.lwjgl.opengl.GL11;
 
 public class RenderFluidBarrel extends TileEntitySpecialRenderer<TileEntityBarrel> {
 

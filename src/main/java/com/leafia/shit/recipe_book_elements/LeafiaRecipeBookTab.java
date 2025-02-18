@@ -1,10 +1,7 @@
 package com.leafia.shit.recipe_book_elements;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
 import com.hbm.main.ModEventHandlerClient;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
 import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButtonToggle;
@@ -16,6 +13,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @SideOnly(Side.CLIENT)
 public class LeafiaRecipeBookTab extends GuiButtonToggle

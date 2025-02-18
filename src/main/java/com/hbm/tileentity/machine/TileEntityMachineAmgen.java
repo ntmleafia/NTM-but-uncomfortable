@@ -1,17 +1,13 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.blocks.ModBlocks;
-import com.hbm.lib.Library;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
 
 public class TileEntityMachineAmgen extends TileEntityLoadedBase implements ITickable, IEnergyGenerator {
 

@@ -1,8 +1,5 @@
 package com.hbm.items.weapon;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
@@ -10,7 +7,6 @@ import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,6 +25,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
+
+import java.util.List;
+import java.util.Random;
 
 public class GunXVL1456 extends Item {
 

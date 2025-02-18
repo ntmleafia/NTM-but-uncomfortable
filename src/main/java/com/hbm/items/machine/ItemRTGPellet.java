@@ -1,25 +1,22 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
-import javax.annotation.CheckForNull;
-
-import com.hbm.items.ModItems;
+import com.hbm.items.special.ItemHazard;
 import com.hbm.util.BobMathUtil;
 import com.hbm.util.I18nUtil;
-import com.hbm.items.special.ItemHazard;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import javax.annotation.CheckForNull;
+import java.util.List;
 
 public class ItemRTGPellet extends ItemHazard {
 	

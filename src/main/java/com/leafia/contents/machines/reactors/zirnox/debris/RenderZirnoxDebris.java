@@ -1,8 +1,8 @@
 package com.leafia.contents.machines.reactors.zirnox.debris;
 
-import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris.DebrisType;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
+import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris.DebrisType;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

@@ -1,21 +1,19 @@
 package com.hbm.render.world;
 
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.capability.HbmLivingProps;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import org.lwjgl.opengl.GL11;
 
 public class RenderNTMSkybox extends IRenderHandler { //why an abstract class uses the I-prefix is beyond me but ok, alright, whatever
 	

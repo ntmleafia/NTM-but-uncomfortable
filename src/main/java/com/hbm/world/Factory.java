@@ -1,20 +1,10 @@
 package com.hbm.world;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.handler.WeightedRandomChestContentFrom1710;
 import com.hbm.lib.HbmChestContents;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFurnace;
-import net.minecraft.block.BlockHopper;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockSilverfish;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.BlockStoneBrick;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockStoneBrick.EnumType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import java.util.Random;
 
 public class Factory extends WorldGenerator
 {

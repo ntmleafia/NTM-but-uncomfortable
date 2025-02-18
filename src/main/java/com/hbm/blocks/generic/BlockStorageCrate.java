@@ -1,25 +1,13 @@
 package com.hbm.blocks.generic;
 
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
+import com.hbm.config.MachineConfig;
 import com.hbm.items.ModItems;
 import com.hbm.items.tool.ItemLock;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
-import com.hbm.config.MachineConfig;
-import com.hbm.tileentity.machine.TileEntityLockableBase;
-import com.hbm.tileentity.machine.TileEntityCrateIron;
-import com.hbm.tileentity.machine.TileEntityCrateSteel;
-import com.hbm.tileentity.machine.TileEntityCrateTungsten;
-import com.hbm.tileentity.machine.TileEntityCrateDesh;
-import com.hbm.tileentity.machine.TileEntitySafe;
-
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-
+import com.hbm.tileentity.machine.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -29,23 +17,23 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+
+import java.util.List;
+import java.util.Random;
 
 public class BlockStorageCrate extends BlockContainer {
 

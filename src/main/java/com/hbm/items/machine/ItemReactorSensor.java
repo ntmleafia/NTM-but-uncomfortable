@@ -1,11 +1,8 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,6 +16,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemReactorSensor extends Item {
 

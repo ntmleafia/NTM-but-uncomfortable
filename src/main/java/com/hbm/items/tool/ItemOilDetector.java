@@ -1,11 +1,8 @@
 package com.hbm.items.tool;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,13 +12,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemOilDetector extends Item {
 

@@ -1,16 +1,11 @@
 package com.hbm.tileentity.machine.oil;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -25,6 +20,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public abstract class TileEntityOilDrillBase extends TileEntityLoadedBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor
 {

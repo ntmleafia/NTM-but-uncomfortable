@@ -6,7 +6,6 @@ import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.interfaces.IBomb;
 import com.hbm.lib.HBMSoundHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

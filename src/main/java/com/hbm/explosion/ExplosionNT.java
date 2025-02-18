@@ -1,19 +1,9 @@
 package com.hbm.explosion;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
 import com.google.common.collect.Lists;
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.render.amlfrom1710.Vec3;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -32,6 +22,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 public class ExplosionNT extends Explosion {
 

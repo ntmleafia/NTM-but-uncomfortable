@@ -1,11 +1,7 @@
 package com.hbm.forgefluid;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.interfaces.IFluidPipe;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -17,6 +13,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FFPipeNetwork implements IFluidHandler {
 

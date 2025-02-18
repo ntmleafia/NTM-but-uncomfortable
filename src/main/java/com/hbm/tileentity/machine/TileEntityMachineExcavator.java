@@ -1,38 +1,32 @@
 package com.hbm.tileentity.machine;
 
-import java.util.HashSet;
-import java.util.List;
-
+import api.hbm.block.IDrillInteraction;
+import api.hbm.block.IMiningDrill;
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.gas.BlockGasBase;
 import com.hbm.blocks.generic.BlockBedrockOreTE.TileEntityBedrockOre;
 import com.hbm.interfaces.IControlReceiver;
+import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.inventory.BedrockOreRegistry;
+import com.hbm.inventory.ShredderRecipes;
 import com.hbm.inventory.UpgradeManager;
 import com.hbm.inventory.container.ContainerMachineExcavator;
 import com.hbm.inventory.gui.GUIMachineExcavator;
-import com.hbm.inventory.ShredderRecipes;
-import com.hbm.inventory.BedrockOreRegistry;
-import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemDrillbit;
 import com.hbm.items.machine.ItemDrillbit.EnumDrillType;
+import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
-import com.hbm.lib.Library;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.lib.Library;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.InventoryUtil;
 import com.hbm.util.ItemStackUtil;
-
-import api.hbm.energy.IEnergyUser;
-import api.hbm.block.IDrillInteraction;
-import api.hbm.block.IMiningDrill;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
@@ -43,28 +37,30 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class TileEntityMachineExcavator extends TileEntityMachineBase implements IEnergyUser, IFluidHandler, ITickable, ITankPacketAcceptor, IControlReceiver, IGUIProvider, IMiningDrill {
 

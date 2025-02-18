@@ -6,7 +6,6 @@ import com.hbm.entity.effect.EntityCloudTom;
 import com.hbm.entity.logic.EntityTomBlast;
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.lib.HBMSoundHandler;
-
 import com.hbm.saveddata.AuxSavedData;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;

@@ -1,17 +1,13 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-import java.util.Map.Entry;
-
+import com.hbm.config.GeneralConfig;
+import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
-import com.hbm.config.GeneralConfig;
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
 import com.hbm.util.I18nUtil;
-import com.hbm.forgefluid.ModFluidProperties;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,6 +26,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.List;
+import java.util.Map.Entry;
 
 public class ItemForgeFluidIdentifier extends Item implements IHasCustomModel {
 

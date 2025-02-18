@@ -7,9 +7,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import static org.lwjgl.opengl.GL11.GL_FLAT;
-import static org.lwjgl.opengl.GL11.GL_SMOOTH;
-
 public class ItemRenderPWRDebris extends TEISRBase {
 	RenderPWRDebris associate = null;
 

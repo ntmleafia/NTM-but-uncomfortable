@@ -2,8 +2,6 @@ package com.hbm.core.leafia;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
-import static com.hbm.core.leafia.TransformerCoreLeafia.classesBeingTransformed;
-
 public class LeafiaWorldServerTransformer implements IClassTransformer {
 	static final int index = 1;
 	@Override

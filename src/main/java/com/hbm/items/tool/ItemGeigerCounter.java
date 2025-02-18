@@ -1,26 +1,17 @@
 package com.hbm.items.tool;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import baubles.api.BaubleType;
+import baubles.api.IBauble;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.RadiationSystemNT;
 import com.hbm.handler.RadiationSystemNT.RadPocket;
-import com.hbm.lib.Library;
 import com.hbm.items.ModItems;
 import com.hbm.items.gear.ArmorFSB;
-import com.hbm.items.weapon.ItemGunEgon;
-import com.hbm.packet.PacketDispatcher;
-import com.hbm.render.misc.RenderScreenOverlay;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.ContaminationUtil;
-
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.leafia.passive.rendering.TopRender.Highlight;
@@ -31,26 +22,22 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "baubles.api.IBauble", modid = "baubles")})
 public class ItemGeigerCounter extends Item implements IBauble {

@@ -1,19 +1,13 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.inventory.AssemblerRecipes;
-import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,6 +20,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ItemAssemblyTemplate extends Item implements IHasCustomModel {
 

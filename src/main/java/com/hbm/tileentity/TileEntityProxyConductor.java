@@ -1,12 +1,12 @@
 package com.hbm.tileentity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import api.hbm.energy.IEnergyConductor;
 import api.hbm.energy.PowerNet;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityProxyConductor extends TileEntityProxyBase implements IEnergyConductor {
 

@@ -4,7 +4,6 @@ import com.hbm.items.machine.ItemCassette.SoundType;
 import com.hbm.items.machine.ItemCassette.TrackType;
 import com.hbm.sound.SoundLoopSiren;
 import com.hbm.tileentity.machine.TileEntityMachineSiren;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;

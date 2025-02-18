@@ -1,13 +1,12 @@
 package com.hbm.lib;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.handler.GunConfiguration;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class HBMSoundHandler {
 	

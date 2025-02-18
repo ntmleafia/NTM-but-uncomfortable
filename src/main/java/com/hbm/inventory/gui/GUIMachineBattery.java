@@ -1,27 +1,25 @@
 package com.hbm.inventory.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.Math;
-
+import api.hbm.energy.IEnergyConnector.ConnectionPriority;
 import com.hbm.inventory.container.ContainerMachineBattery;
-import com.hbm.lib.RefStrings;
 import com.hbm.lib.Library;
-import com.hbm.util.I18nUtil;
+import com.hbm.lib.RefStrings;
 import com.hbm.packet.AuxButtonPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.machine.TileEntityMachineBattery;
-
-import api.hbm.energy.IEnergyConnector.ConnectionPriority;
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIMachineBattery extends GuiInfoContainer {
 

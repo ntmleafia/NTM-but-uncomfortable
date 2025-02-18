@@ -1,12 +1,11 @@
 package com.hbm.physics;
 
+import com.hbm.render.amlfrom1710.Vec3;
+
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.hbm.render.amlfrom1710.Vec3;
 
 public class GJK {
 

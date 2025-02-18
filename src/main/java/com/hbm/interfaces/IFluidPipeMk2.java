@@ -1,7 +1,6 @@
 package com.hbm.interfaces;
 
 import com.hbm.forgefluid.FFPipeNetworkMk2;
-
 import net.minecraftforge.fluids.Fluid;
 
 public interface IFluidPipeMk2 {

@@ -1,6 +1,5 @@
 package com.hbm.blocks.gas;
 
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockGasExplosive extends BlockGasFlammable {

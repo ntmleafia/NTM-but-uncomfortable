@@ -1,12 +1,11 @@
 package com.hbm.world.generator;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.world.generator.TimedGenerator.ITimedJob;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class JungleDungeon extends CellularDungeon {
 

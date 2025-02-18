@@ -4,7 +4,6 @@ import com.hbm.config.CompatibilityConfig;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.interfaces.IConstantRenderer;
-
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

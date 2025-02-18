@@ -8,14 +8,12 @@ import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.inventory.container.ContainerOilburner;
 import com.hbm.inventory.gui.GUIOilburner;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

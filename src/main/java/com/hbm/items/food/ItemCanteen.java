@@ -1,12 +1,9 @@
 package com.hbm.items.food;
 
-import java.util.List;
-
 import com.hbm.config.VersatileConfig;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Foods;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +16,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemCanteen extends Item {
 

@@ -1,12 +1,9 @@
 package com.hbm.blocks.fluid;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,6 +16,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+
+import java.util.Random;
 
 public class ToxicBlock extends BlockFluidClassic {
 

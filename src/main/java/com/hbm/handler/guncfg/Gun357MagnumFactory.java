@@ -1,7 +1,5 @@
 package com.hbm.handler.guncfg;
 
-import java.util.ArrayList;
-
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
@@ -9,8 +7,9 @@ import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
-
 import net.minecraft.potion.PotionEffect;
+
+import java.util.ArrayList;
 
 public class Gun357MagnumFactory {
 

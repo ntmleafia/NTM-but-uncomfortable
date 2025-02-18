@@ -1,9 +1,9 @@
 package com.hbm.hazard;
 
+import com.hbm.hazard.type.HazardTypeBase;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.hbm.hazard.type.HazardTypeBase;
 
 public class HazardData {
 	

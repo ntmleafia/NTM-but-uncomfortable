@@ -1,11 +1,11 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class WatzFuel extends ItemHazard {
 

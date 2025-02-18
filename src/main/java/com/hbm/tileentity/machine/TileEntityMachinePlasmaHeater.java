@@ -1,8 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import java.util.Arrays;
-import java.util.List;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineITER;
@@ -13,8 +11,6 @@ import com.hbm.lib.Library;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -32,6 +28,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TileEntityMachinePlasmaHeater extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor, IEnergyUser {
 

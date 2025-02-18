@@ -1,35 +1,34 @@
 package com.hbm.blocks.machine;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.inventory.HeatRecipes;
-import com.hbm.lib.ForgeDirection;
-import com.hbm.util.I18nUtil;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntitySolarBoiler;
-
-import net.minecraft.block.state.IBlockState;
+import com.hbm.util.I18nUtil;
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.EnumHand;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.world.World;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MachineSolarBoiler extends BlockDummyable implements ITooltipProvider, ILookOverlay {
 

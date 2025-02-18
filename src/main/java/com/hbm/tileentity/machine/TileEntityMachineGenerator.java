@@ -1,7 +1,7 @@
 package com.hbm.tileentity.machine;
 
-import java.util.Random;
-
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.blocks.machine.MachineGenerator;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.forgefluid.FFUtils;
@@ -14,9 +14,6 @@ import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -35,6 +32,8 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.Random;
 
 public class TileEntityMachineGenerator extends TileEntityLoadedBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor {
 

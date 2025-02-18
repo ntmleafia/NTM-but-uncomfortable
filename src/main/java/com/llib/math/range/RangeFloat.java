@@ -1,7 +1,5 @@
 package com.llib.math.range;
 
-import com.llib.math.range.RangeBase;
-
 public class RangeFloat extends RangeBase {
     public float min;
     public float max;

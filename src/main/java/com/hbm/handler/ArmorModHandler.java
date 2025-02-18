@@ -1,14 +1,13 @@
 package com.hbm.handler;
 
-import java.util.Arrays;
-import java.util.UUID;
-
 import com.hbm.items.armor.ItemArmorMod;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 public class ArmorModHandler {
 

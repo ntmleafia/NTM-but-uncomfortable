@@ -2,10 +2,8 @@ package com.hbm.entity.grenade;
 
 import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionLarge;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.weapon.ItemGrenade;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;

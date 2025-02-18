@@ -1,6 +1,5 @@
 package api.hbm.energy.network;
 
-import api.hbm.energy.IEnergyConductor;
 import com.hbm.lib.ForgeDirection;
 import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
@@ -8,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public interface NTMNetworkConductor<T extends NTMNetworkInstance<? extends NTMNetworkConductor<T>,? extends NTMNetworkMember>> extends NTMNetworkMember {

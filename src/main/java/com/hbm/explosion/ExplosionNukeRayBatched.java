@@ -1,24 +1,16 @@
 package com.hbm.explosion;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Objects;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.render.amlfrom1710.Vec3;
-
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+
+import java.util.*;
 
 public class ExplosionNukeRayBatched {
 	final static int calculateSpeed = 4;

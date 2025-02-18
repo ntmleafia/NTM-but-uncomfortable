@@ -1,11 +1,10 @@
 package com.hbm.config;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class CompatibilityConfig {
 

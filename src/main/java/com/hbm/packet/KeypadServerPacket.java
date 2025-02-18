@@ -2,7 +2,6 @@ package com.hbm.packet;
 
 import com.hbm.interfaces.IKeypadHandler;
 import com.hbm.util.Keypad;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.tileentity.TileEntity;
