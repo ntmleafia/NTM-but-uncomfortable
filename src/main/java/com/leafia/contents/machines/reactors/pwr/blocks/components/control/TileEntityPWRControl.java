@@ -108,6 +108,25 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
         }
     }
 
+    public NBTTagCompound writeControlDateToNBT()
+    {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setDouble("rodP", position);
+        nbt.setDouble("rodD", targetPosition);
+        nbt.setString("name", name);
+        nbt.setInteger("x", pos.getX());
+        nbt.setInteger("y", pos.getY());
+        nbt.setInteger("z", pos.getZ());
+        return nbt;
+    }
+
+    public void readControlDataFromNBT(NBTTagCompound nbt)
+    {
+        position = nbt.getDouble("rodP");
+        targetPosition = nbt.getDouble("rodD");
+        name = nbt.getString("name");
+    }
+
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         if (corePos != null) {
