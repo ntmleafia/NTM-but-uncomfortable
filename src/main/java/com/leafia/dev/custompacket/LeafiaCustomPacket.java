@@ -76,15 +76,15 @@ public class LeafiaCustomPacket extends RecordablePacket {
 		if ((protocol&0xFF) != CustomPacketType.values().length) {
 			packetType = CustomPacketType.NONE;
 			callback = (ctx)->{
-				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.RED))
-						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR "))
-						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaCustomPacket").setStyle(new Style().setColor(TextFormatting.RED)))
+				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.GOLD))
+						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR ").setStyle(new Style().setColor(TextFormatting.WHITE)))
+						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaCustomPacket").setStyle(new Style().setColor(TextFormatting.GOLD)))
 						.appendSibling(
-								new TextComponentString("\nThe server supports "+(protocol&0xFF)+" custom packet variations. Your client supports "+CustomPacketType.values().length)
+								new TextComponentString("\nThe server supports "+(protocol&0xFF)+" custom packet variations. Your client supports "+CustomPacketType.values().length).setStyle(new Style().setColor(TextFormatting.WHITE))
 						)
-						.appendSibling(new TextComponentString("\n\nPossible reasons are:").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)))
+						.appendSibling(new TextComponentString("\n\nPossible reasons are:").setStyle(new Style().setColor(TextFormatting.AQUA)))
 						.appendSibling(
-								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idfk")
+								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idfk").setStyle(new Style().setColor(TextFormatting.GRAY))
 						);
 				if (ctx.side.isClient())
 					Minecraft.getMinecraft().player.connection.getNetworkManager().closeChannel(reason);

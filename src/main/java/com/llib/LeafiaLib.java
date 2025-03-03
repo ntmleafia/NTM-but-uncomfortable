@@ -60,4 +60,13 @@ public class LeafiaLib {
 		}
 		return builder.toString();
 	}
+	public static class NumScale {
+		static public final int KILO = 1_000;
+		static public final int MEGA = 1_000_000;
+		static public final int GIGA = 1_000_000_000;
+		static public final long TERRA = 1_000_000_000_000L;
+		static public final long PETA = 1_000_000_000_000_000L;
+		static public final long EXA = 1_000_000_000_000_000_000L;
+		//,ZETTA,YOTTA,RONNA,QUETTA;
+	}
 }

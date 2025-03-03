@@ -45,12 +45,21 @@
   "external.pwrcontrol": {"category": "block", "sounds": [{"name": "hbm:external/stormworks_hingepivot4_loop", "stream": false}]},
   "external.pwrcontrolstop": {"category": "block", "sounds": [{"name": "hbm:external/stormworks_hingepivot4_end", "stream": false}]},
 
+  "external.machineDestroyed": {"category": "block", "sounds": [{"name": "hbm:external/apeboss_death", "stream": false}]},
+  "external.machineExplode": {"category": "block", "sounds": [{"name": "hbm:external/mech_explosion", "stream": false}]},
+
   "weapon.nuke": {"subtitle": "subtitles.weapon.nuke", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearExplosion", "stream": false}]},
   "weapon.nuke_n": {"subtitle": "subtitles.weapon.nuke_n", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearexplosion_louder", "stream": false}]},
   "weapon.nuke_d": {"subtitle": "subtitles.weapon.nuke_d", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant_mix", "stream": false}]},
   "weapon.nuke_a": {"category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant", "stream": false}]},
   "weapon.nuke_s": {"subtitle": "subtitles.weapon.nuke_s", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_mini", "stream": false}]},
   "weapon.nuke_folkvangr": {"subtitle": "subtitles.weapon.nuke_folkvangr", "category": "player", "sounds": [{"name": "hbm:weapon/nuke_folkvangr", "stream": false}]},
+
+  "block.kfc.vs": {"category": "block", "sounds": [{"subtitle": "subtitles.block.kfc.vs", "name": "hbm:external/forcefield_loop", "stream": false}]},
+  "block.kfc.tw": {"category": "block", "sounds": [{"subtitle": "subtitles.block.kfc.tw", "name": "hbm:external/charge_full_hold1", "stream": false}]},
+  "block.kfc.eoh": {"category": "block", "sounds": [{"subtitle": "subtitles.block.kfc.eoh", "name": "hbm:external/avactron_loop", "stream": false}]},
+  "block.kfc.meltdown": {"category": "block", "sounds": [{"subtitle": "subtitles.block.kfc.meltdown", "name": "hbm:leafia/dfcstress", "stream": false}]},
+  "block.kfc.explode": {"category": "block", "sounds": [{"subtitle": "subtitles.block.kfc.explode", "name": "hbm:leafia/dfcexplode", "stream": false}]},
 
 	"item.techBleep": {"subtitle": "subtitles.item.techBleep", "category": "player", "sounds": [{"name": "hbm:tool/techBleep", "stream": false}]},
     "item.techBoop": {"subtitle": "subtitles.item.techBoop", "category": "player", "sounds": [{"name": "hbm:tool/techBoop", "stream": false}]},

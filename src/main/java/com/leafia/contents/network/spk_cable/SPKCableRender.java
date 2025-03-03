@@ -71,8 +71,8 @@ public class SPKCableRender extends TileEntitySpecialRenderer<SPKCableTE> {
 							EnumWaveType.RANDOM,EnumBeamType.SOLID,
 							0x64001e,0x9A9A9A,
 							(int)(getWorld().getTotalWorldTime()%1000),
-							(int)(distance*3),1/16f,
-							2,0.5f/16f
+							(int)(distance*5),1/16f,
+							2,0.666f/16f
 					);
 				});
 			}

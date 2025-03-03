@@ -65,6 +65,7 @@ public class EntityDebrisBase extends Entity {
 		this.radrange = range;
 		this.rad3d = rad3d;
 	}
+	public boolean destroysBlocks() { return true; }
 	@Override
 	public void onUpdate(){
 		if(!hasSizeSet) {
@@ -73,7 +74,7 @@ public class EntityDebrisBase extends Entity {
 		}
 
 		if(!world.isRemote) {
-			if(motionY > 0) {
+			if(motionY > 0 && destroysBlocks()) {
 
 				Vec3 pos = Vec3.createVectorHelper(posX, posY, posZ);
 				Vec3 next = Vec3.createVectorHelper(posX + motionX * 2, posY + motionY * 2, posZ + motionZ * 2);
@@ -92,7 +93,7 @@ public class EntityDebrisBase extends Entity {
 								int rn = Math.abs(i) + Math.abs(j) + Math.abs(k);
 
 								if(rn <= 1 || rand.nextInt(rn) == 0)
-									world.setBlockToAir(new BlockPos(x + i, y + j, z + k));
+									world.destroyBlock(new BlockPos(x + i, y + j, z + k),false);
 							}
 						}
 					}

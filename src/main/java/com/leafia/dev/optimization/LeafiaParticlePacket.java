@@ -240,15 +240,15 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(LeafiaParticlePacket message,MessageContext ctx) {
 			if (message.nbt == null) {
-				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.RED))
-						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR "))
-						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaParticlePacket").setStyle(new Style().setColor(TextFormatting.RED)))
+				ITextComponent reason = new TextComponentString("########").setStyle(new Style().setColor(TextFormatting.GOLD))
+						.appendSibling(new TextComponentString(" NTM:LCE FATAL ERROR ").setStyle(new Style().setColor(TextFormatting.WHITE)))
+						.appendSibling(new TextComponentString("########\nInvalid protocol on LeafiaParticlePacket").setStyle(new Style().setColor(TextFormatting.GOLD)))
 						.appendSibling(
-								new TextComponentString("\nThe server supports "+message.supports+" particles. Your client supports "+ registry.size())
+								new TextComponentString("\nThe server supports "+message.supports+" particles. Your client supports "+ registry.size()).setStyle(new Style().setColor(TextFormatting.WHITE))
 						)
-						.appendSibling(new TextComponentString("\n\nPossible reasons are:").setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE)))
+						.appendSibling(new TextComponentString("\n\nPossible reasons are:").setStyle(new Style().setColor(TextFormatting.AQUA)))
 						.appendSibling(
-								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idfk")
+								new TextComponentString("\n- Your client is outdated. Check for any updates on github (I don't add version numbers!)\n- Or the server is outdated. Contact server owner\n- Else perhaps it's some unpredictable fucks going on idfk").setStyle(new Style().setColor(TextFormatting.GRAY))
 						);
 				Minecraft.getMinecraft().player.connection.getNetworkManager().closeChannel(reason);
 			} else

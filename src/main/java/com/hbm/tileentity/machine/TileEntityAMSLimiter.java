@@ -246,7 +246,7 @@ public class TileEntityAMSLimiter extends TileEntity implements ITickable, IFlui
 					ExplosionLarge.spawnShock(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 24, 3);
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 24, 3);
 		            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.oldExplosion, SoundCategory.BLOCKS, 10.0F, 1);
-			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
+			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.machineDestroyed, SoundCategory.BLOCKS, 10.0F, 1.0F);
 				}
 	
 				power = Library.chargeTEFromItems(inventory, 3, power, maxPower);

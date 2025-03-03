@@ -282,8 +282,17 @@ public final class HBMSoundHandler {
 	public static SoundEvent pwrRodLoop;
 	public static SoundEvent pwrRodStop;
 
+	public static SoundEvent machineDestroyed;
+	public static SoundEvent machineExplode;
+
 	public static SoundEvent pointed;
 
+	public static SoundEvent dfc_vs;
+	public static SoundEvent dfc_tw;
+	public static SoundEvent dfc_eoh;
+
+	public static SoundEvent dfc_meltdown;
+	public static SoundEvent dfc_explode;
 	
 	
 	public static void init() {
@@ -520,7 +529,16 @@ public final class HBMSoundHandler {
 		pwrRodLoop = register("external.pwrcontrol");
 		pwrRodStop = register("external.pwrcontrolstop");
 
+		machineDestroyed = register("external.machineDestroyed");
+		machineExplode = register("external.machineExplode");
+
 		pointed = register("item.pointed");
+
+		dfc_vs = register("block.kfc.vs");
+		dfc_tw = register("block.kfc.tw");
+		dfc_eoh = register("block.kfc.eoh");
+		dfc_meltdown = register("block.kfc.meltdown");
+		dfc_explode = register("block.kfc.explode");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};
