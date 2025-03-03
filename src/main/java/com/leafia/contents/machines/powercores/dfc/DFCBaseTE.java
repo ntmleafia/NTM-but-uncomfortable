@@ -64,7 +64,7 @@ public abstract class DFCBaseTE extends TileEntityMachineBase implements LeafiaP
 	public TileEntityCore lastGetCore = null;
 	@Nullable
 	protected TileEntityCore getCore(int range) {
-		lastGetCore = Library.leafiaRayTraceBlocksCustom(world,new Vec3d(pos).addVector(0.5,0.5,0.5),new Vec3d(pos).addVector(0.5,0.5,0.5).add(getDirection().scale(range)),(process,config,current) -> {
+		lastGetCore = Library.leafiaRayTraceBlocksCustom(world,new Vec3d(pos).add(0.5,0.5,0.5),new Vec3d(pos).add(0.5,0.5,0.5).add(getDirection().scale(range)),(process,config,current) -> {
 			if (current.posSnapped.equals(pos)) return process.CONTINUE();
 			if (!current.block.canCollideCheck(current.state,true))
 				return process.CONTINUE();
