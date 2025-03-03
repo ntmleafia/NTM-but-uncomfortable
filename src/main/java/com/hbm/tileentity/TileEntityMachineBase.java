@@ -111,13 +111,17 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 	public int getGaugeScaled(int i, FluidTank tank) {
 		return tank.getFluidAmount() * i / tank.getCapacity();
 	}
-	
+
+	@Deprecated
+	@Spaghetti("For f*ck's sake we are tired of NBTPacket, fucking don't use it for new work or i'll cut your face down")
 	public void networkPack(NBTTagCompound nbt, int range) {
 
 		if(!world.isRemote)
 			PacketDispatcher.wrapper.sendToAllAround(new NBTPacket(nbt, pos), new TargetPoint(this.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range));
 	}
-	
+
+	@Deprecated
+	@Spaghetti("For f*ck's sake we are tired of NBTPacket, fucking don't use it for new work or i'll cut your face down")
 	public void networkUnpack(NBTTagCompound nbt) { }
 	
 	public void handleButtonPacket(int value, int meta) { }

@@ -63,6 +63,10 @@ public class FiaMatrix {
 		);
 	}
 
+	public double getX() { return position.x; }
+	public double getY() { return position.y; }
+	public double getZ() { return position.z; }
+
 	public FiaMatrix add(Vec3d vector) {
 		FiaMatrix matrix = new FiaMatrix(this);
 		matrix.position = this.position.add(vector);
