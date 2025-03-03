@@ -2,6 +2,7 @@ package com.hbm.packet;
 
 import java.io.IOException;
 
+import com.hbm.interfaces.Spaghetti;
 import com.hbm.tileentity.INBTPacketReceiver;
 
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -18,6 +19,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated
+@Spaghetti("For f*ck's sake we are tired of NBTPacket, fucking don't use it for new work or i'll cut your face down")
 public class NBTPacket extends RecordablePacket {
 
 	NBTTagCompound buffer;

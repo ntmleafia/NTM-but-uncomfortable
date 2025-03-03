@@ -2898,6 +2898,11 @@ public class ModItems {
 	public static final Item pwr_piece = new ItemPWRDebris("pwr_piece",DebrisType.CONCRETE).addRadiation(12F).toItem();
 	public static final Item pwr_shrapnel = new ItemPWRDebris("pwr_shrapnel",DebrisType.SHRAPNEL).addRadiation(12F).addSharp(35).toItem();
 	public static final Item pwr_shard = new ItemPWRDebris("pwr_shard",DebrisType.BLANK).disableCrafting().addRadiation(7F).addSharp(85).toItem();
+	public static final Item dfcsh_cable = new ItemHazard("dfcsh_cable").addDigamma(0.003F).addSharp(5).toItem().setCreativeTab(MainRegistry.controlTab);
+	public static final Item dfcsh_core = new ItemHazard("dfcsh_core").addFire(10).toItem().setCreativeTab(MainRegistry.controlTab);
+	public static final Item dfcsh_corner = new ItemHazard("dfcsh_corner").addDigamma(0.005F).addSharp(5).toItem().setCreativeTab(MainRegistry.controlTab);
+	public static final Item dfcsh_front = new ItemHazard("dfcsh_front").addDigamma(0.004F).toItem().setCreativeTab(MainRegistry.controlTab);
+	public static final Item dfcsh_beam = new ItemHazard("dfcsh_beam").addDigamma(0.002F).addSharp(25).toItem().setCreativeTab(MainRegistry.controlTab);
 
 	public static class RBMKFuel {
 

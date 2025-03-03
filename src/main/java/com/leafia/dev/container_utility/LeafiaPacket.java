@@ -5,6 +5,7 @@ import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.Tuple.Pair;
+import com.llib.technical.FiaLatch;
 import com.llib.technical.FifthString;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -59,8 +59,17 @@ public class LeafiaPacket extends RecordablePacket {
 		//BitSet bit = BitSet.valueOf(new byte[]{entry}).get(0,5);
 		return (byte)(entry & 0b00011111);//(bit.cardinality() == 0) ? 0 : bit.toByteArray()[0];
 	}
+	List<FiaLatch<?>> latches = new ArrayList<>();
 	public LeafiaPacket __write(int id,Object valueIn) {
 		Object value = valueIn;
+		if (value instanceof FiaLatch) {
+			FiaLatch<?> latch = (FiaLatch<?>)value;
+			value = latch.getInterest();
+			if (latch.needsUpdate())
+				latches.add(latch);
+			else
+				return this;
+		}
 		if (id == -1) return this;
 		byte key = (byte)id;
 		//BitSet bit = BitSet.valueOf(new byte[]{key});
@@ -237,33 +246,57 @@ public class LeafiaPacket extends RecordablePacket {
 		packet.te = entity;
 		return packet;
 	}
-	// Send signal to server to update the client
+
+	/**
+	 * Send a signal to server to update the client
+	 * <p>This is called automatically
+	 * @param entity The TileEntity this whole thing is on about
+	 */
 	public static void _validate(TileEntity entity) {
 		if (!entity.getWorld().isRemote) return; // ayo you're lazy
 		LeafiaPacket packet = new LeafiaPacket(entity.getPos(),((LeafiaPacketReceiver)entity).getPacketIdentifier());
 		packet.dimension = entity.getWorld().provider.getDimension();
 		packet.te = entity;
+		packet.isValidation = true;
 		packet.__setTileEntityQueryType(Chunk.EnumCreateEntityType.CHECK);
 		packet.__sendToServer();
 	}
+
+	/**
+	 * Internal variable, client only; never sent to server.
+	 * <br>Flagging this will bypass the empty value check.
+	 */
+	boolean isValidation = false;
+	boolean onSending() {
+		if (signal.size() <= 0 && !isValidation) return true;
+		for (FiaLatch<?> latch : latches)
+			latch.update();
+		return false;
+	}
 	public void __sendToAll() {
+		if (onSending()) return;
 		PacketDispatcher.wrapper.sendToAll(this);
 	}
 	@Deprecated
 	public void __sendToAllInDimension() {
+		if (onSending()) return;
 		PacketDispatcher.wrapper.sendToDimension(this,dimension);
 	}
 	public void __sendToAffectedClients() {
+		if (onSending()) return;
 		this.checkType = Chunk.EnumCreateEntityType.CHECK;
 		this.__sendToClients(((LeafiaPacketReceiver)te).affectionRange()*1.3);
 	}
 	public void __sendToServer() {
+		if (onSending()) return;
 		PacketDispatcher.wrapper.sendToServer(this);
 	}
 	public void __sendToClients(double range) {
+		if (onSending()) return;
 		PacketDispatcher.wrapper.sendToAllAround(this,new NetworkRegistry.TargetPoint(dimension,x,y,z,range));
 	}
 	public void __sendToClient(EntityPlayer player) {
+		if (onSending()) return;
 		_sendToClient(this,player);
 	}
 	public static void _sendToClient(IMessage message,EntityPlayer player) {

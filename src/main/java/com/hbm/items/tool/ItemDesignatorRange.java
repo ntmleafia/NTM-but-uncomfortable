@@ -24,21 +24,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemDesignatorRange extends Item {
+public class ItemDesignatorRange extends ItemDesignator {
 
 	public ItemDesignatorRange(String s) {
-		this.setUnlocalizedName(s);
-		this.setRegistryName(s);
-		this.setCreativeTab(MainRegistry.missileTab);
-		
-		ModItems.ALL_ITEMS.add(this);
-	}
-	
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-		stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setInteger("xCoord", 0);
-		stack.getTagCompound().setInteger("zCoord", 0);
+		super(s);
 	}
 	
 	@Override
@@ -69,6 +58,7 @@ public class ItemDesignatorRange extends Item {
 				stack.setTagCompound(new NBTTagCompound());
 			
 			stack.getTagCompound().setInteger("xCoord", x);
+			stack.getTagCompound().setInteger("yCoord", mpos.getBlockPos().getY());
 			stack.getTagCompound().setInteger("zCoord", z);
 			
 	        if(world.isRemote)

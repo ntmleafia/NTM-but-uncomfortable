@@ -1,6 +1,9 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.items.tool.ItemDesignator;
+import com.hbm.lib.HBMSoundHandler;
+import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.dev.MachineTooltip;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityCoreEmitter;
@@ -19,12 +22,9 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -66,10 +66,16 @@ public class CoreComponent extends BlockContainer {
 		
 		return null;
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)));
+		super.onBlockPlacedBy(worldIn,pos,state,placer,stack);
+		TileEntity te0 = worldIn.getTileEntity(pos);
+		if (te0 instanceof DFCBaseTE) {
+			DFCBaseTE te = (DFCBaseTE)te0;
+			te.setTargetPosition(pos.offset(EnumFacing.getDirectionFromEntityLiving(pos, placer)));
+		}
+		//worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)));
 	}
 	
 	@Override
@@ -77,16 +83,31 @@ public class CoreComponent extends BlockContainer {
 		if(world.isRemote) {
 			return true;
 		} else if(!player.isSneaking()) {
-			
+			if (!player.getHeldItem(hand).isEmpty()) {
+				TileEntity te = world.getTileEntity(pos);
+				NBTTagCompound nbt = player.getHeldItem(hand).getTagCompound();
+				if (player.getHeldItem(hand).getItem() instanceof ItemDesignator && te instanceof DFCBaseTE && nbt != null) {
+					BlockPos target =
+							new BlockPos(nbt.getInteger("xCoord"),nbt.getInteger("yCoord"),nbt.getInteger("zCoord"));
+					if (target.equals(pos)) {
+						world.playSound(null,pos,HBMSoundHandler.buttonNo,SoundCategory.BLOCKS,1,1);
+						return true;
+					}
+					((DFCBaseTE)te).setTargetPosition(target);
+					world.playSound(null,pos,HBMSoundHandler.buttonYes,SoundCategory.BLOCKS,1,1);
+					return true;
+				}
+			}
+
 			if(this == ModBlocks.dfc_emitter)
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_emitter, world, pos.getX(), pos.getY(), pos.getZ());
-			
+
 			if(this == ModBlocks.dfc_receiver)
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_receiver, world, pos.getX(), pos.getY(), pos.getZ());
-			
+
 			if(this == ModBlocks.dfc_injector)
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_injector, world, pos.getX(), pos.getY(), pos.getZ());
-			
+
 			if(this == ModBlocks.dfc_stabilizer)
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_stabilizer, world, pos.getX(), pos.getY(), pos.getZ());
 			

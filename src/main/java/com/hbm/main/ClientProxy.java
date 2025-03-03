@@ -17,6 +17,8 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
+import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.RenderPWRVentElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.RenderPWRVentOutlet;
@@ -46,6 +48,7 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.hbm.tileentity.machine.*;
+import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.tileentity.TileEntity;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
@@ -627,7 +630,15 @@ public class ClientProxy extends ServerProxy {
 			Minecraft.getMinecraft().getFramebuffer().enableStencil();
 		
 		MinecraftForge.EVENT_BUS.register(new ModEventHandlerClient());
-		MinecraftForge.EVENT_BUS.register(new LeafiaClientListener());
+		for (Class<?> cl : LeafiaClientListener.class.getClasses()) {
+			try {
+				MinecraftForge.EVENT_BUS.register(cl.newInstance());
+			} catch (InstantiationException | IllegalAccessException e) {
+				LeafiaDevFlaw flaw = new LeafiaDevFlaw(e.getMessage());
+				flaw.setStackTrace(e.getStackTrace());
+				throw flaw;
+			}
+		}
 
 		AdvancedModelLoader.registerModelHandler(new HmfModelLoader());
 		
@@ -993,6 +1004,7 @@ public class ClientProxy extends ServerProxy {
 	    RenderingRegistry.registerEntityRenderingHandler(EntityRBMKDebris.class, RenderRBMKDebris.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityZirnoxDebris.class, RenderZirnoxDebris.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityPWRDebris.class, RenderPWRDebris.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(AbsorberShrapnelEntity.class,AbsorberShrapnelRender.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, RenderSpear.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityMissileVolcano.class, RenderMissileNuclear.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityUFO.class, RenderUFO.FACTORY);

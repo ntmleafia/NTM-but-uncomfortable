@@ -5,6 +5,7 @@ import java.util.List;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ILaserable;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.packet.AuxGaugePacket;
@@ -13,6 +14,8 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyUser;
+import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -23,12 +26,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -42,7 +45,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {
+public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEnergyUser, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {
 
 	public long power;
 	public static final long maxPower = 1000000000L;
@@ -61,6 +64,68 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 		tank = new FluidTank(64000);
 	}
 
+	public RayTraceResult raycast(long out) {
+		return Library.leafiaRayTraceBlocksCustom(world,new Vec3d(pos).addVector(0.5,0.5,0.5),new Vec3d(pos).addVector(0.5,0.5,0.5).add(getDirection().scale(range)),(process,config,current) -> {
+			if (!world.isRemote) {
+				Vec3d centerVec = current.posIntended.add(new Vec3d(config.pivotAxisFace.getDirectionVec()).scale(0.5)
+						.add(config.secondaryVector.scale(0.5)));
+				List<Entity> list = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(
+						centerVec.subtract(0.5,0.5,0.5),centerVec.addVector(0.5,0.5,0.5)
+				));
+				for(Entity e : list) {
+					e.attackEntityFrom(ModDamageSource.amsCore, joules*0.000001F);
+					e.setFire(10);
+				}
+			}
+			if (current.posSnapped.equals(pos)) return process.CONTINUE();
+
+			RayTraceResult miss = new RayTraceResult(Type.MISS,current.posIntended,config.pivotAxisFace,current.posSnapped);
+			if (!current.block.canCollideCheck(current.state,true))
+				return process.CONTINUE(miss);
+
+			RayTraceResult result = current.state.collisionRayTrace(world,current.posSnapped,current.posIntended.subtract(config.unitDir.scale(2)),current.posIntended.add(config.unitDir.scale(2)));
+			if (result == null)
+				return process.CONTINUE(miss);
+
+			Vec3d vec = result.hitVec;
+			TileEntity te = world.getTileEntity(current.posSnapped);
+			if(te instanceof ILaserable) {
+				if (!world.isRemote) ((ILaserable)te).addEnergy(out * 100 * watts / 10000, config.pivotAxisFace);
+				return process.RETURN(result);
+			}
+
+			if(te instanceof TileEntityCore) {
+				//out = Math.max(0, ((TileEntityCore)te).burn(out));
+				if (!world.isRemote) ((TileEntityCore) te).incomingSpk += out/333d;
+				//continue;
+				//break;
+				result.hitVec = new Vec3d(te.getPos()); // align to the center
+				return process.RETURN(result);
+			}
+
+			IBlockState state = current.state;
+
+			if (current.block != Blocks.AIR) { //(!state.getRenderType().equals(EnumBlockRenderType.INVISIBLE)) {
+				if (!world.isRemote) {
+					if(state.getMaterial().isLiquid()) {
+						world.playSound(null,vec.x,vec.y,vec.z,SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						world.setBlockToAir(result.getBlockPos());
+						return process.RETURN(result);
+					}
+					@SuppressWarnings("deprecation")
+					float hardness = state.getBlock().getExplosionResistance(null);
+					if(hardness < 10000 && world.rand.nextDouble()/20 < (out * 0.00000001F)/hardness) {
+						world.playSound(null,vec.x,vec.y,vec.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						world.getBlockState(result.getBlockPos()).getBlock().onBlockExploded(world,result.getBlockPos(),new Explosion(world,null,result.getBlockPos().getX(),result.getBlockPos().getY(),result.getBlockPos().getZ(),5,false,false));
+						//world.destroyBlock(pos1, false);
+					}
+				}
+				return process.RETURN(result);
+			} else
+				return process.CONTINUE(result);
+		});
+	}
+
 	@Override
 	public void update() {
 		if (!world.isRemote) {
@@ -68,7 +133,7 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 			this.updateStandardConnections(world, pos);
 			this.updateSPKConnections(world,pos);
 			
-			watts = MathHelper.clamp(watts, 1, 999999100);
+			watts = MathHelper.clamp(watts, 1, 100);
 			long demand = maxPower * Math.min(watts,100) / 2000;
 
 			beam = 0;
@@ -100,10 +165,11 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 				if(joules > 0) {
 					
 					long out = joules;
-					
+
+					/*
 					EnumFacing dir = EnumFacing.getFront(this.getBlockMetadata());
 					for(int i = 1; i <= range; i++) {
-						
+
 						beam = i;
 		
 						int x = pos.getX() + dir.getFrontOffsetX() * i;
@@ -112,56 +178,9 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 						
 						BlockPos pos1 = new BlockPos(x, y, z);
 						
-						TileEntity te = world.getTileEntity(pos1);
-						
-						if(te instanceof ILaserable) {
-							
-							((ILaserable)te).addEnergy(out * 100 * watts / 10000, dir);
-							break;
-						}
-						
-						if(te instanceof TileEntityCore) {
-							//out = Math.max(0, ((TileEntityCore)te).burn(out));
-							((TileEntityCore) te).incomingSpk += out/100d;
-							//continue;
-							break;
-						}
-						
-						IBlockState b = world.getBlockState(pos1);
-						
-						if(b.getBlock() != Blocks.AIR) {
-							
-							if(b.getMaterial().isLiquid()) {
-								world.playSound(null, x + 0.5, y + 0.5, z + 0.5, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-								world.setBlockToAir(pos1);
-								break;
-							}
-							
-							@SuppressWarnings("deprecation")
-							float hardness = b.getBlock().getExplosionResistance(null);
-							if(hardness < 10000 && world.rand.nextDouble()/2 < (out * 0.00000001F)/hardness) {
-								world.playSound(null, x + 0.5, y + 0.5, z + 0.5, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-								world.getBlockState(pos1).getBlock().onBlockExploded(world,pos1,new Explosion(world,null,pos1.getX(),pos1.getY(),pos1.getZ(),5,false,false));
-								//world.destroyBlock(pos1, false);
-							}
-							
-							break;
-						}
-					}
-					
-					double blx = Math.min(pos.getX(), pos.getX() + dir.getFrontOffsetX() * beam) + 0.2;
-					double bux = Math.max(pos.getX(), pos.getX() + dir.getFrontOffsetX() * beam) + 0.8;
-					double bly = Math.min(pos.getY(), pos.getY() + dir.getFrontOffsetY() * beam) + 0.2;
-					double buy = Math.max(pos.getY(), pos.getY() + dir.getFrontOffsetY() * beam) + 0.8;
-					double blz = Math.min(pos.getZ(), pos.getZ() + dir.getFrontOffsetZ() * beam) + 0.2;
-					double buz = Math.max(pos.getZ(), pos.getZ() + dir.getFrontOffsetZ() * beam) + 0.8;
-					
-					List<Entity> list = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(blx, bly, blz, bux, buy, buz));
-					
-					for(Entity e : list) {
-						e.attackEntityFrom(ModDamageSource.amsCore, joules*0.000001F);
-						e.setFire(10);
-					}
+
+					}*/
+					raycast(out);
 
 					joules = 0;
 				}
@@ -171,13 +190,33 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 			}
 			
 			this.markDirty();
-			
-			PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
+
+			LeafiaPacket packet = LeafiaPacket._start(this)
+					.__write(0,isOn)
+					.__write(1,watts)
+					.__write(2,prev);
+			//if (watts != prevWatts)
+			//	packet.__write(1,watts);
+			packet.__sendToAffectedClients();
+			/*
+			//PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
 			if(watts != prevWatts) PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, watts, 1), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
 			PacketDispatcher.wrapper.sendToAllTracking(new AuxLongPacket(pos, prev, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
 			prevWatts = watts;
-			
+			*/
 			//this.networkPack(data, 250);
+		} else if (isOn) {
+			lastRaycast = raycast(0);
+		}
+	}
+	public RayTraceResult lastRaycast = null;
+	@Override
+	public void onReceivePacketLocal(byte key,Object value) {
+		super.onReceivePacketLocal(key,value);
+		switch(key) {
+			case 0: isOn = (boolean)value; break;
+			case 1: watts = (int)value; break;
+			case 2: prev = (long)value; break;
 		}
 	}
 
@@ -343,5 +382,10 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 	@Callback
 	public Object[] storedCoolnt(Context context, Arguments args) {
 		return new Object[] {tank.getFluidAmount()};
+	}
+
+	@Override
+	public String getPacketIdentifier() {
+		return "DFC_BOOSTER";
 	}
 }

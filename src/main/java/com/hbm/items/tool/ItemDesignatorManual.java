@@ -12,25 +12,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemDesignatorManual extends Item {
+public class ItemDesignatorManual extends ItemDesignator {
 
 	public ItemDesignatorManual(String s) {
-		this.setUnlocalizedName(s);
-		this.setRegistryName(s);
-		this.setCreativeTab(MainRegistry.missileTab);
-		
-		ModItems.ALL_ITEMS.add(this);
-	}
-	
-	@Override
-	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-		stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setInteger("xCoord", 0);
-		stack.getTagCompound().setInteger("zCoord", 0);
+		super(s);
 	}
 	
 	@Override
@@ -44,7 +36,12 @@ public class ItemDesignatorManual extends Item {
 			tooltip.add(TextFormatting.YELLOW + I18nUtil.resolveKey("desc.choosetarget2"));
 		}
 	}
-	
+
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player,World world,BlockPos pos,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
+		return EnumActionResult.PASS;
+	}
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if(worldIn.isRemote)

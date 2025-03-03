@@ -42,11 +42,13 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	public TileEntityBarrel() {
 		super(4);
 		tank = new FluidTank(-1);
+		tank.setTileEntity(this);
 	}
 	
 	public TileEntityBarrel(int cap) {
 		super(4);
 		tank = new FluidTank(cap);
+		tank.setTileEntity(this);
 	}
 
 	@Override

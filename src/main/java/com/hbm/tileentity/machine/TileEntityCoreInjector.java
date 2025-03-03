@@ -7,6 +7,7 @@ import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 
+import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +26,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityCoreInjector extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor {
+public class TileEntityCoreInjector extends DFCBaseTE implements ITickable, IFluidHandler, ITankPacketAcceptor {
 
 	public FluidTank[] tanks;
 	public static final int range = 15;
@@ -40,10 +41,11 @@ public class TileEntityCoreInjector extends TileEntityMachineBase implements ITi
 
 	@Override
 	public void update() {
+		TileEntityCore core = getCore(range);
 		if(!world.isRemote) {
 
-			beam = 0;
-			
+			//beam = 0;
+			/*
 			EnumFacing dir = EnumFacing.getFront(this.getBlockMetadata());
 			for(int i = 1; i <= range; i++) {
 
@@ -57,18 +59,20 @@ public class TileEntityCoreInjector extends TileEntityMachineBase implements ITi
 					
 					fillDFC((TileEntityCore)te);
 					
-					beam = i;
+					//beam = i;
 					break;
 				}
 				
 				if(world.getBlockState(pos1).getBlock() != Blocks.AIR)
 					break;
-			}
+			}*/
+			if (core != null)
+				fillDFC(core);
 			
 			this.markDirty();
 
 			PacketDispatcher.wrapper.sendToAllTracking(new FluidTankPacket(pos, tanks), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
-			PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
+			//PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
 		}
 	}
 
@@ -190,4 +194,8 @@ public class TileEntityCoreInjector extends TileEntityMachineBase implements ITi
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
+	public String getPacketIdentifier() {
+		return "dfc_injector";
+	}
 }

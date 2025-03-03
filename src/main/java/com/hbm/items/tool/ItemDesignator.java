@@ -36,6 +36,7 @@ public class ItemDesignator extends Item {
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		stack.setTagCompound(new NBTTagCompound());
 		stack.getTagCompound().setInteger("xCoord", 0);
+		stack.getTagCompound().setInteger("yCoord", 0);
 		stack.getTagCompound().setInteger("zCoord", 0);
 	}
 	
@@ -46,6 +47,7 @@ public class ItemDesignator extends Item {
 			tooltip.add(TextFormatting.GREEN + I18nUtil.resolveKey("desc.targetcoord")+"§r");
 			tooltip.add("§aX: " + String.valueOf(stack.getTagCompound().getInteger("xCoord")) + "§r");
 			tooltip.add("§aZ: " + String.valueOf(stack.getTagCompound().getInteger("zCoord")) + "§r");
+			tooltip.add("§2(Y: " + String.valueOf(stack.getTagCompound().getInteger("yCoord")) + ")§r");
 		} else {
 			tooltip.add(TextFormatting.YELLOW + I18nUtil.resolveKey("desc.choosetarget1"));
 		}
@@ -59,10 +61,12 @@ public class ItemDesignator extends Item {
 			if(stack.getTagCompound() != null)
 			{
 				stack.getTagCompound().setInteger("xCoord", pos.getX());
+				stack.getTagCompound().setInteger("yCoord", pos.getY());
 				stack.getTagCompound().setInteger("zCoord", pos.getZ());
 			} else {
 				stack.setTagCompound(new NBTTagCompound());
 				stack.getTagCompound().setInteger("xCoord", pos.getX());
+				stack.getTagCompound().setInteger("yCoord", pos.getY());
 				stack.getTagCompound().setInteger("zCoord", pos.getZ());
 			}
 	        if(world.isRemote)

@@ -248,9 +248,9 @@ public class AuxGaugePacket extends RecordablePacket {
 					} else if(te instanceof TileEntityCoreInjector) {
 						if(m.id == 0)
 							((TileEntityCoreInjector) te).beam = m.value;
-					} else if(te instanceof TileEntityCoreStabilizer) {
-						if(m.id == 0)
-							((TileEntityCoreStabilizer) te).beam = m.value;
+//					} else if(te instanceof TileEntityCoreStabilizer) {
+//						if(m.id == 0)
+//							((TileEntityCoreStabilizer) te).beam = m.value;
 					} else if(te instanceof TileEntityMachineGenerator){
 						if(m.id == 0)
 							((TileEntityMachineGenerator) te).heat = m.value;

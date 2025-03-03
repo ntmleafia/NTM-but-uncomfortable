@@ -1,5 +1,7 @@
 package com.leafia.eventbuses;
 
+import com.hbm.entity.logic.EntityNukeExplosionMK3;
+import com.hbm.entity.logic.EntityNukeExplosionMK3.ATEntry;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
@@ -29,6 +31,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
+import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fluids.FluidEvent.FluidFillingEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidMotionEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidSpilledEvent;
@@ -59,6 +62,14 @@ public class LeafiaServerListener {
 					if (entry.getValue().contains(evt.getPos()))
 						entry.getKey().rebuildMap();
 				}
+			}
+		}
+		@SubscribeEvent
+		public void worldInit(Load evt) {
+			List<ATEntry> entries = new ArrayList<>(EntityNukeExplosionMK3.at.keySet());
+			for (ATEntry entry : entries) {
+				if (entry.dim == evt.getWorld().provider.getDimension())
+					EntityNukeExplosionMK3.at.remove(entry);
 			}
 		}
 	}

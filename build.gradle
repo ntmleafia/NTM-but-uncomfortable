@@ -16,6 +16,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'org.reflections:reflections:0.10.2'
     }
 }
         

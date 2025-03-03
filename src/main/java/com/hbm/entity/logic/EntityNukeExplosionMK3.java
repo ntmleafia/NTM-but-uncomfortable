@@ -14,6 +14,7 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.util.ContaminationUtil;
 
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
@@ -289,6 +290,7 @@ public class EntityNukeExplosionMK3 extends Entity implements IChunkLoader {
 		PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, x+0.5D, y+0.5D, z+0.5D), new TargetPoint(dim, x, y, z, 150));
 	}
 
+	public static BlockPos lastDetectedJammer = new BlockPos(0,0,0);
 	public static boolean isJammed(World world, Entity entity) {
 		
 		Iterator<Entry<ATEntry, Long>> it = at.entrySet().iterator();
@@ -313,6 +315,8 @@ public class EntityNukeExplosionMK3 extends Entity implements IChunkLoader {
 					createParticle(world, jammer.dim, entity.posX, entity.posY, entity.posZ, 1.0F, 0.5F, 0.0F);
 					createParticle(world, jammer.dim, jammer.x, jammer.y, jammer.z, 0.0F, 0.75F, 1.0F);
 				}
+				lastDetectedJammer = new BlockPos(jammer.x,jammer.y,jammer.z);
+
 				entity.setDead();
 				return true;
 			}
@@ -321,7 +325,7 @@ public class EntityNukeExplosionMK3 extends Entity implements IChunkLoader {
 	}
 
 	public static class ATEntry {
-		int dim;
+		public int dim;
 		int x;
 		int y;
 		int z;
