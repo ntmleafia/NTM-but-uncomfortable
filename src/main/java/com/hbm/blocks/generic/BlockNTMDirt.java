@@ -1,9 +1,6 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.SoundType;
@@ -17,10 +14,12 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Random;
+
 public class BlockNTMDirt extends BlockDirt {
 
 	public BlockNTMDirt(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -40,7 +39,7 @@ public class BlockNTMDirt extends BlockDirt {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getLocalizedName() {
-		return ("" + I18n.format(Blocks.DIRT.getUnlocalizedName()) + ".name").trim();
+		return ("" + I18n.format(Blocks.DIRT.getTranslationKey()) + ".name").trim();
 	}
 	
 	@Override

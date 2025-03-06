@@ -1,7 +1,6 @@
 package com.hbm.creativetabs;
 
 import com.hbm.blocks.ModBlocks;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,7 +14,7 @@ public class NukeTab extends CreativeTabs {
 	}
 
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		if(ModBlocks.float_bomb != null){
 			return new ItemStack(Item.getItemFromBlock(ModBlocks.nuke_man));
 		}

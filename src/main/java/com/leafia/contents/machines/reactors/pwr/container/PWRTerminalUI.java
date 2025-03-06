@@ -33,8 +33,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.opengl.GL11;
-//import static com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI.AdjacentType.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -221,7 +219,7 @@ public class PWRTerminalUI extends GuiInfoContainer {
 	static class ColumnVector {
 		final int x;
 		final int y;
-		ColumnVector(EnumFacing facing) { x = facing.getFrontOffsetX(); y = -facing.getFrontOffsetZ(); }
+		ColumnVector(EnumFacing facing) { x = facing.getXOffset(); y = -facing.getZOffset(); }
 		ColumnVector(ColumnPos pos) { x = pos.x; y = -pos.y; }
 		ColumnVector(int x,int y) { this.x = x; this.y = y; }
 		ColumnVector right() { return new ColumnVector(y,-x); }

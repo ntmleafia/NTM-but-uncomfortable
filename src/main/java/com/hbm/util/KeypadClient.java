@@ -1,11 +1,5 @@
 package com.hbm.util;
 
-import java.nio.FloatBuffer;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector4f;
-
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.main.ResourceManager;
@@ -13,7 +7,6 @@ import com.hbm.packet.KeypadServerPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.WavefrontObjDisplayList;
 import com.hbm.render.amlfrom1710.WavefrontObject;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GLAllocation;
@@ -28,6 +21,11 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
+
+import java.nio.FloatBuffer;
 
 @SideOnly(Side.CLIENT)
 public class KeypadClient extends Keypad {

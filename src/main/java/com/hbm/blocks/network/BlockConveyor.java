@@ -1,10 +1,9 @@
 package com.hbm.blocks.network;
 
+import api.hbm.block.IConveyorBelt;
 import api.hbm.block.IToolable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.item.EntityMovingItem;
-import api.hbm.block.IConveyorBelt;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -33,7 +32,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 
 	public BlockConveyor(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -49,14 +48,14 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 		EnumFacing dir = this.getTravelDirection(world, pos);
 		Vec3d snap = this.getClosestSnappingPosition(world, pos, itemPos);
 		Vec3d dest = new Vec3d(
-				snap.x - dir.getFrontOffsetX() * speed,
-				snap.y - dir.getFrontOffsetY() * speed,
-				snap.z - dir.getFrontOffsetZ() * speed);
+				snap.x - dir.getXOffset() * speed,
+				snap.y - dir.getYOffset() * speed,
+				snap.z - dir.getZOffset() * speed);
 		Vec3d motion = new Vec3d(
 				dest.x - itemPos.x,
 				dest.y - itemPos.y,
 				dest.z - itemPos.z);
-		double len = motion.lengthVector();
+		double len = motion.length();
 		Vec3d ret = new Vec3d(
 				itemPos.x + motion.x / len * speed,
 				itemPos.y + motion.y / len * speed,
@@ -66,7 +65,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 
 
 	public EnumFacing getTravelDirection(World world, BlockPos pos) {
-		return EnumFacing.getFront(world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
+		return EnumFacing.byIndex(world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if(!world.isRemote) {
 
 			if(entity instanceof EntityItem && entity.ticksExisted > 10 && !entity.isDead) {
@@ -166,7 +165,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {
@@ -198,7 +197,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 			if(meta > 9) meta -= 8;
 			if(meta > 5) meta -= 4;
 
-			EnumFacing facing = EnumFacing.getFront(meta & 7);
+			EnumFacing facing = EnumFacing.byIndex(meta & 7);
 			newMeta = facing.rotateY().getIndex() + dir * 4;
 		} else {
 			if(dir < 2)

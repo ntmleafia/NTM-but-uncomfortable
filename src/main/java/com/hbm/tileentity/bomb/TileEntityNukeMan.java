@@ -1,7 +1,6 @@
 package com.hbm.tileentity.bomb;
 
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Materials.Nuggies;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;

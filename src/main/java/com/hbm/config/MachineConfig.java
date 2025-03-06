@@ -1,9 +1,9 @@
 package com.hbm.config;
 
-import java.util.HashSet;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.Fluid;
+
+import java.util.HashSet;
 
 public class MachineConfig {
 

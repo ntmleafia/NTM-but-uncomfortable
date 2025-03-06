@@ -1,21 +1,16 @@
 package com.hbm.modules;
 
-import java.util.List;
-
 import com.hbm.config.GeneralConfig;
-import com.hbm.config.RadiationConfig;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.lib.Library;
-import com.hbm.potion.HbmPotion;
 import com.hbm.util.ArmorRegistry;
 import com.hbm.util.ArmorRegistry.HazardClass;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
 import com.hbm.util.I18nUtil;
-
 import com.leafia.dev.MultiRad;
 import com.leafia.dev.MultiRad.RadiationType;
 import com.leafia.dev.items.LeafiaDynamicHazard;
@@ -31,6 +26,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+
+import java.util.List;
 
 public class ItemHazardModule {
 	/**

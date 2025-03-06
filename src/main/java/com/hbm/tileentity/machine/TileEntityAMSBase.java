@@ -1,20 +1,15 @@
 package com.hbm.tileentity.machine;
 
-import java.util.List;
-
 import api.hbm.energy.IEnergyGenerator;
-import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.items.machine.ItemSatChip;
-import com.hbm.saveddata.satellites.SatelliteResonator;
-import com.hbm.saveddata.satellites.SatelliteSavedData;
-import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCatalyst;
+import com.hbm.items.machine.ItemForgeFluidIdentifier;
+import com.hbm.items.machine.ItemSatChip;
 import com.hbm.items.special.ItemAMSCore;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
@@ -22,7 +17,9 @@ import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
-
+import com.hbm.saveddata.satellites.SatelliteResonator;
+import com.hbm.saveddata.satellites.SatelliteSavedData;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -44,6 +41,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import scala.util.Random;
+
+import java.util.List;
 
 public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHandler, ITankPacketAcceptor, IEnergyGenerator {
 

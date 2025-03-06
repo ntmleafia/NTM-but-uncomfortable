@@ -4,9 +4,9 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFallingLeafia;
 import com.hbm.entity.Bruh;
 import com.hbm.items.ModItems.Materials.Powders;
+import com.hbm.potion.HbmPotion;
 import com.leafia.unsorted.ParticleBalefire;
 import com.leafia.unsorted.ParticleBalefireLava;
-import com.hbm.potion.HbmPotion;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -168,8 +168,9 @@ public class AshBalefire extends BlockHazardFallingLeafia {
         if (entity instanceof EntityLivingBase)
             ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(HbmPotion.radiation, 5 * 5, 4));
     }
+
     @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+    public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
         entityIn.setFire(6);
         if (entityIn instanceof EntityLivingBase)
             ((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(HbmPotion.radiation, 5 * 5, 4));
@@ -242,16 +243,16 @@ public class AshBalefire extends BlockHazardFallingLeafia {
                             continue;
                     }
 
-                    double ix = pos.getX() + 0.5F + dir.getFrontOffsetX() + rand.nextDouble() - 0.5D;
+                    double ix = pos.getX() + 0.5F + dir.getXOffset() + rand.nextDouble() - 0.5D;
                     double iy = pos.getY() + offs;
-                    double iz = pos.getZ() + 0.5F + dir.getFrontOffsetZ() + rand.nextDouble() - 0.5D;
+                    double iz = pos.getZ() + 0.5F + dir.getZOffset() + rand.nextDouble() - 0.5D;
 
-                    if (dir.getFrontOffsetX() != 0)
-                        ix = pos.getX() + 0.5F + dir.getFrontOffsetX() * 0.5 + rand.nextDouble() * 0.125 * dir.getFrontOffsetX();
-                    if (dir.getFrontOffsetY() != 0)
+                    if (dir.getXOffset() != 0)
+                        ix = pos.getX() + 0.5F + dir.getXOffset() * 0.5 + rand.nextDouble() * 0.125 * dir.getXOffset();
+                    if (dir.getYOffset() != 0)
                         iy = pos.getY() + state.getValue(LAYERS)/8D + rand.nextDouble() * 0.125;
-                    if (dir.getFrontOffsetZ() != 0)
-                        iz = pos.getZ() + 0.5F + dir.getFrontOffsetZ() * 0.5 + rand.nextDouble() * 0.125 * dir.getFrontOffsetZ();
+                    if (dir.getZOffset() != 0)
+                        iz = pos.getZ() + 0.5F + dir.getZOffset() * 0.5 + rand.nextDouble() * 0.125 * dir.getZOffset();
 
                     ParticleBalefire fx = new ParticleBalefire(world, ix, iy, iz);
                     Minecraft.getMinecraft().effectRenderer.addEffect(fx);

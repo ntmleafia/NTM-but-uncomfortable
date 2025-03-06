@@ -1,14 +1,11 @@
 package com.hbm.particle;
 
-import org.lwjgl.opengl.GL20;
-
 import com.hbm.handler.HbmShaderManager2;
 import com.hbm.handler.LightningGenerator;
 import com.hbm.handler.LightningGenerator.LightningGenInfo;
 import com.hbm.handler.LightningGenerator.LightningNode;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.item.weapon.ItemRenderCrucible;
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
@@ -27,7 +24,7 @@ public class ParticleCrucibleLightning extends ParticleFirstPerson {
 		i.forkLengthRandom = 2;
 		i.forkConeDegrees = 10;
 		Vec3d start = new Vec3d(posXIn, posYIn, posZIn);
-		Vec3d end = start.addVector(0, 0, -1F);
+		Vec3d end = start.add(0, 0, -1F);
 		if(worldIn.rand.nextBoolean()){
 			Vec3d tmp = start;
 			start = end;

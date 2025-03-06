@@ -1,10 +1,7 @@
 package com.leafia.shit;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -12,11 +9,13 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BlockFallingBase extends BlockFalling {
 	
 	public BlockFallingBase(Material m, String s, SoundType type){
 		super(m);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setHarvestLevel("shovel", 0);

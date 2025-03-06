@@ -1,11 +1,8 @@
 package com.hbm.blocks.machine;
 
-import java.util.List;
-
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.util.I18nUtil;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,13 +10,15 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BlockHadronCoil extends Block {
 
 	public int factor;
 	
 	public BlockHadronCoil(Material materialIn, int factor, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.factor = factor;
 		

@@ -1,12 +1,9 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
 import com.hbm.config.WeaponConfig;
 import com.hbm.entity.effect.EntityQuasar;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -14,6 +11,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemDigamma extends ItemHazard {
 

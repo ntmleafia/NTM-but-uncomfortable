@@ -1,14 +1,13 @@
 package com.hbm.handler;
 
-import java.util.Arrays;
-import java.util.UUID;
-
 import com.hbm.items.armor.ItemArmorMod;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.Arrays;
+import java.util.UUID;
 
 public class ArmorModHandler {
 
@@ -116,7 +115,7 @@ public class ArmorModHandler {
 		NBTTagCompound mods = nbt.getCompoundTag(MOD_COMPOUND_KEY);
 		mods.removeTag(MOD_SLOT_KEY + slot);
 		
-		if(mods.hasNoTags())
+		if(mods.isEmpty())
 			clearMods(armor);
 	}
 	
@@ -132,7 +131,7 @@ public class ArmorModHandler {
 		
 		NBTTagCompound nbt = armor.getTagCompound();
 		nbt.removeTag(MOD_COMPOUND_KEY);
-		if(nbt.hasNoTags())
+		if(nbt.isEmpty())
 			armor.setTagCompound(null);
 	}
 	

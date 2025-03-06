@@ -1,9 +1,8 @@
 package api.hbm.energy;
 
 import com.hbm.lib.ForgeDirection;
-
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**

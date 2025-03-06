@@ -1,10 +1,9 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.tileentity.machine.TileEntityMachineReactorLarge;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,7 +21,7 @@ public class ReactorCore extends BlockContainer {
 
 	public ReactorCore(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);

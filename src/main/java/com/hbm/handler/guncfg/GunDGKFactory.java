@@ -1,7 +1,6 @@
 package com.hbm.handler.guncfg;
 
 import com.hbm.handler.BulletConfiguration;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 
 public class GunDGKFactory {

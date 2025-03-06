@@ -1,37 +1,30 @@
 package com.hbm.tileentity.machine;
 
-import java.util.List;
-
+import api.hbm.energy.IEnergyGenerator;
 import com.hbm.entity.particle.EntitySSmokeFX;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.items.ModItems.Upgrades;
-import com.hbm.main.MainRegistry;
 import com.hbm.inventory.EngineRecipes;
-import com.hbm.lib.Library;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.Library;
+import com.hbm.lib.ModDamageSource;
+import com.hbm.main.MainRegistry;
+import com.hbm.packet.*;
 import com.hbm.sound.AudioWrapper;
-import com.hbm.packet.AuxElectricityPacket;
-import com.hbm.packet.AuxParticlePacketNT;
-import com.hbm.packet.FluidTankPacket;
-import com.hbm.packet.PacketDispatcher;
-import com.hbm.packet.TETurbofanPacket;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyGenerator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -44,6 +37,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.List;
 
 public class TileEntityMachineTurbofan extends TileEntityLoadedBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor {
 

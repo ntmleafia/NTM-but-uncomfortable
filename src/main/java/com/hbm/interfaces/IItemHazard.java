@@ -1,7 +1,6 @@
 package com.hbm.interfaces;
 
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 

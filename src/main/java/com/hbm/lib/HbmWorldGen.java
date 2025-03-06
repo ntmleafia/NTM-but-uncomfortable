@@ -1,55 +1,32 @@
 package com.hbm.lib;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.generic.BlockBedrockOreTE.TileEntityBedrockOre;
 import com.hbm.blocks.generic.BlockStorageCrate;
 import com.hbm.blocks.machine.PinkCloudBroadcaster;
 import com.hbm.blocks.machine.SoyuzCapsule;
-import com.hbm.blocks.generic.BlockBedrockOreTE.TileEntityBedrockOre;
-import com.hbm.config.GeneralConfig;
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.BedrockOreJsonConfig;
+import com.hbm.config.CompatibilityConfig;
+import com.hbm.config.GeneralConfig;
 import com.hbm.handler.WeightedRandomChestContentFrom1710;
+import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
-import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.tileentity.machine.TileEntitySafe;
 import com.hbm.tileentity.machine.TileEntitySoyuzCapsule;
-import com.hbm.world.Antenna;
-import com.hbm.world.Barrel;
-import com.hbm.world.Bunker;
-import com.hbm.world.CrashedVertibird;
-import com.hbm.world.DesertAtom001;
-import com.hbm.world.Dud;
-import com.hbm.world.Factory;
-import com.hbm.world.Geyser;
-import com.hbm.world.GeyserLarge;
-import com.hbm.world.LibraryDungeon;
-import com.hbm.world.OilBubble;
-import com.hbm.world.OilSandBubble;
-import com.hbm.world.Radio01;
-import com.hbm.world.Relay;
-import com.hbm.world.Satellite;
-import com.hbm.world.Sellafield;
-import com.hbm.world.Silo;
-import com.hbm.world.Spaceship;
-import com.hbm.world.Vertibird;
+import com.hbm.world.*;
 import com.hbm.world.dungeon.AncientTomb;
 import com.hbm.world.dungeon.ArcticVault;
 import com.hbm.world.feature.DepthDeposit;
 import com.hbm.world.feature.OilSpot;
 import com.hbm.world.generator.CellularDungeonFactory;
 import com.hbm.world.generator.DungeonToolbox;
-
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockSkull;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
-import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
@@ -61,8 +38,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.fml.common.IWorldGenerator;
+
+import java.util.Random;
 
 public class HbmWorldGen implements IWorldGenerator {
 
@@ -380,7 +359,7 @@ public class HbmWorldGen implements IWorldGenerator {
 				int y = world.getHeight(x, z);
 
 				if (world.getBlockState(new BlockPos(x, y-1, z)).isSideSolid(world, new BlockPos(x, y-1, z), EnumFacing.UP)){
-					world.setBlockState(new BlockPos(x, y, z), ModBlocks.broadcaster_pc.getDefaultState().withProperty(PinkCloudBroadcaster.FACING, EnumFacing.getFront(rand.nextInt(4) + 2)), 2);
+					world.setBlockState(new BlockPos(x, y, z), ModBlocks.broadcaster_pc.getDefaultState().withProperty(PinkCloudBroadcaster.FACING, EnumFacing.byIndex(rand.nextInt(4) + 2)), 2);
 
 					if (GeneralConfig.enableDebugMode)
 						MainRegistry.logger.info("[Debug] Successfully spawned corrupted broadcaster at x=" + x + " y=" + y + " z=" + z);
@@ -484,7 +463,7 @@ public class HbmWorldGen implements IWorldGenerator {
 					int y = world.getHeight(x, z);
 
 					if (world.getBlockState(new BlockPos(x, y-1, z)).isSideSolid(world, new BlockPos(x, y-1, z), EnumFacing.UP)) {
-						boolean set = world.setBlockState(new BlockPos(x, y, z), ModBlocks.safe.getDefaultState().withProperty(BlockStorageCrate.FACING, EnumFacing.getFront(rand.nextInt(4) + 2)), 2);
+						boolean set = world.setBlockState(new BlockPos(x, y, z), ModBlocks.safe.getDefaultState().withProperty(BlockStorageCrate.FACING, EnumFacing.byIndex(rand.nextInt(4) + 2)), 2);
 
 						if(set){
 							switch (rand.nextInt(10)) {

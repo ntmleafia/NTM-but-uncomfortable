@@ -1,14 +1,12 @@
 package com.hbm.animloader;
 
-import java.nio.FloatBuffer;
-
+import com.hbm.render.amlfrom1710.Vec3;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Quaternion;
 
-import com.hbm.render.amlfrom1710.Vec3;
-
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import java.nio.FloatBuffer;
 
 public class Transform {
 
@@ -30,9 +28,9 @@ public class Transform {
 	}
 	
 	private Vec3 getScaleFromMatrix(float[] matrix){
-		float scaleX = (float) Vec3.createVectorHelper(matrix[0], matrix[1], matrix[2]).lengthVector();
-		float scaleY = (float) Vec3.createVectorHelper(matrix[4], matrix[5], matrix[6]).lengthVector();
-		float scaleZ = (float) Vec3.createVectorHelper(matrix[8], matrix[9], matrix[10]).lengthVector();
+		float scaleX = (float) Vec3.createVectorHelper(matrix[0], matrix[1], matrix[2]).length();
+		float scaleY = (float) Vec3.createVectorHelper(matrix[4], matrix[5], matrix[6]).length();
+		float scaleZ = (float) Vec3.createVectorHelper(matrix[8], matrix[9], matrix[10]).length();
 		
 		matrix[0] = matrix[0]/scaleX;
 		matrix[1] = matrix[1]/scaleX;

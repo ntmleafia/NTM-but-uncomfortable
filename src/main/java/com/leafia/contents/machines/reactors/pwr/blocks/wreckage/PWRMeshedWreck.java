@@ -110,7 +110,7 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 				for (WreckBound hitbox : variation.hitboxes) {
 					WreckBound bound = hitbox.reflect();
 					// rotation algorithm parity to RenderPWRMeshedWreck
-					if (face.getFrontOffsetY() != 0) {
+					if (face.getYOffset() != 0) {
 						if (face.equals(EnumFacing.DOWN))
 							bound = bound.rotateX(-180);
 					} else {
@@ -133,7 +133,7 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 	public void randomDisplayTick(IBlockState stateIn,World world,BlockPos pos,Random rand) {
 		super.randomDisplayTick(stateIn,world,pos,rand);
 		if (world.isBlockLoaded(pos)) {
-			Chunk chunk = world.getChunkFromBlockCoords(pos);
+			Chunk chunk = world.getChunk(pos);
 			TileEntity entity = chunk.getTileEntity(pos,EnumCreateEntityType.CHECK);
 			if (entity != null) {
 				if (entity instanceof PWRMeshedWreckEntity) {
@@ -191,7 +191,7 @@ public abstract class PWRMeshedWreck extends BlockBase implements ITileEntityPro
 		return ((EnumFacing)state.getValue(FACING)).getIndex();
 	}
 	@Override
-	public IBlockState getStateFromMeta(int meta) { EnumFacing enumfacing = EnumFacing.getFront(meta); return this.getDefaultState().withProperty(FACING, enumfacing); }
+	public IBlockState getStateFromMeta(int meta) { EnumFacing enumfacing = EnumFacing.byIndex(meta); return this.getDefaultState().withProperty(FACING, enumfacing); }
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot){ return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING))); }
 	@Override

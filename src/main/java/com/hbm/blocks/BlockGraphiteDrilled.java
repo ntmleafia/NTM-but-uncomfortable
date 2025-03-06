@@ -4,7 +4,6 @@ import com.hbm.blocks.machine.pile.BlockGraphiteDrilledBase;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.lib.HBMSoundHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

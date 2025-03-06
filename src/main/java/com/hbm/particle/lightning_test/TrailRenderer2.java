@@ -1,17 +1,14 @@
 package com.hbm.particle.lightning_test;
 
-import java.nio.ByteBuffer;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.render.GLCompat;
-
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nullable;
+import java.nio.ByteBuffer;
+import java.util.List;
 
 public class TrailRenderer2 {
 

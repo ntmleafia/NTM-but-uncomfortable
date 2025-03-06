@@ -1,14 +1,13 @@
 package com.hbm.entity.missile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.entity.effect.EntityBlackHole;
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Armory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityMissileBHole extends EntityMissileBaseAdvanced {
 

@@ -1,7 +1,5 @@
 package com.hbm.hazard.type;
 
-import java.util.List;
-
 import com.hbm.config.GeneralConfig;
 import com.hbm.hazard.HazardModifier;
 import com.hbm.items.ModItems;
@@ -10,7 +8,6 @@ import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class HazardTypeRadiation extends HazardTypeBase {
 

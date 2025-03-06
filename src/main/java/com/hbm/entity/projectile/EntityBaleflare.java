@@ -1,13 +1,10 @@
 package com.hbm.entity.projectile;
 
-import java.util.List;
-
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.BombConfig;
-import com.hbm.entity.logic.EntityBalefire;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
+import com.hbm.entity.logic.EntityBalefire;
 import com.hbm.entity.particle.EntitySSmokeFX;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,14 +24,12 @@ import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class EntityBaleflare extends Entity implements IProjectile {
 
@@ -425,7 +420,7 @@ public class EntityBaleflare extends Entity implements IProjectile {
 
                     if (newState.getMaterial() != Material.AIR)
                     {
-                    	newState.getBlock().onEntityCollidedWithBlock(world, newPos, newState, this);
+                    	newState.getBlock().onEntityCollision(world, newPos, newState, this);
                     }
                 }
             }

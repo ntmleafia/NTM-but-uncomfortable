@@ -1,12 +1,11 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyUser;
+import com.hbm.items.ModItems;
+import com.hbm.items.machine.ItemLens;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
-import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemLens;
-
-import api.hbm.energy.IEnergyUser;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -29,94 +28,106 @@ import java.util.LinkedHashMap;
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
 public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent {
 
-	public long power;
-	public static final long maxPower = 10000000000000L;
+    public long power;
+    public static final long maxPower = 10000000000000L;
 
-	@Override
-	public String getPacketIdentifier() {
-		return "dfc_stabilizer";
-	}
+    @Override
+    public String getPacketIdentifier() {
+        return "dfc_stabilizer";
+    }
 
-	public boolean cl_hasLens = false;
+    public boolean cl_hasLens = false;
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void onReceivePacketLocal(byte key, Object value) {
-		if (key == 0) {
-			cl_hasLens = (int)value >= 0;
-			if (cl_hasLens)
-				this.lens = LensType.values()[(int)value];
-		} if (key == 1)
-			this.isOn = (boolean)value;
-		//if (key == 2)
-			//this.innerColor = (int)value;
-		super.onReceivePacketLocal(key,value);
-	}
-	@Override
-	public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void onReceivePacketLocal(byte key, Object value) {
+        if (key == 0) {
+            cl_hasLens = (int) value >= 0;
+            if (cl_hasLens)
+                this.lens = LensType.values()[(int) value];
+        }
+        if (key == 1)
+            this.isOn = (boolean) value;
+        //if (key == 2)
+        //this.innerColor = (int)value;
+        super.onReceivePacketLocal(key, value);
+    }
 
-	@Override
-	public void onPlayerValidate(EntityPlayer plr) {
-		super.onPlayerValidate(plr);
-	}
+    @Override
+    public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {
+    }
 
-	@Override
-	public String getComponentName() {
-		return "dfc_communicator";
-	}
-	@Callback
-	public Object[] analyze(Context context, Arguments args) {
-		TileEntityCore core = getCore();
-		if (isOn && core != null) {
-			LinkedHashMap<String,Object> mop = new LinkedHashMap<>();
-			mop.put("heat",core.heat);
-			mop.put("restriction",core.field);
-			mop.put("stress",core.heat/(float)core.field);
-			mop.put("corruption",core.overload/60F);
-			mop.put("fuelA",core.tanks[0].getFluidAmount());
-			mop.put("fuelB",core.tanks[1].getFluidAmount());
-			return new Object[] {mop};
-		}
-		return new Object[] {"COULDN'T CONNECT TO THE CORE"};
-	}
-	@Callback(doc = "setLevel(newLevel: number)->(previousLevel: number)")
-	public Object[] setLevel(Context context, Arguments args) {
-		Object[] prev = new Object[] {watts};
-		watts = MathHelper.clamp(args.checkInteger(0),1,100);
-		return prev;
-	}
-	@Callback(doc = "getLevel()->(level: number)")
-	public Object[] getLevel(Context context, Arguments args) {
-		return new Object[] {watts};
-	}
-	@Callback(doc = "validate()->(success: boolean) - Whether the stabilizer is working or not")
-	public Object[] validate(Context context, Arguments args) {
-		return new Object[] {isOn};
-	}
-	@Callback(doc = "durability()->(lensDurability: int, maximum: int) - Returns currently installed lens' durability, or 0 if missing.")
-	public Object[] durability(Context context, Arguments args) {
-		ItemStack stack = inventory.getStackInSlot(0);
-		if(stack.getItem() instanceof ItemLens) {
-			ItemLens lens = (ItemLens) inventory.getStackInSlot(0).getItem();
-			return new Object[] {ItemLens.getLensDamage(stack),lens.maxDamage};
-		}
-		return new Object[] {0,0};
-	}
-	@Callback(doc = "getPower(); returns the current power level - long")
-	public Object[] getPower(Context context, Arguments args) {
-		return new Object[] {power};
-	}
-	@Callback(doc = "getMaxPower(); returns the maximum power level - long")
-	public Object[] getMaxPower(Context context, Arguments args) {
-		return new Object[] {getMaxPower()};
-	}
-	@Callback(doc = "getChargePercent(); returns the charge in percent - double")
-	public Object[] getChargePercent(Context context, Arguments args) {
-		return new Object[] {100D * getPower()/(double)getMaxPower()};
-	}
-	@Nullable
-	TileEntityCore getCore() {
-		return super.getCore(range);
+    @Override
+    public void onPlayerValidate(EntityPlayer plr) {
+        super.onPlayerValidate(plr);
+    }
+
+    @Override
+    public String getComponentName() {
+        return "dfc_communicator";
+    }
+
+    @Callback
+    public Object[] analyze(Context context, Arguments args) {
+        TileEntityCore core = getCore();
+        if (isOn && core != null) {
+            LinkedHashMap<String, Object> mop = new LinkedHashMap<>();
+            mop.put("heat", core.heat);
+            mop.put("restriction", core.field);
+            mop.put("stress", core.heat / (float) core.field);
+            mop.put("corruption", core.overload / 60F);
+            mop.put("fuelA", core.tanks[0].getFluidAmount());
+            mop.put("fuelB", core.tanks[1].getFluidAmount());
+            return new Object[]{mop};
+        }
+        return new Object[]{"COULDN'T CONNECT TO THE CORE"};
+    }
+
+    @Callback(doc = "setLevel(newLevel: number)->(previousLevel: number)")
+    public Object[] setLevel(Context context, Arguments args) {
+        Object[] prev = new Object[]{watts};
+        watts = MathHelper.clamp(args.checkInteger(0), 1, 100);
+        return prev;
+    }
+
+    @Callback(doc = "getLevel()->(level: number)")
+    public Object[] getLevel(Context context, Arguments args) {
+        return new Object[]{watts};
+    }
+
+    @Callback(doc = "validate()->(success: boolean) - Whether the stabilizer is working or not")
+    public Object[] validate(Context context, Arguments args) {
+        return new Object[]{isOn};
+    }
+
+    @Callback(doc = "durability()->(lensDurability: int, maximum: int) - Returns currently installed lens' durability, or 0 if missing.")
+    public Object[] durability(Context context, Arguments args) {
+        ItemStack stack = inventory.getStackInSlot(0);
+        if (stack.getItem() instanceof ItemLens) {
+            ItemLens lens = (ItemLens) inventory.getStackInSlot(0).getItem();
+            return new Object[]{ItemLens.getLensDamage(stack), lens.maxDamage};
+        }
+        return new Object[]{0, 0};
+    }
+
+    @Callback(doc = "getPower(); returns the current power level - long")
+    public Object[] getPower(Context context, Arguments args) {
+        return new Object[]{power};
+    }
+
+    @Callback(doc = "getMaxPower(); returns the maximum power level - long")
+    public Object[] getMaxPower(Context context, Arguments args) {
+        return new Object[]{getMaxPower()};
+    }
+
+    @Callback(doc = "getChargePercent(); returns the charge in percent - double")
+    public Object[] getChargePercent(Context context, Arguments args) {
+        return new Object[]{100D * getPower() / (double) getMaxPower()};
+    }
+
+    @Nullable
+    TileEntityCore getCore() {
+        return super.getCore(range);
 		/*
 		EnumFacing dir = EnumFacing.getFront(this.getBlockMetadata());
 		for(int i = 1; i <= range; i++) {
@@ -135,55 +146,58 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 				break;
 		}
 		return null;*/
-	}
-	public enum LensType {
-		STANDARD(0x0c222c,0x7F7F7F,ModItems.ams_lens),
-		BLANK(0x121212,0x646464,ModItems.ams_focus_blank),
-		LIMITER(0x001733,0x7F7F7F,ModItems.ams_focus_limiter),
-		BOOSTER(0x4f1600,0x7F7F7F,ModItems.ams_focus_booster),
-		OMEGA(0x64001e,0x9A9A9A,ModItems.ams_focus_omega);
-		public final int outerColor;
-		public final int innerColor;
-		public final Item item;
-		LensType(int outerColor,int innerColor,Item item) {
-			this.outerColor = outerColor;
-			this.innerColor = innerColor;
-			this.item = item;
-		}
-	}
-	public int watts;
-	//public int beam;
-	public LensType lens = LensType.STANDARD;
-	public boolean isOn;
-	
-	public static final int range = 15;
-	
-	public TileEntityCoreStabilizer() {
-		super(1);
-		
-	}
+    }
 
-	@Override
-	public void update() {
-		if(!world.isRemote) {
+    public enum LensType {
+        STANDARD(0x0c222c, 0x7F7F7F, ModItems.ams_lens),
+        BLANK(0x121212, 0x646464, ModItems.ams_focus_blank),
+        LIMITER(0x001733, 0x7F7F7F, ModItems.ams_focus_limiter),
+        BOOSTER(0x4f1600, 0x7F7F7F, ModItems.ams_focus_booster),
+        OMEGA(0x64001e, 0x9A9A9A, ModItems.ams_focus_omega);
+        public final int outerColor;
+        public final int innerColor;
+        public final Item item;
 
-			this.updateStandardConnections(world, pos);
-			
-			watts = MathHelper.clamp(watts, 1, 100);
-			long demand = (long) Math.pow(watts, 6);
-			isOn = false;
+        LensType(int outerColor, int innerColor, Item item) {
+            this.outerColor = outerColor;
+            this.innerColor = innerColor;
+            this.item = item;
+        }
+    }
 
-			//beam = 0;
+    public int watts;
+    //public int beam;
+    public LensType lens = LensType.STANDARD;
+    public boolean isOn;
 
-			ItemLens lens = null;
-			if(inventory.getStackInSlot(0).getItem() instanceof ItemLens){
-				lens = (ItemLens) inventory.getStackInSlot(0).getItem();
-				for (LensType type : LensType.values()) {
-					if (type.item == lens) {
-						this.lens = type;
-						break;
-					}
-				}
+    public static final int range = 15;
+
+    public TileEntityCoreStabilizer() {
+        super(1);
+
+    }
+
+    @Override
+    public void update() {
+        if (!world.isRemote) {
+
+            this.updateStandardConnections(world, pos);
+
+            watts = MathHelper.clamp(watts, 1, 100);
+            long demand = (long) Math.pow(watts, 6);
+            isOn = false;
+
+            //beam = 0;
+
+            ItemLens lens = null;
+            if (inventory.getStackInSlot(0).getItem() instanceof ItemLens) {
+                lens = (ItemLens) inventory.getStackInSlot(0).getItem();
+                for (LensType type : LensType.values()) {
+                    if (type.item == lens) {
+                        this.lens = type;
+                        break;
+                    }
+                }
 //				if (lens == ModItems.ams_focus_blank) wtf is this stupid shit
 //					this.lens = LensType.BLANK;
 //				else if (lens == ModItems.ams_lens)
@@ -194,97 +208,96 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 //					this.lens = LensType.BOOSTER;
 //				else if (lens == ModItems.ams_focus_omega)
 //					this.lens = LensType.OMEGA;
-			}
+            }
 
-			if(lens != null && power >= demand * lens.drainMod) {
-				isOn = true;
-				TileEntityCore core = getCore();
-				if (core != null) {
-					//core.field += (int)(watts * lens.fieldMod);
-					core.stabilization += lens.fieldMod*(watts/100d);
-					core.energyMod += lens.energyMod;
-					this.power -= (long)(demand * lens.drainMod);
+            if (lens != null && power >= demand * lens.drainMod) {
+                isOn = true;
+                TileEntityCore core = getCore();
+                if (core != null) {
+                    //core.field += (int)(watts * lens.fieldMod);
+                    core.stabilization += lens.fieldMod * (watts / 100d);
+                    core.energyMod += lens.energyMod;
+                    this.power -= (long) (demand * lens.drainMod);
 
-					long dmg = ItemLens.getLensDamage(inventory.getStackInSlot(0));
-					dmg += watts;
+                    long dmg = ItemLens.getLensDamage(inventory.getStackInSlot(0));
+                    dmg += watts;
 
-					if(dmg >= lens.maxDamage)
-						inventory.setStackInSlot(0, ItemStack.EMPTY);
-					else
-						ItemLens.setLensDamage(inventory.getStackInSlot(0), dmg);
-				}
-			}
-			//PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
-			LeafiaPacket._start(this)
-					.__write((byte)0,lens != null ? this.lens.ordinal() : -1)
-					.__write(1,isOn)
-					//.__write((byte)1,this.lens.outerColor)
-					//.__write((byte)2,this.lens.innerColor)
-					.__sendToClients(250);
-		} else if (isOn)
-			lastGetCore = getCore();
-	}
+                    if (dmg >= lens.maxDamage)
+                        inventory.setStackInSlot(0, ItemStack.EMPTY);
+                    else
+                        ItemLens.setLensDamage(inventory.getStackInSlot(0), dmg);
+                }
+            }
+            //PacketDispatcher.wrapper.sendToAllTracking(new AuxGaugePacket(pos, beam, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 250));
+            LeafiaPacket._start(this)
+                    .__write((byte) 0, lens != null ? this.lens.ordinal() : -1)
+                    .__write(1, isOn)
+                    //.__write((byte)1,this.lens.outerColor)
+                    //.__write((byte)2,this.lens.innerColor)
+                    .__sendToClients(250);
+        } else if (isOn)
+            lastGetCore = getCore();
+    }
 
-	@Override
-	public void networkUnpack(NBTTagCompound data) {
-		power = data.getLong("power");
-		watts = data.getInteger("watts");
-		isOn = data.getBoolean("isOn");
-	}
-	
-	@Override
-	public String getName() {
-		return "container.dfcStabilizer";
-	}
+    @Override
+    public void networkUnpack(NBTTagCompound data) {
+        power = data.getLong("power");
+        watts = data.getInteger("watts");
+        isOn = data.getBoolean("isOn");
+    }
 
-	public long getPowerScaled(long i) {
-		return (power * i) / maxPower;
-	}
-	
-	public int getWattsScaled(int i) {
-		return (watts * i) / 100;
-	}
+    @Override
+    public String getName() {
+        return "container.dfcStabilizer";
+    }
 
-	@Override
-	public void setPower(long i) {
-		this.power = i;
-	}
+    public long getPowerScaled(long i) {
+        return (power * i) / maxPower;
+    }
 
-	@Override
-	public long getPower() {
-		return this.power;
-	}
+    public int getWattsScaled(int i) {
+        return (watts * i) / 100;
+    }
 
-	@Override
-	public long getMaxPower() {
-		return maxPower;
-	}
-	
-	@Override
-	public AxisAlignedBB getRenderBoundingBox() {
-		return TileEntity.INFINITE_EXTENT_AABB;
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public double getMaxRenderDistanceSquared()
-	{
-		return 65536.0D;
-	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		power = compound.getLong("power");
-		watts = compound.getInteger("watts");
-		isOn = compound.getBoolean("isOn");
-		super.readFromNBT(compound);
-	}
-	
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setLong("power", power);
-		compound.setInteger("watts", watts);
-		compound.setBoolean("isOn", isOn);
-		return super.writeToNBT(compound);
-	}
+    @Override
+    public void setPower(long i) {
+        this.power = i;
+    }
+
+    @Override
+    public long getPower() {
+        return this.power;
+    }
+
+    @Override
+    public long getMaxPower() {
+        return maxPower;
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return TileEntity.INFINITE_EXTENT_AABB;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public double getMaxRenderDistanceSquared() {
+        return 65536.0D;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound compound) {
+        power = compound.getLong("power");
+        watts = compound.getInteger("watts");
+        isOn = compound.getBoolean("isOn");
+        super.readFromNBT(compound);
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setLong("power", power);
+        compound.setInteger("watts", watts);
+        compound.setBoolean("isOn", isOn);
+        return super.writeToNBT(compound);
+    }
 }

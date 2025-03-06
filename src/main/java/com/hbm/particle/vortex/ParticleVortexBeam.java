@@ -1,23 +1,21 @@
 package com.hbm.particle.vortex;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ResourceManager;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class ParticleVortexBeam extends Particle {
 
@@ -88,13 +86,13 @@ public class ParticleVortexBeam extends Particle {
         
         Vec3d particleAxis = new Vec3d(mX, mY, mZ).subtract(f5, f6, f7);
         Vec3d dissolveAmount = particleAxis.scale(timeScale);
-        Vec3d back = particleAxis.normalize().scale(!thirdPerson ? 22*particleAxis.lengthVector()*0.01F : 0);
+        Vec3d back = particleAxis.normalize().scale(!thirdPerson ? 22*particleAxis.length()*0.01F : 0);
         dissolveAmount = dissolveAmount.subtract(back).scale(0.25);
         Vec3d toPlayer = new Vec3d(f5, f6-entityIn.getEyeHeight(), f7);
         Vec3d point1 = toPlayer.crossProduct(particleAxis).normalize().scale(0.5*particleScale);
         Vec3d point2 = point1.scale(-1);
-        point1 = point1.addVector(f5, f6, f7);
-        point2 = point2.addVector(f5, f6, f7);
+        point1 = point1.add(f5, f6, f7);
+        point2 = point2.add(f5, f6, f7);
         
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);

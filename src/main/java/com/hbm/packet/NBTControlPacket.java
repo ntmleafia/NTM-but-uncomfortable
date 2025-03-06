@@ -1,15 +1,10 @@
 package com.hbm.packet;
 
-import java.io.IOException;
-
 import com.hbm.interfaces.IControlReceiver;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -63,7 +58,7 @@ public class NBTControlPacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(NBTControlPacket m, MessageContext ctx) {
 
-			ctx.getServerHandler().player.mcServer.addScheduledTask(() -> {
+			ctx.getServerHandler().player.server.addScheduledTask(() -> {
 				EntityPlayer p = ctx.getServerHandler().player;
 				
 				if(p.world == null)

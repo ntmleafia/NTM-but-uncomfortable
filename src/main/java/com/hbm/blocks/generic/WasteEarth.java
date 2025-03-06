@@ -1,17 +1,12 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
-import com.hbm.main.MainRegistry;
-import com.hbm.potion.HbmPotion;
-import com.hbm.items.ModItems;
-import com.hbm.saveddata.RadiationSavedData;
-import com.hbm.util.ContaminationUtil;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
-
+import com.hbm.potion.HbmPotion;
+import com.hbm.util.ContaminationUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockMushroom;
 import net.minecraft.block.SoundType;
@@ -29,10 +24,11 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class WasteEarth extends Block implements IItemHazard {
 
@@ -41,7 +37,7 @@ public class WasteEarth extends Block implements IItemHazard {
 	
 	public WasteEarth(Material materialIn, boolean tick, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setTickRandomly(tick);

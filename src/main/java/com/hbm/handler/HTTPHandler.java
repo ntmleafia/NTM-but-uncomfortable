@@ -1,5 +1,9 @@
 package com.hbm.handler;
 
+import com.hbm.interfaces.Untested;
+import com.hbm.lib.RefStrings;
+import com.hbm.main.MainRegistry;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,10 +12,6 @@ import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import com.hbm.interfaces.Untested;
-import com.hbm.lib.RefStrings;
-import com.hbm.main.MainRegistry;
 
 public class HTTPHandler {
 

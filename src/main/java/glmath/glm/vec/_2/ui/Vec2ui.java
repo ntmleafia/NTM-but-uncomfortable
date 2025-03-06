@@ -5,14 +5,14 @@
  */
 package glmath.glm.vec._2.ui;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-
 import glmath.glm.vec._2.i.Vec2i;
 import glmath.glm.vec._3.Vec3;
 import glmath.glm.vec._4.Vec4;
 import glmath.joou.UInt;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 
 /**
  *

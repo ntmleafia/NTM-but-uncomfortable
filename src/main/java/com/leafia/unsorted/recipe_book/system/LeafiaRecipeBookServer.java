@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -175,7 +174,7 @@ public class LeafiaRecipeBookServer {
                                 if (container.inventorySlots.size() > triplet.getC()) {
                                     if (container.getSlot(triplet.getA()).getHasStack()) {
                                         ItemStack copyStack = container.getSlot(triplet.getA()).getStack().copy();
-                                        //player.sendMessage(new TextComponentString("Stack: "+copyStack.getUnlocalizedName()));
+                                        //player.sendMessage(new TextComponentString("Stack: "+copyStack.getTranslationKey()));
                                         if (copyStack.getCount() < triplet.getB()) continue;
                                         copyStack.setCount(triplet.getB());
                                         if (container.getSlot(triplet.getC()).getHasStack()) {

@@ -1,20 +1,19 @@
 package com.hbm.tileentity.bomb;
 
+import api.hbm.energy.IEnergyUser;
 import com.hbm.config.RadiationConfig;
 import com.hbm.entity.projectile.EntityRailgunBlast;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.RailgunRotationPacket;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.TileEntityLoadedBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -169,13 +168,13 @@ public class TileEntityRailgun extends TileEntityLoadedBase implements ITickable
     			vec = vec.rotateYaw((float) (world.rand.nextGaussian() * Math.PI / 45));
     		}
     		
-    		if(vec.lengthVector() < 1 || vec.lengthVector() > 9000)
+    		if(vec.length() < 1 || vec.length() > 9000)
     			return false;
     		
     		double yawUpper = vec.x * unit.x/* + vec.zCoord * unit.zCoord*/; //second side falls away since unit.z is always 0
-    		double yawLower = vec.lengthVector()/* * unit.lengthVector()*/; //second side falls away since unit always has length 1
+    		double yawLower = vec.length()/* * unit.length()*/; //second side falls away since unit always has length 1
     		float yaw = (float) Math.acos(yawUpper / yawLower);
-    		float pitch = (float) (Math.asin((vec.lengthVector() * 9.81) / (300 * 300)) / 2D);
+    		float pitch = (float) (Math.asin((vec.length() * 9.81) / (300 * 300)) / 2D);
 			
     		float newYaw = (float) (yaw * 180D / Math.PI);
     		float newPitch = (float) (pitch * 180D / Math.PI) - 90F;

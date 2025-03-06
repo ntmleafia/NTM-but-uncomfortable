@@ -1,9 +1,6 @@
 package com.hbm.tileentity.turret;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.entity.logic.EntityBomber;
 import com.hbm.entity.missile.EntityMissileBaseAdvanced;
@@ -15,15 +12,12 @@ import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlEventSystem;
 import com.hbm.inventory.control_panel.IControllable;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.machine.ItemTurretBiometry;
-import com.hbm.lib.Library;
 import com.hbm.lib.ForgeDirection;
+import com.hbm.lib.Library;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.tileentity.TileEntityMachineBase;
-
-import api.hbm.energy.IEnergyUser;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.INpc;
@@ -48,6 +42,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase implements IEnergyUser, IControllable, IControlReceiver, ITickable {
 
@@ -428,7 +426,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 			Vec3d ent = this.getEntityPos(entity);
 			Vec3d delta = new Vec3d(ent.x - pos.x, ent.y - pos.y, ent.z - pos.z);
 			
-			double dist = delta.lengthVector();
+			double dist = delta.length();
 			
 			//check if it's in range
 			if(dist > range)
@@ -475,7 +473,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 		Vec3d pos = this.getTurretPos();
 		Vec3d delta = new Vec3d(ent.x - pos.x, ent.y - pos.y, ent.z - pos.z);
 		
-		double targetPitch = Math.asin(delta.y / delta.lengthVector());
+		double targetPitch = Math.asin(delta.y / delta.length());
 		double targetYaw = -Math.atan2(delta.x, delta.z);
 		
 		//if we are about to overshoot the target by turning, just snap to the correct rotation
@@ -557,13 +555,13 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 		Vec3d pos = this.getTurretPos();
 		Vec3d ent = this.getEntityPos(e);
 		Vec3d delta = new Vec3d(ent.x - pos.x, ent.y - pos.y, ent.z - pos.z);
-		double length = delta.lengthVector();
+		double length = delta.length();
 		
 		if(length < this.getDecetorGrace() || length > this.getDecetorRange() * 1.1) //the latter statement is only relevant for entities that have already been detected
 			return false;
 		
 		delta = delta.normalize();
-		double pitch = Math.asin(delta.y / delta.lengthVector());
+		double pitch = Math.asin(delta.y / delta.length());
 		double pitchDeg = Math.toDegrees(pitch);
 		
 		//check if the entity is within swivel range

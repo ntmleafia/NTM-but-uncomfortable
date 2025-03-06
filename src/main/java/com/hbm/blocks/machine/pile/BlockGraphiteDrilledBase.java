@@ -1,10 +1,7 @@
 package com.hbm.blocks.machine.pile;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockHazardFuel;
-
 import com.hbm.items.ModItems.Materials.Ingots;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
@@ -20,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockGraphiteDrilledBase extends BlockHazardFuel {
 
 	public static final PropertyEnum<EnumFacing.Axis> AXIS = PropertyEnum.create("axis", EnumFacing.Axis.class);
@@ -34,10 +33,10 @@ public class BlockGraphiteDrilledBase extends BlockHazardFuel {
 	
 	protected static void ejectItem(World world, int x, int y, int z, EnumFacing dir, ItemStack stack) {
 		
-		EntityItem dust = new EntityItem(world, x + 0.5D + dir.getFrontOffsetX() * 0.75D, y + 0.5D + dir.getFrontOffsetY() * 0.75D, z + 0.5D + dir.getFrontOffsetZ() * 0.75D, stack);
-		dust.motionX = dir.getFrontOffsetX() * 0.25;
-		dust.motionY = dir.getFrontOffsetY() * 0.25;
-		dust.motionZ = dir.getFrontOffsetZ() * 0.25;
+		EntityItem dust = new EntityItem(world, x + 0.5D + dir.getXOffset() * 0.75D, y + 0.5D + dir.getYOffset() * 0.75D, z + 0.5D + dir.getZOffset() * 0.75D, stack);
+		dust.motionX = dir.getXOffset() * 0.25;
+		dust.motionY = dir.getYOffset() * 0.25;
+		dust.motionZ = dir.getZOffset() * 0.25;
 		world.spawnEntity(dust);
 	}
 	

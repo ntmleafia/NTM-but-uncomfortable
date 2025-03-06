@@ -3,7 +3,6 @@ package com.hbm.world.generator.room;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.world.generator.CellularDungeon;
 import com.hbm.world.generator.CellularDungeonRoom;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 

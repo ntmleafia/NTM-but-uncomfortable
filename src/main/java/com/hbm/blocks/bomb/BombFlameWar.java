@@ -3,7 +3,6 @@ package com.hbm.blocks.bomb;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.explosion.ExplosionChaos;
 import com.hbm.interfaces.IBomb;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,7 @@ public class BombFlameWar extends Block implements IBomb {
 
 	public BombFlameWar(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -22,7 +21,7 @@ public class BombFlameWar extends Block implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if(worldIn.isBlockIndirectlyGettingPowered(pos) > 0){
+		if(worldIn.getRedstonePowerFromNeighbors(pos) > 0){
 			explode(worldIn, pos);
 		}
 	}

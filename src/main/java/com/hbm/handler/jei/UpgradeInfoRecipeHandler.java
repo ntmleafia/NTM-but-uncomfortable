@@ -4,7 +4,10 @@ import com.hbm.handler.jei.JeiRecipes.UpgradeInfoRecipe;
 import com.hbm.lib.RefStrings;
 import com.hbm.util.I18nUtil;
 import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.gui.*;
+import mezz.jei.api.gui.IDrawable;
+import mezz.jei.api.gui.IDrawableStatic;
+import mezz.jei.api.gui.IGuiItemStackGroup;
+import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.block.Block;
@@ -30,7 +33,7 @@ public class UpgradeInfoRecipeHandler implements IRecipeCategory<UpgradeInfoReci
 
 	public UpgradeInfoRecipeHandler(IGuiHelper help, Block machine) {
 		this.machine = machine;
-		this.resPath = machine.getRegistryName().getResourcePath();
+		this.resPath = machine.getRegistryName().getPath();
 		UpgradeDetailsDatabase.init();
 		this.tabdats = UpgradeDetailsDatabase.supportedMachines.get(machine);
 

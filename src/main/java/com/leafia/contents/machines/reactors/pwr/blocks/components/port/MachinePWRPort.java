@@ -5,7 +5,6 @@ import com.hbm.blocks.generic.BlockRadResistant;
 import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;

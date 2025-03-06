@@ -1,19 +1,17 @@
 package com.hbm.particle;
 
-import java.util.ArrayDeque;
-
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.collect.Queues;
 import com.hbm.main.ResourceManager;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayDeque;
 
 public class ParticleRenderLayer {
 

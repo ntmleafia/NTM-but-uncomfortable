@@ -1,18 +1,12 @@
 package com.hbm.entity.projectile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.missile.EntityMissileBaseAdvanced;
 import com.hbm.entity.particle.EntityTSmokeFX;
 import com.hbm.explosion.ExplosionLarge;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -33,12 +27,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EntityRocketHoming extends Entity implements IProjectile {
 
@@ -390,7 +384,7 @@ public class EntityRocketHoming extends Entity implements IProjectile {
 
                     if (state1.getMaterial() != Material.AIR)
                     {
-                        this.field_145790_g.onEntityCollidedWithBlock(this.world, newPos, state1, this);
+                        this.field_145790_g.onEntityCollision(this.world, newPos, state1, this);
                     }
                 }
             }
@@ -472,7 +466,7 @@ public class EntityRocketHoming extends Entity implements IProjectile {
     	List<Entity> all = world.getEntitiesWithinAABBExcludingEntity(this, new AxisAlignedBB(posX - homingRadius, posY - homingRadius, posZ - homingRadius, posX + homingRadius, posY + homingRadius, posZ + homingRadius));
     	HashMap<Entity, Double> targetable = new HashMap<Entity, Double>();
     	Vec3d path = new Vec3d(motionX, motionY, motionZ);
-    	double startSpeed = path.lengthVector();
+    	double startSpeed = path.length();
     	path.normalize();
     	
     	if(all.isEmpty())
@@ -486,7 +480,7 @@ public class EntityRocketHoming extends Entity implements IProjectile {
     		
     		Vec3d rel = new Vec3d(e.posX - posX, e.posY + e.getEyeHeight() - posY, e.posZ - posZ);
     		double vecProd = rel.x * path.x + rel.y * path.y + rel.z * path.z;
-    		double bot = rel.lengthVector() * path.lengthVector();
+    		double bot = rel.length() * path.length();
     		double angle = Math.acos(vecProd / bot) * 180 / Math.PI;
     		
     		if(angle <= acceptance);

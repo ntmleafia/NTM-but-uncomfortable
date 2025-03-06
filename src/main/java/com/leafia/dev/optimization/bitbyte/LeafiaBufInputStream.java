@@ -4,7 +4,10 @@ import com.leafia.dev.optimization.bitbyte.LeafiaBuf.Config;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.technical.LeafiaBitByteUTF;
 
-import java.io.*;
+import java.io.DataInput;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class LeafiaBufInputStream extends InputStream implements DataInput {
 	final LeafiaBuf buffer;

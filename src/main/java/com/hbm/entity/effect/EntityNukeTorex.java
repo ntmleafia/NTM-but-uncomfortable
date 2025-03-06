@@ -1,19 +1,13 @@
 package com.hbm.entity.effect;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
 import com.hbm.interfaces.IConstantRenderer;
 import com.hbm.items.ModItems;
-import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
-import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import com.llib.technical.LeafiaEase;
-import com.llib.exceptions.messages.TextWarningLeafia;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
-
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
+import com.leafia.dev.optimization.diagnosis.RecordablePacket;
+import com.llib.exceptions.messages.TextWarningLeafia;
+import com.llib.technical.LeafiaEase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityTracker;
@@ -26,14 +20,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 /*
  * Toroidal Convection Simulation Explosion Effect
  * Tor                            Ex
@@ -476,7 +473,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			this.prevPosZ = this.initPosZ;
 			
 			Vec3 simPos = Vec3.createVectorHelper(EntityNukeTorex.this.initPosX - this.initPosX, 0, EntityNukeTorex.this.initPosZ - this.initPosZ);
-			double simPosX = EntityNukeTorex.this.initPosX + simPos.lengthVector();
+			double simPosX = EntityNukeTorex.this.initPosX + simPos.length();
 			double simPosZ = EntityNukeTorex.this.initPosZ + 0D;
 
 			double mult = this.motionMult;
@@ -549,7 +546,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			/* the distance this cloudlet wants to achieve to the torus' ring center */
 			double roller = EntityNukeTorex.this.rollerSize * this.rangeMod * 0.25;
 			/* the distance between this cloudlet and the torus' outer ring perimeter */
-			double dist = delta.lengthVector() / roller - 1D;
+			double dist = delta.length() / roller - 1D;
 			
 			/* euler function based on how far the cloudlet is away from the perimeter */
 			double func = 1D - Math.pow(Math.E, -dist); // [0;1]
@@ -595,7 +592,7 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 			/* the distance this cloudlet wants to achieve to the torus' ring center */
 			double roller = EntityNukeTorex.this.rollerSize * this.rangeMod;
 			/* the distance between this cloudlet and the torus' outer ring perimeter */
-			double dist = delta.lengthVector() / roller - 1D;
+			double dist = delta.length() / roller - 1D;
 			
 			/* euler function based on how far the cloudlet is away from the perimeter */
 			double func = 1D - Math.pow(Math.E, -dist); // [0;1]

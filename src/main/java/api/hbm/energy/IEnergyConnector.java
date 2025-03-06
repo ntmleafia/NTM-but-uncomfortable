@@ -1,11 +1,10 @@
 package api.hbm.energy;
 
 import api.hbm.energy.network.NTMNetworkMember;
-import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.lib.ForgeDirection;
-
-import net.minecraft.util.math.BlockPos;
+import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**

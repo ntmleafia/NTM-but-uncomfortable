@@ -1,30 +1,17 @@
 package com.hbm.explosion;
 
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
-import com.hbm.config.CompatibilityConfig;
 import com.hbm.blocks.generic.EntityGrenadeTau;
+import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.grenade.EntityGrenadeZOMG;
-import com.hbm.entity.particle.EntityChlorineFX;
-import com.hbm.entity.particle.EntityCloudFX;
-import com.hbm.entity.particle.EntityModFX;
-import com.hbm.entity.particle.EntityOrangeFX;
-import com.hbm.entity.particle.EntityPinkCloudFX;
-import com.hbm.entity.projectile.EntityBullet;
-import com.hbm.entity.projectile.EntityMiniNuke;
-import com.hbm.entity.projectile.EntityRainbow;
-import com.hbm.entity.projectile.EntityRocket;
-import com.hbm.entity.projectile.EntityRubble;
-import com.hbm.entity.projectile.EntitySchrab;
-import com.hbm.util.ArmorRegistry;
-import com.hbm.util.ArmorRegistry.HazardClass;
+import com.hbm.entity.particle.*;
+import com.hbm.entity.projectile.*;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.potion.HbmPotion;
-
+import com.hbm.util.ArmorRegistry;
+import com.hbm.util.ArmorRegistry.HazardClass;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSand;
@@ -37,9 +24,9 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -48,6 +35,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class ExplosionChaos {
 

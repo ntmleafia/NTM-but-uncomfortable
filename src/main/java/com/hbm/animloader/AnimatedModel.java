@@ -1,15 +1,13 @@
 package com.hbm.animloader;
 
+import com.hbm.util.BobMathUtil;
+import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.util.math.MathHelper;
+import org.lwjgl.opengl.GL11;
+
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
-import com.hbm.util.BobMathUtil;
-
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.util.math.MathHelper;
 
 public class AnimatedModel {
 

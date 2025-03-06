@@ -6,7 +6,6 @@ import com.hbm.inventory.AnvilRecipes.AnvilConstructionRecipe;
 import com.hbm.inventory.container.ContainerAnvil;
 import com.hbm.main.AdvancementManager;
 import com.hbm.util.InventoryUtil;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +43,7 @@ public class AnvilCraftPacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(AnvilCraftPacket m, MessageContext ctx) {
 
-			ctx.getServerHandler().player.mcServer.addScheduledTask(() -> {
+			ctx.getServerHandler().player.server.addScheduledTask(() -> {
 				if(m.recipeIndex < 0 || m.recipeIndex >= AnvilRecipes.getConstruction().size()) //recipe is out of range -> bad
 					return;
 

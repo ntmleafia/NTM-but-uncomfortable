@@ -1,9 +1,8 @@
 package com.hbm.tileentity.machine.pile;
 
+import api.hbm.block.IPileNeutronReceiver;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.pile.BlockGraphiteDrilledBase;
-
-import api.hbm.block.IPileNeutronReceiver;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 

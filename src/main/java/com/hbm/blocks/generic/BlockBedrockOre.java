@@ -1,10 +1,9 @@
 package com.hbm.blocks.generic;
 
-import com.hbm.blocks.ModBlocks;
-import com.hbm.items.ModItems;
-
 import api.hbm.block.IDrillInteraction;
 import api.hbm.block.IMiningDrill;
+import com.hbm.blocks.ModBlocks;
+import com.hbm.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,7 +15,7 @@ public class BlockBedrockOre extends Block implements IDrillInteraction {
 
 	public BlockBedrockOre(String s) {
 		super(Material.ROCK);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);

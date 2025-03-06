@@ -6,11 +6,11 @@ import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.worldgen.NTMStructBuffer.NTMStructVersion;
+import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.rendering.TopRender.Highlight;
-import com.leafia.dev.LeafiaUtil;
 import com.llib.LeafiaLib;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.exceptions.messages.TextWarningLeafia;
@@ -28,7 +28,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
-import static net.minecraft.util.EnumActionResult.*;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -46,15 +45,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.function.Consumer;
+
+import static net.minecraft.util.EnumActionResult.PASS;
+import static net.minecraft.util.EnumActionResult.SUCCESS;
 
 public class ItemWandSaving extends Item {
 	@SideOnly(Side.CLIENT) Highlight savingHighlight;
 	Highlight highlight = null;
 	public ItemWandSaving(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		ModItems.ALL_ITEMS.add(this);
 		if (MainRegistry.proxy instanceof ClientProxy) {
@@ -143,8 +147,8 @@ public class ItemWandSaving extends Item {
 			return (ctx)->{
 				Highlight high = ModItems.wand_leaf.savingHighlight;
 				if (min != null) {
-					high.center = new Vec3d(min).scale(0.5).add(new Vec3d(max).scale(0.5)).addVector(0.5,0.5,0.5);
-					high.size = new Vec3d(max).subtract(new Vec3d(min)).addVector(1,1,1);
+					high.center = new Vec3d(min).scale(0.5).add(new Vec3d(max).scale(0.5)).add(0.5,0.5,0.5);
+					high.size = new Vec3d(max).subtract(new Vec3d(min)).add(1,1,1);
 					high.show();
 				} else
 					high.hide();

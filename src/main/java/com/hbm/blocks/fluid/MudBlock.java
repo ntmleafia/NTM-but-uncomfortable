@@ -1,11 +1,8 @@
 package com.hbm.blocks.fluid;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.lib.ModDamageSource;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -19,6 +16,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
+import java.util.Random;
+
 public class MudBlock extends BlockFluidClassic {
 
 	public static DamageSource damageSource;
@@ -27,7 +26,7 @@ public class MudBlock extends BlockFluidClassic {
 	public MudBlock(Fluid fluid, Material material, DamageSource d, String s) {
 		super(fluid, material);
 		damageSource = d;
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setQuantaPerBlock(4);
 		this.setCreativeTab(null);
@@ -53,7 +52,7 @@ public class MudBlock extends BlockFluidClassic {
 	}
 	
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
 		entity.setInWeb();
 
 		if (entity instanceof EntityPlayer && ArmorUtil.checkForHazmat((EntityPlayer) entity)) {} else {

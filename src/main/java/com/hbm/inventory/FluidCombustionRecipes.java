@@ -1,12 +1,10 @@
 package com.hbm.inventory;
 
-import java.util.HashSet;
-import java.util.HashMap;
-
 import com.hbm.forgefluid.ModForgeFluids;
-
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+
+import java.util.HashMap;
 
 public class FluidCombustionRecipes {
 	

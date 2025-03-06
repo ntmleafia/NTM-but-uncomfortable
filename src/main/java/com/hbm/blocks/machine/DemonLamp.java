@@ -4,7 +4,6 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.tileentity.machine.TileEntityDemonLamp;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -23,7 +22,7 @@ public class DemonLamp extends BlockContainer implements IItemHazard {
 
 	public DemonLamp(SoundType st, String s) {
 		super(Material.IRON);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		super.setSoundType(st);
 		this.module = new ItemHazardModule();

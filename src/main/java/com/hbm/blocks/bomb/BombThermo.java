@@ -3,7 +3,6 @@ package com.hbm.blocks.bomb;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.explosion.ExplosionThermo;
 import com.hbm.interfaces.IBomb;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +14,7 @@ public class BombThermo extends Block implements IBomb {
 
 	public BombThermo(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);
@@ -23,7 +22,7 @@ public class BombThermo extends Block implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (!worldIn.isRemote && worldIn.isBlockIndirectlyGettingPowered(pos) > 0)
+		if (!worldIn.isRemote && worldIn.getRedstonePowerFromNeighbors(pos) > 0)
         {
 			worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
         	if(this == ModBlocks.therm_endo)

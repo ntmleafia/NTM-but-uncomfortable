@@ -1,22 +1,21 @@
 package com.hbm.blocks.bomb;
 
-import java.util.List;
-
-import com.hbm.util.I18nUtil;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.interfaces.IBomb;
 import com.hbm.tileentity.bomb.TileEntityNukeBalefire;
-
-import net.minecraft.client.util.ITooltipFlag;
+import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class NukeBalefire extends BlockMachineBase implements IBomb {
 
@@ -66,7 +65,7 @@ public class NukeBalefire extends BlockMachineBase implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (world.isBlockIndirectlyGettingPowered(pos) > 0) {
+		if (world.getRedstonePowerFromNeighbors(pos) > 0) {
 			explode(world, pos);
 		}
 	}

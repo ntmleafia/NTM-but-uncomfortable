@@ -2,10 +2,9 @@ package com.hbm.tileentity.bomb;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.NukeBoy;
+import com.hbm.items.ModItems;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
-import com.hbm.items.ModItems;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -110,7 +109,7 @@ public class TileEntityNukeBoy extends TileEntity implements LeafiaPacketReceive
 		}
 		if (!detonated && willExplode) {
 			detonated = true;
-			ModBlocks.nuke_boy.onBlockDestroyedByPlayer(world, pos, world.getBlockState(pos));
+			ModBlocks.nuke_boy.onPlayerDestroy(world, pos, world.getBlockState(pos));
 			this.clearSlots();
 			world.setBlockToAir(pos);
 			((NukeBoy) ModBlocks.nuke_boy).igniteTestBomb(world, pos.getX(), pos.getY(), pos.getZ());

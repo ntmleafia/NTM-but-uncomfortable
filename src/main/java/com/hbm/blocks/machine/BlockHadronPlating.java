@@ -1,7 +1,6 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -17,7 +16,7 @@ public class BlockHadronPlating extends Block {
 
 	public BlockHadronPlating(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		
 		ModBlocks.ALL_BLOCKS.add(this);

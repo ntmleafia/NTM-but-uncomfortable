@@ -18,7 +18,7 @@ public class ItemMissileCustomNuke extends Item {
 	public static ItemStack lastStackEw = null;
 	public static int lastSlotEw = -1;
 	public ItemMissileCustomNuke(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(MainRegistry.missileTab);

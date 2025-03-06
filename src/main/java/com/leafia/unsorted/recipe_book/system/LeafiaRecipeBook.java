@@ -1,25 +1,23 @@
 package com.leafia.unsorted.recipe_book.system;
 
 import com.hbm.interfaces.Spaghetti;
-import com.hbm.inventory.RecipesCommon.*;
-import com.leafia.unsorted.recipe_book.LeafiaGuiWorkstation;
-import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
-import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
-import com.leafia.shit.recipe_book_elements.LeafiaRecipeButton;
-import com.llib.math.range.RangeInt;
+import com.hbm.inventory.RecipesCommon.AStack;
+import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.lib.RefStrings;
-
-import java.util.*;
-import javax.annotation.Nullable;
-
 import com.hbm.main.ModEventHandlerClient;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple;
 import com.hbm.util.Tuple.Pair;
+import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
+import com.leafia.shit.recipe_book_elements.LeafiaRecipeButton;
+import com.leafia.unsorted.recipe_book.LeafiaGuiWorkstation;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.llib.math.range.RangeInt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.recipebook.*;
+import net.minecraft.client.gui.recipebook.GhostRecipe;
+import net.minecraft.client.gui.recipebook.IRecipeUpdateListener;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
@@ -42,6 +40,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
+
+import javax.annotation.Nullable;
+import java.util.*;
 
 @SideOnly(Side.CLIENT)
 public class LeafiaRecipeBook extends Gui implements IRecipeUpdateListener
@@ -243,7 +244,7 @@ public class LeafiaRecipeBook extends Gui implements IRecipeUpdateListener
         /*
         for (Slot inventorySlot : container.inventorySlots) {
             if (inventorySlot.getHasStack())
-                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": "+inventorySlot.getStack().getUnlocalizedName()));
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": "+inventorySlot.getStack().getTranslationKey()));
             else
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString(""+inventorySlot.slotNumber+": Empty"));
         }

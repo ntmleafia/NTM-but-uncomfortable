@@ -1,3 +1,41 @@
+# <u>**PAIN**</u>
+
+The build is messed up as fk,
+I got it working on IntelliJ:
+
+1. Make sure you use Java 8 + Gradle 7
+2. Put computertronics (deobf dev jar) in the folder the project is in (project parent folder) [download](https://wiki.vexatos.com/wiki:computronics)
+3. Load the project
+
+### If you encounter LeafiaGls.java:19: error: cannot find symbol:
+````java
+LeafiaGls.java:19: error: cannot find symbol
+public class LeafiaGls extends GlStateManager {
+       ^
+  symbol:   constructor GlStateManager()
+  location: class GlStateManager
+````
+do this:
+1. run `gradle clean`
+2. run `gradle clean --refresh-dependencies`
+3. goto `com.leafia.transformer.LeafiaGls` and click `Download Sources` this magically fixes the error idk some kind of environment issue, download source runs a lot of tasks, mappings and setup MCP env
+
+### Also access transformers are broken and wont apply automatically
+thats why i just bundled the at.cfg's of mods you may want to use for testing (JEI and OpenComputers)
+````gradle
+accessTransformers(
+                    file("${projectDir}/Assets/jei_at.cfg"),
+                    file("${projectDir}/Assets/oc_at.cfg"))
+````
+
+### Help minecraft screen is black on startup
+- Somehow the OpenGL context is messed up sometimes, (could be window mode related)
+
+If you are in windowed mode:
+Just resize the window, for example press the maximize button
+
+I don't know any fix for fullscreen mode or if that event happens in fullscreen mode
+
 # <u>**pain**</u>
 
 Here's version of NTM that i decided to modify from Extended Edition 2.0.1, since the mod suddenly stopped receiving updates<br>

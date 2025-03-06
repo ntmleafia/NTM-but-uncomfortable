@@ -1,7 +1,6 @@
 package com.hbm.packet;
 
 import com.hbm.interfaces.IAnimatedDoor;
-
 import com.hbm.interfaces.IDoor;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;

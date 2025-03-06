@@ -1,7 +1,5 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.RBMKFuel;
@@ -10,7 +8,6 @@ import com.hbm.modules.ItemHazardModule;
 import com.hbm.tileentity.machine.rbmk.IRBMKFluxReceiver.NType;
 import com.hbm.tileentity.machine.rbmk.RBMKDials;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,6 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemRBMKRod extends Item implements IItemHazard {
 
@@ -77,7 +76,7 @@ public class ItemRBMKRod extends Item implements IItemHazard {
 	}
 
 	public ItemRBMKRod(String fullName, String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.module = new ItemHazardModule();
 		

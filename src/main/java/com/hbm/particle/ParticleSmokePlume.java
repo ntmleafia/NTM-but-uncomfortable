@@ -1,9 +1,6 @@
 package com.hbm.particle;
 
-import java.util.Random;
-
 import com.hbm.main.ModEventHandlerClient;
-
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -11,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class ParticleSmokePlume extends Particle {
 
@@ -54,7 +53,7 @@ public class ParticleSmokePlume extends Particle {
 			this.setExpired();
 		}
         
-		double bak = new Vec3d(motionX, motionY, motionZ).lengthVector();
+		double bak = new Vec3d(motionX, motionY, motionZ).length();
 		
         this.move(this.motionX, this.motionY, this.motionZ);
         

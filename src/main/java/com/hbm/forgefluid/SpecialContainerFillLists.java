@@ -1,13 +1,11 @@
 package com.hbm.forgefluid;
 
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.hbm.lib.RefStrings;
-
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.fluids.Fluid;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class SpecialContainerFillLists {
 	
@@ -38,7 +36,7 @@ public class SpecialContainerFillLists {
 		private EnumCanister(Fluid f, ModelResourceLocation r){
 			this.fluid = f;
 			this.renderPair = MutablePair.of(r, null);
-			this.translateKey = "item." + r.getResourcePath() + ".name";
+			this.translateKey = "item." + r.getPath() + ".name";
 		}
 		public Fluid getFluid(){
 			return fluid;
@@ -100,7 +98,7 @@ public class SpecialContainerFillLists {
 		private EnumCell(Fluid f, ModelResourceLocation r){
 			this.fluid = f;
 			this.renderPair = MutablePair.of(r, null);
-			this.translateKey = "item." + r.getResourcePath() + ".name";
+			this.translateKey = "item." + r.getPath() + ".name";
 		}
 		public Fluid getFluid(){
 			return fluid;
@@ -162,7 +160,7 @@ public class SpecialContainerFillLists {
 		private EnumGasCanister(Fluid f, ModelResourceLocation r){
 			this.fluid = f;
 			this.renderPair = MutablePair.of(r, null);
-			this.translateKey = "item." + r.getResourcePath() + ".name";
+			this.translateKey = "item." + r.getPath() + ".name";
 		}
 		public Fluid getFluid(){
 			return fluid;

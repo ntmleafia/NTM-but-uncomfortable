@@ -2,7 +2,6 @@ package com.hbm.packet;
 
 import com.hbm.handler.JetpackHandler;
 import com.hbm.handler.JetpackHandler.JetpackInfo;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
@@ -46,7 +45,7 @@ public class JetpackSyncPacket extends RecordablePacket {
 		@Override
 		public IMessage onMessage(JetpackSyncPacket message, MessageContext ctx) {
 			if(ctx.side == Side.SERVER) {
-				ctx.getServerHandler().player.mcServer.addScheduledTask(() -> {
+				ctx.getServerHandler().player.server.addScheduledTask(() -> {
 					EntityPlayer player = ctx.getServerHandler().player;
 					JetpackInfo info = JetpackHandler.get(player);
 					if(info == null) {

@@ -1,15 +1,10 @@
 package com.hbm.saveddata;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
 import com.hbm.handler.RadiationSystemNT;
 import com.hbm.packet.AuxParticlePacket;
 import com.hbm.packet.PacketDispatcher;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -17,6 +12,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class RadiationSavedData extends WorldSavedData {
 	public Map<ChunkPos, RadiationSaveStructure> contamination = new HashMap<ChunkPos, RadiationSaveStructure>();
@@ -146,7 +145,7 @@ public class RadiationSavedData extends WorldSavedData {
 					struct.radiation = 0;
 				}
 				
-				if(struct.radiation > RadiationConfig.fogRad && worldObj != null && worldObj.rand.nextInt(RadiationConfig.fogCh) == 0 && worldObj.getChunkFromChunkCoords(struct.chunkX, struct.chunkY).isLoaded()) {
+				if(struct.radiation > RadiationConfig.fogRad && worldObj != null && worldObj.rand.nextInt(RadiationConfig.fogCh) == 0 && worldObj.getChunk(struct.chunkX, struct.chunkY).isLoaded()) {
 					
 					int x = struct.chunkX * 16 + worldObj.rand.nextInt(16);
 					int z = struct.chunkY * 16 + worldObj.rand.nextInt(16);
@@ -244,7 +243,7 @@ public class RadiationSavedData extends WorldSavedData {
 		}
 		RadiationSavedData data = getData(worldObj);
 		
-		Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
+		Chunk chunk = worldObj.getChunk(pos);
 		
 		float r = data.getRadNumFromChunkCoord(chunk.x, chunk.z);
 		
@@ -261,7 +260,7 @@ public class RadiationSavedData extends WorldSavedData {
 		}
 		RadiationSavedData data = getData(worldObj);
 		
-		Chunk chunk = worldObj.getChunkFromBlockCoords(pos);
+		Chunk chunk = worldObj.getChunk(pos);
 		
 		float r = data.getRadNumFromChunkCoord(chunk.x, chunk.z);
 		

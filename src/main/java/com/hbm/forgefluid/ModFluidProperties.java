@@ -1,15 +1,14 @@
 package com.hbm.forgefluid;
 
+import com.hbm.render.misc.EnumSymbol;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.hbm.render.misc.EnumSymbol;
-
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
 public class ModFluidProperties {
 	// formerly FluidTypeHandler

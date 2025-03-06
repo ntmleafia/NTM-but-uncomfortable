@@ -1,17 +1,16 @@
 package com.hbm.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
-
 import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //TODO: clean this shit up
 //Alcater: on it

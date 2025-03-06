@@ -1,7 +1,6 @@
 package com.hbm.creativetabs;
 
 import com.hbm.blocks.ModBlocks;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -14,7 +13,7 @@ public class BlockTab extends CreativeTabs {
 	}
 
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		if(ModBlocks.ore_uranium != null){
 			return new ItemStack(Item.getItemFromBlock(ModBlocks.brick_concrete));
 		}

@@ -1,12 +1,11 @@
 package com.hbm.config;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import com.hbm.main.MainRegistry;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class CommonConfig {
 

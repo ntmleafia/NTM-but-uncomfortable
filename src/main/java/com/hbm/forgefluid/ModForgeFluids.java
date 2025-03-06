@@ -1,24 +1,9 @@
 package com.hbm.forgefluid;
 
-import java.awt.Color;
-import java.util.HashMap;
-
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.fluid.BlockLiquidCorium;
-import com.hbm.blocks.fluid.CoriumFluid;
-import com.hbm.blocks.fluid.MudBlock;
-import com.hbm.blocks.fluid.MudFluid;
-import com.hbm.blocks.fluid.SchrabidicBlock;
-import com.hbm.blocks.fluid.SchrabidicFluid;
-import com.hbm.blocks.fluid.ToxicBlock;
-import com.hbm.blocks.fluid.ToxicFluid;
-import com.hbm.blocks.fluid.RadWaterBlock;
-import com.hbm.blocks.fluid.RadWaterFluid;
-import com.hbm.blocks.fluid.VolcanicBlock;
-import com.hbm.blocks.fluid.VolcanicFluid;
+import com.hbm.blocks.fluid.*;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.RefStrings;
-
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
@@ -26,6 +11,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.awt.*;
+import java.util.HashMap;
 
 @Mod.EventBusSubscriber(modid = RefStrings.MODID)
 public class ModForgeFluids {

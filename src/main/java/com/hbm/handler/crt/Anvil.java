@@ -1,21 +1,17 @@
 package com.hbm.handler.crt;
 
 
+import com.hbm.inventory.AnvilRecipes;
 import com.hbm.inventory.RecipesCommon;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.IAction;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.item.IngredientStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import crafttweaker.api.oredict.IOreDictEntry;
 import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
-
-
-import com.hbm.inventory.AnvilRecipes;
 
 import java.util.Arrays;
 

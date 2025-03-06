@@ -31,7 +31,7 @@ public class BlockGasRadonZirnox extends BlockGasBase {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity){
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity){
 		if(!(entity instanceof EntityLivingBase))
 			return;
 		

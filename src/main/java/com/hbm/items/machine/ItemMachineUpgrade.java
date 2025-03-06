@@ -1,13 +1,9 @@
 package com.hbm.items.machine;
 
-import java.util.Set;
-import java.util.List;
-
+import com.google.common.collect.Sets;
+import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.jei.UpgradeDetailsDatabase;
 import com.hbm.items.ModItems;
-import com.hbm.blocks.ModBlocks;
-
-import com.google.common.collect.Sets;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,6 +13,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Set;
 
 public class ItemMachineUpgrade extends Item {
 	public UpgradeType type;
@@ -31,7 +30,7 @@ public class ItemMachineUpgrade extends Item {
 	}
 
 	public ItemMachineUpgrade(String s, UpgradeType type, int tier) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 
 		this.type = type;
@@ -76,7 +75,7 @@ public class ItemMachineUpgrade extends Item {
 	}
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
-		String res = this.getRegistryName().getResourcePath();
+		String res = this.getRegistryName().getPath();
 		switch(res.substring(0,res.length()-2)) {
 			case "upgrade_speed":
 				writeUpgrade(list,"desc.upgradenew.general","speed");

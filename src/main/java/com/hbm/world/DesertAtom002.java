@@ -1,7 +1,5 @@
 package com.hbm.world;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.DecoPoleSatelliteReceiver;
 import com.hbm.blocks.machine.MachineNukeFurnace;
@@ -9,15 +7,7 @@ import com.hbm.handler.WeightedRandomChestContentFrom1710;
 import com.hbm.lib.HbmChestContents;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.machine.TileEntityCrateSteel;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockHalfWoodSlab;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockVine;
+import net.minecraft.block.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.tileentity.TileEntityChest;
@@ -25,6 +15,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class DesertAtom002
 {
@@ -1166,7 +1158,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 24, y + 0, z + 12), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 0, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 27, y + 0, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
-		world.setBlockState(pos.setPos(x + 28, y + 0, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
+		world.setBlockState(pos.setPos(x + 28, y + 0, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 0, z + 12), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 0, z + 12), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 0, z + 12), Blocks.WEB.getDefaultState(), 3);
@@ -1198,7 +1190,7 @@ public class DesertAtom002
 			WeightedRandomChestContentFrom1710.generateChestContents(rand, HbmChestContents.getLoot(1), (TileEntityChest)world.getTileEntity(pos.setPos(x + 22, y + 0, z + 13)), 8);
 		}
 		world.setBlockState(pos.setPos(x + 23, y + 0, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 0, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 0, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 0, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 0, z + 13), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 37, y + 0, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
@@ -1220,7 +1212,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 20, y + 0, z + 14), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 0, z + 14), Block7.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 0, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 0, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 0, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 0, z + 14), Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.TOP).withProperty(BlockStairs.FACING, EnumFacing.NORTH), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 0, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 0, z + 14), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
@@ -1242,9 +1234,9 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 19, y + 0, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 0, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 0, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.EAST, true), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 0, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 0, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 0, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 0, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 0, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 0, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 27, y + 0, z + 15), Blocks.OAK_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.FACING, EnumFacing.WEST), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 0, z + 15), Blocks.WOODEN_SLAB.getDefaultState().withProperty(BlockHalfWoodSlab.HALF, BlockSlab.EnumBlockHalf.TOP).withProperty(BlockHalfWoodSlab.VARIANT, BlockPlanks.EnumType.OAK), 3);
@@ -1321,22 +1313,22 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 19), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 19), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 20), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 6, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 7, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 8, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 9, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 10, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
+		world.setBlockState(pos.setPos(x + 6, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 7, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 8, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 9, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 10, y + 0, z + 20), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 20), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 21), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 4, y + 0, z + 21), Block5.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 5, y + 0, z + 21), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 11, y + 0, z + 21), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
+		world.setBlockState(pos.setPos(x + 5, y + 0, z + 21), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 11, y + 0, z + 21), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
 		world.setBlockState(pos.setPos(x + 12, y + 0, z + 21), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 0, z + 21), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 21), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 22), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 4, y + 0, z + 22), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 12, y + 0, z + 22), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 4, y + 0, z + 22), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 12, y + 0, z + 22), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 0, z + 22), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 0, z + 22), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 0, z + 22), Block2.getDefaultState(), 3);
@@ -1348,8 +1340,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 35, y + 0, z + 22), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 22), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 23), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 3, y + 0, z + 23), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 13, y + 0, z + 23), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 3, y + 0, z + 23), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 13, y + 0, z + 23), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 0, z + 23), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 18, y + 0, z + 23), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 0, z + 23), Block2.getDefaultState(), 3);
@@ -1362,8 +1354,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 36, y + 0, z + 23), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 23), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 24), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 3, y + 0, z + 24), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 13, y + 0, z + 24), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 3, y + 0, z + 24), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 13, y + 0, z + 24), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 0, z + 24), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 0, z + 24), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 0, z + 24), Block2.getDefaultState(), 3);
@@ -1373,14 +1365,14 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 35, y + 0, z + 24), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 24), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 25), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 3, y + 0, z + 25), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 13, y + 0, z + 25), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 3, y + 0, z + 25), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 13, y + 0, z + 25), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 0, z + 25), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 0, z + 25), Blocks.FLOWER_POT.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 25), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 26), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 3, y + 0, z + 26), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 13, y + 0, z + 26), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 3, y + 0, z + 26), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 13, y + 0, z + 26), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 0, z + 26), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 0, z + 26), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 0, z + 26), Block2.getDefaultState(), 3);
@@ -1394,8 +1386,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 35, y + 0, z + 26), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 26), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 27), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 3, y + 0, z + 27), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 13, y + 0, z + 27), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 3, y + 0, z + 27), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 13, y + 0, z + 27), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 18, y + 0, z + 27), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 0, z + 27), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 0, z + 27), Block2.getDefaultState(), 3);
@@ -1411,8 +1403,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 36, y + 0, z + 27), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 27), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 28), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 4, y + 0, z + 28), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
-		world.setBlockState(pos.setPos(x + 12, y + 0, z + 28), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5)), 3);
+		world.setBlockState(pos.setPos(x + 4, y + 0, z + 28), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
+		world.setBlockState(pos.setPos(x + 12, y + 0, z + 28), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5)), 3);
 		world.setBlockState(pos.setPos(x + 24, y + 0, z + 28), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 0, z + 28), Block2.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 26, y + 0, z + 28), Block2.getDefaultState(), 3);
@@ -1421,16 +1413,16 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 28), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 29), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 4, y + 0, z + 29), Block5.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 5, y + 0, z + 29), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
-		world.setBlockState(pos.setPos(x + 11, y + 0, z + 29), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
+		world.setBlockState(pos.setPos(x + 5, y + 0, z + 29), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
+		world.setBlockState(pos.setPos(x + 11, y + 0, z + 29), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
 		world.setBlockState(pos.setPos(x + 12, y + 0, z + 29), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 29), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 30), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 6, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
-		world.setBlockState(pos.setPos(x + 7, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
-		world.setBlockState(pos.setPos(x + 8, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
-		world.setBlockState(pos.setPos(x + 9, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
-		world.setBlockState(pos.setPos(x + 10, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
+		world.setBlockState(pos.setPos(x + 6, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
+		world.setBlockState(pos.setPos(x + 7, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
+		world.setBlockState(pos.setPos(x + 8, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
+		world.setBlockState(pos.setPos(x + 9, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
+		world.setBlockState(pos.setPos(x + 10, y + 0, z + 30), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 0, z + 30), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 0, z + 31), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 16, y + 0, z + 31), Block5.getDefaultState(), 3);
@@ -1551,8 +1543,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 37, y + 1, z + 6), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 1, z + 6), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 1, z + 7), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 7, y + 1, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 9, y + 1, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
+		world.setBlockState(pos.setPos(x + 7, y + 1, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 9, y + 1, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
 		world.setBlockState(pos.setPos(x + 16, y + 1, z + 7), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 1, z + 7), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 1, z + 7), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
@@ -1666,7 +1658,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 24, y + 1, z + 12), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 1, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 27, y + 1, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
-		world.setBlockState(pos.setPos(x + 28, y + 1, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
+		world.setBlockState(pos.setPos(x + 28, y + 1, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 12), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 1, z + 12), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 33, y + 1, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
@@ -1689,7 +1681,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 19, y + 1, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 1, z + 13), Blocks.STONE_BRICK_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.TOP).withProperty(BlockStairs.FACING, EnumFacing.EAST), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 1, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 1, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 1, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 1, z + 13), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 36, y + 1, z + 13), Blocks.WEB.getDefaultState(), 3);
@@ -1716,7 +1708,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 29, y + 1, z + 14), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 1, z + 14), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
-		world.setBlockState(pos.setPos(x + 36, y + 1, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 36, y + 1, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 37, y + 1, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 1, z + 14), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 1, z + 15), ModBlocks.fence_metal.getDefaultState(), 3);
@@ -1733,7 +1725,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 19, y + 1, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 1, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 1, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.EAST, true), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 1, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4)), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 1, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4)), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 1, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 24, y + 1, z + 15), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 1, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
@@ -1741,7 +1733,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 1, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 35, y + 1, z + 15), Blocks.FLOWER_POT.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 36, y + 1, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 36, y + 1, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 37, y + 1, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 1, z + 15), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 1, z + 16), ModBlocks.fence_metal.getDefaultState(), 3);
@@ -1773,10 +1765,10 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 20, y + 1, z + 16), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 1, z + 16), Blocks.STONE_BRICK_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.TOP).withProperty(BlockStairs.FACING, EnumFacing.EAST), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 1, z + 16), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 1, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 1, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 1, z + 16), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 16), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 36, y + 1, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 36, y + 1, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 37, y + 1, z + 16), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 1, z + 16), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 1, z + 17), ModBlocks.fence_metal.getDefaultState(), 3);
@@ -1793,7 +1785,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 29, y + 1, z + 17), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 1, z + 17), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 35, y + 1, z + 17), Blocks.VINE.getDefaultState().withProperty(BlockVine.SOUTH, true).withProperty(BlockVine.WEST, true), 3);
-		world.setBlockState(pos.setPos(x + 36, y + 1, z + 17), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 36, y + 1, z + 17), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 37, y + 1, z + 17), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 1, z + 17), ModBlocks.fence_metal.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 1, z + 18), ModBlocks.fence_metal.getDefaultState(), 3);
@@ -2008,8 +2000,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 37, y + 2, z + 6), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 2, z + 6), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 2, z + 7), ModBlocks.fence_metal.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 7, y + 2, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 9, y + 2, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
+		world.setBlockState(pos.setPos(x + 7, y + 2, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 9, y + 2, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
 		world.setBlockState(pos.setPos(x + 16, y + 2, z + 7), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 2, z + 7), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 18, y + 2, z + 7), Blocks.WEB.getDefaultState(), 3);
@@ -2117,12 +2109,12 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 19, y + 2, z + 12), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 2, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 2, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 2, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 2, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 2, z + 12), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 24, y + 2, z + 12), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 2, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
 		world.setBlockState(pos.setPos(x + 27, y + 2, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
-		world.setBlockState(pos.setPos(x + 28, y + 2, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(3)), 3);
+		world.setBlockState(pos.setPos(x + 28, y + 2, z + 12), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(3)), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 2, z + 12), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 2, z + 12), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 31, y + 2, z + 12), Blocks.VINE.getDefaultState().withProperty(BlockVine.NORTH, true), 3);
@@ -2144,7 +2136,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 16, y + 2, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 2, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 2, z + 13), Blocks.WEB.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 2, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 2, z + 13), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 2, z + 13), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 24, y + 2, z + 13), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 2, z + 13), Blocks.VINE.getDefaultState().withProperty(BlockVine.WEST, true), 3);
@@ -2168,9 +2160,9 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 17, y + 2, z + 14), Blocks.STONE_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.FACING, EnumFacing.SOUTH), 3);
 		world.setBlockState(pos.setPos(x + 18, y + 2, z + 14), Blocks.STONE_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.FACING, EnumFacing.SOUTH), 3);
 		world.setBlockState(pos.setPos(x + 19, y + 2, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 2, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 2, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 2, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 2, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 2, z + 14), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 2, z + 14), Blocks.VINE.getDefaultState().withProperty(BlockVine.EAST, true), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 2, z + 14), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 36, y + 2, z + 14), Blocks.STONE_BRICK_STAIRS.getDefaultState().withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.FACING, EnumFacing.EAST), 3);
@@ -2192,7 +2184,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 21, y + 2, z + 15), Blocks.VINE.getDefaultState().withProperty(BlockVine.EAST, true), 3);
 		world.setBlockState(pos.setPos(x + 22, y + 2, z + 15), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 2, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 24, y + 2, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(5).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 24, y + 2, z + 15), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(5).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 27, y + 2, z + 15), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 29, y + 2, z + 15), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 30, y + 2, z + 15), Library.getRandomConcrete().getDefaultState(), 3);
@@ -2212,7 +2204,7 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 19, y + 2, z + 16), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 20, y + 2, z + 16), Blocks.WEB.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 21, y + 2, z + 16), Blocks.WEB.getDefaultState(), 3);
-		world.setBlockState(pos.setPos(x + 22, y + 2, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(4).rotateYCCW()), 3);
+		world.setBlockState(pos.setPos(x + 22, y + 2, z + 16), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(4).rotateYCCW()), 3);
 		world.setBlockState(pos.setPos(x + 23, y + 2, z + 16), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 24, y + 2, z + 16), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 25, y + 2, z + 16), Blocks.WEB.getDefaultState(), 3);
@@ -2440,8 +2432,8 @@ public class DesertAtom002
 		world.setBlockState(pos.setPos(x + 37, y + 3, z + 6), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 40, y + 3, z + 6), Block5.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 0, y + 3, z + 7), ModBlocks.barbed_wire.getStateFromMeta(4), 3);
-		world.setBlockState(pos.setPos(x + 7, y + 3, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
-		world.setBlockState(pos.setPos(x + 9, y + 3, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getFront(2)), 3);
+		world.setBlockState(pos.setPos(x + 7, y + 3, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
+		world.setBlockState(pos.setPos(x + 9, y + 3, z + 7), Block8.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byIndex(2)), 3);
 		world.setBlockState(pos.setPos(x + 16, y + 3, z + 7), Library.getRandomConcrete().getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 17, y + 3, z + 7), Block6.getDefaultState(), 3);
 		world.setBlockState(pos.setPos(x + 18, y + 3, z + 7), Block6.getDefaultState(), 3);

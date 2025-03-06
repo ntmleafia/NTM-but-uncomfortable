@@ -1,11 +1,5 @@
 package com.hbm.inventory;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.HashMap;
-
-import static com.hbm.inventory.OreDictManager.*;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.config.MachineConfig;
@@ -19,12 +13,17 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.machine.ItemChemistryTemplate;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import static com.hbm.inventory.OreDictManager.*;
 
 //TODO: clean this shit up
 @Spaghetti("everything")

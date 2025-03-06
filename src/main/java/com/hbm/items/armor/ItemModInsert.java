@@ -1,8 +1,5 @@
 package com.hbm.items.armor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Multimap;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.interfaces.IItemHazard;
@@ -11,7 +8,6 @@ import com.hbm.modules.ItemHazardModule;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +20,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemModInsert extends ItemArmorMod implements IItemHazard {
 

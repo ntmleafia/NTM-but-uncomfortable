@@ -1,14 +1,10 @@
 package com.hbm.entity.projectile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
@@ -19,6 +15,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityRailgunBlast extends Entity implements IChunkLoader {
 

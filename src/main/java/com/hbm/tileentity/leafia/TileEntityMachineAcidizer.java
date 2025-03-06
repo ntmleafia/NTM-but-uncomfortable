@@ -1,9 +1,9 @@
 package com.hbm.tileentity.leafia;
 
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.hbm.render.tileentity.RenderAcidizer;
 import com.hbm.tileentity.machine.CrystallizerCopyBase;
+import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

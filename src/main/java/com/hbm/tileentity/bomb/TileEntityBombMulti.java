@@ -1,7 +1,6 @@
 package com.hbm.tileentity.bomb;
 
 import com.hbm.items.ModItems;
-
 import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

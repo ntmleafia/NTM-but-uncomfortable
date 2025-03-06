@@ -1,16 +1,11 @@
 package com.hbm.packet;
 
-import java.io.IOException;
-
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.tileentity.INBTPacketReceiver;
-
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -23,69 +18,69 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Spaghetti("For f*ck's sake we are tired of NBTPacket, fucking don't use it for new work or i'll cut your face down")
 public class NBTPacket extends RecordablePacket {
 
-	NBTTagCompound buffer;
-	int x;
-	int y;
-	int z;
+    NBTTagCompound buffer;
+    int x;
+    int y;
+    int z;
 
-	public NBTPacket() {
-	}
+    public NBTPacket() {
+    }
 
-	public NBTPacket(NBTTagCompound nbt, BlockPos pos) {
+    public NBTPacket(NBTTagCompound nbt, BlockPos pos) {
 
-		this.x = pos.getX();
-		this.y = pos.getY();
-		this.z = pos.getZ();
+        this.x = pos.getX();
+        this.y = pos.getY();
+        this.z = pos.getZ();
 
-		buffer=(nbt);
+        buffer = (nbt);
 
-	}
+    }
 
-	@Override
-	public void fromBits(LeafiaBuf buf) {
+    @Override
+    public void fromBits(LeafiaBuf buf) {
 
-		x = buf.readInt();
-		y = buf.readInt();
-		z = buf.readInt();
+        x = buf.readInt();
+        y = buf.readInt();
+        z = buf.readInt();
 
-		buffer = buf.readNBT();
-	}
+        buffer = buf.readNBT();
+    }
 
-	@Override
-	public void toBits(LeafiaBuf buf) {
+    @Override
+    public void toBits(LeafiaBuf buf) {
 
-		buf.writeInt(x);
-		buf.writeInt(y);
-		buf.writeInt(z);
+        buf.writeInt(x);
+        buf.writeInt(y);
+        buf.writeInt(z);
 
-		buf.writeNBT(buffer);
-	}
+        buf.writeNBT(buffer);
+    }
 
-	public static class Handler implements IMessageHandler<NBTPacket, IMessage> {
+    public static class Handler implements IMessageHandler<NBTPacket, IMessage> {
 
-		@Override
-		@SideOnly(Side.CLIENT)
-		public IMessage onMessage(NBTPacket m, MessageContext ctx) {
-			Minecraft.getMinecraft().addScheduledTask(() -> {
-				if(Minecraft.getMinecraft().world == null)
-					return;
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(NBTPacket m, MessageContext ctx) {
+            Minecraft.getMinecraft().addScheduledTask(() -> {
+                if (Minecraft.getMinecraft().world == null)
+                    return;
 
-				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(new BlockPos(m.x, m.y, m.z));
+                TileEntity te = Minecraft.getMinecraft().world.getTileEntity(new BlockPos(m.x, m.y, m.z));
 
-				 {
+                {
 
-					NBTTagCompound nbt = m.buffer;
+                    NBTTagCompound nbt = m.buffer;
 
-					if(nbt != null) {
-						 if(te instanceof INBTPacketReceiver)
-								((INBTPacketReceiver) te).networkUnpack(nbt);
-					}
+                    if (nbt != null) {
+                        if (te instanceof INBTPacketReceiver)
+                            ((INBTPacketReceiver) te).networkUnpack(nbt);
+                    }
 
-				}
-			});
+                }
+            });
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 
 }

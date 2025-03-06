@@ -1,8 +1,8 @@
 package com.leafia.unsorted.recipe_book;
 
-import com.hbm.inventory.RecipesCommon.*;
-import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
+import com.hbm.inventory.RecipesCommon.AStack;
 import com.leafia.shit.recipe_book_elements.LeafiaRecipeBookTab;
+import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import com.llib.math.range.RangeInt;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

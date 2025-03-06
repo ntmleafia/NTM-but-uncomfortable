@@ -1,25 +1,10 @@
 package com.hbm.lib;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.text.DecimalFormat;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.annotation.Nullable;
-
-import com.hbm.items.ModItems.Batteries;
-import net.minecraft.block.material.Material;
-import org.apache.logging.log4j.Level;
-import org.apache.commons.lang3.tuple.Pair;
-
+import api.hbm.energy.IBatteryItem;
+import api.hbm.energy.IEnergyConnector;
+import api.hbm.energy.IEnergyConnectorBlock;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Sets;
-import com.hbm.main.MainRegistry;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.capability.HbmLivingCapability.EntityHbmPropsProvider;
 import com.hbm.capability.HbmLivingCapability.IEntityHbmProps;
@@ -28,17 +13,16 @@ import com.hbm.entity.projectile.EntityChopperMine;
 import com.hbm.handler.WeightedRandomChestContentFrom1710;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Batteries;
+import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.BobMathUtil;
-
-import api.hbm.energy.IBatteryItem;
-import api.hbm.energy.IEnergyConnector;
-import api.hbm.energy.IEnergyConnectorBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,23 +35,26 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.oredict.OreDictionary;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.Level;
+
+import javax.annotation.Nullable;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Spaghetti("this whole class")
 public class Library {
@@ -212,10 +199,10 @@ public class Library {
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(stack.getItem(), stack.getMetadata());
 		if(sprite != null){
 			path = new ResourceLocation(sprite.getIconName()+".png");
-			actualPath = new ResourceLocation(path.getResourceDomain(), "textures/"+path.getResourcePath());
+			actualPath = new ResourceLocation(path.getNamespace(), "textures/"+path.getPath());
 		} else {
 			path = new ResourceLocation(stack.getItem().getRegistryName()+".png");
-			actualPath = new ResourceLocation(path.getResourceDomain(), "textures/items/"+path.getResourcePath());
+			actualPath = new ResourceLocation(path.getNamespace(), "textures/items/"+path.getPath());
 		}
 		return getColorFromResourceLocation(actualPath);
 	}
@@ -376,17 +363,17 @@ public class Library {
 
 	public static RayTraceResult rayTrace(EntityPlayer player, double length, float interpolation) {
 		Vec3d vec3 = getPosition(interpolation, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
 		Vec3d vec31 = player.getLook(interpolation);
-		Vec3d vec32 = vec3.addVector(vec31.x * length, vec31.y * length, vec31.z * length);
+		Vec3d vec32 = vec3.add(vec31.x * length, vec31.y * length, vec31.z * length);
 		return player.world.rayTraceBlocks(vec3, vec32, false, false, true);
 	}
 	
 	public static RayTraceResult rayTrace(EntityPlayer player, double length, float interpolation, boolean b1, boolean b2, boolean b3) {
 		Vec3d vec3 = getPosition(interpolation, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
 		Vec3d vec31 = player.getLook(interpolation);
-		Vec3d vec32 = vec3.addVector(vec31.x * length, vec31.y * length, vec31.z * length);
+		Vec3d vec32 = vec3.add(vec31.x * length, vec31.y * length, vec31.z * length);
 		return player.world.rayTraceBlocks(vec3, vec32, b1, b2, b3);
 	}
 	
@@ -407,16 +394,16 @@ public class Library {
 	
 	public static RayTraceResult rayTraceIncludeEntities(EntityPlayer player, double d, float f) {
 		Vec3d vec3 = getPosition(f, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
 		Vec3d vec31 = player.getLook(f);
-		Vec3d vec32 = vec3.addVector(vec31.x * d, vec31.y * d, vec31.z * d);
+		Vec3d vec32 = vec3.add(vec31.x * d, vec31.y * d, vec31.z * d);
 		return rayTraceIncludeEntities(player.world, vec3, vec32, player);
 	}
 	
 	public static RayTraceResult rayTraceIncludeEntitiesCustomDirection(EntityPlayer player, Vec3d look, double d, float f) {
 		Vec3d vec3 = getPosition(f, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
-		Vec3d vec32 = vec3.addVector(look.x * d, look.y * d, look.z * d);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
+		Vec3d vec32 = vec3.add(look.x * d, look.y * d, look.z * d);
 		return rayTraceIncludeEntities(player.world, vec3, vec32, player);
 	}
 	
@@ -608,9 +595,9 @@ public class Library {
 	
 	public static Pair<RayTraceResult, List<Entity>> rayTraceEntitiesOnLine(EntityPlayer player, double d, float f){
 		Vec3d vec3 = getPosition(f, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
 		Vec3d vec31 = player.getLook(f);
-		Vec3d vec32 = vec3.addVector(vec31.x * d, vec31.y * d, vec31.z * d);
+		Vec3d vec32 = vec3.add(vec31.x * d, vec31.y * d, vec31.z * d);
 		RayTraceResult result = player.world.rayTraceBlocks(vec3, vec32, false, true, true);
 		if(result != null)
 			vec32 = result.hitVec;
@@ -631,9 +618,9 @@ public class Library {
 	public static RayTraceResult rayTraceEntitiesInCone(EntityPlayer player, double d, float f, float degrees) {
 		double cosDegrees = Math.cos(Math.toRadians(degrees));
 		Vec3d vec3 = getPosition(f, player);
-		vec3 = vec3.addVector(0D, (double) player.eyeHeight, 0D);
+		vec3 = vec3.add(0D, (double) player.eyeHeight, 0D);
 		Vec3d vec31 = player.getLook(f);
-		Vec3d vec32 = vec3.addVector(vec31.x * d, vec31.y * d, vec31.z * d);
+		Vec3d vec32 = vec3.add(vec31.x * d, vec31.y * d, vec31.z * d);
 		
 		RayTraceResult result = player.world.rayTraceBlocks(vec3, vec32, false, true, true);
 		double runningDot = Double.MIN_VALUE;
@@ -666,7 +653,7 @@ public class Library {
 		Vec3d V = center.subtract(coneStart);
 		double VlenSq = V.lengthSquared();
 		Vec3d direction = coneEnd.subtract(coneStart);
-		double size = direction.lengthVector();
+		double size = direction.length();
 		double V1len  = V.dotProduct(direction.normalize());
 		double angRad = Math.toRadians(degrees);
 		double distanceClosestPoint = Math.cos(angRad) * Math.sqrt(VlenSq - V1len*V1len) - V1len * Math.sin(angRad);

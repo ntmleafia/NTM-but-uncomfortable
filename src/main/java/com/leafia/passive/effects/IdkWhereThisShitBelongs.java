@@ -6,10 +6,10 @@ import com.hbm.config.BombConfig;
 import com.hbm.entity.logic.EntityTomBlast;
 import com.hbm.handler.RadiationSystemNT;
 import com.hbm.interfaces.IRadResistantBlock;
-import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.saveddata.RadiationSavedData;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.block.Block;
@@ -263,7 +263,7 @@ public class IdkWhereThisShitBelongs {
         if (state.getMaterial().getCanBurn()) {
             if (world.rand.nextInt(100) == 0) {
                 EnumFacing face = EnumFacing.random(world.rand);
-                BlockPos pos1 = pos.add(face.getFrontOffsetX(), face.getFrontOffsetY(), face.getFrontOffsetZ());
+                BlockPos pos1 = pos.add(face.getXOffset(), face.getYOffset(), face.getZOffset());
                 if (world.isValid(pos1))
                     if (world.isAirBlock(pos1))
                         world.setBlockState(pos, Blocks.FIRE.getDefaultState());

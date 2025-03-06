@@ -1,15 +1,9 @@
 package com.hbm.particle.tau;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.items.weapon.ItemGunGauss;
 import com.hbm.main.ResourceManager;
 import com.hbm.particle.ParticleFirstPerson;
 import com.hbm.render.RenderHelper;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,6 +16,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParticleTauMuzzleLightning extends ParticleFirstPerson {
 
@@ -56,7 +54,7 @@ public class ParticleTauMuzzleLightning extends ParticleFirstPerson {
 		}
 		if(nextPositionTime == 0){
 			nextPositionTime = 3 + rand.nextInt(3);
-			positions.add(new Vec3d(rand.nextFloat()-0.5, rand.nextFloat()-0.5, rand.nextFloat()-0.5).scale(0.3).addVector(posX, posY, posZ));
+			positions.add(new Vec3d(rand.nextFloat()-0.5, rand.nextFloat()-0.5, rand.nextFloat()-0.5).scale(0.3).add(posX, posY, posZ));
 			if(positions.size() > 9){
 				positions.remove(0);
 			}

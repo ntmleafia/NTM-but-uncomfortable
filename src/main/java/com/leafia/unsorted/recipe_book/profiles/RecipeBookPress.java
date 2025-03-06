@@ -3,14 +3,17 @@ package com.leafia.unsorted.recipe_book.profiles;
 import com.hbm.inventory.PressRecipes;
 import com.hbm.inventory.RecipesCommon;
 import com.hbm.inventory.RecipesCommon.AStack;
+import com.hbm.items.ModItems;
+import com.hbm.util.Tuple.Pair;
 import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
-import com.hbm.items.ModItems;
 import com.llib.math.range.RangeInt;
-import com.hbm.util.Tuple.Pair;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeBookPress extends LeafiaRecipeBookProfile {
     @Override

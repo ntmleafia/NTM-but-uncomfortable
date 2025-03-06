@@ -1,14 +1,11 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
-import com.hbm.main.MainRegistry;
-import com.hbm.world.HugeMush;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
-
+import com.hbm.world.HugeMush;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -21,6 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class BlockMush extends BlockBush implements IGrowable, IItemHazard {
 	
 	ItemHazardModule module;
@@ -28,7 +27,7 @@ public class BlockMush extends BlockBush implements IGrowable, IItemHazard {
 	
 	public BlockMush(Material materialIn, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setTickRandomly(true);

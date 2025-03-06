@@ -1,10 +1,11 @@
 package com.hbm.render.amlfrom1710;
 
-import javax.vecmath.Matrix3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import javax.vecmath.Matrix3f;
 
 public class Vec3
 {
@@ -189,7 +190,7 @@ public class Vec3
     /**
      * Returns the length of the vector.
      */
-    public double lengthVector()
+    public double length()
     {
         return (double)MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
     }

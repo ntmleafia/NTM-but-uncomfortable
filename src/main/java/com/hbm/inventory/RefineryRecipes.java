@@ -1,17 +1,15 @@
 package com.hbm.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.hbm.util.Tuple.Pair;
-
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemFluidIcon;
+import com.hbm.util.Tuple.Pair;
 import com.hbm.util.Tuple.Quartet;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RefineryRecipes {
 

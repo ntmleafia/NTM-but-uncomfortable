@@ -4,14 +4,13 @@ import api.hbm.block.IToolable;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
 import com.hbm.blocks.ModBlocks;
-import com.hbm.main.MainRegistry;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.items.tool.ItemTooling;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +24,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -39,7 +37,7 @@ import java.util.List;
 public class MachinePWRElement extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
 	public MachinePWRElement() {
 		super(Material.IRON,-1,"reactor_element");
-		this.setUnlocalizedName("pwr_element");
+		this.setTranslationKey("pwr_element");
 		this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
 	}
 	@Override
@@ -47,7 +45,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 		return true;
 	}
 	public void check(World world,BlockPos pos) { // Called only on server
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 		TileEntity entity = chunk.getTileEntity(pos,Chunk.EnumCreateEntityType.CHECK);
 		if (entity != null) {
 			if (entity instanceof TileEntityPWRElement) {
@@ -162,7 +160,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 			}
 		}
 
-		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getUnlocalizedName() + ".name"), 0xFF55FF, 0x3F153F, texts);
+		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
 	}
 
 	@Override

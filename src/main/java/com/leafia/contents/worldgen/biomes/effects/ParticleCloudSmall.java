@@ -1,7 +1,6 @@
 package com.leafia.contents.worldgen.biomes.effects;
 
 import net.minecraft.client.particle.Particle;
-// import net.minecraft.client.particle.ParticleCloud; Yeah its unusable because we cannot bypass changes done to renderParticle by ParticleCloud. Bruh.
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

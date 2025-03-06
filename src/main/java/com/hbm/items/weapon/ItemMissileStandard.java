@@ -1,12 +1,8 @@
 package com.hbm.items.weapon;
 
-import java.util.HashMap;
-import java.util.List;
-
 import com.hbm.config.BombConfig;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
-
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -14,10 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class ItemMissileStandard extends Item {
 	
 	public ItemMissileStandard(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(MainRegistry.missileTab);

@@ -1,18 +1,14 @@
 package com.hbm.config;
 
-import java.util.Locale;
-
-import org.apache.logging.log4j.Level;
-import org.lwjgl.opengl.GLContext;
-
 import com.hbm.main.MainRegistry;
 import com.hbm.render.GLCompat;
-
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import org.apache.logging.log4j.Level;
+import org.lwjgl.opengl.GLContext;
 
 public class GeneralConfig {
 

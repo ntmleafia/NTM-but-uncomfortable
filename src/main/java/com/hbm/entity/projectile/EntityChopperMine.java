@@ -1,10 +1,7 @@
 package com.hbm.entity.projectile;
 
-import java.util.List;
-
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.lib.HBMSoundHandler;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IProjectile;
@@ -16,6 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EntityChopperMine extends Entity implements IProjectile {
 

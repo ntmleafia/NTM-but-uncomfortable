@@ -1,15 +1,14 @@
 package com.hbm.tileentity.network;
 
 import api.hbm.block.IConveyorBelt;
-import com.hbm.items.ModItems.Upgrades;
-import com.hbm.lib.Library;
 import com.hbm.entity.item.EntityMovingItem;
 import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.container.ContainerCraneExtractor;
 import com.hbm.inventory.gui.GUICraneExtractor;
+import com.hbm.items.ModItems.Upgrades;
+import com.hbm.lib.Library;
 import com.hbm.modules.ModulePatternMatcher;
 import com.hbm.tileentity.IGUIProvider;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,11 +22,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGUIProvider, IControlReceiver {
     public boolean isWhitelist = false;
@@ -91,7 +90,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
 
                 if(te instanceof ISidedInventory && !(te instanceof TileEntityCraneExtractor)) {
                     sided = (ISidedInventory) te;
-                    access = masquerade(sided, EnumFacing.getFront(inputSide.getOpposite().ordinal()));
+                    access = masquerade(sided, EnumFacing.byIndex(inputSide.getOpposite().ordinal()));
                 }
 
                 //collect matching items
@@ -108,7 +107,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
                             int index = access == null ? i : access[i];
                             ItemStack stack = inv.getStackInSlot(index);
 
-                            if(stack != ItemStack.EMPTY && (sided == null || sided.canExtractItem(index, stack, EnumFacing.getFront(inputSide.getOpposite().ordinal())))){
+                            if(stack != ItemStack.EMPTY && (sided == null || sided.canExtractItem(index, stack, EnumFacing.byIndex(inputSide.getOpposite().ordinal())))){
 
                                 boolean match = this.matchesFilter(stack);
 
@@ -134,7 +133,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
                     for(int index : allowed_slots) {
                         ItemStack stack = inventory.getStackInSlot(index);
 
-                        if(stack != ItemStack.EMPTY && (sided == null || sided.canExtractItem(index, stack, EnumFacing.getFront(inputSide.getOpposite().ordinal())))){
+                        if(stack != ItemStack.EMPTY && (sided == null || sided.canExtractItem(index, stack, EnumFacing.byIndex(inputSide.getOpposite().ordinal())))){
 
                             boolean match = this.matchesFilter(stack);
 
@@ -262,7 +261,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
         int xCoord = pos.getX();
         int yCoord = pos.getY();
         int zCoord = pos.getZ();
-        return new Vec3d(xCoord - player.posX, yCoord - player.posY, zCoord - player.posZ).lengthVector() < 20;
+        return new Vec3d(xCoord - player.posX, yCoord - player.posY, zCoord - player.posZ).length() < 20;
     }
 
     @Override

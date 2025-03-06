@@ -1,14 +1,13 @@
 package com.hbm.sound;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.tileentity.machine.TileEntityMachineCentrifuge;
 import com.hbm.tileentity.machine.TileEntityMachineGasCent;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SoundLoopCentrifuge extends SoundLoopMachine {
 

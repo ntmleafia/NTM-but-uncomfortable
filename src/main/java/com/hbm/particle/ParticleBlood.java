@@ -1,11 +1,8 @@
 package com.hbm.particle;
 
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ResourceManager;
 import com.hbm.render.util.BakedModelUtil;
 import com.hbm.render.util.BakedModelUtil.DecalType;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -17,9 +14,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
 
 public class ParticleBlood extends Particle {
 
@@ -107,8 +105,8 @@ public class ParticleBlood extends Particle {
         Vec3d toPlayer = new Vec3d(f5, f6-Minecraft.getMinecraft().player.getEyeHeight(), f7);
         Vec3d point1 = particleAxis.crossProduct(toPlayer).normalize().scale(0.5*particleScale*(fade*fade*1.5F+1));
         Vec3d point2 = point1.scale(-1);
-        point1 = point1.addVector(f5, f6, f7);
-        point2 = point2.addVector(f5, f6, f7);
+        point1 = point1.add(f5, f6, f7);
+        point2 = point2.add(f5, f6, f7);
         particleAxis = particleAxis.scale(stretch*(fade*fade*1.5F+1));
         
         int i = this.getBrightnessForRender(partialTicks);

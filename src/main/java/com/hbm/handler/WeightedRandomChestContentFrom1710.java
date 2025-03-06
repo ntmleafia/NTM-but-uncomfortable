@@ -1,8 +1,5 @@
 package com.hbm.handler;
 
-import java.util.Arrays;
-import java.util.Random;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
@@ -10,6 +7,9 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+
+import java.util.Arrays;
+import java.util.Random;
 
 public class WeightedRandomChestContentFrom1710 extends WeightedRandom.Item
 {

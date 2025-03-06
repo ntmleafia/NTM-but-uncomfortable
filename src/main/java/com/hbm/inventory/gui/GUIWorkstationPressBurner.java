@@ -1,18 +1,16 @@
 package com.hbm.inventory.gui;
 
-import com.leafia.unsorted.recipe_book.LeafiaGuiWorkstation;
-import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBook;
-import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
-import com.leafia.unsorted.recipe_book.profiles.RecipeBookPress;
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.inventory.container.ContainerMachinePress;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityMachinePress;
-
+import com.leafia.unsorted.recipe_book.LeafiaGuiWorkstation;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.leafia.unsorted.recipe_book.profiles.RecipeBookPress;
+import com.leafia.unsorted.recipe_book.system.LeafiaRecipeBook;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class GUIWorkstationPressBurner extends LeafiaGuiWorkstation {
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_press.png");

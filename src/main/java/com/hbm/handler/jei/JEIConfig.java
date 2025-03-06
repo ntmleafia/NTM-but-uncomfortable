@@ -2,47 +2,13 @@ package com.hbm.handler.jei;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
-import com.hbm.inventory.CentrifugeRecipes;
-import com.hbm.inventory.CrystallizerRecipes;
-import com.hbm.inventory.ShredderRecipes;
-import com.hbm.inventory.RBMKOutgasserRecipes;
-import com.hbm.inventory.DFCRecipes;
-import com.hbm.inventory.gui.GUIAnvil;
-import com.hbm.inventory.gui.GUIBook;
-import com.hbm.inventory.gui.GUICrystallizer;
-import com.hbm.inventory.gui.GUIHadron;
-import com.hbm.inventory.gui.GUIMixer;
-import com.hbm.inventory.gui.GUIWorkstationAssembler;
-import com.hbm.inventory.gui.GUIMachineBoiler;
-import com.hbm.inventory.gui.GUIMachineBoilerElectric;
-import com.hbm.inventory.gui.GUIMachineBoilerRTG;
-import com.hbm.inventory.gui.GUIMachineCMBFactory;
-import com.hbm.inventory.gui.GUIMachineCentrifuge;
-import com.hbm.inventory.gui.GUIWorkstationChemical;
-import com.hbm.inventory.gui.GUIMachineCyclotron;
-import com.hbm.inventory.gui.GUIWorkstationPressElectric;
-import com.hbm.inventory.gui.GUIMachineGasCent;
-import com.hbm.inventory.gui.GUIWorkstationPressBurner;
-import com.hbm.inventory.gui.GUIMachineReactor;
-import com.hbm.inventory.gui.GUIMachineRefinery;
-import com.hbm.inventory.gui.GUIMachineShredder;
-import com.hbm.inventory.gui.GUISILEX;
-import com.hbm.inventory.gui.GUIWorkstationDiFurnace;
-import com.hbm.inventory.gui.GUIWorkstationDiFurnaceRTG;
-import com.hbm.inventory.gui.GUIRBMKOutgasser;
-import com.hbm.inventory.gui.GUIFWatzCore;
-import com.hbm.inventory.gui.GUIMachineSchrabidiumTransmutator;
+import com.hbm.inventory.*;
+import com.hbm.inventory.gui.*;
 import com.hbm.items.ModItems;
-import com.hbm.items.weapon.ItemCustomMissile;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
+import com.hbm.items.weapon.ItemCustomMissile;
 import com.hbm.main.MainRegistry;
-
-import mezz.jei.api.IGuiHelper;
-import mezz.jei.api.IJeiRuntime;
-import mezz.jei.api.IModPlugin;
-import mezz.jei.api.IModRegistry;
-import mezz.jei.api.ISubtypeRegistry;
-import mezz.jei.api.JEIPlugin;
+import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.block.Block;
@@ -129,7 +95,7 @@ public class JEIConfig implements IModPlugin {
 
 		UpgradeDetailsDatabase.init();
 		for (Block machine:UpgradeDetailsDatabase.supportedMachines.keySet()) {
-			String newUID = UPGRADES + machine.getRegistryName().getResourcePath();
+			String newUID = UPGRADES + machine.getRegistryName().getPath();
 			registry.addRecipeCatalyst(new ItemStack(ModItems.upgrade_template), newUID);
 			registry.addRecipeCatalyst(new ItemStack(machine), newUID);
 			registry.addRecipes(JeiRecipes.getUpgradeDetails(machine), newUID);
@@ -345,22 +311,22 @@ public class JEIConfig implements IModPlugin {
 			return;
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.cell, (ItemStack stack) -> {
 			FluidStack fluid = FluidUtil.getFluidContained(stack);
-			return ModItems.cell.getUnlocalizedName() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
+			return ModItems.cell.getTranslationKey() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.fluid_barrel_full, (ItemStack stack) -> {
 			FluidStack fluid = FluidUtil.getFluidContained(stack);
-			return ModItems.fluid_barrel_full.getUnlocalizedName() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
+			return ModItems.fluid_barrel_full.getTranslationKey() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.fluid_tank_full, (ItemStack stack) -> {
 			FluidStack fluid = FluidUtil.getFluidContained(stack);
-			return ModItems.fluid_tank_full.getUnlocalizedName() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
+			return ModItems.fluid_tank_full.getTranslationKey() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.canister_generic, (ItemStack stack) -> {
 			FluidStack fluid = FluidUtil.getFluidContained(stack);
-			return ModItems.canister_generic.getUnlocalizedName() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
+			return ModItems.canister_generic.getTranslationKey() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.missile_custom, (ItemStack stack) -> {
-			return ModItems.missile_custom.getUnlocalizedName() + "w" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "warhead")) + "f" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "fuselage")) + "s" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "stability")) + "t" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "thruster"));
+			return ModItems.missile_custom.getTranslationKey() + "w" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "warhead")) + "f" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "fuselage")) + "s" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "stability")) + "t" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "thruster"));
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.fluid_icon, (ItemStack stack) -> {
 			if(stack.hasTagCompound()) {

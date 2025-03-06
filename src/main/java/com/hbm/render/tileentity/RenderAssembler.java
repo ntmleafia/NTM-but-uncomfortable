@@ -1,10 +1,8 @@
 package com.hbm.render.tileentity;
 
-import org.lwjgl.opengl.GL11;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.main.ResourceManager;
 import com.hbm.tileentity.machine.TileEntityMachineAssembler;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -15,6 +13,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.ForgeHooksClient;
+import org.lwjgl.opengl.GL11;
 
 public class RenderAssembler extends TileEntitySpecialRenderer<TileEntityMachineAssembler> {
 	
@@ -27,8 +26,8 @@ public class RenderAssembler extends TileEntitySpecialRenderer<TileEntityMachine
 	public void render(TileEntityMachineAssembler assembler, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
     	Vec3d start = new Vec3d(assembler.getPos().getX()+0.05, assembler.getPos().getY()+1.5, assembler.getPos().getZ()+3.1);
-    	//RenderHelper.renderFlashLight(start, start.addVector(-20, 0, 0), 20, 1, ResourceManager.fl_cookie, partialTicks);
-    	//FlashlightRenderer.addFlashlight(start, start.addVector(-20, 0, 0), 20, 20, ResourceManager.fl_cookie, true, true);
+    	//RenderHelper.renderFlashLight(start, start.add(-20, 0, 0), 20, 1, ResourceManager.fl_cookie, partialTicks);
+    	//FlashlightRenderer.addFlashlight(start, start.add(-20, 0, 0), 20, 20, ResourceManager.fl_cookie, true, true);
     	//LightRenderer.addPointLight(start, new Vec3d(1, 0.4, 0.1), 10);
         GL11.glPushMatrix();
         GL11.glTranslated(x + 0.5D, y, z + 0.5D);

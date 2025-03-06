@@ -1,22 +1,21 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components.element;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.interfaces.IRadResistantBlock;
+import com.hbm.lib.InventoryHelper;
 import com.hbm.saveddata.RadiationSavedData;
-import com.hbm.util.Tuple.*;
+import com.hbm.tileentity.TileEntityInventoryBase;
+import com.hbm.util.I18nUtil;
+import com.hbm.util.Tuple.Pair;
+import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
-import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRSource;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
-import com.hbm.interfaces.IRadResistantBlock;
-import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
-import com.hbm.lib.InventoryHelper;
-import com.hbm.tileentity.TileEntityInventoryBase;
-import com.hbm.util.I18nUtil;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
@@ -30,12 +29,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
@@ -151,7 +148,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			showRangesInt(pos.add(facing.getDirectionVec()),areas,"areas start");
 			Set<Integer> moderatedRows = new HashSet<>();
 			for (int i = 1; (areas.size() > 0) && (i < 20); i++) {
-				BlockPos basePos = pos.add(facing.getFrontOffsetX()*i,0,facing.getFrontOffsetZ()*i);
+				BlockPos basePos = pos.add(facing.getXOffset()*i,0,facing.getZOffset()*i);
 				if (!world.isValid(basePos)) break;
 				Tracker._tracePosition(this,basePos,"basePos");
 				linetraceNeutrons(basePos,areas,controls,moderatedRows,new MapConsumer(i) {
@@ -189,14 +186,14 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		return intersection;
 	}
 	void showRanges(BlockPos horizontalPos,Collection<RangeDouble> areas,String name) {
-		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).addVector(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
+		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).add(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
 		for (RangeDouble area : areas)
-			Tracker._traceLine(this,base.addVector(0,1-area.min*height,0),base.addVector(0,1-area.max*height,0),name);
+			Tracker._traceLine(this,base.add(0,1-area.min*height,0),base.add(0,1-area.max*height,0),name);
 	}
 	void showRangesInt(BlockPos horizontalPos,Collection<RangeInt> areas,String name) {
-		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).addVector(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
+		Vec3d base = new Vec3d(horizontalPos.getX(),getPos().getY(),horizontalPos.getZ()).add(0.5+Math.signum(getPos().getX()-horizontalPos.getX())*0.6,0,0.5+Math.signum(getPos().getZ()-horizontalPos.getZ())*0.6);
 		for (RangeInt area : areas)
-			Tracker._traceLine(this,base.addVector(0,1-area.min,0),base.addVector(0,-area.max,0),name);
+			Tracker._traceLine(this,base.add(0,1-area.min,0),base.add(0,-area.max,0),name);
 	}
 	void searchFuelAndAdd(BlockPos basePos,List<RangeInt> areas,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<Integer> moderatedRows,MapConsumer callback) {
 		Tracker._startProfile(this,"searchFuelAndAdd");
@@ -286,7 +283,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				if (world.isValid(searchPos)) {
 					Tracker._tracePosition(this,searchPos,"Looking for graphite");
 					if (block.getRegistryName() != null) {
-						if (("_"+block.getRegistryName().getResourcePath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
+						if (("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
 							moderatedRows.add(depth);
 					}
 				}
@@ -388,14 +385,14 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 							);
 							Tracker._traceLine(
 									this,
-									new Vec3d(basePos.down(rodTop)).addVector(0.5,1+rangeBottom.min*rodHeight,0.5),
-									new Vec3d(basePos.down(rodTop)).addVector(0.5,1+rangeBottom.max*rodHeight,0.5),
+									new Vec3d(basePos.down(rodTop)).add(0.5,1+rangeBottom.min*rodHeight,0.5),
+									new Vec3d(basePos.down(rodTop)).add(0.5,1+rangeBottom.max*rodHeight,0.5),
 									"rangeBottom",String.format("%01.2f%% ~ %01.2f%%",rangeBottom.min*100,rangeBottom.max*100)
 							);
 							Tracker._traceLine(
 									this,
-									new Vec3d(basePos.down(rodBottom)).addVector(0.5,rangeTop.min*rodHeight,0.5),
-									new Vec3d(basePos.down(rodBottom)).addVector(0.5,rangeTop.max*rodHeight,0.5),
+									new Vec3d(basePos.down(rodBottom)).add(0.5,rangeTop.min*rodHeight,0.5),
+									new Vec3d(basePos.down(rodBottom)).add(0.5,rangeTop.max*rodHeight,0.5),
 									"rangeTop",String.format("%01.2f%% ~ %01.2f%%",rangeTop.min*100,rangeTop.max*100)
 							);
 							controls.put(new BlockPos(basePos.getX(),basePos.getY() - rodTop,basePos.getZ()),new Pair<>(rangeBottom,rangeTop));
@@ -450,7 +447,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			Tracker._startProfile(entity,"getControlMin");
 			Set<RangeDouble> intersection = new LeafiaSet<>();
 			double h = entity.height;
-			Vec3d midPos = (new Vec3d(entity.getPos()).add(new Vec3d(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()))).scale(0.5).addVector(0.5,1,0.5);
+			Vec3d midPos = (new Vec3d(entity.getPos()).add(new Vec3d(fuelPos.getX(),entity.getPos().getY(),fuelPos.getZ()))).scale(0.5).add(0.5,1,0.5);
 			for (RangeDouble area : areas) {
 				Tracker._traceLine(entity,midPos.subtract(0,area.min*h,0),midPos.subtract(0,area.max*h,0),"areaTest");
 				intersection.add(area.clone());
@@ -519,7 +516,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 
 	public void connectUpper() { // For clients, called only on validate()
 		if (!this.isInvalid() && world.isBlockLoaded(pos)) {
-			Chunk chunk = world.getChunkFromBlockCoords(pos);
+			Chunk chunk = world.getChunk(pos);
 			if (world.isRemote) { // Keep in mind that neighborChanged in Block does NOT get called for Remotes
 				if (world.getBlockState(pos.down()).getBlock() instanceof MachinePWRElement) {
 					TileEntity entityBelow = chunk.getTileEntity(pos.down(),Chunk.EnumCreateEntityType.CHECK);

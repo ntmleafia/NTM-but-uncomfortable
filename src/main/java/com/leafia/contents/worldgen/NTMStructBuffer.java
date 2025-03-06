@@ -9,7 +9,6 @@ import com.llib.technical.FifthString;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -84,14 +83,14 @@ public class NTMStructBuffer {
 		version = NTMStructVersion.values()[buf.readUnsignedByte()];
 		offset = buf.readVec3i();
 		size = buf.readVec3i();
-		originalFace = EnumFacing.getHorizontal(buf.readByte());
+		originalFace = EnumFacing.byHorizontalIndex(buf.readByte());
 		paletteBlock = new Block[buf.readUnsignedShort()];
 		for (int i = 0; i < paletteBlock.length; i++) {
 			boolean hasNext = true;
 			while (hasNext) {
 				FifthString fifth = buf.readFifthString();
 				if (paletteBlock[i] == null)
-					paletteBlock[i] = Block.getBlockFromName(LeafiaLib.stringSwap(fifth.toString()," ".charAt(0),":".charAt(0)));
+					paletteBlock[i] = Block.getBlockFromName(LeafiaLib.stringSwap(fifth.toString(), ' ', ':'));
 				hasNext = buf.extract(1) > 0;
 			}
 		}
@@ -162,7 +161,7 @@ public class NTMStructBuffer {
 						if (key instanceof PropertyDirection) {
 							PropertyDirection cast = (PropertyDirection)key;
 							EnumFacing facing = property.state.getValue(cast);
-							if (facing.getFrontOffsetY() == 0 && rotation != NTMStructAngle.ORIGINAL) {
+							if (facing.getYOffset() == 0 && rotation != NTMStructAngle.ORIGINAL) {
 								switch(rotation) {
 									case RIGHT: property.state = property.state.withProperty(cast,facing.rotateY()); break;
 									case BACK: property.state = property.state.withProperty(cast,facing.getOpposite()); break;

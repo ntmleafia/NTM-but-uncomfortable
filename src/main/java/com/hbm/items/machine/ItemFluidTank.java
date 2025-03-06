@@ -1,16 +1,12 @@
 package com.hbm.items.machine;
 
-import java.util.List;
-import java.util.Map.Entry;
-
-import com.hbm.forgefluid.HbmFluidHandlerItemStack;
-import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.config.GeneralConfig;
+import com.hbm.forgefluid.HbmFluidHandlerItemStack;
+import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
-import com.hbm.forgefluid.ModFluidProperties;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,6 +24,9 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 public class ItemFluidTank extends Item implements IHasCustomModel {
 
 	public static final ModelResourceLocation fluidTankModel = new ModelResourceLocation(
@@ -39,7 +38,7 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	private int cap;
 
 	public ItemFluidTank(String s, int cap) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setHasSubtypes(true);
@@ -77,9 +76,9 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + I18n.format(this.getUnlocalizedName() + ".name")).trim();
+		String s = ("" + I18n.format(this.getTranslationKey() + ".name")).trim();
 		String s1 = null;// ("" +
-							// StatCollector.translateToLocal(FluidType.getEnum(stack.getItemDamage()).getUnlocalizedName()))
+							// StatCollector.translateToLocal(FluidType.getEnum(stack.getItemDamage()).getTranslationKey()))
 		// .trim();
 		if (FluidUtil.getFluidContained(stack) != null) {
 			s1 = ("" + I18n.format(FluidUtil.getFluidContained(stack).getLocalizedName()).trim());

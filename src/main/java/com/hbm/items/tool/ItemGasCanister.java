@@ -1,15 +1,11 @@
 package com.hbm.items.tool;
 
-import java.util.List;
-
 import com.hbm.forgefluid.HbmFluidHandlerGasCanister;
-import com.hbm.forgefluid.HbmFluidHandlerItemStack;
 import com.hbm.forgefluid.SpecialContainerFillLists.EnumGasCanister;
 import com.hbm.interfaces.IHasCustomModel;
 import com.hbm.items.ModItems;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
-
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,6 +22,8 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.List;
+
 public class ItemGasCanister extends Item implements IHasCustomModel {
 
 	public static final ModelResourceLocation fluidCanisterModel = new ModelResourceLocation(RefStrings.MODID + ":gas_empty", "inventory");
@@ -33,7 +31,7 @@ public class ItemGasCanister extends Item implements IHasCustomModel {
 	
 	
 	public ItemGasCanister(String s, int cap){
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(MainRegistry.controlTab);
 		this.setMaxStackSize(1);

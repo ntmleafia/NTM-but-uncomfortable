@@ -1,21 +1,19 @@
 package com.hbm.inventory.control_panel;
 
-import java.util.*;
-
 import com.hbm.inventory.control_panel.nodes.*;
+import com.hbm.lib.RefStrings;
+import com.hbm.main.ClientProxy;
+import com.hbm.render.RenderHelper;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
-import com.hbm.lib.RefStrings;
-import com.hbm.main.ClientProxy;
-import com.hbm.render.RenderHelper;
-
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import java.util.*;
 
 public class SubElementNodeEditor extends SubElement {
 

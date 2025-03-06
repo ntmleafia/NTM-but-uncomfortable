@@ -1,10 +1,5 @@
 package com.hbm.items.special;
 
-import java.util.List;
-
-import com.hbm.items.ModItems.Armory;
-import com.hbm.items.ModItems.Foods;
-import com.hbm.util.I18nUtil;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.effect.EntityVortex;
 import com.hbm.entity.missile.EntityMIRV;
@@ -12,9 +7,11 @@ import com.hbm.entity.projectile.EntityBoxcar;
 import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
-
+import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -29,10 +26,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class ItemGlitch extends Item {
 
 	public ItemGlitch(String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.maxStackSize = 1;
         this.setMaxDamage(1);

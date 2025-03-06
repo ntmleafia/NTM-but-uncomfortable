@@ -225,7 +225,7 @@ public class LeafiaDebug {
 			if (triplet == null) return new VisualizerTrace(entity);
 			String message = triplet.getA();
 			String profile = triplet.getB();
-			VisualizerTrace trace = new VisualizerTrace(new Vec3d(pos).addVector(0.5,0.5,0.5),message.split("\n"),triplet.getC(),profile);
+			VisualizerTrace trace = new VisualizerTrace(new Vec3d(pos).add(0.5,0.5,0.5),message.split("\n"),triplet.getC(),profile);
 			return addTrace(entity,trace);
 		}
 		public static VisualizerTrace _traceLine(TileEntity entity,Vec3d start,Vec3d end,Object... details) {
@@ -318,7 +318,7 @@ public class LeafiaDebug {
 					tgtPos = new Vec3d(buf.readDouble(),buf.readDouble(),buf.readDouble());
 			}
 			public VisualizerTrace(TileEntity entity) {
-				pos = new Vec3d(entity.getPos()).addVector(0.5,0.5,0.5);
+				pos = new Vec3d(entity.getPos()).add(0.5,0.5,0.5);
 				label = null;
 				profile = null;
 				color = 0xFFFFFF;

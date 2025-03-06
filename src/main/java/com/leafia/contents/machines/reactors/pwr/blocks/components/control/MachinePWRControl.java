@@ -4,13 +4,12 @@ import api.hbm.block.IToolable;
 import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
-import com.hbm.main.MainRegistry;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
-import com.leafia.dev.MachineTooltip;
-import com.leafia.dev.container_utility.LeafiaPacket;
 import com.hbm.items.tool.ItemTooling;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
+import com.leafia.dev.MachineTooltip;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -26,7 +25,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -40,7 +38,7 @@ import java.util.List;
 public class MachinePWRControl extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRComponentBlock {
     public MachinePWRControl() {
         super(Material.IRON,"reactor_control");
-        this.setUnlocalizedName("pwr_control");
+        this.setTranslationKey("pwr_control");
         setSoundType(SoundType.METAL);
     }
     @Override
@@ -149,7 +147,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
         texts.add("§8"+control.name);
         texts.add("Use name tag to label rods for group control");
 
-        ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getUnlocalizedName() + ".name"), 0xFF55FF, 0x3F153F, texts);
+        ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
     }
 
     @Override

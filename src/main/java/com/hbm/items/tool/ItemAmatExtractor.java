@@ -2,13 +2,11 @@ package com.hbm.items.tool;
 
 import com.hbm.blocks.bomb.BlockCrashedBomb;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.special.ItemCustomLore;
 import com.hbm.util.ContaminationUtil;
 import com.hbm.util.ContaminationUtil.ContaminationType;
 import com.hbm.util.ContaminationUtil.HazardType;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;

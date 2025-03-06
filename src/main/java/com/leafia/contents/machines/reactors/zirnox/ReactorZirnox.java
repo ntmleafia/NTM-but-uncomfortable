@@ -2,16 +2,14 @@ package com.leafia.contents.machines.reactors.zirnox;
 
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
-import com.leafia.dev.MachineTooltip;
 import com.hbm.handler.BossSpawnHandler;
 import com.hbm.handler.MultiblockHandlerXR;
+import com.hbm.lib.ForgeDirection;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.TileEntityProxyCombo;
-import com.hbm.lib.ForgeDirection;
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
-
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.material.Material;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;

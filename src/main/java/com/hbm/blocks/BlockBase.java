@@ -1,27 +1,23 @@
 package com.hbm.blocks;
 
-import java.util.List;
-
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BlockBase extends Block {
 	
 	public BlockBase(Material m, String s){
 		super(m);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setHarvestLevel("pickaxe", 0);
 		this.setCreativeTab(MainRegistry.controlTab);
@@ -30,7 +26,7 @@ public class BlockBase extends Block {
 
 	public BlockBase(Material m, SoundType sound, String s){
 		super(m);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setSoundType(sound);
 		this.setHarvestLevel("pickaxe", 0);

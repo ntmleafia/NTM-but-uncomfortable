@@ -1,46 +1,33 @@
 
 package com.hbm.entity.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hbm.config.BombConfig;
 import com.hbm.config.CompatibilityConfig;
-import com.hbm.entity.effect.EntityNukeTorex;
-import com.hbm.entity.logic.IChunkLoader;
-import com.hbm.entity.mob.EntityGlowingOne;
-import com.hbm.main.MainRegistry;
-
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.common.ForgeChunkManager.Type;
-import net.minecraft.util.math.ChunkPos;
-
-import org.apache.logging.log4j.Level;
-
-import com.hbm.render.amlfrom1710.Vec3;
-import com.hbm.config.BombConfig;
 import com.hbm.config.GeneralConfig;
-import com.hbm.config.CompatibilityConfig;
-import com.hbm.util.ContaminationUtil;
-import com.hbm.entity.effect.EntityFalloutUnderGround;
 import com.hbm.entity.effect.EntityFalloutRain;
-import com.hbm.explosion.ExplosionNukeGeneric;
+import com.hbm.entity.effect.EntityFalloutUnderGround;
+import com.hbm.entity.effect.EntityNukeTorex;
+import com.hbm.entity.mob.EntityGlowingOne;
 import com.hbm.explosion.ExplosionNukeRayBatched;
 import com.hbm.main.MainRegistry;
-
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Biomes;
-import net.minecraft.world.biome.Biome;
+import com.hbm.util.ContaminationUtil;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.world.World;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
+import org.apache.logging.log4j.Level;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityNukeExplosionMK5 extends Entity implements IChunkLoader {
 	//Strength of the blast

@@ -1,15 +1,15 @@
 package com.leafia.unsorted.recipe_book.profiles;
 
 import com.hbm.inventory.DiFurnaceRecipes;
-import com.hbm.inventory.RecipesCommon.*;
-import com.hbm.items.ModItems.Materials.Ingots;
-import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
-import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.special.ItemHazard;
-import com.llib.math.range.RangeInt;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.Tuple.Pair;
+import com.leafia.unsorted.recipe_book.LeafiaRecipeBookProfile;
+import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
+import com.llib.math.range.RangeInt;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,7 +33,7 @@ public class RecipeBookBlastFurnace extends LeafiaRecipeBookProfile {
             Item item = stack.getItem();
             int index = -1;
             if (item.getCreativeTab() == MainRegistry.partsTab) {
-                if (item.getRegistryName().getResourcePath().startsWith("ingot_")) {
+                if (item.getRegistryName().getPath().startsWith("ingot_")) {
                     if (item instanceof ItemHazard)
                         index = 1;
                     else

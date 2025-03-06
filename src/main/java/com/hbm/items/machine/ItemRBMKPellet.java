@@ -1,15 +1,9 @@
 package com.hbm.items.machine;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.List;
-
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.items.ModItems;
 import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -22,13 +16,15 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class ItemRBMKPellet extends Item implements IItemHazard {
 	
 	public String fullName = "";
 	ItemHazardModule module;
 
 	public ItemRBMKPellet(String fullName, String s) {
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.fullName = fullName;
 		this.setHasSubtypes(true);

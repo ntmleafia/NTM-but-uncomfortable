@@ -1,16 +1,11 @@
 package com.hbm.particle;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.lwjgl.opengl.GL11;
-
 import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.hbm.main.ResourceManager;
 import com.hbm.particle.gluon.ParticleGluonDisintegration;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.util.ModelRendererUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
@@ -25,6 +20,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.lwjgl.opengl.GL11;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class DisintegrationParticleHandler {
 
@@ -296,7 +294,7 @@ public class DisintegrationParticleHandler {
 			int numLTrails = MathHelper.clamp(trailCount, 0, 2);
 			ParticleLightningGib p = new ParticleLightningGib(world, pX, pY, pZ, cube, matrix, tex, cubeMidX, cubeMidY, cubeMidZ, scale, numLTrails);
 			trailCount -= numLTrails;
-			Vec3d motion = hitPos.toVec3d().normalize().addVector(0, 0.2, 0).scale(1.2)
+			Vec3d motion = hitPos.toVec3d().normalize().add(0, 0.2, 0).scale(1.2)
 					.add(new Vec3d(world.rand.nextFloat()-0.5F, world.rand.nextFloat()-0.5F, world.rand.nextFloat()-0.5F).scale(0.5));
 			p.motion(motion);
 			Minecraft.getMinecraft().effectRenderer.addEffect(p);

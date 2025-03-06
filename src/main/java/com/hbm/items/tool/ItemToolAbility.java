@@ -1,24 +1,17 @@
 package com.hbm.items.tool;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
+import api.hbm.item.IDepthRockTool;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.hbm.handler.ToolAbility;
-import com.hbm.handler.ToolAbility.SilkAbility;
-import com.hbm.handler.WeaponAbility;
-import com.hbm.util.I18nUtil;
-import com.hbm.items.ModItems;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockBedrockOre;
 import com.hbm.blocks.generic.BlockBedrockOreTE;
-
-import api.hbm.item.IDepthRockTool;
+import com.hbm.handler.ToolAbility;
+import com.hbm.handler.ToolAbility.SilkAbility;
+import com.hbm.handler.WeaponAbility;
+import com.hbm.items.ModItems;
+import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -38,11 +31,7 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
 import net.minecraft.network.play.server.SPacketBlockChange;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -52,6 +41,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.*;
 
 public class ItemToolAbility extends ItemTool implements IItemAbility, IDepthRockTool {
 
@@ -101,7 +92,7 @@ public class ItemToolAbility extends ItemTool implements IItemAbility, IDepthRoc
 	
 	public ItemToolAbility(float damage, float attackSpeedIn, double movement, ToolMaterial material, EnumToolType type, String s) {
 		super(0, attackSpeedIn, material, type.blocks);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.damage = damage;
 		this.movement = movement;
@@ -237,7 +228,7 @@ public class ItemToolAbility extends ItemTool implements IItemAbility, IDepthRoc
         if (player.capabilities.isCreativeMode) {
             block.getBlock().onBlockHarvested(world, pos, block, player);
             if (block.getBlock().removedByPlayer(block, world, pos, player, false))
-                block.getBlock().onBlockDestroyedByPlayer(world, pos, block);
+                block.getBlock().onPlayerDestroy(world, pos, block);
 
             if (!world.isRemote) {
                 player.connection.sendPacket(new SPacketBlockChange(world, pos));
@@ -253,7 +244,7 @@ public class ItemToolAbility extends ItemTool implements IItemAbility, IDepthRoc
 
             if(block.getBlock().removedByPlayer(block, world, pos, player, true))
             {
-                block.getBlock().onBlockDestroyedByPlayer(world, pos, block);
+                block.getBlock().onPlayerDestroy(world, pos, block);
                 block.getBlock().harvestBlock(world, player, pos, block, world.getTileEntity(pos), stack);
                 block.getBlock().dropXpOnBlockBreak(world, pos, event);
             }
@@ -264,7 +255,7 @@ public class ItemToolAbility extends ItemTool implements IItemAbility, IDepthRoc
             world.playEvent(2001, pos, Block.getStateId(block));
             if(block.getBlock().removedByPlayer(block, world, pos, player, true))
             {
-                block.getBlock().onBlockDestroyedByPlayer(world, pos, block);
+                block.getBlock().onPlayerDestroy(world, pos, block);
             }
             ItemStack itemstack = player.getHeldItem(hand);
             if (itemstack != null)

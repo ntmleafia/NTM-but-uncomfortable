@@ -1,16 +1,7 @@
 package com.hbm.world;
 
-import java.util.Random;
-
 import com.hbm.config.GeneralConfig;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockHalfWoodSlab;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStoneBrick;
-import net.minecraft.block.BlockWoodSlab;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntityChest;
@@ -23,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.DungeonHooks;
+
+import java.util.Random;
 
 public class LibraryDungeon extends WorldGenerator
 {

@@ -460,7 +460,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	int meltdownFlash = 0;
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
-		String res = this.getRegistryName().getResourcePath();
+		String res = this.getRegistryName().getPath();
 		ItemLeafiaRod item = ItemLeafiaRod.fromResourceMap.get(res);
 		NBTTagCompound data = stack.getTagCompound();
 		double heat = 20;
@@ -473,12 +473,12 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 			meltdown = data.getBoolean("melting");
 			decay = data.getDouble("decay");
 		}
-		list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getUnlocalizedName()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
+		list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getTranslationKey()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
 		if (newFuel != null) {
 			if (newFuel instanceof ItemLeafiaRod)
 				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + ((ItemLeafiaRod)newFuel).label);
 			else
-				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getUnlocalizedName()+".name"));
+				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getTranslationKey()+".name"));
 		}
 		if (life != 0) {
 			list.add(TextFormatting.DARK_GREEN + "  Life: About "+life+"°C");

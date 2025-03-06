@@ -58,7 +58,7 @@ public class RenderPWRVentElement extends TileEntitySpecialRenderer<TileEntityPW
 		IBlockState state = entity.getWorld().getBlockState(entity.getPos());
 		if (state.getBlock() instanceof MachinePWRVentBase) {
 			EnumFacing face = state.getValue(MachinePWRVentBase.FACING);
-			if (face.getFrontOffsetY() != 0) {
+			if (face.getYOffset() != 0) {
 				if (face.equals(EnumFacing.DOWN)) LeafiaGls.rotate(-180,1,0,0);
 			} else {
 				LeafiaGls.rotate(180-face.getHorizontalAngle(),0,1,0);

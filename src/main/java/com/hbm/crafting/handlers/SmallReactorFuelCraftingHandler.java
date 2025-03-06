@@ -1,12 +1,9 @@
 package com.hbm.crafting.handlers;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFuelRod;
-
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class SmallReactorFuelCraftingHandler extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {

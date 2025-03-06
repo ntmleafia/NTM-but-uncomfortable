@@ -2,7 +2,6 @@ package com.leafia.contents.machines.reactors.pwr.blocks.components.channel;
 
 import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ITooltipProvider;
-import com.hbm.blocks.ModBlocks;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.SoundType;

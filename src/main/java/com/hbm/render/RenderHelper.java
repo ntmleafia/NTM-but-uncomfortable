@@ -1,48 +1,19 @@
 package com.hbm.render;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.util.glu.Project;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
-
 import com.hbm.entity.missile.EntityCarrier;
-import com.hbm.entity.missile.EntityMissileCustom;
-import com.hbm.entity.missile.EntityMissileAntiBallistic;
 import com.hbm.entity.missile.EntityMissileBaseAdvanced;
+import com.hbm.entity.missile.EntityMissileCustom;
 import com.hbm.handler.HbmShaderManager2;
 import com.hbm.lib.Library;
 import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.hbm.main.ResourceManager;
 import com.hbm.util.BobMathUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.ViewFrustum;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.chunk.RenderChunk;
@@ -66,6 +37,21 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.*;
+import org.lwjgl.util.glu.Project;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
 	
@@ -613,7 +599,7 @@ public class RenderHelper {
 		clearDeferredBuffer();
 		double radians = Math.toRadians(degrees);
 		Vec3d startToEnd = end.subtract(start);
-		double height = startToEnd.lengthVector();
+		double height = startToEnd.length();
 		double radius = height * Math.tan(radians);
 		AxisAlignedBB box = new AxisAlignedBB(start.x, start.y, start.z, end.x, end.y, end.z).grow(radius);
 		box = new AxisAlignedBB(
@@ -630,7 +616,7 @@ public class RenderHelper {
 					if(!Minecraft.getMinecraft().world.isBlockLoaded(new BlockPos(i, j, k)))
 						continue;
 					RenderChunk chunk = getRenderChunk(new BlockPos(i, j, k));
-					ClassInheritanceMultiMap<Entity> classinheritancemultimap = Minecraft.getMinecraft().world.getChunkFromBlockCoords(chunk.getPosition()).getEntityLists()[chunk.getPosition().getY() / 16];
+					ClassInheritanceMultiMap<Entity> classinheritancemultimap = Minecraft.getMinecraft().world.getChunk(chunk.getPosition()).getEntityLists()[chunk.getPosition().getY() / 16];
 					if(Library.isBoxCollidingCone(chunk.boundingBox, start, end, degrees)){
 						toRender.add(chunk);
 						for(TileEntity te : chunk.compiledChunk.getTileEntities()){
@@ -774,7 +760,7 @@ public class RenderHelper {
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
 		ResourceManager.cone_volume.use();
 		int shader = ResourceManager.cone_volume.getShaderId();
-		float height = (float) vec.lengthVector();
+		float height = (float) vec.length();
 		GL20.glUniform1f(GL20.glGetUniformLocation(shader, "height"), height);
 		vec = vec.normalize();
 		GL20.glUniform1f(GL20.glGetUniformLocation(shader, "cosAngle"), (float) Math.cos(Math.toRadians(degrees)));

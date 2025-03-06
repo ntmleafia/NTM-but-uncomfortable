@@ -1,13 +1,13 @@
 package com.hbm.world.generator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class CellularDungeon {
 
@@ -113,12 +113,12 @@ public class CellularDungeon {
 		if(cells[x][z] != null) {
 
 			EnumFacing dir = getRandomDir(rand);
-			addRoom(x + dir.getFrontOffsetX(), z + dir.getFrontOffsetZ(), rand, dir.getOpposite(), DungeonToolbox.getRandom(rooms, rand));
+			addRoom(x + dir.getXOffset(), z + dir.getZOffset(), rand, dir.getOpposite(), DungeonToolbox.getRandom(rooms, rand));
 			return false;
 		}
 
 
-		if(room.daisyChain == null || addRoom(x + room.daisyDirection.getFrontOffsetX(), z + room.daisyDirection.getFrontOffsetZ(), rand, null, room.daisyChain)) {
+		if(room.daisyChain == null || addRoom(x + room.daisyDirection.getXOffset(), z + room.daisyDirection.getZOffset(), rand, null, room.daisyChain)) {
 			cells[x][z] = room;
 			doors[x][z] = door;
 			order.add(new int[] { x, z });
@@ -126,7 +126,7 @@ public class CellularDungeon {
 
 		for(int i = 0; i < branches; i++) {
 			EnumFacing dir = getRandomDir(rand);
-			addRoom(x + dir.getFrontOffsetX(), z + dir.getFrontOffsetZ(), rand, dir.getOpposite(), DungeonToolbox.getRandom(rooms, rand));
+			addRoom(x + dir.getXOffset(), z + dir.getZOffset(), rand, dir.getOpposite(), DungeonToolbox.getRandom(rooms, rand));
 		}
 
 		return true;
@@ -134,6 +134,6 @@ public class CellularDungeon {
 
 	public static EnumFacing getRandomDir(Random rand) {
 
-		return EnumFacing.getFront(rand.nextInt(4) + 2);
+		return EnumFacing.byIndex(rand.nextInt(4) + 2);
 	}
 }

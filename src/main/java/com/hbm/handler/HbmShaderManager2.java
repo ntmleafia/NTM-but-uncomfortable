@@ -1,14 +1,20 @@
 package com.hbm.handler;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
+import com.hbm.config.GeneralConfig;
+import com.hbm.handler.HbmShaderManager2.Shader.Uniform;
+import com.hbm.main.ClientProxy;
+import com.hbm.main.MainRegistry;
+import com.hbm.main.ResourceManager;
+import com.hbm.particle_instanced.InstancedParticleRenderer;
+import com.hbm.render.GLCompat;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.shader.Framebuffer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -17,26 +23,14 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.hbm.config.GeneralConfig;
-import com.hbm.handler.HbmShaderManager2.Shader.Uniform;
-import com.hbm.main.ClientProxy;
-import com.hbm.main.MainRegistry;
-import com.hbm.main.ResourceManager;
-import com.hbm.particle_instanced.InstancedParticleRenderer;
-import com.hbm.render.GLCompat;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 //Same as the other class except with less junk (hopefully)
 public class HbmShaderManager2 {
@@ -404,7 +398,7 @@ public class HbmShaderManager2 {
 			int program = GLCompat.createProgram();
 			
 			vertexShader = GLCompat.createShader(GLCompat.GL_VERTEX_SHADER);
-			GLCompat.shaderSource(vertexShader, readFileToBuf(new ResourceLocation(file.getResourceDomain(), file.getResourcePath() + ".vert")));
+			GLCompat.shaderSource(vertexShader, readFileToBuf(new ResourceLocation(file.getNamespace(), file.getPath() + ".vert")));
 			GLCompat.compileShader(vertexShader);
 			if(GLCompat.getShaderi(vertexShader, GLCompat.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
 				MainRegistry.logger.error(GLCompat.getShaderInfoLog(vertexShader, GLCompat.GL_INFO_LOG_LENGTH));
@@ -412,7 +406,7 @@ public class HbmShaderManager2 {
 			}
 			
 			fragmentShader = GLCompat.createShader(GLCompat.GL_FRAGMENT_SHADER);
-			GLCompat.shaderSource(fragmentShader, readFileToBuf(new ResourceLocation(file.getResourceDomain(), file.getResourcePath() + ".frag")));
+			GLCompat.shaderSource(fragmentShader, readFileToBuf(new ResourceLocation(file.getNamespace(), file.getPath() + ".frag")));
 			GLCompat.compileShader(fragmentShader);
 			if(GLCompat.getShaderi(fragmentShader, GLCompat.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
 				MainRegistry.logger.error(GLCompat.getShaderInfoLog(fragmentShader, GLCompat.GL_INFO_LOG_LENGTH));

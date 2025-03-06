@@ -1,8 +1,5 @@
 package com.leafia.shit.recipe_book_elements;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.leafia.unsorted.recipe_book.system.LeafiaDummyRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -15,6 +12,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class LeafiaRecipeButton extends GuiButton

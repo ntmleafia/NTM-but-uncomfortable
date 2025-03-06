@@ -1,18 +1,5 @@
 package com.hbm.handler;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.GeneralConfig;
 import com.hbm.config.RadiationConfig;
@@ -27,7 +14,6 @@ import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacket;
 import com.hbm.packet.PacketDispatcher;
-
 import com.hbm.saveddata.AuxSavedData;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.ContaminationUtil;
@@ -38,7 +24,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityZombieVillager;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -65,6 +53,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 import javax.annotation.Nullable;
+import java.nio.ByteBuffer;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = RefStrings.MODID)
 public class RadiationSystemNT {
@@ -219,7 +209,7 @@ public class RadiationSystemNT {
 		SubChunkRadiationStorage sc = st.getForYLevel(pos.getY());
 		//If the sub chunk doesn't exist, bring it into existence by rebuilding the sub chunk, then get it.
 		if(sc == null){
-			rebuildChunkPockets(world.getChunkFromBlockCoords(pos), pos.getY() >> 4);
+			rebuildChunkPockets(world.getChunk(pos), pos.getY() >> 4);
 		}
 		sc = st.getForYLevel(pos.getY());
 		return sc;
@@ -236,7 +226,7 @@ public class RadiationSystemNT {
 		ChunkRadiationStorage st = worldRadData.data.get(new ChunkPos(pos));
 		//If it doesn't currently exist, create it
 		if(st == null){
-			st = new ChunkRadiationStorage(worldRadData, world.getChunkFromBlockCoords(pos));
+			st = new ChunkRadiationStorage(worldRadData, world.getChunk(pos));
 			worldRadData.data.put(new ChunkPos(pos), st);
 		}
 		return st;
@@ -246,7 +236,7 @@ public class RadiationSystemNT {
 		WorldRadiationData worldRadData = getWorldRadData(world);
 		ChunkRadiationStorage st = worldRadData.data.get(pos);
 		if(st == null){
-			st = new ChunkRadiationStorage(worldRadData, world.getChunkFromChunkCoords(pos.x,pos.z));
+			st = new ChunkRadiationStorage(worldRadData, world.getChunk(pos.x,pos.z));
 			worldRadData.data.put(pos, st);
 		}
 		return st;
@@ -540,7 +530,7 @@ public class RadiationSystemNT {
 					MainRegistry.logger.info("[Debug] Rebuilding chunk pockets for dirty chunk at " + dirtyChunkPos);
 				}
 
-				rebuildChunkPockets(r.world.getChunkFromChunkCoords(dirtyChunkPos.getX(), dirtyChunkPos.getZ()), dirtyChunkPos.getY());
+				rebuildChunkPockets(r.world.getChunk(dirtyChunkPos.getX(), dirtyChunkPos.getZ()), dirtyChunkPos.getY());
 				hadDirty = true;
 			}
 			r.iteratingDirty = false;
@@ -722,7 +712,7 @@ public class RadiationSystemNT {
 							randPos = randPos.add(p.parent.parent.getWorldPos(p.parent.yLevel));
 							IBlockState state = w.world.getBlockState(randPos);
 							Vec3d rPos = new Vec3d(randPos.getX() + 0.5, randPos.getY() + 0.5, randPos.getZ() + 0.5);
-							RayTraceResult trace = w.world.rayTraceBlocks(rPos, rPos.addVector(0, -6, 0));
+							RayTraceResult trace = w.world.rayTraceBlocks(rPos, rPos.add(0, -6, 0));
 							if (state.getBlock().isAir(state, w.world, randPos) && trace != null && trace.typeOfHit == Type.BLOCK) {
 								PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacket(randPos.getX() + 0.5F, randPos.getY() + 0.5F, randPos.getZ() + 0.5F, 3), new TargetPoint(w.world.provider.getDimension(), randPos.getX(), randPos.getY(), randPos.getZ(), 100));
 								break;
@@ -765,7 +755,7 @@ public class RadiationSystemNT {
 
 						if (p.connectionIndices[e.ordinal()].size() == 1 && p.connectionIndices[e.ordinal()].get(0) == -1) {
 							//If the chunk in this direction isn't loaded, load it
-							rebuildChunkPockets(p.parent.parent.chunk.getWorld().getChunkFromBlockCoords(nPos), nPos.getY() >> 4);
+							rebuildChunkPockets(p.parent.parent.chunk.getWorld().getChunk(nPos), nPos.getY() >> 4);
 						} else {
 							// Otherwise, for every pocket this chunk is connected to in this direction, add radiation to it;
 							// also add those pockets to the active pockets set

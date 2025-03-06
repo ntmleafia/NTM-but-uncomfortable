@@ -2,17 +2,17 @@ package com.leafia.contents.effects.folkvangr;
 
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
+import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.ModDamageSource;
+import com.hbm.main.MainRegistry;
+import com.hbm.packet.PacketDispatcher;
 import com.leafia.CommandLeaf;
+import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import com.llib.exceptions.messages.TextWarningLeafia;
-import com.hbm.lib.HBMSoundHandler;
-import com.hbm.lib.ModDamageSource;
-import com.hbm.main.MainRegistry;
 import com.llib.technical.LeafiaEase;
-import com.hbm.packet.PacketDispatcher;
-import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -252,7 +252,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 	}
 	protected void processChunk(int x,int z) {
 		int radius = cloudBound.getMaxAge();
-		Chunk chunk = world.getChunkFromChunkCoords(chunkCoordX+x,chunkCoordZ+z);
+		Chunk chunk = world.getChunk(chunkCoordX+x,chunkCoordZ+z);
 		ExtendedBlockStorage[] storage = chunk.getBlockStorageArray();
 		if (
 				((Math.ceil((posX-radius*0.707)/16) <= x) && (x+15 <= Math.floor((posX+radius*0.707)/16)))
@@ -408,7 +408,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 			@SideOnly(Side.CLIENT)
 			public IMessage onMessage(ClearChunkPacket message,MessageContext ctx) {
 				Minecraft.getMinecraft().addScheduledTask(() -> {
-					Chunk chunk = Minecraft.getMinecraft().world.getChunkFromChunkCoords(message.pos.x,message.pos.z);
+					Chunk chunk = Minecraft.getMinecraft().world.getChunk(message.pos.x,message.pos.z);
 					EntityNukeFolkvangr.eraseChunk(chunk,message.min,message.max);
 					Minecraft.getMinecraft().world.markBlockRangeForRenderUpdate(
 							message.pos.getXStart(),0,message.pos.getZStart(),

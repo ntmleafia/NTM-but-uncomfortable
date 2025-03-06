@@ -1,21 +1,21 @@
 package com.hbm.blocks.generic;
 
-import java.util.Random;
-import java.util.List;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.RadiationSystemNT;
 import com.hbm.interfaces.IRadResistantBlock;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class ReinforcedLamp extends Block implements IRadResistantBlock {
 
@@ -23,7 +23,7 @@ public class ReinforcedLamp extends Block implements IRadResistantBlock {
 	
 	public ReinforcedLamp(Material materialIn, boolean b, String s) {
 		super(materialIn);
-		this.setUnlocalizedName(s);
+		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		isOn = b;
 		if(b){
@@ -37,11 +37,11 @@ public class ReinforcedLamp extends Block implements IRadResistantBlock {
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		if (!worldIn.isRemote)
         {
-            if (this.isOn && !(worldIn.isBlockIndirectlyGettingPowered(pos) > 0))
+            if (this.isOn && !(worldIn.getRedstonePowerFromNeighbors(pos) > 0))
             {
             	worldIn.scheduleUpdate(pos, this, 4);
             }
-            else if (!this.isOn && worldIn.isBlockIndirectlyGettingPowered(pos) > 0)
+            else if (!this.isOn && worldIn.getRedstonePowerFromNeighbors(pos) > 0)
             {
             	worldIn.setBlockState(pos, ModBlocks.reinforced_lamp_on.getDefaultState(), 2);
             }
@@ -53,11 +53,11 @@ public class ReinforcedLamp extends Block implements IRadResistantBlock {
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (!worldIn.isRemote)
         {
-            if (this.isOn && !(worldIn.isBlockIndirectlyGettingPowered(pos) > 0))
+            if (this.isOn && !(worldIn.getRedstonePowerFromNeighbors(pos) > 0))
             {
             	worldIn.scheduleUpdate(pos, this, 4);
             }
-            else if (!this.isOn && worldIn.isBlockIndirectlyGettingPowered(pos) > 0)
+            else if (!this.isOn && worldIn.getRedstonePowerFromNeighbors(pos) > 0)
             {
             	worldIn.setBlockState(pos, ModBlocks.reinforced_lamp_on.getDefaultState(), 2);
             }
@@ -66,7 +66,7 @@ public class ReinforcedLamp extends Block implements IRadResistantBlock {
 	
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (!worldIn.isRemote && this.isOn && !(worldIn.isBlockIndirectlyGettingPowered(pos) > 0))
+		if (!worldIn.isRemote && this.isOn && !(worldIn.getRedstonePowerFromNeighbors(pos) > 0))
         {
 			worldIn.setBlockState(pos, ModBlocks.reinforced_lamp_off.getDefaultState(), 2);
         }
