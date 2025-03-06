@@ -3,6 +3,7 @@ package com.leafia.eventbuses;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.logic.EntityNukeExplosionMK3.ATEntry;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.inventory.OreDictManager;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.modules.ItemHazardModule;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -35,6 +37,7 @@ import net.minecraftforge.fluids.FluidEvent.FluidFillingEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidMotionEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidSpilledEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,10 +150,22 @@ public class LeafiaServerListener {
 			float modifier = 0;
 			float max = 0;
 			for (ItemStack stack : stacks) {
-				if (!stack.isEmpty() && stack.getItem() instanceof IItemHazard) {
-					IItemHazard hazard = (IItemHazard)stack.getItem();
-					modifier += hazard.getModule().sharp*stack.getCount();
-					max = Math.max(max,hazard.getModule().sharp);
+				if (!stack.isEmpty()) {
+					ItemHazardModule module = null;
+					if (stack.getItem() instanceof IItemHazard) {
+						IItemHazard hazard = (IItemHazard)stack.getItem();
+						module = hazard.getModule();
+					} else {
+						for (int id : OreDictionary.getOreIDs(stack)) {
+							module = OreDictManager.fiaOreHazards.get(OreDictionary.getOreName(id));
+							if (module != null)
+								break;
+						}
+					}
+					if (module != null) {
+						modifier += module.sharp*stack.getCount();
+						max = Math.max(max,module.sharp);
+					}
 				}
 			}
 			float additionalDamage = baseDamage*(modifier*(1-ItemHazardModule.sharpStackNerf)+max*ItemHazardModule.sharpStackNerf);

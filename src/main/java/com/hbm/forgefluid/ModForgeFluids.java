@@ -4,6 +4,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.fluid.*;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.RefStrings;
+import com.leafia.dev.fluids.LeafiaFluid;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
@@ -80,7 +81,8 @@ public class ModForgeFluids {
 	public static Fluid sas3 = new Fluid("sas3", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/sas3_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/sas3_flowing"), null, Color.WHITE);
 
 	public static Fluid amat = new Fluid("amat", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/amat_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/amat_flowing"), null, Color.WHITE);
-	public static Fluid aschrab = new Fluid("aschrab", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/aschrab_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/aschrab_flowing"), null, Color.WHITE);
+	public static Fluid aschrab = new LeafiaFluid("aschrab", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/aschrab_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/aschrab_flowing"), null, Color.WHITE)
+			.addTraits("NTMTraitAntischrab","NTMTraitMagnetic");
 
 	public static Fluid acid = new Fluid("acid", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/acid_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/acid_flowing"), null, Color.WHITE);
 	public static Fluid sulfuric_acid = new Fluid("sulfuric_acid", new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/sulfuric_acid_still"), new ResourceLocation(RefStrings.MODID, "blocks/forgefluid/sulfuric_acid_flowing"), null, Color.WHITE);

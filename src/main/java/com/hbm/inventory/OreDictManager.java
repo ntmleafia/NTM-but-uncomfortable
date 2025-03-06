@@ -5,10 +5,13 @@ import com.hbm.hazard.HazardData;
 import com.hbm.hazard.HazardEntry;
 import com.hbm.hazard.HazardRegistry;
 import com.hbm.hazard.HazardSystem;
+import com.hbm.interfaces.IItemHazard;
+import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ItemEnums.EnumTarType;
 import com.hbm.items.ModItems.Materials.*;
 import com.hbm.main.MainRegistry;
+import com.hbm.modules.ItemHazardModule;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,10 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static com.hbm.blocks.ModBlocks.*;
 import static com.hbm.inventory.OreDictManager.DictFrame.fromAll;
@@ -30,8 +30,11 @@ import static com.hbm.inventory.OreNames.*;
 import static com.hbm.items.ModItems.*;
 
 //the more i optimize this, the more it starts looking like gregtech
+@Spaghetti("the more i look at it, the more i decay")
 public class OreDictManager {
-	
+
+	public static final Map<String,ItemHazardModule> fiaOreHazards = new HashMap<>();
+
 	/** Alternate, additional names for ore dict registration. Used mostly for DictGroups */
 	private static final HashMap<String, HashSet<String>> reRegistration = new HashMap();
 
@@ -719,7 +722,9 @@ public class OreDictManager {
 		
 		public void registerStack(String tag, ItemStack stack) {
 			for(String mat : mats) {
-				
+
+				if (stack.getItem() instanceof IItemHazard)
+					fiaOreHazards.put(tag+mat,((IItemHazard) stack.getItem()).getModule());
 				OreDictionary.registerOre(tag + mat, stack);
 				
 				if(!hazards.isEmpty() && hazMult > 0F) {

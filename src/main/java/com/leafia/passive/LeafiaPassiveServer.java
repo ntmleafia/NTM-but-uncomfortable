@@ -5,6 +5,7 @@ import com.leafia.contents.machines.reactors.pwr.PWRDiagnosis;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.eventbuses.LeafiaServerListener;
+import com.leafia.transformer.WorldServerLeafia;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class LeafiaPassiveServer {
 		queue.clear();
 		for (Runnable callback : running)
 			callback.run();
+		WorldServerLeafia.violatedPositions.clear();
 	}
 	public static void queueFunction(Runnable callback) {
 		queue.add(callback);

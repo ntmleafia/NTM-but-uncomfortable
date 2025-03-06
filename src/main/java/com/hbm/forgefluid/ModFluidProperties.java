@@ -196,6 +196,8 @@ public class ModFluidProperties {
 		public final EnumSymbol symbol;
 		public final List<FluidTrait> traits = new ArrayList<>();
 
+		public final List<String> fiaTraits = new ArrayList<>();
+
 		public FluidProperties(int p, int f, int r, EnumSymbol symbol, FluidTrait... traits) {
 			this(p, f, r, 0, symbol, traits);
 		}

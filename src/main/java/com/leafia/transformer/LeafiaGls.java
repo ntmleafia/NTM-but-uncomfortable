@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Yeah uh this is bullsh*t i could have just used GL11.getState which i didn't know exis
 public class LeafiaGls extends GlStateManager {
 	public static class LeafiaGlStack {
 		// Those are intended only for reading, do not override them.

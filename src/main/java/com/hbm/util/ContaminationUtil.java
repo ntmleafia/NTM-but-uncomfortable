@@ -21,10 +21,12 @@ import com.hbm.handler.ArmorUtil;
 import com.hbm.handler.HazmatRegistry;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.interfaces.IRadiationImmune;
+import com.hbm.inventory.OreDictManager;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.ModItems.Foods;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
+import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.saveddata.RadiationSavedData;
@@ -41,6 +43,7 @@ import net.minecraft.entity.passive.EntitySkeletonHorse;
 import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,6 +58,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
@@ -272,6 +276,17 @@ public class ContaminationUtil {
 			}
 		}
 
+		if (!stack.isEmpty()) {
+			for (int id : OreDictionary.getOreIDs(stack)) {
+				ItemHazardModule module = OreDictManager.fiaOreHazards.get(OreDictionary.getOreName(id));
+				if (module != null) {
+					if (module.radiation.isRadioactive()) rads += module.radiation.total();
+				}
+			}
+		}
+
+
+
 		if(rads > 1)
 			return rads;
 		else
@@ -304,6 +319,21 @@ public class ContaminationUtil {
 		return radBuffer;
 	}
 
+	public static void applyOreDictHazards(EntityPlayer player) {
+		for (Slot slot : player.inventoryContainer.inventorySlots) {
+			ItemStack stack = slot.getStack();
+			if (!stack.isEmpty() && !(stack.getItem() instanceof IItemHazard)) {
+				boolean heldPrim = player.getHeldItemMainhand() == stack;
+				boolean heldOff = player.getHeldItemOffhand() == stack;
+				for (int id : OreDictionary.getOreIDs(stack)) {
+					ItemHazardModule module = OreDictManager.fiaOreHazards.get(OreDictionary.getOreName(id));
+					if (module != null)
+						module.applyEffects(player,stack.getCount(),slot.getSlotIndex(),heldOff || heldPrim,heldPrim ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
+				}
+			}
+		}
+	}
+
 	public static boolean isRadItem(ItemStack stack){
 		if(stack == null)
 			return false;
@@ -314,6 +344,13 @@ public class ContaminationUtil {
 
 		if(stack.getItem() instanceof ItemBlockHazard && ((ItemBlockHazard)stack.getItem()).getModule().radiation.total() > 0){
 			return true;
+		}
+
+		for (int id : OreDictionary.getOreIDs(stack)) {
+			ItemHazardModule module = OreDictManager.fiaOreHazards.get(OreDictionary.getOreName(id));
+			if (module != null) {
+				if (module.radiation.isRadioactive()) return true;
+			}
 		}
 
 		return false;

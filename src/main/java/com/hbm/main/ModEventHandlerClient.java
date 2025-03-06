@@ -19,6 +19,7 @@ import com.hbm.handler.*;
 import com.hbm.interfaces.*;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.ChemplantRecipes;
+import com.hbm.inventory.OreDictManager;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
@@ -175,6 +176,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -2408,6 +2410,13 @@ public class ModEventHandlerClient {
 
 			if(entry.entry == EnumEntryType.MULT)
 				list.add(TextFormatting.GOLD + "Adds multiplier " + entry.value + " to the custom nuke stage " + entry.type);
+		}
+		if (!stack.isEmpty() && !(stack.getItem() instanceof IItemHazard)) {
+			for (int id : OreDictionary.getOreIDs(stack)) {
+				ItemHazardModule module = OreDictManager.fiaOreHazards.get(OreDictionary.getOreName(id));
+				if (module != null)
+					module.addInformation(stack,list,event.getFlags());
+			}
 		}
 
 		/// NEUTRON RADS ///

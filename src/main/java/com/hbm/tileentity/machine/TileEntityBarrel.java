@@ -8,6 +8,7 @@ import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.dev.fluids.ISpecializedContainer;
 import net.minecraft.block.Block;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
-public class TileEntityBarrel extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor {
+public class TileEntityBarrel extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor, ISpecializedContainer {
 
 	public FluidTank tank;
 	//Drillgon200: I think this would be much easier to read as an enum.
@@ -240,5 +241,13 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		}
 		
 		return false;
+	}
+
+	@Override
+	public String[] protections() {
+		Block b = this.getBlockType();
+		if (b == ModBlocks.barrel_antimatter)
+			return new String[]{"magnetic"};
+		return new String[0];
 	}
 }

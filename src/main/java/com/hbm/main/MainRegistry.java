@@ -101,6 +101,7 @@ import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
 import com.leafia.contents.worldgen.ModBiomesGenerator;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
+import com.leafia.dev.fluids.ntmtraits.*;
 import com.leafia.eventbuses.LeafiaServerListener;
 import com.leafia.passive.DispenserBullet;
 import com.llib.exceptions.LeafiaDevFlaw;
@@ -338,6 +339,19 @@ public class MainRegistry {
 
 		CapabilityManager.INSTANCE.register(HbmLivingCapability.IEntityHbmProps.class, new HbmLivingCapability.EntityHbmPropsStorage(), HbmLivingCapability.EntityHbmProps.FACTORY);
 		CapabilityManager.INSTANCE.register(HbmCapability.IHBMData.class, new HbmCapability.HBMDataStorage(), HbmCapability.HBMData.FACTORY);
+
+		new NTMTraitAntimatter();
+		new NTMTraitAntischrab();
+		new NTMTraitAsphyxiant();
+		new NTMTraitCorrosive();
+		new NTMTraitCorrosiveStrong();
+		new NTMTraitCryogenic();
+		new NTMTraitHighPressure();
+		new NTMTraitHighPressureStrong();
+		new NTMTraitMagnetic();
+		new NTMTraitOxidizer();
+		new NTMTraitRadioactive();
+
 		ModForgeFluids.init();
 		ModItems.preInit();
 		ModBlocks.preInit();

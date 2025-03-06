@@ -6,6 +6,7 @@ import com.leafia.transformer.LeafiaGls;
 import com.leafia.transformer.WorldServerLeafia;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -24,14 +25,25 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			"net.minecraft.client.renderer.GlStateManager",
 			"net.minecraft.world.WorldServer",
 			"net.minecraft.client.gui.GuiMainMenu",
-			"net.minecraft.client.renderer.EntityRenderer"
+			"net.minecraft.client.renderer.EntityRenderer",
+			"net.minecraftforge.fluids.FluidTank"
 	};
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] classBeingTransformed) {
-		//System.out.println("#Leaf: Transform Input: " + name + " : " + transformedName);
+		System.out.println("#Leaf: Transform Input: " + name + " : " + transformedName);
+
+
+		/*try {
+			if (!name.equals("net.minecraftforge.fml.common.Loader") && !name.equals("net.minecraftforge.fluids.capability.IFluidHandler"))
+				System.out.println("#Leaf: AssignableFrom "+IFluidHandler.class.isAssignableFrom(Class.forName(name)));
+		} catch (ClassNotFoundException e) {
+			System.out.println("#Leaf: Nope, errrrrrrrrr");
+		}*/
+
 		boolean isObfuscated = !name.equals(transformedName);
 		int index = Arrays.asList(classesBeingTransformed).indexOf(transformedName);
-		return index != -1 ? transform(index, classBeingTransformed, isObfuscated) : classBeingTransformed;
+		return /*index != -1 ? */transform(index, classBeingTransformed, isObfuscated);// : classBeingTransformed;
+		//return index != -1 ? transform(index, classBeingTransformed, isObfuscated) : classBeingTransformed;
 	}
 	public static class LeafiaDevErrorGls extends RuntimeException {
 		public LeafiaDevErrorGls(String s) {
@@ -39,37 +51,50 @@ public class TransformerCoreLeafia implements IClassTransformer {
 		}
 	}
 	public static byte[] transform(int index,byte[] classBeingTransformed,boolean isObfuscated) {
-		System.out.println("#Leaf: Transforming: " + classesBeingTransformed[index]);
+		String name = "anonymous";
+		if (index >= 0) {
+			name = classesBeingTransformed[index];
+			System.out.println("#Leaf: Transforming: " + name);
+		}
+		//else System.out.println("#Leaf: Transforming anonymous");
 		try {
 			ClassNode classNode = new ClassNode();
 			ClassReader classReader = new ClassReader(classBeingTransformed);
 			classReader.accept(classNode, 0);
 
-			switch (index) {
-				case 0:
-					doTransform(classNode,isObfuscated,LeafiaGls.Handler.class,index);
-					break;
-				case 1:
-					doTransform(classNode,isObfuscated,WorldServerLeafia.class,index);
-					break;
-				case 2: case 3:
-					doTransform(classNode,isObfuscated,LeafiaGeneralLocal.class,index);// fuck you.period.
-					break;
-				default:
-					throw new LeafiaDevErrorGls("#Leaf: Unexpected index "+index);
+			if (index < 0) {
+				if (classNode.interfaces.contains("net/minecraftforge/fluids/capability/IFluidHandler")) {
+					System.out.println("Yeah!");
+					doTransform(classNode,isObfuscated,WorldServerLeafia.class,-2);
+				} else
+					return classBeingTransformed;
+			} else {
+				switch (index) {
+					case 0:
+						doTransform(classNode,isObfuscated,LeafiaGls.Handler.class,index);
+						break;
+					case 1: case 4:
+						doTransform(classNode,isObfuscated,WorldServerLeafia.class,index);
+						break;
+					case 2: case 3:
+						doTransform(classNode,isObfuscated,LeafiaGeneralLocal.class,index);// fuck you.period.
+						break;
+					default:
+						throw new LeafiaDevErrorGls("#Leaf: Unexpected index "+index);
+				}
 			}
 
 			ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 			classNode.accept(classWriter);
-			System.out.println("#Leaf: Transform Complete: " + classesBeingTransformed[index] + " ("+classBeingTransformed.length+" -> "+classWriter.toByteArray().length+")");
+			System.out.println("#Leaf: Transform Complete: " + name + " ("+classBeingTransformed.length+" -> "+classWriter.toByteArray().length+")");
 			return classWriter.toByteArray();
 		} catch (Exception e) {
-			System.out.println("#Leaf ERROR: " + classesBeingTransformed[index]);
+			System.out.println("#Leaf ERROR: " + name);
 			e.printStackTrace();
 			if (e instanceof LeafiaDevErrorGls)
 				throw e;
 		}
-		System.out.println("#Leaf: Transform End: " + classesBeingTransformed[index]);
+		System.out.println("#Leaf: Transform End: " + name);
 		return classBeingTransformed;
 	}
 	static final Map<String,String> furtherDeobf = new HashMap<>();
@@ -701,6 +726,31 @@ public class TransformerCoreLeafia implements IClassTransformer {
 							return true;
 						}
 					}
+				}
+				break;
+			case 4:
+				if (name.equals("fillInternal")) {
+					LabelNode skipNode = new LabelNode();
+					{
+						helper.method.instructions.insert(skipNode);
+						helper.method.instructions.insertBefore(skipNode,new VarInsnNode(ALOAD,1));
+
+						helper.method.instructions.insertBefore(skipNode,new VarInsnNode(ALOAD,0));
+						helper.method.instructions.insertBefore(skipNode,new FieldInsnNode(GETFIELD,helper.target.name,"tile","Lnet/minecraft/tileentity/TileEntity;"));
+
+						helper.method.instructions.insertBefore(skipNode,new MethodInsnNode(INVOKESTATIC,Type.getInternalName(helper.listener),"fluid_canContinue","(Lnet/minecraftforge/fluids/FluidStack;Lnet/minecraft/tileentity/TileEntity;)Z",false));
+					}
+					helper.method.instructions.insertBefore(skipNode,new JumpInsnNode(IFGT,skipNode));
+					helper.method.instructions.insertBefore(skipNode,new InsnNode(ICONST_0));
+					helper.method.instructions.insertBefore(skipNode,new InsnNode(IRETURN));
+					return true;
+				}
+				break;
+			case -2:
+				if (name.equals("fill") && desc.equals("(Lnet/minecraftforge/fluids/FluidStack;Z)I")) {
+					helper.method.instructions.insert(new MethodInsnNode(INVOKESTATIC,Type.getInternalName(helper.listener),"fluid_onFilling","(Lnet/minecraftforge/fluids/FluidStack;Lnet/minecraftforge/fluids/capability/IFluidHandler;)V",false));
+					helper.method.instructions.insert(new VarInsnNode(ALOAD,0));
+					helper.method.instructions.insert(new VarInsnNode(ALOAD,1));
 				}
 				break;
 		}
