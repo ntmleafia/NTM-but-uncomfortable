@@ -1,9 +1,11 @@
 package com.hbm.core.leafia;
 
 import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
+import com.leafia.passive.LeafiaPassiveServer;
 import com.leafia.transformer.LeafiaGeneralLocal;
 import com.leafia.transformer.LeafiaGls;
 import com.leafia.transformer.WorldServerLeafia;
+import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -26,11 +28,12 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			"net.minecraft.world.WorldServer",
 			"net.minecraft.client.gui.GuiMainMenu",
 			"net.minecraft.client.renderer.EntityRenderer",
-			"net.minecraftforge.fluids.FluidTank"
+			"net.minecraftforge.fluids.FluidTank",
+			"net.minecraft.world.ServerWorldEventHandler"
 	};
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] classBeingTransformed) {
-		System.out.println("#Leaf: Transform Input: " + name + " : " + transformedName);
+		///System.out.println("#Leaf: Transform Input: " + name + " : " + transformedName);
 
 
 		/*try {
@@ -42,8 +45,8 @@ public class TransformerCoreLeafia implements IClassTransformer {
 
 		boolean isObfuscated = !name.equals(transformedName);
 		int index = Arrays.asList(classesBeingTransformed).indexOf(transformedName);
-		return /*index != -1 ? */transform(index, classBeingTransformed, isObfuscated);// : classBeingTransformed;
-		//return index != -1 ? transform(index, classBeingTransformed, isObfuscated) : classBeingTransformed;
+		//return /*index != -1 ? */transform(index, classBeingTransformed, isObfuscated);// : classBeingTransformed;
+		return index != -1 ? transform(index, classBeingTransformed, isObfuscated) : classBeingTransformed;
 	}
 	public static class LeafiaDevErrorGls extends RuntimeException {
 		public LeafiaDevErrorGls(String s) {
@@ -73,7 +76,7 @@ public class TransformerCoreLeafia implements IClassTransformer {
 					case 0:
 						doTransform(classNode,isObfuscated,LeafiaGls.Handler.class,index);
 						break;
-					case 1: case 4:
+					case 1: case 4: case 5:
 						doTransform(classNode,isObfuscated,WorldServerLeafia.class,index);
 						break;
 					case 2: case 3:
@@ -91,8 +94,10 @@ public class TransformerCoreLeafia implements IClassTransformer {
 		} catch (Exception e) {
 			System.out.println("#Leaf ERROR: " + name);
 			e.printStackTrace();
-			if (e instanceof LeafiaDevErrorGls)
-				throw e;
+			if (e instanceof LeafiaDevErrorGls || e instanceof LeafiaDevFlaw) {
+				LeafiaPassiveServer.queueFunction(()->{throw e;}); // fuck you
+				//throw e;
+			}
 		}
 		System.out.println("#Leaf: Transform End: " + name);
 		return classBeingTransformed;
@@ -193,13 +198,17 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			furtherDeobf.put("func_187428_a","tryBlendFuncSeparate");
 		}
 		{
+			furtherDeobf.put("func_175715_c","sendBlockBreakProgress");
+			furtherDeobf.put("func_180441_b","sendBlockBreakProgress");
+		}
+		// (func_\w+),(\w+),.,(.*)
+		// furtherDeobf.put("$1","$2"); // $3
+		{
 			furtherDeobf.put("func_180798_a","renderDebugInfoLeft");
 			furtherDeobf.put("func_78474_d","renderRainSnow");
 
 			furtherDeobf.put("func_78484_h","addRainParticles");
 
-			// (func_\w+),(\w+),.,(.*)
-			// furtherDeobf.put("$1","$2"); // $3
 
 			furtherDeobf.put("func_177855_a","setBlockState"); //
 			furtherDeobf.put("func_177856_a","getBlockState"); //
@@ -233,6 +242,64 @@ public class TransformerCoreLeafia implements IClassTransformer {
 			furtherDeobf.put("func_177984_a","up"); // Offset this BlockPos 1 block up
 			furtherDeobf.put("func_177985_f","west"); // Offset this BlockPos n blocks in western direction
 			furtherDeobf.put("func_177986_g","toLong"); // Serialize this BlockPos into a long value
+		}
+		{ // thank you for making me go through all this suffering Mojang
+			/*
+			furtherDeobf.put("field_145850_b","world");
+			furtherDeobf.put("field_147300_g","world");
+			furtherDeobf.put("field_147550_f","world");
+			furtherDeobf.put("field_150660_b","world");
+			furtherDeobf.put("field_150867_a","world");
+			furtherDeobf.put("field_175128_a","world");
+			furtherDeobf.put("field_175130_a","world");
+			furtherDeobf.put("field_175946_l","world");
+			furtherDeobf.put("field_177261_a","world");
+			furtherDeobf.put("field_177463_c","world");
+			furtherDeobf.put("field_177515_a","world");
+			furtherDeobf.put("field_177680_a","world");
+			furtherDeobf.put("field_178167_b","world");
+			furtherDeobf.put("field_178588_d","world");
+			furtherDeobf.put("field_185952_n","world");
+			furtherDeobf.put("field_185995_n","world");
+			furtherDeobf.put("field_186110_d","world");
+			furtherDeobf.put("field_186474_a","world");
+			furtherDeobf.put("field_186499_b","world");
+			furtherDeobf.put("field_187122_b","world");
+			furtherDeobf.put("field_70170_p","world");
+			furtherDeobf.put("field_71441_e","world");
+			furtherDeobf.put("field_72701_a","world");
+			furtherDeobf.put("field_72769_h","world");
+			furtherDeobf.put("field_72782_b","world");
+			furtherDeobf.put("field_72795_a","world");
+			furtherDeobf.put("field_72815_e","world");
+			furtherDeobf.put("field_73092_a","world");
+			furtherDeobf.put("field_73163_a","world");
+			furtherDeobf.put("field_73230_p","world");
+			furtherDeobf.put("field_73235_d","world");
+			furtherDeobf.put("field_73251_h","world");
+			furtherDeobf.put("field_75039_c","world");
+			furtherDeobf.put("field_75161_g","world");
+			furtherDeobf.put("field_75172_h","world");
+			furtherDeobf.put("field_75177_g","world");
+			furtherDeobf.put("field_75342_a","world");
+			furtherDeobf.put("field_75367_f","world");
+			furtherDeobf.put("field_75386_c","world");
+			furtherDeobf.put("field_75394_a","world");
+			furtherDeobf.put("field_75411_a","world");
+			furtherDeobf.put("field_75443_a","world");
+			furtherDeobf.put("field_75448_d","world");
+			furtherDeobf.put("field_75513_b","world");
+			furtherDeobf.put("field_75537_a","world");
+			furtherDeobf.put("field_75556_a","world");
+			furtherDeobf.put("field_75586_a","world");
+			furtherDeobf.put("field_76579_a","world");
+			furtherDeobf.put("field_76637_e","world");
+			furtherDeobf.put("field_77287_j","world");
+			furtherDeobf.put("field_78722_g","world");
+			furtherDeobf.put("field_78878_a","world");
+			furtherDeobf.put("field_82627_a","world");
+			furtherDeobf.put("field_82860_h","world");
+			furtherDeobf.put("field_85192_a","world");*/
 		}
 		furtherDeobf.put("func_73044_a","saveAllChunks");
 	}
@@ -743,6 +810,27 @@ public class TransformerCoreLeafia implements IClassTransformer {
 					helper.method.instructions.insertBefore(skipNode,new JumpInsnNode(IFGT,skipNode));
 					helper.method.instructions.insertBefore(skipNode,new InsnNode(ICONST_0));
 					helper.method.instructions.insertBefore(skipNode,new InsnNode(IRETURN));
+					return true;
+				}
+				break;
+			case 5:
+				if (name.equals("sendBlockBreakProgress")) {
+					String confirmedField = "ERR_FIELD_NOT_FOUND";
+					for (FieldNode field : helper.target.fields) {
+						//if (furtherDeobf.containsKey(field.name) && furtherDeobf.get(field.name).equals("world")) {
+						if (pain.mapDesc(field.desc).equals("Lnet/minecraft/world/WorldServer;")) { // fuck you
+							confirmedField = field.name;
+							break;
+						}
+					}
+					if (confirmedField.equals("ERR_FIELD_NOT_FOUND"))
+						throw new LeafiaDevFlaw("LeafiaCore mod error: WorldServer field failed to detect in ServerWorldEventHandler"); // this is better
+					helper.method.instructions.insert(new MethodInsnNode(INVOKESTATIC,Type.getInternalName(helper.listener),"player_onBreakBlockProgress","(Lnet/minecraft/world/WorldServer;ILnet/minecraft/util/math/BlockPos;I)V",false));
+					helper.method.instructions.insert(new VarInsnNode(ILOAD,3));
+					helper.method.instructions.insert(new VarInsnNode(ALOAD,2));
+					helper.method.instructions.insert(new VarInsnNode(ILOAD,1));
+					helper.method.instructions.insert(new FieldInsnNode(GETFIELD,helper.target.name,confirmedField,"Lnet/minecraft/world/WorldServer;"));
+					helper.method.instructions.insert(new VarInsnNode(ALOAD,0));
 					return true;
 				}
 				break;

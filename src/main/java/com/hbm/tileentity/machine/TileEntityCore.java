@@ -265,81 +265,92 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
                     float catalystHeatMod = ItemCatalyst.getHeatMod(catalystA) * ItemCatalyst.getHeatMod(catalystB);
                     float catalystFuelMod = ItemCatalyst.getFuelMod(catalystA) * ItemCatalyst.getFuelMod(catalystB);
                     double catalystPowerSPK = catalystPower / 5000d;
+                    Fluid f1 = tanks[0].getFluid().getFluid();
+                    Fluid f2 = tanks[1].getFluid().getFluid();
+                    double fuelPower = ModFluidProperties.getDFCEfficiency(f1) * ModFluidProperties.getDFCEfficiency(f2);
+
+                    double tempRatio = temperature/meltingPoint;
+                    double energyRatio = containedEnergy;
 
                     ticks++;
                     //LeafiaDebug.debugLog(world,"incomingSpk: "+incomingSpk);
 
-                    double desiredBonus = Math.sqrt(incomingSpk);
-                    bonus += (desiredBonus - bonus) * 0.01;
+                    { // i wanted to redo everything this sucks ASS
+                        containedEnergy += incomingSpk;
 
-                    containedEnergy += (Math.pow(Math.pow(incomingSpk, 0.666) + 1, 0.666) - 1) * 6.666 / 3;
-                    double multiplier = (1 + world.rand.nextGaussian() * 0.75 / getStabilizationDivAlt())
-                            * (1 + Math.sin(ticks * Math.PI) * 0.75 / getStabilizationDivAlt());
-
-                    double tempChange = Math.pow(Math.pow(containedEnergy,
-                            MathHelper.clampedLerp(0.44, 0.666, Math.pow(1 / getStabilizationDivAlt(), 0.666))) / 100, 0.666) * 100 * 7
-                            * Math.max(1 - Math.pow(temperature / meltingPoint, 2) / 1.25 * Math.max(1 - Math.pow(containedEnergy / 10000, 1), 0.1), 0.5) //Math.pow(internalEnergy/corePower,6.666/getStabilizationDiv()/getStabilizationDiv())*corePower //(Math.pow(internalEnergy/(meltingPoint/2d),6.666/getStabilizationDiv()/getStabilizationDiv())*(meltingPoint/2d))
-                            / 20 * coreHeatMod * multiplier;
-                    tempChange = tempChange - Math.signum(tempChange) * Math.max(Math.abs(tempChange) - 10, 0) / 5;
-                    temperature += tempChange;
-                    temperature *= 0.99 * Math.pow(1 / getStabilizationDiv(), 0.0025);
-
-                    Fluid f1 = tanks[0].getFluid().getFluid();
-                    Fluid f2 = tanks[1].getFluid().getFluid();
-
-                    //tanks[0].drain(demand, true);
-                    //tanks[1].drain(demand, true);
-
-                    double fuelPower = ModFluidProperties.getDFCEfficiency(f1) * ModFluidProperties.getDFCEfficiency(f2);
-
-                    containedEnergy += Math.pow(temperature, 0.666) * getEnergyBase(corePower) * corePower / 65 //Math.pow(temperature*getEnergyBase()/corePower,0.5)*corePower
-                            / 20 / Math.pow(getStabilizationDiv(), 2) * energyMod * multiplier * fuelPower;
-
-                    if (Double.isNaN(temperature)) temperature = failsafeLevel; // fuck you
-                    if (Double.isNaN(containedEnergy)) containedEnergy = failsafeLevel; // fuck you
-                    if (Double.isNaN(tempChange)) tempChange = 0; // fuck you
-                    if (temperature < -100) temperature = failsafeLevel; // for real fuck you piece of dipshti
-                    temperature = Math.min(failsafeLevel, temperature); // for technical reasons there has to be a limit
-                    containedEnergy = Math.min(failsafeLevel, containedEnergy); // for technical reasons there has to be a limit
-
-                    double taxes = Math.max(0, containedEnergy - (temperature / meltingPoint) * 1000);
-                    //containedEnergy -= taxes/14;
-                    //containedEnergy = getEnergyCurved(internalEnergy)*energyMod;
-                    {
-                        double sin = Math.sin(ticks / 20d * Math.PI);
-                        double abs = Math.abs(sin);
-                        double sign = Math.signum(sin);
-                        double wave = (1 - Math.pow(abs, 0.5)) * (1 + Math.sin(ticks / 20d * Math.PI * 22) * 0.7);//sign*Math.pow(abs,0.5);
-                        double craziness = Math.pow(Math.abs(Math.sin(ticks / 20d * Math.PI * 0.666)), 6.666) * 25 / getStabilizationDiv() / getStabilizationDivAlt();
-                        craziness *= Math.max(0, Math.pow(containedEnergy / 10000, 4) - 0.2);
-                        //double waveScaled = wave/2/getStabilizationDiv()+0.5;
-                        potentialRelease = getEnergyBase(corePower) / 200 * energyMod + wave * containedEnergy / 2000 / getStabilizationDivAlt() + craziness; //waveScaled * containedEnergy/200;
-                        potentialRelease = Math.abs(potentialRelease); // overflows are expected
                     }
-                    double energyBefore = containedEnergy;
-                    if (world.rand.nextInt(101) >= 50 / getStabilizationDivAlt())
-                        containedEnergy = Math.max(containedEnergy - (containedEnergy * potentialRelease / 20 + taxes / 14) * absorbers.size(), 0);
-                    //containedEnergy = getEnergyCurved(internalEnergy)*energyMod;
-                    double expelBonus = Math.min(bonus * bonus, bonus * bonus * potentialRelease / 20 * absorbers.size());
-                    bonus -= Math.sqrt(expelBonus);
 
-                    double expelling = energyBefore - containedEnergy + expelBonus;
-                    for (TileEntityCoreReceiver absorber : absorbers) {
-                        absorber.joules += (long) (expelling * 333_333) / absorbers.size();
+                    if (false) {
+
+                        double desiredBonus = Math.sqrt(incomingSpk);
+                        bonus += (desiredBonus - bonus) * 0.01;
+
+                        containedEnergy += (Math.pow(Math.pow(incomingSpk, 0.666) + 1, 0.666) - 1) * 6.666 / 3;
+                        double multiplier = (1 + world.rand.nextGaussian() * 0.75 / getStabilizationDivAlt())
+                                * (1 + Math.sin(ticks * Math.PI) * 0.75 / getStabilizationDivAlt());
+
+                        double tempChange = Math.pow(Math.pow(containedEnergy,
+                                MathHelper.clampedLerp(0.44, 0.666, Math.pow(1 / getStabilizationDivAlt(), 0.666))) / 100, 0.666) * 100 * 7
+                                * Math.max(1 - Math.pow(temperature / meltingPoint, 2) / 1.25 * Math.max(1 - Math.pow(containedEnergy / 10000, 1), 0.1), 0.5) //Math.pow(internalEnergy/corePower,6.666/getStabilizationDiv()/getStabilizationDiv())*corePower //(Math.pow(internalEnergy/(meltingPoint/2d),6.666/getStabilizationDiv()/getStabilizationDiv())*(meltingPoint/2d))
+                                / 20 * coreHeatMod * multiplier;
+                        tempChange = tempChange - Math.signum(tempChange) * Math.max(Math.abs(tempChange) - 10, 0) / 5;
+                        temperature += tempChange;
+                        temperature *= 0.99 * Math.pow(1 / getStabilizationDiv(), 0.0025);
+
+
+                        //tanks[0].drain(demand, true);
+                        //tanks[1].drain(demand, true);
+
+
+                        containedEnergy += Math.pow(temperature, 0.666) * getEnergyBase(corePower) * corePower / 65 //Math.pow(temperature*getEnergyBase()/corePower,0.5)*corePower
+                                / 20 / Math.pow(getStabilizationDiv(), 2) * energyMod * multiplier * fuelPower;
+
+                        if (Double.isNaN(temperature)) temperature = failsafeLevel; // fuck you
+                        if (Double.isNaN(containedEnergy)) containedEnergy = failsafeLevel; // fuck you
+                        if (Double.isNaN(tempChange)) tempChange = 0; // fuck you
+                        if (temperature < -100) temperature = failsafeLevel; // for real fuck you piece of dipshti
+                        temperature = Math.min(failsafeLevel, temperature); // for technical reasons there has to be a limit
+                        containedEnergy = Math.min(failsafeLevel, containedEnergy); // for technical reasons there has to be a limit
+
+                        double taxes = Math.max(0, containedEnergy - (temperature / meltingPoint) * 1000);
+                        //containedEnergy -= taxes/14;
+                        //containedEnergy = getEnergyCurved(internalEnergy)*energyMod;
+                        {
+                            double sin = Math.sin(ticks / 20d * Math.PI);
+                            double abs = Math.abs(sin);
+                            double sign = Math.signum(sin);
+                            double wave = (1 - Math.pow(abs, 0.5)) * (1 + Math.sin(ticks / 20d * Math.PI * 22) * 0.7);//sign*Math.pow(abs,0.5);
+                            double craziness = Math.pow(Math.abs(Math.sin(ticks / 20d * Math.PI * 0.666)), 6.666) * 25 / getStabilizationDiv() / getStabilizationDivAlt();
+                            craziness *= Math.max(0, Math.pow(containedEnergy / 10000, 4) - 0.2);
+                            //double waveScaled = wave/2/getStabilizationDiv()+0.5;
+                            potentialRelease = getEnergyBase(corePower) / 200 * energyMod + wave * containedEnergy / 2000 / getStabilizationDivAlt() + craziness; //waveScaled * containedEnergy/200;
+                            potentialRelease = Math.abs(potentialRelease); // overflows are expected
+                        }
+                        double energyBefore = containedEnergy;
+                        if (world.rand.nextInt(101) >= 50 / getStabilizationDivAlt())
+                            containedEnergy = Math.max(containedEnergy - (containedEnergy * potentialRelease / 20 + taxes / 14) * absorbers.size(), 0);
+                        //containedEnergy = getEnergyCurved(internalEnergy)*energyMod;
+                        double expelBonus = Math.min(bonus * bonus, bonus * bonus * potentialRelease / 20 * absorbers.size());
+                        bonus -= Math.sqrt(expelBonus);
+
+                        double expelling = energyBefore - containedEnergy + expelBonus;
+                        for (TileEntityCoreReceiver absorber : absorbers) {
+                            absorber.joules += (long) (expelling * 333_333) / absorbers.size();
+                        }
+                        expellingSpk = expelling;
+                        expelTicks[Math.floorMod(ticks, 20)] = expelling;
+
+                        double timeToMeltdown = 10;
+                        double timeToRegen = 30;
+                        tagA.setDouble("damage", MathHelper.clamp(damageA
+                                        + (temperature >= ItemCatalyst.getMelting(catalystA) ? 5 / timeToMeltdown : -5 / timeToRegen),
+                                0, 100
+                        ));
+                        tagB.setDouble("damage", MathHelper.clamp(damageB
+                                        + (temperature >= ItemCatalyst.getMelting(catalystB) ? 5 / timeToMeltdown : -5 / timeToRegen),
+                                0, 100
+                        ));
                     }
-                    expellingSpk = expelling;
-                    expelTicks[Math.floorMod(ticks, 20)] = expelling;
-
-                    double timeToMeltdown = 10;
-                    double timeToRegen = 30;
-                    tagA.setDouble("damage", MathHelper.clamp(damageA
-                                    + (temperature >= ItemCatalyst.getMelting(catalystA) ? 5 / timeToMeltdown : -5 / timeToRegen),
-                            0, 100
-                    ));
-                    tagB.setDouble("damage", MathHelper.clamp(damageB
-                                    + (temperature >= ItemCatalyst.getMelting(catalystB) ? 5 / timeToMeltdown : -5 / timeToRegen),
-                            0, 100
-                    ));
                 }
 
                 if (damageA >= 100 || damageB >= 100) {

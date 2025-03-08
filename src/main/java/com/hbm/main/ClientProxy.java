@@ -49,6 +49,7 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.hbm.tileentity.machine.*;
 import com.llib.exceptions.LeafiaDevFlaw;
+import net.minecraft.client.particle.*;
 import net.minecraft.tileentity.TileEntity;
 import org.apache.logging.log4j.Level;
 import org.lwjgl.input.Keyboard;
@@ -539,18 +540,7 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.HbmParticleUtility;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleBlockDust;
-import net.minecraft.client.particle.ParticleCloud;
-import net.minecraft.client.particle.ParticleExplosion;
-import net.minecraft.client.particle.ParticleExplosionLarge;
-import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.client.particle.ParticleFirework.Spark;
-import net.minecraft.client.particle.ParticleFlame;
-import net.minecraft.client.particle.ParticleRedstone;
-import net.minecraft.client.particle.ParticleSmokeNormal;
-import net.minecraft.client.particle.ParticleSuspendedTown;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -1624,6 +1614,9 @@ public class ClientProxy extends ServerProxy {
 
 			if("flame".equals(data.getString("mode"))) {
 				fx = new ParticleFlame.Factory().createParticle(-1, world, x, y, z, mX, mY, mZ);
+			}
+			if("lava".equals(data.getString("mode"))) {
+				world.spawnParticle(EnumParticleTypes.LAVA,x,y,z,mX,mY,mZ);
 			}
 
 			if("smoke".equals(data.getString("mode"))) {

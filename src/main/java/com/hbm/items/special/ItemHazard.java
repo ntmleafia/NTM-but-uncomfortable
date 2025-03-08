@@ -187,4 +187,5 @@ public class ItemHazard extends ItemCustomLore implements IItemHazard {
 		public ItemHazard(float radiation,boolean fire, boolean blinding,String s) {
 			this(RadiationType.ACTIVATION,radiation,fire,blinding,s);
 		}
+
 }

@@ -48,6 +48,8 @@
   "external.machineDestroyed": {"category": "block", "sounds": [{"name": "hbm:external/apeboss_death", "stream": false}]},
   "external.machineExplode": {"category": "block", "sounds": [{"name": "hbm:external/mech_explosion", "stream": false}]},
 
+  "external.sbpickore": {"category": "block", "sounds": [{"name": "hbm:external/pickaxe_ore", "stream": false},{"name": "hbm:external/pickaxe_ore2", "stream": false}]},
+
   "weapon.nuke": {"subtitle": "subtitles.weapon.nuke", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearExplosion", "stream": false}]},
   "weapon.nuke_n": {"subtitle": "subtitles.weapon.nuke_n", "category": "player", "sounds": [{"name": "hbm:weapon/nuclearexplosion_louder", "stream": false}]},
   "weapon.nuke_d": {"subtitle": "subtitles.weapon.nuke_d", "category": "player", "sounds": [{"name": "hbm:weapon/nuclear_distant_mix", "stream": false}]},

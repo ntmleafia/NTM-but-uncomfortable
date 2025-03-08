@@ -5,13 +5,18 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.particle.ParticleRBMKMush;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
+import com.leafia.unsorted.ParticleFireK;
+import com.leafia.unsorted.ParticleFireLavaK;
+import com.leafia.unsorted.ParticleSpark;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.group.LeafiaSet;
+import com.llib.math.FiaMatrix;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -59,6 +64,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			self.blockdust_block = blockId;
 			return self;
 		}
+		public static VanillaExt Lava() { VanillaExt self = new VanillaExt(); self.mode = 10; return self; }
 		protected VanillaExt(LeafiaBuf buf,NBTTagCompound nbt) {
 			nbt.setString("type","vanillaExt");
 			mode = buf.extract(4);
@@ -80,6 +86,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 					nbt.setString("mode","blockdust");
 					nbt.setInteger("block",buf.readInt());
 					break;
+				case 10: nbt.setString("mode","lava"); break;
 			}
 		}
 		@Override
@@ -144,6 +151,129 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			);
 			mush.isPink = true;
 			Minecraft.getMinecraft().effectRenderer.addEffect(mush);
+		}
+	}
+	public static class AlkaliFire extends LeafiaParticle {
+		public int period = 1;
+		protected AlkaliFire() { }
+		public AlkaliFire(int period) {
+			super();
+			this.period = period;
+		}
+		@Override
+		protected LeafiaParticle fromBits(LeafiaBuf buf,NBTTagCompound nbt) { return new AlkaliFire(buf.readByte()); }
+		@Override
+		protected void toBits(LeafiaBuf buf) { buf.writeByte(period); }
+		@Override
+		protected void emit(NBTTagCompound nbt) {
+			World world = Minecraft.getMinecraft().world;
+			double x = nbt.getDouble("posX") + world.rand.nextDouble()*0.5D - 0.25D;
+			double y = nbt.getDouble("posY") + world.rand.nextDouble()*0.5D - 0.25D;
+			double z = nbt.getDouble("posZ") + world.rand.nextDouble()*0.5D - 0.25D;
+			if (period == 3) {
+				ParticleFireK fx = new ParticleFireK(world, x, y, z);
+				Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+			} else
+				world.spawnParticle(EnumParticleTypes.FLAME,x,y,z,0,0,0);
+			if (period >= 3 && world.rand.nextInt(2) == 0) {
+				if (period == 3) {
+					ParticleFireLavaK fx2 = new ParticleFireLavaK(world, x, y, z);
+					Minecraft.getMinecraft().effectRenderer.addEffect(fx2);
+				} else
+					world.spawnParticle(EnumParticleTypes.LAVA,x,y,z,0,0,0);
+			}
+		}
+	}
+	public static class TauSpark extends LeafiaParticle {
+		public int color = 0xE6E6FF; // i-ARGB format
+		public int count = 7; // preferrably 5+rand(3)
+		public float angle = 70F;
+		public float life = 1;
+		public float width = 0.01F;
+		@Override
+		protected LeafiaParticle fromBits(LeafiaBuf buf,NBTTagCompound nbt) {
+			TauSpark spark = new TauSpark();
+			spark.color = buf.readInt();
+			spark.count = buf.readInt();
+			spark.angle = buf.readFloat();
+			spark.life = buf.readFloat();
+			spark.width = buf.readFloat();
+			return spark;
+		}
+		@Override
+		protected void toBits(LeafiaBuf buf) {
+			buf.writeInt(color);
+			buf.writeInt(count);
+			buf.writeFloat(angle);
+			buf.writeFloat(life);
+			buf.writeFloat(width);
+		}
+		@Override
+		protected void emit(NBTTagCompound tag) { // stolen from tau cannon lmao
+			World world = Minecraft.getMinecraft().world;
+			tag.setString("type", "spark");
+			tag.setString("mode", "coneBurst");
+			tag.setFloat("r", (color>>>16&0xFF)/255f);
+			tag.setFloat("g", (color>>>8&0xFF)/255f);
+			tag.setFloat("b", (color&0xFF)/255f);
+			tag.setFloat("a", 1-(color>>>24&0xFF)/255f);
+			tag.setInteger("lifetime", (int)(5*life));
+			tag.setInteger("randLifetime", (int)(8*life));
+			tag.setFloat("width", width);
+			tag.setFloat("length", 0.5F);
+			tag.setFloat("gravity", 0.1F);
+			tag.setFloat("angle", 70F);
+			tag.setInteger("count", count);
+			tag.setFloat("randomVelocity", 0.1F);
+			MainRegistry.proxy.effectNT(tag);
+		}
+	}
+	public static class FiaSpark extends LeafiaParticle {
+		public int color = 0x80EEFF; // RGB format
+		public double spread = 45;
+		public double speedMin = 0.15;
+		public double speedMax = 0.35;
+		public int count = 1;
+		public int length = 8;
+		public float thickness = 0.02f;
+		public float segmentsPerTick = 3;
+		@Override
+		protected LeafiaParticle fromBits(LeafiaBuf buf,NBTTagCompound nbt) {
+			FiaSpark spark = new FiaSpark();
+			spark.color = buf.readInt();
+			spark.spread = buf.readDouble();
+			spark.speedMin = buf.readDouble();
+			spark.speedMax = buf.readDouble();
+			spark.count = buf.readInt();
+			spark.length = buf.readInt();
+			spark.thickness = buf.readFloat();
+			spark.segmentsPerTick = buf.readFloat();
+			return spark;
+		}
+		@Override
+		protected void toBits(LeafiaBuf buf) {
+			buf.writeInt(color);
+			buf.writeDouble(spread);
+			buf.writeDouble(speedMin);
+			buf.writeDouble(speedMax);
+			buf.writeInt(count);
+			buf.writeInt(length);
+			buf.writeFloat(thickness);
+			buf.writeFloat(segmentsPerTick);
+		}
+		@Override
+		protected void emit(NBTTagCompound tag) { // stolen from tau cannon lmao
+			World world = Minecraft.getMinecraft().world;
+			Vec3d vec = new Vec3d(tag.getDouble("posX"),tag.getDouble("posY"),tag.getDouble("posZ"));
+			for (int i = 0; i < count; i++) {
+				ParticleSpark spark = new ParticleSpark(
+						world,new FiaMatrix(vec,vec.add(tag.getDouble("mX"),tag.getDouble("mY"),tag.getDouble("mZ"))),
+						color,length,speedMin+(speedMax-speedMin)*world.rand.nextDouble(),spread
+				);
+				spark.thickness = thickness;
+				spark.segmentsPerTick = segmentsPerTick;
+				Minecraft.getMinecraft().effectRenderer.addEffect(spark);
+			}
 		}
 	}
 

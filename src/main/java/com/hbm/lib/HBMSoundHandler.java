@@ -293,6 +293,8 @@ public final class HBMSoundHandler {
 
 	public static SoundEvent dfc_meltdown;
 	public static SoundEvent dfc_explode;
+
+	public static SoundEvent sbPickaxeOre;
 	
 	
 	public static void init() {
@@ -539,6 +541,8 @@ public final class HBMSoundHandler {
 		dfc_eoh = register("block.kfc.eoh");
 		dfc_meltdown = register("block.kfc.meltdown");
 		dfc_explode = register("block.kfc.explode");
+
+		sbPickaxeOre = register("external.sbpickore");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

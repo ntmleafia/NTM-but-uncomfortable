@@ -17,18 +17,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-public class BlockLithium extends Block implements IItemHazard {
+public class BlockNeoveline extends BlockHazard implements IItemHazard {
 
-	ItemHazardModule module;
-
-	public BlockLithium(Material materialIn, String s) {
-		super(materialIn);
-		this.setTranslationKey(s);
-		this.setRegistryName(s);
-		this.module = new ItemHazardModule();
-		this.addHydroReactivity();
-
-		ModBlocks.ALL_BLOCKS.add(this);
+	public BlockNeoveline(Material materialIn,String s) {
+		super(materialIn,s);
+		this.addHydroReactivity(6);
 	}
 
 	@Override
@@ -53,7 +46,7 @@ public class BlockLithium extends Block implements IItemHazard {
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if(touchesWater(world, pos.getX(), pos.getY(), pos.getZ())) {
 			world.destroyBlock(pos, false);
-			world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
+			world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 15, false, true);
 		}
 	}
 
@@ -61,15 +54,8 @@ public class BlockLithium extends Block implements IItemHazard {
 	public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 		if(touchesWater(world, pos.getX(), pos.getY(), pos.getZ())) {
 			world.destroyBlock(pos, false);
-			world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 3, false, true);
+			world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 15, false, true);
 		}
-	}
-	
-	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		super.addInformation(stack, player, tooltip, advanced);
-		tooltip.add("It's not my fault you didn't pay");
-		tooltip.add("attention in chemistry class.");
 	}
 
 	@Override

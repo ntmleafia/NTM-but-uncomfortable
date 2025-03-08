@@ -1,13 +1,18 @@
 package com.leafia.transformer;
 
+import com.hbm.blocks.generic.BlockCoalOil;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.util.Tuple.Pair;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.fluids.ISpecializedContainer;
 import com.leafia.dev.fluids.LeafiaFluid;
 import com.leafia.dev.fluids.LeafiaFluidTrait;
 import com.leafia.passive.LeafiaPassiveServer;
 import com.llib.group.LeafiaSet;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -37,6 +42,19 @@ public class WorldServerLeafia {
 						throw new MinecraftException("Ongoing nuclear explosion detected, sabotaging world saving");
 				}
 			}
+		}
+	}
+	public static void player_onBreakBlockProgress(WorldServer world,int breakerId,BlockPos pos,int progress) {
+		EntityPlayer doxxed = null;
+		for (EntityPlayer entity : world.playerEntities) {
+			if (entity.getEntityId() == breakerId)
+				doxxed = entity;
+		}
+		if (doxxed != null) {
+			IBlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
+			if (block instanceof BlockCoalOil && Math.floorMod(progress,2) == 0)
+				((BlockCoalOil) block).onBreakBlockProgress(world,pos,doxxed);
 		}
 	}
 	public static void fluid_onFilling(FluidStack stack,IFluidHandler inst) {
