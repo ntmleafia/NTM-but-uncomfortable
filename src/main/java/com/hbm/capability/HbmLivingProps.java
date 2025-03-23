@@ -158,7 +158,7 @@ public class HbmLivingProps {
 	public static void incrementAsbestos(EntityLivingBase entity, int asbestos){
 		setAsbestos(entity, getAsbestos(entity) + asbestos);
 		if (entity instanceof EntityPlayer) {
-			((EntityPlayer)entity).sendStatusMessage(new TextComponentTranslation("").setStyle(new Style().setColor(TextFormatting.RED)),true);
+			((EntityPlayer)entity).sendStatusMessage(new TextComponentTranslation("chat.lungs").setStyle(new Style().setColor(TextFormatting.RED)),true);
 		}
 	}
 
