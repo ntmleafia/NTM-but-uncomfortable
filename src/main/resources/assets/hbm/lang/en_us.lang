@@ -799,6 +799,7 @@ desc.hemissile=HE Missile %s
 desc.icmissile=IC Missile %s
 desc.inaccuracy=Inaccuracy:
 desc.infilter=Installed filter:
+desc.infilterrm=Shift+Use this item to remove filter
 desc.infinitehe=∞ HE/s
 desc.item.rtgDecay=Decays into: %s
 desc.item.rtgHeat=Heat: %s

@@ -795,6 +795,7 @@ desc.hemissile=HE Missile %s
 desc.icmissile=IC Missile %s
 desc.inaccuracy=誤差
 desc.infilter=搭載フィルター
+desc.infilterrm=このアイテムをシフト+使用でフィルターを取り外せます
 desc.infinitehe=∞ HE/s
 desc.item.rtgDecay=崩壊すると%sに
 desc.item.rtgHeat=熱量 %s

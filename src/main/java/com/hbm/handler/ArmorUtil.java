@@ -482,6 +482,7 @@ public class ArmorUtil {
 		filter.getItem().addInformation(filter, world, lore, flagIn);
 		ForgeEventFactory.onItemTooltip(filter, null, lore, flagIn);
 		lore.forEach(x -> list.add("§e  " + x));
+		list.add("§b" + I18nUtil.resolveKey("desc.infilterrm"));
 	}
 	
 	// public static boolean isWearingEmptyMask(EntityPlayer player) {
