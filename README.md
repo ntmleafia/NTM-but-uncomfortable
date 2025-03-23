@@ -1,51 +1,19 @@
-# <u>**PAIN**</u>
+# <u>**The cursed meme fork eddition**</u> made by a stupid lefeon
 
-The build is messed up as fk,
-I got it working on IntelliJ:
+Here's my playground of NTM modding: This mod does not focus on porting stuff from 1.7.10, but rather throw in bunch of exclusive contents to make some flavor.<br>
+This mod aims on making frequent updates, <i>in exchange for less reliability and stability</i>. This is a local project not focused on production.<br>
+<b>Downloads can be found [here](https://github.com/abysschroma/NTM-but-uncomfortable/releases).</b>
 
-1. Make sure you use Java 8 + Gradle 7
-2. Put computertronics (deobf dev jar) in the folder the project is in (project parent folder) [download](https://wiki.vexatos.com/wiki:computronics)
-3. Load the project
-
-### If you encounter LeafiaGls.java:19: error: cannot find symbol:
-````java
-LeafiaGls.java:19: error: cannot find symbol
-public class LeafiaGls extends GlStateManager {
-       ^
-  symbol:   constructor GlStateManager()
-  location: class GlStateManager
-````
-do this:
-1. run `gradle clean`
-2. run `gradle clean --refresh-dependencies`
-3. goto `com.leafia.transformer.LeafiaGls` and click `Download Sources` this magically fixes the error idk some kind of environment issue, download source runs a lot of tasks, mappings and setup MCP env
-
-### Also access transformers are broken and wont apply automatically
-thats why i just bundled the at.cfg's of mods you may want to use for testing (JEI and OpenComputers)
-````gradle
-accessTransformers(
-                    file("${projectDir}/Assets/jei_at.cfg"),
-                    file("${projectDir}/Assets/oc_at.cfg"))
-````
-
-### Help minecraft screen is black on startup
-- Somehow the OpenGL context is messed up sometimes, (could be window mode related)
-
-If you are in windowed mode:
-Just resize the window, for example press the maximize button
-
-I don't know any fix for fullscreen mode or if that event happens in fullscreen mode
-
-# <u>**pain**</u>
-
-Here's version of NTM that i decided to modify from Extended Edition 2.0.1, since the mod suddenly stopped receiving updates<br>
-This is more of a local project not focused on production, and also I have no experience in Java coding, so it's not recommended for a wide use lol
+If you've found a bug or feature requests, feel free to [open an issue](https://github.com/abysschroma/NTM-but-uncomfortable/issues/new).<br>
 
 It is forked from Extended Edition made by [Alcater](https://github.com/Alcatergit/Hbm-s-Nuclear-Tech-GIT)<br>
 which is forked from the fork made by [TheOriginalGolem](https://github.com/TheOriginalGolem/Hbm-s-Nuclear-Tech-GIT)<br>
 which is forked from the port made by [Drillgon200](https://github.com/Drillgon200/Hbm-s-Nuclear-Tech-GIT)<br>
 which is ported from the original mod made by [HBMTheBobcat](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT).
 
-Details are on their README's. What I want to say here is that GitHub is way, WAY too confusing to me I have no idea how to mark this repository as a proper fork of Extended Edition. Sigh.
+![2025-01-05_11 50 16](https://github.com/user-attachments/assets/db2d0f36-9a31-4647-9ba3-45f6beebdd5b)
 
-(update: internet say it's impossible to mark as a fork retroactively. ntm hamster reloaded also lacks the "forked from" thingy so im happy im not the only one lol)
+# <u>Technical information</u>
+If you'd like to build the mod and you're struggling on it, go read the README on [FireDragon91245's fork](https://github.com/FireDragon91245/NTM-Ext-Ext), since I have no idea how the build configurations work anymore ever since merging their fork lmao
+
+Not my fault ^-^
