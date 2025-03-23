@@ -41,6 +41,12 @@ public class BlockGasRadonZirnox extends BlockGasBase {
 		
 		if(ArmorRegistry.hasProtection(entityLiving, EntityEquipmentSlot.HEAD, HazardClass.RAD_GAS)) {
 			ArmorUtil.damageGasMaskFilter(entityLiving, 1);
+			if(ArmorRegistry.hasProtection(entityLiving, EntityEquipmentSlot.HEAD, HazardClass.PARTICLE_FINE))
+				ArmorUtil.damageGasMaskFilter(entityLiving, 1);
+			else {
+				ContaminationUtil.contaminate(entityLiving, HazardType.RADIATION, ContaminationType.CREATIVE, 0.2F);
+				ContaminationUtil.applyAsbestos(entity, 3, 1);
+			}
 		} else {
 			ContaminationUtil.contaminate(entityLiving, HazardType.RADIATION, ContaminationType.RAD_BYPASS, 1.5F);
 			ContaminationUtil.applyAsbestos(entityLiving,5,0); // Mesothelioma can be developed as a result of exposure to radiation in the lungs
