@@ -1,5 +1,6 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IBatteryItem;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.config.MachineConfig;
 import com.hbm.forgefluid.FFUtils;
@@ -10,6 +11,7 @@ import com.hbm.inventory.UpgradeManager;
 import com.hbm.inventory.container.ContainerMixer;
 import com.hbm.inventory.gui.GUIMixer;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
+import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.Library;
@@ -56,6 +58,23 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ITi
 	
 	public FluidTank[] tanks;
 	private final UpgradeManager upgradeManager = new UpgradeManager();
+
+	@Override
+	public boolean canInsertItemHopper(int slot,ItemStack itemStack,int amount) {
+		return super.canInsertItemHopper(slot,itemStack,amount);
+	}
+	@Override
+	public boolean canInsertItem(int slot,ItemStack itemStack,int amount) {
+		return super.canInsertItem(slot,itemStack,amount);
+	}
+	@Override
+	public boolean canExtractItemHopper(int slot,ItemStack itemStack,int amount) {
+		return super.canExtractItemHopper(slot,itemStack,amount);
+	}
+	@Override
+	public boolean canExtractItem(int slot,ItemStack itemStack,int amount) {
+		return super.canExtractItem(slot,itemStack,amount);
+	}
 
 	public TileEntityMachineMixer() {
 		super(5);
@@ -335,11 +354,17 @@ public class TileEntityMachineMixer extends TileEntityMachineBase implements ITi
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemStack) {
+		if (i == 0) return itemStack.getItem() instanceof IBatteryItem;
 		if(i == 1) return MixerRecipes.matchesInputItem(outputFluid, itemStack);
 		if(i == 2) return itemStack.getItem() instanceof ItemForgeFluidIdentifier;
+		if (i == 3 || i == 4) return itemStack.getItem() instanceof ItemMachineUpgrade;
 		return false;
 	}
-	
+	@Override
+	public boolean isItemValidForSlotHopper(int i,ItemStack stack) {
+		return isItemValidForSlot(i,stack);
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);

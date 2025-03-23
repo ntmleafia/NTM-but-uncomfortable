@@ -42,7 +42,7 @@ public class GUICore extends GuiInfoContainer {
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 7, guiTop + 102, 70, 4, mouseX, mouseY,
 				new String[]{"Stabilization: "+Math.round(core.stabilization*100)+"%"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 98, 70, 4, mouseX, mouseY,
-				new String[]{"Contained Energy: "+((core.containedEnergy >= TileEntityCore.failsafeLevel) ? "ERROR" : String.format("%01.3f",core.containedEnergy/3)+"MSPK")});
+				new String[]{"Contained Energy: "+((core.containedEnergy >= TileEntityCore.failsafeLevel) ? "ERROR" : String.format("%01.3f",core.containedEnergy)+"MSPK")});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 102, 70, 4, mouseX, mouseY,
 				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/3000)+"GSPK/s"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 161, guiTop + 98, 8, 8, mouseX, mouseY,
@@ -85,7 +85,7 @@ public class GUICore extends GuiInfoContainer {
 		drawTexturedModalRect(guiLeft + 7, guiTop + 102, 0, 208,
 				(int)MathHelper.clampedLerp(0,70,(core.getStabilizationDiv()-1)/10), 4);
 		drawTexturedModalRect(guiLeft + 84, guiTop + 98, 0, 216,
-				(int)MathHelper.clampedLerp(0,70,core.containedEnergy/(100000/3d)), 4);
+				(int)MathHelper.clampedLerp(0,70,core.containedEnergy/1_000_000), 4); // 1MSPK ~ 1PSPK (= 5EHE)
 		drawTexturedModalRect(guiLeft + 84, guiTop + 102, 0, 220,
 				(int)MathHelper.clampedLerp(0,70,core.expellingEnergy/(100000_000/3d)), 4);
 		LeafiaGls.inLocalSpace(()->{

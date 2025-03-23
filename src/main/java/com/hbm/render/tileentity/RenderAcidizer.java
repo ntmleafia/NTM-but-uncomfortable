@@ -5,6 +5,7 @@ import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
@@ -46,9 +47,8 @@ public class RenderAcidizer extends TileEntitySpecialRenderer<TileEntity> {
 			GL11.glDepthMask(false);
 			OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 			FluidStack stuck = crys.tank.getFluid();
-			if (stuck != null) {
-				bindTexture(stuck.getFluid().getStill());
-			}
+			if (stuck != null)
+				bindByResource(stuck.getFluid().getStill().toString());
 			mdl.__getModel().renderPart("Fluid");
 			GL11.glDepthMask(true);
 			GL11.glDisable(GL11.GL_BLEND);
@@ -57,5 +57,10 @@ public class RenderAcidizer extends TileEntitySpecialRenderer<TileEntity> {
 		GL11.glShadeModel(GL11.GL_FLAT);
 
 		GL11.glPopMatrix();
+	}
+	void bindByResource(String resource) {
+		// convert format like "hbm:         blocks/brick_concrete    "
+		//                  to "hbm:textures/blocks/brick_concrete.png"
+		bindTexture(new ResourceLocation(resource.replaceFirst("(\\w+:)?(.*)","$1textures/$2.png")));
 	}
 }

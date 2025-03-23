@@ -16,6 +16,7 @@ import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.leafia.dev.LeafiaDebug;
+import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.passive.LeafiaPassiveLocal;
@@ -86,7 +87,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
     public double temperature = 0;
     public double stabilization = 0;
-    public double containedEnergy = 0;
+    public double containedEnergy = 0; // 1 = 1MSPK
     public double expellingEnergy = 0;
     public double potentialRelease = 0;
 
@@ -100,6 +101,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
     public long explosionClock = 0;
     public BlockPos jammerPos = null;
     public static double failsafeLevel = 250000000;
+    public static double maxEnergy = 100_000; // 1PSPK or 5EHE
 
     public double incomingSpk = 0;
     public double expellingSpk = 0;
@@ -270,15 +272,33 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
                     double fuelPower = ModFluidProperties.getDFCEfficiency(f1) * ModFluidProperties.getDFCEfficiency(f2);
 
                     double tempRatio = temperature/meltingPoint;
-                    double energyRatio = containedEnergy;
+                    double energyRatio = containedEnergy/maxEnergy;
 
                     ticks++;
                     //LeafiaDebug.debugLog(world,"incomingSpk: "+incomingSpk);
 
+                    Tracker._startProfile(this,"NeoTick");
                     { // i wanted to redo everything this sucks ASS
                         containedEnergy += incomingSpk;
+                        double combustionPotential = Math.pow(energyRatio,0.25);
+                        int consumption = (int)(combustionPotential*100);
+                        tanks[0].drain(consumption,true);
+                        tanks[1].drain(consumption,true);
+                        Tracker._tracePosition(this,pos.east(6),"combustionPotential: "+combustionPotential,"cons: "+consumption);
+                        temperature += consumption/100d;
+                        containedEnergy += consumption*fuelPower;
 
+                        temperature = Math.max(temperature-2,0);
+
+                        double potAdd = Math.pow(energyRatio/3,5)*4;
+                        double potSub = Math.pow(tempRatio,2)*3;
+                        double potMul = Math.pow(energyRatio,0.1);
+                        double potAbsorb = absorbers.size()*0.2;
+                        double potFinal = potAdd-potSub;
+                        Tracker._tracePosition(this,pos.down(3),"potAdd: "+potAdd,"potSub: "+potSub,"","potMul:"+potMul,"Total: "+potFinal);
+                        Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
                     }
+                    Tracker._endProfile(this);
 
                     if (false) {
 
