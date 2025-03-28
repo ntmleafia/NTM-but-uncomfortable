@@ -336,10 +336,15 @@ public class FFUtils {
 				texts.add(amount + "/" + capacity + "mB");
 				addFluidInfo(fluid, texts);
 				if (!lastClicked && gui.clickDown) {
-					FuzzyIdentifierPacket packet = new FuzzyIdentifierPacket();
-					packet.fluidRsc = fluid.getName();
-					LeafiaCustomPacket.__start(packet).__sendToServer();
-					Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+					ItemStack stack = Minecraft.getMinecraft().player.inventory.getItemStack();
+					if (stack != null && !stack.isEmpty()) {
+						if (stack.getItem() instanceof ItemFuzzyIdentifier) {
+							FuzzyIdentifierPacket packet = new FuzzyIdentifierPacket();
+							packet.fluidRsc = fluid.getName();
+							LeafiaCustomPacket.__start(packet).__sendToServer();
+							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+						}
+					}
 				}
 			} else {
 				texts.add(I18nUtil.resolveKey("desc.none"));

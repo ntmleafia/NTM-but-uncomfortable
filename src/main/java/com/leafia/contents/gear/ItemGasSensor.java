@@ -25,15 +25,16 @@ public class ItemGasSensor extends ItemArmorMod {
 	}
 	@Override
 	public void addInformation(ItemStack stack,World worldIn,List<String> list,ITooltipFlag flagIn){
-		list.add(TextFormatting.YELLOW + "Beeps near hazardous gasses");
-		list.add(TextFormatting.YELLOW + "Works in the inventory or when applied to armor");
+		String[] lol = I18nUtil.resolveKey("item.gas_sensor.desc").split("\\$");
+		for (String s : lol)
+			list.add(TextFormatting.YELLOW + s);
 		list.add("");
 		super.addInformation(stack,worldIn,list,flagIn);
 	}
 
 	@Override
 	public void addDesc(List<String> list, ItemStack stack, ItemStack armor) {
-		list.add(TextFormatting.YELLOW + "  " + stack.getDisplayName() + " (Detects gasses)");
+		list.add(TextFormatting.YELLOW + "  " + stack.getDisplayName() + " ("+I18nUtil.resolveKey("item.gas_sensor.mod")+")");
 	}
 
 	@Override
