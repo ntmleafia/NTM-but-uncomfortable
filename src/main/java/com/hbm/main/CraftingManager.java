@@ -1647,6 +1647,9 @@ public class CraftingManager {
         addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_mk2, 8), "SAS", "   ", "SAS", 'S', STEEL.plate(), 'A', AL.plate());
         addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_solid, 8), "SAS", "ADA", "SAS", 'S', STEEL.ingot(), 'A', AL.plate(), 'D', ModItems.ducttape);
         addShapelessAuto(new ItemStack(ModBlocks.fluid_duct_solid_sealed, 1), ModBlocks.fluid_duct_solid, ModBlocks.brick_compound);
+        addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_valve, 1), "S", "D", 'S', Blocks.LEVER, 'D', ModBlocks.fluid_duct_solid);
+        addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_valve_rs, 1), "S", "D", 'S', REDSTONE.dust(), 'D', ModBlocks.fluid_duct_solid);
+
         addRecipeAuto(new ItemStack(ModBlocks.machine_assembler, 1), "WWW", "MCM", "ISI", 'W', KEY_ANYPANE, 'M', ModItems.motor, 'C', ModItems.circuit_aluminium, 'I', CU.block(), 'S', STEEL.block());
         addRecipeAuto(new ItemStack(ModItems.template_folder, 1), "LPL", "BPB", "LPL", 'P', Items.PAPER, 'L', "dyeBlue", 'B', "dyeWhite");
         addRecipeAuto(new ItemStack(Armory.turret_control, 1), "R12", "PPI", "  I", 'R', Items.REDSTONE, '1', ModItems.circuit_aluminium, '2', ModItems.circuit_red_copper, 'P', STEEL.plate(), 'I', STEEL.ingot());
