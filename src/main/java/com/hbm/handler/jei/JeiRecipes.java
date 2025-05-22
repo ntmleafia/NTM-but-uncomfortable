@@ -704,7 +704,9 @@ public class JeiRecipes {
 			return mixerRecipes;
 		mixerRecipes = new ArrayList<MixerRecipe>();
 		
-        for(Fluid f : MixerRecipes.recipesDurations.keySet()){
+        for(String fluidName : MixerRecipes.recipesDurations.keySet()){
+
+			Fluid f = FluidRegistry.getFluid(fluidName);
 
         	List<AStack> inputs = new ArrayList<AStack>(3);
 
