@@ -130,7 +130,7 @@ public class TileEntityNukeCustom extends TileEntity implements ITickable {
 		entries.put(new NbtComparableStack(ItemCell.getFullCell(ModForgeFluids.tritium)), new CustomNukeEntry(EnumBombType.HYDRO, 30F));
 		entries.put(new ComparableStack(Powders.powder_lithium_tiny), new CustomNukeEntry(EnumBombType.HYDRO, 2F));
 		entries.put(new ComparableStack(Powders.powder_lithium), new CustomNukeEntry(EnumBombType.HYDRO, 20F));
-		entries.put(new ComparableStack(ModItems.lithium), new CustomNukeEntry(EnumBombType.HYDRO, 20F));
+		entries.put(new ComparableStack(Ingots.ingot_lithium), new CustomNukeEntry(EnumBombType.HYDRO, 20F));
 		entries.put(new ComparableStack(ModBlocks.block_lithium), new CustomNukeEntry(EnumBombType.HYDRO, 200F));
 		entries.put(new ComparableStack(ModItems.tritium_deuterium_cake), new CustomNukeEntry(EnumBombType.HYDRO, 300F));
 		entries.put(new ComparableStack(ModItems.custom_hydro), new CustomNukeEntry(EnumBombType.HYDRO, 30F));

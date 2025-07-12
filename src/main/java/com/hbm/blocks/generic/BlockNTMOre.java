@@ -81,7 +81,7 @@ public class BlockNTMOre extends BlockOre implements IItemHazard {
 			return ModItems.niter;
 		}
 		if(this == ModBlocks.ore_fluorite){
-			return ModItems.fluorite;
+			return Ingots.fluorite;
 		}
 		if(this == ModBlocks.ore_lignite){
 			return ModItems.lignite;

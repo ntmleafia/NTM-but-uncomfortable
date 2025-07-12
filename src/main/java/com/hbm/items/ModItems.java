@@ -822,7 +822,6 @@ public class ModItems {
 			public static final Item ingot_actinium = new ItemCustomLore("ingot_actinium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_neodymium = new ItemCustomLore("ingot_neodymium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_bromine = new ItemCustomLore("ingot_bromine").setCreativeTab(MainRegistry.partsTab);
-			public static final Item ingot_caesium = new ItemHazard(null,0.0F, true, "ingot_caesium").addHydroReactivity(5).toItem().setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_cerium = new ItemCustomLore("ingot_cerium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_lanthanium = new ItemCustomLore("ingot_lanthanium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_tantalium = new ItemCustomLore("ingot_tantalium").setCreativeTab(MainRegistry.partsTab);
@@ -851,6 +850,14 @@ public class ModItems {
 			public static final Item ingot_chainsteel = new ItemHot(100, "ingot_chainsteel").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_meteorite = new ItemHot(200, "ingot_meteorite").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_meteorite_forged = new ItemHot(200, "ingot_meteorite_forged").setCreativeTab(MainRegistry.partsTab);
+			public static final Item fluorite = new ItemBase("fluorite").setCreativeTab(MainRegistry.partsTab);
+
+			public static final Item ingot_lithium = new ItemHazard("lithium").addHydroReactivity(1).toItem().setCreativeTab(MainRegistry.partsTab);
+			public static final Item ingot_sodium = new ItemHazard("ingot_sodium").addHydroReactivity(2).toItem().setCreativeTab(MainRegistry.partsTab);
+			public static final Item ingot_potassium = new ItemHazard("ingot_potassium").addHydroReactivity(3).toItem().setCreativeTab(MainRegistry.partsTab);
+			public static final Item ingot_rubidium = new ItemHazard("ingot_rubidium").addHydroReactivity(4).toItem().setCreativeTab(MainRegistry.partsTab);
+			public static final Item ingot_caesium = new ItemHazard(null,0.0F, true, "ingot_caesium").addHydroReactivity(5).toItem().setCreativeTab(MainRegistry.partsTab);
+			public static final Item ingot_francium = new ItemHazard("ingot_francium").addBeta(20f).addHydroReactivity(6).addFire(5).toItem().setCreativeTab(MainRegistry.partsTab);
 		}
 		public static class Powders {
 			//POWDERS
@@ -1140,8 +1147,7 @@ public class ModItems {
 
 	public static final Item sulfur = new ItemBase("sulfur").setCreativeTab(MainRegistry.partsTab);
 	public static final Item niter = new ItemBase("niter").setCreativeTab(MainRegistry.partsTab);
-	public static final Item fluorite = new ItemBase("fluorite").setCreativeTab(MainRegistry.partsTab);
-	public static final Item lithium = new ItemHazard("lithium").addHydroReactivity().toItem().setCreativeTab(MainRegistry.partsTab);
+
 	public static final Item ingot_semtex = new ItemLemon(4, 5, true, "ingot_semtex").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_c4 = new ItemFuel("ingot_c4", 1600).setCreativeTab(MainRegistry.partsTab);
 	public static final Item trinitite = new ItemHazard(GAMMA, 5F, "trinitite").setCreativeTab(MainRegistry.partsTab);
@@ -1409,7 +1415,7 @@ public class ModItems {
 		public static final Item
 				leafRodLithium
 				= new ItemLeafiaRod("Lithium",300, 0)
-				.setAppearance(lithium, BILLET, RAW)
+				.setAppearance(Ingots.ingot_lithium, BILLET, RAW)
 				.addHydroReactivity()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item

@@ -3,6 +3,7 @@ package com.hbm.inventory;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import net.minecraft.item.ItemStack;
@@ -43,13 +44,13 @@ public class MachineRecipes {
 			list.add(new GasCentOutput(1, new ItemStack(Nuggies.nugget_u235), 1));
 			list.add(new GasCentOutput(19, new ItemStack(Nuggies.nugget_u238), 2));
 			list.add(new GasCentOutput(7, new ItemStack(Nuggies.nugget_uranium_fuel), 3));
-			list.add(new GasCentOutput(9, new ItemStack(ModItems.fluorite), 4));
+			list.add(new GasCentOutput(9, new ItemStack(Ingots.fluorite), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.puf6){
 			list.add(new GasCentOutput(3, new ItemStack(Nuggies.nugget_pu238), 1));
 			list.add(new GasCentOutput(2, new ItemStack(Nuggies.nugget_pu239), 2));
 			list.add(new GasCentOutput(4, new ItemStack(Nuggies.nugget_pu240), 3));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.fluorite), 4));
+			list.add(new GasCentOutput(1, new ItemStack(Ingots.fluorite), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.watz){
 			list.add(new GasCentOutput(1, new ItemStack(Nuggies.nugget_solinium), 1));

@@ -9,6 +9,8 @@ import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.util.ContaminationUtil;
 import com.leafia.passive.effects.LeafiaShakecam;
 import com.llib.technical.LeafiaEase;
+import com.llib.technical.LeafiaEase.Direction;
+import com.llib.technical.LeafiaEase.Ease;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -74,7 +76,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		if(cloud.ticksExisted < flareDuration+1)
 			flareWrapper(cloud, partialTicks, flareDuration);
 		
-		if(cloud.ticksExisted < flashDuration+1)
+		//if(cloud.ticksExisted < flashDuration+1)
 			flashWrapper(cloud, partialTicks, flashDuration);
 
 		if(fog)
@@ -89,7 +91,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 		double dist = player.getDistance(cloud);
 		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk;
-		if(shockwaveDistance > 10 || shockwaveDistance < 0) return;
+		if(shockwaveDistance > 10) return;
 
 		if (!cloud.reachedPlayer && cloud.sound) {
 			cloud.reachedPlayer = true;
@@ -115,6 +117,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 			player.motionY += force.y;
 			player.motionZ += force.z;
 		}
+		if(shockwaveDistance < 0) return;
 		
 		int duration = ((int)(amplitude * Math.min(1, (amplitude * amplitude)/(dist * dist))));
 		int swingTimer = duration<<1;
@@ -165,9 +168,19 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 		for(Cloudlet cloudlet : cloudlets) {
 			Vec3 vec = cloudlet.getInterpPos(partialTicks);
-			tessellateCloudlet(buf, vec.xCoord - cloud.initPosX, vec.yCoord - cloud.initPosY, vec.zCoord - cloud.initPosZ, cloudlet, partialTicks, false);
+			tessellateCloudlet(buf,0.35F,  vec.xCoord - cloud.initPosX, vec.yCoord - cloud.initPosY, vec.zCoord - cloud.initPosZ, cloudlet, partialTicks, false);
 		}
 		tess.draw();
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA,DestFactor.ONE);
+		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		for(Cloudlet cloudlet : cloudlets) {
+			if (cloudlet.type != EntityNukeTorex.TorexType.CONDENSATION) {
+				Vec3 vec = cloudlet.getInterpPos(partialTicks);
+				tessellateCloudlet(buf,0,vec.xCoord - cloud.initPosX,vec.yCoord - cloud.initPosY,vec.zCoord - cloud.initPosZ,cloudlet,partialTicks,true);
+			}
+		}
+		tess.draw(); // /hbmleaf torex statFac ~ ~ ~100 100 false
+		/*
 		GlStateManager.blendFunc(SourceFactor.SRC_COLOR,DestFactor.ONE);
 		buf.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 		for(Cloudlet cloudlet : cloudlets) {
@@ -176,7 +189,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 				tessellateCloudlet(buf,vec.xCoord - cloud.initPosX,vec.yCoord - cloud.initPosY,vec.zCoord - cloud.initPosZ,cloudlet,partialTicks,true);
 			}
 		}
-		tess.draw();
+		tess.draw();*/
 
 		GL11.glDepthMask(true);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
@@ -224,7 +237,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		GL11.glPopMatrix();
 	}
 
-	private void tessellateCloudlet(BufferBuilder buf, double posX, double posY, double posZ, Cloudlet cloud, float partialTicks, boolean additive) {
+	private void tessellateCloudlet(BufferBuilder buf, float minBrightness, double posX, double posY, double posZ, Cloudlet cloud, float partialTicks, boolean additive) {
 
 		float a = cloud.getAlpha();
 		float scale = cloud.getScale();
@@ -238,9 +251,9 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		float brightness = cloud.type == cloud.type.CONDENSATION ? 0.9F : 0.75F * cloud.colorMod;
 		Vec3 color = cloud.getInterpColor(partialTicks);
 		float r, g, b;
-		r =  Math.max(0.15F, (float)color.xCoord * brightness);
-		g =  Math.max(0.15F, (float)color.yCoord * brightness);
-		b =  Math.max(0.15F, (float)color.zCoord * brightness);
+		r =  Math.max(minBrightness, (float)color.xCoord * brightness);
+		g =  Math.max(minBrightness, (float)color.yCoord * brightness);
+		b =  Math.max(minBrightness, (float)color.zCoord * brightness);
 
 		int br = (int)Math.max(48, (Math.min((r+g+b) / 3D, 1) * 240));
 		r = Math.min(1F, r);
@@ -276,24 +289,38 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 
 	private void flashWrapper(EntityNukeTorex cloud, float interp, float flashDuration) {
 
-        if(cloud.ticksExisted < flashDuration) {
+        //if(cloud.ticksExisted < flashDuration) {
 
-    		GL11.glPushMatrix();
-    		//Function [0, 1] that determines the scale and intensity (inverse!) of the flash
-        	double intensity = (cloud.ticksExisted + interp) / flashDuration;
-        	GlStateManager.alphaFunc(GL11.GL_GREATER, 0.0F);
+		if (cloud.ticksExisted+interp > flashDuration*12/2) return;
+		float scale = (float)cloud.getScale(); // MY SUFFERING. LOOK AT THIS MESSY CODE SJGDAJGDS
 
-        	//Euler function to slow down the scale as it progresses
-        	//Makes it start fast and the fade-out is nice and smooth
-        	intensity = intensity * Math.pow(Math.E, -intensity) * 2.717391304D;
+		//Function [0, 1] that determines the scale and intensity (inverse!) of the flash
+		double intensity = (cloud.ticksExisted + interp) / flashDuration * 2;
+		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.0F);
+		GL11.glPushMatrix();
+		if (intensity < 1) {
+			LeafiaEase ease = new LeafiaEase(Ease.QUAD,Direction.O);
+			intensity = ease.get(intensity);
+			renderFlash(scale*(float)intensity,50,cloud.coreHeight,1);
+		} else {
+			//LeafiaEase ease = new LeafiaEase(Ease.QUAD,Direction.IO);
+			//double alpha = 1-ease.get((intensity-1)/5);
+			//GL11.glColor3d(intensity,intensity,intensity);
+			double size = Math.pow(Math.min(intensity,20),0.5);
+			renderFlash(scale*(float)size,50,cloud.coreHeight,Math.max(1-Math.pow((intensity-1)/8,0.5),0));
+		}
 
-        	renderFlash(50F * (float)flashDuration/(float)flashBaseDuration, intensity, cloud.coreHeight);
-            GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
-    		GL11.glPopMatrix();
-        }
+		//Euler function to slow down the scale as it progresses
+		//Makes it start fast and the fade-out is nice and smooth
+		//intensity = intensity * Math.pow(Math.E, -intensity) * 2.717391304D;
+
+		//renderFlash(scale*(float)intensity  /* *(float)flashDuration/(float)flashBaseDuration,*/ /*intensity*/,50, cloud.coreHeight);
+		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
+		GL11.glPopMatrix();
+        //}
 	}
 
-	private void renderFlash(float scale, double intensity, double height) {
+	private void renderFlash(float scale, double intensity, double height, double alpha) {
 
     	GL11.glScalef(0.2F, 0.2F, 0.2F);
     	GL11.glTranslated(0, height * 4, 0);
@@ -328,7 +355,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
             float vert2 = (random.nextFloat() * 2.0F + 1.0F + 1 * 2.0F) * (float)(intensity * scale);
 
             buf.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-            buf.pos(0D, 0D, 0D).color(1.0F, 1.0F, 1.0F, (float) inverse).endVertex();
+            buf.pos(0D, 0D, 0D).color(1.0F, 1.0F, 1.0F, (float)alpha/*(float) inverse*/).endVertex();
             buf.pos(-0.866D * vert2, vert1, -0.5D * vert2).color(1.0F, 1.0F, 1.0F, 0.0F).endVertex();
             buf.pos(0.866D * vert2, vert1, -0.5D * vert2).color(1.0F, 1.0F, 1.0F, 0.0F).endVertex();
             buf.pos(0.0D, vert1, 1.0D * vert2).color(1.0F, 1.0F, 1.0F, 0.0F).endVertex();

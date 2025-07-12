@@ -35,8 +35,8 @@ public class RadWaterBlock extends BlockFluidClassic {
 	
 	@Override
 	public boolean canDisplace(IBlockAccess world, BlockPos pos) {
-		if(world.getBlockState(pos).getMaterial().isLiquid())
-			return true;
+		//if(world.getBlockState(pos).getMaterial().isLiquid())
+		//	return true;
 		return super.canDisplace(world, pos);
 	}
 	

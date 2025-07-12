@@ -321,12 +321,12 @@ public class OreDictManager {
 		ND															.nugget(fragment_neodymium)								.ingot(Ingots.ingot_neodymium)		.dust(Powders.powder_neodymium)	.dustSmall(Powders.powder_neodymium_tiny)																										.ore(ore_depth_nether_neodymium)	.oreNether(ore_depth_nether_neodymium);
 		CE															.nugget(fragment_cerium)								.ingot(Ingots.ingot_cerium)		.dust(Powders.powder_cerium)	.dustSmall(Powders.powder_cerium_tiny);
 		BR																													.ingot(Ingots.ingot_bromine)		.dust(Powders.powder_bromine);
-		LI	.hydro(1F)																										.ingot(lithium)				.dust(Powders.powder_lithium)	.dustSmall(Powders.powder_lithium_tiny)	.block(block_lithium)							.crystal(Crystals.crystal_lithium)								.ore(ore_gneiss_lithium, ore_meteor_lithium);
+		LI	.hydro(1F)																										.ingot(Ingots.ingot_lithium)				.dust(Powders.powder_lithium)	.dustSmall(Powders.powder_lithium_tiny)	.block(block_lithium)							.crystal(Crystals.crystal_lithium)								.ore(ore_gneiss_lithium, ore_meteor_lithium);
 		P_WHITE	.hot(5)																										.ingot(Ingots.ingot_phosphorus)															.block(block_white_phosphorus);
 		P_RED	.hot(2)																																	.dust(Powders.powder_fire)										.block(block_red_phosphorus)					.crystal(Crystals.crystal_phosphorus)							.ore(ore_nether_fire);
 		S																																				.dust(sulfur)											.block(block_sulfur)							.crystal(Crystals.crystal_sulfur)								.ore(ore_sulfur, ore_nether_sulfur, basalt_sulfur, ore_meteor_sulfur);
 		KNO																																				.dust(niter)											.block(block_niter)								.crystal(Crystals.crystal_niter)									.ore(ore_niter);
-		F																																				.dust(fluorite)											.block(block_fluorite)							.crystal(Crystals.crystal_fluorite)								.ore(ore_fluorite, basalt_fluorite);
+		F																																				.dust(Ingots.fluorite)											.block(block_fluorite)							.crystal(Crystals.crystal_fluorite)								.ore(ore_fluorite, basalt_fluorite);
 		INFERNAL																																																.block(block_coal_infernal)	.gem(coal_infernal)															.ore(ore_nether_coal);
 		RAREEARTH																																		.dust(Powders.powder_desh_mix)																.gem(rare_earth_chunk).crystal(Crystals.crystal_rare)								.ore(ore_rare, ore_gneiss_rare);
 		NITANIUM																																		.dust(Powders.powder_nitan_mix)																																			.ore(ore_depth_nether_nitan);
@@ -484,8 +484,8 @@ public class OreDictManager {
 		OreDictionary.registerOre("dye", Powders.powder_lignite);
 		OreDictionary.registerOre("dyeLightGray", Powders.powder_titanium);
 		OreDictionary.registerOre("dye", Powders.powder_titanium);
-		OreDictionary.registerOre("dyeWhite", fluorite);
-		OreDictionary.registerOre("dye", fluorite);
+		OreDictionary.registerOre("dyeWhite", Ingots.fluorite);
+		OreDictionary.registerOre("dye", Ingots.fluorite);
 		OreDictionary.registerOre("dyeBlue", Powders.powder_lapis);
 		OreDictionary.registerOre("dye", Powders.powder_lapis);
 		OreDictionary.registerOre("dyeBlack", fromOne(oil_tar, EnumTarType.CRUDE));

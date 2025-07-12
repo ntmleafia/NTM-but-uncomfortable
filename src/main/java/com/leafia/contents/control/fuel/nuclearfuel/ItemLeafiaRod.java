@@ -17,6 +17,7 @@ import com.hbm.modules.ItemHazardModule;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.I18nUtil;
 import com.leafia.dev.items.LeafiaDynamicHazard;
+import com.llib.LeafiaLib;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
+import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -185,7 +187,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		}
 		return detonateRadius;
 	}
-
+	double lastY = 0;
 	/**
 	 * Do nuclear fissions
 	 * @param stack The fuel rod stack to cause fission reaction
@@ -321,6 +323,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				n = "tan(min("+temp+"/400,0.5)*PI)\n + "+flux+"/4 "+TextFormatting.DARK_RED+"(JUST NO)";
 				break;
 		}
+		lastY = y;
 		if (updateHeat) {
 			double decay = 0;
 			if(data == null) {
@@ -473,27 +476,33 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 			meltdown = data.getBoolean("melting");
 			decay = data.getDouble("decay");
 		}
-		list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getTranslationKey()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
-		if (newFuel != null) {
-			if (newFuel instanceof ItemLeafiaRod)
-				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + ((ItemLeafiaRod)newFuel).label);
-			else
-				list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getTranslationKey()+".name"));
+		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			list.add(TextFormatting.YELLOW + "Heat Function");
+			for (String s : graph)
+				list.add("  "+funcColor+s);
+		} else {
+			list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getTranslationKey()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
+			if (newFuel != null) {
+				if (newFuel instanceof ItemLeafiaRod)
+					list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + ((ItemLeafiaRod)newFuel).label);
+				else
+					list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getTranslationKey()+".name"));
+			}
+			if (life != 0) {
+				list.add(TextFormatting.DARK_GREEN + "  Life: About "+life+"°C");
+				list.add(TextFormatting.GOLD + "  Fission Product Decay Heat: +"+String.format("%01.3f",decay*20)+"°C/s");
+			}
+			if (splitWithAny)
+				list.add(TextFormatting.AQUA + "  Prefers all neutrons");
+			else if (splitWithFast)
+				list.add(TextFormatting.LIGHT_PURPLE + "  Prefers fast neutrons");
+			if (!splitIntoFast)
+				list.add(TextFormatting.AQUA + "  Moderated");
+			super.addInformation(stack,worldIn,list,flagIn);
+			list.add("");
+			list.add(TextFormatting.YELLOW + "Heat Function: "+item.HeatFunction(stack,false,0,0,0,0));
+			list.add(TextFormatting.GOLD + "Temperature: "+String.format("%01.1f",heat)+"°C");
 		}
-		if (life != 0) {
-			list.add(TextFormatting.DARK_GREEN + "  Life: About "+life+"°C");
-			list.add(TextFormatting.GOLD + "  Fission Product Decay Heat: +"+String.format("%01.3f",decay*20)+"°C/s");
-		}
-		if (splitWithAny)
-			list.add(TextFormatting.AQUA + "  Prefers all neutrons");
-		else if (splitWithFast)
-			list.add(TextFormatting.LIGHT_PURPLE + "  Prefers fast neutrons");
-		if (!splitIntoFast)
-			list.add(TextFormatting.AQUA + "  Moderated");
-		super.addInformation(stack,worldIn,list,flagIn);
-		list.add("");
-		list.add(TextFormatting.YELLOW + "Heat Function: "+item.HeatFunction(stack,false,0,0,0,0));
-		list.add(TextFormatting.GOLD + "Temperature: "+String.format("%01.1f",heat)+"°C");
 		if (meltingPoint != 0) {
 			list.add(TextFormatting.DARK_RED + "Melting Point: "+String.format("%01.1f",meltingPoint));
 			double percent = heat/meltingPoint;
@@ -570,7 +579,8 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		if (nextItem != null)
 			entity.replaceItemInInventory(itemSlot,nextItem);
 	}
-
+	protected String[] graph = new String[0];
+	protected String funcColor = "";
 	public ItemLeafiaRod(String s, double heatGenerated, double meltingPoint) {
 		super("leafia_rod_" + s.replace("-","").replace(" ","").toLowerCase());
 		this.label = s;
@@ -578,6 +588,18 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		this.functionId = s;
 		s = "leafia_rod_" + s;
 		fromResourceMap.put(s,this);
+
+		String fnc = HeatFunction(null,false,0,0,0,0);
+		if (!fnc.equals("0")) {
+			graph = LeafiaLib.drawGraph(45,4,1,0,3000,0,3000,(heat)->{HeatFunction(null,false,heat,0,0,0); return lastY;});
+			for (int i = fnc.length()-1; i >= 0; i--) {
+				String sub = fnc.substring(i,Math.min(i+2,fnc.length()));
+				if (sub.startsWith("§")) {
+					funcColor = sub;
+					break;
+				}
+			}
+		}
 
 		//this.setHasSubtypes(true);
 		this.setMaxStackSize(1);

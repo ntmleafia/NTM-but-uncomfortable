@@ -27,7 +27,7 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
 	protected RenderCloudFleija(RenderManager renderManager) {
 		super(renderManager);
 		blastModel = AdvancedModelLoader.loadModel(objTesterModelRL);
-    	blastTexture = new ResourceLocation(RefStrings.MODID, "textures/models/explosion/BlastFleija.png");
+    	blastTexture = new ResourceLocation(RefStrings.MODID, "textures/solid_emissive.png");//models/explosion/BlastFleija.png");
     	scale = 0;
 	}
 	LeafiaEase shrinkEase = new LeafiaEase(LeafiaEase.Ease.EXPO,LeafiaEase.Direction.I);
@@ -51,7 +51,8 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
         
         //bindTexture(blastTexture);
 		LeafiaGls._push();
-		LeafiaGls.disableTexture2D();
+		//LeafiaGls.disableTexture2D();
+		bindTexture(blastTexture); // Shader fix
 		LeafiaGls.enableBlend();
 		LeafiaGls.disableCull();
 		LeafiaGls.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

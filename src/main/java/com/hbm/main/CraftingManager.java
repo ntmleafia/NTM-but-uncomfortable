@@ -231,7 +231,7 @@ public class CraftingManager {
 
 
         addRecipeAuto(new ItemStack(Ingots.ingot_copper, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_copper));
-        addRecipeAuto(new ItemStack(ModItems.fluorite, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_fluorite));
+        addRecipeAuto(new ItemStack(Ingots.fluorite, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_fluorite));
         addRecipeAuto(new ItemStack(ModItems.niter, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_niter));
         addRecipeAuto(new ItemStack(Ingots.ingot_red_copper, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_red_copper));
         addRecipeAuto(new ItemStack(Ingots.ingot_steel, 9), "#", '#', Item.getItemFromBlock(ModBlocks.block_steel));
@@ -566,7 +566,7 @@ public class CraftingManager {
         addShapelessAuto(new ItemStack(RetroRods.rod_quad_water, 1), RetroRods.rod_quad_empty, Items.WATER_BUCKET, Items.WATER_BUCKET, Items.WATER_BUCKET, Items.WATER_BUCKET);
 
         addShapelessAuto(new ItemStack(Nuggies.nugget_lead, 6), RetroRods.rod_lead);
-        addShapelessAuto(new ItemStack(ModItems.lithium, 1), RetroRods.rod_lithium);
+        addShapelessAuto(new ItemStack(Ingots.ingot_lithium, 1), RetroRods.rod_lithium);
         addShapelessAuto(new ItemStack(Nuggies.nugget_cobalt, 6), RetroRods.rod_cobalt);
         addShapelessAuto(new ItemStack(Nuggies.nugget_australium, 6), RetroRods.rod_australium);
         addShapelessAuto(new ItemStack(Nuggies.nugget_weidanium, 6), RetroRods.rod_weidanium);
@@ -579,13 +579,13 @@ public class CraftingManager {
         addShapelessAuto(new ItemStack(ModItems.egg_balefire_shard, 1), RetroRods.rod_balefire_blazing);
 
         addShapelessAuto(new ItemStack(Nuggies.nugget_lead, 12), RetroRods.rod_dual_lead);
-        addShapelessAuto(new ItemStack(ModItems.lithium, 2), RetroRods.rod_dual_lithium);
+        addShapelessAuto(new ItemStack(Ingots.ingot_lithium, 2), RetroRods.rod_dual_lithium);
         addShapelessAuto(new ItemStack(Nuggies.nugget_cobalt, 12), RetroRods.rod_dual_cobalt);
         addShapelessAuto(new ItemStack(ModItems.egg_balefire_shard, 2), RetroRods.rod_dual_balefire);
         addShapelessAuto(new ItemStack(ModItems.egg_balefire_shard, 2), RetroRods.rod_dual_balefire_blazing);
 
         addShapelessAuto(new ItemStack(Nuggies.nugget_lead, 24), RetroRods.rod_quad_lead);
-        addShapelessAuto(new ItemStack(ModItems.lithium, 4), RetroRods.rod_quad_lithium);
+        addShapelessAuto(new ItemStack(Ingots.ingot_lithium, 4), RetroRods.rod_quad_lithium);
         addShapelessAuto(new ItemStack(Nuggies.nugget_cobalt, 24), RetroRods.rod_quad_cobalt);
         addShapelessAuto(new ItemStack(ModItems.egg_balefire_shard, 4), RetroRods.rod_quad_balefire);
         addShapelessAuto(new ItemStack(ModItems.egg_balefire_shard, 4), RetroRods.rod_quad_balefire_blazing);
@@ -1970,7 +1970,7 @@ public class CraftingManager {
         addRecipeAuto(new ItemStack(Ingots.ingot_magnetized_tungsten, 1), "###", "###", "###", '#', ModItems.wire_magnetized_tungsten);
 
         addRecipeAuto(new ItemStack(Ingots.ingot_mox_fuel, 9), "#", '#', ModBlocks.block_mox_fuel);
-        addRecipeAuto(new ItemStack(ModItems.lithium, 9), "#", '#', LI.block());
+        addRecipeAuto(new ItemStack(Ingots.ingot_lithium, 9), "#", '#', LI.block());
         addRecipeAuto(new ItemStack(Ingots.ingot_phosphorus, 9), "#", '#', P_WHITE.block());
         addRecipeAuto(new ItemStack(Powders.powder_fire, 9), "#", '#', P_RED.block());
         addRecipeAuto(new ItemStack(ModItems.plate_polymer, 9), "#", '#', ModBlocks.block_insulator);
@@ -2852,7 +2852,7 @@ public class CraftingManager {
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_tungsten), new ItemStack(Ingots.ingot_tungsten, 3), 12.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_aluminium), new ItemStack(Ingots.ingot_aluminium, 3), 5.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_lead), new ItemStack(Ingots.ingot_lead, 3), 6.0F);
-        GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_lithium), new ItemStack(ModItems.lithium), 20.0F);
+        GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_lithium), new ItemStack(Ingots.ingot_lithium), 20.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_meteor_starmetal), new ItemStack(Ingots.ingot_starmetal), 50.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_cobalt), new ItemStack(Ingots.ingot_cobalt), 2.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_cobalt), new ItemStack(Ingots.ingot_cobalt), 2.0F);
@@ -2863,7 +2863,7 @@ public class CraftingManager {
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_uranium), new ItemStack(Ingots.ingot_uranium), 12.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_uranium_scorched), new ItemStack(Ingots.ingot_uranium), 12.0F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_copper), new ItemStack(Ingots.ingot_copper), 5F);
-        GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_lithium), new ItemStack(ModItems.lithium), 10F);
+        GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_lithium), new ItemStack(Ingots.ingot_lithium), 10F);
         GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gneiss_schrabidium), new ItemStack(Ingots.ingot_schrabidium), 256.0F);
 
         GameRegistry.addSmelting(Armory.casing_357, new ItemStack(Ingots.ingot_copper), 0.1F);
@@ -2905,7 +2905,7 @@ public class CraftingManager {
         GameRegistry.addSmelting(Powders.powder_magnetized_tungsten, new ItemStack(Ingots.ingot_magnetized_tungsten), 1.0F);
         GameRegistry.addSmelting(Powders.powder_red_copper, new ItemStack(Ingots.ingot_red_copper), 1.0F);
         GameRegistry.addSmelting(Powders.powder_steel, new ItemStack(Ingots.ingot_steel), 1.0F);
-        GameRegistry.addSmelting(Powders.powder_lithium, new ItemStack(ModItems.lithium), 1.0F);
+        GameRegistry.addSmelting(Powders.powder_lithium, new ItemStack(Ingots.ingot_lithium), 1.0F);
         GameRegistry.addSmelting(Powders.powder_dura_steel, new ItemStack(Ingots.ingot_dura_steel), 1.0F);
         GameRegistry.addSmelting(Powders.powder_polymer, new ItemStack(Ingots.ingot_polymer), 1.0F);
         GameRegistry.addSmelting(Powders.powder_bakelite, new ItemStack(Ingots.ingot_bakelite), 1.0F);
@@ -2980,13 +2980,13 @@ public class CraftingManager {
         GameRegistry.addSmelting(Crystals.crystal_copper, new ItemStack(Ingots.ingot_copper, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_tungsten, new ItemStack(Ingots.ingot_tungsten, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_aluminium, new ItemStack(Ingots.ingot_aluminium, 2), 2.0F);
-        GameRegistry.addSmelting(Crystals.crystal_fluorite, new ItemStack(ModItems.fluorite, 6), 2.0F);
+        GameRegistry.addSmelting(Crystals.crystal_fluorite, new ItemStack(Ingots.fluorite, 6), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_beryllium, new ItemStack(Ingots.ingot_beryllium, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_lead, new ItemStack(Ingots.ingot_lead, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_schrabidium, new ItemStack(Ingots.ingot_schrabidium, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_rare, new ItemStack(Powders.powder_desh_mix, 1), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_phosphorus, new ItemStack(Powders.powder_fire, 6), 2.0F);
-        GameRegistry.addSmelting(Crystals.crystal_lithium, new ItemStack(ModItems.lithium, 2), 2.0F);
+        GameRegistry.addSmelting(Crystals.crystal_lithium, new ItemStack(Ingots.ingot_lithium, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_starmetal, new ItemStack(Ingots.ingot_starmetal, 2), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_trixite, new ItemStack(Ingots.ingot_plutonium, 4), 2.0F);
         GameRegistry.addSmelting(Crystals.crystal_cinnebar, new ItemStack(ModItems.cinnebar, 2), 2.0F);

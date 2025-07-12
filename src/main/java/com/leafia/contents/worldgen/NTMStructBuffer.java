@@ -173,7 +173,7 @@ public class NTMStructBuffer {
 				}
 			}
 			if (!property.ignore) {
-				world.setBlockState(pos,property.state);
+				world.setBlockState(pos,property.state,0b00010);
 				if (property.entity != null)
 					tebuffer.put(pos,paletteTEs[property.entity]);
 			}

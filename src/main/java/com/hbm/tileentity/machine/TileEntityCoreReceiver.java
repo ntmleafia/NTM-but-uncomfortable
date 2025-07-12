@@ -10,12 +10,14 @@ import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity.DebrisType;
+import com.leafia.dev.container_utility.LeafiaPacket;
 import com.llib.LeafiaLib.NumScale;
 import com.llib.math.FiaMatrix;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -46,6 +48,8 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     //Because it get cleared after the te updates, it needs to be saved here for the container
     public long syncJoules;
     public FluidTank tank;
+
+    public double level = 1;
 
     public TileEntityCore core = null;
 
@@ -242,6 +246,31 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     @SideOnly(Side.CLIENT)
     public double getMaxRenderDistanceSquared() {
         return 65536.0D;
+    }
+
+    public void sendToPlayer(EntityPlayer player) {
+        LeafiaPacket._start(this)
+                .__write(0,syncJoules)
+                .__write(1,power)
+                .__write(2,level)
+                .__sendToClient(player);
+    }
+
+    @Override
+    public void onReceivePacketLocal(byte key,Object value) {
+        super.onReceivePacketLocal(key,value);
+        switch(key) {
+            case 0: joules = (long)value;
+            case 1: power = (long)value;
+            case 2: level = (double)value;
+        }
+    }
+
+    @Override
+    public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {
+        super.onReceivePacketServer(key,value,plr);
+        if (key == 0)
+            level = (double)value;
     }
 
     @Override

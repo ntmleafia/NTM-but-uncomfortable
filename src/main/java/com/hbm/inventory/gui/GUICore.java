@@ -91,7 +91,7 @@ public class GUICore extends GuiInfoContainer {
 		LeafiaGls.inLocalSpace(()->{
 			LeafiaGls.translate(guiLeft+165,guiTop+102,0);
 			LeafiaGls.scale(2/5f);
-			LeafiaGls.rotate((float)Math.min(core.potentialRelease,core.client_maxDial)*360,0,0,1);
+			LeafiaGls.rotate((float)Math.min(core.potentialRelease-1,core.client_maxDial)*360,0,0,1);
 			LeafiaGls.pushMatrix();
 			LeafiaGls.translate(-2.5,-9.5,0);
 			drawTexturedModalRect(0,0,176,0,5,12);
