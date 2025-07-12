@@ -1,5 +1,6 @@
 package com.hbm.render.tileentity;
 
+import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderSparks;
 import com.hbm.render.amlfrom1710.Vec3;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
@@ -118,6 +120,7 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 
         GlStateManager.enableCull();
         GlStateManager.disableLighting();
+        bindTexture(new ResourceLocation(RefStrings.MODID, "textures/solid_emissive.png")); // shader fix
         GlStateManager.disableTexture2D();
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
 

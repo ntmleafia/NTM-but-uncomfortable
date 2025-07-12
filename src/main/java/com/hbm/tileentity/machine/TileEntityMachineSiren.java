@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -50,8 +51,10 @@ public class TileEntityMachineSiren extends TileEntity implements IAudioReceiver
 	
 	private String customName;
 	private List<TileEntityMachineSirenSounder> sounders = new ArrayList<>();
-	
+	final boolean computronics;
+
 	public TileEntityMachineSiren() {
+		computronics = Loader.isModLoaded("computronics");
 		for (int i = 0; i < 4; i++)
 			sounders.add(new TileEntityMachineSirenSounder(this,i));
 		inventory = new ItemStackHandler(1){
@@ -104,7 +107,7 @@ public class TileEntityMachineSiren extends TileEntity implements IAudioReceiver
 			boolean spk = false;
 			for (EnumFacing face : EnumFacing.VALUES) {
 				TileEntity ate = world.getTileEntity(pos.offset(face));
-				if (ate != null && ate.hasCapability(AUDIO_RECEIVER_CAPABILITY,face.getOpposite())) {
+				if (computronics && ate != null && ate.hasCapability(AUDIO_RECEIVER_CAPABILITY,face.getOpposite())) {
 					spk = true;
 					InventoryHelper.dropInventoryItems(world,pos,this);
 					break;
