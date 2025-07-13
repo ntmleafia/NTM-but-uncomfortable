@@ -222,19 +222,21 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 				if (this.ticksExisted < 120 * s) {
 					world.setLastLightningBolt(2);
 				}
-
+				double tickOffset = getScale()*15*3.65;
+				double ticksExistedO = ticksExisted-tickOffset;
+				int animTickIO = animTickI-(int)tickOffset;
 				// spawn shock clouds
-				if (this.ticksExisted * animationSpeedShk < 150) {
+				if (this.ticksExisted * animationSpeedShk < 150+tickOffset*animationSpeedShk && this.ticksExisted > tickOffset) {
 
-					int cloudCount = Math.min((int) (this.ticksExisted * animationSpeedShk) * 2,300);
-					int shockLife = Math.max(400 - (int) (this.ticksExisted * animationSpeedShk) * 20,50);
+					int cloudCount = Math.min((int) (ticksExistedO * animationSpeedShk) * 2,300);
+					int shockLife = Math.max(400 - (int) (ticksExistedO * animationSpeedShk) * 20,50);
 
 					for (int i = 0; i < cloudCount; i++) {
-						Vec3 vec = Vec3.createVectorHelper((this.ticksExisted + rand.nextDouble() * 2) * 1.5 * animationSpeedShk /*make it a little faster*/,0,0);
+						Vec3 vec = Vec3.createVectorHelper((ticksExistedO + rand.nextDouble() * 2) * 1.5 * animationSpeedShk /*make it a little faster*/,0,0);
 						float rot = (float) (Math.PI * 2 * rand.nextDouble());
 						vec.rotateAroundY(rot);
 						this.cloudlets.add(new Cloudlet(vec.xCoord + initPosX,world.getHeight((int) (vec.xCoord + initPosX) + 1,(int) (vec.zCoord + initPosZ)),vec.zCoord + initPosZ,rot,0,shockLife,TorexType.SHOCK)
-								.setScale((float) s * 5F * 2,(float) s * 2F * 2).setMotion(MathHelper.clamp(0.25 * (int) (this.ticksExisted * animationSpeedShk) - 5,0,1)));
+								.setScale((float) s * 5F * 2,(float) s * 2F * 2).setMotion(MathHelper.clamp(0.25 * (int) (ticksExistedO * animationSpeedShk) - 5,0,1)));
 					}
 				}
 
@@ -248,12 +250,12 @@ public class EntityNukeTorex extends Entity implements IConstantRenderer {
 					}
 				}
 
-				if (this.humidity > 0 && animTick < 220) {
+				if (this.humidity > 0 && animTick < 220+tickOffset && animTick > tickOffset) {
 					// spawn lower condensation clouds
-					spawnCondensationClouds(animTickI,this.humidity,firstCondenseHeight,80,4,s,cs);
+					spawnCondensationClouds(animTickIO,this.humidity,firstCondenseHeight,80,4,s,cs);
 
 					// spawn upper condensation clouds
-					spawnCondensationClouds(animTickI,this.humidity,secondCondenseHeight,80,2,s,cs);
+					spawnCondensationClouds(animTickIO,this.humidity,secondCondenseHeight,80,2,s,cs);
 				}
 
 				cloudlets.removeIf(x -> x.isDead);

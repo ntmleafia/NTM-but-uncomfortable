@@ -40,7 +40,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 	private static final ResourceLocation cloudlet = new ResourceLocation(RefStrings.MODID + ":textures/particle/particle_base.png");
 	private static final ResourceLocation flare = new ResourceLocation(RefStrings.MODID + ":textures/particle/flare.png");
 
-	public static final int flashBaseDuration = 30;
+	public static final int flashBaseDuration = 15;
 	public static final int flareBaseDuration = 100;
 
 	protected RenderTorex(RenderManager renderManager){
@@ -90,7 +90,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		EntityPlayer player = MainRegistry.proxy.me();
 
 		double dist = player.getDistance(cloud);
-		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk;
+		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk + cloud.getScale()*flashBaseDuration*7*cloud.animationSpeedShk;
 		if(shockwaveDistance > 10) return;
 
 		if (!cloud.reachedPlayer && cloud.sound) {
