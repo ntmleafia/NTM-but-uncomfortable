@@ -90,7 +90,7 @@ public class RenderTorex extends Render<EntityNukeTorex> {
 		EntityPlayer player = MainRegistry.proxy.me();
 
 		double dist = player.getDistance(cloud);
-		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk + cloud.getScale()*flashBaseDuration*7*cloud.animationSpeedShk;
+		double shockwaveDistance = dist - cloud.ticksExisted * 1.5 * cloud.animationSpeedShk + cloud.getScale()*flashBaseDuration*6*cloud.animationSpeedShk;
 		if(shockwaveDistance > 10) return;
 
 		if (!cloud.reachedPlayer && cloud.sound) {

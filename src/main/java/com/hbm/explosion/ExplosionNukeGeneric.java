@@ -10,6 +10,7 @@ import com.hbm.entity.effect.EntityBlackHole;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.main.MainRegistry;
+import com.hbm.tileentity.network.energy.TileEntityCableBaseNT;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -477,8 +478,14 @@ public class ExplosionNukeGeneric {
 			}
 			Block b = world.getBlockState(pos).getBlock();
 			TileEntity te = world.getTileEntity(pos);
-			
-			if (te != null && te instanceof IEnergyUser) {
+			if (te instanceof TileEntityCableBaseNT) {
+				if(random.nextInt(5) < 4) {
+					if (b.isFullCube(world.getBlockState(pos)))
+						world.setBlockState(pos,ModBlocks.block_electrical_scrap.getDefaultState());
+					else
+						world.destroyBlock(pos,true);
+				}
+			} else if (te != null && te instanceof IEnergyUser) {
 				
 				((IEnergyUser)te).setPower(0);
 				
