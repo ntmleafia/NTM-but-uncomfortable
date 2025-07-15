@@ -143,7 +143,7 @@ public class GUICoreCreativeEmitter extends GuiInfoContainer {
 		drawTexturedModalRect(guiLeft + 49, guiTop + 73 - i, 176, 52 - i, 16, i);
 
 		if(emitter.isOn && emitter.power > 500000)
-			drawTexturedModalRect(guiLeft + 149, guiTop + 33, 176, 87, 80, 3);
+			drawTexturedModalRect(guiLeft + 149, guiTop + 33, 176, 53, 80, 3);
 
 		if(saveButtonCoolDown > 0){
             drawTexturedModalRect(guiLeft + 124, guiTop + 56, 192, 18, 18, 18);

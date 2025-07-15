@@ -90,6 +90,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public double containedEnergy = 0; // 1 = 1MSPK
 	public double expellingEnergy = 0;
 	public double potentialRelease = 0;
+	public double gainedEnergy = 0;
 
 	public double internalEnergy = 0;
 	public double[] expelTicks = new double[20];
@@ -311,12 +312,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						double rdc = 1-energyRatio;
 						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
 
-						tgtTemp -= Math.max(0,Math.pow(temperature/meltingPoint,4)*temperature*getStabilizationDivAlt());
 
-						tgtTemp = Math.max(tgtTemp,0);
-						double deltaTemp = tgtTemp-temperature;
-						temperature += Math.pow(Math.abs(deltaTemp),0.5)*Math.signum(deltaTemp);
-						temperature = Math.max(temperature,0);
 
 						Tracker._tracePosition(this,pos.down(3),"containedEnergy: ",containedEnergy);
 						Tracker._tracePosition(this,pos.down(4),"deltaEnergy: ",deltaEnergy);
@@ -324,6 +320,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						double absorbDiv = 0.001;
 						for (TileEntityCoreReceiver absorber : absorbers)
 							absorbDiv += absorber.level;
+
+						gainedEnergy = containedEnergy;
 
 						double absorbed = Math.pow(containedEnergy,0.75+energyRatio*0.25)/20*absorbDiv;
 						for (TileEntityCoreReceiver absorber : absorbers) {
@@ -334,7 +332,18 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						expellingSpk = absorbed;
 						expelTicks[Math.floorMod(ticks, 20)] = expellingSpk;
 						containedEnergy = Math.max(containedEnergy,0);
-						containedEnergy = Math.pow(containedEnergy,0.99);
+						double targetEnergy = Math.pow(containedEnergy,0.99);
+						double deltaSubEnergy = containedEnergy-targetEnergy;
+						Tracker._tracePosition(this,pos.down(5),"deltaSubEnergy: ",deltaSubEnergy);
+						containedEnergy -= deltaSubEnergy*Math.pow(Math.max(0,1-energyRatio),0.25);
+
+						containedEnergy = Math.min(containedEnergy,failsafeLevel);
+
+						tgtTemp -= Math.max(0,Math.pow(temperature/meltingPoint,4)*temperature*getStabilizationDivAlt())*(0.5+(Math.pow(Math.abs(rdc),0.01)*Math.signum(rdc))/2);
+						tgtTemp = Math.min(Math.max(tgtTemp,0),5000000);
+						double deltaTemp = tgtTemp-temperature;
+						temperature += Math.pow(Math.abs(deltaTemp),0.5)*Math.signum(deltaTemp);
+						temperature = Math.max(temperature,0);
 						/*
 
 						for (TileEntityCoreReceiver absorber : absorbers) {
@@ -532,7 +541,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					.__write(packetKeys.TEMP.key, temperature)
 					.__write(packetKeys.STABILIZATION.key, stabilization)
-					.__write(packetKeys.CONTAINED.key, containedEnergy + bonus * bonus)
+					.__write(packetKeys.CONTAINED.key, gainedEnergy + bonus * bonus)
 					.__write(packetKeys.EXPELLING.key, expellingEnergy)
 					.__write(packetKeys.POTENTIAL.key, potentialRelease)
 
