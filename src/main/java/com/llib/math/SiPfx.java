@@ -43,4 +43,16 @@ public class SiPfx { // Yeah i know SI is supposed to be both uppercase. SHUT UP
 		byte exponent = getExponent(x);
 		return callback.apply(scale(x,exponent),(exponent <= 0 ? " " : " "+(full ? siPrefixFull : siPrefix)[exponent-1]));
 	}
+	public static double parse(String s) throws NumberFormatException {
+		try {
+			return Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			String suffix = s.substring(s.length()-1);
+			for (int z = 0; z < siPrefix.length; z++) {
+				if (suffix.equals(siPrefix[z]))
+					return Double.parseDouble(s.substring(0,s.length()-1).trim())*Math.pow(1000,z+1);
+			}
+			throw new RuntimeException(e);
+		}
+	}
 }

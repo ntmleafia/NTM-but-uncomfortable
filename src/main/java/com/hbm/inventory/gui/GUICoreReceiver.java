@@ -35,7 +35,7 @@ public class GUICoreReceiver extends GuiInfoContainer {
 		this.field.setDisabledTextColour(0x499500);
 		this.field.setEnableBackgroundDrawing(false);
 		this.field.setMaxStringLength(3);
-		this.field.setText(String.valueOf((int)(receiver.level*100)));
+		this.field.setText(String.valueOf(receiver.level*100));
 	}
 
 	public GUICoreReceiver(EntityPlayer invPlayer,TileEntityCoreReceiver tedf) {
@@ -62,10 +62,12 @@ public class GUICoreReceiver extends GuiInfoContainer {
 		if (guiLeft+50 < x && guiLeft+50+18 > x && guiTop+65 < y && guiTop+65+18 > y && i == 0) {
 			if (saveButtonCooldown <= 0) {
 				saveButtonCooldown = 20;
-				double level = MathHelper.clamp(Integer.parseInt(field.getText())/100d,0,1);
-				field.setText(String.valueOf((int)(level*100)));
-				LeafiaPacket._start(receiver).__write(0,level).__sendToServer();
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+				try {
+					double level = MathHelper.clamp(Double.parseDouble(field.getText()) / 100d,0,1);
+					field.setText(String.valueOf(level));
+					LeafiaPacket._start(receiver).__write(0,level).__sendToServer();
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK,1.0F));
+				} catch (NumberFormatException ignored) {}
 			}
 		}
 	}

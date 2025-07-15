@@ -22,6 +22,9 @@ import com.hbm.tileentity.machine.rbmk.*;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.turret.*;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
@@ -449,6 +452,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_dfc_emitter:
 				if(entity instanceof TileEntityCoreEmitter) {
 					return new ContainerCoreEmitter(player, (TileEntityCoreEmitter) entity);
+				}
+				return null;
+			case ModBlocks.guiID_dfc_cemitter:
+				if(entity instanceof TileEntityCoreCreativeEmitter) {
+					return new ContainerCoreCreativeEmitter(player, (TileEntityCoreCreativeEmitter) entity);
 				}
 				return null;
 			case ModBlocks.guiID_dfc_receiver:
@@ -1070,6 +1078,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_dfc_emitter:
 				if(entity instanceof TileEntityCoreEmitter) {
 					return new GUICoreEmitter(player, (TileEntityCoreEmitter) entity);
+				}
+				return null;
+			case ModBlocks.guiID_dfc_cemitter:
+				if(entity instanceof TileEntityCoreCreativeEmitter) {
+					return new GUICoreCreativeEmitter(player, (TileEntityCoreCreativeEmitter) entity);
 				}
 				return null;
 			case ModBlocks.guiID_dfc_receiver:

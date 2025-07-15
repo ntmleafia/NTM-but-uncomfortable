@@ -92,7 +92,7 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 
             if (te instanceof TileEntityCore) {
                 //out = Math.max(0, ((TileEntityCore)te).burn(out));
-                if (!world.isRemote) ((TileEntityCore) te).incomingSpk += out / 100d;
+                if (!world.isRemote) ((TileEntityCore) te).incomingSpk += out / 1000_000d;
                 //continue;
                 //break;
                 result.hitVec = new Vec3d(te.getPos()); // align to the center

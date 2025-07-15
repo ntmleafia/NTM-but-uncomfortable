@@ -87,11 +87,11 @@ public class GUICore extends GuiInfoContainer {
 		drawTexturedModalRect(guiLeft + 84, guiTop + 98, 0, 216,
 				(int)MathHelper.clampedLerp(0,70,core.containedEnergy/1_000_000), 4); // 1MSPK ~ 1PSPK (= 5EHE)
 		drawTexturedModalRect(guiLeft + 84, guiTop + 102, 0, 220,
-				(int)MathHelper.clampedLerp(0,70,core.expellingEnergy/(100000_000/3d)), 4);
+				(int)MathHelper.clampedLerp(0,70,core.expellingEnergy/(1_000_000)), 4);
 		LeafiaGls.inLocalSpace(()->{
 			LeafiaGls.translate(guiLeft+165,guiTop+102,0);
 			LeafiaGls.scale(2/5f);
-			LeafiaGls.rotate((float)Math.min(core.potentialRelease-1,core.client_maxDial)*360,0,0,1);
+			LeafiaGls.rotate((float)Math.min((core.potentialRelease-1)/9,core.client_maxDial)*360,0,0,1);
 			LeafiaGls.pushMatrix();
 			LeafiaGls.translate(-2.5,-9.5,0);
 			drawTexturedModalRect(0,0,176,0,5,12);

@@ -9,6 +9,7 @@ import com.hbm.tileentity.machine.TileEntityCoreInjector;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
@@ -56,6 +57,8 @@ public class CoreComponent extends BlockContainer {
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         if (this == ModBlocks.dfc_emitter)
             return new TileEntityCoreEmitter();
+        if (this == ModBlocks.dfc_cemitter)
+            return new TileEntityCoreCreativeEmitter();
         if (this == ModBlocks.dfc_receiver)
             return new TileEntityCoreReceiver();
         if (this == ModBlocks.dfc_injector)
@@ -113,6 +116,8 @@ public class CoreComponent extends BlockContainer {
 
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_stabilizer, world, pos.getX(), pos.getY(), pos.getZ());
 
+            if (this == ModBlocks.dfc_cemitter)
+                player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_cemitter, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
 
         } else {

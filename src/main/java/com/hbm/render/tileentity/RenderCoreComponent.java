@@ -1,6 +1,7 @@
 package com.hbm.render.tileentity;
 
 import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderHelper;
 import com.hbm.render.amlfrom1710.IModelCustom;
@@ -14,6 +15,7 @@ import com.hbm.tileentity.machine.TileEntityCoreInjector;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -47,11 +49,16 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
         return component > 0.15;
     }
 
+    ResourceLocation dfc_cemitter_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/core_cemitter.png");
+
     @Override
     public void render(TileEntityMachineBase tileEntity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         if (!(tileEntity instanceof DFCBaseTE)) return;
         IModelCustom mdl;
-        if (tileEntity instanceof TileEntityCoreEmitter) {
+        if (tileEntity instanceof TileEntityCoreCreativeEmitter) {
+            bindTexture(dfc_cemitter_tex);
+            mdl = ResourceManager.dfc_emitter;
+        } else if (tileEntity instanceof TileEntityCoreEmitter) {
             bindTexture(ResourceManager.dfc_emitter_tex);
             mdl = ResourceManager.dfc_emitter;
         } else if (tileEntity instanceof TileEntityCoreReceiver) {
@@ -139,9 +146,15 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
                 range = new Vec3d(te.getPos()).add(0.5, 0.5, 0.5).distanceTo(result.hitVec);
                 if (((TileEntityCoreEmitter) tileEntity).isOn) {
                     float width = (float) Math.max(1, Math.log10(((TileEntityCoreEmitter) tileEntity).prev) - 6) / 8F;
-                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.STRAIGHT, EnumBeamType.SOLID, 0x401500, 0x7F7F7F, 0, 1, 0F, 2, width);
-                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.RANDOM, EnumBeamType.SOLID, 0x401500, 0x7F7F7F, (int) tileEntity.getWorld().getTotalWorldTime() % 1000, (int) (0.3F * range / width), width * 0.75F, 2, width * 0.5F);
-                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.RANDOM, EnumBeamType.SOLID, 0x5B1D00, 0x7F7F7F, (int) tileEntity.getWorld().getTotalWorldTime() % 1000 + 1, (int) (0.3F * range / width), width * 0.75F, 2, width * 0.5F);
+                    int colorA = 0x401500;
+                    int colorB = 0x5B1D00;
+                    if (tileEntity instanceof TileEntityCoreCreativeEmitter) {
+                        colorA = 0x281332;
+                        colorB = 0x110165;
+                    }
+                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.STRAIGHT, EnumBeamType.SOLID, colorA, 0x7F7F7F, 0, 1, 0F, 2, width);
+                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.RANDOM, EnumBeamType.SOLID, colorA, 0x7F7F7F, (int) tileEntity.getWorld().getTotalWorldTime() % 1000, (int) (0.3F * range / width), width * 0.75F, 2, width * 0.5F);
+                    BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.RANDOM, EnumBeamType.SOLID, colorB, 0x7F7F7F, (int) tileEntity.getWorld().getTotalWorldTime() % 1000 + 1, (int) (0.3F * range / width), width * 0.75F, 2, width * 0.5F);
                 }
             }
         }
@@ -163,7 +176,7 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
         if (tileEntity instanceof TileEntityCoreReceiver) {
             TileEntityCoreReceiver absorber = (TileEntityCoreReceiver) tileEntity;
             if (absorber.core != null) {
-                double mspk = absorber.core.expellingSpk * 20 / absorber.core.absorbers.size();// /10;
+                double mspk = absorber.core.expellingSpk * 20 / absorber.core.absorbers.size() * absorber.level;// /10;
                 mspk *= (getWorld().rand.nextDouble() * 99 + 1); // What the fuck why is it not
                 mspk = Math.min(100000, mspk);
                 int distance = (int) Math.round(Math.sqrt(absorber.getPos().distanceSq(absorber.core.getPos())));
@@ -177,7 +190,7 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
                                 0x5B1D00, 0x7F7F7F,
                                 (int) Math.floorMod(absorber.getWorld().getTotalWorldTime() * 3 + (int) (partialTicks / 7) + i + 33, 1500),
                                 distance * (i + 1),
-                                0.2F + (float) (Math.pow(mspk / 200, 0.75) - 1) * 0.05F,
+                                0.2F + (float) (Math.pow(mspk / 1000, 0.75) - 1) * 0.025F,
                                 3,
                                 (mspk < 100) ? 0.1F : 0.25F
                         );

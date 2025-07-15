@@ -283,8 +283,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					{
 						potentialRelease = 1;
 						if (temperature >= 100) {
-							double randRange = Math.pow(tempRatio,0.3)*10;
-							potentialRelease += world.rand.nextDouble()*randRange/getStabilizationDivAlt();
+							double randRange = Math.pow(tempRatio,0.65)*10;
+							potentialRelease += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();
 						}
 					}
 					{ // i wanted to redo everything this sucks ASS
@@ -298,26 +298,43 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(3),"potAdd: "+potAdd,"potSub: "+potSub,"","potMul:"+potMul,"Total: "+potFinal);
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
-						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666) + 1, 0.666) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
-						containedEnergy += deltaEnergy*boost*fill0*fill1;
+						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/1) + 1, 0.666/1) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
+						containedEnergy += (deltaEnergy*corePower+(incomingSpk-deltaEnergy)*0.666)*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/10,0.75)*potentialRelease*boost*fill0*fill1;
-						temperature = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,0.75)+0.1));
+						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialRelease*boost*fill0*fill1;
+						double tgtTemp = temperature;
+						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
+
+						//temperature = Math.pow(temperature,0.9);
+						tgtTemp += Math.pow(deltaEnergy*10,2/(1+stabilization))*(1-tempRatio/2);//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
+						double rdc = 1-energyRatio;
+						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
+
+						tgtTemp -= Math.max(0,Math.pow(temperature/meltingPoint,4)*temperature*getStabilizationDivAlt());
+
+						tgtTemp = Math.max(tgtTemp,0);
+						double deltaTemp = tgtTemp-temperature;
+						temperature += Math.pow(Math.abs(deltaTemp),0.5)*Math.signum(deltaTemp);
+						temperature = Math.max(temperature,0);
 
 						Tracker._tracePosition(this,pos.down(3),"containedEnergy: ",containedEnergy);
 						Tracker._tracePosition(this,pos.down(4),"deltaEnergy: ",deltaEnergy);
 
-						double absorbed = Math.pow(containedEnergy,1)/20;
 						double absorbDiv = 0.001;
 						for (TileEntityCoreReceiver absorber : absorbers)
 							absorbDiv += absorber.level;
 
+						double absorbed = Math.pow(containedEnergy,0.75+energyRatio*0.25)/20*absorbDiv;
 						for (TileEntityCoreReceiver absorber : absorbers) {
 							long absorb = (long)(absorbed/absorbDiv*absorber.level*1000_000);
-							containedEnergy -= absorb/1000_0000d;
+							containedEnergy -= absorb/1000_000d;
 							absorber.joules += absorb + (long)(catalystPower*Math.pow(tempRatio,0.1)/absorbDiv*absorber.level);
 						}
+						expellingSpk = absorbed;
+						expelTicks[Math.floorMod(ticks, 20)] = expellingSpk;
+						containedEnergy = Math.max(containedEnergy,0);
+						containedEnergy = Math.pow(containedEnergy,0.99);
 						/*
 
 						for (TileEntityCoreReceiver absorber : absorbers) {

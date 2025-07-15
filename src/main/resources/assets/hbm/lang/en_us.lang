@@ -4396,6 +4396,7 @@ tile.det_miner.name=Mining Charge
 tile.det_n2.name=N² Charge
 tile.det_nuke.name=Nuclear Charge
 tile.dfc_core.name=DFC Core Chamber
+tile.dfc_cemitter.name=Creative DFC Booster
 tile.dfc_emitter.name=DFC Booster
 tile.dfc_injector.name=DFC Fuel Injector
 tile.dfc_receiver.name=DFC Absorber

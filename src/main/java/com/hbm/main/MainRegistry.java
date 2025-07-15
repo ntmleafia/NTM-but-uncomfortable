@@ -78,6 +78,7 @@ import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
@@ -562,6 +563,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCoreInjector.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_injector"));
 		GameRegistry.registerTileEntity(TileEntityCoreStabilizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_stabilizer"));
 		GameRegistry.registerTileEntity(TileEntityCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_core"));
+		GameRegistry.registerTileEntity(TileEntityCoreCreativeEmitter.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_cemitter"));
 		GameRegistry.registerTileEntity(SPKCableTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_spk"));
 
 		GameRegistry.registerTileEntity(TileEntitySoyuzCapsule.class, new ResourceLocation(RefStrings.MODID, "tileentity_soyuz_capsule"));

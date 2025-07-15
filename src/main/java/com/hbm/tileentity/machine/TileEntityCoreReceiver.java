@@ -175,6 +175,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             syncJoules = joules;
 
             joules = 0;
+            LeafiaPacket._start(this).__write(2,level).__sendToAffectedClients(); // fuick fuck fuck fuck fuck
         }
     }
 
@@ -278,6 +279,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         power = compound.getLong("power");
         joules = compound.getLong("joules");
         tank.readFromNBT(compound.getCompoundTag("tank"));
+        level = compound.getDouble("level");
         super.readFromNBT(compound);
     }
 
@@ -286,6 +288,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         compound.setLong("power", power);
         compound.setLong("joules", joules);
         compound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
+        compound.setDouble("level",level);
         return super.writeToNBT(compound);
     }
 
