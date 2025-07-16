@@ -5123,7 +5123,7 @@ trait.modularbomb=カスタム爆弾
 trait.nuclearbomb=原子爆弾
 trait.nucleargrenade=核爆発グレネード
 trait.pressure.extreme=超高圧
-trait.pressure.high=High Pressureweapon.ability.vampire
+trait.pressure.high=High Pressure
 trait.radResistance=放射線耐性 %s
 trait.radshield=放射線遮蔽
 trait.rbmk.coreTemp=核温度 %s
@@ -5270,7 +5270,9 @@ trait.rbmk.decay=Fission product decay heat: %s
 trait.rbmk.decayHeat=Fission product max temperature: %s
 trait.rbmx.decay=Leftover hollowness: %s
 trait.rbmx.decayTarget=Pit depth: %s
-
 item.gas_sensor.desc=危険なガスを検知すると音がなります$インベントリに入れておくか、アーマーに取り付けると機能します
 item.gas_sensor.mod=ガスを検出します
-weapon.ability.vampire=Vampireweapon.ability.stun=Stunningweapon.ability.vampire=Vampireweapon.ability.stun=Stunningweapon.ability.vampire
+
+desc.jammer=対フォルクヴァングルフィールド
+tile.dfc_cemitter.name=Creative DFC Booster
+weapon.ability.stun=Stunningweapon.ability.vampire=ヴァンパイア

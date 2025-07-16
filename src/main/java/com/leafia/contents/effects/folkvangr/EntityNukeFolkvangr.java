@@ -100,9 +100,10 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 		if (world.isRemote) return;
 		if (postEffect >= 0) {
 			postEffect--;
-			if (postEffect <= 0)
+			if (postEffect <= 0) {
 				this.setDead();
-			else {
+				unloadMainChunk();
+			} else {
 				List<Entity> entities = world.getEntitiesWithinAABB(
 						Entity.class,
 						new AxisAlignedBB(
@@ -176,6 +177,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 				}
 			}
 			played = true;
+			loadMainChunk();
 			double curRange = cloudBound.scale/16d;
 			short start = (short)Math.floor(curRange);
 			int destColumn = (int)Math.floor((curRange-Math.floor(curRange))*getRowTotal(start));
@@ -381,6 +383,18 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 			{
 				ForgeChunkManager.forceChunk(loaderTicket, chunk);
 			}
+		}
+	}
+	private ChunkPos mainChunk;
+	public void loadMainChunk() {
+		if(!world.isRemote && loaderTicket != null && this.mainChunk == null) {
+			this.mainChunk = new ChunkPos((int) Math.floor(this.posX / 16D), (int) Math.floor(this.posZ / 16D));
+			ForgeChunkManager.forceChunk(loaderTicket, this.mainChunk);
+		}
+	}
+	public void unloadMainChunk() {
+		if(!world.isRemote && loaderTicket != null && this.mainChunk != null) {
+			ForgeChunkManager.unforceChunk(loaderTicket, this.mainChunk);
 		}
 	}
 

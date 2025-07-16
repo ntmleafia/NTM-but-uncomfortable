@@ -9,6 +9,8 @@ import com.hbm.render.misc.BeamPronter.EnumBeamType;
 import com.hbm.render.misc.BeamPronter.EnumWaveType;
 import com.hbm.tileentity.machine.TileEntityCore;
 import com.hbm.tileentity.machine.TileEntityCore.Cores;
+import com.hbm.tileentity.machine.TileEntityCore.DFCShock;
+import com.leafia.transformer.LeafiaGls;
 import com.llib.math.LeafiaColor;
 import com.llib.math.MathLeafia;
 import net.minecraft.client.renderer.GlStateManager;
@@ -18,7 +20,10 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
+
+import java.util.ConcurrentModificationException;
 
 public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 
@@ -64,6 +69,32 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
             );
             GL11.glPopMatrix();
         }
+        try {
+            for (DFCShock shock : core.dfcShocks) {
+                Vec3d lastPos = null;
+                LeafiaGls.pushMatrix();
+                GL11.glTranslated(x-core.getPos().getX(),y-core.getPos().getY(),z-core.getPos().getZ());
+                if (core.getWorld().rand.nextInt(4) >= 1) {
+                    for (Vec3d pos : shock.poses) {
+                        if (lastPos != null) {
+                            if (pos.distanceTo(lastPos) < 0.1) continue;
+                            LeafiaGls.pushMatrix();
+                            LeafiaGls.translate(lastPos);
+                            Vec3 vec3 = new Vec3(pos.subtract(lastPos));
+                            BeamPronter.prontBeam(
+                                    vec3,
+                                    EnumWaveType.STRAIGHT,EnumBeamType.SOLID,
+                                    0x5B1D00,0x7F7F7F,
+                                    0,1,0,2,0.25f
+                            );
+                            LeafiaGls.popMatrix();
+                        }
+                        lastPos = pos;
+                    }
+                }
+                LeafiaGls.popMatrix();
+            }
+        } catch (ConcurrentModificationException ignored) {} // fuck you java array iterations
     }
 
     public void renderStandby(TileEntityCore core, double x, double y, double z) {
@@ -115,7 +146,7 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
         int tot = core.tanks[0].getCapacity() + core.tanks[1].getCapacity();
         int fill = core.tanks[0].getFluidAmount() + core.tanks[1].getFluidAmount();
 
-        float scale = (float) Math.log(core.temperature / 50 + 1) * ((float) fill / (float) tot) + 0.5F;
+        float scale = (float) Math.log(core.temperature / 50 + 1) /* * ((float) fill / (float) tot)*/ + 0.5F;
         GL11.glScalef(scale, scale, scale);
 
         GlStateManager.enableCull();

@@ -170,7 +170,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
     public LensType lens = LensType.STANDARD;
     public boolean isOn;
 
-    public static final int range = 15;
+    public static final int range = 50;
 
     public TileEntityCoreStabilizer() {
         super(1);

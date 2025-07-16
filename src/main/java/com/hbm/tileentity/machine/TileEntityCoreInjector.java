@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityCoreInjector extends DFCBaseTE implements ITickable, IFluidHandler, ITankPacketAcceptor {
 
     public FluidTank[] tanks;
-    public static final int range = 15;
+    public static final int range = 50;
     public int beam;
 
     public TileEntityCoreInjector() {

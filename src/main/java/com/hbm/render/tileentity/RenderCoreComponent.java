@@ -190,9 +190,9 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
                                 0x5B1D00, 0x7F7F7F,
                                 (int) Math.floorMod(absorber.getWorld().getTotalWorldTime() * 3 + (int) (partialTicks / 7) + i + 33, 1500),
                                 distance * (i + 1),
-                                0.2F + (float) (Math.pow(mspk / 1000, 0.5) - 1) * 0.025F,
+                                0.2F + (float) (Math.pow(mspk / 1000, 0.25) - 1) * 0.025F,
                                 3,
-                                (mspk < 100) ? 0.1F : 0.25F
+                                0.1F + 0.0666F*(float)(Math.pow(mspk / 1000, 0.25) - 1)
                         );
                     }
                 }

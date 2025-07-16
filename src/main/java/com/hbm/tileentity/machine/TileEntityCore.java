@@ -4,6 +4,7 @@ import com.hbm.blocks.machine.MachineFieldDisturber;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
+import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.machine.ItemCatalyst;
 import com.hbm.items.special.ItemAMSCore;
@@ -14,12 +15,20 @@ import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.LeafiaHelper;
+import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr.VacuumInstance;
+import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import com.leafia.dev.custompacket.LeafiaCustomPacket;
+import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
+import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.LeafiaPassiveLocal;
+import com.llib.exceptions.LeafiaDevFlaw;
+import com.llib.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -32,18 +41,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class TileEntityCore extends TileEntityMachineBase implements ITickable, LeafiaPacketReceiver {
 	public enum Cores {
@@ -76,7 +87,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		TANK_A, TANK_B,
 		EXPEL_TICK, COLOR, CORE_TYPE,
 
-		PLAY_SOUND, JAMMER;
+		PLAY_SOUND, JAMMER,
+		COLLAPSE;
 
 		public int key;
 
@@ -91,6 +103,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public double expellingEnergy = 0;
 	public double potentialRelease = 0;
 	public double gainedEnergy = 0;
+
+	public double collapsing = 0;
 
 	public double internalEnergy = 0;
 	public double[] expelTicks = new double[20];
@@ -255,7 +269,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			}
 			expellingSpk = 0;
 
-			if (inventory.getStackInSlot(1).getItem() instanceof ItemAMSCore && tanks[0].getFluid() != null && tanks[1].getFluid() != null) {
+			if (inventory.getStackInSlot(1).getItem() instanceof ItemAMSCore /*&& tanks[0].getFluid() != null && tanks[1].getFluid() != null*/) {
 				if (tagA != null && tagB != null) {
 					meltingPoint = Math.min(1500000, Math.min(ItemCatalyst.getMelting(catalystA), ItemCatalyst.getMelting(catalystB)));
 
@@ -268,8 +282,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					float catalystHeatMod = ItemCatalyst.getHeatMod(catalystA) * ItemCatalyst.getHeatMod(catalystB);
 					float catalystFuelMod = ItemCatalyst.getFuelMod(catalystA) * ItemCatalyst.getFuelMod(catalystB);
 					double catalystPowerSPK = catalystPower / 5000d;
-					Fluid f1 = tanks[0].getFluid().getFluid();
-					Fluid f2 = tanks[1].getFluid().getFluid();
+					FluidStack f1s = tanks[0].getFluid();
+					FluidStack f2s = tanks[1].getFluid();
+					Fluid f1;
+					Fluid f2;
+					if (f1s == null) f1 = ModForgeFluids.deuterium; else f1 = f1s.getFluid();
+					if (f2s == null) f2 = ModForgeFluids.tritium; else f2 = f2s.getFluid();
 					double fill0 = tanks[0].getFluidAmount()/(double)tanks[0].getCapacity();
 					double fill1 = tanks[0].getFluidAmount()/(double)tanks[0].getCapacity();
 					double fuelPower = ModFluidProperties.getDFCEfficiency(f1) * ModFluidProperties.getDFCEfficiency(f2);
@@ -285,13 +303,14 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						potentialRelease = 1;
 						if (temperature >= 100) {
 							double randRange = Math.pow(tempRatio,0.65)*10;
-							potentialRelease += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();
+							potentialRelease += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv()*energyMod;
 						}
 					}
 					{ // i wanted to redo everything this sucks ASS
 						//containedEnergy += incomingSpk;
 						double combustionPotential = Math.pow(energyRatio,0.25);
-						int consumption = 100;//(int)(combustionPotential*100);
+						int consumption = (int)Math.pow(incomingSpk,0.75);//(int)(combustionPotential*100);
+						Tracker._tracePosition(this,pos.up(3),"incomingSpk: ",incomingSpk);
 						tanks[0].drain(consumption,true);
 						tanks[1].drain(consumption,true);
 						//Tracker._tracePosition(this,pos.east(6),"combustionPotential: "+combustionPotential,"cons: "+consumption);
@@ -299,7 +318,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(3),"potAdd: "+potAdd,"potSub: "+potSub,"","potMul:"+potMul,"Total: "+potFinal);
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
-						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/1) + 1, 0.666/1) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
+						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
 						containedEnergy += (deltaEnergy*corePower+(incomingSpk-deltaEnergy)*0.666)*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
 						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialRelease*boost*fill0*fill1;
@@ -352,6 +371,14 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						expellingSpk = expelling;
 						expelTicks[Math.floorMod(ticks, 20)] = expelling;
 						 */
+						if (shockCooldown > 0) shockCooldown--;
+						double energyPerShock = 3_000_000*0.75;
+						if (containedEnergy >= 1_000_000*(world.rand.nextInt(150)+6.66)+0.5 && shockCooldown <= 0) {
+							double count = Math.ceil(containedEnergy/energyPerShock);
+							for (int i = 0; i < Math.pow(count,0.25); i++) shock();
+							containedEnergy = Math.max(containedEnergy-count*energyPerShock,0);
+							shockCooldown = 100-(int)Math.pow(90*collapsing,0.75);
+						}
 					}
 					Tracker._endProfile(this);
 					if (false) {
@@ -426,27 +453,63 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 							0, 100
 					));
 				}
+			}
+			if ((damageA >= 100 || damageB >= 100) && temperature > 100) {
+				EntityNukeExplosionMK3 exp = null;
+				if (jammerPos != null) {
+					if (!(world.getBlockState(jammerPos).getBlock() instanceof MachineFieldDisturber))
+						jammerPos = null;
+				}
+				if (explosionIn < 10 || jammerPos == null) { // stand by
+					exp = new EntityNukeExplosionMK3(world);
+					exp.posX = pos.getX();
+					exp.posY = pos.getY();
+					exp.posZ = pos.getZ();
+					exp.destructionRange = 20+(int)Math.pow(temperature,0.4);
+					exp.speed = 25;
+					exp.coefficient = 1.0F;
+					exp.waste = false;
+				}
+				if (jammerPos == null) {
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 100000.0F, 1.0F);
 
-				if (damageA >= 100 || damageB >= 100) {
-					EntityNukeExplosionMK3 exp = null;
-					if (jammerPos != null) {
-						if (!(world.getBlockState(jammerPos).getBlock() instanceof MachineFieldDisturber))
-							jammerPos = null;
+					if (!EntityNukeExplosionMK3.isJammed(this.world, exp)) {
+						destroyed = true;
+						world.spawnEntity(exp);
+						EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
+						cloud.posX = pos.getX();
+						cloud.posY = pos.getY();
+						cloud.posZ = pos.getZ();
+						world.spawnEntity(cloud);
+					} else {
+						jammerPos = EntityNukeExplosionMK3.lastDetectedJammer;
+						if (explosionIn < 0) {
+							explosionIn = 120;
+							explosionClock = System.currentTimeMillis();
+							LeafiaPacket._start(this)
+									.__write(packetKeys.PLAY_SOUND.key, 0)
+									.__sendToAll();
+						}
 					}
-					if (explosionIn < 10 || jammerPos == null) { // stand by
-						exp = new EntityNukeExplosionMK3(world);
-						exp.posX = pos.getX();
-						exp.posY = pos.getY();
-						exp.posZ = pos.getZ();
-						exp.destructionRange = 20;
-						exp.speed = 25;
-						exp.coefficient = 1.0F;
-						exp.waste = false;
+				}
+				if (jammerPos != null) {
+					boolean tick = true;
+					MinecraftServer server = world.getMinecraftServer();
+					if (server != null) {
+						LeafiaDebug.debugLog(world, "isSinglePlayer: " + server.isSinglePlayer());
+						LeafiaDebug.debugLog(world, "isServerInOnlineMode: " + server.isServerInOnlineMode());
+						LeafiaDebug.debugLog(world, "isDedicatedServer: " + server.isDedicatedServer());
+						LeafiaDebug.debugLog(world, TextFormatting.GOLD + "Time Left: " + explosionIn);
+						if (!server.isDedicatedServer())
+							tick = !Minecraft.getMinecraft().isGamePaused();
 					}
-					if (jammerPos == null) {
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 100000.0F, 1.0F);
-
-						if (!EntityNukeExplosionMK3.isJammed(this.world, exp)) {
+					if (tick) {
+						long time = System.currentTimeMillis();
+						explosionIn = Math.max(explosionIn - (time - explosionClock) / 1000d, 0);
+						collapsing = MathHelper.clamp(1-explosionIn/120,0,1);
+						explosionClock = time;
+						if (explosionIn <= 0 && exp != null) {
+							world.playSound(null, pos, HBMSoundHandler.dfc_explode, SoundCategory.BLOCKS, 100, 1);
 							destroyed = true;
 							world.spawnEntity(exp);
 							EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
@@ -454,52 +517,17 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 							cloud.posY = pos.getY();
 							cloud.posZ = pos.getZ();
 							world.spawnEntity(cloud);
-						} else {
-							jammerPos = EntityNukeExplosionMK3.lastDetectedJammer;
-							if (explosionIn < 0) {
-								explosionIn = 120;
-								explosionClock = System.currentTimeMillis();
-								LeafiaPacket._start(this)
-										.__write(packetKeys.PLAY_SOUND.key, 0)
-										.__sendToAll();
-							}
 						}
 					}
-					if (jammerPos != null) {
-						boolean tick = true;
-						MinecraftServer server = world.getMinecraftServer();
-						if (server != null) {
-							LeafiaDebug.debugLog(world, "isSinglePlayer: " + server.isSinglePlayer());
-							LeafiaDebug.debugLog(world, "isServerInOnlineMode: " + server.isServerInOnlineMode());
-							LeafiaDebug.debugLog(world, "isDedicatedServer: " + server.isDedicatedServer());
-							LeafiaDebug.debugLog(world, TextFormatting.GOLD + "Time Left: " + explosionIn);
-							if (!server.isDedicatedServer())
-								tick = !Minecraft.getMinecraft().isGamePaused();
-						}
-						if (tick) {
-							long time = System.currentTimeMillis();
-							explosionIn = Math.max(explosionIn - (time - explosionClock) / 1000d, 0);
-							explosionClock = time;
-							if (explosionIn <= 0 && exp != null) {
-								world.playSound(null, pos, HBMSoundHandler.dfc_explode, SoundCategory.BLOCKS, 100, 1);
-								destroyed = true;
-								world.spawnEntity(exp);
-								EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
-								cloud.posX = pos.getX();
-								cloud.posY = pos.getY();
-								cloud.posZ = pos.getZ();
-								world.spawnEntity(cloud);
-							}
-						}
-					}
-				} else {
-					if (explosionIn >= 0) {
-						jammerPos = null;
-						explosionIn = -1;
-						LeafiaPacket._start(this)
-								.__write(packetKeys.PLAY_SOUND.key, 1)
-								.__sendToAll();
-					}
+				}
+			} else {
+				if (explosionIn >= 0) {
+					jammerPos = null;
+					explosionIn = -1;
+					collapsing = 0;
+					LeafiaPacket._start(this)
+							.__write(packetKeys.PLAY_SOUND.key, 1)
+							.__sendToAll();
 				}
 			}
 
@@ -511,7 +539,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			absorbers.clear();
 
 			if (temperature > 100) {
-				//vaporization();
+				vaporization();
 			}
 			/*
 			NBTTagCompound data = new NBTTagCompound();
@@ -552,12 +580,25 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					.__write(packetKeys.CORE_TYPE.key, coreId)
 
 					.__write(packetKeys.JAMMER.key, jammerPos)
+					.__write(packetKeys.COLLAPSE.key, collapsing)
 
 					.__sendToAffectedClients();
 
 			heat = 0;
 			stabilization = 0;
+			if (this.collapsing > 0) {
+				List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(null,LeafiaHelper.getAABBRadius(LeafiaHelper.getBlockPosCenter(this.pos),getPullRange()));
+				for (Entity e : list)
+					pull(e);
+			}
 			this.markDirty();
+			/*testDebug++;
+			if (testDebug > 30) {
+				testDebug = 0;
+				shock();
+				shock();
+				shock();
+			}*/
 		} else {
 			ticks++;
 			client_maxDial = world.rand.nextDouble() * 0.08 + 0.9;
@@ -571,7 +612,103 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					client_sfx.stopSound();
 				}
 			}
+			if (collapsing > 0.666) {
+				pull(Minecraft.getMinecraft().player);
+				Vec3d p = LeafiaHelper.getBlockPosCenter(pos);
+				VacuumInstance vacuum = new VacuumInstance(p,0,10,getPullRange(),0.1);
+				p = new FiaMatrix(p).rotateY(world.rand.nextDouble()*360).rotateX(world.rand.nextDouble()*360).translate(0,0,world.rand.nextDouble()*getPullRange()).position;
+
+				ParticleFleijaVacuum fx = new ParticleFleijaVacuum(
+						Minecraft.getMinecraft().world,
+						p.x,
+						p.y,
+						p.z,
+						world.rand.nextFloat()*2 + 2,
+						world.rand.nextFloat()*0.1f+0.1f,
+						vacuum
+				);
+				Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+			}
+			for (DFCShock shock : dfcShocks) {
+				shock.ticks++;
+			}
+			while (!dfcShocks.isEmpty()) {
+				if (dfcShocks.get(0).ticks > 4)
+					dfcShocks.remove(0);
+				else break;
+			}
 			//TODO: sick particle effects
+		}
+	}
+	int shockCooldown = 0;
+	//int testDebug = 0;
+	public void shock() {
+		double rlen = 1;
+		double length = 0.5;
+		Vec3d core = LeafiaHelper.getBlockPosCenter(pos);
+		Vec3d p0 = LeafiaHelper.getBlockPosCenter(pos);
+		Vec3d p1 = new FiaMatrix(p0).rotateY(world.rand.nextDouble()*360).rotateX(world.rand.nextDouble()*360).translate(0,0,length+world.rand.nextDouble()*rlen).position;
+		DFCShockPacket packet = new DFCShockPacket();
+		packet.pos = pos;
+		packet.poses0.add(p0);
+		packet.poses0.add(p1);
+		Tracker._startProfile(this,"shock");
+		for (int i = 0; i < 25; i++) {
+			p0 = p1;
+			p1 = new FiaMatrix(p1,core).translate(world.rand.nextGaussian()*2,world.rand.nextGaussian()*2,length+world.rand.nextDouble()*rlen).position;
+			RayTraceResult res = Library.leafiaRayTraceBlocks(world,p0,p1,false,true,false);
+			if (res != null && res.hitVec != null) {
+				p1 = res.hitVec;
+				packet.poses0.add(p1);
+				world.newExplosion(null,p1.x,p1.y,p1.z,world.rand.nextFloat()*5+2,true,true);
+				break;
+			}
+			packet.poses0.add(p1);
+		}
+		for (int i = 0; i < packet.poses0.size()-1; i++) {
+			Tracker._traceLine(this,packet.poses0.get(i),packet.poses0.get(i+1),i);
+		}
+		Tracker._endProfile(this);
+		LeafiaCustomPacket.__start(packet).__sendToAll();
+	}
+	public static class DFCShock {
+		public final List<Vec3d> poses;
+		public int ticks = 0;
+		public DFCShock(List<Vec3d> poses) {
+			this.poses = poses;
+		}
+	}
+	public List<DFCShock> dfcShocks = new ArrayList<>();
+	public static class DFCShockPacket implements LeafiaCustomPacketEncoder {
+		BlockPos pos;
+		List<Vec3d> poses0 = new ArrayList<>();
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeVec3i(pos);
+			buf.writeByte(poses0.size());
+			for (Vec3d pos : poses0) {
+				buf.writeFloat((float)pos.x);
+				buf.writeFloat((float)pos.y);
+				buf.writeFloat((float)pos.z);
+			}
+		}
+		@Nullable
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			List<Vec3d> poses = new ArrayList<>();
+			TileEntity te = Minecraft.getMinecraft().world.getTileEntity(new BlockPos(buf.readVec3i()));
+			int leng = buf.readByte();
+			for (int i = 0; i < leng; i++)
+				poses.add(new Vec3d(buf.readFloat(),buf.readFloat(),buf.readFloat()));
+			return (context)->{
+				if (te == null) return;
+				if (!(te instanceof TileEntityCore)) throw new LeafiaDevFlaw("TileEntity is not a TileEntityCore");
+				for (int i = 0; i < poses.size(); i++) {
+					LeafiaDebug.debugPos(Minecraft.getMinecraft().world,new BlockPos(poses.get(i)),1,0xFFD800,Integer.toString(i));
+				}
+				TileEntityCore core = (TileEntityCore)te;
+				core.dfcShocks.add(new DFCShock(poses));
+			};
 		}
 	}
 	/*
@@ -595,6 +732,26 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		hasCore = data.getBoolean("hasCore");
 	}*/
 
+	private double getPullRange() {
+		return 150; // constant for now
+	}
+	private double getPull(Entity e) {
+		Vec3d p = new Vec3d(pos).add(0.5,0.5,0.5);
+		double distance = p.distanceTo(e.getPositionVector());
+		if (distance > getPullRange()) return 0;
+		double pull = MathHelper.clamp(1-distance/getPullRange(),0,1);
+		pull = Math.pow(pull,1.5);
+		return pull*0.1*Math.pow(Math.max(0,collapsing/0.666-1)*2,0.5);
+	}
+	public void pull(Entity e) {
+		//if (e instanceof EntityPlayer && ((EntityPlayer) e).isCreative()) return;
+		double pull = getPull(e);
+		if (pull <= 0) return;
+		Vec3d p = new Vec3d(pos).add(0.5,0.5,0.5);
+		Vec3d lookAt = new FiaMatrix(e.getPositionVector(),p).frontVector;
+		e.addVelocity(lookAt.x*pull,lookAt.y*pull,lookAt.z*pull);
+	}
+
 	private void vaporization() {
 
 		double scale = (int) Math.log(temperature / 50 + 1) * 1.25 / 4 + 0.5;
@@ -607,7 +764,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			if (!(isPlayer && ArmorUtil.checkForHazmat((EntityPlayer) e))) {
 				if (!(Library.isObstructed(world, pos.getX() + 0.5, pos.getY() + 0.5 + 6, pos.getZ() + 0.5, e.posX, e.posY + e.getEyeHeight(), e.posZ))) {
 					if (!isPlayer || (isPlayer && !((EntityPlayer) e).capabilities.isCreativeMode))
-						e.attackEntityFrom(ModDamageSource.ams, (int) (this.temperature / 100));
+						e.attackEntityFrom(ModDamageSource.dfc, (int) (this.temperature / 100));
 					e.setFire(3);
 				}
 			}
@@ -615,7 +772,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 				AdvancementManager.grantAchievement(((EntityPlayer) e), AdvancementManager.progress_dfc);
 			}
 		}
-
+/*
 		List<Entity> list2 = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.getX() - scale + 0.5, pos.getY() - scale + 0.5, pos.getZ() - scale + 0.5, pos.getX() + scale + 0.5, pos.getY() + scale + 0.5, pos.getZ() + scale + 0.5));
 
 		for (Entity e : list2) {
@@ -624,6 +781,13 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 				if (!isPlayer || (isPlayer && !((EntityPlayer) e).capabilities.isCreativeMode))
 					e.attackEntityFrom(ModDamageSource.amsCore, (int) (this.temperature / 10));
 				e.setFire(3);
+			}
+		}*/
+		List<Entity> list3 = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.getX()+0.4,pos.getY()+0.4,pos.getZ()+0.4,pos.getX()+0.6,pos.getY()+0.6,pos.getZ()+0.6));
+		if (collapsing > 0) {
+			for (Entity e : list3) {
+				e.attackEntityFrom(ModDamageSource.dfcMeltdown,(int) (this.temperature / 10));
+				e.setFire(10);
 			}
 		}
 	}
@@ -820,10 +984,13 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						meltdownSFX = MainRegistry.proxy.getLoopedSound(
 										soundToPlay,
 										SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(),
-										0.45f, pitch
+										1f, pitch
 								).setCustomAttentuation((intended, distance) -> Math.pow(MathHelper.clamp(1 - (distance - 50) / 500, 0, 1), 6.66))
 								.setLooped(false);
 						meltdownSFX.startSound();
+						break;
+					case COLLAPSE:
+						collapsing = (double)value;
 						break;
 				}
 			}
@@ -838,5 +1005,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	@Override
 	public void onPlayerValidate(EntityPlayer plr) {
 
+	}
+
+	@Override
+	public double affectionRange() {
+		return 300;
 	}
 }

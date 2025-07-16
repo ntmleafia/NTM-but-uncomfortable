@@ -69,7 +69,7 @@ public class ExplosionBalefire {
 	
 	public boolean update()
 	{
-		breakColumn(this.lastposX, this.lastposZ);
+		breakColumn(this.lastposX, this.lastposZ, this.posY);
 		this.shell = (int) Math.floor((Math.sqrt(n) + 1) / 2);
 		if(shell == 0)
 			shell = 1;
@@ -83,18 +83,25 @@ public class ExplosionBalefire {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void breakColumn(int x, int z)
+	private void breakColumn(int x, int z, int ys)
 	{
 		int dist = (int) (radius - Math.sqrt(x * x + z * z));
 		
 		if (dist > 0) {
 			int pX = posX + x;
 			int pZ = posZ + z;
-			
-			int y  = worldObj.getHeight(pX, pZ);
+
+			int y  = ys+5;//worldObj.getHeight(pX, pZ);
+			int ystart = y;
+			for (int y0 = y; y0 >= 0; y0--) {
+				if (worldObj.isAirBlock(new BlockPos(pX,y0,pZ))) y = y0;
+			}
 			int maxdepth = (int) (10 + radius * 0.25);
 			int voidDepth = (int) ((maxdepth * dist / radius) + (Math.sin(dist * 0.15 + 2) * 2));//
-			
+
+			int yend = (int)(ystart+maxdepth*3*Math.pow(Math.cos(dist/radius*Math.PI/4),2));
+			for (int yc = ystart; yc < yend; yc++)
+				worldObj.setBlockState(new BlockPos(pX,yc,pZ),Blocks.AIR.getDefaultState(),2);
 			int depth = Math.max(y - voidDepth, 0);
 			
 			while(y > depth) {

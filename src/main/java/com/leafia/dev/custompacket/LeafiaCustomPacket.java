@@ -3,6 +3,8 @@ package com.leafia.dev.custompacket;
 import com.hbm.forgefluid.FFUtils.FuzzyIdentifierPacket;
 import com.hbm.items.tool.ItemWandS.WandStructurePacket;
 import com.hbm.packet.PacketDispatcher;
+import com.hbm.tileentity.machine.TileEntityCore;
+import com.hbm.tileentity.machine.TileEntityCore.DFCShockPacket;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandProduct;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandRemove;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandSave;
@@ -24,7 +26,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.util.function.Consumer;
 
 public class LeafiaCustomPacket extends RecordablePacket {
-	public enum CustomPacketType {
+	public enum CustomPacketType { // add your packets here, that's literally all registering you have to do!
 		NONE,
 		VISUALIZER_TRACE(new VisualizerPacket()),
 		HIGHLIGHT_SAVING_SAVE(new HighlightSavingWandSave()),
@@ -32,6 +34,7 @@ public class LeafiaCustomPacket extends RecordablePacket {
 		HIGHLIGHT_SAVING_PRODUCT(new HighlightSavingWandProduct()),
 		WAND_STRUCTURE(new WandStructurePacket()),
 		FUZZY_IDENTIFIER(new FuzzyIdentifierPacket()),
+		DFC_SHOCK(new DFCShockPacket())
 		;
 		final LeafiaCustomPacketEncoder encoder;
 		CustomPacketType() { encoder = null; }
