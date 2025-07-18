@@ -146,7 +146,7 @@ public class Balefire extends BlockFire {
 			}
 
 			Block block = worldIn.getBlockState(pos.down()).getBlock();
-			boolean flag = block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
+			boolean flag = !canDie(worldIn,pos); //block.isFireSource(worldIn, pos.down(), EnumFacing.UP);
 
 			int i = ((Integer)state.getValue(AGE)).intValue();
 
