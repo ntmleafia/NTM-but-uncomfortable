@@ -76,7 +76,7 @@ import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
-import com.leafia.contents.machines.elevators.EntityElevator;
+import com.leafia.contents.machines.elevators.car.EntityElevator;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;

@@ -1,9 +1,9 @@
-package com.leafia.contents.machines.elevators;
+package com.leafia.contents.machines.elevators.car;
 
 import com.hbm.lib.HBMSoundHandler;
-import com.leafia.contents.machines.elevators.styles.EvWallBase;
-import com.leafia.contents.machines.elevators.styles.panels.ElevatorPanelBase;
-import com.leafia.contents.machines.elevators.styles.panels.S6Door;
+import com.leafia.contents.machines.elevators.car.styles.EvWallBase;
+import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
+import com.leafia.contents.machines.elevators.car.styles.panels.S6Door;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;

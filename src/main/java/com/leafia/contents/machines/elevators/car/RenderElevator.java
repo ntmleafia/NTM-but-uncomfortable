@@ -1,12 +1,12 @@
-package com.leafia.contents.machines.elevators;
+package com.leafia.contents.machines.elevators.car;
 
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.AdvancedModelLoader;
 import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.amlfrom1710.IModelCustom;
-import com.leafia.contents.machines.elevators.EntityElevator.*;
-import com.leafia.contents.machines.elevators.styles.panels.ElevatorPanelBase;
+import com.leafia.contents.machines.elevators.car.EntityElevator.*;
+import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
 import com.leafia.transformer.LeafiaGls;
 import com.llib.group.LeafiaMap;
 import net.minecraft.client.Minecraft;

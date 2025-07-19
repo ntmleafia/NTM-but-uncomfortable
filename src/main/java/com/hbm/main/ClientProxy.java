@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import com.leafia.contents.machines.elevators.EntityElevator;
-import com.leafia.contents.machines.elevators.RenderElevator;
+import com.leafia.contents.machines.elevators.car.EntityElevator;
+import com.leafia.contents.machines.elevators.car.RenderElevator;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.hbm.items.ModItems.Armory;

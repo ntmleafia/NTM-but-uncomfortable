@@ -1,6 +1,6 @@
-package com.leafia.contents.machines.elevators.styles.panels;
+package com.leafia.contents.machines.elevators.car.styles.panels;
 
-import com.leafia.contents.machines.elevators.EntityElevator.HitSrf;
+import com.leafia.contents.machines.elevators.car.EntityElevator.HitSrf;
 import com.llib.math.FiaMatrix;
 
 import java.util.ArrayList;

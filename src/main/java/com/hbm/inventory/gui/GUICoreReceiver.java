@@ -64,7 +64,7 @@ public class GUICoreReceiver extends GuiInfoContainer {
 				saveButtonCooldown = 20;
 				try {
 					double level = MathHelper.clamp(Double.parseDouble(field.getText()) / 100d,0,1);
-					field.setText(String.valueOf(level));
+					field.setText(String.valueOf(level*100));
 					LeafiaPacket._start(receiver).__write(0,level).__sendToServer();
 					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK,1.0F));
 				} catch (NumberFormatException ignored) {}

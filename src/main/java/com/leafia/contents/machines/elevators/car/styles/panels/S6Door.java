@@ -1,4 +1,4 @@
-package com.leafia.contents.machines.elevators.styles.panels;
+package com.leafia.contents.machines.elevators.car.styles.panels;
 
 public class S6Door extends EvGenericDoorBase {
 	public S6Door(int rotation) {
