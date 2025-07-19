@@ -76,6 +76,7 @@ import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
+import com.leafia.contents.machines.elevators.EntityElevator;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
@@ -846,6 +847,7 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_digamma_quasar"), EntityQuasar.class, "entity_digamma_quasar", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_folkvangr"), EntityNukeFolkvangr.class, "entity_nuke_folkvangr", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_elevator"), EntityElevator.class, "entity_elevator", i++, MainRegistry.instance, 1000, 1, true);
 
 		GameRegistry.registerTileEntity(TileEntityPWRElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
 		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));

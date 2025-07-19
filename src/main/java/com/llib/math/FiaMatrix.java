@@ -82,11 +82,13 @@ public class FiaMatrix {
 		matrix.position = this.position.scale(factor);
 		return matrix;
 	}
+	public FiaMatrix translateWorld(double x,double y,double z) { return add(new Vec3d(x,y,z)); }
 	public FiaMatrix translate(double x,double y,double z) {
 		FiaMatrix matrix = new FiaMatrix(this);
 		matrix.position = position.add(frontVector.scale(-z)).add(rightVector.scale(x)).add(upVector.scale(y));
 		return matrix;
 	}
+	public FiaMatrix translateWorld(Vec3d vector) { return add(vector); }
 	public FiaMatrix translate(Vec3d vector) { return translate(vector.x,vector.y,vector.z); }
 	public FiaMatrix rotate(RotationOrder order,double angleX,double angleY,double angleZ) {
 		FiaMatrix matrix = this;
@@ -102,6 +104,14 @@ public class FiaMatrix {
 	public FiaMatrix travel(FiaMatrix other) {
 		return new FiaMatrix(
 				position.add(frontVector.scale(-other.position.z)).add(rightVector.scale(other.position.x)).add(upVector.scale(other.position.y)),
+				rightVector.scale(other.rightVector.x).add(upVector.scale(other.rightVector.y)).subtract(frontVector.scale(other.rightVector.z)),
+				rightVector.scale(other.upVector.x).add(upVector.scale(other.upVector.y)).subtract(frontVector.scale(other.upVector.z)),
+				rightVector.scale(other.frontVector.x).add(upVector.scale(other.frontVector.y)).subtract(frontVector.scale(other.frontVector.z))
+		);
+	}
+	public FiaMatrix rotateAlong(FiaMatrix other) {
+		return new FiaMatrix(
+				position,
 				rightVector.scale(other.rightVector.x).add(upVector.scale(other.rightVector.y)).subtract(frontVector.scale(other.rightVector.z)),
 				rightVector.scale(other.upVector.x).add(upVector.scale(other.upVector.y)).subtract(frontVector.scale(other.upVector.z)),
 				rightVector.scale(other.frontVector.x).add(upVector.scale(other.frontVector.y)).subtract(frontVector.scale(other.frontVector.z))
@@ -160,11 +170,17 @@ public class FiaMatrix {
 	public FiaMatrix rotateY(double angle) { return radian_rotateY(Math.toRadians(angle)); }
 	public FiaMatrix rotateZ(double angle) { return radian_rotateZ(Math.toRadians(angle)); }
 	public FiaMatrix inverse() {
+		/* broken code lol
 		return new FiaMatrix(position.scale(-1),
 				new Vec3d(rightVector.x,upVector.x,-frontVector.x),
 				new Vec3d(rightVector.y,upVector.y,-frontVector.y),
 				new Vec3d(-rightVector.z,-upVector.z,frontVector.z)
-		);
+		);*/
+		return new FiaMatrix(new Vec3d(0,0,0),
+				new Vec3d(rightVector.x,upVector.x,-frontVector.x),
+				new Vec3d(rightVector.y,upVector.y,-frontVector.y),
+				new Vec3d(-rightVector.z,-upVector.z,frontVector.z)
+		).travel(new FiaMatrix(position.scale(-1)));
 	}
 
 	////////////////////////////////////////////// TECHNICAL FEATURES //////////////////////////////////////////////

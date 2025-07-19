@@ -261,9 +261,9 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     public void onReceivePacketLocal(byte key,Object value) {
         super.onReceivePacketLocal(key,value);
         switch(key) {
-            case 0: joules = (long)value;
-            case 1: power = (long)value;
-            case 2: level = (double)value;
+            case 0: joules = (long)value; break;
+            case 1: power = (long)value; break;
+            case 2: level = (double)value; break;
         }
     }
 

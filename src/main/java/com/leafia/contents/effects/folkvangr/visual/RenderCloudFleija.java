@@ -1,6 +1,7 @@
 package com.leafia.contents.effects.folkvangr.visual;
 
 import com.hbm.lib.RefStrings;
+import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.AdvancedModelLoader;
 import com.hbm.render.amlfrom1710.IModelCustom;
 import com.leafia.transformer.LeafiaGls;
@@ -27,7 +28,7 @@ public class RenderCloudFleija extends Render<EntityCloudFleija> {
 	protected RenderCloudFleija(RenderManager renderManager) {
 		super(renderManager);
 		blastModel = AdvancedModelLoader.loadModel(objTesterModelRL);
-    	blastTexture = new ResourceLocation(RefStrings.MODID, "textures/solid_emissive.png");//models/explosion/BlastFleija.png");
+    	blastTexture = ResourceManager.solid_e;//new ResourceLocation(RefStrings.MODID, "textures/solid_emissive.png");//models/explosion/BlastFleija.png");
     	scale = 0;
 	}
 	LeafiaEase shrinkEase = new LeafiaEase(LeafiaEase.Ease.EXPO,LeafiaEase.Direction.I);

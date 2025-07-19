@@ -987,6 +987,9 @@ public class ResourceManager {
 	
 	////Texture Entities
 
+	public static final ResourceLocation solid = new ResourceLocation(RefStrings.MODID, "textures/solid.png");
+	public static final ResourceLocation solid_e = new ResourceLocation(RefStrings.MODID, "textures/solid_emissive.png");
+
 	//Vortex
 	public static final ResourceLocation vortex_tex = new ResourceLocation(RefStrings.MODID, "textures/models/weapons/vortex.png");
 	public static final ResourceLocation vortex_hud_circle = new ResourceLocation(RefStrings.MODID, "textures/misc/vortex_circle.png");
