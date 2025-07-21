@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityRocketHoming;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -78,9 +78,9 @@ public class GunStinger extends Item {
 			stack.damageItem(1, player);
 			
 			if(this == Armory.gun_stinger)
-				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.rpgShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.rpgShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			if(this == Armory.gun_skystinger)
-				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.rpgShoot, SoundCategory.PLAYERS, 1.0F, 0.5F);
+				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.rpgShoot, SoundCategory.PLAYERS, 1.0F, 0.5F);
 
 			Library.consumeInventoryItem(player.inventory, Armory.gun_stinger_ammo);
 

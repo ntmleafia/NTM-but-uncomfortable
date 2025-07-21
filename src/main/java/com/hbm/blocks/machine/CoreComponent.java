@@ -2,7 +2,7 @@ package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.tool.ItemDesignator;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityCoreEmitter;
 import com.hbm.tileentity.machine.TileEntityCoreInjector;
@@ -92,11 +92,11 @@ public class CoreComponent extends BlockContainer {
                     BlockPos target =
                             new BlockPos(nbt.getInteger("xCoord"), nbt.getInteger("yCoord"), nbt.getInteger("zCoord"));
                     if (target.equals(pos)) {
-                        world.playSound(null, pos, HBMSoundHandler.buttonNo, SoundCategory.BLOCKS, 1, 1);
+                        world.playSound(null, pos, HBMSoundEvents.buttonNo, SoundCategory.BLOCKS, 1, 1);
                         return true;
                     }
                     ((DFCBaseTE) te).setTargetPosition(target);
-                    world.playSound(null, pos, HBMSoundHandler.buttonYes, SoundCategory.BLOCKS, 1, 1);
+                    world.playSound(null, pos, HBMSoundEvents.buttonYes, SoundCategory.BLOCKS, 1, 1);
                     return true;
                 }
             }

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class HBMSoundHandler {
+public final class HBMSoundEvents {
 	
 	public static List<SoundEvent> ALL_SOUNDS = new ArrayList<SoundEvent>();
 	
@@ -299,6 +299,7 @@ public final class HBMSoundHandler {
 	public static SoundEvent s6beep;
 	public static SoundEvent s6bell;
 	public static SoundEvent electronicpingshort;
+	public static SoundEvent UI_BUTTON_INVALID;
 	
 	
 	public static void init() {
@@ -551,6 +552,7 @@ public final class HBMSoundHandler {
 		s6beep = register("elevators.s6beep");
 		s6bell = register("elevators.s6bell");
 		electronicpingshort = register("elevators.electronicpingshort");
+		UI_BUTTON_INVALID = register("ui.button.invalid");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

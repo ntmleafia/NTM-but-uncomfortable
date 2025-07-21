@@ -7,7 +7,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Foods;
 import com.hbm.items.armor.JetpackBase;
 import com.hbm.items.weapon.ItemGunBase;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
 import com.hbm.potion.HbmPotion;
@@ -54,7 +54,7 @@ public class ItemSyringe extends Item {
             	VersatileConfig.applyPotionSickness(player, 5);
             	
             	player.getHeldItem(hand).shrink(1);
-            	world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            	world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_empty));
@@ -79,7 +79,7 @@ public class ItemSyringe extends Item {
 				player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 5 * 20, 4));
 
 				player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_empty));
@@ -107,7 +107,7 @@ public class ItemSyringe extends Item {
             		player.attackEntityFrom(ModDamageSource.euthanizedSelf2, 30);
                 
             	
-                world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
                 if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_empty));
@@ -120,7 +120,7 @@ public class ItemSyringe extends Item {
 				player.heal(5);
 
 				player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 				if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_metal_empty));
 				}
@@ -138,7 +138,7 @@ public class ItemSyringe extends Item {
             	player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 4 * 60 * 20, 2));
             	
             	player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_metal_empty));
@@ -158,7 +158,7 @@ public class ItemSyringe extends Item {
             	player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 2 * 60 * 20, 0));
             	
             	player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_metal_empty));
@@ -178,7 +178,7 @@ public class ItemSyringe extends Item {
             	player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20, 0));
             
             	player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (player.getHeldItem(hand).isEmpty()) {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, new ItemStack(ModItems.syringe_metal_empty));
@@ -219,7 +219,7 @@ public class ItemSyringe extends Item {
                 player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 5 * 20, 0));
             
                 player.getHeldItem(hand).shrink(1);
-				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
 
         	if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.syringe_metal_empty)))
@@ -250,7 +250,7 @@ public class ItemSyringe extends Item {
 					return ActionResult.<ItemStack> newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 
 				JetpackBase.setFuel(jetpack, fill);
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.jetpackTank, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.jetpackTank, SoundCategory.PLAYERS, 1.0F, 1.0F);
 				ItemStack stack = player.getHeldItem(hand);
 				stack.shrink(1);
 				if (stack.isEmpty())
@@ -270,11 +270,11 @@ public class ItemSyringe extends Item {
     			
     			if(this == ModItems.gun_kit_1) {
     				repair = 0.1F;
-    		        world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.spray, SoundCategory.PLAYERS, 1.0F, 1.0F);
+    		        world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.spray, SoundCategory.PLAYERS, 1.0F, 1.0F);
     			}
     			if(this == ModItems.gun_kit_2) {
     				repair = 0.5F;
-    		        world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundHandler.repair, SoundCategory.PLAYERS, 1.0F, 1.0F);
+    		        world.playSound(null,  player.posX,  player.posY,  player.posZ, HBMSoundEvents.repair, SoundCategory.PLAYERS, 1.0F, 1.0F);
     			}
     			
             	for(int i = 0; i < 10; i++) {
@@ -307,14 +307,14 @@ public class ItemSyringe extends Item {
                 player.addPotionEffect(new PotionEffect(HbmPotion.bang, 30, 0));
 
             	player.getHeldItem(hand).shrink(1);
-            	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.vice, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.vice, SoundCategory.PLAYERS, 1.0F, 1.0F);
             }
 		}
 		if(this == ModItems.syringe_mkunicorn) {
 			if(!world.isRemote) {
 				HbmLivingProps.setContagion(player, 3 * 60 * 60 * 20);
 				player.getHeldItem(hand).shrink(1);
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.vice, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.vice, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			}
 		}
 		
@@ -352,7 +352,7 @@ public class ItemSyringe extends Item {
             	entity.clearActivePotions();
             	VersatileConfig.applyPotionSickness(entity, 5);
             	stack.shrink(1);
-            	world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            	world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -379,7 +379,7 @@ public class ItemSyringe extends Item {
 
 				stack.shrink(1);
 				;
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (attacker instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) attacker;
@@ -397,7 +397,7 @@ public class ItemSyringe extends Item {
             	entity.attackEntityFrom(ModDamageSource.euthanized(attacker, attacker), 30);
                 
             	stack.shrink(1);
-            	world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            	world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -415,7 +415,7 @@ public class ItemSyringe extends Item {
 				entity.heal(5);
 
 				stack.shrink(1);
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 				if (attacker instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) attacker;
@@ -433,7 +433,7 @@ public class ItemSyringe extends Item {
             	entity.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 4 * 60 * 20, 2));
             	
             	stack.shrink(1);
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -454,7 +454,7 @@ public class ItemSyringe extends Item {
             	entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 2 * 60 * 20, 0));
             	
             	stack.shrink(1);
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -475,7 +475,7 @@ public class ItemSyringe extends Item {
             	entity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 10 * 20, 0));
             
             	stack.shrink(1);
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -496,7 +496,7 @@ public class ItemSyringe extends Item {
             	entity.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 5 * 20, 0));
             
             	stack.shrink(1);
-				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null,  entity.posX,  entity.posY,  entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
             	if(attacker instanceof EntityPlayer)
             	{
@@ -525,7 +525,7 @@ public class ItemSyringe extends Item {
 		if(this == ModItems.syringe_mkunicorn) {
 			if(!world.isRemote) {
 				HbmLivingProps.setContagion(entity, 3 * 60 * 60 * 20);
-				world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 				stack.shrink(1);
 			}
 		}

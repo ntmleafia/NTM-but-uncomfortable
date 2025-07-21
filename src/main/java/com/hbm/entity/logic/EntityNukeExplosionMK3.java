@@ -9,7 +9,7 @@ import com.hbm.explosion.ExplosionFleija;
 import com.hbm.explosion.ExplosionNukeAdvanced;
 import com.hbm.explosion.ExplosionSolinium;
 import com.hbm.interfaces.Spaghetti;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -269,7 +269,7 @@ public class EntityNukeExplosionMK3 extends Entity implements IChunkLoader {
     public static HashMap<ATEntry, Long> at = new HashMap();
 
     private static void createParticle(World world, int dim, double x, double y, double z, float r, float g, float b) {
-        world.playSound(null, x + 0.5D, y + 0.5D, z + 0.5D, HBMSoundHandler.ufoBlast, SoundCategory.HOSTILE, 15.0F, 1.0F);
+        world.playSound(null, x + 0.5D, y + 0.5D, z + 0.5D, HBMSoundEvents.ufoBlast, SoundCategory.HOSTILE, 15.0F, 1.0F);
 
         NBTTagCompound data = new NBTTagCompound();
         data.setString("type", "plasmablast");

@@ -20,10 +20,14 @@ import com.hbm.blocks.test.TestObjTester;
 import com.hbm.blocks.test.TestRender;
 import com.hbm.blocks.turret.*;
 import com.hbm.items.special.ItemHazard;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 import com.leafia.contents.building.BlockPinkDoor;
+import com.leafia.contents.machines.elevators.EvBuffer;
+import com.leafia.contents.machines.elevators.EvPulley;
+import com.leafia.contents.machines.elevators.EvShaft;
+import com.leafia.contents.machines.elevators.floors.EvFloor;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderBlock;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
@@ -89,7 +93,7 @@ public class ModBlocks {
 	
 	public static Material materialGas = new MaterialGas();
 	
-	public static SoundType soundTypeGrate = new ModSoundType(HBMSoundHandler.metalBlock, 0.5F, 1.0F) {
+	public static SoundType soundTypeGrate = new ModSoundType(HBMSoundEvents.metalBlock, 0.5F, 1.0F) {
 		@Override
 		public SoundEvent getBreakSound() {
 			return SoundEvents.BLOCK_STONE_BREAK;
@@ -1277,10 +1281,10 @@ public class ModBlocks {
 		public static final int guiID = 273;
 		public static final float generalHardness = 24;
 		public static final float innerHardness = 8;
-		public static SoundType soundTypePWRTube = new ModSoundType(HBMSoundHandler.pipePlaced, 0.5F, 1.0F) {
+		public static SoundType soundTypePWRTube = new ModSoundType(HBMSoundEvents.pipePlaced, 0.5F, 1.0F) {
 			@Override
 			public SoundEvent getBreakSound() {
-				return HBMSoundHandler.metalBlock;
+				return HBMSoundEvents.metalBlock;
 			}
 
 		};
@@ -1306,6 +1310,14 @@ public class ModBlocks {
 		public static final PWRMeshedWreck wreck_stone = new PWRWreckStone();
 		public static final PWRMeshedWreck wreck_metal = new PWRWreckMetal();
 	}
+	public static class Elevators {
+		public static final int guiIdFloor = 365;
+	} // fuck the grouping since it doesnt work
+	public static final Block pulley = new EvPulley(Material.IRON,"elevator_pulley");
+	public static final Block shaft = new EvShaft(Material.IRON,"elevator_shaft");
+	public static final Block buffer = new EvBuffer(Material.IRON,"elevator_buffer");
+
+	public static final Block s6_floor = new EvFloor(Material.IRON,"elevator_s6floor");
 
 	//Big reactor
 	public static final Block reactor_element = PWR.element; // retroompat redirection

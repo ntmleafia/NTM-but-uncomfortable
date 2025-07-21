@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Gun22LRFactory {
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 3000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.uziShoot;
+		config.firingSound = HBMSoundEvents.uziShoot;
 		config.reloadSoundEnd = false;
 		
 		config.name = "IMI Uzi";

@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class GunOSIPRFactory {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_ARROWS;
 		config.durability = 10000;
-		config.reloadSound = HBMSoundHandler.osiprReload;
-		config.firingSound = HBMSoundHandler.osiprShoot;
+		config.reloadSound = HBMSoundEvents.osiprReload;
+		config.firingSound = HBMSoundEvents.osiprShoot;
 		config.reloadSoundEnd = false;
 		
 		config.name = "Overwatch Standard Issue Pulse Rifle";
@@ -52,7 +52,7 @@ public class GunOSIPRFactory {
 		config.ammoCap = 0;
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.allowsInfinity = true;
-		config.firingSound = HBMSoundHandler.singFlyby;
+		config.firingSound = HBMSoundEvents.singFlyby;
 		config.config = new ArrayList<Integer>();
 		config.config.add(BulletConfigSyncingUtil.SPECIAL_OSIPR_CHARGED);
 		

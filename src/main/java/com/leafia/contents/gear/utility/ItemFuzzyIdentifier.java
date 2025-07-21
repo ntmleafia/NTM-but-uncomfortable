@@ -2,7 +2,7 @@ package com.leafia.contents.gear.utility;
 
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
 import com.hbm.util.I18nUtil;
@@ -76,7 +76,7 @@ public class ItemFuzzyIdentifier extends ItemForgeFluidIdentifier {
 						nbt.setString("fluidtype",duct.getType().getName());
 						stack.setTagCompound(nbt);
 						if (!worldIn.isRemote)
-							worldIn.playSound(null,player.getPosition(),HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1,1);
+							worldIn.playSound(null,player.getPosition(),HBMSoundEvents.techBleep,SoundCategory.PLAYERS,1,1);
 						else
 							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",duct.getType().getLocalizedName(new FluidStack(duct.getType(),1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 					}

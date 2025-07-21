@@ -8,7 +8,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.machine.ItemCatalyst;
 import com.hbm.items.special.ItemAMSCore;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
@@ -28,7 +28,7 @@ import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.LeafiaPassiveLocal;
 import com.llib.exceptions.LeafiaDevFlaw;
-import com.llib.math.FiaMatrix;
+import com.leafia.dev.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -58,11 +58,11 @@ import java.util.function.Consumer;
 
 public class TileEntityCore extends TileEntityMachineBase implements ITickable, LeafiaPacketReceiver {
 	public enum Cores {
-		ams_core_sing(HBMSoundHandler.dfc_vs, (intended, distance) ->
+		ams_core_sing(HBMSoundEvents.dfc_vs, (intended,distance) ->
 				Math.pow(MathHelper.clamp(1 - (distance - 3) / 15, 0, 1), 1.5)),
-		ams_core_wormhole(HBMSoundHandler.dfc_tw, (intended, distance) ->
+		ams_core_wormhole(HBMSoundEvents.dfc_tw, (intended,distance) ->
 				Math.pow(MathHelper.clamp(1 - (distance - 3) / 40, 0, 1), 2)),
-		ams_core_eyeofharmony(HBMSoundHandler.dfc_eoh, (intended, distance) ->
+		ams_core_eyeofharmony(HBMSoundEvents.dfc_eoh, (intended,distance) ->
 				Math.pow(MathHelper.clamp(1 - (distance - 3) / 150, 0, 1), 3));
 		public final SoundEvent sfx;
 		public final BiFunction<Float, Double, Double> attentuationFunction;
@@ -509,7 +509,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						collapsing = MathHelper.clamp(1-explosionIn/120,0,1);
 						explosionClock = time;
 						if (explosionIn <= 0 && exp != null) {
-							world.playSound(null, pos, HBMSoundHandler.dfc_explode, SoundCategory.BLOCKS, 100, 1);
+							world.playSound(null, pos, HBMSoundEvents.dfc_explode, SoundCategory.BLOCKS, 100, 1);
 							destroyed = true;
 							world.spawnEntity(exp);
 							EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
@@ -976,7 +976,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						SoundEvent soundToPlay;
 						float pitch = 1;
 						if (type == 0) {
-							soundToPlay = HBMSoundHandler.dfc_meltdown;
+							soundToPlay = HBMSoundEvents.dfc_meltdown;
 						} else if (type == 1) {
 							soundToPlay = SoundEvents.BLOCK_FIRE_EXTINGUISH;
 							pitch = 0.8f;

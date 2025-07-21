@@ -12,7 +12,7 @@ import com.hbm.explosion.ExplosionChaos;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.interfaces.IBomb;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.PacketDispatcher;
 import com.leafia.CommandLeaf;
 import com.leafia.dev.optimization.LeafiaParticlePacket.PinkRBMK;
@@ -67,7 +67,7 @@ public class BlockPinkDoor extends BlockModDoor implements IBomb {
 		);
 		world.createExplosion(null,pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,15,true);
 		new PinkRBMK().emit(new Vec3d(pos).add(.5,-1,.5),new Vec3d(0,0,0),world.provider.getDimension());
-		world.playSound(null,pos,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,30,1);
+		world.playSound(null,pos,HBMSoundEvents.rbmk_explosion,SoundCategory.BLOCKS,30,1);
 		for (int i = 0; i < 15; i++) spawnDebris(world,pos,DebrisType.BLANK);
 		for (int i = 0; i < 10; i++) spawnDebris(world,pos,DebrisType.GRAPHITE);
 		for (int i = 0; i < 4; i++) spawnDebris(world,pos,DebrisType.LID);

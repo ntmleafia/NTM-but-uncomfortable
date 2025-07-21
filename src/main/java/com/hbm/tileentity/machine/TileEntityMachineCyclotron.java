@@ -18,7 +18,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
@@ -86,7 +86,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			@Override
 			public void setStackInSlot(int slot, ItemStack stack) {
 				if(stack != null && slot >= 14 && slot <= 15 && stack.getItem() instanceof ItemMachineUpgrade)
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundHandler.upgradePlug, SoundCategory.BLOCKS, 1.5F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundEvents.upgradePlug, SoundCategory.BLOCKS, 1.5F, 1.0F);
 				super.setStackInSlot(slot, stack);
 			}
 		};
@@ -378,7 +378,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 						}
 
 						if(countdown == 1140)
-							world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
+							world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundEvents.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
 
 						if(countdown > 1200)
 							explode();
@@ -458,7 +458,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "muke");
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), new TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 250));
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
 		} else if(rand < 4) {
 			EntityBalefire bf = new EntityBalefire(world).mute();
 			bf.posX = pos.getX() + 0.5;
@@ -471,7 +471,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			data.setString("type", "muke");
 			data.setBoolean("balefire", true);
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), new TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 250));
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
 		} else if(rand < 5) {
 			EntityBlackHole bl = new EntityBlackHole(world, 1.5F + world.rand.nextFloat());
 			bl.posX = pos.getX() + 0.5F;

@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
 import com.hbm.render.anim.BusAnimationSequence;
@@ -31,7 +31,7 @@ public class Gun9mmFactory {
 		config.crosshair = Crosshair.L_SPLIT;
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.rifleShoot;
+		config.firingSound = HBMSoundEvents.rifleShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "Maschinenpistole 40";
@@ -63,7 +63,7 @@ public class Gun9mmFactory {
 		config.crosshair = Crosshair.L_SPLIT;
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.rifleShoot;
+		config.firingSound = HBMSoundEvents.rifleShoot;
 		config.reloadSoundEnd = false;
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()

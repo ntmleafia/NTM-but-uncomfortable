@@ -1,4 +1,4 @@
-package com.leafia.shit;
+package com.leafia.dev.gui;
 
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.client.Minecraft;

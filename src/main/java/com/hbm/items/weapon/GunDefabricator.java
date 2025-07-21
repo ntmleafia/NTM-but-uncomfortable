@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
@@ -73,9 +73,9 @@ public class GunDefabricator extends Item {
 			entitybullet.setDamage(40 + rand.nextInt(120 - 40));
 
 			//world.playSoundAtEntity(player, "random.explode", 1.0F, 1.5F + (rand.nextFloat() / 4));
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.defabShoot, SoundCategory.PLAYERS, 1.0F, 0.9F + (rand.nextFloat() * 0.2F));
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.defabShoot, SoundCategory.PLAYERS, 1.0F, 0.9F + (rand.nextFloat() * 0.2F));
 			if(count == this.getMaxItemUseDuration(stack))
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.defabSpinup, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.defabSpinup, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 			if(count % 20 == 0 && !flag)
 				Library.consumeInventoryItem(player.inventory, Armory.gun_defabricator_ammo);

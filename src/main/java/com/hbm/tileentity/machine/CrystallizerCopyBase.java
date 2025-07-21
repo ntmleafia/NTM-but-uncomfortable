@@ -8,7 +8,7 @@ import com.hbm.inventory.CrystallizerRecipes;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -59,7 +59,7 @@ public class CrystallizerCopyBase extends TileEntityMachineBase implements ITick
 			public void setStackInSlot(int slot, ItemStack stack) {
 				super.setStackInSlot(slot, stack);
 				if(stack != null && slot >= 5 && slot <= 6 && stack.getItem() instanceof ItemMachineUpgrade)
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.upgradePlug, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.upgradePlug, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		};
 		tank = new FluidTank(16000);

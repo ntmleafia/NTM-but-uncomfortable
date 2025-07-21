@@ -5,7 +5,7 @@ import com.hbm.entity.missile.EntityMissileBaseAdvanced;
 import com.hbm.entity.particle.EntityTSmokeFX;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -526,9 +526,9 @@ public class EntityRocketHoming extends Entity implements IProjectile {
         lockonTicks++;
         if(lockonTicks == 5 && !hasBeeped) {
         	if(this.getIsCritical())
-        		world.playSound(this.posX, this.posY, this.posZ, HBMSoundHandler.stingerLockon, SoundCategory.HOSTILE, 10F, 0.75F, true);
+        		world.playSound(this.posX, this.posY, this.posZ, HBMSoundEvents.stingerLockon, SoundCategory.HOSTILE, 10F, 0.75F, true);
         	else
-        		world.playSound(this.posX, this.posY, this.posZ, HBMSoundHandler.stingerLockon, SoundCategory.HOSTILE, 10F, 1F, true);
+        		world.playSound(this.posX, this.posY, this.posZ, HBMSoundEvents.stingerLockon, SoundCategory.HOSTILE, 10F, 1F, true);
         	hasBeeped = true;
         }
         

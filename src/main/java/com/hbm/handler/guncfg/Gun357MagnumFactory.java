@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 import net.minecraft.potion.PotionEffect;
@@ -28,7 +28,7 @@ public static GunConfiguration getBaseConfig() {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CLASSIC;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
-		config.firingSound = HBMSoundHandler.revolverShoot;
+		config.firingSound = HBMSoundEvents.revolverShoot;
 		config.reloadSoundEnd = false;
 		
 		return config;
@@ -121,7 +121,7 @@ public static GunConfiguration getBaseConfig() {
 		config.rateOfFire = 7;
 		config.ammoCap = 17;
 		config.durability = 5000;
-		config.firingSound = HBMSoundHandler.heavyShoot;
+		config.firingSound = HBMSoundEvents.heavyShoot;
 		
 		config.name = "Britannia Standard Issue Motorized Handgun";
 		config.manufacturer = "BAE Systems plc";
@@ -138,7 +138,7 @@ public static GunConfiguration getBaseConfig() {
 		GunConfiguration config = getBaseConfig();
 		
 		config.durability = 7500;
-		config.firingSound = HBMSoundHandler.schrabidiumShoot;
+		config.firingSound = HBMSoundEvents.schrabidiumShoot;
 		
 		config.name = "FFI Viper Ultra";
 		config.manufacturer = "FlimFlam Industries";
@@ -155,7 +155,7 @@ public static GunConfiguration getBaseConfig() {
 		GunConfiguration config = getBaseConfig();
 		
 		config.durability = 4000;
-		config.firingSound = HBMSoundHandler.schrabidiumShoot;
+		config.firingSound = HBMSoundEvents.schrabidiumShoot;
 		
 		config.name = "FFI Viper N1";
 		config.manufacturer = "FlimFlam Industries";
@@ -172,7 +172,7 @@ public static GunConfiguration getBaseConfig() {
 		GunConfiguration config = getBaseConfig();
 		
 		config.durability = 4000;
-		config.firingSound = HBMSoundHandler.schrabidiumShoot;
+		config.firingSound = HBMSoundEvents.schrabidiumShoot;
 		config.crosshair = Crosshair.NONE;
 		
 		config.name = "FFI Viper N2";

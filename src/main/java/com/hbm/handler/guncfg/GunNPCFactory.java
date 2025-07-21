@@ -6,7 +6,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -321,7 +321,7 @@ public class GunNPCFactory {
 			@Override
 			public void behaveBlockHit(EntityBulletBase bullet, int x, int y, int z) {
 
-				bullet.world.playSound(null, bullet.posX, bullet.posY, bullet.posZ, HBMSoundHandler.ufoBlast, SoundCategory.HOSTILE, 5.0F, 0.9F + bullet.world.rand.nextFloat() * 0.2F);
+				bullet.world.playSound(null, bullet.posX, bullet.posY, bullet.posZ, HBMSoundEvents.ufoBlast, SoundCategory.HOSTILE, 5.0F, 0.9F + bullet.world.rand.nextFloat() * 0.2F);
 				bullet.world.playSound(null, bullet.posX, bullet.posY, bullet.posZ, SoundEvents.ENTITY_FIREWORK_BLAST, SoundCategory.HOSTILE, 5.0F, 0.5F);
 				ContaminationUtil.radiate(bullet.world, bullet.posX, bullet.posY, bullet.posZ, 50, 0, 0, 500);
 				

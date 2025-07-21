@@ -4,7 +4,7 @@ import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
@@ -116,7 +116,7 @@ public class TileEntityTurretRichard extends TileEntityTurretBaseNT {
 			if(conf != null) {
 				this.spawnBullet(conf);
 				this.conusmeAmmo(conf.ammo);
-				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.richard_fire, SoundCategory.BLOCKS, 2.0F, 1.0F);
+				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.richard_fire, SoundCategory.BLOCKS, 2.0F, 1.0F);
 				this.loaded--;
 				
 				if(conf.ammo == Armory.ammo_rocket_nuclear)

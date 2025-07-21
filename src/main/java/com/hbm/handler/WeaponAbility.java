@@ -5,7 +5,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.IItemAbility;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
@@ -228,7 +228,7 @@ public abstract class WeaponAbility {
 						PacketDispatcher.wrapper.sendTo(new AuxParticlePacketNT(data, living.posX, living.posY + living.height * 0.5, living.posZ), (EntityPlayerMP)player);
 					}
 
-					world.playSound(null, living.posX, living.posY + living.height * 0.5, living.posZ, HBMSoundHandler.chainsaw, SoundCategory.PLAYERS, 0.5F, 1.0F);
+					world.playSound(null, living.posX, living.posY + living.height * 0.5, living.posZ, HBMSoundEvents.chainsaw, SoundCategory.PLAYERS, 0.5F, 1.0F);
 				}
 			}
 		}

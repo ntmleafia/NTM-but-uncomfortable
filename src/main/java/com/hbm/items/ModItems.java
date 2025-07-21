@@ -37,7 +37,7 @@ import com.hbm.items.weapon.ItemMissile.FuelType;
 import com.hbm.items.weapon.ItemMissile.PartSize;
 import com.hbm.items.weapon.ItemMissile.Rarity;
 import com.hbm.items.weapon.ItemMissile.WarheadType;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.MainRegistry;
 import com.hbm.potion.HbmPotion;
@@ -131,7 +131,7 @@ public class ModItems {
 	
 	public static final Item iv_xp_empty = new ItemSimpleConsumable("iv_xp_empty").setUseActionServer((stack, user) -> {
 			if(user.experienceTotal >= 100) {
-				ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.syringeUse, new ItemStack(ModItems.iv_xp));
+				ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.syringeUse, new ItemStack(ModItems.iv_xp));
 				EnchantmentUtil.removeExperience(user, 100);
 			}
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
@@ -143,28 +143,28 @@ public class ModItems {
 		
 	public static final Item iv_empty = new ItemSimpleConsumable("iv_empty").setUseActionServer((stack, user) -> {
 			if(user.hurtResistantTime <= 0) {
-				ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.syringeUse, new ItemStack(ModItems.iv_blood));
+				ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.syringeUse, new ItemStack(ModItems.iv_blood));
 				user.attackEntityFrom(DamageSource.MAGIC, 5F);
 			}
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
 		
 	public static final Item iv_blood = new ItemSimpleConsumable("iv_blood").setUseActionServer((stack, user) -> {
-			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.radawayUse, new ItemStack(ModItems.iv_empty));
+			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.radawayUse, new ItemStack(ModItems.iv_empty));
 			user.heal(3F);
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
 		
 	public static final Item radaway = new ItemSimpleConsumable("radaway").setUseActionServer((stack, user) -> {
-			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.radawayUse, new ItemStack(ModItems.iv_empty));
+			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.radawayUse, new ItemStack(ModItems.iv_empty));
 			ItemSimpleConsumable.addPotionEffect(user, HbmPotion.radaway, 200, 24);
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
 		
 	public static final Item radaway_strong = new ItemSimpleConsumable("radaway_strong").setUseActionServer((stack, user) -> {
-			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.radawayUse, new ItemStack(ModItems.iv_empty));
+			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.radawayUse, new ItemStack(ModItems.iv_empty));
 			ItemSimpleConsumable.addPotionEffect(user, HbmPotion.radaway, 100, 99);
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
 		
 	public static final Item radaway_flush = new ItemSimpleConsumable("radaway_flush").setUseActionServer((stack, user) -> {
-			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundHandler.radawayUse, new ItemStack(ModItems.iv_empty));
+			ItemSimpleConsumable.giveSoundAndDecrement(stack, user, HBMSoundEvents.radawayUse, new ItemStack(ModItems.iv_empty));
 			ItemSimpleConsumable.addPotionEffect(user, HbmPotion.radaway, 50, 399);
 		}).setMaxStackSize(16).setCreativeTab(MainRegistry.consumableTab);
 	
@@ -482,9 +482,9 @@ public class ModItems {
 				.setBlastProtection(0.25F)
 				.setProtectionLevel(80F)
 				.setFireproof(true)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand).setMaxStackSize(1);
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand).setMaxStackSize(1);
 		public static final Item liquidator_boots = new ArmorLiquidator(MainRegistry.aMatLiquidator, -1, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/liquidator_1.png", "liquidator_boots").cloneStats((ArmorFSB) liquidator_helmet).setMaxStackSize(1);
 		public static final Item liquidator_legs = new ArmorLiquidator(MainRegistry.aMatLiquidator, -1, EntityEquipmentSlot.LEGS, RefStrings.MODID + ":textures/armor/liquidator_2.png", "liquidator_legs").cloneStats((ArmorFSB) liquidator_helmet).setMaxStackSize(1);
 		public static final Item liquidator_plate = new ArmorLiquidator(MainRegistry.aMatLiquidator, -1, EntityEquipmentSlot.CHEST, RefStrings.MODID + ":textures/armor/liquidator_1.png", "liquidator_plate").cloneStats((ArmorFSB) liquidator_helmet).setMaxStackSize(1);
@@ -573,9 +573,9 @@ public class ModItems {
 				.addEffect(new PotionEffect(MobEffects.STRENGTH, 30, 0))
 				.setBlastProtection(0.25F)
 				.setProtectionLevel(200F)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand)
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand)
 				.addResistance("monoxide", 0F)
 				.addResistance("fall", 0);
 		public static final Item ajr_boots = new ArmorAJR(MainRegistry.aMatAJR, 7, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/starmetal_1.png", 2500000, 10000, 2000, 25, "ajr_boots").cloneStats((ArmorFSB) ajr_helmet);
@@ -591,9 +591,9 @@ public class ModItems {
 				.addEffect(new PotionEffect(MobEffects.STRENGTH, 30, 0))
 				.setBlastProtection(0.25F)
 				.setProtectionLevel(200F)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand)
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand)
 				.addResistance("monoxide", 0F)
 				.addResistance("fall", 0);
 		public static final Item ajro_boots = new ArmorAJRO(MainRegistry.aMatAJR, -1, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/starmetal_1.png", 2500000, 10000, 2000, 25, "ajro_boots").cloneStats((ArmorFSB) ajro_helmet);
@@ -625,9 +625,9 @@ public class ModItems {
 				.addEffect(new PotionEffect(HbmPotion.radx, 30, 0))
 				.setBlastProtection(0.5F)
 				.setProtectionLevel(500F)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand)
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand)
 				.addResistance("fall", 0);
 		public static final Item bj_boots = new ArmorBJ(MainRegistry.aMatBJ, 7, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/starmetal_1.png", 10000000, 10000, 1000, 100, "bj_boots").cloneStats((ArmorFSB) bj_helmet);
 		public static final Item bj_legs = new ArmorBJ(MainRegistry.aMatBJ, 7, EntityEquipmentSlot.LEGS, RefStrings.MODID + ":textures/armor/starmetal_2.png", 10000000, 10000, 1000, 100, "bj_legs").cloneStats((ArmorFSB) bj_helmet);
@@ -646,9 +646,9 @@ public class ModItems {
 				.setProtectionLevel(1500)
 				.setMod(0.1F)
 				.setThreshold(20.0F)
-				.setStep(HBMSoundHandler.poweredStep)
-				.setJump(HBMSoundHandler.poweredStep)
-				.setFall(HBMSoundHandler.poweredStep)
+				.setStep(HBMSoundEvents.poweredStep)
+				.setJump(HBMSoundEvents.poweredStep)
+				.setFall(HBMSoundEvents.poweredStep)
 				.addResistance("monoxide", 0F)
 				.addResistance("fall", 0);
 		public static final Item rpa_boots = new ArmorRPA(MainRegistry.aMatRPA, -1, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/starmetal_1.png", 50000000, 100000, 20000, 500, "RPA_boots").cloneStats((ArmorFSB) rpa_helmet);
@@ -663,9 +663,9 @@ public class ModItems {
 				.setHasGeigerSound(true)
 				.enableThermalSight(true)
 				.setHasHardLanding(true)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand)
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand)
 				.addResistance("fall", 0F)
 				.addResistance("monoxide", 0F)
 				.setFireproof(true);
@@ -681,9 +681,9 @@ public class ModItems {
 				.enableVATS(true)
 				.enableThermalSight(true)
 				.setHasHardLanding(true)
-				.setStep(HBMSoundHandler.iron)
-				.setJump(HBMSoundHandler.ironJump)
-				.setFall(HBMSoundHandler.ironLand)
+				.setStep(HBMSoundEvents.iron)
+				.setJump(HBMSoundEvents.ironJump)
+				.setFall(HBMSoundEvents.ironLand)
 				.setFireproof(true);
 		public static final Item dns_boots = new ArmorDNT(MainRegistry.aMatDNS, -1, EntityEquipmentSlot.FEET, RefStrings.MODID + ":textures/armor/starmetal_1.png", 1000000000, 1000000, 100000, 10000, "dns_boots").cloneStats((ArmorFSB) dns_helmet);
 		public static final Item dns_legs = new ArmorDNT(MainRegistry.aMatDNS, -1, EntityEquipmentSlot.LEGS, RefStrings.MODID + ":textures/armor/starmetal_2.png", 1000000000, 1000000, 100000, 10000, "dns_legs").cloneStats((ArmorFSB) dns_helmet);
@@ -3462,10 +3462,10 @@ public class ModItems {
 	}
 
 	//Music
-	public static final Item record_lc = new ItemModRecord("lc", HBMSoundHandler.lambdaCore, "record_lc").setCreativeTab(CreativeTabs.MISC);
-	public static final Item record_ss = new ItemModRecord("ss", HBMSoundHandler.sectorSweep, "record_ss").setCreativeTab(CreativeTabs.MISC);
-	public static final Item record_vc = new ItemModRecord("vc", HBMSoundHandler.vortalCombat, "record_vc").setCreativeTab(CreativeTabs.MISC);
-	public static final Item record_glass = new ItemModRecord("glass", HBMSoundHandler.glass, "record_glass").setCreativeTab(CreativeTabs.MISC);
+	public static final Item record_lc = new ItemModRecord("lc", HBMSoundEvents.lambdaCore, "record_lc").setCreativeTab(CreativeTabs.MISC);
+	public static final Item record_ss = new ItemModRecord("ss", HBMSoundEvents.sectorSweep, "record_ss").setCreativeTab(CreativeTabs.MISC);
+	public static final Item record_vc = new ItemModRecord("vc", HBMSoundEvents.vortalCombat, "record_vc").setCreativeTab(CreativeTabs.MISC);
+	public static final Item record_glass = new ItemModRecord("glass", HBMSoundEvents.glass, "record_glass").setCreativeTab(CreativeTabs.MISC);
 	
 	//Weird items
 	public static final Item flame_pony = new ItemCustomLore("flame_pony").setCreativeTab(MainRegistry.partsTab);

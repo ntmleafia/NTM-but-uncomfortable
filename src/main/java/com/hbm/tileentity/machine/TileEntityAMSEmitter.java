@@ -6,7 +6,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
@@ -242,8 +242,8 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 2);
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 1.5);
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 1);
-		            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.oldExplosion, SoundCategory.BLOCKS, 10.0F, 1);
-			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
+		            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.oldExplosion, SoundCategory.BLOCKS, 10.0F, 1);
+			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
 				}
 	
 				power = Library.chargeTEFromItems(inventory, 3, power, maxPower);

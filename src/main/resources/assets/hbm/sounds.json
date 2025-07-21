@@ -305,5 +305,6 @@
   "item.pointed": {"subtitle": "subtitles.item.pointed", "category": "neutral", "sounds": ["hbm:entity/slicer3","hbm:weapon/hit_metal0"]},
   "elevators.s6beep": { "category": "block", "sounds": ["hbm:elevators/s6_beep"]},
   "elevators.s6bell": { "category": "block", "sounds": ["hbm:elevators/s6_bell"]},
-  "elevators.electronicpingshort": { "category": "block", "sounds": ["hbm:elevators/electronicpingshort"]}
+  "elevators.electronicpingshort": { "category": "block", "sounds": ["hbm:elevators/electronicpingshort"]},
+  "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]}
 }

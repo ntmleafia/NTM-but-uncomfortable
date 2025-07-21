@@ -1,6 +1,6 @@
 package com.leafia.contents.network.fluid.valves;
 
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +15,7 @@ public class FluidBoxValveBlockRS extends FluidBoxValveBase {
 		boolean on = world.getRedstonePowerFromNeighbors(pos) > 0;
 		setState(world,pos,on);
 		if(on)
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.3F);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.3F);
 		super.neighborChanged(state,world,pos,blockIn,fromPos);
 	}
 }

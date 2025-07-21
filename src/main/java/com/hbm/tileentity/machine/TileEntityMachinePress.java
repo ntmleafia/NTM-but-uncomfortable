@@ -2,7 +2,7 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.inventory.PressRecipes;
 import com.hbm.items.machine.ItemStamp;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEPressPacket;
 import com.hbm.tileentity.TileEntityMachineBase;
@@ -148,7 +148,7 @@ public class TileEntityMachinePress extends TileEntityMachineBase implements ITi
 								// this.world.playSound(pos.getX(), pos.getY(),
 								// pos.getZ(), HBMSoundHandler.pressOperate,
 								// SoundCategory.BLOCKS, 1.5F, 1.0F, false);
-								this.world.playSound(null, pos, HBMSoundHandler.pressOperate, SoundCategory.BLOCKS, 1.5F, 1.0F);
+								this.world.playSound(null, pos, HBMSoundEvents.pressOperate, SoundCategory.BLOCKS, 1.5F, 1.0F);
 							}
 
 							if(!isRetracting)

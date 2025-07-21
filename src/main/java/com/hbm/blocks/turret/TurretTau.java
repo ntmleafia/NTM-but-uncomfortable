@@ -1,7 +1,7 @@
 package com.hbm.blocks.turret;
 
 import com.hbm.entity.projectile.EntityBullet;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.turret.TileEntityTurretTau;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -59,7 +59,7 @@ public class TurretTau extends TurretBase {
 				world.spawnEntity(bullet);
 			}
 
-			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundHandler.tauShoot, SoundCategory.BLOCKS, 1.0F, 0.5F);
+			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundEvents.tauShoot, SoundCategory.BLOCKS, 1.0F, 0.5F);
 			
 			flag = true;
 		}

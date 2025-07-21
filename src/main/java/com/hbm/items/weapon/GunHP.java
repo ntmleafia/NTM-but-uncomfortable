@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityPlasmaBeam;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -95,9 +95,9 @@ public class GunHP extends Item {
 			}
 
 			if (count == this.getMaxItemUseDuration(stack))
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.immolatorIgnite, SoundCategory.PLAYERS, 1.0F, 1F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.immolatorIgnite, SoundCategory.PLAYERS, 1.0F, 1F);
 			if (count % 10 == 0)
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.immolatorShoot, SoundCategory.PLAYERS, 1.0F, 1F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.immolatorShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 			if (!world.isRemote) {
 				world.spawnEntity(plasma);

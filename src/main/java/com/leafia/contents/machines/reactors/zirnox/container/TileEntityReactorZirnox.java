@@ -10,7 +10,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.MultiblockHandlerXR;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
@@ -162,7 +162,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
                 }
             }
         }
-        world.playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundHandler.rbmk_explosion,SoundCategory.BLOCKS,50.0F,1.0F);
+        world.playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundEvents.rbmk_explosion,SoundCategory.BLOCKS,50.0F,1.0F);
 
         boolean nope = true;
         if (prevStack != null) {
@@ -398,7 +398,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             stressTimer -= Math.pow(Math.max(pressure-16,0)/14,0.9)*64;
             if (stressTimer <= 0) {
                 stressTimer = 300; // the audios were lot longer than i thought sooo
-                world.playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundHandler.stressSounds[world.rand.nextInt(7)],SoundCategory.BLOCKS, (float)MathHelper.clampedLerp(0.25,4,Math.pow((pressure-16)/14,4)),1.0F);
+                world.playSound(null,pos.getX()+0.5,pos.getY()+2.5,pos.getZ()+0.5,HBMSoundEvents.stressSounds[world.rand.nextInt(7)],SoundCategory.BLOCKS, (float)MathHelper.clampedLerp(0.25,4,Math.pow((pressure-16)/14,4)),1.0F);
             }
             if ((this.pressure >= this.maxPressure) && (pressure >= lastPressure-0.2)) {
                 generosityTimer--;
@@ -544,7 +544,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             updateCompression();
         }
         if (key == packetKeys.OPENVALVE.key) {
-            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.rbmk_az5_cover, SoundCategory.BLOCKS, 0.5F, 0.5F);
+            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.rbmk_az5_cover, SoundCategory.BLOCKS, 0.5F, 0.5F);
             valveOpen = (boolean)value;
         }
     }

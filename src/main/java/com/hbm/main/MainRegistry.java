@@ -41,7 +41,7 @@ import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.HbmWorld;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
@@ -76,7 +76,11 @@ import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
-import com.leafia.contents.machines.elevators.car.EntityElevator;
+import com.leafia.contents.machines.elevators.EvBufferTE;
+import com.leafia.contents.machines.elevators.EvPulleyTE;
+import com.leafia.contents.machines.elevators.EvShaftTE;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
@@ -159,7 +163,7 @@ import java.util.*;
 public class MainRegistry {
 
 	static {
-		HBMSoundHandler.init();
+		HBMSoundEvents.init();
 		FluidRegistry.enableUniversalBucket();
 	}
 
@@ -665,6 +669,11 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCraneExtractor.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneejector"));
 		GameRegistry.registerTileEntity(TileEntityCraneInserter.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneinserter"));
 
+		GameRegistry.registerTileEntity(EvFloorTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_floor"));
+		GameRegistry.registerTileEntity(EvPulleyTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_pulley"));
+		GameRegistry.registerTileEntity(EvShaftTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_shaft"));
+		GameRegistry.registerTileEntity(EvBufferTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_buffer"));
+
 		for (LeafiaQuickModel te : rendererWaiting) {
 			LeafiaQuickModel._loadResources(te,te._assetPath());
 			GameRegistry.registerTileEntity(((TileEntity)te).getClass(),new ResourceLocation(RefStrings.MODID,"tileentity_"+te._resourcePath()));
@@ -847,7 +856,7 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_digamma_quasar"), EntityQuasar.class, "entity_digamma_quasar", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_folkvangr"), EntityNukeFolkvangr.class, "entity_nuke_folkvangr", i++, MainRegistry.instance, 1000, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_elevator"), EntityElevator.class, "entity_elevator", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_elevator"), ElevatorEntity.class, "entity_elevator", i++, MainRegistry.instance, 1000, 1, true);
 
 		GameRegistry.registerTileEntity(TileEntityPWRElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
 		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));

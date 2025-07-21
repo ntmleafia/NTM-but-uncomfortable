@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -86,7 +86,7 @@ public class GunBoltAction extends Item {
 
 			stack.damageItem(1, player);
 
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.revolverShoot, SoundCategory.PLAYERS, 5.0F, 0.75F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.revolverShoot, SoundCategory.PLAYERS, 5.0F, 0.75F);
 
 			if (flag) { } else {
 				Library.consumeInventoryItem(player.inventory, Armory.ammo_20gauge_slug);
@@ -111,7 +111,7 @@ public class GunBoltAction extends Item {
     			setAnim(stack, 0);
     		
         	if(j == 15)
-        		worldIn.playSound(null, entityIn.posX, entityIn.posY, entityIn.posZ, HBMSoundHandler.leverActionReload, SoundCategory.PLAYERS, 2F, 0.85F);
+        		worldIn.playSound(null, entityIn.posX, entityIn.posY, entityIn.posZ, HBMSoundEvents.leverActionReload, SoundCategory.PLAYERS, 2F, 0.85F);
     	}
 	}
 	

@@ -1,6 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.saveddata.RadiationSavedData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -48,9 +48,9 @@ public class TileEntityGeiger extends TileEntity implements ITickable {
 				int r = list.get(world.rand.nextInt(list.size()));
 				
 				if(r > 0)
-		        	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.geigerSounds[r-1], SoundCategory.BLOCKS, 1.0F, 1.0F);
+		        	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.geigerSounds[r-1], SoundCategory.BLOCKS, 1.0F, 1.0F);
 			} else if(world.rand.nextInt(50) == 0) {
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.geigerSounds[(world.rand.nextInt(1))], SoundCategory.BLOCKS, 1.0F, 1.0F);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.geigerSounds[(world.rand.nextInt(1))], SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 		}
 		

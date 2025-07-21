@@ -10,7 +10,7 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.special.ItemCell;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
@@ -64,7 +64,7 @@ public class BlockCrate extends BlockFalling {
     	{
     		dropItems(world, pos.getX(), pos.getY(), pos.getZ());
     		world.setBlockToAir(pos);
-    		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.crateBreak, SoundCategory.BLOCKS, 0.5F, 1.0F);
+    		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.crateBreak, SoundCategory.BLOCKS, 0.5F, 1.0F);
     		return true;
     	} else {
 			if(world.isRemote)

@@ -3,7 +3,7 @@ package com.hbm.entity.missile;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemSatChip;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
@@ -64,7 +64,7 @@ public class EntitySoyuz extends Entity {
 				if(e instanceof EntityPlayer) {
 					if(!memed) {
 						memed = true;
-						world.playSound(null, posX, posY, posZ, HBMSoundHandler.soyuzed, SoundCategory.NEUTRAL, 100, 1.0F);
+						world.playSound(null, posX, posY, posZ, HBMSoundEvents.soyuzed, SoundCategory.NEUTRAL, 100, 1.0F);
 					}
 					
 					AdvancementManager.grantAchievement(((EntityPlayer)e), AdvancementManager.soyuz);

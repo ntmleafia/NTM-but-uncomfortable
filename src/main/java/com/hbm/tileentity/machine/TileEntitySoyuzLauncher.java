@@ -10,7 +10,7 @@ import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems;
 import com.hbm.items.special.ItemSoyuz;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.FluidTankPacket;
@@ -91,7 +91,7 @@ public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements IT
 				countdown--;
 				
 				if(countdown % 100 == 0 && countdown > 0)
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.alarmHatch, SoundCategory.BLOCKS, 100F, 1.1F);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.alarmHatch, SoundCategory.BLOCKS, 100F, 1.1F);
 				
 			} else {
 				liftOff();
@@ -118,7 +118,7 @@ public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements IT
 			} else if(countdown > 0) {
 
 				if(audio == null) {
-					audio = MainRegistry.proxy.getLoopedSound(HBMSoundHandler.soyuzReady, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F);
+					audio = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.soyuzReady, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F);
 					audio.updateVolume(100);
 					audio.startSound();
 				}
@@ -205,7 +205,7 @@ public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements IT
 		soyuz.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
 		world.spawnEntity(soyuz);
 
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.soyuzTakeOff, SoundCategory.BLOCKS, 100F, 1.1F);
+		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.soyuzTakeOff, SoundCategory.BLOCKS, 100F, 1.1F);
 
 		tanks[0].drain(req, true);
 		tanks[1].drain(req, true);

@@ -1,7 +1,7 @@
 package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.machine.TileEntityGeiger;
 import com.hbm.util.ContaminationUtil;
 import net.minecraft.block.BlockContainer;
@@ -48,7 +48,7 @@ public class GeigerCounter extends BlockContainer {
 			return true;
 		} else if(!player.isSneaking())
 		{
-	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.techBoop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.techBoop, SoundCategory.BLOCKS, 1.0F, 1.0F);
 
 	    	ContaminationUtil.printGeigerData(player);
 			return true;

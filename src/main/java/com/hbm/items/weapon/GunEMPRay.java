@@ -6,7 +6,7 @@ import com.hbm.entity.projectile.EntityDischarge;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -94,7 +94,7 @@ public class GunEMPRay extends Item {
 				stack.damageItem(1, player);
 				// p_77615_2_.playSoundAtEntity(p_77615_3_, "tile.piston.out",
 				// 1.0F, 0.5F);
-				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
+				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 				if (!flag) {
 					Library.consumeInventoryItem(player.inventory, Armory.gun_emp_ammo);

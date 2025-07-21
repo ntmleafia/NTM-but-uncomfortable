@@ -6,7 +6,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHurtBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.potion.HbmPotion;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
@@ -37,7 +37,7 @@ public class Gun12GaugeFactory {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
-		config.firingSound = HBMSoundHandler.shotgunShoot;
+		config.firingSound = HBMSoundEvents.shotgunShoot;
 		
 		config.name = "Uboinik Revolving Shotgun";
 		config.manufacturer = "Metro Gunsmiths";
@@ -70,7 +70,7 @@ public class Gun12GaugeFactory {
 		config.hasSights = true;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
-		config.firingSound = HBMSoundHandler.shottyShoot;
+		config.firingSound = HBMSoundEvents.shottyShoot;
 		
 		config.animations.put(AnimType.ALT_CYCLE, new BusAnimation()
 				.addBus("MEATHOOK_RECOIL", new BusAnimationSequence()
@@ -132,7 +132,7 @@ public class Gun12GaugeFactory {
 		config.hasSights = true;
 		config.crosshair = Crosshair.NONE;
 		config.reloadSound = null;
-		config.firingSound = HBMSoundHandler.shottyShoot;
+		config.firingSound = HBMSoundEvents.shottyShoot;
 		
 		config.animations.put(AnimType.ALT_CYCLE, new BusAnimation()
 				.addBus("JS_RECOIL2", new BusAnimationSequence()

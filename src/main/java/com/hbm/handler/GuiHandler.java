@@ -1,6 +1,7 @@
 package com.hbm.handler;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.ModBlocks.Elevators;
 import com.hbm.blocks.ModBlocks.PWR;
 import com.hbm.blocks.machine.NTMAnvil;
 import com.hbm.interfaces.Spaghetti;
@@ -22,6 +23,8 @@ import com.hbm.tileentity.machine.rbmk.*;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.turret.*;
+import com.leafia.contents.machines.elevators.floors.EvFloorGUI;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
@@ -1290,6 +1293,11 @@ public class GuiHandler implements IGuiHandler {
 					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
 					if (core != null)
 						return new PWRTerminalUI(player.inventory,entity,core);
+				}
+				return null;
+			case Elevators.guiIdFloor:
+				if(entity instanceof EvFloorTE) {
+					return new EvFloorGUI((EvFloorTE)entity);
 				}
 				return null;
 			// ITEM GUIS

@@ -5,7 +5,7 @@ import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
 import com.hbm.items.tool.ItemTooling;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
@@ -85,14 +85,14 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
                         control.targetPosition = Math.min(control.targetPosition+0.25/control.height,1);
                     if (control.targetPosition == ogPos)
                         return false;
-                    worldIn.playSound(null,pos,HBMSoundHandler.lockOpen,SoundCategory.BLOCKS,0.5f,1);
+                    worldIn.playSound(null,pos,HBMSoundEvents.lockOpen,SoundCategory.BLOCKS,0.5f,1);
                 }
                 return true;
             }
         } else if (playerIn.getHeldItem(hand).getItem() instanceof ItemNameTag) {
             if (!worldIn.isRemote) {
                 ItemStack stack = playerIn.getHeldItem(hand);
-                worldIn.playSound(null,pos,HBMSoundHandler.techBleep,SoundCategory.BLOCKS,1,1);
+                worldIn.playSound(null,pos,HBMSoundEvents.techBleep,SoundCategory.BLOCKS,1,1);
                 if (stack.getSubCompound("display") != null) {
                     control.name = stack.getDisplayName();
                 } else {

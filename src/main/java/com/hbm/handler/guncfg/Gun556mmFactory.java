@@ -7,7 +7,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHitBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
@@ -42,7 +42,7 @@ public class Gun556mmFactory {
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.hksShoot;
+		config.firingSound = HBMSoundEvents.hksShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "Britannian Standard Issue Assault Rifle";
@@ -82,7 +82,7 @@ public class Gun556mmFactory {
 		config.crosshair = Crosshair.L_BOX;
 		config.durability = 7000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.hksShoot;
+		config.firingSound = HBMSoundEvents.hksShoot;
 		config.reloadSoundEnd = false;
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation()
@@ -126,7 +126,7 @@ public class Gun556mmFactory {
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
-		config.firingSound = HBMSoundHandler.glauncher;
+		config.firingSound = HBMSoundEvents.glauncher;
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;
 		config.reloadSoundEnd = false;
 

@@ -5,14 +5,14 @@ import com.hbm.explosion.ExplosionLarge;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ILaserable;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity.DebrisType;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.llib.LeafiaLib.NumScale;
-import com.llib.math.FiaMatrix;
+import com.leafia.dev.math.FiaMatrix;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -26,6 +26,7 @@ import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -104,7 +105,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         spawnShrapnel(DebrisType.CORE);
         spawnShrapnel(DebrisType.FRONT);
         ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 12, 3);
-        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.machineExplode, SoundCategory.BLOCKS, 10.0F, 1);
+        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.machineExplode, SoundCategory.BLOCKS, 10.0F, 1);
         world.newExplosion(null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, 2f, true, true);
     }
 
@@ -336,8 +337,22 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     }
 
     @Callback
-    public Object[] storedCoolnt(Context context, Arguments args) {
+    public Object[] storedCoolant(Context context, Arguments args) {
         return new Object[]{tank.getFluidAmount()};
+    }
+
+    @Callback(doc = "setLevel(newLevel: number [0~100])->(previousLevel: number)")
+    public Object[] setLevel(Context context, Arguments args) {
+        double level = args.checkDouble(0);
+        level = MathHelper.clamp(level,0,100);
+        double prevLevel = level*100;
+        this.level = level/100d;
+        return new Object[]{prevLevel*100};
+    }
+
+    @Callback(doc = "getLevel()->(level: number [0-100])")
+    public Object[] getLevel(Context context, Arguments args) {
+        return new Object[]{level};
     }
 
     @Override

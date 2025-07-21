@@ -1,4 +1,4 @@
-package com.llib.math;
+package com.leafia.dev.math;
 
 import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.util.math.Vec3d;

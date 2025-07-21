@@ -4,7 +4,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.control_panel.DataValue;
 import com.hbm.inventory.control_panel.DataValueFloat;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.machine.rbmk.TileEntityRBMKConsole.ColumnType;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.SoundEvents;
@@ -67,7 +67,7 @@ public class TileEntityRBMKCooler extends TileEntityRBMKBase implements IFluidHa
 			}
 
 			if(this.lastCooled > 100) {
-				world.playSound(null, pos.getX() + 0.5, pos.getY() + rbmkHeight + 0.5, pos.getZ() + 0.5, HBMSoundHandler.flamethrowerShoot, SoundCategory.BLOCKS, 1.0F, 1.25F + world.rand.nextFloat());
+				world.playSound(null, pos.getX() + 0.5, pos.getY() + rbmkHeight + 0.5, pos.getZ() + 0.5, HBMSoundEvents.flamethrowerShoot, SoundCategory.BLOCKS, 1.0F, 1.25F + world.rand.nextFloat());
 				world.playSound(null, pos.getX() + 0.5, pos.getY() + rbmkHeight + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1F + world.rand.nextFloat() * 0.5F);
 			} else if(this.lastCooled > 50){
 				world.playSound(null, pos.getX() + 0.5, pos.getY() + rbmkHeight + 0.5, pos.getZ() + 0.5, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 0.75F + world.rand.nextFloat() * 0.5F);

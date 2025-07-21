@@ -9,7 +9,7 @@ import com.hbm.entity.particle.EntityBSmokeFX;
 import com.hbm.handler.ArmorUtil;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.ParticleBurstPacket;
@@ -498,7 +498,7 @@ public class EntityBullet extends Entity implements IProjectile {
 
 										world.spawnEntity(pippo);
 										
-										world.playSound(null, movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY + 50, movingobjectposition.entityHit.posZ, HBMSoundHandler.trainHorn, SoundCategory.HOSTILE, 10000F, 1F);
+										world.playSound(null, movingobjectposition.entityHit.posX, movingobjectposition.entityHit.posY + 50, movingobjectposition.entityHit.posZ, HBMSoundEvents.trainHorn, SoundCategory.HOSTILE, 10000F, 1F);
 									}
 									
 								}

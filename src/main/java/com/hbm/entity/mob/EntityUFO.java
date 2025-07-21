@@ -6,7 +6,7 @@ import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.packet.AuxParticlePacketNT;
@@ -194,7 +194,7 @@ public class EntityUFO extends EntityFlying implements IMob, IRadiationImmune {
 				this.beamTimer--;
 				
 				if(!this.getBeam()) {
-					world.playSound(null, this.posX, this.posY, this.posZ, HBMSoundHandler.ufoBeam, SoundCategory.HOSTILE, 10.0F, 1.0F);
+					world.playSound(null, this.posX, this.posY, this.posZ, HBMSoundEvents.ufoBeam, SoundCategory.HOSTILE, 10.0F, 1.0F);
 					this.setBeam(true);
 				}
 
@@ -309,7 +309,7 @@ public class EntityUFO extends EntityFlying implements IMob, IRadiationImmune {
 		this.motionY -= 0.05D;
 		
 		if(this.deathTime == -10) {
-			world.playSound(null, this.posX, this.posY, this.posZ, HBMSoundHandler.chopperDamage, SoundCategory.HOSTILE, 10.0F, 1.0F);
+			world.playSound(null, this.posX, this.posY, this.posZ, HBMSoundEvents.chopperDamage, SoundCategory.HOSTILE, 10.0F, 1.0F);
 		}
 		
 		if(this.deathTime == 19 && !world.isRemote) {
@@ -344,7 +344,7 @@ public class EntityUFO extends EntityFlying implements IMob, IRadiationImmune {
 		bullet.setPosition(pivotX, pivotY, pivotZ);
 		bullet.shoot(heading.xCoord, heading.yCoord, heading.zCoord, 2F, 0.02F);
 		this.world.spawnEntity(bullet);
-		this.playSound(HBMSoundHandler.ballsLaser, 5.0F, 1.0F);
+		this.playSound(HBMSoundEvents.ballsLaser, 5.0F, 1.0F);
 	}
 	
 	private void rocketAttack(Entity e) {
@@ -357,7 +357,7 @@ public class EntityUFO extends EntityFlying implements IMob, IRadiationImmune {
 		bullet.shoot(heading.xCoord, heading.yCoord, heading.zCoord, 2F, 0.02F);
 		bullet.getEntityData().setInteger("homingTarget", e.getEntityId());
 		this.world.spawnEntity(bullet);
-		this.playSound(HBMSoundHandler.richard_fire, 5.0F, 1.0F);
+		this.playSound(HBMSoundEvents.richard_fire, 5.0F, 1.0F);
 	}
 	
 	@Override

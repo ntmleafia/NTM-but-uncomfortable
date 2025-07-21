@@ -10,7 +10,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
@@ -440,7 +440,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
                 stressTimer -= Math.pow(stress, 0.9) * 64;
                 if (stressTimer <= 0) {
                     BlockPos pos = (BlockPos) members.toArray()[getWorld().rand.nextInt(members.size())];
-                    getWorld().playSound(null, pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5, HBMSoundHandler.stressSounds[getWorld().rand.nextInt(7)], SoundCategory.BLOCKS, (float) MathHelper.clampedLerp(0.25, 14, Math.pow(stress, 4)), 1.0F);
+                    getWorld().playSound(null, pos.getX() + 0.5, pos.getY() + 2.5, pos.getZ() + 0.5, HBMSoundEvents.stressSounds[getWorld().rand.nextInt(7)], SoundCategory.BLOCKS, (float) MathHelper.clampedLerp(0.25, 14, Math.pow(stress, 4)), 1.0F);
                 }
             }
             if (tanks[3].getCapacity() > 0) {
@@ -926,7 +926,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
             data.setString("type", "rbmkmush");
             data.setFloat("scale", (float) reactorSize / 3);
             PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5, 250));
-            world.playSound(null, centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5, HBMSoundHandler.rbmk_explosion, SoundCategory.BLOCKS, 50.0F, 1.0F);
+            world.playSound(null, centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5, HBMSoundEvents.rbmk_explosion, SoundCategory.BLOCKS, 50.0F, 1.0F);
         }
     }
 

@@ -2,7 +2,7 @@ package com.hbm.tileentity.machine;
 
 import api.hbm.energy.IEnergyUser;
 import com.hbm.items.ModItems.Upgrades;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEFFPacket;
@@ -249,7 +249,7 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ITicka
 						entity.posY -= entity.motionY;
 						entity.posZ -= entity.motionZ;
 
-			    		world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.sparkShoot, SoundCategory.BLOCKS, 2.5F, 1.0F);
+			    		world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.sparkShoot, SoundCategory.BLOCKS, 2.5F, 1.0F);
 						outside.add(entity);
 						
 						if(!world.isRemote) {
@@ -279,7 +279,7 @@ public class TileEntityForceField extends TileEntityLoadedBase implements ITicka
 						entity.posY -= entity.motionY;
 						entity.posZ -= entity.motionZ;
 
-			    		world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.sparkShoot, SoundCategory.BLOCKS, 2.5F, 1.0F);
+			    		world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.sparkShoot, SoundCategory.BLOCKS, 2.5F, 1.0F);
 						inside.add(entity);
 						
 						if(!world.isRemote) {

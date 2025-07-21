@@ -1,6 +1,6 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components.control;
 
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
@@ -186,7 +186,7 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
             }
             if (!(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl)) {
                 if (sound == null)
-                    sound = MainRegistry.proxy.getLoopedSoundStartStop(world,HBMSoundHandler.pwrRodLoop,HBMSoundHandler.pwrRodStart,HBMSoundHandler.pwrRodStop,SoundCategory.BLOCKS,pos.getX(),pos.getY(),pos.getZ(),0.0175f,0.75f);
+                    sound = MainRegistry.proxy.getLoopedSoundStartStop(world,HBMSoundEvents.pwrRodLoop,HBMSoundEvents.pwrRodStart,HBMSoundEvents.pwrRodStop,SoundCategory.BLOCKS,pos.getX(),pos.getY(),pos.getZ(),0.0175f,0.75f);
                 if (playing) {
                     if (targetPosition == position) {
                         sound.stopSound();

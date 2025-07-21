@@ -6,7 +6,7 @@ import com.hbm.capability.HbmLivingProps;
 import com.hbm.capability.HbmLivingProps.ContaminationEffect;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.RadiationConfig;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
@@ -161,7 +161,7 @@ public class EntityEffectHandler {
 				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
 				
 				if((world.getTotalWorldTime() + r600) % 600 == 1) {
-					world.playSound(null, ix, iy, iz, HBMSoundHandler.vomit, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+					world.playSound(null, ix, iy, iz, HBMSoundEvents.vomit, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 					entity.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 60, 19));
 				}
 
@@ -175,7 +175,7 @@ public class EntityEffectHandler {
 				PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
 				
 				if((world.getTotalWorldTime() + r1200) % 1200 == 1) {
-					world.playSound(null, ix, iy, iz, HBMSoundHandler.vomit, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+					world.playSound(null, ix, iy, iz, HBMSoundEvents.vomit, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 					entity.addPotionEffect(new PotionEffect(MobEffects.HUNGER, 60, 19));
 				}
 			}
@@ -322,7 +322,7 @@ public class EntityEffectHandler {
 					PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(nbt, 0, 0, 0),  new TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 25));
 					
 					if((contagion + entity.getEntityId()) % 200 == 19)
-						world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.vomit, SoundCategory.PLAYERS, 1.0F, 1.0F);
+						world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.vomit, SoundCategory.PLAYERS, 1.0F, 1.0F);
 				}
 				
 				//T-5 minutes, take damage every 5 seconds
@@ -400,7 +400,7 @@ public class EntityEffectHandler {
 		}
 		
 		if(world.getTotalWorldTime() % freq == entity.getEntityId() % freq) {
-			world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.cough, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.cough, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			
 			if(coughsBlood) {
 				NBTTagCompound nbt = new NBTTagCompound();

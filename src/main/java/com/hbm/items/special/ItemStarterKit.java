@@ -11,7 +11,7 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.machine.ItemBattery;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -460,7 +460,7 @@ public class ItemStarterKit extends Item {
 			}
 		}
 		
-		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.itemUnpack, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.itemUnpack, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		stack.shrink(1);
 		return super.onItemRightClick(world, player, hand);
 	}

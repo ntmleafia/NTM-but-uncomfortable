@@ -11,7 +11,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHitBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
@@ -41,7 +41,7 @@ public class Gun44MagnumFactory {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CLASSIC;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
-		config.firingSound = HBMSoundHandler.revolverShootAlt;
+		config.firingSound = HBMSoundEvents.revolverShootAlt;
 		config.reloadSoundEnd = false;
 
 		return config;
@@ -245,7 +245,7 @@ public class Gun44MagnumFactory {
 					}
 					bullet.world.spawnEntity(pippo);
 
-					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundHandler.trainHorn, SoundCategory.PLAYERS, 100F, 1F);
+					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundEvents.trainHorn, SoundCategory.PLAYERS, 100F, 1F);
 				}
 			}
 		};
@@ -280,7 +280,7 @@ public class Gun44MagnumFactory {
 					}
 					bullet.world.spawnEntity(pippo);
 
-					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundHandler.boatWeapon, SoundCategory.PLAYERS, 100F, 1F);
+					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundEvents.boatWeapon, SoundCategory.PLAYERS, 100F, 1F);
 				}
 			}
 
@@ -316,7 +316,7 @@ public class Gun44MagnumFactory {
 					}
 					bullet.world.spawnEntity(pippo);
 
-					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundHandler.blockDebris, SoundCategory.PLAYERS, 100F, 1F);
+					bullet.world.playSound(null, pippo.posX, pippo.posY + 50, pippo.posZ, HBMSoundEvents.blockDebris, SoundCategory.PLAYERS, 100F, 1F);
 				}
 			}
 

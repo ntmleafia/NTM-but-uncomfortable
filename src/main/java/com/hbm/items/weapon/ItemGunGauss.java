@@ -3,7 +3,7 @@ package com.hbm.items.weapon;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
@@ -58,7 +58,7 @@ public class ItemGunGauss extends ItemGunBase {
 	@Override
 	public void endAction(ItemStack stack, World world, EntityPlayer player, boolean main, EnumHand hand) {
 		if(getHasShot(stack)) {
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.sparkShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.sparkShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			setHasShot(stack, false);
 		}
 		if(!main && getStored(stack) > 0) {
@@ -67,7 +67,7 @@ public class ItemGunGauss extends ItemGunBase {
 			//bullet.overrideDamage = Math.min(getStored(stack), 13) * 3.5F;
 			PacketDispatcher.sendTo(new GunAnimationPacket(AnimType.ALT_CYCLE.ordinal(), hand), (EntityPlayerMP) player);
 			//world.spawnEntity(bullet);
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.75F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.75F);
 			setItemWear(stack, getItemWear(stack) + (getCharge(stack)) * 2);
 			setCharge(stack, 0);
 		}
@@ -362,8 +362,8 @@ public class ItemGunGauss extends ItemGunBase {
 	@SideOnly(Side.CLIENT)
 	public void startActionClient(ItemStack stack, World world, EntityPlayer player, boolean main, EnumHand hand) {
 		if(!main && getItemWear(stack) < mainConfig.durability && Library.hasInventoryItem(player.inventory, Armory.gun_xvl1456_ammo)) {
-			chargeLoop = MainRegistry.proxy.getLoopedSound(HBMSoundHandler.tauChargeLoop2, SoundCategory.PLAYERS, (float)player.posX, (float)player.posY, (float)player.posZ, 1.0F, 0.75F);
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.tauChargeLoop2, SoundCategory.PLAYERS, 1.0F, 0.75F);
+			chargeLoop = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.tauChargeLoop2, SoundCategory.PLAYERS, (float)player.posX, (float)player.posY, (float)player.posZ, 1.0F, 0.75F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.tauChargeLoop2, SoundCategory.PLAYERS, 1.0F, 0.75F);
 			firstPersonFireCounter = 0;
 			if(chargeLoop != null) {
 				chargeLoop.startSound();

@@ -6,7 +6,7 @@ import com.hbm.blocks.ITooltipProvider;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.items.tool.ItemTooling;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
@@ -113,7 +113,7 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 					hand.equals(EnumHand.MAIN_HAND) ? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND,
 					ItemStack.EMPTY
 			);
-			world.playSound(null,pos,HBMSoundHandler.upgradePlug,SoundCategory.BLOCKS,1,1);
+			world.playSound(null,pos,HBMSoundEvents.upgradePlug,SoundCategory.BLOCKS,1,1);
 			entity.markDirty();
 			return true;
 		} else {
@@ -123,8 +123,8 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 					if (world.isRemote) return true;
 					InventoryHelper.spawnItemStack(world,player.posX,player.posY,player.posZ,stack);
 					held.damageItem(1,player);
-					world.playSound(null,pos,HBMSoundHandler.lockHang,SoundCategory.BLOCKS,0.85f,1);
-					world.playSound(null,pos,HBMSoundHandler.pipePlaced,SoundCategory.BLOCKS,0.65f,0.8f);
+					world.playSound(null,pos,HBMSoundEvents.lockHang,SoundCategory.BLOCKS,0.85f,1);
+					world.playSound(null,pos,HBMSoundEvents.pipePlaced,SoundCategory.BLOCKS,0.65f,0.8f);
 					entity.markDirty();
 					return true;
 				}

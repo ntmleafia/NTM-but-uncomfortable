@@ -8,7 +8,7 @@ import com.hbm.interfaces.IBulletHurtBehavior;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.weapon.ItemGunDart;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 import net.minecraft.entity.Entity;
@@ -39,7 +39,7 @@ public class GunDartFactory {
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 1000;
 		config.reloadSound = GunConfiguration.RSOUND_GRENADE;
-		config.firingSound = HBMSoundHandler.dartShoot;
+		config.firingSound = HBMSoundEvents.dartShoot;
 		config.reloadSoundEnd = false;
 		config.showAmmo = true;
 

@@ -4,7 +4,7 @@ import com.hbm.config.BombConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.resources.I18n;
@@ -48,7 +48,7 @@ public class ItemUnstable extends Item {
 			if(BombConfig.enableNukeClouds) {
 				EntityNukeTorex.statFac(world, entity.posX, entity.posY, entity.posZ, radius);
 			}
-			world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.oldExplosion, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.oldExplosion, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			entity.attackEntityFrom(ModDamageSource.nuclearBlast, 10000);
 		}
 	}
@@ -67,7 +67,7 @@ public class ItemUnstable extends Item {
 			if(BombConfig.enableNukeClouds) {
 				EntityNukeTorex.statFac(world, itemEntity.posX, itemEntity.posY, itemEntity.posZ, radius);
 			}
-			world.playSound(null, itemEntity.posX, itemEntity.posY, itemEntity.posZ, HBMSoundHandler.oldExplosion, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			world.playSound(null, itemEntity.posX, itemEntity.posY, itemEntity.posZ, HBMSoundEvents.oldExplosion, SoundCategory.PLAYERS, 1.0F, 1.0F);
 			itemEntity.attackEntityFrom(ModDamageSource.nuclearBlast, 10000);
 			itemEntity.setDead();
 			return true;

@@ -4,7 +4,7 @@ import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.logic.EntityNukeExplosionMK3.ATEntry;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.inventory.OreDictManager;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
@@ -14,6 +14,7 @@ import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.optimization.LeafiaParticlePacket;
 import com.leafia.dev.optimization.LeafiaParticlePacket.Sweat;
 import com.leafia.passive.LeafiaPassiveServer;
+import com.leafia.unsorted.IEntityCustomCollision;
 import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
 import net.minecraft.entity.Entity;
@@ -23,8 +24,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -32,6 +33,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
+import net.minecraftforge.event.world.GetCollisionBoxesEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fluids.FluidEvent.FluidFillingEvent;
 import net.minecraftforge.fluids.FluidEvent.FluidMotionEvent;
@@ -47,6 +49,25 @@ import java.util.Random;
 
 public class LeafiaServerListener {
 	public static class Unsorted {
+		@SubscribeEvent
+		public void onGetEntityCollision(GetCollisionBoxesEvent evt) {
+			if (evt.getEntity() == null) return;
+			List<AxisAlignedBB> list = evt.getCollisionBoxesList();
+			List<Entity> list1 = evt.getWorld().getEntitiesWithinAABBExcludingEntity(evt.getEntity(), evt.getAabb().grow((double)0.25F));
+			for(int i = 0; i < list1.size(); ++i) {
+				Entity entity = (Entity)list1.get(i);
+				if (!evt.getEntity().isRidingSameEntity(entity)) {
+					if (entity instanceof IEntityCustomCollision) {
+						List<AxisAlignedBB> aabbs = ((IEntityCustomCollision)entity).getCollisionBoxes(evt.getEntity());
+						if (aabbs == null) continue;
+						for (AxisAlignedBB aabb : aabbs) {
+							if (aabb != null && aabb.intersects(aabb))
+								list.add(aabb);
+						}
+					}
+				}
+			}
+		}
 		@SubscribeEvent
 		public void onBlockNotify(NeighborNotifyEvent evt) {
 			if (!evt.getWorld().isRemote) {
@@ -172,8 +193,8 @@ public class LeafiaServerListener {
 			if (additionalDamage > 0) {
 				LeafiaPassiveServer.queueFunction(()->{
 					if (entity.world == null) return;
-					entity.world.playSound(null,entity.getPosition(),HBMSoundHandler.blood_splat,SoundCategory.MASTER,0.25f,entity.world.rand.nextFloat()*0.2f+0.9f);
-					entity.world.playSound(null,entity.getPosition(),HBMSoundHandler.pointed,SoundCategory.MASTER,0.25f,entity.world.rand.nextFloat()*0.2f+0.9f);
+					entity.world.playSound(null,entity.getPosition(),HBMSoundEvents.blood_splat,SoundCategory.MASTER,0.25f,entity.world.rand.nextFloat()*0.2f+0.9f);
+					entity.world.playSound(null,entity.getPosition(),HBMSoundEvents.pointed,SoundCategory.MASTER,0.25f,entity.world.rand.nextFloat()*0.2f+0.9f);
 					LeafiaParticlePacket.Sweat particle = new Sweat(entity,Blocks.REDSTONE_BLOCK.getDefaultState(),entity.world.rand.nextInt(4)+2);
 					particle.emit(new Vec3d(entity.posX,entity.posY,entity.posZ),Vec3d.ZERO,entity.dimension);
 					entity.hurtResistantTime = 0;

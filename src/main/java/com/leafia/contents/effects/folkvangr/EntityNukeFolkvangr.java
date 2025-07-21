@@ -2,7 +2,7 @@ package com.leafia.contents.effects.folkvangr;
 
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
@@ -157,7 +157,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 		}
 		if ((cloudUUID != null) && (cloudBound != null)) {
 			if (!played) {
-				world.playSound(null,getPosition(),HBMSoundHandler.nuke_folkvangr,SoundCategory.BLOCKS,cloudBound.getMaxAge(),1);
+				world.playSound(null,getPosition(),HBMSoundEvents.nuke_folkvangr,SoundCategory.BLOCKS,cloudBound.getMaxAge(),1);
 				PacketDispatcher.wrapper.sendToAllAround(
 						new CommandLeaf.ShakecamPacket(new String[]{
 								"duration="+cloudBound.getMaxAge(),

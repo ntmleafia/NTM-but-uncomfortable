@@ -10,7 +10,7 @@ import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.machine.ItemFuelRod;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -282,21 +282,21 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			if(retracting && rods > 0) {
 
 				if(rods == rodsMax)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
 				rods--;
 
 				if(rods == 0)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 			if(!retracting && rods < rodsMax) {
 
 				if(rods == 0)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
 
 				rods++;
 
 				if(rods == rodsMax)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 
 			if(rods > 0)

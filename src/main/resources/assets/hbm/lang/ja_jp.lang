@@ -1111,6 +1111,7 @@ geiger.recievedRad=合計
 geiger.title=GEIGER COUNTER
 geiger.sealed.true=Separated from outside radiation
 geiger.sealed.false=Unshielded
+gui.evfloor=%s階
 hadron.analysis=CHECKING
 hadron.buttonOff=Analysis Chamber is OFF
 hadron.buttonOn=Analysis Chamber (if present) is ON

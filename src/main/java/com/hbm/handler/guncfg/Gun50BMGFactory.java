@@ -7,7 +7,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletHitBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
@@ -41,7 +41,7 @@ public class Gun50BMGFactory {
 		config.crosshair = Crosshair.L_BOX;
 		config.durability = 2000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.calShoot;
+		config.firingSound = HBMSoundEvents.calShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "Maxim gun";
@@ -77,7 +77,7 @@ public class Gun50BMGFactory {
 		config.crosshair = Crosshair.L_BOX;
 		config.durability = 3500;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.calShoot;
+		config.firingSound = HBMSoundEvents.calShoot;
 
 		config.name = "Double Maxim gun";
 		config.manufacturer = "???";
@@ -281,7 +281,7 @@ public class Gun50BMGFactory {
 		config.crosshair = Crosshair.L_CROSS;
 		config.durability = 100000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.howard_fire;
+		config.firingSound = HBMSoundEvents.howard_fire;
 
 		config.name = "AR-15 .50 BMG Mod";
 		config.manufacturer = "Armalite";

@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import com.leafia.contents.machines.elevators.car.EntityElevator;
-import com.leafia.contents.machines.elevators.car.RenderElevator;
+import com.leafia.contents.machines.elevators.*;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
+import com.leafia.contents.machines.elevators.car.ElevatorRender;
+import com.leafia.contents.machines.elevators.floors.EvFloorRender;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.hbm.items.ModItems.Armory;
@@ -174,7 +177,7 @@ import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.handler.HbmShaderManager;
 import com.hbm.handler.JetpackHandler;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RecoilHandler;
 import com.hbm.lib.RefStrings;
 import com.hbm.particle.ParticleBatchRenderer;
@@ -821,6 +824,10 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(PWRMeshedWreckEntity.class, new RenderPWRMeshedWreck());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentElement.class, new RenderPWRVentElement());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentOutlet.class, new RenderPWRVentOutlet());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvFloorTE.class, new EvFloorRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvPulleyTE.class, new EvPulleyRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvShaftTE.class, new EvShaftRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvBufferTE.class, new EvBufferRender());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());
@@ -1003,7 +1010,7 @@ public class ClientProxy extends ServerProxy {
 	    RenderingRegistry.registerEntityRenderingHandler(EntityMissileVolcano.class, RenderMissileNuclear.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityUFO.class, RenderUFO.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityQuasar.class, RenderQuasar.FACTORY);
-		RenderingRegistry.registerEntityRenderingHandler(EntityElevator.class,RenderElevator.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(ElevatorEntity.class,ElevatorRender.FACTORY);
 		
 		ModelLoader.setCustomStateMapper(ModBlocks.toxic_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.radwater_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
@@ -1855,9 +1862,9 @@ public class ClientProxy extends ServerProxy {
 				int smokeScale = 5;
 				int smokeLife = 15;
 				if(mat == Material.IRON){
-					world.playSound(x, y, z, HBMSoundHandler.hit_metal, SoundCategory.BLOCKS, 1, 0.9F+world.rand.nextFloat()*0.2F, false);
+					world.playSound(x, y, z, HBMSoundEvents.hit_metal, SoundCategory.BLOCKS, 1, 0.9F+world.rand.nextFloat()*0.2F, false);
 				} else {
-					world.playSound(x, y, z, HBMSoundHandler.hit_dirt, SoundCategory.BLOCKS, 1, 0.7F+world.rand.nextFloat()*0.3F, false);
+					world.playSound(x, y, z, HBMSoundEvents.hit_dirt, SoundCategory.BLOCKS, 1, 0.7F+world.rand.nextFloat()*0.3F, false);
 				}
 				if(mat == Material.ROCK || mat == Material.GROUND || mat == Material.GRASS || mat == Material.WOOD || mat == Material.LEAVES || mat == Material.SAND){
 					ResourceLocation tex = ResourceManager.rock_fragments;
@@ -1952,7 +1959,7 @@ public class ClientProxy extends ServerProxy {
 				}
 				
 			} else if(hitType == Type.ENTITY){
-				world.playSound(x, y, z, HBMSoundHandler.hit_flesh, SoundCategory.BLOCKS, 1, 0.8F+world.rand.nextFloat()*0.4F, false);
+				world.playSound(x, y, z, HBMSoundEvents.hit_flesh, SoundCategory.BLOCKS, 1, 0.8F+world.rand.nextFloat()*0.4F, false);
 				Vec3d bulletDirection = new Vec3d(data.getFloat("dirX"), data.getFloat("dirY"), data.getFloat("dirZ"));
 				if(GeneralConfig.bloodFX){
 					for(int i = 0; i < 2; i ++){

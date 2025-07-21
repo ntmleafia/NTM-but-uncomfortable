@@ -64,4 +64,8 @@ public class PylonConnector extends PylonBase {
 		EnumFacing facing = EnumFacing.VALUES[meta];
 		return this.getDefaultState().withProperty(FACING,facing);
 	}
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
 }

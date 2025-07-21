@@ -1,7 +1,7 @@
 package com.hbm.inventory.gui;
 
 import com.hbm.items.tool.ItemSatInterface;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.SatCoordPacket;
@@ -87,7 +87,7 @@ public class GUIScreenSatCoord extends GuiScreen {
     				
     				if(NumberUtils.isCreatable(yField.getText())) {
     					
-        	    		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundHandler.techBleep, 1.0F));
+        	    		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundEvents.techBleep, 1.0F));
         	    		PacketDispatcher.wrapper.sendToServer(
         	    				new SatCoordPacket(
         	    						(int)Double.parseDouble(xField.getText()),
@@ -100,7 +100,7 @@ public class GUIScreenSatCoord extends GuiScreen {
     				
     			} else {
     	    		
-    	    		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundHandler.techBleep, 1.0F));
+    	    		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundEvents.techBleep, 1.0F));
     	    		PacketDispatcher.wrapper.sendToServer(
     	    				new SatCoordPacket(
     	    						(int)Double.parseDouble(xField.getText()),

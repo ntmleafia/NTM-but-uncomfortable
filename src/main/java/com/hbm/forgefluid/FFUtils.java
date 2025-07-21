@@ -18,7 +18,7 @@ import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
@@ -322,7 +322,7 @@ public class FFUtils {
 						nbt.setString("fluidtype",fluidRsc);
 						stack.setTagCompound(nbt);
 						ctx.getServerHandler().player.updateHeldItem();
-						ctx.getServerHandler().player.world.playSound(null,ctx.getServerHandler().player.getPosition(),HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1,1);
+						ctx.getServerHandler().player.world.playSound(null,ctx.getServerHandler().player.getPosition(),HBMSoundEvents.techBleep,SoundCategory.PLAYERS,1,1);
 					}
 				}
 			};

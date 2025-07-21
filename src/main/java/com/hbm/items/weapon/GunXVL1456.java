@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import net.minecraft.client.util.ITooltipFlag;
@@ -79,7 +79,7 @@ public class GunXVL1456 extends Item {
 
 				entitybullet.setDamage(j + rand.nextInt(6));
 
-				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.5F);
+				worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.5F);
 
 				if (flag) {
 					entitybullet.canBePickedUp = 2;
@@ -130,7 +130,7 @@ public class GunXVL1456 extends Item {
 				EntityBullet entityarrow = new EntityBullet(world, player, 3.0F, 25, 65, false, "eyyOk", player.getHeldItem(EnumHand.MAIN_HAND) == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 				entityarrow.setDamage(25 + rand.nextInt(65 - 25));
 
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.tauShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
 
 				if (flag) {
 					entityarrow.canBePickedUp = 2;
@@ -153,7 +153,7 @@ public class GunXVL1456 extends Item {
 				}
 			}
 			
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.nullTau, SoundCategory.PLAYERS, 0.1F, 1.0F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.nullTau, SoundCategory.PLAYERS, 0.1F, 1.0F);
 		}
 		
 		if(player instanceof EntityPlayer)

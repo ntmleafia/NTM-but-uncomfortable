@@ -40,7 +40,7 @@ import com.hbm.items.special.weapon.GunB92;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGuideBook;
 import com.hbm.items.weapon.*;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.RecoilHandler;
 import com.hbm.lib.RefStrings;
@@ -256,8 +256,8 @@ public class ModEventHandlerClient {
 		Minecraft mc = Minecraft.getMinecraft();
 		LeafiaShakecam.noise = new NoiseGeneratorPerlin(new Random(),1);
 		Framebuffer mainCanvas = mc.getFramebuffer();
-		darkness = EnumHelperClient.addMusicType("DARKNESS_GAME", HBMSoundHandler.darkness, 12000, 24000);
-		darkness2 = EnumHelperClient.addMusicType("DARKNESS_MENU", HBMSoundHandler.darkness2, 12000, 14000);
+		darkness = EnumHelperClient.addMusicType("DARKNESS_GAME", HBMSoundEvents.darkness, 12000, 24000);
+		darkness2 = EnumHelperClient.addMusicType("DARKNESS_MENU", HBMSoundEvents.darkness2, 12000, 14000);
 		this.addShader("tom",new ResourceLocation("hbm:shaders/help/tom_desat.json"));
 		this.addShader("nuclear",new ResourceLocation("hbm:shaders/help/nuclear.json"));
 		//Framebuffer tempCanvas = new Framebuffer(mc.getFramebuffer().framebufferWidth,mc.getFramebuffer().framebufferHeight,mc.getFramebuffer().useDepth);
@@ -2230,7 +2230,7 @@ public class ModEventHandlerClient {
 			EntityPlayer ent = Library.getClosestPlayerForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2);
 
 			if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundTauLoop) == null) {
-				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundXVL1456(HBMSoundHandler.tauChargeLoop2, SoundCategory.PLAYERS, ent, EnumHbmSound.soundTauLoop));
+				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundXVL1456(HBMSoundEvents.tauChargeLoop2, SoundCategory.PLAYERS, ent, EnumHbmSound.soundTauLoop));
 				MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundTauLoop).setPitch(0.5F);
 			} else {
 				if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundTauLoop).getPitch() < 1.5F)
@@ -2240,7 +2240,7 @@ public class ModEventHandlerClient {
 		if(r.toString().equals("hbm:misc.nullradar") && Library.getClosestPlayerForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2) != null) {
 			EntityPlayer ent = Library.getClosestPlayerForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2);
 			if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundRadarLoop) == null) {
-				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundRadarLoop(HBMSoundHandler.alarmAirRaid, SoundCategory.PLAYERS, ent, EnumHbmSound.soundRadarLoop));
+				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundRadarLoop(HBMSoundEvents.alarmAirRaid, SoundCategory.PLAYERS, ent, EnumHbmSound.soundRadarLoop));
 				MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundRadarLoop).setVolume(1.0F);
 			}
 		}
@@ -2249,7 +2249,7 @@ public class ModEventHandlerClient {
 			EntityHunterChopper ent = Library.getClosestChopperForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2);
 
 			if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundChopperLoop) == null) {
-				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundChopper(HBMSoundHandler.chopperFlyingLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundChopperLoop));
+				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundChopper(HBMSoundEvents.chopperFlyingLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundChopperLoop));
 				MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundChopperLoop).setVolume(10.0F);
 			}
 		}
@@ -2258,7 +2258,7 @@ public class ModEventHandlerClient {
 			EntityHunterChopper ent = Library.getClosestChopperForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2);
 
 			if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundCrashingLoop) == null) {
-				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundCrashing(HBMSoundHandler.chopperCrashingLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundCrashingLoop));
+				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundCrashing(HBMSoundEvents.chopperCrashingLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundCrashingLoop));
 				MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundCrashingLoop).setVolume(10.0F);
 			}
 		}
@@ -2267,7 +2267,7 @@ public class ModEventHandlerClient {
 			EntityChopperMine ent = Library.getClosestMineForSound(wc, e.getSound().getXPosF(), e.getSound().getYPosF(), e.getSound().getZPosF(), 2);
 
 			if(MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundMineLoop) == null) {
-				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundChopperMine(HBMSoundHandler.chopperMineLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundMineLoop));
+				MovingSoundPlayerLoop.globalSoundList.add(new MovingSoundChopperMine(HBMSoundEvents.chopperMineLoop, SoundCategory.HOSTILE, ent, EnumHbmSound.soundMineLoop));
 				MovingSoundPlayerLoop.getSoundByPlayer(ent, EnumHbmSound.soundMineLoop).setVolume(10.0F);
 			}
 		}

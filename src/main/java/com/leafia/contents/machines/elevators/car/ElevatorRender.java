@@ -5,7 +5,7 @@ import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.AdvancedModelLoader;
 import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.amlfrom1710.IModelCustom;
-import com.leafia.contents.machines.elevators.car.EntityElevator.*;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity.*;
 import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
 import com.leafia.transformer.LeafiaGls;
 import com.llib.group.LeafiaMap;
@@ -17,60 +17,60 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class RenderElevator extends Render<EntityElevator> {
-	public static final IRenderFactory<EntityElevator> FACTORY = manager->new RenderElevator(manager);
+public class ElevatorRender extends Render<ElevatorEntity> {
+	public static final IRenderFactory<ElevatorEntity> FACTORY = manager->new ElevatorRender(manager);
 
-	protected RenderElevator(RenderManager renderManager) {
+	protected ElevatorRender(RenderManager renderManager) {
 		super(renderManager);
 	}
-	static ResourceLocation resource(String shortPath) { return new ResourceLocation(RefStrings.MODID+":textures/models/leafia/elevator/"+shortPath+".png"); }
-	static IModelCustom model(String shortPath) { return AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID+":models/leafia/elevators/"+shortPath+".obj")); }
-	static LeafiaMap<String,ResourceLocation> indicator(String shortPath) {
+	public static ResourceLocation resource(String shortPath) { return new ResourceLocation(RefStrings.MODID+":textures/models/leafia/elevator/"+shortPath+".png"); }
+	public static IModelCustom model(String shortPath) { return AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID+":models/leafia/elevators/"+shortPath+".obj")); }
+	public static LeafiaMap<String,ResourceLocation> indicator(String shortPath) {
 		LeafiaMap<String,ResourceLocation> map = new LeafiaMap<>();
 		map.put("",resource(shortPath+"off"));
 		map.put(" ",resource(shortPath+"off"));
-		for (String allowedDigit : EntityElevator.ALLOWED_DIGITS) {
+		for (String allowedDigit : ElevatorEntity.ALLOWED_DIGITS) {
 			map.put(allowedDigit,resource(shortPath+allowedDigit));
 		}
 		return map;
 	}
-	static class S6 {
-		static final IModelCustom mdl = model("otis_s6");
-		static final ResourceLocation floor = resource("s6/floor");
-		static final ResourceLocation ceiling = resource("s6/ceiling");
-		static final ResourceLocation wall = resource("s6/wall");
-		static final ResourceLocation window = resource("s6/window");
-		static final ResourceLocation door = resource("s6/door");
-		static final ResourceLocation logo = new ResourceLocation(RefStrings.MODID+":textures/models/leafia/exaprism_txt_lowres.png");
-		static final ResourceLocation arrowOff = resource("s6/arrow_off");
-		static final ResourceLocation arrowOn = resource("s6/arrow_on");
-		static final ResourceLocation buttonOff = resource("s6/buttons/button_off");
-		static final ResourceLocation buttonOn = resource("s6/buttons/button_on");
-		static final ResourceLocation buttonLabel = resource("s6/buttons/button_label");
-		static final ResourceLocation buttonLabelOpen = resource("s6/buttons/open");
-		static final ResourceLocation buttonLabelClose = resource("s6/buttons/close");
-		static final ResourceLocation buttonLabelBell = resource("s6/buttons/bell");
-		static final ResourceLocation buttonFireOff = resource("s6/buttons/28275428");
-		static final ResourceLocation buttonFireOn = resource("s6/buttons/28275551");
-		static final LeafiaMap<String,ResourceLocation> ind = indicator("s6/indicator/");
+	public static ResourceLocation support = resource("support");
+	public static class S6 {
+		public static final IModelCustom mdl = model("otis_s6");
+		public static final ResourceLocation floor = resource("s6/floor");
+		public static final ResourceLocation ceiling = resource("s6/ceiling");
+		public static final ResourceLocation wall = resource("s6/wall");
+		public static final ResourceLocation window = resource("s6/window");
+		public static final ResourceLocation door = resource("s6/door");
+		public static final ResourceLocation logo = new ResourceLocation(RefStrings.MODID+":textures/models/leafia/exaprism_txt_lowres.png");
+		public static final ResourceLocation arrowOff = resource("s6/arrow_off");
+		public static final ResourceLocation arrowOn = resource("s6/arrow_on");
+		public static final ResourceLocation buttonOff = resource("s6/buttons/button_off");
+		public static final ResourceLocation buttonOn = resource("s6/buttons/button_on");
+		public static final ResourceLocation buttonLabel = resource("s6/buttons/button_label");
+		public static final ResourceLocation buttonLabelOpen = resource("s6/buttons/open");
+		public static final ResourceLocation buttonLabelClose = resource("s6/buttons/close");
+		public static final ResourceLocation buttonLabelBell = resource("s6/buttons/bell");
+		public static final ResourceLocation buttonFireOff = resource("s6/buttons/28275428");
+		public static final ResourceLocation buttonFireOn = resource("s6/buttons/28275551");
+		public static final LeafiaMap<String,ResourceLocation> ind = indicator("s6/indicator/");
 	}
 
 	@Override
-	public void doRender(EntityElevator entity,double x,double y,double z,float entityYaw,float partialTicks) {
+	public void doRender(ElevatorEntity entity,double x,double y,double z,float entityYaw,float partialTicks) {
 		LeafiaGls.pushMatrix();
 		LeafiaGls.translate(x,y,z);
 		LeafiaGls.rotate(entityYaw,0,-1,0);
 
 		CompositeBrush brush = CompositeBrush.instance;
 		FontRenderer font = Minecraft.getMinecraft().fontRenderer;
-		bindTexture(ResourceManager.solid);
-		LeafiaGls.color(0.75f,0.75f,0.75f);
+		bindTexture(support);
 		S6.mdl.renderPart("Frames");
 		LeafiaGls.color(1,1,1);
 
 		ResourceLocation floorTexture = S6.floor;
 		for (int i = 0; i < 6; i++) {
-			DataParameter<String> param = EntityElevator.styleParams[i];
+			DataParameter<String> param = ElevatorEntity.styleParams[i];
 			String style = entity.getDataString(param);
 			LeafiaGls.pushMatrix();
 			int r = i-2;
@@ -112,7 +112,7 @@ public class RenderElevator extends Render<EntityElevator> {
 				case "s6door": {
 					bindTexture(S6.door);
 					S6.mdl.renderPart("DoorFrame");
-					float door = entity.getDataFloat(EntityElevator.DOOR_IN);
+					float door = entity.getDataFloat(ElevatorEntity.DOOR_IN);
 					LeafiaGls.pushMatrix();
 					LeafiaGls.translate(-0.440625f*door,0,0);
 					S6.mdl.renderPart("DoorL");
@@ -127,7 +127,7 @@ public class RenderElevator extends Render<EntityElevator> {
 					bindTexture(S6.logo);
 					S6.mdl.renderPart("Logo");
 
-					int dir = entity.getDataInteger(EntityElevator.ARROW);
+					int dir = entity.getDataInteger(ElevatorEntity.ARROW);
 					bindTexture(dir == 1 ? S6.arrowOn : S6.arrowOff);
 					if (dir == 1) LeafiaGls.disableLighting();
 					S6.mdl.renderPart("ArrowUp");
@@ -138,7 +138,7 @@ public class RenderElevator extends Render<EntityElevator> {
 					LeafiaGls.enableLighting();
 
 					LeafiaGls.disableLighting();
-					String display = entity.getDataString(EntityElevator.FLOOR_DISPLAY);
+					String display = entity.getDataString(ElevatorEntity.FLOOR_DISPLAY);
 					if (display.length() < 2) display = " "+display;
 					bindTexture(S6.ind.get(display.substring(1,2)));
 					S6.mdl.renderPart("Digit0");
@@ -222,7 +222,7 @@ public class RenderElevator extends Render<EntityElevator> {
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityElevator entity) {
+	protected ResourceLocation getEntityTexture(ElevatorEntity entity) {
 		return null;
 	}
 }

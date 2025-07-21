@@ -2,7 +2,7 @@ package com.hbm.inventory.gui;
 
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
-import com.leafia.shit.GuiContainerLeafia;
+import com.leafia.dev.gui.GuiContainerLeafia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderHelper;
