@@ -8,6 +8,7 @@ import com.leafia.contents.machines.elevators.EvPulleyTE;
 import com.leafia.contents.machines.elevators.EvShaft;
 import com.leafia.contents.machines.elevators.car.chips.EvChipBase;
 import com.leafia.contents.machines.elevators.car.chips.EvChipS6;
+import com.leafia.contents.machines.elevators.car.chips.EvChipSkylift;
 import com.leafia.contents.machines.elevators.car.styles.EvWallBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.EvGenericDoorBase;
@@ -242,6 +243,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		String style = getDataString(styleParams[side+2]);
 		switch(style) {
 			case "s6door": return new S6Door(side);
+			case "skyliftdoor": return new S6Door(side);
 		}
 		return null;
 	}
@@ -732,6 +734,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		if (id.equals("fire")) {
 			buttons.clear();
 			//dataManager.set(STYLE_BACK,"s6wall");
+			dataManager.set(STYLE_FRONT,"s6door");
 			buttons.add(new FloorButton(this,1,"★L",-2,14));
 			buttons.add(new FloorButton(this,2,"2",1,14));
 			buttons.add(new FloorButton(this,3,"3",-2,17));

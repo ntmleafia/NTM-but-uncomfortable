@@ -108,6 +108,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.machineExplode, SoundCategory.BLOCKS, 10.0F, 1);
         world.newExplosion(null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, 2f, true, true);
     }
+    int destructionLevel = 0;
 
     @Override
     public void update() {
@@ -130,8 +131,12 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         if (!world.isRemote) {
 
             if (joules >= NumScale.PETA) {
-                this.explode();
+                destructionLevel = Math.min(destructionLevel+1,200);
+                if (destructionLevel > 150 && world.rand.nextInt(100) == 0)
+                    this.explode();
                 return;
+            } else {
+                destructionLevel = Math.min(destructionLevel-1,0);
             }
 
             updateSPKConnections(world, pos);

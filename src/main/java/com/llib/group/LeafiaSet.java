@@ -111,6 +111,7 @@ public class LeafiaSet<E> extends AbstractSet<E> implements Set<E>, List<E>, Clo
 		for (int i = 0; i < quickAccessSize; i++) {
 			int item = quickAccess[(quickAccessIndex-i)&sizeSub];
 			if (item >= 0) {
+				if (item >= contents.length) continue; // failsafe
 				if (isEquals(contents[item],element)) {
 					// swap out the position of this entry with the latest one
 					// do not call sortQuickAccess as this does not change values, just the order

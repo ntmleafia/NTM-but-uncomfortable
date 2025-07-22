@@ -21,6 +21,9 @@ import java.util.ConcurrentModificationException;
 
 public class ElevatorRender extends Render<ElevatorEntity> {
 	public static final IRenderFactory<ElevatorEntity> FACTORY = manager->new ElevatorRender(manager);
+	public static final ResourceLocation buttonLabelOpen = resource("buttons/open");
+	public static final ResourceLocation buttonLabelClose = resource("buttons/close");
+	public static final ResourceLocation buttonLabelBell = resource("buttons/bell");
 
 	protected ElevatorRender(RenderManager renderManager) {
 		super(renderManager);
@@ -50,12 +53,23 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 		public static final ResourceLocation buttonOff = resource("s6/buttons/button_off");
 		public static final ResourceLocation buttonOn = resource("s6/buttons/button_on");
 		public static final ResourceLocation buttonLabel = resource("s6/buttons/button_label");
-		public static final ResourceLocation buttonLabelOpen = resource("s6/buttons/open");
-		public static final ResourceLocation buttonLabelClose = resource("s6/buttons/close");
-		public static final ResourceLocation buttonLabelBell = resource("s6/buttons/bell");
 		public static final ResourceLocation buttonFireOff = resource("s6/buttons/28275428");
 		public static final ResourceLocation buttonFireOn = resource("s6/buttons/28275551");
 		public static final LeafiaMap<String,ResourceLocation> ind = indicator("s6/indicator/");
+	}
+	public static class Skylift {
+		public static final IModelCustom mdl = model("skylift");
+		public static final ResourceLocation frame = resource("skylift/door");
+		public static final ResourceLocation door = resource("skylift/door_color");
+		public static final ResourceLocation logo = resource("skylift/logo");
+		public static final ResourceLocation leafia = resource("skylift/leafia");
+		public static final ResourceLocation skylift = resource("skylift/skylift");
+		public static final ResourceLocation arrowOff = resource("skylift/arrow_off");
+		public static final ResourceLocation arrowOn = resource("skylift/arrow_on");
+		public static final ResourceLocation buttonOff = resource("skylift/buttons/button_off");
+		public static final ResourceLocation buttonOn = resource("skylift/buttons/button_on");
+		public static final ResourceLocation buttonLabel = resource("skylift/buttons/button_label");
+		public static final LeafiaMap<String,ResourceLocation> ind = indicator("skylift/indicator/");
 	}
 
 	@Override
@@ -195,9 +209,121 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 									LeafiaGls.popMatrix();
 								} else {
 									ResourceLocation res = null;
-									if (button instanceof OpenButton) res = S6.buttonLabelOpen;
-									if (button instanceof CloseButton) res = S6.buttonLabelClose;
-									if (button instanceof BellButton) res = S6.buttonLabelBell;
+									if (button instanceof OpenButton) res = buttonLabelOpen;
+									if (button instanceof CloseButton) res = buttonLabelClose;
+									if (button instanceof BellButton) res = buttonLabelBell;
+									if (res != null) {
+										LeafiaGls.pushMatrix();
+										LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);
+										LeafiaGls.scale(1/16d/(9+4));
+										LeafiaGls.translate(1,-1,0);
+										bindTexture(res);
+										brush.startDrawingQuads();
+										brush.addVertexWithUV(0,-11,0,0,1);
+										brush.addVertexWithUV(11,-11,0,1,1);
+										brush.addVertexWithUV(11,0,0,1,0);
+										brush.addVertexWithUV(0,0,0,0,0);
+										brush.draw();
+										LeafiaGls.popMatrix();
+									}
+								}
+							}
+						} catch (ConcurrentModificationException ignored) {} // fuck you
+					}
+					break;
+				}
+				case "skyliftdoor": {
+					bindTexture(Skylift.frame);
+					Skylift.mdl.renderPart("DoorFrame");
+					bindTexture(Skylift.door);
+					float door = entity.getDataFloat(ElevatorEntity.DOOR_IN);
+					if (!entity.hasExteriorDoor(r)) door = 0;
+					LeafiaGls.pushMatrix();
+					LeafiaGls.translate(-0.440625f*door,0,0);
+					Skylift.mdl.renderPart("DoorL");
+					LeafiaGls.popMatrix();
+					LeafiaGls.pushMatrix();
+					LeafiaGls.translate(0.440625f*door,0,0);
+					Skylift.mdl.renderPart("DoorR");
+					LeafiaGls.popMatrix();
+
+					bindTexture(floorTexture);
+					Skylift.mdl.renderPart("DoorFloor");
+					bindTexture(Skylift.logo);
+					Skylift.mdl.renderPart("Logo");
+					bindTexture(Skylift.leafia);
+					Skylift.mdl.renderPart("Name");
+					bindTexture(Skylift.skylift);
+					Skylift.mdl.renderPart("Skylift");
+
+					int dir = entity.getDataInteger(ElevatorEntity.ARROW);
+					bindTexture(dir == 1 ? Skylift.arrowOn : Skylift.arrowOff);
+					if (dir == 1) LeafiaGls.disableLighting();
+					Skylift.mdl.renderPart("ArrowUp");
+					LeafiaGls.enableLighting();
+					bindTexture(dir == -1 ? Skylift.arrowOn : Skylift.arrowOff);
+					if (dir == -1) LeafiaGls.disableLighting();
+					Skylift.mdl.renderPart("ArrowDn");
+					LeafiaGls.enableLighting();
+
+					LeafiaGls.disableLighting();
+					String display = entity.getDataString(ElevatorEntity.FLOOR_DISPLAY);
+					if (display.length() < 2) display = " "+display;
+					bindTexture(Skylift.ind.get(display.substring(1,2)));
+					Skylift.mdl.renderPart("Digit0");
+					bindTexture(Skylift.ind.get(display.substring(0,1)));
+					Skylift.mdl.renderPart("Digit10");
+					LeafiaGls.enableLighting();
+
+					ElevatorPanelBase panel = entity.getPanel(r);
+					if (panel != null) {
+						int staticX = panel.getStaticX();
+						double staticZ = panel.getStaticZ();
+						try {
+							for (ElevatorButton button : entity.buttons) {
+								if (button instanceof FireButton) {
+									bindTexture(S6.buttonFireOff);
+									brush.startDrawingQuads();
+									brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d-0.2/16d,-staticZ,0,1);
+									brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d-0.2/16d,-staticZ,1,1);
+									brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d+1.2/16d,-staticZ,1,0);
+									brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1.2/16d,-staticZ,0,0);
+									brush.draw();
+									continue;
+								}
+								if (entity.enabledButtons.contains(button.id) || entity.clickedButtons.containsKey(button.id))
+									bindTexture(Skylift.buttonOn);
+								else
+									bindTexture(Skylift.buttonOff);
+								brush.startDrawingQuads();
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0.25/16d,button.y/16d-0.25/16d,-staticZ,0,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+1.25/16d,button.y/16d-0.25/16d,-staticZ,1,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+1.25/16d,button.y/16d+1.25/16d,-staticZ,1,0);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0.25/16d,button.y/16d+1.25/16d,-staticZ,0,0);
+								brush.draw();
+
+								bindTexture(Skylift.buttonLabel);
+								brush.startDrawingQuads();
+								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+0/16d,-staticZ,0,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0.25/16d,button.y/16d+0/16d,-staticZ,1,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0.25/16d,button.y/16d+1.25/16d,-staticZ,1,0);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1.25/16d,-staticZ,0,0);
+								brush.draw();
+								String text = null;
+								if (button instanceof FloorButton) text = ((FloorButton)button).label;
+								if (text != null) {
+									LeafiaGls.pushMatrix();
+									LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);
+									LeafiaGls.scale(1/16d/(9+4));
+									LeafiaGls.translate((9+4)/2d-font.getStringWidth(text)/2d,0,0);
+									LeafiaGls.rotate(180,1,0,0);
+									font.drawString(text,0,3,0xFFFFFF);
+									LeafiaGls.popMatrix();
+								} else {
+									ResourceLocation res = null;
+									if (button instanceof OpenButton) res = buttonLabelOpen;
+									if (button instanceof CloseButton) res = buttonLabelClose;
+									if (button instanceof BellButton) res = buttonLabelBell;
 									if (res != null) {
 										LeafiaGls.pushMatrix();
 										LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);

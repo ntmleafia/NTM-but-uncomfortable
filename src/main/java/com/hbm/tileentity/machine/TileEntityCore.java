@@ -13,8 +13,10 @@ import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
+import com.hbm.packet.PacketDispatcher;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.CommandLeaf;
 import com.leafia.LeafiaHelper;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr.VacuumInstance;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
@@ -46,6 +48,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -309,7 +312,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					{ // i wanted to redo everything this sucks ASS
 						//containedEnergy += incomingSpk;
 						double combustionPotential = Math.pow(energyRatio,0.25);
-						int consumption = (int)Math.pow(incomingSpk,0.75);//(int)(combustionPotential*100);
+						int consumption = (int)Math.ceil(Math.pow(incomingSpk*catalystFuelMod,0.75));//(int)(combustionPotential*100);
 						Tracker._tracePosition(this,pos.up(3),"incomingSpk: ",incomingSpk);
 						tanks[0].drain(consumption,true);
 						tanks[1].drain(consumption,true);
@@ -321,13 +324,13 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
 						containedEnergy += (deltaEnergy*corePower+(incomingSpk-deltaEnergy)*0.666)*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialRelease*boost*fill0*fill1;
+						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialRelease*boost*fill0*fill1*fuelPower;
 						double tgtTemp = temperature;
 						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
 
 						//temperature = Math.pow(temperature,0.9);
-						tgtTemp += Math.pow(deltaEnergy*10,2/(1+stabilization))*(1-tempRatio/2);//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
+						tgtTemp += Math.pow(deltaEnergy*10*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2);//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
 						double rdc = 1-energyRatio;
 						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
 
@@ -376,6 +379,28 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						if (containedEnergy >= 1_000_000*(world.rand.nextInt(150)+6.66)+0.5 && shockCooldown <= 0) {
 							double count = Math.ceil(containedEnergy/energyPerShock);
 							for (int i = 0; i < Math.pow(count,0.25); i++) shock();
+							world.playSound(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,HBMSoundEvents.mus_sfx_a_lithit,SoundCategory.BLOCKS,3,1+(float)world.rand.nextGaussian()*0.1f);
+							PacketDispatcher.wrapper.sendToAllAround(
+									new CommandLeaf.ShakecamPacket(new String[]{
+											"type=smooth",
+											"preset=RUPTURE",
+											"duration/4",
+											"blurDulling*2",
+											"intensity/2",
+											"range=50"
+									}).setPos(pos),
+									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 100)
+							);
+							PacketDispatcher.wrapper.sendToAllAround(
+									new CommandLeaf.ShakecamPacket(new String[]{
+											"type=smooth",
+											"preset=QUAKE",
+											"duration/2",
+											"intensity/4",
+											"range=100"
+									}).setPos(pos),
+									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 150)
+							);
 							containedEnergy = Math.max(containedEnergy-count*energyPerShock,0);
 							shockCooldown = 100-(int)Math.pow(90*collapsing,0.75);
 						}
@@ -509,6 +534,16 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						collapsing = MathHelper.clamp(1-explosionIn/120,0,1);
 						explosionClock = time;
 						if (explosionIn <= 0 && exp != null) {
+							PacketDispatcher.wrapper.sendToAllAround(
+									new CommandLeaf.ShakecamPacket(new String[]{
+											"type=smooth",
+											"preset=PWR_NEAR",
+											"duration*2",
+											"intensity*1.5",
+											"range=200"
+									}).setPos(pos),
+									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 300)
+							);
 							world.playSound(null, pos, HBMSoundEvents.dfc_explode, SoundCategory.BLOCKS, 100, 1);
 							destroyed = true;
 							world.spawnEntity(exp);

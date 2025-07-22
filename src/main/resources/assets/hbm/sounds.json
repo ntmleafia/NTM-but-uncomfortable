@@ -307,5 +307,6 @@
   "elevators.s6bell": { "category": "block", "sounds": ["hbm:elevators/s6_bell"]},
   "elevators.electronicpingshort": { "category": "block", "sounds": ["hbm:elevators/electronicpingshort"]},
   "elevators.skyliftarrive": { "category": "block", "sounds": ["hbm:elevators/skylift_arrive"]},
-  "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]}
+  "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]},
+  "external.mus_sfx_a_lithit": { "category": "block", "sounds": ["hbm:external/mus_sfx_a_lithit"]}
 }

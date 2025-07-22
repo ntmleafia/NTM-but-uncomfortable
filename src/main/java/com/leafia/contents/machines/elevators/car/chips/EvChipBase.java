@@ -36,7 +36,7 @@ public abstract class EvChipBase {
 			entity.braking = true;
 		double ratio = Math.min(maxRatio,entity.timeSinceStart/(accelerateTime*20));
 		if (entity.targetHeight >= 0 ? entity.targetHeight < entity.posY : nextFloor < entity.getDataInteger(ElevatorEntity.FLOOR)) ratio *= -1;
-		if (Math.abs(ratio) < 0.05) {
+		if (Math.abs(maxRatio) < 0.05) {
 			double offset = entity.targetHeight-entity.posY;
 			double dir = Math.signum(offset);
 			ratio = 0.05*dir;
