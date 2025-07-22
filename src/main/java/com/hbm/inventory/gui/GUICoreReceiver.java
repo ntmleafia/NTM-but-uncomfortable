@@ -112,7 +112,7 @@ public class GUICoreReceiver extends GuiInfoContainer {
 			drawTexturedModalRect(guiLeft+50,guiTop+65,221,14,18,18);
 		}
 		int i = (int) (MathHelper.clamp(receiver.joules/(double)NumScale.PETA,0,1)*52);
-		drawTexturedModalRect(guiLeft + 46, guiTop + 58 - i, 176, 52 - i, 16, i);
+		drawTexturedModalRect(guiLeft + 46, guiTop + 58 - i, 205, 52 - i, 16, i);
 
 		this.field.drawTextBox();
 		FFUtils.drawLiquid(receiver.tank, guiLeft, guiTop, zLevel, 16, 52, 17-7, 97-11);
