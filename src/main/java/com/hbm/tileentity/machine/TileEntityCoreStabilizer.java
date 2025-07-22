@@ -72,10 +72,12 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
         TileEntityCore core = getCore();
         if (isOn && core != null) {
             LinkedHashMap<String, Object> mop = new LinkedHashMap<>();
-            mop.put("heat", core.heat);
-            mop.put("restriction", core.field);
-            mop.put("stress", core.heat / (float) core.field);
-            mop.put("corruption", core.overload / 60F);
+            mop.put("temperature", core.temperature);
+            mop.put("stabilization", core.stabilization);
+            mop.put("containedEnergy", core.containedEnergy);
+            mop.put("expellingEnergy", core.expellingEnergy);
+            mop.put("potentialRelease", core.potentialRelease);
+            mop.put("explosionIn", core.explosionIn);
             mop.put("fuelA", core.tanks[0].getFluidAmount());
             mop.put("fuelB", core.tanks[1].getFluidAmount());
             return new Object[]{mop};
