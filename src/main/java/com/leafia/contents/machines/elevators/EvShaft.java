@@ -101,4 +101,8 @@ public class EvShaft extends BlockDummyable {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
 }

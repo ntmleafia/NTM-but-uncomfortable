@@ -104,4 +104,8 @@ public class EvFloor extends BlockDummyable {
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
+	@Override
+	public boolean isNormalCube(IBlockState state) {
+		return false;
+	}
 }
