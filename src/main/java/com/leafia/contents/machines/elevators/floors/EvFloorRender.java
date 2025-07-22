@@ -26,8 +26,15 @@ public class EvFloorRender extends TileEntitySpecialRenderer<EvFloorTE> {
 		}
 		bindTexture(S6.door);
 		mdl.renderPart("Frames");
+		float door = te.open.get();
+		LeafiaGls.pushMatrix();
+		LeafiaGls.translate(-0.440625f*door,0,0);
 		mdl.renderPart("DoorL");
+		LeafiaGls.popMatrix();
+		LeafiaGls.pushMatrix();
+		LeafiaGls.translate(0.440625f*door,0,0);
 		mdl.renderPart("DoorR");
+		LeafiaGls.popMatrix();
 		LeafiaGls.popMatrix();
 	}
 }

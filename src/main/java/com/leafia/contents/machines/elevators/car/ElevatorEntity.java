@@ -1,6 +1,8 @@
 package com.leafia.contents.machines.elevators.car;
 
+import com.hbm.blocks.BlockDummyable;
 import com.hbm.lib.HBMSoundEvents;
+import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulleyTE;
 import com.leafia.contents.machines.elevators.EvShaft;
@@ -8,7 +10,11 @@ import com.leafia.contents.machines.elevators.car.chips.EvChipBase;
 import com.leafia.contents.machines.elevators.car.chips.EvChipS6;
 import com.leafia.contents.machines.elevators.car.styles.EvWallBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
+import com.leafia.contents.machines.elevators.car.styles.panels.EvGenericDoorBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.S6Door;
+import com.leafia.contents.machines.elevators.floors.EvFloor;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -17,6 +23,7 @@ import com.llib.group.LeafiaMap;
 import com.llib.group.LeafiaSet;
 import com.leafia.dev.math.FiaMatrix;
 import com.llib.technical.FifthString;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityMultiPart;
@@ -40,10 +47,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityCustomCollision {
@@ -55,6 +59,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 	public static final DataParameter<String> STYLE_BACK = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.STRING);
 	public static final DataParameter<String>[] styleParams = new DataParameter[]{STYLE_FLOOR,STYLE_CEILING,STYLE_FRONT,STYLE_LEFT,STYLE_BACK,STYLE_RIGHT};
 	public static final DataParameter<String> FLOOR_DISPLAY = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.STRING);
+	public static final Map<Integer,String> specialDisplayFloors = new HashMap<>();
 	public static final String[] ALLOWED_DIGITS = new String[]{"0","1","2","3","4","5","6","7","8","9","-","L"};
 	public static boolean isDigitAllowed(String s) {
 		for (String allowedDigit : ALLOWED_DIGITS) {
@@ -84,17 +89,18 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		}
 		return false;
 	}
-	public Integer getNextFloor() {
+	public Integer getNextFloor(boolean down) {
 		int floor = getDataInteger(FLOOR);
 		Integer nextFloor = null;
 		for (Integer targetFloor : targetFloors) {
+			if (targetFloor == floor && !braking) continue;;
 			if (!down) {
-				if (targetFloor > floor) {
+				if (targetFloor >= floor) {
 					if (nextFloor == null) nextFloor = targetFloor;
 					else nextFloor = Math.min(nextFloor,targetFloor);
 				}
 			} else {
-				if (targetFloor < floor) {
+				if (targetFloor <= floor) {
 					if (nextFloor == null) nextFloor = targetFloor;
 					else nextFloor = Math.max(nextFloor,targetFloor);
 				}
@@ -102,6 +108,59 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		}
 		return nextFloor;
 	}
+	public Integer getNextFloor() {
+		return getNextFloor(down);
+	}
+	public boolean isFloorOnReverseDirection() {
+		int floor = getDataInteger(FLOOR);
+		for (Integer targetFloor : targetFloors) {
+			if (targetFloor == floor && !braking) continue;;
+			if (!down) {
+				if (targetFloor < floor) return true;
+			} else {
+				if (targetFloor > floor) return true;
+			}
+		}
+		return false;
+	}
+	@Nullable
+	public Integer getFloorAtPos(BlockPos pos) {
+		for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
+			BlockPos p = pos.add(horizontal.getDirectionVec());
+			if (world.getBlockState(p).getBlock() instanceof EvFloor) {
+				TileEntity te = world.getTileEntity(p);
+				if (te instanceof EvFloorTE)
+					return ((EvFloorTE)te).floor;
+			}
+		}
+		return null;
+	}
+	public Map<Integer,Integer> getFloorsInRange(int offset) {
+		Map<Integer,Integer> map = new HashMap<>();
+		for (int i = 0; i <= Math.abs(offset); i++) {
+			BlockPos pos = new BlockPos(posX,posY+0.5+i*Math.signum(offset),posZ);
+			Integer floor = getFloorAtPos(pos);
+			if (floor != null)
+				map.put(floor,pos.getY());
+		}
+		return map;
+	}
+	public boolean isEnd(boolean down) {
+		int floor = getDataInteger(FLOOR);
+		for (ElevatorButton btn : buttons) {
+			if (btn instanceof FloorButton) {
+				FloorButton fb = (FloorButton)btn;
+				if (fb.floor > floor && !down) return false;
+				if (fb.floor < floor && down) return false;
+			}
+		}
+		return true;
+	}
+	public int timeSinceStart = 0;
+	public double targetHeight = -1;
+	public boolean braking = false;
+	public int parkFloor = 1;
+	public boolean parking = false;
 	public static final DataParameter<Integer> FLOOR = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.VARINT);
 	public static final DataParameter<Integer> ARROW = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.VARINT);
 	public static final DataParameter<Float> DOOR_IN = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.FLOAT);
@@ -462,6 +521,27 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			surfaces.put("wall"+i,srfs);
 		}
 	}
+	void updateDoorCollisions() {
+		boolean open = getDataFloat(DOOR_IN) > 0;
+		for (int i = 0; i < 4; i++) {
+			EvWallBase wall = getWallInstance(i);
+			if (wall instanceof EvGenericDoorBase) {
+				if (hasExteriorDoor(i)) {
+					List<HitSrf> srfs = surfaces.get("wall"+i);
+					srfs.get(0).enabled = !open;
+				}
+			}
+		}
+	}
+	public boolean hasExteriorDoor(int side) {
+		FiaMatrix mat = new FiaMatrix(new Vec3d(posX,posY+0.5,posZ)).rotateY(side*90);
+		BlockPos pos = new BlockPos(mat.translate(0,0,-1).position);
+		LeafiaDebug.debugPos(world,pos,1/20f,0xFFFF00,"hasExteriorDoor");
+		IBlockState state = world.getBlockState(pos);
+		if (state.getBlock() instanceof EvFloor)
+			return state.getValue(BlockDummyable.META) >= 12;
+		return false;
+	}
 	public static class HitSrf {
 		public FiaMatrix mat;
 		public double x0;
@@ -548,11 +628,14 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		if (getEntityBoundingBox().expand(0,-Math.min(0,motionY)*4-e.height,0).contains(new Vec3d(e.posX,e.posY,e.posZ))) {
 			e.fallDistance = 0;
 			e.setPosition(e.posX+motionX,e.posY+motionY,e.posZ+motionZ);
-			if (e.posY < posY+motionY)
+			if (e.posY < posY+motionY) {
 				e.setPosition(e.posX,posY+motionY,e.posZ); // anti-fallthrough
+				e.setVelocity(e.motionX,Math.max(e.motionY,motionY),e.motionZ);
+			}
 		}
 		for (List<HitSrf> srfs : surfaces.values()) {
 			for (HitSrf srf : srfs) {
+				if (!srf.enabled) continue;
 				Vec3d pushed = null;
 				if (srf.type == -1) {
 					pushed = collideVector(new Vec3d(e.posX,e.posY,e.posZ),new Vec3d(e.motionX,e.motionY,e.motionZ),0,srf,posX,posY,posZ,rotationYaw);
@@ -604,13 +687,18 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			}
 			for (int i = 0; i < 2; i++) {
 				EnumFacing face = EnumFacing.byHorizontalIndex(i);
-				if (world.getBlockState(new BlockPos(posX+0.5,posY+0.5,posZ+0.5).add(face.getDirectionVec())).getBlock() instanceof EvShaft) {
+				if (world.getBlockState(new BlockPos(posX,posY+0.5,posZ).add(face.getDirectionVec())).getBlock() instanceof EvShaft) {
 					setVelocity(0,motionY,0);
 					break;
 				}
 			}
 			if (controller != null)
 				controller.onUpdate();
+			int floor = getDataInteger(FLOOR);
+			if (specialDisplayFloors.containsKey(floor))
+				dataManager.set(FLOOR_DISPLAY,specialDisplayFloors.get(floor));
+			else
+				dataManager.set(FLOOR_DISPLAY,Integer.toString(floor));
 			setPosition(posX+motionX,posY+motionY,posZ+motionZ);
 			double prevMotionY = motionY;
 			doBlockCollisions();
@@ -619,7 +707,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 				boolean foundBuffer = false;
 				for (int i = -1; i <= 1; i++) {
 					for (int j = -1; j <= 1; j++) {
-						if (world.getBlockState(new BlockPos(posX+0.5+i,posY-0.5,posZ+0.5+j)).getBlock() instanceof EvBuffer) {
+						if (world.getBlockState(new BlockPos(posX+i,posY-0.5,posZ+j)).getBlock() instanceof EvBuffer) {
 							foundBuffer = true;
 							break;
 						}
@@ -628,20 +716,34 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 				if (!foundBuffer)
 					world.createExplosion(null,posX,posY,posZ,5,false);
 			}
+			for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
+				BlockPos p = new BlockPos(posX,posY+0.5,posZ).add(horizontal.getDirectionVec());
+				if (world.getBlockState(p).getBlock() instanceof EvFloor) {
+					TileEntity te = world.getTileEntity(p);
+					if (te instanceof EvFloorTE) {
+						((EvFloorTE)te).open.cur = getDataFloat(DOOR_OUT);
+					}
+				}
+			}
 		}
+		updateDoorCollisions();
 	}
 	public void onButtonServer(String id,EntityPlayer player,EnumHand hand) {
 		if (id.equals("fire")) {
 			buttons.clear();
-			dataManager.set(STYLE_BACK,"s6wall");
+			//dataManager.set(STYLE_BACK,"s6wall");
 			buttons.add(new FloorButton(this,1,"★L",-2,14));
 			buttons.add(new FloorButton(this,2,"2",1,14));
+			buttons.add(new FloorButton(this,3,"3",-2,17));
+			buttons.add(new FloorButton(this,4,"4",1,17));
+			buttons.add(new FireButton(this,-2,20));
+			buttons.add(new OpenButton(this,1,9));
+			buttons.add(new CloseButton(this,-2,9));
 			EvButtonSyncPacket packet = new EvButtonSyncPacket();
 			packet.serverEntity = this;
 			LeafiaCustomPacket.__start(packet).__sendToAll();
-			buttons.add(new OpenButton(this,1,9));
-			buttons.add(new CloseButton(this,-2,9));
 		} else LeafiaCustomPacket.__start(new EvButtonClickPacket(this,id)).__sendToAll();
+		controller.onButtonServer(id,player,hand);
 		LeafiaCustomPacket.__start(new EvButtonEnablePacket(this)).__sendToAll();
 	}
 	@Override

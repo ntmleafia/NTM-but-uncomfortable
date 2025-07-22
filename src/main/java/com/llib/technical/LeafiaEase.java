@@ -75,6 +75,7 @@ public class LeafiaEase {
     }
     double io(double x) {
         switch(ease) {
+            case SINE: return -(Math.cos(Math.PI * x) - 1) / 2;
             case BOUNCE: return (x<0.5) ? (1-o(1-2*x))/2 : (1+o(2*x-1))/2;
             case SMOOTH_STEP: return x*x*(x*-2+3);
             case SMOOTHER_STEP: return x*x*x*(x*(x*6-15)+10);

@@ -306,5 +306,6 @@
   "elevators.s6beep": { "category": "block", "sounds": ["hbm:elevators/s6_beep"]},
   "elevators.s6bell": { "category": "block", "sounds": ["hbm:elevators/s6_bell"]},
   "elevators.electronicpingshort": { "category": "block", "sounds": ["hbm:elevators/electronicpingshort"]},
+  "elevators.skyliftarrive": { "category": "block", "sounds": ["hbm:elevators/skylift_arrive"]},
   "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]}
 }

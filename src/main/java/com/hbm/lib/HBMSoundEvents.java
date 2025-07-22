@@ -299,6 +299,8 @@ public final class HBMSoundEvents {
 	public static SoundEvent s6beep;
 	public static SoundEvent s6bell;
 	public static SoundEvent electronicpingshort;
+	public static SoundEvent skyliftarrive;
+
 	public static SoundEvent UI_BUTTON_INVALID;
 	
 	
@@ -552,6 +554,7 @@ public final class HBMSoundEvents {
 		s6beep = register("elevators.s6beep");
 		s6bell = register("elevators.s6bell");
 		electronicpingshort = register("elevators.electronicpingshort");
+		skyliftarrive = register("elevators.skyliftarrive");
 		UI_BUTTON_INVALID = register("ui.button.invalid");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};

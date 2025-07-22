@@ -17,6 +17,8 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+import java.util.ConcurrentModificationException;
+
 public class ElevatorRender extends Render<ElevatorEntity> {
 	public static final IRenderFactory<ElevatorEntity> FACTORY = manager->new ElevatorRender(manager);
 
@@ -113,6 +115,7 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					bindTexture(S6.door);
 					S6.mdl.renderPart("DoorFrame");
 					float door = entity.getDataFloat(ElevatorEntity.DOOR_IN);
+					if (!entity.hasExteriorDoor(r)) door = 0;
 					LeafiaGls.pushMatrix();
 					LeafiaGls.translate(-0.440625f*door,0,0);
 					S6.mdl.renderPart("DoorL");
@@ -150,67 +153,68 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					if (panel != null) {
 						int staticX = panel.getStaticX();
 						double staticZ = panel.getStaticZ();
-
-						for (ElevatorButton button : entity.buttons) {
-							if (button instanceof FireButton) {
-								bindTexture(S6.buttonFireOff);
+						try {
+							for (ElevatorButton button : entity.buttons) {
+								if (button instanceof FireButton) {
+									bindTexture(S6.buttonFireOff);
+									brush.startDrawingQuads();
+									brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d-0.2/16d,-staticZ,0,1);
+									brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d-0.2/16d,-staticZ,1,1);
+									brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d+1.2/16d,-staticZ,1,0);
+									brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1.2/16d,-staticZ,0,0);
+									brush.draw();
+									continue;
+								}
+								if (entity.enabledButtons.contains(button.id) || entity.clickedButtons.containsKey(button.id))
+									bindTexture(S6.buttonOn);
+								else
+									bindTexture(S6.buttonOff);
 								brush.startDrawingQuads();
-								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d-0.2/16d,-staticZ,0,1);
-								brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d-0.2/16d,-staticZ,1,1);
-								brush.addVertexWithUV(staticX/16d+button.x/16d+1/16d,button.y/16d+1.2/16d,-staticZ,1,0);
-								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1.2/16d,-staticZ,0,0);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+0.15/16d,button.y/16d+0.15/16d,-staticZ,0,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+0.85/16d,button.y/16d+0.15/16d,-staticZ,1,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+0.85/16d,button.y/16d+0.85/16d,-staticZ,1,0);
+								brush.addVertexWithUV(staticX/16d+button.x/16d+0.15/16d,button.y/16d+0.85/16d,-staticZ,0,0);
 								brush.draw();
-								continue;
-							}
-							if (entity.enabledButtons.contains(button.id) || entity.clickedButtons.containsKey(button.id))
-								bindTexture(S6.buttonOn);
-							else
-								bindTexture(S6.buttonOff);
-							brush.startDrawingQuads();
-							brush.addVertexWithUV(staticX/16d+button.x/16d+0.15/16d,button.y/16d+0.15/16d,-staticZ,0,1);
-							brush.addVertexWithUV(staticX/16d+button.x/16d+0.85/16d,button.y/16d+0.15/16d,-staticZ,1,1);
-							brush.addVertexWithUV(staticX/16d+button.x/16d+0.85/16d,button.y/16d+0.85/16d,-staticZ,1,0);
-							brush.addVertexWithUV(staticX/16d+button.x/16d+0.15/16d,button.y/16d+0.85/16d,-staticZ,0,0);
-							brush.draw();
 
-							bindTexture(S6.buttonLabel);
-							brush.startDrawingQuads();
-							brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+0/16d,-staticZ,0,1);
-							brush.addVertexWithUV(staticX/16d+button.x/16d-0/16d,button.y/16d+0/16d,-staticZ,1,1);
-							brush.addVertexWithUV(staticX/16d+button.x/16d-0/16d,button.y/16d+1/16d,-staticZ,1,0);
-							brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ,0,0);
-							brush.draw();
-							String text = null;
-							if (button instanceof FloorButton) text = ((FloorButton)button).label;
-							if (text != null) {
-								LeafiaGls.pushMatrix();
-								LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);
-								LeafiaGls.scale(1/16d/(9+4));
-								LeafiaGls.translate((9+4)/2d-font.getStringWidth(text)/2d,0,0);
-								LeafiaGls.rotate(180,1,0,0);
-								font.drawString(text,0,3,0xFFFFFF);
-								LeafiaGls.popMatrix();
-							} else {
-								ResourceLocation res = null;
-								if (button instanceof OpenButton) res = S6.buttonLabelOpen;
-								if (button instanceof CloseButton) res = S6.buttonLabelClose;
-								if (button instanceof BellButton) res = S6.buttonLabelBell;
-								if (res != null) {
+								bindTexture(S6.buttonLabel);
+								brush.startDrawingQuads();
+								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+0/16d,-staticZ,0,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0/16d,button.y/16d+0/16d,-staticZ,1,1);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-0/16d,button.y/16d+1/16d,-staticZ,1,0);
+								brush.addVertexWithUV(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ,0,0);
+								brush.draw();
+								String text = null;
+								if (button instanceof FloorButton) text = ((FloorButton)button).label;
+								if (text != null) {
 									LeafiaGls.pushMatrix();
 									LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);
 									LeafiaGls.scale(1/16d/(9+4));
-									LeafiaGls.translate(1,-1,0);
-									bindTexture(res);
-									brush.startDrawingQuads();
-									brush.addVertexWithUV(0,-11,0,0,1);
-									brush.addVertexWithUV(11,-11,0,1,1);
-									brush.addVertexWithUV(11,0,0,1,0);
-									brush.addVertexWithUV(0,0,0,0,0);
-									brush.draw();
+									LeafiaGls.translate((9+4)/2d-font.getStringWidth(text)/2d,0,0);
+									LeafiaGls.rotate(180,1,0,0);
+									font.drawString(text,0,3,0xFFFFFF);
 									LeafiaGls.popMatrix();
+								} else {
+									ResourceLocation res = null;
+									if (button instanceof OpenButton) res = S6.buttonLabelOpen;
+									if (button instanceof CloseButton) res = S6.buttonLabelClose;
+									if (button instanceof BellButton) res = S6.buttonLabelBell;
+									if (res != null) {
+										LeafiaGls.pushMatrix();
+										LeafiaGls.translate(staticX/16d+button.x/16d-1/16d,button.y/16d+1/16d,-staticZ+0.001);
+										LeafiaGls.scale(1/16d/(9+4));
+										LeafiaGls.translate(1,-1,0);
+										bindTexture(res);
+										brush.startDrawingQuads();
+										brush.addVertexWithUV(0,-11,0,0,1);
+										brush.addVertexWithUV(11,-11,0,1,1);
+										brush.addVertexWithUV(11,0,0,1,0);
+										brush.addVertexWithUV(0,0,0,0,0);
+										brush.draw();
+										LeafiaGls.popMatrix();
+									}
 								}
 							}
-						}
+						} catch (ConcurrentModificationException ignored) {} // fuck you
 					}
 					break;
 				}

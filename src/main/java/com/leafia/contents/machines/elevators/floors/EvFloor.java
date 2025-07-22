@@ -87,6 +87,19 @@ public class EvFloor extends BlockDummyable {
 		return bb.toAABB();
 	}
 
+	@Nullable
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState,IBlockAccess worldIn,BlockPos pos) {
+		int[] shit = findCore(worldIn,pos.getX(),pos.getY(),pos.getZ());
+		if (shit != null) {
+			TileEntity te = worldIn.getTileEntity(new BlockPos(shit[0],shit[1],shit[2]));
+			if (te instanceof EvFloorTE) {
+				if (((EvFloorTE) te).open.cur > 0) return NULL_AABB;
+			}
+		}
+		return super.getCollisionBoundingBox(blockState,worldIn,pos);
+	}
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;

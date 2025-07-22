@@ -247,12 +247,15 @@ public class LeafiaSet<E> extends AbstractSet<E> implements Set<E>, List<E>, Clo
 			add(e);
 		return index;
 	}
-	@Override
-	public boolean remove(Object o) {
+	public boolean removeElement(Object o) {
 		int index = indexOf(o);
 		if (index < 0) return false;
 		remove(index);
 		return true;
+	}
+	@Override
+	public boolean remove(Object o) {
+		return removeElement(o);
 	}
 	@Override
 	public E remove(int index) {
