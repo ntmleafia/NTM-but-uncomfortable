@@ -1378,8 +1378,11 @@ public class ModBlocks {
 	public static final Block dfc_injector = new CoreComponent(Material.IRON, "dfc_injector").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block dfc_receiver = new CoreComponent(Material.IRON, "dfc_receiver").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block dfc_stabilizer = new CoreComponent(Material.IRON, "dfc_stabilizer").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block dfc_reinforced = new CoreComponent(Material.IRON, "dfc_reinforced").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
 	public static final Block dfc_core = new CoreCore(Material.IRON, "dfc_core").setHardness(5.0F).setResistance(/*10.0F*/65000000).setCreativeTab(MainRegistry.machineTab);
 	public static final Block dfc_cemitter = new CoreComponent(Material.IRON, "dfc_cemitter").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
 	public static final int guiID_dfc_emitter = 87;
 	public static final int guiID_dfc_injector = 90;
 	public static final int guiID_dfc_receiver = 88;

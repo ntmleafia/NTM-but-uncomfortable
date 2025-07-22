@@ -4404,6 +4404,7 @@ tile.dfc_cemitter.name=Creative DFC Booster
 tile.dfc_emitter.name=DFC Booster
 tile.dfc_injector.name=DFC Fuel Injector
 tile.dfc_receiver.name=DFC Absorber
+tile.dfc_reinforced.name=DFC Reinforced Absorber
 tile.dfc_stabilizer.name=DFC Stabilizer
 tile.digamma_matter.name=Digammarium
 tile.dirt_dead.name=Dead Dirt

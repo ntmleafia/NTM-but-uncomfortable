@@ -48,7 +48,7 @@ public class CoreComponent extends BlockContainer {
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);
-        if (this == ModBlocks.dfc_receiver)
+        if (this == ModBlocks.dfc_receiver || this == ModBlocks.dfc_reinforced)
             MachineTooltip.addGenerator(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -65,6 +65,8 @@ public class CoreComponent extends BlockContainer {
             return new TileEntityCoreInjector();
         if (this == ModBlocks.dfc_stabilizer)
             return new TileEntityCoreStabilizer();
+        if (this == ModBlocks.dfc_reinforced)
+            return new TileEntityCoreReceiver();
 
         return null;
     }
@@ -104,7 +106,7 @@ public class CoreComponent extends BlockContainer {
             if (this == ModBlocks.dfc_emitter)
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_emitter, world, pos.getX(), pos.getY(), pos.getZ());
 
-            if (this == ModBlocks.dfc_receiver)
+            if (this == ModBlocks.dfc_receiver || this == ModBlocks.dfc_reinforced)
 
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_receiver, world, pos.getX(), pos.getY(), pos.getZ());
 

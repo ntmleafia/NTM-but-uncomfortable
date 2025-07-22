@@ -166,6 +166,7 @@ public class ResourceManager {
 	public static final IModelCustom dfc_receiver = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/leafia/dfc_rotatable/absorber.obj"));
 	public static final IModelCustom dfc_injector = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/leafia/dfc_rotatable/injector.obj"));
 	public static final IModelCustom dfc_stabilizer = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/leafia/dfc_rotatable/stabilizer.obj"));
+	public static final IModelCustom dfc_reinforced = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/leafia/dfc_rotatable/reinforced.obj"));
 
 	//Sphere
 	public static final IModelCustom sphere_ruv = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/sphere_ruv.obj"));

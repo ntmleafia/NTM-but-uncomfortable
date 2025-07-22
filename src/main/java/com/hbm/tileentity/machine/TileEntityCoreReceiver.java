@@ -1,6 +1,7 @@
 package com.hbm.tileentity.machine;
 
 import api.hbm.energy.IEnergyGenerator;
+import com.hbm.blocks.ModBlocks;
 import com.hbm.explosion.ExplosionLarge;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ILaserable;
@@ -49,6 +50,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     //Because it get cleared after the te updates, it needs to be saved here for the container
     public long syncJoules;
     public FluidTank tank;
+    public boolean spkMode = false;
 
     public double level = 1;
 
@@ -130,7 +132,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             core.absorbers.add(this);
         if (!world.isRemote) {
 
-            if (joules >= NumScale.PETA) {
+            if (joules >= NumScale.PETA && world.getBlockState(pos).getBlock() == ModBlocks.dfc_receiver) {
                 destructionLevel = Math.min(destructionLevel+1,200);
                 if (destructionLevel > 150 && world.rand.nextInt(100) == 0)
                     this.explode();
@@ -148,6 +150,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             this.sendPower(world, pos);
 
             long remaining = power / 5000L;
+            long totalTransfer = 0;
             if (remaining > 0) {
                 List<Pair<ILaserable, EnumFacing>> targets = new ArrayList<>();
                 for (EnumFacing outFace : EnumFacing.values()) {
@@ -164,7 +167,8 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
                     for (Pair<ILaserable, EnumFacing> target : targets)
                         target.getA().addEnergy(transfer, target.getB());
 
-                    power -= transfer * targets.size() * 5000L;
+                    totalTransfer = transfer * targets.size();
+                    power -= totalTransfer * 5000L;
                 }
             }
 
@@ -181,9 +185,20 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             syncJoules = joules;
 
             joules = 0;
-            LeafiaPacket._start(this).__write(2,level).__sendToAffectedClients(); // fuick fuck fuck fuck fuck
+            LeafiaPacket._start(this).__write(2,level)/*.__write(3,power)*/.__write(4,totalTransfer).__sendToAffectedClients(); // fuick fuck fuck fuck fuck
+        } else {
+            tickJoules[needle] = joules;
+            needle = Math.floorMod(needle+1,20);
+            joulesPerSec = 0;
+            for (long tickJoule : tickJoules)
+                joulesPerSec += Math.max(0,tickJoule-syncSpk)/20d;
+            fanAngle += Math.floorMod(720/20,360);
         }
     }
+    public int fanAngle = 0;
+    public double joulesPerSec = 0;
+    long[] tickJoules = new long[20];
+    int needle = 0;
 
     @Override
     public String getName() {
@@ -263,6 +278,8 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
                 .__sendToClient(player);
     }
 
+    public long syncSpk = 0;
+
     @Override
     public void onReceivePacketLocal(byte key,Object value) {
         super.onReceivePacketLocal(key,value);
@@ -270,6 +287,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             case 0: joules = (long)value; break;
             case 1: power = (long)value; break;
             case 2: level = (double)value; break;
+            case 4: syncSpk = (long)value; break;
         }
     }
 

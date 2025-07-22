@@ -7,6 +7,8 @@ import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.leafia.dev.container_utility.LeafiaPacket;
+import com.llib.LeafiaLib;
+import com.llib.LeafiaLib.NumScale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiTextField;
@@ -51,7 +53,8 @@ public class GUICoreReceiver extends GuiInfoContainer {
 		super.drawScreen(mouseX, mouseY, f);
 
 		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 17-7, guiTop + 16-11, 16, 52, receiver.tank, ModForgeFluids.cryogel);
-		this.drawElectricityInfo(this,mouseX, mouseY, guiLeft + 46, guiTop + 6, 16, 52, receiver.power, 1000000000L);
+		//this.drawElectricityInfo(this,mouseX, mouseY, guiLeft + 46, guiTop + 6, 16, 52, receiver.power, NumScale.PETA);
+		this.drawCustomInfo(this,mouseX, mouseY, guiLeft + 46, guiTop + 6, 16, 52, new String[]{Library.getShortNumber(receiver.power)+"HE"});
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 	int saveButtonCooldown = 0;
@@ -75,13 +78,16 @@ public class GUICoreReceiver extends GuiInfoContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer( int i, int j) {
 		String name = this.receiver.hasCustomInventoryName() ? this.receiver.getInventoryName() : I18n.format(this.receiver.getInventoryName());
-		this.fontRenderer.drawString(name, 117 - this.fontRenderer.getStringWidth(name)/2, 7, 4210752);
+		this.fontRenderer.drawString(name, 114 - this.fontRenderer.getStringWidth(name)/2, 7, 4210752);
 
-		this.fontRenderer.drawString("Input:", 54+29, 21, 4210752);
+		this.fontRenderer.drawString("Input:", /*54+29*/98-this.fontRenderer.getStringWidth("Input:")/2+5, 21, 4210752);
 		String sparks = Library.getShortNumber(receiver.joules) + "SPK";
 		this.fontRenderer.drawString(sparks, 161+29-this.fontRenderer.getStringWidth(sparks), 21, 0x4EB3DB);
-		this.fontRenderer.drawString("Output:", 54+29, 21+20*2, 4210752);
-		String power = Library.getShortNumber(receiver.joules * 100000L) + "HE/s";
+		this.fontRenderer.drawString("Relaying:", /*54+29*/98-this.fontRenderer.getStringWidth("Relaying:")/2+5, 21+20, 4210752);
+		String relayin = Library.getShortNumber(receiver.syncSpk) + "SPK";
+		this.fontRenderer.drawString(relayin, 161+29-this.fontRenderer.getStringWidth(relayin), 21+20, 0x4EB3DB);
+		this.fontRenderer.drawString("Output:", /*54+29*/98-this.fontRenderer.getStringWidth("Output:")/2, 21+20*2, 4210752);
+		String power = Library.getShortNumber((long)receiver.joulesPerSec*5000*20) + "HE/s";
 		this.fontRenderer.drawString(power, 161+29-this.fontRenderer.getStringWidth(power), 21+20*2, 0xD84EDB);
 
 		String inventory = I18n.format("container.inventory");
@@ -105,6 +111,8 @@ public class GUICoreReceiver extends GuiInfoContainer {
 			saveButtonCooldown--;
 			drawTexturedModalRect(guiLeft+50,guiTop+65,221,14,18,18);
 		}
+		int i = (int) (MathHelper.clamp(receiver.joules/(double)NumScale.PETA,0,1)*52);
+		drawTexturedModalRect(guiLeft + 46, guiTop + 58 - i, 176, 52 - i, 16, i);
 
 		this.field.drawTextBox();
 		FFUtils.drawLiquid(receiver.tank, guiLeft, guiTop, zLevel, 16, 52, 17-7, 97-11);
