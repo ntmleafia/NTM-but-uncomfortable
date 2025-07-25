@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GUIScreenTemplateFolder extends GuiScreen {
-	
+	public static boolean cooldown = false;
     protected static final ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_planner.png");
     protected int xSize = 176;
     protected int ySize = 229;
@@ -84,6 +84,7 @@ public class GUIScreenTemplateFolder extends GuiScreen {
     	
     	this.player = player;
 		this.allStacks = new ArrayList<>();
+		cooldown = false;
 
     	//Stamps
 		for(Item i : PressRecipes.stamps_plate)
@@ -296,9 +297,9 @@ public class GUIScreenTemplateFolder extends GuiScreen {
 		}
 		
 		public void executeAction() {
-			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			if(type == 0) {
-				PacketDispatcher.wrapper.sendToServer(new ItemFolderPacket(stack.copy()));
+				if (!cooldown)
+					PacketDispatcher.wrapper.sendToServer(new ItemFolderPacket(stack.copy()));
 			} else if(type == 1) {
 				if(currentPage > 0)
 					currentPage--;

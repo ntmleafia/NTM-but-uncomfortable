@@ -48,6 +48,8 @@ import com.leafia.contents.gear.ItemGasSensor;
 import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.gear.wands.ItemWandSaving;
+import com.leafia.contents.machines.elevators.car.chips.EvChipItem;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType;
 import com.leafia.contents.machines.reactors.pwr.debris.ItemPWRDebris;
 import net.minecraft.block.Block;
@@ -432,6 +434,18 @@ public class ModItems {
 		public static final Item upgrade_stack_1 = new ItemMachineUpgrade("upgrade_stack_1", UpgradeType.SPEED, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_stack_2 = new ItemMachineUpgrade("upgrade_stack_2", UpgradeType.SPEED, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_stack_3 = new ItemMachineUpgrade("upgrade_stack_3", UpgradeType.SPEED, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	}
+
+	public static class ElevatorStyles {
+		public static final List<EvStyleItem> styleItems = new ArrayList<>();
+		public static final Item s6chip = new EvChipItem("ev_chip_s6");
+		public static final Item skyliftchip = new EvChipItem("ev_chip_skylift");
+		public static final Item s6floor = new EvStyleItem("ev_s6floor");
+		public static final Item s6ceiling = new EvStyleItem("ev_s6ceiling");
+		public static final Item s6door = new EvStyleItem("ev_s6door");
+		public static final Item s6wall = new EvStyleItem("ev_s6wall");
+		public static final Item s6window = new EvStyleItem("ev_s6window");
+		public static final Item skyliftdoor = new EvStyleItem("ev_skyliftdoor");
 	}
 
 	//Fluid handling items
@@ -906,7 +920,7 @@ public class ModItems {
 			public static final Item powder_coal_tiny = new ItemFuelHazard("powder_coal_tiny", 160, false).addCoal(1).toItem().setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_yellowcake = new ItemContaminating(ItemHazard.yc * ItemHazard.powder, "powder_yellowcake").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_thorium = new ItemContaminating(ItemHazard.th232 * ItemHazard.powder, "powder_thorium").setCreativeTab(MainRegistry.partsTab);
-			public static final Item powder_uranium = new ItemContaminating(ItemHazard.u * ItemHazard.powder, "powder_uranium").setCreativeTab(MainRegistry.partsTab);
+			public static final Item powder_uranium = new ItemContaminating(ItemHazard.u * ItemHazard.powder, true, "powder_uranium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_plutonium = new ItemContaminating(ItemHazard.pu * ItemHazard.powder, true, "powder_plutonium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_neptunium = new ItemContaminating(ItemHazard.np237 * ItemHazard.powder, true, "powder_neptunium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_polonium = new ItemContaminating(ItemHazard.po210 * ItemHazard.powder, true, "powder_polonium").setCreativeTab(MainRegistry.partsTab);

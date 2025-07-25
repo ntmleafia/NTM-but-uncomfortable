@@ -1312,6 +1312,7 @@ public class ModBlocks {
 	}
 	public static class Elevators {
 		public static final int guiIdFloor = 365;
+		public static final int guiIdCabin = 366;
 	} // fuck the grouping since it doesnt work
 	public static final Block pulley = new EvPulley(Material.IRON,"elevator_pulley");
 	public static final Block shaft = new EvShaft(Material.IRON,"elevator_shaft");

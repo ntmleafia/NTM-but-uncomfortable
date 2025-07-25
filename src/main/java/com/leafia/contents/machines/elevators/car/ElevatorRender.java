@@ -98,19 +98,19 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					floorTexture = S6.floor;
 					bindTexture(floorTexture);
 					S6.mdl.renderPart("Floor");
-					bindTexture(ResourceManager.solid);
+					bindTexture(support);
 					S6.mdl.renderPart("FloorSide");
 					break;
 				}
 				case "s6ceiling": {
 					bindTexture(S6.ceiling);
 					S6.mdl.renderPart("Ceiling");
-					bindTexture(ResourceManager.solid);
+					bindTexture(support);
 					S6.mdl.renderPart("CeilingSide");
 					break;
 				}
 				case "s6wall": {
-					bindTexture(ResourceManager.solid);
+					bindTexture(support);
 					S6.mdl.renderPart("WallFrames");
 					S6.mdl.renderPart("WallOut");
 					bindTexture(S6.wall);
@@ -118,7 +118,7 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					break;
 				}
 				case "s6window": {
-					bindTexture(ResourceManager.solid);
+					bindTexture(support);
 					S6.mdl.renderPart("WallFrames");
 					bindTexture(S6.window);
 					S6.mdl.renderPart("WallOut");
@@ -157,9 +157,10 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					LeafiaGls.disableLighting();
 					String display = entity.getDataString(ElevatorEntity.FLOOR_DISPLAY);
 					if (display.length() < 2) display = " "+display;
-					bindTexture(S6.ind.get(display.substring(1,2)));
+					if (display.length() < 2) display = " "+display;
+					bindTexture(S6.ind.getOrDefault(display.substring(1,2),S6.ind.get(" ")));
 					S6.mdl.renderPart("Digit0");
-					bindTexture(S6.ind.get(display.substring(0,1)));
+					bindTexture(S6.ind.getOrDefault(display.substring(0,1),S6.ind.get(" ")));
 					S6.mdl.renderPart("Digit10");
 					LeafiaGls.enableLighting();
 
@@ -269,9 +270,10 @@ public class ElevatorRender extends Render<ElevatorEntity> {
 					LeafiaGls.disableLighting();
 					String display = entity.getDataString(ElevatorEntity.FLOOR_DISPLAY);
 					if (display.length() < 2) display = " "+display;
-					bindTexture(Skylift.ind.get(display.substring(1,2)));
+					if (display.length() < 2) display = " "+display;
+					bindTexture(Skylift.ind.getOrDefault(display.substring(1,2),S6.ind.get(" ")));
 					Skylift.mdl.renderPart("Digit0");
-					bindTexture(Skylift.ind.get(display.substring(0,1)));
+					bindTexture(Skylift.ind.getOrDefault(display.substring(0,1),S6.ind.get(" ")));
 					Skylift.mdl.renderPart("Digit10");
 					LeafiaGls.enableLighting();
 

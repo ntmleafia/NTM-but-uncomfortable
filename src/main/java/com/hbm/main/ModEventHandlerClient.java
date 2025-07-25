@@ -25,6 +25,7 @@ import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.ElevatorStyles;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.armor.ItemArmorMod;
@@ -92,6 +93,7 @@ import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodRender;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.gear.utility.FuzzyIdentifierBakedModel;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
 import com.leafia.contents.worldgen.ModBiome;
 import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -632,6 +634,9 @@ public class ModEventHandlerClient {
 		swapModels(ModItems.ore_bedrock_perfect, reg);
 
 		swapModels(ModItems.detonator_laser, reg);
+
+		for (EvStyleItem styleItem : ElevatorStyles.styleItems)
+			swapModels(styleItem,reg);
 
 		swapModels(ModItems.pwr_piece, reg);
 		swapModels(ModItems.pwr_shrapnel, reg);

@@ -1,20 +1,23 @@
 package com.leafia.contents.machines.elevators.car;
 
+import api.hbm.block.IToolable.ToolType;
 import com.hbm.blocks.BlockDummyable;
-import com.hbm.lib.HBMSoundEvents;
-import com.hbm.util.Tuple.Pair;
+import com.hbm.blocks.ModBlocks.Elevators;
+import com.hbm.items.tool.ItemTooling;
+import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulleyTE;
 import com.leafia.contents.machines.elevators.EvShaft;
 import com.leafia.contents.machines.elevators.car.chips.EvChipBase;
-import com.leafia.contents.machines.elevators.car.chips.EvChipS6;
-import com.leafia.contents.machines.elevators.car.chips.EvChipSkylift;
+import com.leafia.contents.machines.elevators.car.chips.EvChipItem;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
 import com.leafia.contents.machines.elevators.car.styles.EvWallBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.ElevatorPanelBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.EvGenericDoorBase;
 import com.leafia.contents.machines.elevators.car.styles.panels.S6Door;
 import com.leafia.contents.machines.elevators.floors.EvFloor;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.contents.machines.elevators.gui.EvCabinContainer;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
@@ -30,9 +33,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.MultiPartEntityPart;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -40,15 +49,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityCustomCollision {
@@ -60,8 +70,8 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 	public static final DataParameter<String> STYLE_BACK = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.STRING);
 	public static final DataParameter<String>[] styleParams = new DataParameter[]{STYLE_FLOOR,STYLE_CEILING,STYLE_FRONT,STYLE_LEFT,STYLE_BACK,STYLE_RIGHT};
 	public static final DataParameter<String> FLOOR_DISPLAY = EntityDataManager.createKey(ElevatorEntity.class,DataSerializers.STRING);
-	public static final Map<Integer,String> specialDisplayFloors = new HashMap<>();
-	public static final String[] ALLOWED_DIGITS = new String[]{"0","1","2","3","4","5","6","7","8","9","-","L"};
+	public final Map<Integer,String> specialDisplayFloors = new HashMap<>();
+	public static final String[] ALLOWED_DIGITS = new String[]{"0","1","2","3","4","5","6","7","8","9","-","L","R","B","E"};
 	public static boolean isDigitAllowed(String s) {
 		for (String allowedDigit : ALLOWED_DIGITS) {
 			if (allowedDigit.equals(s)) return true;
@@ -176,10 +186,10 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			return (EvPulleyTE)te;
 		return null;
 	}
-	EvPulleyTE pulley = null;
+	public EvPulleyTE pulley = null;
 	public void findPulley() {
 		for (int i = (int)posY; i < 255; i++) {
-			TileEntity te = world.getTileEntity(new BlockPos(posX,posY+i,posZ));
+			TileEntity te = world.getTileEntity(new BlockPos(posX,i,posZ));
 			if (te instanceof EvPulleyTE) {
 				pulley = (EvPulleyTE)te;
 				BlockPos pos = pulley.getPos();
@@ -190,26 +200,6 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		}
 	}
 
-	public LeafiaMap<String,List<HitSrf>> surfaces = new LeafiaMap<>();
-	@Override
-	protected void entityInit() {
-		this.dataManager.register(STYLE_FLOOR,"s6floor");
-		this.dataManager.register(STYLE_CEILING,"s6ceiling");
-		this.dataManager.register(STYLE_FRONT,"s6door");
-		this.dataManager.register(STYLE_LEFT,"s6window");
-		this.dataManager.register(STYLE_BACK,"s6door");
-		this.dataManager.register(STYLE_RIGHT,"s6window");
-		this.dataManager.register(FLOOR,1);
-		this.dataManager.register(FLOOR_DISPLAY,"1");
-		this.dataManager.register(ARROW,1);
-		this.dataManager.register(DOOR_IN,0f);
-		this.dataManager.register(DOOR_OUT,0f);
-		this.dataManager.register(PULLEY_X,1);
-		this.dataManager.register(PULLEY_Y,1);
-		this.dataManager.register(PULLEY_Z,1);
-		width = 30/16f;
-		height = 0.1f;
-	}
 	public String getDataString(DataParameter<String> param) {
 		return this.dataManager.get(param);
 	}
@@ -247,18 +237,24 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		}
 		return null;
 	}
+	@Nullable
 	public EvWallBase getWallInstance(int side) {
 		ElevatorPanelBase panel = getPanel(side);
 		if (panel != null) return panel;
 		String style = getDataString(styleParams[side+2]);
-		switch(style) {
-		}
+		if (style.equals("")) return null;
 		return new EvWallBase(side);
 	}
+	int lastPanelCount = 0;
 	@Override
 	public Entity[] getParts() {
 		if (!world.isRemote) return super.getParts();
 		List<ElevatorPanelBase> panels = getPanels();
+		if (panels.size() != lastPanelCount) {
+			lastPanelCount = panels.size();
+			for (ElevatorButton button : buttons)
+				button.updateHitboxes();
+		}
 		Entity[] list = new Entity[buttons.size()*panels.size()];
 		for (int i = 0; i < buttons.size(); i++) {
 			for (int j = 0; j < panels.size(); j++)
@@ -271,29 +267,32 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 
 
 	public static class ElevatorButton {
-		int x;
-		int y;
+		public int x;
+		public int y;
 		final ElevatorEntity entity;
 		final List<MultiPartEntityPart> hitboxes = new ArrayList<>();
 		final List<ElevatorPanelBase> panels;
-		final String id;
+		public String id;
 		// z = 0.9365;
 		ElevatorButton(ElevatorEntity elevator,String id,int x,int y) {
 			entity = elevator;
 			panels = elevator.getPanels();
 			this.id = id;
-			if (elevator.world.isRemote) {
-				for (ElevatorPanelBase panel : panels) {
-					hitboxes.add(new MultiPartEntityPart(elevator,id,1 / 16f,1 / 16f) {
-						@Override
-						public boolean processInitialInteract(EntityPlayer player,EnumHand hand) {
-							return onInteract(player,hand);
-						}
-					});
-				}
-			}
+			if (elevator.world.isRemote)
+				updateHitboxes();
 			this.x = x;
 			this.y = y;
+		}
+		void updateHitboxes() {
+			hitboxes.clear();
+			for (ElevatorPanelBase panel : panels) {
+				hitboxes.add(new MultiPartEntityPart(entity,"button",1 / 16f,1 / 16f) {
+					@Override
+					public boolean processInitialInteract(EntityPlayer player,EnumHand hand) {
+						return onInteract(player,hand);
+					}
+				});
+			}
 		}
 		void onUpdate() {
 			for (int i = 0; i < panels.size(); i++) {
@@ -312,8 +311,8 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		}
 	}
 	public static class FloorButton extends ElevatorButton {
-		String label;
-		int floor;
+		public String label;
+		public int floor;
 		public FloorButton(ElevatorEntity e,int floor,String label,int x,int y) {
 			super(e,"floor"+floor,x,y);
 			this.floor = floor;
@@ -333,8 +332,8 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		public FireButton(ElevatorEntity e,int x,int y) { super(e,"fire",x,y); }
 	}
 	public boolean onButtonPressed(String id,EntityPlayer player,EnumHand hand) {
+		player.swingArm(hand);
 		if (world.isRemote) {
-			player.swingArm(hand);
 			LeafiaCustomPacket.__start(new EvButtonInteractPacket(this,id,hand)).__sendToServer();
 		}
 
@@ -491,23 +490,306 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			};
 		}
 	}
+	public static class EvSpecialFloorsSyncPacket implements LeafiaCustomPacketEncoder {
+		public ElevatorEntity serverEntity;
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeInt(serverEntity.getEntityId());
+			buf.writeInt(serverEntity.specialDisplayFloors.size());
+			for (Entry<Integer,String> entry : serverEntity.specialDisplayFloors.entrySet()) {
+				buf.writeInt(entry.getKey());
+				buf.writeUTF8String(entry.getValue());
+			}
+		}
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			int id = buf.readInt();
+			int length = buf.readInt();
+			return (ctx)->{
+				World world = Minecraft.getMinecraft().world;
+				Entity get = world.getEntityByID(id);
+				if (get != null && get instanceof ElevatorEntity) {
+					ElevatorEntity entity = (ElevatorEntity)get;
+					entity.specialDisplayFloors.clear();
+					for (int i = 0; i < length; i++) {
+						entity.specialDisplayFloors.put(buf.readInt(),buf.readUTF8String());
+					}
+				}
+			};
+		}
+	}
+	public static class EvSyncRequestPacket implements LeafiaCustomPacketEncoder {
+		public ElevatorEntity localEntity;
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeInt(localEntity.getEntityId());
+		}
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			int entityId = buf.readInt();
+			return (ctx)->{
+				World world = ctx.getServerHandler().player.world;
+				Entity get = world.getEntityByID(entityId);
+				if (get != null && get instanceof ElevatorEntity) {
+					ElevatorEntity entity = (ElevatorEntity)get;
+					{
+						EvSpecialFloorsSyncPacket packet = new EvSpecialFloorsSyncPacket();
+						packet.serverEntity = entity;
+						LeafiaCustomPacket.__start(packet).__sendToClient(ctx.getServerHandler().player);
+					}
+					{
+						EvButtonSyncPacket packet = new EvButtonSyncPacket();
+						packet.serverEntity = entity;
+						LeafiaCustomPacket.__start(packet).__sendToClient(ctx.getServerHandler().player);
+					}
+					{
+						EvButtonEnablePacket packet = new EvButtonEnablePacket();
+						packet.serverEntity = entity;
+						LeafiaCustomPacket.__start(packet).__sendToClient(ctx.getServerHandler().player);
+					}
+					{
+						EvInventorySyncPacket packet = new EvInventorySyncPacket();
+						packet.serverEntity = entity;
+						LeafiaCustomPacket.__start(packet).__sendToClient(ctx.getServerHandler().player);
+					}
+				}
+			};
+		}
+	}
+	public static class EvButtonModifyPacket implements LeafiaCustomPacketEncoder {
+		public ElevatorEntity localEntity;
+		public int localMode = 0; // 0: move, 1: add, 2: remove, 3: modify
+		public int localTarget = -1;
+		public int localX = 0;
+		public int localY = 0;
+		public int localProperty = 0; // 0: floor, 1: floorInd, 2: buttonLabel
+		public int localFloor = 1;
+		public String localLabel = "ERROR";
+		public int localButtonType = 0; // 0: Floor, 1: Fire, 2: Open, 3: Close, 4: Bell
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeInt(localEntity.getEntityId());
+			buf.insert(localMode,2);
+			if (localMode != 1)
+				buf.writeInt(localTarget);
+			if (localMode == 0) {
+				buf.writeByte(localX);
+				buf.writeByte(localY);
+			} else if (localMode == 1)
+				buf.insert(localButtonType,3);
+			else if (localMode == 3) {
+				buf.insert(localProperty,2);
+				if (localProperty == 0)
+					buf.writeByte(localFloor);
+				else
+					buf.writeUTF8String(localLabel);
+			}
+		}
+		public ElevatorEntity tryGetEntity(MessageContext ctx,int entityId) {
+			Entity entity = ctx.getServerHandler().player.world.getEntityByID(entityId);
+			if (entity instanceof ElevatorEntity) return (ElevatorEntity)entity;
+			return null;
+		}
+		@Nullable
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			int entityId = buf.readInt();
+			int mode = buf.extract(2);
+			switch(mode) {
+				case 0: {
+					int target = buf.readInt();
+					int x = buf.readByte();
+					int y = buf.readByte();
+					return (ctx)->{
+						ElevatorEntity entity = tryGetEntity(ctx,entityId);
+						if (entity != null && entity.buttons.size() > target) {
+							entity.buttons.get(target).x = x;
+							entity.buttons.get(target).y = y;
+							EvButtonSyncPacket packet = new EvButtonSyncPacket();
+							packet.serverEntity = entity;
+							LeafiaCustomPacket.__start(packet).__sendToAll();
+						}
+					};
+				}
+				case 1: {
+					int type = buf.extract(3);
+					return (ctx)->{
+						ElevatorEntity entity = tryGetEntity(ctx,entityId);
+						if (entity != null) {
+							switch(type) {
+								case 0: entity.buttons.add(new FloorButton(entity,1,"1",0,3)); break;
+								case 1: entity.buttons.add(new FireButton(entity,0,3)); break;
+								case 2: entity.buttons.add(new OpenButton(entity,0,3)); break;
+								case 3: entity.buttons.add(new CloseButton(entity,0,3)); break;
+								case 4: entity.buttons.add(new BellButton(entity,0,3)); break;
+							}
+							EvButtonSyncPacket packet = new EvButtonSyncPacket();
+							packet.serverEntity = entity;
+							LeafiaCustomPacket.__start(packet).__sendToAll();
+						}
+					};
+				}
+				case 2: {
+					int target = buf.readInt();
+					return (ctx)->{
+						ElevatorEntity entity = tryGetEntity(ctx,entityId);
+						if (entity != null && entity.buttons.size() > target) {
+							entity.buttons.remove(target);
+							EvButtonSyncPacket packet = new EvButtonSyncPacket();
+							packet.serverEntity = entity;
+							LeafiaCustomPacket.__start(packet).__sendToAll();
+						}
+					};
+				}
+				case 3: {
+					int target = buf.readInt();
+					int property = buf.extract(2);
+					return (ctx)->{
+						ElevatorEntity entity = tryGetEntity(ctx,entityId);
+						if (entity != null && entity.buttons.size() > target) {
+							ElevatorButton btn = entity.buttons.get(target);
+							if (btn instanceof FloorButton) {
+								switch(property) {
+									case 0: {
+										int floor = buf.readByte();
+										((FloorButton) btn).floor = floor;
+										btn.id = "floor"+floor;
+										break;
+									} case 1: {
+										String s = buf.readUTF8String();
+										if (s == "" || s.equals(Integer.toString(((FloorButton) btn).floor)))
+											entity.specialDisplayFloors.remove(((FloorButton) btn).floor);
+										else
+											entity.specialDisplayFloors.put(((FloorButton)btn).floor,s);
+										EvSpecialFloorsSyncPacket packet = new EvSpecialFloorsSyncPacket();
+										packet.serverEntity = entity;
+										LeafiaCustomPacket.__start(packet).__sendToAll();
+										break;
+									} case 2: {
+										((FloorButton)btn).label = buf.readUTF8String();
+										break;
+									}
+								}
+								EvButtonSyncPacket packet = new EvButtonSyncPacket();
+								packet.serverEntity = entity;
+								LeafiaCustomPacket.__start(packet).__sendToAll();
+							}
+						}
+					};
+				}
+			}
+			return null;
+		}
+	}
+	public static class EvInventorySyncPacket implements LeafiaCustomPacketEncoder {
+		public ElevatorEntity serverEntity;
+		@Override
+		public void encode(LeafiaBuf buf) {
+			buf.writeInt(serverEntity.getEntityId());
+			buf.writeNBT(serverEntity.inventory.serializeNBT());
+		}
+		@Override
+		public Consumer<MessageContext> decode(LeafiaBuf buf) {
+			int id = buf.readInt();
+			NBTTagCompound inventory = buf.readNBT();
+			return (ctx)->{
+				World world = Minecraft.getMinecraft().world;
+				Entity get = world.getEntityByID(id);
+				if (get != null && get instanceof ElevatorEntity) {
+					ElevatorEntity entity = (ElevatorEntity)get;
+					entity.inventory.deserializeNBT(inventory);
+				}
+			};
+		}
+	}
 	public EvChipBase controller = null;
+	String curController = "";
+	void updateController() {
+		if (inventory.getStackInSlot(0).getItem() instanceof EvChipItem) {
+			EvChipItem chip = (EvChipItem)inventory.getStackInSlot(0).getItem();
+			if (!chip.getChipId().equals(curController)) {
+				curController = chip.getChipId();
+				controller = chip.getController(this);
+			}
+		} else controller = null;
+	}
+	void updateWallParameters() {
+		for (int i = 1; i < 7; i++) {
+			String style = "";
+			if (inventory.getStackInSlot(i).getItem() instanceof EvStyleItem) {
+				EvStyleItem item = (EvStyleItem)inventory.getStackInSlot(i).getItem();
+				style = item.getStyleId();
+			}
+			dataManager.set(styleParams[i-1],style);
+		}
+	}
 	public List<ElevatorButton> buttons = new ArrayList<>();
+	public ItemStackHandler inventory;
+	public Container tempContainer;
+	public static ElevatorEntity lastEntityEw;
+	@Override
+	public boolean processInitialInteract(EntityPlayer player,EnumHand hand) {
+		if (player.getHeldItem(hand).getItem() instanceof ItemTooling) {
+			ItemTooling tool = (ItemTooling)player.getHeldItem(hand).getItem();
+			if (tool.getType() == ToolType.SCREWDRIVER) {
+				tempContainer = new EvCabinContainer(player,this);
+				player.openContainer = tempContainer;
+				player.swingArm(hand);
+				if (world.isRemote) {
+					lastEntityEw = this; // ewww stupid way to do this
+					player.openGui(MainRegistry.instance,Elevators.guiIdCabin,world,(int)posX,(int)posY,(int)posZ);
+					//world.createExplosion(null,posX,posY,posZ,1,false);
+				} else {
+				}
+			}
+		}
+		return true;
+	}
+	public boolean shouldUpdateItems = true;
+	public LeafiaMap<String,List<HitSrf>> surfaces = new LeafiaMap<>();
+	@Override
+	protected void entityInit() {
+		this.dataManager.register(STYLE_FLOOR,"");
+		this.dataManager.register(STYLE_CEILING,"");
+		this.dataManager.register(STYLE_FRONT,"");
+		this.dataManager.register(STYLE_LEFT,"");
+		this.dataManager.register(STYLE_BACK,"");
+		this.dataManager.register(STYLE_RIGHT,"");
+		this.dataManager.register(FLOOR,1);
+		this.dataManager.register(FLOOR_DISPLAY,"1");
+		this.dataManager.register(ARROW,1);
+		this.dataManager.register(DOOR_IN,0f);
+		this.dataManager.register(DOOR_OUT,0f);
+		this.dataManager.register(PULLEY_X,1);
+		this.dataManager.register(PULLEY_Y,1);
+		this.dataManager.register(PULLEY_Z,1);
+		width = 30/16f;
+		height = world.isRemote ? 0.1f : 2.5f;
+	}
 	public ElevatorEntity(World worldIn) {
 		super(worldIn);
+		inventory = new ItemStackHandler(8) {
+			@Override
+			protected void onContentsChanged(int slot) {
+				super.onContentsChanged(slot);
+				LeafiaDebug.debugLog(world,"Slot "+slot+" changed!");
+				shouldUpdateItems = true;
+			}
+		};
 		updateHitSurfaces();
-		controller = new EvChipS6(this);
 		/*
 		surfaces.put("wallF",new HitSrf(new FiaMatrix().rotateY(0).translate(0,0,-19/16d),-15/16d,0,15/16d,36/16d,4d/16d).setType(0));
 		surfaces.put("wallL",new HitSrf(new FiaMatrix().rotateY(90).translate(0,0,-19/16d),-15/16d,0,15/16d,36/16d,4d/16d).setType(0));
 		surfaces.put("wallB",new HitSrf(new FiaMatrix().rotateY(180).translate(0,0,-19/16d),-15/16d,0,15/16d,36/16d,4d/16d).setType(0));
 		surfaces.put("wallR",new HitSrf(new FiaMatrix().rotateY(-90).translate(0,0,-19/16d),-15/16d,0,15/16d,36/16d,4d/16d).setType(0));
 		*/
+		/*
 		buttons.add(new FloorButton(this,1,"★L",1,14));
 		buttons.add(new FloorButton(this,-1,"-1",-2,14));
 		buttons.add(new OpenButton(this,1,9));
 		buttons.add(new CloseButton(this,-2,9));
 		buttons.add(new FireButton(this,-2,20));
+		buttons.add(new FloorButton(this,2,"Og",0,3));*/
 	}
 	void updateHitSurfaces() {
 		surfaces.clear();
@@ -517,10 +799,12 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		surfaces.put("ceiling",Collections.singletonList(ceilingSrf));
 		for (int i = 0; i < 4; i++) {
 			EvWallBase wall = getWallInstance(i);
-			List<HitSrf> srfs = wall.getHitSurfaces();
-			for (HitSrf srf : srfs)
-				srf.mat = new FiaMatrix().rotateY(90*i).travel(srf.mat);
-			surfaces.put("wall"+i,srfs);
+			if (wall != null) {
+				List<HitSrf> srfs = wall.getHitSurfaces();
+				for (HitSrf srf : srfs)
+					srf.mat = new FiaMatrix().rotateY(90*i).travel(srf.mat);
+				surfaces.put("wall"+i,srfs);
+			}
 		}
 	}
 	void updateDoorCollisions() {
@@ -530,7 +814,8 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			if (wall instanceof EvGenericDoorBase) {
 				if (hasExteriorDoor(i)) {
 					List<HitSrf> srfs = surfaces.get("wall"+i);
-					srfs.get(0).enabled = !open;
+					if (srfs != null)
+						srfs.get(0).enabled = !open;
 				}
 			}
 		}
@@ -617,14 +902,6 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 		return vec;
 	}
 
-	@Override
-	public boolean processInitialInteract(EntityPlayer player,EnumHand hand) {
-		if (!world.isRemote) {
-			//world.createExplosion(null,posX,posY,posZ,1,false);
-		}
-		return true;
-	}
-
 
 	public void processEntity(Entity e) {
 		if (getEntityBoundingBox().expand(0,-Math.min(0,motionY)*4-e.height,0).contains(new Vec3d(e.posX,e.posY,e.posZ))) {
@@ -658,77 +935,139 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			}
 		}
 	}
+	String[] localLastWalls = new String[4];
+	boolean sync = true;
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		//this.rotationYaw+=45/20f;
-		if (world.isRemote) {
-			for (ElevatorButton button : buttons) button.onUpdate();
-			for (String btn : clickedButtons.keySet()) {
-				clickedButtons.put(btn,clickedButtons.get(btn)+1);
-				if (clickedButtons.get(btn) > 4)
-					clickedButtons.remove(btn);
-			}
-			EntityPlayer player = Minecraft.getMinecraft().player;
-			if (!player.isSpectator())
-				processEntity(player);
-			setPosition(posX+motionX,posY+motionY,posZ+motionZ);
-		} else {
-			AxisAlignedBB area = new AxisAlignedBB(posX-1.5,posY-0.2,posZ-1.5,posX+1.5,posY+2.5,posZ+1.5);
-			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(this,area);
-			for (Entity entity : entities) {
-				if (!(entity instanceof EntityPlayer))
-					processEntity(entity);
-				else
-					entity.fallDistance = 0;
-			}
-			if (pulley == null) {
-				findPulley();
-				if (pulley == null)
-					setVelocity(motionX/2,motionY-9.8/400,motionZ/2);
-			}
-			for (int i = 0; i < 2; i++) {
-				EnumFacing face = EnumFacing.byHorizontalIndex(i);
-				if (world.getBlockState(new BlockPos(posX,posY+0.5,posZ).add(face.getDirectionVec())).getBlock() instanceof EvShaft) {
-					setVelocity(0,motionY,0);
-					break;
+		try { // fuck you, i surround the whole shit with try/catch
+			if (world.isRemote) {
+				if (sync) {
+					sync = false;
+					EvSyncRequestPacket packet = new EvSyncRequestPacket();
+					packet.localEntity = this;
+					LeafiaCustomPacket.__start(packet).__sendToServer();
 				}
-			}
-			if (controller != null)
-				controller.onUpdate();
-			int floor = getDataInteger(FLOOR);
-			if (specialDisplayFloors.containsKey(floor))
-				dataManager.set(FLOOR_DISPLAY,specialDisplayFloors.get(floor));
-			else
-				dataManager.set(FLOOR_DISPLAY,Integer.toString(floor));
-			setPosition(posX+motionX,posY+motionY,posZ+motionZ);
-			double prevMotionY = motionY;
-			doBlockCollisions();
-			boolean collided = this.pushOutOfBlocks(this.posX, (this.getEntityBoundingBox().minY + this.getEntityBoundingBox().maxY) / (double)2.0F, this.posZ);
-			if (collided && prevMotionY < -15/20d) {
-				boolean foundBuffer = false;
-				for (int i = -1; i <= 1; i++) {
-					for (int j = -1; j <= 1; j++) {
-						if (world.getBlockState(new BlockPos(posX+i,posY-0.5,posZ+j)).getBlock() instanceof EvBuffer) {
-							foundBuffer = true;
-							break;
+				for (ElevatorButton button : buttons) button.onUpdate();
+				for (String btn : clickedButtons.keySet()) {
+					clickedButtons.put(btn,clickedButtons.get(btn)+1);
+					if (clickedButtons.get(btn) > 4)
+						clickedButtons.remove(btn);
+				}
+				EntityPlayer player = Minecraft.getMinecraft().player;
+				if (!player.isSpectator())
+					processEntity(player);
+				//setPosition(posX+motionX,posY+motionY,posZ+motionZ);
+				move(MoverType.SELF,motionX,motionY,motionZ);
+				boolean updateSurfaces = false;
+				for (int i = 0; i < 4; i++) {
+					String style = getDataString(styleParams[i+2]);
+					if (!style.equals(localLastWalls[i])) {
+						localLastWalls[i] = style;
+						updateSurfaces = true;
+					}
+				}
+				if (updateSurfaces)
+					updateHitSurfaces();
+			} else {
+				if (shouldUpdateItems) {
+					updateController();
+					updateWallParameters();
+					updateHitSurfaces();
+					shouldUpdateItems = false;
+				}
+				if (sync) {
+					sync = false;
+					{
+						EvButtonSyncPacket packet = new EvButtonSyncPacket();
+						packet.serverEntity = this;
+						LeafiaCustomPacket.__start(packet).__sendToAll();
+					}
+					{
+						EvSpecialFloorsSyncPacket packet = new EvSpecialFloorsSyncPacket();
+						packet.serverEntity = this;
+						LeafiaCustomPacket.__start(packet).__sendToAll();
+					}
+					{
+						EvButtonEnablePacket packet = new EvButtonEnablePacket();
+						packet.serverEntity = this;
+						LeafiaCustomPacket.__start(packet).__sendToAll();
+					}
+					{
+						EvInventorySyncPacket packet = new EvInventorySyncPacket();
+						packet.serverEntity = this;
+						LeafiaCustomPacket.__start(packet).__sendToAll();
+					}
+				}
+				AxisAlignedBB area = new AxisAlignedBB(posX-1.5,posY-0.2,posZ-1.5,posX+1.5,posY+2.5,posZ+1.5);
+				List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(this,area);
+				for (Entity entity : entities) {
+					if (!(entity instanceof EntityPlayer))
+						processEntity(entity);
+					else
+						entity.fallDistance = 0;
+				}
+				if (pulley != null && pulley.isInvalid())
+					pulley = null;
+				if (pulley == null) {
+					findPulley();
+					if (pulley == null)
+						setVelocity(motionX/2,motionY-9.8/400,motionZ/2);
+				}
+				for (int i = 0; i < 2; i++) {
+					EnumFacing face = EnumFacing.byHorizontalIndex(i);
+					if (world.getBlockState(new BlockPos(posX,posY+0.5,posZ).add(face.getDirectionVec())).getBlock() instanceof EvShaft) {
+						setVelocity(0,motionY,0);
+						break;
+					}
+				}
+				if (controller != null)
+					controller.onUpdate();
+				int floor = getDataInteger(FLOOR);
+				if (specialDisplayFloors.containsKey(floor))
+					dataManager.set(FLOOR_DISPLAY,specialDisplayFloors.get(floor));
+				else
+					dataManager.set(FLOOR_DISPLAY,Integer.toString(floor));
+				Vec3d prevMotion = new Vec3d(motionY,motionY,motionZ);
+				move(MoverType.SELF,motionX,motionY,motionZ);
+				//this.pushOutOfBlocks(this.posX, (this.getEntityBoundingBox().minY + this.getEntityBoundingBox().maxY) / (double)2.0F, this.posZ);
+				if (collided && prevMotion.length() > 15/20d) {
+					boolean foundBuffer = false;
+					for (int i = -1; i <= 1; i++) {
+						for (int j = -1; j <= 1; j++) {
+							if (world.getBlockState(new BlockPos(posX+i,posY-0.5,posZ+j)).getBlock() instanceof EvBuffer) {
+								foundBuffer = true;
+								break;
+							}
+						}
+					}
+					if (!foundBuffer) {
+						world.createExplosion(null,posX,posY,posZ,3,true);
+						int slots = inventory.getSlots();
+						for (int i = 0; i < slots; i++) {
+							ItemStack stack = inventory.getStackInSlot(i);
+							EntityItem item = entityDropItem(stack,0);
+							if (item != null)
+								item.setVelocity(world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5);
+							inventory.setStackInSlot(i,ItemStack.EMPTY);
+						}
+						setDead();
+						return;
+					}
+				}
+				for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
+					BlockPos p = new BlockPos(posX,posY+0.5,posZ).add(horizontal.getDirectionVec());
+					if (world.getBlockState(p).getBlock() instanceof EvFloor) {
+						TileEntity te = world.getTileEntity(p);
+						if (te instanceof EvFloorTE) {
+							((EvFloorTE)te).open.cur = getDataFloat(DOOR_OUT);
 						}
 					}
 				}
-				if (!foundBuffer)
-					world.createExplosion(null,posX,posY,posZ,5,false);
 			}
-			for (EnumFacing horizontal : EnumFacing.HORIZONTALS) {
-				BlockPos p = new BlockPos(posX,posY+0.5,posZ).add(horizontal.getDirectionVec());
-				if (world.getBlockState(p).getBlock() instanceof EvFloor) {
-					TileEntity te = world.getTileEntity(p);
-					if (te instanceof EvFloorTE) {
-						((EvFloorTE)te).open.cur = getDataFloat(DOOR_OUT);
-					}
-				}
-			}
-		}
-		updateDoorCollisions();
+			updateDoorCollisions();
+		} catch (ConcurrentModificationException ignored) {}
 	}
 	public void onButtonServer(String id,EntityPlayer player,EnumHand hand) {
 		if (id.equals("fire")) {
@@ -746,7 +1085,8 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			packet.serverEntity = this;
 			LeafiaCustomPacket.__start(packet).__sendToAll();
 		} else LeafiaCustomPacket.__start(new EvButtonClickPacket(this,id)).__sendToAll();
-		controller.onButtonServer(id,player,hand);
+		if (controller != null)
+			controller.onButtonServer(id,player,hand);
 		LeafiaCustomPacket.__start(new EvButtonEnablePacket(this)).__sendToAll();
 	}
 	@Override
@@ -763,11 +1103,11 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 	{
 		return new AxisAlignedBB(posX-19/16d,posY-3/16d,posX-19/16d,posX+19/16d,posY,posZ+19/16d);
 	}
-
+	/*
 	@Override
 	public AxisAlignedBB getEntityBoundingBox() {
 		return new AxisAlignedBB(posX-20/16d,posY-4/16d,posX-20/16d,posX+20/16d,posY+40/16d,posZ+20/16d);
-	}
+	}*/
 	@Override
 	public List<AxisAlignedBB> getCollisionBoxes(Entity other) {
 		if (new Vec3d(posX,posY+39/32d,posZ).distanceTo(new Vec3d(other.posX,other.posY+other.height/2,other.posZ)) <  1.25) {
@@ -780,12 +1120,77 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
+		NBTBase list0 = compound.getTag("buttons"); //compound.getTagList("buttons",10);
+		if (list0 instanceof NBTTagList) {//list != null) {
+			NBTTagList list = (NBTTagList)list0;
+			buttons.clear();
+			for (NBTBase nbtBase : list) {
+				NBTTagCompound tag = (NBTTagCompound)nbtBase;
+				//String id = tag.getString("id");
+				int x = tag.getByte("x");
+				int y = tag.getByte("y");
+				String type = tag.getString("type");
+				switch(type) {
+					case "floor": buttons.add(new FloorButton(this,tag.getByte("floor"),tag.getString("label"),x,y)); break;
+					case "fire": buttons.add(new FireButton(this,x,y)); break;
+					case "open": buttons.add(new OpenButton(this,x,y)); break;
+					case "close": buttons.add(new CloseButton(this,x,y)); break;
+					case "bell": buttons.add(new BellButton(this,x,y)); break;
+				}
+			}
+		}
+		NBTTagCompound displays = compound.getCompoundTag("displays");
+		if (displays != null) {
+			specialDisplayFloors.clear();
+			for (String key : displays.getKeySet()) {
+				Integer floor = Integer.parseInt(key);
+				specialDisplayFloors.put(floor,displays.getString(key));
+			}
+		}
+		NBTTagList enableds = compound.getTagList("enableds",8);
+		if (enableds != null) {
+			for (NBTBase enabled : enableds)
+				enabledButtons.add(((NBTTagString) enabled).toString());
+		}
+		dataManager.set(FLOOR,(int)compound.getByte("floor"));
+		parkFloor = compound.getByte("parkFloor");
+		NBTTagCompound inv = compound.getCompoundTag("inventory");
+		if (inv != null)
+			inventory.deserializeNBT(inv);
 		if (controller != null)
 			controller.readEntityFromNBT(compound);
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
+		NBTTagList list = new NBTTagList();
+		for (ElevatorButton button : buttons) {
+			NBTTagCompound tag = new NBTTagCompound();
+			//tag.setString("id",button.id);
+			tag.setByte("x",(byte)button.x);
+			tag.setByte("y",(byte)button.y);
+			if (button instanceof FloorButton) {
+				tag.setString("type","floor");
+				tag.setString("label",((FloorButton)button).label);
+				tag.setByte("floor",((byte)((FloorButton)button).floor));
+			} else if (button instanceof FireButton) tag.setString("type","fire");
+			else if (button instanceof OpenButton) tag.setString("type","open");
+			else if (button instanceof CloseButton) tag.setString("type","close");
+			else if (button instanceof BellButton) tag.setString("type","bell");
+			list.appendTag(tag);
+		}
+		compound.setTag("buttons",list);
+		NBTTagCompound displays = new NBTTagCompound();
+		for (Entry<Integer,String> entry : specialDisplayFloors.entrySet())
+			displays.setString(entry.getKey().toString(),entry.getValue());
+		compound.setTag("displays",displays);
+		NBTTagList enableds = new NBTTagList();
+		for (String enabled : enabledButtons)
+			enableds.appendTag(new NBTTagString(enabled));
+		compound.setTag("enableds",enableds);
+		compound.setByte("floor",getDataInteger(FLOOR).byteValue());
+		compound.setByte("parkFloor",(byte)parkFloor);
+		compound.setTag("inventory",inventory.serializeNBT());
 		if (controller != null)
 			controller.writeEntityToNBT(compound);
 	}

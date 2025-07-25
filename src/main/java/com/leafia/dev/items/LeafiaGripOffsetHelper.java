@@ -41,6 +41,13 @@ public class LeafiaGripOffsetHelper {
             this.scale = scale;
             return this;
         }
+        public LeafiaGripOffset copySettings(TransformType type) {
+            LeafiaGripOffset offset = this.helper.get(type);
+            this.scale = offset.scale;
+            this.position = offset.position;
+            this.rotation = offset.rotation;
+            return this;
+        }
         public LeafiaGripOffsetHelper getHelper() {
             return this.helper;
         }
@@ -81,7 +88,7 @@ public class LeafiaGripOffsetHelper {
         switch(type) {
             case FIRST_PERSON_LEFT_HAND: render(TransformType.FIRST_PERSON_RIGHT_HAND); break;
             case THIRD_PERSON_LEFT_HAND: render(TransformType.THIRD_PERSON_RIGHT_HAND); break;
-            case FIXED: render(TransformType.GUI); break;
+            //case FIXED: render(TransformType.GUI); break;
         }
         render(type);
         render(TransformType.NONE);

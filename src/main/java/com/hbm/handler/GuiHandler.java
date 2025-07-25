@@ -23,8 +23,10 @@ import com.hbm.tileentity.machine.rbmk.*;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.turret.*;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
 import com.leafia.contents.machines.elevators.floors.EvFloorGUI;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.contents.machines.elevators.gui.EvCabinGUI;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
@@ -1300,6 +1302,8 @@ public class GuiHandler implements IGuiHandler {
 					return new EvFloorGUI((EvFloorTE)entity);
 				}
 				return null;
+			case Elevators.guiIdCabin:
+				return new EvCabinGUI(ElevatorEntity.lastEntityEw);
 			// ITEM GUIS
 			case ModItems.guiID_item_folder:
 				return new GUIScreenTemplateFolder(player);

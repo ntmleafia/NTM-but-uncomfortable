@@ -1,11 +1,14 @@
 package com.hbm.inventory.gui;
 
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.leafia.dev.gui.GuiContainerLeafia;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -20,6 +23,12 @@ import java.util.List;
 public abstract class GuiInfoContainer extends GuiContainerLeafia {
 	
 	ResourceLocation guiUtil =  new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_utility.png");
+	protected void playClick(float pitch) {
+		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK,pitch));
+	}
+	protected void playDenied() {
+		mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundEvents.UI_BUTTON_INVALID,1));
+	}
 
 	public GuiInfoContainer(Container p_i1072_1_) {
 		super(p_i1072_1_);

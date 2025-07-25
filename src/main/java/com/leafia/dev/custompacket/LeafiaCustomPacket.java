@@ -2,15 +2,13 @@ package com.leafia.dev.custompacket;
 
 import com.hbm.forgefluid.FFUtils.FuzzyIdentifierPacket;
 import com.hbm.items.tool.ItemWandS.WandStructurePacket;
+import com.hbm.packet.ItemFolderPacket.FolderResponsePacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.machine.TileEntityCore.DFCShockPacket;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandProduct;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandRemove;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandSave;
-import com.leafia.contents.machines.elevators.car.ElevatorEntity.EvButtonClickPacket;
-import com.leafia.contents.machines.elevators.car.ElevatorEntity.EvButtonEnablePacket;
-import com.leafia.contents.machines.elevators.car.ElevatorEntity.EvButtonInteractPacket;
-import com.leafia.contents.machines.elevators.car.ElevatorEntity.EvButtonSyncPacket;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity.*;
 import com.leafia.dev.LeafiaDebug.Tracker.VisualizerPacket;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
@@ -42,6 +40,11 @@ public class LeafiaCustomPacket extends RecordablePacket {
 		ELEVATOR_BUTTON_ENABLED_SYNC(new EvButtonEnablePacket()),
 		ELEVATOR_BUTTON_CLICK_SYNC(new EvButtonClickPacket()),
 		ELEVATOR_BUTTON_CLICKED(new EvButtonInteractPacket()),
+		ELEVATOR_BUTTON_MODIFY(new EvButtonModifyPacket()),
+		ELEVATOR_SPECIAL_SYNC(new EvSpecialFloorsSyncPacket()),
+		ELEVATOR_SYNC_REQUEST(new EvSyncRequestPacket()),
+		ELEVATOR_INVENTORY_SYNC(new EvInventorySyncPacket()),
+		CLOSE_GUI(new FolderResponsePacket()),
 		;
 		final LeafiaCustomPacketEncoder encoder;
 		CustomPacketType() { encoder = null; }

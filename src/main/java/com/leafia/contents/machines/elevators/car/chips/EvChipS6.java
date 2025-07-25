@@ -122,9 +122,8 @@ public class EvChipS6 extends EvChipBase {
 		if (cooldown > 0) cooldown--;
 
 		double ratio = getSpeedRatio();
-		entity.setVelocity(0,entity.doorOpen ? 0 : ratio*0.08,0);
-		LeafiaDebug.debugLog(entity.getWorld(),ratio);
-		LeafiaDebug.debugLog(entity.getWorld(),"park: "+entity.parkFloor);
+		if (entity.pulley != null)
+			entity.setVelocity(0,entity.doorOpen ? 0 : ratio*0.08,0);
 
 		// MAIN CONTROL
 		if (nextFloor != null && !entity.doorOpen) {
@@ -132,7 +131,6 @@ public class EvChipS6 extends EvChipBase {
 			else
 				entity.timeSinceStart++;
 		}
-		LeafiaDebug.debugLog(entity.getWorld(),"timeSinceStart: "+entity.timeSinceStart);
 		if (nextFloor != null && entity.doorOpen && !closing && cooldown <= 0) {
 			if (closeTimer < closeTime)
 				closeTimer++;
@@ -144,9 +142,6 @@ public class EvChipS6 extends EvChipBase {
 
 		// DOOR CONTROL
 		if (floor != null) {
-			LeafiaDebug.debugLog(entity.getWorld(),"CONDITION 1: "+floor.equals(entity.parkFloor));
-			LeafiaDebug.debugLog(entity.getWorld(),"CONDITION 2: "+(ratio==0));
-			LeafiaDebug.debugLog(entity.getWorld(),"CONDITION 3: "+!closing);
 			if (floor.equals(entity.parkFloor) && ratio == 0 && !closing) {
 				openingDoor();
 				entity.timeSinceStart = 0;

@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.items.ModItems.ElevatorStyles;
 import com.leafia.contents.machines.elevators.*;
 import com.leafia.contents.machines.elevators.car.ElevatorEntity;
 import com.leafia.contents.machines.elevators.car.ElevatorRender;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItemRender;
 import com.leafia.contents.machines.elevators.floors.EvFloorRender;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
@@ -2390,6 +2393,8 @@ public class ClientProxy extends ServerProxy {
 		ModItems.ore_bedrock_enriched.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x55595D, 1F));
 
         ModItems.detonator_laser.setTileEntityItemStackRenderer(new ItemRenderLaserDetonator());
+		for (EvStyleItem styleItem : ElevatorStyles.styleItems)
+			styleItem.setTileEntityItemStackRenderer(new EvStyleItemRender());
 
 		ModItems.pwr_piece.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
 		ModItems.pwr_shrapnel.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());

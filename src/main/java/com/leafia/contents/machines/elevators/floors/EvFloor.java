@@ -105,7 +105,7 @@ public class EvFloor extends BlockDummyable {
 		return false;
 	}
 	@Override
-	public boolean isNormalCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 }

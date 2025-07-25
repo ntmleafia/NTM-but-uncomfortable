@@ -223,20 +223,20 @@ public class FFUtils {
 
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.HIGH_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait.pressure.high")+"]");
+				texts.add("§c["+I18n.format("trait._hazardfluid.pressure.high")+"]");
 			}
 			hasInfo = true;
 		}
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.EXTREME_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait.pressure.extreme")+"]");
+				texts.add("§4["+I18n.format("trait._hazardfluid.pressure.extreme")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (ModFluidProperties.isAntimatter(fluid)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait.antimatter")+"]");
+				texts.add("§4["+I18n.format("trait._hazardfluid.antimatter")+"]");
 			}
 			hasInfo = true;
 		}
@@ -244,27 +244,27 @@ public class FFUtils {
 		if (ModFluidProperties.isCorrosivePlastic(fluid)) {
 			if (ModFluidProperties.isCorrosiveIron(fluid)) {
 				if(isKeyPressed){
-					texts.add("§2["+I18n.format("trait.corrosiveIron")+"]");
+					texts.add("§2["+I18n.format("trait._hazardfluid.corrosiveIron")+"]");
 				}
 			} else if(isKeyPressed){
-				texts.add("§a["+I18n.format("trait.corrosivePlastic")+"]");
+				texts.add("§a["+I18n.format("trait._hazardfluid.corrosivePlastic")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (FluidCombustionRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§6["+I18n.format("trait.flammable")+"]");
-				texts.add(" "+I18n.format("trait.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
+				texts.add("§6["+I18n.format("trait._hazardfluid.flammable")+"]");
+				texts.add(" "+I18n.format("trait._hazardfluid.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
 			}
 			hasInfo = true;
 		}
 		if (EngineRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait.combustable")+"]");
+				texts.add("§c["+I18n.format("trait._hazardfluid.combustable")+"]");
 				
-				texts.add(" "+I18n.format("trait.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
-				texts.add(" "+I18n.format("trait.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
+				texts.add(" "+I18n.format("trait._hazardfluid.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
+				texts.add(" "+I18n.format("trait._hazardfluid.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
 			}
 			hasInfo = true;
 		}
@@ -272,8 +272,8 @@ public class FFUtils {
 		if (HeatRecipes.hasCoolRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getResultingHeat(fluid) * 1000 / HeatRecipes.getInputAmountCold(fluid));
-				texts.add("§4["+I18n.format("trait.coolable")+"]");
-				texts.add(" "+I18n.format("trait.coolable.desc", heat));
+				texts.add("§4["+I18n.format("trait._hazardfluid.coolable")+"]");
+				texts.add(" "+I18n.format("trait._hazardfluid.coolable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -281,8 +281,8 @@ public class FFUtils {
 		if (HeatRecipes.hasBoilRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getRequiredHeat(fluid) * 1000 / HeatRecipes.getInputAmountHot(fluid));
-				texts.add("§3["+I18n.format("trait.boilable")+"]");
-				texts.add(" "+I18n.format("trait.boilable.desc", heat));
+				texts.add("§3["+I18n.format("trait._hazardfluid.boilable")+"]");
+				texts.add(" "+I18n.format("trait._hazardfluid.boilable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -291,9 +291,9 @@ public class FFUtils {
 
 		if(dfcEff >= 1){
 			if(isKeyPressed){
-				texts.add("§5["+I18n.format("trait.dfcFuel")+"]");
+				texts.add("§5["+I18n.format("trait._hazardfluid.dfcFuel")+"]");
 				dfcEff = (dfcEff-1F);
-				texts.add(" "+I18n.format("trait.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
+				texts.add(" "+I18n.format("trait._hazardfluid.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
 			}
 			hasInfo = true;
 		}
