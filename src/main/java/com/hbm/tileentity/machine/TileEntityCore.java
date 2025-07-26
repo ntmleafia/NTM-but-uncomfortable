@@ -6,6 +6,7 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
+import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCatalyst;
 import com.hbm.items.special.ItemAMSCore;
 import com.hbm.lib.HBMSoundEvents;
@@ -34,6 +35,7 @@ import com.leafia.dev.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -402,7 +404,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 150)
 							);
 							containedEnergy = Math.max(containedEnergy-count*energyPerShock,0);
-							shockCooldown = 100-(int)Math.pow(90*collapsing,0.75);
+							shockCooldown = 100-(int)(90*Math.pow(collapsing,1.75));
 						}
 					}
 					Tracker._endProfile(this);
@@ -787,6 +789,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		e.addVelocity(lookAt.x*pull,lookAt.y*pull,lookAt.z*pull);
 	}
 
+	boolean isFixTool(Entity e) {
+		if (e instanceof EntityItem)
+			return ((EntityItem)e).getItem().getItem() == ModItems.fix_tool;
+		return false;
+	}
+
 	private void vaporization() {
 
 		double scale = (int) Math.log(temperature / 50 + 1) * 1.25 / 4 + 0.5;
@@ -795,6 +803,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.getX() - range + 0.5, pos.getY() - range + 0.5, pos.getZ() - range + 0.5, pos.getX() + range + 0.5, pos.getY() + range + 0.5, pos.getZ() + range + 0.5));
 
 		for (Entity e : list) {
+			if (isFixTool(e)) continue;
 			boolean isPlayer = e instanceof EntityPlayer;
 			if (!(isPlayer && ArmorUtil.checkForHazmat((EntityPlayer) e))) {
 				if (!(Library.isObstructed(world, pos.getX() + 0.5, pos.getY() + 0.5 + 6, pos.getZ() + 0.5, e.posX, e.posY + e.getEyeHeight(), e.posZ))) {
@@ -821,6 +830,17 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		List<Entity> list3 = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.getX()+0.4,pos.getY()+0.4,pos.getZ()+0.4,pos.getX()+0.6,pos.getY()+0.6,pos.getZ()+0.6));
 		if (collapsing > 0) {
 			for (Entity e : list3) {
+				if (isFixTool(e)) {
+					e.setEntityInvulnerable(false);
+					e.setDead();
+					temperature = 0;
+					containedEnergy = 0;
+					tanks[0].drain(1000000000,true);
+					tanks[1].drain(1000000000,true);
+					world.createExplosion(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,20,false);
+					world.playSound(null,pos,HBMSoundEvents.crucifix,SoundCategory.BLOCKS,20,1);
+					continue;
+				}
 				e.attackEntityFrom(ModDamageSource.dfcMeltdown,(int) (this.temperature / 10));
 				e.setFire(10);
 			}

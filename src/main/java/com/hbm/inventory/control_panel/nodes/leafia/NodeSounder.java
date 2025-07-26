@@ -1,7 +1,8 @@
-package com.hbm.inventory.control_panel.nodes;
+package com.hbm.inventory.control_panel.nodes.leafia;
 
 import com.hbm.inventory.control_panel.*;
 import com.hbm.inventory.control_panel.DataValue.DataType;
+import com.hbm.inventory.control_panel.nodes.NodeOutput;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.machine.TileEntityControlPanel;
 import net.minecraft.init.SoundEvents;

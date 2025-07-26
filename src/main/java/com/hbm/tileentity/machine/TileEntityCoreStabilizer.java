@@ -77,10 +77,10 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
             LinkedHashMap<String, Object> mop = new LinkedHashMap<>();
             mop.put("temperature", core.temperature);
             mop.put("stabilization", core.stabilization);
-            mop.put("containedEnergy", core.containedEnergy);
-            mop.put("expellingEnergy", core.expellingEnergy);
-            mop.put("potentialRelease", core.potentialGain);
-            mop.put("explosionIn", core.explosionIn);
+            mop.put("containedEnergy", core.containedEnergy*1000_000);
+            mop.put("expellingEnergy", core.expellingEnergy*1000_000);
+            mop.put("potentialRelease", core.potentialGain*100);
+            mop.put("collapse", Math.pow(core.collapsing,4)*100);
             mop.put("fuelA", core.tanks[0].getFluidAmount());
             mop.put("fuelB", core.tanks[1].getFluidAmount());
             return new Object[]{mop};
@@ -178,19 +178,14 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
         map.put("core_energy",new DataValueFloat(0));
         map.put("core_expel",new DataValueFloat(0));
         map.put("core_potent",new DataValueFloat(0));
-        map.put("core_overload",new DataValueFloat(0));
+        map.put("core_collapse",new DataValueFloat(0));
         TileEntityCore core = getCore();
         if (isOn && core != null) {
             map.put("core_temp",new DataValueFloat((float)core.temperature));
-            map.put("core_energy",new DataValueFloat((float)core.containedEnergy));
-            map.put("core_expel",new DataValueFloat((float)core.expellingEnergy));
-            map.put("core_potent",new DataValueFloat((float)core.potentialGain));
-            double meltdown = core.explosionIn;
-            if (meltdown >= 0)
-                meltdown = Math.pow(1-120/meltdown,4);
-            else
-                meltdown = 0;
-            map.put("core_overload",new DataValueFloat((float)meltdown));
+            map.put("core_energy",new DataValueFloat((float)core.containedEnergy*1000_000));
+            map.put("core_expel",new DataValueFloat((float)core.expellingEnergy*1000_000));
+            map.put("core_potent",new DataValueFloat((float)core.potentialGain*100));
+            map.put("core_collapse",new DataValueFloat((float)Math.pow(core.collapsing,4)*100));
         }
         return map;
     }

@@ -18,7 +18,7 @@ function sipfx.auto(x)
 end
 return sipfx
  */
-public class SiPfx { // Yeah i know SI is supposed to be both uppercase. SHUT UP - leafinia
+public class SIPfx { // Now its both uppercase!
 	public static final String[] siPrefix = new String[]{"k","M","G","T","P","E","Z","Y","R","Q"};
 	public static final String[] siPrefixFull = new String[]{"Kilo","Mega","Giga","Terra","Peta","Exa","Zetta","Yotta","Ronna","Quetta"};
 	public static double round(double num,int decimals) {
@@ -31,9 +31,12 @@ public class SiPfx { // Yeah i know SI is supposed to be both uppercase. SHUT UP
 	public static double scale(double x,double exponent) {
 		return x/Math.pow(1000,exponent);
 	}
-	public static String auto(double x) {
+	public static String auto(double x,boolean full) {
 		byte pfxLv = getExponent(x);
-		return (pfxLv <= 0 ? String.valueOf(x)+" " : String.valueOf(round(scale(x,pfxLv),2))+" "+siPrefix[pfxLv-1]);
+		return (pfxLv <= 0 ? String.valueOf(x)+" " : String.valueOf(round(scale(x,pfxLv),2))+" "+(full ? siPrefixFull : siPrefix)[pfxLv-1]);
+	}
+	public static String auto(double x) {
+		return auto(x,false);
 	}
 	public static String format(String format,double x,boolean full) {
 		byte exponent = getExponent(x);

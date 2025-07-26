@@ -44,7 +44,7 @@ public class GUICore extends GuiInfoContainer {
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 98, 70, 4, mouseX, mouseY,
 				new String[]{"Contained Energy: "+((core.containedEnergy >= TileEntityCore.failsafeLevel) ? "ERROR" : String.format("%01.3f",core.containedEnergy)+"MSPK")});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 102, 70, 4, mouseX, mouseY,
-				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/3000)+"GSPK/s"});
+				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/1000)+"GSPK/s"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 161, guiTop + 98, 8, 8, mouseX, mouseY,
 				new String[]{"Potential: "+Math.round(core.potentialGain*100)+"%"});
 

@@ -50,6 +50,7 @@ import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.gear.wands.ItemWandSaving;
 import com.leafia.contents.machines.elevators.car.chips.EvChipItem;
 import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
+import com.leafia.contents.machines.powercores.dfc.CrucifixItem;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType;
 import com.leafia.contents.machines.reactors.pwr.debris.ItemPWRDebris;
 import net.minecraft.block.Block;
@@ -3507,6 +3508,7 @@ public class ModItems {
 	public static final Item defuser = new ItemTooling(ToolType.DEFUSER, 100, "defuser").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);
 	public static final Item defuser_desh = new ItemTooling(ToolType.DEFUSER, -1, "defuser_desh").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);
 	public static final Item meltdown_tool = new ItemDyatlov("meltdown_tool").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item fix_tool = new CrucifixItem("fix_tool").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 
 	public static final Item
 			leafRodDyatlov

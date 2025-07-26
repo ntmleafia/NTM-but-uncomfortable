@@ -135,12 +135,12 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         if (!world.isRemote) {
 
             if (joules >= NumScale.PETA && world.getBlockState(pos).getBlock() == ModBlocks.dfc_receiver) {
-                destructionLevel = Math.min(destructionLevel+1,200);
-                if (destructionLevel > 150 && world.rand.nextInt(100) == 0)
+                destructionLevel = Math.min(destructionLevel+2,400);
+                if (destructionLevel > 300 && world.rand.nextInt(100) == 0)
                     this.explode();
                 return;
             } else {
-                destructionLevel = Math.min(destructionLevel-1,0);
+                destructionLevel = Math.max(destructionLevel-1,0);
             }
 
             updateSPKConnections(world, pos);
@@ -366,6 +366,12 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         return new Object[]{tank.getFluidAmount()};
     }
 
+    @Callback
+    public Object[] getStress(Context context, Arguments args) {
+        return new Object[]{destructionLevel*100/300f};
+    }
+
+
     @Callback(doc = "setLevel(newLevel: number [0~100])->(previousLevel: number)")
     public Object[] setLevel(Context context, Arguments args) {
         double level = args.checkDouble(0);
@@ -398,13 +404,16 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     @Override
     public void receiveEvent(BlockPos from,ControlEvent e) {
         if (e.name.equals("set_absorber_level")) {
-            level = e.vars.get("level").getNumber()*100;
+            level = e.vars.get("level").getNumber()/100d;
         }
     }
     @Override
     public Map<String,DataValue> getQueryData() {
         Map<String,DataValue> map = new HashMap<>();
         map.put("level",new DataValueFloat((float)(level*100)));
+        map.put("stress",new DataValueFloat(destructionLevel*100/300f));
+        map.put("received",new DataValueFloat(syncJoules));
+        map.put("power",new DataValueFloat(power));
         return map;
     }
 

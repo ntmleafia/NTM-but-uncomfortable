@@ -367,8 +367,8 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 	}
 
 	@Callback
-	public Object[] outgoingEnergy(Context context, Arguments args) {
-		return new Object[]{joules};
+	public Object[] getEmitted(Context context, Arguments args) {
+		return new Object[]{prev};
 	}
 
 	@Callback(doc = "getActive()->(active: boolean)")
@@ -431,6 +431,7 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 		Map<String,DataValue> map = new HashMap<>();
 		map.put("active",new DataValueFloat(isOn ? 1 : 0));
 		map.put("level",new DataValueFloat(watts));
+		map.put("emitted",new DataValueFloat(prev));
 		return map;
 	}
 

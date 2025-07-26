@@ -13,6 +13,9 @@ import com.hbm.tileentity.machine.TileEntityCore.DFCShock;
 import com.leafia.transformer.LeafiaGls;
 import com.llib.math.LeafiaColor;
 import com.llib.math.MathLeafia;
+import com.llib.technical.LeafiaEase;
+import com.llib.technical.LeafiaEase.Direction;
+import com.llib.technical.LeafiaEase.Ease;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
@@ -147,6 +150,12 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
         int fill = core.tanks[0].getFluidAmount() + core.tanks[1].getFluidAmount();
 
         float scale = (float) Math.log(core.temperature / 50 + 1) /* * ((float) fill / (float) tot)*/ + 0.5F;
+        if (core.collapsing > 0.97) {
+            double percent = (core.collapsing-0.97)/0.03;
+            LeafiaEase ease = new LeafiaEase(Ease.EXPO,Direction.I);
+            scale *= (float)ease.get(ease.get(percent),1,0);
+            GL11.glRotated(ease.get(percent)*1000,1,1,1);
+        }
         GL11.glScalef(scale, scale, scale);
 
         GlStateManager.enableCull();

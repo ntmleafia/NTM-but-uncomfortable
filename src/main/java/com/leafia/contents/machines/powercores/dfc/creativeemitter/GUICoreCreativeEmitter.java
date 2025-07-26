@@ -1,15 +1,13 @@
 package com.leafia.contents.machines.powercores.dfc.creativeemitter;
 
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.gui.GuiInfoContainer;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.AuxButtonPacket;
 import com.hbm.packet.PacketDispatcher;
-import com.hbm.tileentity.machine.TileEntityCoreEmitter;
 import com.leafia.dev.container_utility.LeafiaPacket;
-import com.llib.math.SiPfx;
+import com.llib.math.SIPfx;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiTextField;
@@ -17,8 +15,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -57,7 +53,7 @@ public class GUICoreCreativeEmitter extends GuiInfoContainer {
 	
 	public void syncTextField(){
 		for (int z = 0; z < 4; z++)
-			fields[z].setText(SiPfx.custom((x,s)->Long.toString(x.longValue())+s.substring(1),emitter.joulesT[z],false));
+			fields[z].setText(SIPfx.custom((x,s)->Long.toString(x.longValue())+s.substring(1),emitter.joulesT[z],false));
 	}
 	
 	@Override
@@ -128,7 +124,7 @@ public class GUICoreCreativeEmitter extends GuiInfoContainer {
 		}
 		try {
 			if (lastFocused != -1 && focused != lastFocused)
-				LeafiaPacket._start(emitter).__write(lastFocused + 1,(long) SiPfx.parse(fields[lastFocused].getText())).__sendToServer();
+				LeafiaPacket._start(emitter).__write(lastFocused + 1,(long) SIPfx.parse(fields[lastFocused].getText())).__sendToServer();
 		} catch (NumberFormatException ignored) {}
 		drawTexturedModalRect(guiLeft+61,guiTop+17+14*emitter.selecting,194,9,10,13);
 

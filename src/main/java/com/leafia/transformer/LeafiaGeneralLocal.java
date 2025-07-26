@@ -4,7 +4,7 @@ import com.hbm.lib.RefStrings;
 import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
 import com.leafia.contents.worldgen.biomes.effects.ParticleCloudSmall;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
-import com.llib.math.SiPfx;
+import com.llib.math.SIPfx;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -29,8 +29,8 @@ public class LeafiaGeneralLocal {
 			}
 		}
 		if (index >= 0) {
-			list.add(index,"NTM packet network: "+SiPfx.format("%01.2f",RecordablePacket.previousByteUsageSec,true).toLowerCase()+"bytes/sec");
-			list.add(index+1,"("+SiPfx.format("%01.2f",RecordablePacket.previousByteUsageMin,true).toLowerCase()+"bytes/min, "+SiPfx.format("%01.2f",RecordablePacket.previousByteUsage,true).toLowerCase()+"bytes/tick)");
+			list.add(index,"NTM packet network: "+SIPfx.format("%01.2f",RecordablePacket.previousByteUsageSec,true).toLowerCase()+"bytes/sec");
+			list.add(index+1,"("+SIPfx.format("%01.2f",RecordablePacket.previousByteUsageMin,true).toLowerCase()+"bytes/min, "+SIPfx.format("%01.2f",RecordablePacket.previousByteUsage,true).toLowerCase()+"bytes/tick)");
 		}
 	}
 	public static final ResourceLocation acidRain = new ResourceLocation(RefStrings.MODID, "textures/acidicrain.png");
