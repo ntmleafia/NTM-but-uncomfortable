@@ -104,7 +104,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public double stabilization = 0;
 	public double containedEnergy = 0; // 1 = 1MSPK
 	public double expellingEnergy = 0;
-	public double potentialRelease = 0;
+	public double potentialGain = 0;
 	public double gainedEnergy = 0;
 
 	public double collapsing = 0;
@@ -303,10 +303,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					Tracker._startProfile(this,"NeoTick");
 					{
-						potentialRelease = 1;
+						potentialGain = Math.max(0,energyMod);
 						if (temperature >= 100) {
 							double randRange = Math.pow(tempRatio,0.65)*10;
-							potentialRelease += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv()*energyMod;
+							potentialGain += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();
 						}
 					}
 					{ // i wanted to redo everything this sucks ASS
@@ -321,10 +321,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(3),"potAdd: "+potAdd,"potSub: "+potSub,"","potMul:"+potMul,"Total: "+potFinal);
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
-						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialRelease);
+						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialGain);
 						containedEnergy += (deltaEnergy*corePower+(incomingSpk-deltaEnergy)*0.666)*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialRelease*boost*fill0*fill1*fuelPower;
+						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower;
 						double tgtTemp = temperature;
 						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
@@ -449,14 +449,14 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 							double craziness = Math.pow(Math.abs(Math.sin(ticks / 20d * Math.PI * 0.666)), 6.666) * 25 / getStabilizationDiv() / getStabilizationDivAlt();
 							craziness *= Math.max(0, Math.pow(containedEnergy / 10000, 4) - 0.2);
 							//double waveScaled = wave/2/getStabilizationDiv()+0.5;
-							potentialRelease = getEnergyBase(corePower) / 200 * energyMod + wave * containedEnergy / 2000 / getStabilizationDivAlt() + craziness; //waveScaled * containedEnergy/200;
-							potentialRelease = Math.abs(potentialRelease); // overflows are expected
+							potentialGain = getEnergyBase(corePower) / 200 * energyMod + wave * containedEnergy / 2000 / getStabilizationDivAlt() + craziness; //waveScaled * containedEnergy/200;
+							potentialGain = Math.abs(potentialGain); // overflows are expected
 						}
 						double energyBefore = containedEnergy;
 						if (world.rand.nextInt(101) >= 50 / getStabilizationDivAlt())
-							containedEnergy = Math.max(containedEnergy - (containedEnergy * potentialRelease / 20 + taxes / 14) * absorbers.size(), 0);
+							containedEnergy = Math.max(containedEnergy - (containedEnergy *potentialGain/ 20 + taxes / 14) * absorbers.size(), 0);
 						//containedEnergy = getEnergyCurved(internalEnergy)*energyMod;
-						double expelBonus = Math.min(bonus * bonus, bonus * bonus * potentialRelease / 20 * absorbers.size());
+						double expelBonus = Math.min(bonus * bonus, bonus * bonus *potentialGain/ 20 * absorbers.size());
 						bonus -= Math.sqrt(expelBonus);
 
 						double expelling = energyBefore - containedEnergy + expelBonus;
@@ -606,7 +606,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					.__write(packetKeys.STABILIZATION.key, stabilization)
 					.__write(packetKeys.CONTAINED.key, gainedEnergy + bonus * bonus)
 					.__write(packetKeys.EXPELLING.key, expellingEnergy)
-					.__write(packetKeys.POTENTIAL.key, potentialRelease)
+					.__write(packetKeys.POTENTIAL.key,potentialGain)
 
 					.__write(packetKeys.EXPEL_TICK.key, expellingSpk)
 					.__write(packetKeys.MAXIMUM.key, meltingPoint)
@@ -967,7 +967,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						expellingEnergy = (double) value;
 						break;
 					case POTENTIAL:
-						potentialRelease = (double) value;
+						potentialGain = (double) value;
 						break;
 					case TANK_A:
 						tanks[0].readFromNBT((NBTTagCompound) value);

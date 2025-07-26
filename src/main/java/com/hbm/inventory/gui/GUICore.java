@@ -46,7 +46,7 @@ public class GUICore extends GuiInfoContainer {
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 102, 70, 4, mouseX, mouseY,
 				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/3000)+"GSPK/s"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 161, guiTop + 98, 8, 8, mouseX, mouseY,
-				new String[]{"Potential: "+Math.round(core.potentialRelease*100)+"%"});
+				new String[]{"Potential: "+Math.round(core.potentialGain*100)+"%"});
 
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
@@ -91,7 +91,7 @@ public class GUICore extends GuiInfoContainer {
 		LeafiaGls.inLocalSpace(()->{
 			LeafiaGls.translate(guiLeft+165,guiTop+102,0);
 			LeafiaGls.scale(2/5f);
-			LeafiaGls.rotate((float)Math.min((core.potentialRelease-1)/9,core.client_maxDial)*360,0,0,1);
+			LeafiaGls.rotate((float)Math.min((core.potentialGain-1)/9,core.client_maxDial)*360,0,0,1);
 			LeafiaGls.pushMatrix();
 			LeafiaGls.translate(-2.5,-9.5,0);
 			drawTexturedModalRect(0,0,176,0,5,12);

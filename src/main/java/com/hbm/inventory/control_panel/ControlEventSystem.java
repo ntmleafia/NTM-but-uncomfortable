@@ -1,7 +1,11 @@
 package com.hbm.inventory.control_panel;
 
 import com.hbm.lib.RefStrings;
+import com.leafia.dev.LeafiaDebug;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -109,6 +113,13 @@ public class ControlEventSystem {
 				}
 			}
 		}
+	}
+
+	public void playSound(World world,BlockPos from,SoundEvent evt,float volume,float pitch) {
+		volume = MathHelper.clamp(volume,0,10);
+		pitch = MathHelper.clamp(pitch,0.5f,2);
+		//LeafiaDebug.debugLog(world,"PlaySound "+volume+": "+pitch); yipeeee
+		world.playSound(null,from.getX()+0.5,from.getY()+0.5,from.getZ()+0.5,evt,SoundCategory.BLOCKS,volume,pitch);
 	}
 	
 	public void broadcastEvent(BlockPos from, ControlEvent c){

@@ -6,6 +6,7 @@ import com.hbm.explosion.ExplosionLarge;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ILaserable;
 import com.hbm.interfaces.ITankPacketAcceptor;
+import com.hbm.inventory.control_panel.*;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
@@ -27,8 +28,10 @@ import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -39,11 +42,10 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEnergyGenerator, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent {
+public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEnergyGenerator, IFluidHandler, ILaserable, ITankPacketAcceptor, SimpleComponent, IControllable {
 
     public long power;
     public long joules;
@@ -381,5 +383,45 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
     @Override
     public String getPacketIdentifier() {
         return "dfc_absorber";
+    }
+
+    @Override
+    public BlockPos getControlPos() {
+        return getPos();
+    }
+
+    @Override
+    public World getControlWorld() {
+        return getWorld();
+    }
+
+    @Override
+    public void receiveEvent(BlockPos from,ControlEvent e) {
+        if (e.name.equals("set_absorber_level")) {
+            level = e.vars.get("level").getNumber()*100;
+        }
+    }
+    @Override
+    public Map<String,DataValue> getQueryData() {
+        Map<String,DataValue> map = new HashMap<>();
+        map.put("level",new DataValueFloat((float)(level*100)));
+        return map;
+    }
+
+    @Override
+    public List<String> getInEvents() {
+        return Collections.singletonList("set_absorber_level");
+    }
+
+    @Override
+    public void validate(){
+        super.validate();
+        ControlEventSystem.get(world).addControllable(this);
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        ControlEventSystem.get(world).removeControllable(this);
     }
 }

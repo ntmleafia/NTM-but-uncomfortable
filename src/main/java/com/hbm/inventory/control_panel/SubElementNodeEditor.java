@@ -184,6 +184,8 @@ public class SubElementNodeEditor extends SubElement {
 							node = new NodeCancelEvent(x, y);
 						} else if(s2.equals("Set Variable")){
 							node = new NodeSetVar(x, y, gui.currentEditControl);
+						} else if (s2.equals("Play Sound")) {
+							node = new NodeSounder(x,y);
 						}
 						if(node != null){
 							addMenu.close();
@@ -200,6 +202,7 @@ public class SubElementNodeEditor extends SubElement {
 						list.addItems("Cancel");
 					}
 					list.addItems("Set Variable");
+					list.addItems("Play Sound");
 					return list;
 				}
 				return null;

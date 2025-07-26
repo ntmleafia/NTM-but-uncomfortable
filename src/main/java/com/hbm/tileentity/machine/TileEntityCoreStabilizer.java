@@ -1,6 +1,7 @@
 package com.hbm.tileentity.machine;
 
 import api.hbm.energy.IEnergyUser;
+import com.hbm.inventory.control_panel.*;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemLens;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
@@ -17,16 +18,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent {
+public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent, IControllable {
 
     public long power;
     public static final long maxPower = 10000000000000L;
@@ -76,7 +79,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
             mop.put("stabilization", core.stabilization);
             mop.put("containedEnergy", core.containedEnergy);
             mop.put("expellingEnergy", core.expellingEnergy);
-            mop.put("potentialRelease", core.potentialRelease);
+            mop.put("potentialRelease", core.potentialGain);
             mop.put("explosionIn", core.explosionIn);
             mop.put("fuelA", core.tanks[0].getFluidAmount());
             mop.put("fuelB", core.tanks[1].getFluidAmount());
@@ -148,6 +151,65 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 				break;
 		}
 		return null;*/
+    }
+
+    @Override
+    public BlockPos getControlPos() {
+        return getPos();
+    }
+
+    @Override
+    public World getControlWorld() {
+        return getWorld();
+    }
+
+    @Override
+    public void receiveEvent(BlockPos from,ControlEvent e) {
+        if (e.name.equals("set_stabilizer_level")) {
+            watts = Math.round(e.vars.get("level").getNumber());
+        }
+    }
+    @Override
+    public Map<String,DataValue> getQueryData() {
+        Map<String,DataValue> map = new HashMap<>();
+        map.put("active",new DataValueFloat(isOn ? 1 : 0));
+        map.put("level",new DataValueFloat(watts));
+        map.put("core_temp",new DataValueFloat(0));
+        map.put("core_energy",new DataValueFloat(0));
+        map.put("core_expel",new DataValueFloat(0));
+        map.put("core_potent",new DataValueFloat(0));
+        map.put("core_overload",new DataValueFloat(0));
+        TileEntityCore core = getCore();
+        if (isOn && core != null) {
+            map.put("core_temp",new DataValueFloat((float)core.temperature));
+            map.put("core_energy",new DataValueFloat((float)core.containedEnergy));
+            map.put("core_expel",new DataValueFloat((float)core.expellingEnergy));
+            map.put("core_potent",new DataValueFloat((float)core.potentialGain));
+            double meltdown = core.explosionIn;
+            if (meltdown >= 0)
+                meltdown = Math.pow(1-120/meltdown,4);
+            else
+                meltdown = 0;
+            map.put("core_overload",new DataValueFloat((float)meltdown));
+        }
+        return map;
+    }
+
+    @Override
+    public List<String> getInEvents() {
+        return Collections.singletonList("set_stabilizer_level");
+    }
+
+    @Override
+    public void validate(){
+        super.validate();
+        ControlEventSystem.get(world).addControllable(this);
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        ControlEventSystem.get(world).removeControllable(this);
     }
 
     public enum LensType {

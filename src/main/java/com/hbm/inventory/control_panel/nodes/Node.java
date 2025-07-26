@@ -79,47 +79,50 @@ public abstract class Node {
 	public static Node nodeFromNBT(NBTTagCompound tag, NodeSystem sys){
 		Node node = null;
 		switch(tag.getString("nodeType")){
-		case "cancelEvent":
-			node = new NodeCancelEvent(0, 0);
-			break;
-		case "eventBroadcast":
-			NBTTagCompound list = tag.getCompoundTag("itemList");
-			List<ControlEvent> l = new ArrayList<>();
-			for(int i = 0; i < list.getKeySet().size(); i ++){
-				l.add(ControlEvent.getRegisteredEvent(list.getString("item"+i)));
-			}
-			node = new NodeEventBroadcast(0, 0, l);
-			break;
-		case "getVar":
-			int ctrlIdx = tag.getInteger("controlIdx");
-			node = new NodeGetVar(0, 0, sys.parent.panel.controls.get(ctrlIdx));
-			break;
-		case "queryBlock":
-			ctrlIdx = tag.getInteger("controlIdx");
-			node = new NodeQueryBlock(0, 0, sys.parent.panel.controls.get(ctrlIdx));
-			break;
+			case "cancelEvent":
+				node = new NodeCancelEvent(0, 0);
+				break;
+			case "eventBroadcast":
+				NBTTagCompound list = tag.getCompoundTag("itemList");
+				List<ControlEvent> l = new ArrayList<>();
+				for(int i = 0; i < list.getKeySet().size(); i ++){
+					l.add(ControlEvent.getRegisteredEvent(list.getString("item"+i)));
+				}
+				node = new NodeEventBroadcast(0, 0, l);
+				break;
+			case "sounder":
+				node = new NodeSounder(0,0);
+				break;
+			case "getVar":
+				int ctrlIdx = tag.getInteger("controlIdx");
+				node = new NodeGetVar(0, 0, sys.parent.panel.controls.get(ctrlIdx));
+				break;
+			case "queryBlock":
+				ctrlIdx = tag.getInteger("controlIdx");
+				node = new NodeQueryBlock(0, 0, sys.parent.panel.controls.get(ctrlIdx));
+				break;
 			case "math":
-			node = new NodeMath(0, 0);
-			break;
-		case "boolean":
-			node = new NodeBoolean(0, 0);
-			break;
-		case "function":
-			node = new NodeFunction(0, 0);
-			break;
-		case "buffer":
-			node = new NodeBuffer(0, 0);
-			break;
-		case "conditional":
-			node = new NodeConditional(0, 0);
-			break;
-		case "setVar":
-			int ctrlIdx2 = tag.getInteger("controlIdx");
-			node = new NodeSetVar(0, 0, sys.parent.panel.controls.get(ctrlIdx2));
-			break;
-		case "input":
-			node = new NodeInput(0, 0, null);
-			break;
+				node = new NodeMath(0, 0);
+				break;
+			case "boolean":
+				node = new NodeBoolean(0, 0);
+				break;
+			case "function":
+				node = new NodeFunction(0, 0);
+				break;
+			case "buffer":
+				node = new NodeBuffer(0, 0);
+				break;
+			case "conditional":
+				node = new NodeConditional(0, 0);
+				break;
+			case "setVar":
+				int ctrlIdx2 = tag.getInteger("controlIdx");
+				node = new NodeSetVar(0, 0, sys.parent.panel.controls.get(ctrlIdx2));
+				break;
+			case "input":
+				node = new NodeInput(0, 0, null);
+				break;
 		}
 		return node;
 	}

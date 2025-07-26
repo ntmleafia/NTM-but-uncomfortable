@@ -155,7 +155,7 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 			RayTraceResult result = ((TileEntityCoreEmitter) tileEntity).lastRaycast;
 			if (result != null) {
 				range = new Vec3d(te.getPos()).add(0.5, 0.5, 0.5).distanceTo(result.hitVec);
-				if (((TileEntityCoreEmitter) tileEntity).isOn) {
+				if (((TileEntityCoreEmitter) tileEntity).isActive) {
 					float width = (float) Math.max(1, Math.log10(((TileEntityCoreEmitter) tileEntity).prev) - 6) / 8F;
 					int colorA = 0x401500;
 					int colorB = 0x5B1D00;
