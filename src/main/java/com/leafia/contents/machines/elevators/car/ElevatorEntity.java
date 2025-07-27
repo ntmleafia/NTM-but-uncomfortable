@@ -54,6 +54,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
@@ -937,6 +939,10 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 	}
 	String[] localLastWalls = new String[4];
 	boolean sync = true;
+	@SideOnly(Side.CLIENT)
+	EntityPlayer getPlayer() {
+		return Minecraft.getMinecraft().player;
+	}
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
@@ -955,7 +961,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 					if (clickedButtons.get(btn) > 4)
 						clickedButtons.remove(btn);
 				}
-				EntityPlayer player = Minecraft.getMinecraft().player;
+				EntityPlayer player = getPlayer();
 				if (!player.isSpectator())
 					processEntity(player);
 				//setPosition(posX+motionX,posY+motionY,posZ+motionZ);

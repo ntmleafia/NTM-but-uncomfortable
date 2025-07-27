@@ -18,6 +18,14 @@ public class FiaBB {
 		this.y1 = y1;
 		this.depth = depth;
 	}
+	public FiaBB(FiaBB bb) {
+		this.mat = bb.mat;
+		this.x0 = bb.x0;
+		this.x1 = bb.x1;
+		this.y0 = bb.y0;
+		this.y1 = bb.y1;
+		this.depth = bb.depth;
+	}
 	public AxisAlignedBB toAABB() {
 		Vec3d a = mat.translate(x0,y0,0).position;
 		Vec3d b = mat.translate(x1,y1,depth).position;

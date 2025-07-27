@@ -103,6 +103,7 @@ import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZ
 import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.contents.network.computers.cable.ComputerCableTE;
+import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveTE;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
@@ -560,6 +561,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityFFFluidDuctMk2.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2"));
 		GameRegistry.registerTileEntity(TileEntityFFFluidDuctMk2Solid.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_solid"));
 		GameRegistry.registerTileEntity(FluidBoxValveTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_box_valve"));
+		GameRegistry.registerTileEntity(FluidDuctGaugeTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_duct_gauge"));
+
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, new ResourceLocation(RefStrings.MODID, "tileentity_barrel"));
 		GameRegistry.registerTileEntity(TileEntityTesla.class, new ResourceLocation(RefStrings.MODID, "tileentity_tesla"));
 		GameRegistry.registerTileEntity(TileEntityCyberCrab.class, new ResourceLocation(RefStrings.MODID, "tileentity_cybercrab"));

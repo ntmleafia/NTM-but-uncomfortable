@@ -1,6 +1,10 @@
 package com.hbm.forgefluid;
 
 import com.hbm.interfaces.IFluidPipeMk2;
+import com.leafia.contents.network.fluid.gauges.IFluidGauge;
+import com.leafia.dev.LeafiaDebug;
+import com.llib.group.LeafiaSet;
+import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +32,8 @@ public class FFPipeNetworkMk2 implements IFluidHandler {
 	public IFluidTankProperties[] getTankProperties() {
 		return new IFluidTankProperties[]{};
 	}
+
+	public LeafiaSet<IFluidGauge> listeners = new LeafiaSet<>();
 
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
@@ -66,9 +72,14 @@ public class FFPipeNetworkMk2 implements IFluidHandler {
 			totalDrained += vol;
 			remaining -= vol;
 			if(remaining <= 0)
-				return totalDrained;
+				break;
 		}
-		
+
+		if (doFill) {
+			for (IFluidGauge listener : listeners)
+				listener.onFill(totalDrained);
+		}
+
 		return totalDrained;
 	}
 

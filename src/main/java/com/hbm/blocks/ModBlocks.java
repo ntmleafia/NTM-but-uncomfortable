@@ -55,6 +55,7 @@ import com.leafia.contents.machines.reactors.zirnox.ReactorZirnox;
 import com.leafia.contents.machines.reactors.zirnox.ReactorZirnoxDestroyed;
 import com.leafia.contents.network.computers.audiocable.AudioCableBlock;
 import com.leafia.contents.network.computers.cable.ComputerCableBlock;
+import com.leafia.contents.network.fluid.gauges.FluidDuctGauge;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveBlock;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveBlockRS;
 import com.leafia.contents.network.spk_cable.SPKCableBlock;
@@ -1487,6 +1488,7 @@ public class ModBlocks {
 	public static final Block fluid_duct_solid_stripe = new BlockFluidPipeSolid(Material.IRON, "fluid_duct_solid_stripe").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
 	public static final Block fluid_duct_valve = new FluidBoxValveBlock(Material.IRON, "fluid_duct_valve").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
 	public static final Block fluid_duct_valve_rs = new FluidBoxValveBlockRS(Material.IRON, "fluid_duct_valve_rs").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
+	public static final Block fluid_duct_gauge_mdl = new FluidDuctGauge(Material.IRON, "fluid_duct_gauge_mdl").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.templateTab);
 
 	public static final Block chain = new BlockChain(Material.IRON, "dungeon_chain").setHardness(0.25F).setResistance(2.0F).setCreativeTab(MainRegistry.blockTab);
 	
@@ -1633,7 +1635,7 @@ public class ModBlocks {
 
 	public static void preInit(){
 		MainRegistry._initMemberClasses(ModBlocks.class);
-
+		System.out.println("Blocks: "+ALL_BLOCKS.size());
 		for(Block block : ALL_BLOCKS){
 			ForgeRegistries.BLOCKS.register(block);
 		}

@@ -38,6 +38,8 @@ import com.leafia.contents.machines.reactors.pwr.debris.RenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.network.fluid.FluidDuctEquipmentRender;
+import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.spk_cable.SPKCableRender;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
@@ -831,6 +833,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(EvPulleyTE.class, new EvPulleyRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(EvShaftTE.class, new EvShaftRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(EvBufferTE.class, new EvBufferRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(FluidDuctGaugeTE.class, new FluidDuctEquipmentRender());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());
