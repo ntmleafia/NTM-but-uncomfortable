@@ -964,7 +964,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				world.spawnEntity(debris);
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "rbmkmush");
-			data.setFloat("scale", (float) reactorSize / 3);
+			data.setFloat("scale", (float) reactorSize);
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5), new NetworkRegistry.TargetPoint(world.provider.getDimension(), centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5, 250));
 			world.playSound(null, centerPoint.x + 0.5, centerPoint.y + 0.5, centerPoint.z + 0.5, HBMSoundEvents.rbmk_explosion, SoundCategory.BLOCKS, 50.0F, 1.0F);
 		}
