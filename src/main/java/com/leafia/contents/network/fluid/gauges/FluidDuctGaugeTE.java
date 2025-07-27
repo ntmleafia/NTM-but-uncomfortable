@@ -21,8 +21,10 @@ public class FluidDuctGaugeTE extends FluidDuctEquipmentTE implements ITickable,
 					unoptimizedshit.remove(network);
 				}
 			}
-			if (network != null && !this.isInvalid())
+			if (network != null && !this.isInvalid()) {
+				unoptimizedshit.add(network);
 				network.listeners.add(this);
+			}
 			needle = Math.floorMod(needle+1,20);
 			fills[needle] = 0;
 
