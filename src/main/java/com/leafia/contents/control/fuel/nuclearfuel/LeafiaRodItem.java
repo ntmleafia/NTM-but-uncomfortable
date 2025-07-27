@@ -185,6 +185,7 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 					cloud.posZ = z;
 					world.spawnEntity(cloud);
 				}
+				break;
 			}
 			default: {
 				EntityNukeTorex.statFac(world,x,y,z,100);
