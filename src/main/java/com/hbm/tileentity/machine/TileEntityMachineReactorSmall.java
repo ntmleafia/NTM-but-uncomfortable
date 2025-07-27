@@ -15,7 +15,7 @@ import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,7 +88,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 				if((i >= 0) && (i < 12)) {
 					if (itemStack.getItem() instanceof ItemFuelRod)
 						return true;
-					else if (itemStack.getItem() instanceof ItemLeafiaRod)
+					else if (itemStack.getItem() instanceof LeafiaRodItem)
 						return true;
 				}
 				if(i == 12)
@@ -190,12 +190,12 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			compression = level;
 		}
 	}
-	double getHeatInSlot(int slot,ItemLeafiaRod rod) {
+	double getHeatInSlot(int slot,LeafiaRodItem rod) {
 		return rod.getFlux(inventory.getStackInSlot(slot));
 	}
 	double handleLeafiaFuel(int slot,double cool) {
 		ItemStack stack = inventory.getStackInSlot(slot);
-		ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+		LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
 		double detectedHeat = 0;
 		for (int offset = 1; slot-offset*5 >= 0; offset += 1) {
 			detectedHeat += getHeatInSlot(slot-offset*5,rod)/Math.pow(2,offset-1);
@@ -318,7 +318,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			float feedwatr = (float) Math.pow(this.tanks[0].getFluidAmount()/32000f,0.4);
 			double cooledSum = 0;
 			for (int i = 0; i < 12; i++) {
-				if (inventory.getStackInSlot(i).getItem() instanceof ItemLeafiaRod)
+				if (inventory.getStackInSlot(i).getItem() instanceof LeafiaRodItem)
 					cooledSum += handleLeafiaFuel(i,coolin);
 			}
 			coreHeatAddition = (int)Math.floor(fuelHeat/12000*(maxCoreHeat-coreHeat/2));
@@ -371,15 +371,15 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 	private void explode() {
 		ItemStack prevStack = null;
 		for(int i = 0; i < inventory.getSlots(); i++) {
-			prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i),prevStack);
+			prevStack = LeafiaRodItem.comparePriority(inventory.getStackInSlot(i),prevStack);
 			inventory.setStackInSlot(i, ItemStack.EMPTY);
 		}
 		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 18.0F, true);
 		boolean nope = true;
 		if (prevStack != null) {
-			if (prevStack.getItem() instanceof ItemLeafiaRod) {
+			if (prevStack.getItem() instanceof LeafiaRodItem) {
 				nope = false;
-				ItemLeafiaRod rod = (ItemLeafiaRod)(prevStack.getItem());
+				LeafiaRodItem rod = (LeafiaRodItem)(prevStack.getItem());
 				rod.resetDetonate();
 				rod.detonateRadius = 18;
 				rod.detonateNuclear = true;

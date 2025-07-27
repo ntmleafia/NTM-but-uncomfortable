@@ -26,7 +26,7 @@ import com.hbm.items.ModItems.ToolSets;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.RenderPWRVentElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
@@ -2252,7 +2252,7 @@ public class ClientProxy extends ServerProxy {
 		ModItems.fluid_tank_full.setTileEntityItemStackRenderer(FluidTankRender.INSTANCE);
 		ModItems.fluid_barrel_full.setTileEntityItemStackRenderer(FluidBarrelRender.INSTANCE);
 
-        for (ItemLeafiaRod rod : ItemLeafiaRod.fromResourceMap.values()) {
+        for (LeafiaRodItem rod : LeafiaRodItem.fromResourceMap.values()) {
             rod.setTileEntityItemStackRenderer(LeafiaRodRender.INSTANCE);
         }
 

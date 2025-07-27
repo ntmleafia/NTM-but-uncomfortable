@@ -7,10 +7,12 @@ import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.tileentity.TileEntityInventoryBase;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.leafia.dev.LeafiaDebug.Tracker;
@@ -23,6 +25,7 @@ import com.llib.math.range.RangeDouble;
 import com.llib.math.range.RangeInt;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -283,7 +286,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				if (world.isValid(searchPos)) {
 					Tracker._tracePosition(this,searchPos,"Looking for graphite");
 					if (block.getRegistryName() != null) {
-						if (("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*"))
+						if (("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*") || block instanceof MachinePWRChannel || block instanceof MachinePWRConductor || block == Blocks.WATER || block == Blocks.FLOWING_WATER)
 							moderatedRows.add(depth);
 					}
 				}
@@ -492,7 +495,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			return 1;
 		}
 	}
-	public double getHeatFromHeatRetrival(HeatRetrival retrival,ItemLeafiaRod rod) {
+	public double getHeatFromHeatRetrival(HeatRetrival retrival,LeafiaRodItem rod) {
 		BlockPos pos = retrival.fuelPos;
 		if (world.getBlockState(pos).getBlock() instanceof MachinePWRElement) {
 			if (((MachinePWRElement) world.getBlockState(pos).getBlock()).tileEntityShouldCreate(world,pos)) {
@@ -661,7 +664,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	public double getHeat() {
 		ItemStack stack = this.inventory.getStackInSlot(0);
 		if (!stack.isEmpty()) {
-			if (stack.getItem() instanceof ItemLeafiaRod) {
+			if (stack.getItem() instanceof LeafiaRodItem) {
 				if (stack.getTagCompound() != null)
 					return stack.getTagCompound().getDouble("heat");
 			}
@@ -671,7 +674,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	public void setHeat(double heat) {
 		ItemStack stack = this.inventory.getStackInSlot(0);
 		if (!stack.isEmpty()) {
-			if (stack.getItem() instanceof ItemLeafiaRod) {
+			if (stack.getItem() instanceof LeafiaRodItem) {
 				if (stack.getTagCompound() != null)
 					stack.getTagCompound().setDouble("heat",heat);
 			}
@@ -686,17 +689,19 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		if (!world.isRemote) {
 			ItemStack stack = this.inventory.getStackInSlot(0);
 			if (!stack.isEmpty()) {
-				if (stack.getItem() instanceof ItemLeafiaRod) {
+				if (stack.getItem() instanceof LeafiaRodItem) {
 					int height = getHeight();
 					double coolin = 0;
 					PWRData gathered = gatherData();
+					double coolantTemp = 400;
 					if (gathered != null) {
 						// DONE PROBABLY: make it detect only nearby channels
 						// DONE PROBABLY: exchangers would increase coolant consumption rate
 						coolin = Math.pow(gathered.tanks[0].getFluidAmount()/(double)Math.max(gathered.tanks[0].getCapacity(),1),0.4)
 								;//*(gathered.tanks[0].getCapacity()/1250d);
+						coolantTemp = gathered.tankTypes[1].getTemperature()-273;
 					}
-					ItemLeafiaRod rod = (ItemLeafiaRod)(stack.getItem());
+					LeafiaRodItem rod = (LeafiaRodItem)(stack.getItem());
 					double heatDetection = 0;
 					for (Pair<HeatRetrival,HeatRetrival> pair : cornerFuelMap) {
 						// getControlAvg is scrapped
@@ -718,24 +723,44 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					NBTTagCompound data = stack.getTagCompound();
 					double cooled = 0;
 					if (data != null) {
-						if (data.getInteger("spillage") > 100) {
-							if (rod.meltdownPriority > 0) {
+						if (data.getBoolean("nuke")) {
+							if (gathered != null)
+								gathered.explode(world,stack,rod);
+							inventory.setStackInSlot(0,ItemStack.EMPTY);
+							return;
+						} else if (data.getInteger("spillage") > 100) {
+							/*if (rod.meltdownPriority > 0) {
 								if (gathered != null)
 									gathered.explode(world,stack);
-							} else {
-								inventory.setStackInSlot(0,ItemStack.EMPTY);
+							} else */
+							if (gathered != null && gathered.tankTypes[1].isGaseous())
+								gathered.explode(world,stack,null);
+							else {
+								//inventory.setStackInSlot(0,ItemStack.EMPTY);
 								//world.destroyBlock(pos,false);
-								world.playEvent(2001, pos, Block.getStateId(world.getBlockState(pos)));
-								world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
-								BlockPos nextPos = pos.down();
-								while (world.isValid(nextPos)) {
-									if (world.getBlockState(nextPos).getBlock() instanceof MachinePWRElement)
-										world.setBlockState(nextPos,ModBlocks.corium_block.getDefaultState());
-									else
+								BlockPos pos = this.pos.down(height);
+								int tries = height;
+								while (tries >= 0) {
+									tries--;
+									if (world.getBlockState(pos).getBlock() == ModBlocks.block_corium) {
+										pos = pos.up();
+										continue;
+									} else if (world.getBlockState(pos).getBlock() == ModBlocks.corium_block)
 										break;
-									nextPos = nextPos.down();
+									else {
+										world.playEvent(2001,pos,Block.getStateId(world.getBlockState(pos)));
+										world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
+										//BlockPos nextPos = pos.down();
+										/*while (world.isValid(nextPos)) {
+											if (world.getBlockState(nextPos).getBlock() instanceof MachinePWRElement)
+												world.setBlockState(nextPos,ModBlocks.corium_block.getDefaultState());
+											else
+												break;
+											nextPos = nextPos.down();
+										}*/
+										world.setBlockState(pos,ModBlocks.corium_block.getDefaultState());
+									}
 								}
-								return;
 							}
 						}
 						cooled = data.getDouble("cooled");
@@ -790,7 +815,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				if (value instanceof Double) {
 					if (inventory != null) {
 						if (!inventory.getStackInSlot(0).isEmpty()) {
-							if (inventory.getStackInSlot(0).getItem() instanceof ItemLeafiaRod) {
+							if (inventory.getStackInSlot(0).getItem() instanceof LeafiaRodItem) {
 								NBTTagCompound nbt = inventory.getStackInSlot(0).getTagCompound();
 								if (nbt == null) nbt = new NBTTagCompound();
 								nbt.setDouble(doubleArray[key-1],(double)value);
@@ -804,7 +829,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				if (value instanceof Boolean) {
 					if (inventory != null) {
 						if (!inventory.getStackInSlot(0).isEmpty()) {
-							if (inventory.getStackInSlot(0).getItem() instanceof ItemLeafiaRod) {
+							if (inventory.getStackInSlot(0).getItem() instanceof LeafiaRodItem) {
 								NBTTagCompound nbt = inventory.getStackInSlot(0).getTagCompound();
 								if (nbt == null) nbt = new NBTTagCompound();
 								nbt.setBoolean("melting",(boolean)value);

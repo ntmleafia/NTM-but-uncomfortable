@@ -11,18 +11,19 @@ import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
+import com.leafia.unsorted.ParticleBalefire;
+import com.leafia.unsorted.ParticleBalefireLava;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -33,6 +34,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static net.minecraft.block.BlockSnow.LAYERS;
 
 public class MachinePWRElement extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
 	public MachinePWRElement() {
@@ -166,5 +170,45 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 	@Override
 	public boolean tileEntityShouldCreate(World world,BlockPos pos) {
 		return !(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement);
+	}
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings("incomplete-switch")
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+		super.randomDisplayTick(state, world, pos, rand);
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileEntityPWRElement) {
+			TileEntityPWRElement element = (TileEntityPWRElement)te;
+			if (element.inventory != null) {
+				Item item = element.inventory.getStackInSlot(0).getItem();
+				if (item != null) {
+					if (item.getRegistryName().toString().contains("blazingbalefire")) {
+						// definitely not copypasted from AshBalefire.java
+						for(EnumFacing dir : EnumFacing.VALUES) {
+							for (int rep = 0; rep < 2; rep+=(rand.nextInt(2)+1)) {
+								double ix = pos.getX() + 0.5F + dir.getXOffset() + rand.nextDouble() - 0.5D;
+								double iy = pos.getY() + 0.5F + dir.getYOffset() + rand.nextDouble() - 0.5D;
+								double iz = pos.getZ() + 0.5F + dir.getZOffset() + rand.nextDouble() - 0.5D;
+
+								if (dir.getXOffset() != 0)
+									ix = pos.getX() + 0.5F + dir.getXOffset() * 0.5 + rand.nextDouble() * 0.125 * dir.getXOffset();
+								if (dir.getYOffset() != 0)
+									iy = pos.getY() +  0.5F + dir.getYOffset() * 0.5 + rand.nextDouble() * 0.125 * dir.getYOffset();
+								if (dir.getZOffset() != 0)
+									iz = pos.getZ() + 0.5F + dir.getZOffset() * 0.5 + rand.nextDouble() * 0.125 * dir.getZOffset();
+
+								ParticleBalefire fx = new ParticleBalefire(world, ix, iy, iz);
+								Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+								if (rand.nextInt(2) == 0) {
+									ParticleBalefireLava fx2 = new ParticleBalefireLava(world, ix, iy, iz);
+									Minecraft.getMinecraft().effectRenderer.addEffect(fx2);
+								}
+								world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, ix, iy, iz, 0.0, 0.0, 0.0);
+								world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, ix, iy, iz, 0.0, 0.1, 0.0);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }

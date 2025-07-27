@@ -20,7 +20,7 @@ import com.hbm.items.weapon.GunB92Cell;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.util.EnchantmentUtil;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.machines.reactors.pwr.debris.CraftingPWRDebris;
 import net.minecraft.block.Block;
@@ -2824,9 +2824,11 @@ public class CraftingManager {
         addShapelessAuto(new ItemStack(ModItems.drillbit_dnt_diamond, 1), ModItems.drillbit_dnt, new ItemStack(ModItems.ore_bedrock, 1, 3));
 
         addRecipeAuto(new ItemStack(LeafiaRods.leafRod, 4), "O", "I", "O", 'O', ZR.billet(), 'I', ZR.nugget());
-        for (ItemLeafiaRod rod : ItemLeafiaRod.fromResourceMap.values()) {
-            addShapelessAuto(new ItemStack(rod, 1), LeafiaRods.leafRod, rod.baseItem);
-            addShapelessAuto(new ItemStack(rod.baseItem, 1), rod);
+        for (LeafiaRodItem rod : LeafiaRodItem.fromResourceMap.values()) {
+            if (rod.baseItem != null) {
+                addShapelessAuto(new ItemStack(rod,1),LeafiaRods.leafRod,rod.baseItem);
+                addShapelessAuto(new ItemStack(rod.baseItem,1),rod);
+            }
         }
     }
 

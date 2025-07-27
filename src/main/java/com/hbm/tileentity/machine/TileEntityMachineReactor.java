@@ -3,7 +3,7 @@ package com.hbm.tileentity.machine;
 import com.hbm.inventory.BreederRecipes;
 import com.hbm.inventory.BreederRecipes.BreederRecipe;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -124,7 +124,7 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return i == 2 ? false : (i == 0 ? (hasItemPower(stack) || (stack.getItem() instanceof ItemLeafiaRod)) : true);
+		return i == 2 ? false : (i == 0 ? (hasItemPower(stack) || (stack.getItem() instanceof LeafiaRodItem)) : true);
 	}
 
 	public int getProgressScaled(int i) {
@@ -238,9 +238,9 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 					
 					markDirty = true;
 				}
-			} else if (inventory.getStackInSlot(0).getItem() instanceof ItemLeafiaRod) {
+			} else if (inventory.getStackInSlot(0).getItem() instanceof LeafiaRodItem) {
 				ItemStack stack = inventory.getStackInSlot(0);
-				ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+				LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
 				NBTTagCompound nbt = stack.getTagCompound();
 				double fuelHeat = 20;
 				if (nbt != null) {
@@ -249,11 +249,11 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 						if (nbt.getInteger("spillage") > 20*5) {
 							ItemStack prevStack = null;
 							for (int i = 0; i < inventory.getSlots(); i++) {
-								prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i), prevStack);
+								prevStack = LeafiaRodItem.comparePriority(inventory.getStackInSlot(i), prevStack);
 								inventory.setStackInSlot(i, ItemStack.EMPTY);
 							}
 							world.setBlockToAir(pos);
-							((ItemLeafiaRod) (prevStack.getItem())).resetDetonate().detonate(world, pos);
+							((LeafiaRodItem) (prevStack.getItem())).resetDetonate().detonate(world, pos);
 							return;
 						}
 					//}

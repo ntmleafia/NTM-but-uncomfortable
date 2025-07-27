@@ -87,7 +87,7 @@ import com.hbm.util.ContaminationUtil;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
 import com.hbm.util.Tuple.Triplet;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodBakedModel;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodRender;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
@@ -404,7 +404,7 @@ public class ModEventHandlerClient {
 			for (int i = 0; i < 4; i++) {
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			}
-		} else if (item instanceof ItemLeafiaRod.EmptyLeafiaRod) {
+		} else if (item instanceof LeafiaRodItem.EmptyLeafiaRod) {
 			ModelLoader.setCustomModelResourceLocation(item, 15, new ModelResourceLocation(item.getRegistryName() + "_overlay", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName() + "_empty", "inventory"));
 		} else if(item instanceof IHasCustomModel) {
@@ -486,17 +486,26 @@ public class ModEventHandlerClient {
 			FFIdentifierRender.INSTANCE.itemModel = model;
 			evt.getModelRegistry().putObject(ItemForgeFluidIdentifier.identifierModel, new FFIdentifierModel());
 		}
-		Object object9 = evt.getModelRegistry().getObject(ItemLeafiaRod.rodModel);
+		Object object9 = evt.getModelRegistry().getObject(LeafiaRodItem.rodModel);
 		if(object9 instanceof IBakedModel) {
 			IBakedModel model = (IBakedModel) object9;
 			LeafiaRodRender.INSTANCE.itemModel = model;
-			evt.getModelRegistry().putObject(ItemLeafiaRod.rodModel, new LeafiaRodBakedModel());
+			evt.getModelRegistry().putObject(LeafiaRodItem.rodModel, new LeafiaRodBakedModel());
 		}
+
 		Object objecta = evt.getModelRegistry().getObject(ItemFuzzyIdentifier.fuzzyModel);
 		if(objecta instanceof IBakedModel) {
 			IBakedModel model = (IBakedModel) objecta;
 			FFIdentifierRender.INSTANCE.itemModelFuzzy = model;
 			evt.getModelRegistry().putObject(ItemFuzzyIdentifier.fuzzyModel, new FuzzyIdentifierBakedModel());
+		}
+
+		for (LeafiaRodItem item : LeafiaRodItem.fromResourceMap.values()) {
+			if (item.specialRodModel != null) {
+				Object objectb = evt.getModelRegistry().getObject(item.specialRodModel);
+				if(objectb instanceof IBakedModel)
+					item.bakedSpecialRod = (IBakedModel)objectb;
+			}
 		}
 
 		IRegistry<ModelResourceLocation, IBakedModel> reg = evt.getModelRegistry();

@@ -43,7 +43,7 @@ import com.hbm.main.MainRegistry;
 import com.hbm.potion.HbmPotion;
 import com.hbm.tileentity.machine.rbmk.IRBMKFluxReceiver.NType;
 import com.hbm.util.EnchantmentUtil;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.gear.ItemGasSensor;
 import com.leafia.contents.gear.detonator_laser.ItemLaserDetonator;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
@@ -76,8 +76,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod.ItemType.BILLET;
-import static com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod.Purity.*;
+import static com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem.ItemType.*;
+import static com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem.Purity.*;
 import static com.leafia.dev.MultiRad.RadiationType.*;
 
 public class ModItems {
@@ -1179,16 +1179,16 @@ public class ModItems {
 	public static final Item nuclear_waste_tiny = new ItemContaminating(ItemHazard.wst * ItemHazard.powder_tiny, "nuclear_waste_tiny").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nuclear_waste_vitrified = new ItemContaminating(ItemHazard.wstv * ItemHazard.powder, "nuclear_waste_vitrified").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nuclear_waste_vitrified_tiny = new ItemContaminating(ItemHazard.wstv * ItemHazard.powder_tiny, "nuclear_waste_vitrified_tiny").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_uranium = new ItemContaminating(15F, "waste_uranium").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_thorium = new ItemContaminating(10F, "waste_thorium").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_plutonium = new ItemContaminating(15F, "waste_plutonium").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_mox = new ItemContaminating(15F, "waste_mox").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_schrabidium = new ItemContaminating(40F, false, true, "waste_schrabidium").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_uranium_hot = new ItemContaminating(15F, true, "waste_uranium_hot").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_thorium_hot = new ItemContaminating(10F, true, "waste_thorium_hot").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_plutonium_hot = new ItemContaminating(15F, true, "waste_plutonium_hot").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_mox_hot = new ItemContaminating(15F, true, "waste_mox_hot").setCreativeTab(MainRegistry.partsTab);
-	public static final Item waste_schrabidium_hot = new ItemContaminating(40F, true, true, "waste_schrabidium_hot").setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_uranium = new ItemContaminating(ALPHA,15F, "waste_uranium").addRadon(5).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_thorium = new ItemContaminating(ALPHA,10F, "waste_thorium").addRadon(5).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_plutonium = new ItemContaminating(ALPHA,15F, "waste_plutonium").addRadon(5).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_mox = new ItemContaminating(ALPHA,15F, "waste_mox").addRadon(5).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_schrabidium = new ItemContaminating(ALPHA,40F, false, true, "waste_schrabidium").addRadon(5).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_uranium_hot = new ItemContaminating(ALPHA,15F, true, "waste_uranium_hot").addRadon(15).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_thorium_hot = new ItemContaminating(ALPHA,10F, true, "waste_thorium_hot").addRadon(15).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_plutonium_hot = new ItemContaminating(15F, true, "waste_plutonium_hot").addRadon(15).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_mox_hot = new ItemContaminating(ALPHA,15F, true, "waste_mox_hot").addRadon(15).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item waste_schrabidium_hot = new ItemContaminating(ALPHA,40F, true, true, "waste_schrabidium_hot").addRadon(15).toItem().setCreativeTab(MainRegistry.partsTab);
 	public static final Item scrap = new ItemBase("scrap").setCreativeTab(MainRegistry.partsTab);
 	public static final Item scrap_oil = new ItemBase("scrap_oil").setCreativeTab(MainRegistry.partsTab);
 	public static final Item dust = new ItemBase("dust").setCreativeTab(MainRegistry.partsTab);
@@ -1204,7 +1204,7 @@ public class ModItems {
 	public static final Item pile_rod_boron = new ItemPileRod("pile_rod_boron").setCreativeTab(MainRegistry.controlTab);
 
 	public static class LeafiaRods {
-		public static final Item leafRod = new ItemLeafiaRod.EmptyLeafiaRod().setCreativeTab(MainRegistry.controlTab);
+		public static final Item leafRod = new LeafiaRodItem.EmptyLeafiaRod().setCreativeTab(MainRegistry.controlTab);
 		/*
 				public static final Item dante = new ItemBase("dante").setCreativeTab(CreativeTabs.REDSTONE);
 				public static final Item
@@ -1215,284 +1215,343 @@ public class ModItems {
 		// rbmk based
 		public static final Item
 				leafRodU38
-				= new ItemLeafiaRod("U-238",95000, 2865)
+				= new LeafiaRodItem("U-238",950000, 2865)
 				.setAppearance(Billets.billet_u238, BILLET, ISOTOPE)
+				.setReactivity(0.3)
+				.setDecayProduct("hepu239")
 				.addAlpha(ItemHazard.u238 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodNU
-				= new ItemLeafiaRod("NU",60000, 2865)
+				= new LeafiaRodItem("NU",600000, 2865)
 				.setAppearance(Billets.billet_uranium, BILLET, RAW)
+				.setReactivity(0.4)
+				.setDecayProduct("npu")
 				.addAlpha(ItemHazard.u * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMEU235
-				= new ItemLeafiaRod("MEU-235",40000, 2865)
+				= new LeafiaRodItem("MEU-235",400000, 2865)
 				.setAppearance(Billets.billet_uranium_fuel, BILLET, FUEL)
+				.setDecayProduct("depleteduranium")
 				.addAlpha(ItemHazard.uf * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEU233
-				= new ItemLeafiaRod("HEU-233",10000, 2865)
+				= new LeafiaRodItem("HEU-233",100000, 2865)
 				.setAppearance(Billets.billet_u233, BILLET, ISOTOPE)
+				.setReactivity(2)
+				.setDecayProduct("heu235")
 				.addAlpha(ItemHazard.u233 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEU235
-				= new ItemLeafiaRod("HEU-235",30000, 2865)
+				= new LeafiaRodItem("HEU-235",300000, 2865)
 				.setAppearance(Billets.billet_u235, BILLET, ISOTOPE)
+				.setReactivity(1.75)
+				.setDecayProduct("depleteduranium")
 				.addAlpha(ItemHazard.u235 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodTHMEU
-				= new ItemLeafiaRod("ThMEU",6000, 3350)
+				= new LeafiaRodItem("ThMEU",60000, 3350)
 				.setAppearance(Billets.billet_thorium_fuel, BILLET, FUEL)
+				.setDecayProduct("depletedthorium")
 				.addAlpha(ItemHazard.thf * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLEP239
-				= new ItemLeafiaRod("LEPu-239",50000, 2744)
+				= new LeafiaRodItem("LEPu-239",500000, 2744)
 				.setAppearance(Billets.billet_plutonium_fuel, BILLET, FUEL)
+				.setReactivity(1/1.5)
+				.setDecayProduct("depletedplutonium")
 				.addAlpha(ItemHazard.puf * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMEP239
-				= new ItemLeafiaRod("MEPu-239",50000, 2744)
+				= new LeafiaRodItem("MEPu-239",500000, 2744)
 				.setAppearance(Billets.billet_pu_mix, BILLET, ISOTOPE)
+				.setDecayProduct("depletedplutonium")
 				.addAlpha(ItemHazard.purg * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEP239
-				= new ItemLeafiaRod("HEPu-239",50000, 2744)
+				= new LeafiaRodItem("HEPu-239",500000, 2744)
 				.setAppearance(Billets.billet_pu239, BILLET, ISOTOPE)
+				.setReactivity(1.25)
+				.setDecayProduct("pu240")
 				.addAlpha(ItemHazard.pu239 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEP241
-				= new ItemLeafiaRod("HEPu-241",180000, 2744)
+				= new LeafiaRodItem("HEPu-241",1800000, 2744)
 				.setAppearance(Billets.billet_pu241, BILLET, ISOTOPE)
+				.setReactivity(1.45)
+				.setDecayProduct("depletedplutonium")
 				.addBeta(ItemHazard.pu241 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLEA242
-				= new ItemLeafiaRod("LEAm-242",180000, 3986)
+				= new LeafiaRodItem("LEAm-242",1800000, 3986)
 				.setAppearance(Billets.billet_americium_fuel, BILLET, FUEL)
 				.addAlpha(ItemHazard.amf * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMEA242
-				= new ItemLeafiaRod("MEAm-242",180000, 3986)
+				= new LeafiaRodItem("MEAm-242",1800000, 3986)
 				.setAppearance(Billets.billet_am_mix, BILLET, ISOTOPE)
 				.addBeta(ItemHazard.amrg * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEA241
-				= new ItemLeafiaRod("HEAm-241",180000, 3986)
+				= new LeafiaRodItem("HEAm-241",1800000, 3986)
 				.setAppearance(Billets.billet_am241, BILLET, ISOTOPE)
 				.preferFast()
 				.addAlpha(ItemHazard.am241 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEA242
-				= new ItemLeafiaRod("HEAm-242",180000, 3986)
+				= new LeafiaRodItem("HEAm-242",1800000, 3986)
 				.setAppearance(Billets.billet_am242, BILLET, ISOTOPE)
 				.addBeta(ItemHazard.am242 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMEN237
-				= new ItemLeafiaRod("MENp-237",52000, 2800)
+				= new LeafiaRodItem("MENp-237",520000, 2800)
 				.setAppearance(Billets.billet_neptunium_fuel, BILLET, FUEL)
 				.preferAny()
 				.addAlpha(ItemHazard.npf * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEN237
-				= new ItemLeafiaRod("HENp-237",32000, 2800)
+				= new LeafiaRodItem("HENp-237",320000, 2800)
 				.setAppearance(Billets.billet_neptunium, BILLET, RAW)
 				.preferFast()
 				.addAlpha(ItemHazard.np237 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMOX
-				= new ItemLeafiaRod("MOX",60000, 2815)
+				= new LeafiaRodItem("MOX",600000, 2815)
 				.setAppearance(Billets.billet_mox_fuel, BILLET, FUEL)
 				.addAlpha(ItemHazard.mox * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLES236
-				= new ItemLeafiaRod("LESa-326",35000, 2500)
+				= new LeafiaRodItem("LESa-326",350000, 2500)
 				.setAppearance(Billets.billet_les, BILLET, FUEL)
+				.setEmission(0.75)
 				.setModerated()
 				.addAlpha(ItemHazard.les * ItemHazard.billet)
 				.addBlinding()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodMES326
-				= new ItemLeafiaRod("MESa-326",30000, 2750)
+				= new LeafiaRodItem("MESa-326",300000, 2750)
 				.setAppearance(Billets.billet_schrabidium_fuel, BILLET, FUEL)
 				.addAlpha(ItemHazard.saf * ItemHazard.billet)
 				.addBlinding()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHES326
-				= new ItemLeafiaRod("HESa-326",25000, 3000)
+				= new LeafiaRodItem("HESa-326",250000, 3000)
 				.setAppearance(Billets.billet_hes, BILLET, FUEL)
+				.setEmission(1.25)
 				.addAlpha(ItemHazard.hes * ItemHazard.billet)
 				.addBlinding()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
+				leafRodSa326
+				= new LeafiaRodItem("Sa-326",200000, 3250)
+				.setAppearance(Billets.billet_schrabidium, BILLET, FUEL)
+				.setEmission(2.25)
+				.addAlpha(ItemHazard.sa326 * ItemHazard.billet)
+				.addBlinding()
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+		public static final Item
 				leafRodLEAus
-				= new ItemLeafiaRod("LEAus",55000, 7029)
+				= new LeafiaRodItem("LEAus",550000, 7029)
 				.setAppearance(Billets.billet_australium_lesser, BILLET, ISOTOPE)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodHEAus
-				= new ItemLeafiaRod("HEAus",55000, 5211)
+				= new LeafiaRodItem("HEAus",550000, 5211)
 				.setAppearance(Billets.billet_australium_greater, BILLET, ISOTOPE)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodEmitter
-				= new ItemLeafiaRod("Emitter",9000, 6000)
+				= new LeafiaRodItem("Emitter",90000, 6000)
 				.setAppearance(Billets.billet_unobtainium, BILLET, SOURCE)
 				.addRadiation(ItemHazard.unof * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodRa226Be
-				= new ItemLeafiaRod("Ra-226Be",4000, 700)
+				= new LeafiaRodItem("Ra-226Be",40000, 700)
 				.setAppearance(Billets.billet_ra226be, BILLET, SOURCE)
 				.setModerated()
 				.addNeutrons(ItemHazard.rabe * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodPo210Be
-				= new ItemLeafiaRod("Po-210Be",20000, 1287)
+				= new LeafiaRodItem("Po-210Be",200000, 1287)
 				.setAppearance(Billets.billet_po210be, BILLET, SOURCE)
 				.setModerated()
 				.addNeutrons(ItemHazard.pobe * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodPu238Be
-				= new ItemLeafiaRod("Pu-238Be",20000, 1287)
+				= new LeafiaRodItem("Pu-238Be",200000, 1287)
 				.setAppearance(Billets.billet_pu238be, BILLET, SOURCE)
 				.setModerated()
 				.addNeutrons(ItemHazard.pube * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodFlashgold
-				= new ItemLeafiaRod("Flashgold",180000, 5000)
+				= new LeafiaRodItem("Flashgold",1800000, 5000)
 				.setAppearance(Billets.billet_balefire_gold, BILLET, RAW)
 				.addBeta(ItemHazard.au198 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodFlashlead
-				= new ItemLeafiaRod("Flashlead",220000, 5050)
+				= new LeafiaRodItem("Flashlead",2200000, 5050)
 				.setAppearance(Billets.billet_flashlead, BILLET, RAW)
 				.addBeta(ItemHazard.aupb * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodBi209ZFB
-				= new ItemLeafiaRod("Bi-209 ZFB",18000, 2744)
+				= new LeafiaRodItem("Bi-209 ZFB",180000, 2744)
 				.setAppearance(Billets.billet_zfb_bismuth, BILLET, BREEDER)
 				.addRadiation(ItemHazard.zfb_bi * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodPu241ZFB
-				= new ItemLeafiaRod("Pu-241 ZFB",18000, 2865)
+				= new LeafiaRodItem("Pu-241 ZFB",180000, 2865)
 				.setAppearance(Billets.billet_zfb_pu241, BILLET, BREEDER)
 				.addRadiation(ItemHazard.zfb_pu241 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodAm242ZFB
-				= new ItemLeafiaRod("Am-242 ZFB",18000, 3744)
+				= new LeafiaRodItem("Am-242 ZFB",180000, 3744)
 				.setAppearance(Billets.billet_zfb_am_mix, BILLET, BREEDER)
 				.addRadiation(ItemHazard.zfb_am_mix * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		// normal rods-based
 		public static final Item
 				leafRodPu238
-				= new ItemLeafiaRod("Pu-238",35000, 2744)
+				= new LeafiaRodItem("Pu-238",350000, 2744)
 				.setAppearance(Billets.billet_pu238, BILLET, ISOTOPE)
 				.addAlpha(ItemHazard.pu238 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodPo210
-				= new ItemLeafiaRod("Po-210",30000, 1287)
+				= new LeafiaRodItem("Po-210",300000, 1287)
 				.setAppearance(Billets.billet_polonium, BILLET, ISOTOPE)
 				.addAlpha(ItemHazard.po210 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodSa327
-				= new ItemLeafiaRod("Sa-327",80000, 2250)
+				= new LeafiaRodItem("Sa-327",800000, 2250)
 				.setAppearance(Billets.billet_solinium, BILLET, RAW)
+				.setEmission(25).setReactivity(1/45d)
 				.addAlpha(ItemHazard.sa327 * ItemHazard.billet)
 				.addBlinding()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLithium
-				= new ItemLeafiaRod("Lithium",300, 0)
+				= new LeafiaRodItem("Lithium",3000, 0)
 				.setAppearance(Ingots.ingot_lithium, BILLET, RAW)
 				.addHydroReactivity()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodPu240
-				= new ItemLeafiaRod("Pu-240",650000, 2744)
+				= new LeafiaRodItem("Pu-240",6500000, 2744)
 				.setAppearance(Billets.billet_pu240, BILLET, ISOTOPE)
 				.addAlpha(ItemHazard.pu240 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodWasteUranium
-				= new ItemLeafiaRod("Depleted Uranium",0, 0)
-				.setAppearance(waste_uranium_hot, BILLET, RAW)
+				= new LeafiaRodItem("Depleted Uranium",0, 0)
+				.setAppearance(waste_uranium_hot, BONEMEAL, RAW)
 				.addAlpha(12F)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodWastePlutonium
-				= new ItemLeafiaRod("Depleted Plutonium",0, 0)
-				.setAppearance(waste_plutonium_hot, BILLET, RAW)
+				= new LeafiaRodItem("Depleted Plutonium",0, 0)
+				.setAppearance(waste_plutonium_hot, BONEMEAL, RAW)
 				.addAlpha(19F)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
+				leafRodWasteThorium
+				= new LeafiaRodItem("Depleted Thorium",0, 0)
+				.setAppearance(waste_thorium_hot, BONEMEAL, RAW)
+				.addAlpha(8F)
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+		public static final Item
+				leafRodWasteMOX
+				= new LeafiaRodItem("Depleted MOX",0, 0)
+				.setAppearance(waste_mox_hot, BONEMEAL, RAW)
+				.addAlpha(12F)
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+		public static final Item
 				leafRodWasteSchrabidium
-				= new ItemLeafiaRod("Depleted Schrabidium",0, 0)
-				.setAppearance(waste_schrabidium_hot, BILLET, RAW)
+				= new LeafiaRodItem("Depleted Schrabidium",0, 0)
+				.setAppearance(waste_schrabidium_hot, BONEMEAL, RAW)
 				.addAlpha(35F)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLead
-				= new ItemLeafiaRod("Lead",9999999, 0)
+				= new LeafiaRodItem("Lead",99999999, 0)
 				.setAppearance(Ingots.ingot_lead, BILLET, RAW)
 				.addToxic(2)
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+		public static final Item
+				leafRodBF
+				= new LeafiaRodItem("Balefire",200, 8652)
+				.setSpecialRodModel().setBaseItem(ModItems.egg_balefire)
+				.setDecayProduct("blazingbalefire")
+				.setEmission(3).setReactivity(1/2d)
+				.addGamma(ItemHazard.bf)
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+		public static final Item
+				leafRodBFblazing
+				= new LeafiaRodItem("Blazing Balefire",65000, 8652)
+				.setSpecialRodModel()
+				.setDecayProduct("balefire")
+				.setEmission(5).setReactivity(1/4d)
+				.addGamma(ItemHazard.bf*2)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		// new stuff
 		public static final Item
 				leafRodNPu
-				= new ItemLeafiaRod("NPu",26000, 2744)
+				= new LeafiaRodItem("NPu",260000, 2744)
 				.setAppearance(Billets.billet_plutonium, BILLET, RAW)
 				.addAlpha(ItemHazard.pu * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodTh232
-				= new ItemLeafiaRod("Th-232",45000, 3510)
+				= new LeafiaRodItem("Th-232",450000, 3510)
 				.setAppearance(Billets.billet_th232, BILLET, RAW)
 				.addAlpha(ItemHazard.th232 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodBi209
-				= new ItemLeafiaRod("Bi-209",0, 0)
+				= new LeafiaRodItem("Bi-209",0, 0)
 				.setAppearance(Billets.billet_bismuth, BILLET, RAW)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodGold198
-				= new ItemLeafiaRod("Au-198",90000, 3850)
+				= new LeafiaRodItem("Au-198",900000, 3850)
 				.setAppearance(Billets.billet_au198, BILLET, ISOTOPE)
 				.addBeta(ItemHazard.au198 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodLead209
-				= new ItemLeafiaRod("Pb-209",60000, 4300)
+				= new LeafiaRodItem("Pb-209",600000, 4300)
 				.setAppearance(Billets.billet_pb209, BILLET, ISOTOPE)
 				.addBeta(ItemHazard.pb209 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
+		static {
+			LeafiaRodItem.confirmDecayProducts();
+		}
 	}
 
 	public static class RetroRods {
@@ -3168,8 +3227,8 @@ public class ModItems {
 	
 	public static final Item n2_charge = new ItemN2("n2_charge").setMaxStackSize(12).setCreativeTab(MainRegistry.nukeTab);
 	
-	public static final Item egg_balefire_shard = new ItemHazard(ItemHazard.bf * ItemHazard.nugget, true, "egg_balefire_shard").setMaxStackSize(16).setCreativeTab(MainRegistry.nukeTab);
-	public static final Item egg_balefire = new ItemHazard(ItemHazard.bf, true, "egg_balefire").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
+	public static final Item egg_balefire_shard = new ItemHazard(GAMMA,ItemHazard.bf * ItemHazard.nugget, true, "egg_balefire_shard").setMaxStackSize(16).setCreativeTab(MainRegistry.nukeTab);
+	public static final Item egg_balefire = new ItemHazard(GAMMA,ItemHazard.bf, true, "egg_balefire").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
 	
 	public static final Item custom_tnt = new ItemCustomLore("custom_tnt").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
 	public static final Item custom_nuke = new ItemCustomLore("custom_nuke").setMaxStackSize(1).setCreativeTab(MainRegistry.nukeTab);
@@ -3512,7 +3571,7 @@ public class ModItems {
 
 	public static final Item
 			leafRodDyatlov
-			= new ItemLeafiaRod("Potential Instant Blowout Applicator",95000000, 650000000)
+			= new LeafiaRodItem("Potential Instant Blowout Applicator",95000000, 650000000)
 			.setAppearance(meltdown_tool, BILLET, UNSTABLE)
 			.toItem().setCreativeTab(MainRegistry.controlTab);
 

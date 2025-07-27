@@ -18,7 +18,7 @@ import com.hbm.packet.FluidTypePacketTest;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -144,7 +144,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
     public void explode() {
         ItemStack prevStack = null;
         for(int i = 0; i < inventory.getSlots(); i++) {
-            prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i),prevStack);
+            prevStack = LeafiaRodItem.comparePriority(inventory.getStackInSlot(i),prevStack);
             inventory.setStackInSlot(i, ItemStack.EMPTY);
         }
 
@@ -166,9 +166,9 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
 
         boolean nope = true;
         if (prevStack != null) {
-            if (prevStack.getItem() instanceof ItemLeafiaRod) {
+            if (prevStack.getItem() instanceof LeafiaRodItem) {
                 nope = false;
-                ItemLeafiaRod rod = (ItemLeafiaRod)(prevStack.getItem());
+                LeafiaRodItem rod = (LeafiaRodItem)(prevStack.getItem());
                 rod.resetDetonate();
                 rod.detonateRadius = 18;
                 rod.detonateVisualsOnly = true;
@@ -213,7 +213,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
         else if (slot == 26)
             return FFUtils.containsFluid(stack,tankTypes[0]);
         else if (slot < 24)
-            return stack.getItem() instanceof ItemLeafiaRod;
+            return stack.getItem() instanceof LeafiaRodItem;
         else
             return false;
     }
@@ -301,12 +301,12 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
     @SideOnly(Side.CLIENT)
     public int valveLevel = 0;
     int movedelay = 0;
-    double getHeatInSlot(int slot,ItemLeafiaRod rod) {
+    double getHeatInSlot(int slot,LeafiaRodItem rod) {
         return rod.getFlux(inventory.getStackInSlot(slot));
     }
     double handleLeafiaFuel(int slot,double cool) {
         ItemStack stack = inventory.getStackInSlot(slot);
-        ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+        LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
         double detectedHeat = 0;
         for (int offset = 1; slot-offset*7 >= 0; offset += 1) {
             detectedHeat += getHeatInSlot(slot-offset*7,rod)/Math.pow(2,offset-1);
@@ -418,7 +418,7 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
             avgHeat = 20;
             for (int i = 0; i < 24; i++) {
                 if (kill) return;
-                if (inventory.getStackInSlot(i).getItem() instanceof ItemLeafiaRod)
+                if (inventory.getStackInSlot(i).getItem() instanceof LeafiaRodItem)
                     cooledSum += handleLeafiaFuel(i,coolin*1.5);
             }
             if (kill) return;

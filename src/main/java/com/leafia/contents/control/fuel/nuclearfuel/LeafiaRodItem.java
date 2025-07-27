@@ -1,8 +1,10 @@
 package com.leafia.contents.control.fuel.nuclearfuel;
 
+import com.hbm.config.BombConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.effect.EntityNukeTorex;
 import com.hbm.entity.logic.EntityBalefire;
+import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.handler.ArmorUtil;
@@ -16,8 +18,10 @@ import com.hbm.lib.RefStrings;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.saveddata.RadiationSavedData;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.dev.items.LeafiaDynamicHazard;
 import com.llib.LeafiaLib;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -39,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, LeafiaDynamicHazard {
+public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, LeafiaDynamicHazard {
 	@Override
 	public ItemHazardModule getHazards(ItemHazardModule hazards,ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
@@ -54,7 +58,8 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 
 	public enum ItemType {
 		VOID,
-		BILLET
+		BILLET,
+		BONEMEAL
 	}
 	public enum Purity {
 		RAW,		// no icon
@@ -69,12 +74,16 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	}
 	public Item baseItem = null;
 	public ItemType baseItemType = ItemType.VOID;
+	public ModelResourceLocation specialRodModel = null;
+	public IBakedModel bakedSpecialRod = null;
 	public Purity purity = Purity.RAW;
 	public String functionId = "null";
 	public double life = 0;
 	public double meltingPoint = 1538;
 	public String label = "ERROR!";
 	public Item newFuel = null;
+	public double emission = 1;
+	public double reactivity = 1;
 	public boolean splitIntoFast = true;
 	public boolean splitWithFast = false;
 	public boolean splitWithAny = false;
@@ -110,20 +119,20 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				} else return a;
 			} else return b;
 		}*/
-		boolean validA = a.getItem() instanceof ItemLeafiaRod;
+		boolean validA = a.getItem() instanceof LeafiaRodItem;
 		if (b == null) {
 			if (validA) return a;
 			else return null;
 		} else {
-			boolean validB = b.getItem() instanceof ItemLeafiaRod;
+			boolean validB = b.getItem() instanceof LeafiaRodItem;
 			if (!validA && !validB)
 				return null;
 			else if (validA && !validB)
 				return a;
 			else if (!validA && validB)
 				return b;
-			int myPriority = ((ItemLeafiaRod) a.getItem()).meltdownPriority;
-			if (((ItemLeafiaRod) b.getItem()).meltdownPriority > myPriority)
+			int myPriority = ((LeafiaRodItem) a.getItem()).meltdownPriority;
+			if (((LeafiaRodItem) b.getItem()).meltdownPriority > myPriority)
 				return b;
 			else
 				return a;
@@ -135,12 +144,54 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	public boolean detonateNuclear = false;
 	public boolean detonateVisualsOnly = false;
 	public String detonateConfiguration = "default";
-	public ItemLeafiaRod resetDetonate() {
+	public LeafiaRodItem resetDetonate() {
 		detonateRadius = 5;
 		detonateNuclear = false;
 		detonateVisualsOnly = false;
 		detonateConfiguration = "default";
 		return this;
+	}
+	public void nuke(World world,BlockPos pos) {
+		float x = pos.getX()+0.5f;
+		float y = pos.getY()+0.5f;
+		float z = pos.getZ()+0.5f;
+		switch(functionId) {
+			case "balefire": case "blazingbalefire": {
+				EntityNukeTorex.statFacBale(world,x,y,z,180);
+				EntityBalefire bf = new EntityBalefire(world);
+				bf.posX = x;
+				bf.posY = y;
+				bf.posZ = z;
+				bf.destructionRange = 280;
+				world.spawnEntity(bf);
+				break;
+			}
+			case "sa326": {
+				EntityNukeExplosionMK3 entity = new EntityNukeExplosionMK3(world);
+				entity.posX = x;
+				entity.posY = y;
+				entity.posZ = z;
+				if(!EntityNukeExplosionMK3.isJammed(world, entity)){
+					entity.destructionRange = 50;
+					entity.speed = BombConfig.blastSpeed;
+					entity.coefficient = 1.0F;
+					entity.waste = false;
+
+					world.spawnEntity(entity);
+
+					EntityCloudFleija cloud = new EntityCloudFleija(world, 50);
+					cloud.posX = x;
+					cloud.posY = y;
+					cloud.posZ = z;
+					world.spawnEntity(cloud);
+				}
+			}
+			default: {
+				EntityNukeTorex.statFac(world,x,y,z,100);
+				world.spawnEntity(EntityNukeExplosionMK5.statFac(world,100,x,y,z));
+				break;
+			}
+		}
 	}
 	public float detonate(@Nullable World world, @Nullable BlockPos pos) {
 		boolean explode = (world != null);
@@ -157,7 +208,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 						world.spawnEntity(EntityNukeExplosionMK5.statFac(world,(int)detonateRadius,x,y,z));
 				}
 				break;
-			case "balefire":
+			case "balefire": case "blazingbalefire":
 				meltdownPriority = 20;
 				if (explode) {
 					float x = pos.getX()+0.5f;
@@ -214,7 +265,8 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		String n = "0";
 		double y = 0; // x = 20+~~
 		switch(functionId) {
-			case "depleteduranium":
+				// DEPLETED
+			case "depleteduranium": case "depletedmox":
 				y = 80;
 				n = "80";
 				break;
@@ -222,105 +274,88 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				y = 90;
 				n = "90";
 				break;
-			case "u238":
-				y = Math.pow(x*6,0.69)*0.5;
-				n = "("+flux+"*6)^0.69 * 0.5 "+TextFormatting.DARK_AQUA+"(POOR)";
-				newFuel = fromResourceMap.get("leafia_rod_hepu239");
-				break;
-			case "nu":
-				y = Math.pow(x*6,0.5)*4;
-				n = "("+flux+"*6)^0.5 * 4 "+TextFormatting.DARK_AQUA+"(POOR)";
-				newFuel = fromResourceMap.get("leafia_rod_npu");
-				break;
-			case "meu235":
-				y = Math.pow(x*6,0.6)*3;
-				n = "("+flux+"*6)^0.6 * 3 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_depleteduranium");
-				break;
-			case "heu235":
-				y = Math.pow(x*6,0.6)*4;
-				n = "("+flux+"*6)^0.6 * 4 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_depleteduranium");
-				break;
-			case "heu233":
-				y = Math.pow(x*6,0.65)*3;
-				n = "("+flux+"*6)^0.65 * 3 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_heu235");
+			case "depletedthorium":
+				y = 60;
+				n = "60";
 				break;
 
-			case "pu238":
-				y = 400+Math.pow(x*2,0.75);
-				n = "400 + ("+flux+"*2)^0.75 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_lepu239");
+				// URANIUM
+			case "meu235": case "nu": case "u238":
+				y = Math.pow(x*8,0.56)*3;
+				n = "("+flux+"×8)^0.56×3 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
-			case "pu240":
-				y = Math.pow(x*5,0.5)*4.5;
-				n = "("+flux+"*5)^0.5 * 4.5 "+TextFormatting.DARK_AQUA+"(POOR)";
-				newFuel = fromResourceMap.get("leafia_rod_hepu241");
+			case "heu235": case "heu233":
+				y = Math.pow(x*8,0.56)*3+Math.pow(Math.max(x-2500,0)/1000,3);
+				n = "("+flux+"×8)^0.56×3 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
-			case "npu":
-				y = Math.pow(x*5,0.5)*6.5;
-				n = "("+flux+"*5)^0.5 * 6.5 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedplutonium");
-				break;
-			case "lepu239":
-				y = Math.pow(x*4,0.6)*5;
-				n = "("+flux+"*4)^0.6 * 5 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedplutonium");
-				break;
-			case "mepu239":
-				y = Math.pow(x*4,0.65)*3;
-				n = "("+flux+"*4)^0.65 * 3 "+TextFormatting.DARK_GREEN+"(FINE)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedplutonium");
-				break;
-			case "hepu239":
-				y = Math.pow(x*4,0.75)*1.5;
-				n = "("+flux+"*4)^0.75 * 1.5 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_pu240");
+			case "mox":
+				y = Math.pow(x*8,0.56)*2;
+				n = "("+flux+"×8)^0.56×2 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
 
+				// THORIUM
 			case "th232":
-				y = heat*0.9+Math.pow(x,0.1);
-				n = temp+"*0.9 + "+flux+"^0.1 "+TextFormatting.DARK_AQUA+"(LIKE, REALLY POOR)";
-				newFuel = fromResourceMap.get("leafia_rod_thmeu");
+				y = Math.pow(x*4,0.35)*3;
+				n = "("+flux+"×4)^0.35×3 "+TextFormatting.DARK_AQUA+"(LIKE, REALLY POOR)";
 				break;
-			case "po210": case "po210be":
-				y = 700+Math.pow(x*2,0.69);
-				n = "700 + ("+flux+"*2)^0.69 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_lead");
+			case "thmeu":
+				y = Math.pow(x*65,0.35)*3;
+				n = "("+flux+"×64)^0.35×3 "+TextFormatting.DARK_AQUA+"(POOR)";
 				break;
-			case "au198":
-				y = 1580+Math.pow(x,0.75)*2.5;
-				n = "1580 + "+flux+"^0.75 * 2.5 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = ModItems.bottle_mercury;
+
+				// PLUTONIUM
+			case "lepu239": case "mepu239": case "npu": case "pu240":
+				y = Math.pow(x*8,0.6)*3;
+				n = "("+flux+"×8)^0.6×3 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
-			case "pb209":
-				y = 2300+x*0.4;
-				n = "2300 + "+flux+"* 0.4 "+TextFormatting.DARK_RED+"(DANGEROUS)";
-				newFuel = fromResourceMap.get("leafia_rod_bi209");
+			case "hepu239": case "hepu241":
+				y = Math.pow(x*8,0.6)*3+Math.pow(Math.max(x-2500,0)/800,3);
+				n = "("+flux+"×8)^0.6×3 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
-			case "lesa326":
-				y = Math.pow(x,0.65)*12;
-				n = ""+flux+"^0.65 * 12 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+
+				// AMERICIUM
+			case "leam242": case "meam242": case "heam242":
+				y = Math.pow(x*8,0.64)*3;
+				n = "("+flux+"×8)^0.64×3 "+TextFormatting.GOLD+"(RISKY)";
 				break;
-			case "mesa326":
-				y = Math.pow(x,0.68)*12;
-				n = ""+flux+"^0.68 * 12 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+			case "heam241":
+				y = Math.pow(x*8,0.64)*3+Math.pow(Math.max(x-2500,0)/800,3);
+				n = "("+flux+"×8)^0.64×3 "+TextFormatting.GOLD+"(RISKY)";
 				break;
-			case "hesa326":
-				y = Math.pow(x,0.7)*12;
-				n = ""+flux+"^0.70 * 12 "+TextFormatting.GOLD+"(RISKY)";
-				newFuel = fromResourceMap.get("leafia_rod_depletedschrabidium");
+
+				// NEPTUNIUM
+			case "menp237": case "henp237":
+				y = Math.pow(x*8,0.52)*3;
+				n = "("+flux+"×8)^0.52×3 "+TextFormatting.DARK_GREEN+"(FINE)";
 				break;
-			case "sa327":
-				y = Math.pow(x,0.75)*12;
-				n = ""+flux+"^0.75 * 12 "+TextFormatting.GOLD+"(RISKY)";
+
+				// SCHRABIDIUM
+			case "lesa326": case "mesa326": case "hesa326": case "sa326": case "sa327":
+				y = Math.pow(x,0.65)*12+Math.pow(Math.max(x-2500,0)/1600,3);
+				n = ""+flux+"^0.65×12 "+TextFormatting.GOLD+"(RISKY)";
 				break;
-			case "dante": case "potentialinstantblowoutapplicator":
+
+				// RADIUM
+			case "ra226be":
+				y = 300/(1+Math.pow(Math.E,-0.02*x))-150;
+				n = "300/(1+e^(-0.02×"+flux+"))-150 "+TextFormatting.DARK_AQUA+"(POOR)";
+				break;
+
+				// OTHER
+			case "potentialinstantblowoutapplicator":
 				y = Math.tan(Math.min(heat/400,0.5)*Math.PI)+x/4;
 				n = "tan(min("+temp+"/400,0.5)*PI)\n + "+flux+"/4 "+TextFormatting.DARK_RED+"(JUST NO)";
+				break;
+
+				// B.F.
+			case "balefire":
+				y = 100*Math.pow(x/1000-2,3)-500*Math.pow(x/1000-2,2)+x/600+2800;
+				n = "100(("+flux+"/1000-2)³)-500(("+flux+"/1000-2)²)+"+flux+"/600+2800 "+TextFormatting.RED+"(DANGEROUS)";
+				break;
+			case "blazingbalefire":
+				double z = x+1000;
+				y = 100*Math.pow(z/1000-2,3)-500*Math.pow(z/1000-2,2)+z/600+2800;
+				n = "100(("+flux+"/1000-1)³)-500(("+flux+"/1000-1)²)+("+flux+"+1000)/600+2800 "+TextFormatting.RED+"(DANGEROUS)";
 				break;
 		}
 		lastY = y;
@@ -339,18 +374,20 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 			boolean meltdown = data.getBoolean("melting");
 			data.setDouble("incoming",x);
 			if (meltdown) {
-				y = heat+20;
-				cool = 0; // it's only a matter of time until your machine explodes >:)
+				//y = heat+20;
+				//cool = 0; // it's only a matter of time until your machine explodes >:)
 				data.setInteger("spillage",data.getInteger("spillage")+1);
 			}
+			if (data.getDouble("depletion") >= life)
+				y = 0;
 			heat = data.getDouble("heat");
 			decay = data.getDouble("decay");
 			double heatX = Math.max(heat,20);
 			double heatMg = Math.pow(Math.abs((20+y)-heat)+1,0.25)-1;
 			if (heatX > 20+y)
 				heatMg = heatMg * -1;
-			else if ((heatX >= meltingPoint) && (meltingPoint != 0) && !meltdown)
-				heatMg = heatMg * Math.max(lerp(1,0,(heatX-meltingPoint)/(Math.pow(meltingPoint,0.75)+200)),0);
+			//else if ((heatX >= meltingPoint) && (meltingPoint != 0) && !meltdown)
+			//	heatMg = heatMg * Math.max(lerp(1,0,(heatX-meltingPoint)/(Math.pow(meltingPoint,0.75)+200)),0);
 			if (Math.abs(heatMg) < 0.00001)
 				heatMg = 0;
 			if (!meltdown && (heatMg != 0)) {
@@ -375,6 +412,8 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 					"heat",
 					newCooledTemp
 			);
+			if (newCooledTemp >= 100000)
+				data.setBoolean("nuke",true); // new update
 			if (!meltdown && (meltingPoint != 0)) {
 				int timer = data.getInteger("generosityTimer");
 				int initial = timer;
@@ -387,11 +426,14 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 						timer = 0;
 						data.setBoolean("melting", true);
 					}
-				} else
+				} else {
 					timer = 90;
+					data.setInteger("spillage",data.getInteger("spillage")-1);
+				}
 				if (timer != initial)
 					data.setInteger("generosityTimer", timer);
-			}
+			} if (meltdown && newCooledTemp < meltingPoint)
+				data.setBoolean("melting", false);
 		}
 		return n;
 	}
@@ -407,10 +449,12 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	public double getFlux(@Nullable ItemStack stack) {
 		if (stack == null)
 			return 0;
-		if(stack.getItem() instanceof ItemLeafiaRod) {
+		if(stack.getItem() instanceof LeafiaRodItem) {
 			double compat = 1;
-			if (this.splitWithAny || (((ItemLeafiaRod) stack.getItem()).splitIntoFast == this.splitWithFast))
+			LeafiaRodItem otherRod = (LeafiaRodItem)stack.getItem();
+			if (this.splitWithAny || otherRod.splitIntoFast == this.splitWithFast)
 				compat = 2;
+			compat = compat * otherRod.emission * this.reactivity;
 			NBTTagCompound data = stack.getTagCompound();
 			if (data != null)
 				return Math.max(data.getDouble("heat"),20)*compat;
@@ -420,10 +464,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	public double getFlux(@Nullable ItemStack stack,boolean moderated) {
 		if (stack == null)
 			return 0;
-		if(stack.getItem() instanceof ItemLeafiaRod) {
-			double compat = 1;
+		if(stack.getItem() instanceof LeafiaRodItem) {
+			double compat = 0.5;
 			if (this.splitWithAny || (moderated != this.splitWithFast))
-				compat = 2;
+				compat = 1;
 			NBTTagCompound data = stack.getTagCompound();
 			if (data != null)
 				return Math.max(data.getDouble("heat"),20)*compat;
@@ -461,10 +505,22 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 		return false;
 	}
 	int meltdownFlash = 0;
+	public String formatHeatMultiplier(double x) {
+		boolean isDiv = false;
+		if (x < 1) {
+			isDiv = true;
+			x = 1/x;
+		}
+		x = Math.round(x*1000)/1000d;
+		String s = Double.toString(x);
+		if (s.endsWith(".0"))
+			s = s.substring(0,s.length()-2);
+		return (isDiv ? "/" : "×")+s;
+	}
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
 		String res = this.getRegistryName().getPath();
-		ItemLeafiaRod item = ItemLeafiaRod.fromResourceMap.get(res);
+		LeafiaRodItem item = LeafiaRodItem.fromResourceMap.get(res);
 		NBTTagCompound data = stack.getTagCompound();
 		double heat = 20;
 		double depletion = 0;
@@ -481,10 +537,13 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 			for (String s : graph)
 				list.add("  "+funcColor+s);
 		} else {
-			list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getTranslationKey()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
+			if (item.baseItem != null)
+				list.add(TextFormatting.DARK_GRAY + I18nUtil.resolveKey(item.baseItem.getTranslationKey()+".name") + ((life != 0) ? ("  " + TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]") : ""));
+			else if (life != 0)
+				list.add(TextFormatting.DARK_GREEN + "["+(int)Math.max(Math.ceil((1-depletion/life)*100),0)+"%]");
 			if (newFuel != null) {
-				if (newFuel instanceof ItemLeafiaRod)
-					list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + ((ItemLeafiaRod)newFuel).label);
+				if (newFuel instanceof LeafiaRodItem)
+					list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + ((LeafiaRodItem)newFuel).label);
 				else
 					list.add(TextFormatting.DARK_GRAY + "  Decays into: " + TextFormatting.GRAY + I18nUtil.resolveKey(newFuel.getTranslationKey()+".name"));
 			}
@@ -492,6 +551,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 				list.add(TextFormatting.DARK_GREEN + "  Life: About "+life+"°C");
 				list.add(TextFormatting.GOLD + "  Fission Product Decay Heat: +"+String.format("%01.3f",decay*20)+"°C/s");
 			}
+			if (emission != 1)
+				list.add(TextFormatting.AQUA+"  Emission "+formatHeatMultiplier(emission));
+			if (reactivity != 1)
+				list.add(TextFormatting.AQUA+"  Reactivity "+formatHeatMultiplier(reactivity));
 			if (splitWithAny)
 				list.add(TextFormatting.AQUA + "  Prefers all neutrons");
 			else if (splitWithFast)
@@ -553,7 +616,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	}
 	public static final ModelResourceLocation rodModel = new ModelResourceLocation(
 			RefStrings.MODID + ":leafia_rod", "bakeMe");
-	public static final Map<String,ItemLeafiaRod> fromResourceMap = new HashMap<>();
+	public static final Map<String,LeafiaRodItem> fromResourceMap = new HashMap<>();
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entity, int itemSlot, boolean isSelected){
@@ -581,7 +644,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 	}
 	protected String[] graph = new String[0];
 	protected String funcColor = "";
-	public ItemLeafiaRod(String s, double heatGenerated, double meltingPoint) {
+	public LeafiaRodItem(String s,double heatGenerated,double meltingPoint) {
 		super("leafia_rod_" + s.replace("-","").replace(" ","").toLowerCase());
 		this.label = s;
 		s = s.replace("-","").replace(" ","").toLowerCase();
@@ -591,7 +654,7 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 
 		String fnc = HeatFunction(null,false,0,0,0,0);
 		if (!fnc.equals("0")) {
-			graph = LeafiaLib.drawGraph(45,4,1,0,3000,0,3000,(heat)->{HeatFunction(null,false,heat,0,0,0); return lastY;});
+			graph = LeafiaLib.drawGraph(45,4,0,0,meltingPoint,0,meltingPoint,(heat)->{HeatFunction(null,false,heat,0,0,0); return lastY;});
 			for (int i = fnc.length()-1; i >= 0; i--) {
 				String sub = fnc.substring(i,Math.min(i+2,fnc.length()));
 				if (sub.startsWith("§")) {
@@ -603,22 +666,35 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 
 		//this.setHasSubtypes(true);
 		this.setMaxStackSize(1);
-		this.life = heatGenerated*10;
+		this.life = heatGenerated;
 		this.meltingPoint = meltingPoint;
 
 		this.setContainerItem(LeafiaRods.leafRod);
 
 		detonate(null,null);
 	}
-	public ItemLeafiaRod setAppearance(Item baseItem, ItemType baseItemType, Purity purity) {
+	public LeafiaRodItem setAppearance(Item baseItem,ItemType baseItemType,Purity purity) {
 		this.baseItem = baseItem;
 		this.baseItemType = baseItemType;
 		this.purity = purity;
 		return this;
 	}
-	public ItemLeafiaRod setModerated() { this.splitIntoFast = false; return this; }
-	public ItemLeafiaRod preferFast() { this.splitWithFast = true; return this; }
-	public ItemLeafiaRod preferAny() { this.splitWithAny = true; return this; }
+	String decayProductBuffer = null;
+	public LeafiaRodItem setBaseItem(Item baseItem) { this.baseItem = baseItem; return this; }
+	public LeafiaRodItem setEmission(double emission) { this.emission = emission; return this; }
+	public LeafiaRodItem setReactivity(double reactivity) { this.reactivity = reactivity; return this; }
+	public LeafiaRodItem setSpecialRodModel() { specialRodModel = new ModelResourceLocation(RefStrings.MODID + ":leafia_rod_"+functionId, "bakeMe"); return this; }
+	public LeafiaRodItem setModerated() { this.splitIntoFast = false; return this; }
+	public LeafiaRodItem setDecayProduct(String funcName) { decayProductBuffer = funcName; return this; }
+	public LeafiaRodItem preferFast() { this.splitWithFast = true; return this; }
+	public LeafiaRodItem preferAny() { this.splitWithAny = true; return this; }
+
+	public static void confirmDecayProducts() {
+		for (LeafiaRodItem item : fromResourceMap.values()) {
+			if (item.decayProductBuffer != null)
+				item.newFuel = fromResourceMap.get("leafia_rod_"+item.decayProductBuffer);
+		}
+	}
 	
 	@Override
 	public int getItemStackLimit(ItemStack stack) {
@@ -633,7 +709,10 @@ public class ItemLeafiaRod extends ItemHazard implements IHasCustomModel, Leafia
 
 	@Override
 	public ModelResourceLocation getResourceLocation() {
-		return rodModel;
+		if (specialRodModel != null)
+			return specialRodModel;
+		else
+			return rodModel;
 	}
 
 	public static class EmptyLeafiaRod extends ItemCustomLore {

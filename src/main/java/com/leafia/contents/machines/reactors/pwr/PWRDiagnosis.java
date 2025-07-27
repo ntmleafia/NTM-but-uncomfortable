@@ -308,7 +308,7 @@ public class PWRDiagnosis {
 					if (link != null) {
 						if (!members.contains(link.corePos)) {
 							if (isMeltdown) {
-								link.explode(world,null);
+								link.explode(world,null,null);
 								return;
 							}
 						}
@@ -338,6 +338,8 @@ public class PWRDiagnosis {
 					float avg = sumHardness/Math.max(divide,1);
 					float hardness = avg*0.8f+maxHardness*0.2f;
 					core.toughness = (int)(Math.pow(hardness,0.25)*4800);
+					core.lastChannels = channels.size();
+					core.lastConductors = conductors;
 					core.resizeTanks(channels.size(),conductors);
 					gridFill();
 					LeafiaSet<BlockPos> projection = new LeafiaSet<>();
