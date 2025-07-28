@@ -9,6 +9,8 @@ import com.hbm.items.ModItems;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.tileentity.RenderDemonLamp;
+import com.leafia.contents.machines.reactors.zirnox.RenderItemZirnox;
+import com.leafia.contents.machines.reactors.zirnox.RenderItemZirnoxDestroyed;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -1742,6 +1744,8 @@ public class ItemRenderLibrary {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
 		});
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_zirnox),new RenderItemZirnox());
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_zirnox_destroyed),new RenderItemZirnoxDestroyed());
 	}
 
 	private static void bindTexture(ResourceLocation res) {

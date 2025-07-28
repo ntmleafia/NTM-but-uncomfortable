@@ -73,7 +73,6 @@ public class CompositeBrush // Sorry bro but it was incredibly confusing between
     private boolean isDrawing;
     /** The size of the buffers used (in integers). */
     private int bufferSize;
-    private static final String __OBFID = "CL_00000960";
 
     private CompositeBrush(int p_i1250_1_) {
     }

@@ -329,12 +329,12 @@ public class ModBlocks {
 	public static final Block block_electrical_scrap = new BlockFallingBase(Material.IRON, "block_electrical_scrap", SoundType.METAL).setCreativeTab(MainRegistry.blockTab).setHardness(2.5F).setResistance(5.0F);
 	
 	//Ores
-	public static final Block ore_uranium = new BlockOutgas(true, 20, true, "ore_uranium").addRadiation(ItemHazard.ore * ItemHazard.u).toBlock().setHardness(5.0F).setResistance(ORE_VANILLA.v).setCreativeTab(MainRegistry.resourceTab);
-	public static final Block ore_uranium_scorched = new BlockOutgas(true, 15, true, "ore_uranium_scorched").addRadiation(0.5F).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
+	public static final Block ore_uranium = new BlockNTMOre("ore_uranium",2).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.blockTab);
+	public static final Block ore_uranium_scorched = new BlockNTMOre("ore_uranium_scorched",2).setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(10.0F);
 	public static final Block ore_schrabidium = new BlockNTMOre("ore_schrabidium", 3, 300).addRadiation(ItemHazard.ore * ItemHazard.sa326).addBlinding().toBlock().setHardness(15.0F).setResistance(60.0F).setCreativeTab(MainRegistry.resourceTab);
 	
 
-	public static final Block ore_thorium = new BlockNTMOre("ore_thorium", 2).addRadiation(ItemHazard.ore * ItemHazard.th232).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
+	public static final Block ore_thorium = new BlockNTMOre("ore_thorium", 2).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_titanium = new BlockNTMOre("ore_titanium", 2).setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_sulfur = new BlockNTMOre("ore_sulfur", 1).setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_niter = new BlockNTMOre("ore_niter", 1).setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
