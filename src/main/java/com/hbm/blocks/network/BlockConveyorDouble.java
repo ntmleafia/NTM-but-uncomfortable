@@ -16,7 +16,7 @@ public class BlockConveyorDouble extends BlockConveyor {
     @Override
     public Vec3d getClosestSnappingPosition(World world, BlockPos pos, Vec3d itemPos) {
 
-        EnumFacing dir = this.getTravelDirection(world, pos);
+        EnumFacing dir = this.getTravelDirection(world, pos, itemPos);
 
         double posX = MathHelper.clamp(itemPos.x, pos.getX(), pos.getX() + 1);
         double posZ = MathHelper.clamp(itemPos.z, pos.getZ(), pos.getZ() + 1);
@@ -26,13 +26,13 @@ public class BlockConveyorDouble extends BlockConveyor {
 
         if(dir.getAxis() == EnumFacing.Axis.X) {
             xCenter = posX;
-            zCenter += itemPos.z > zCenter ? 0.25 : -0.25;
+            zCenter += posZ > zCenter ? 0.25 : -0.25;
         }
         if(dir.getAxis() == EnumFacing.Axis.Z) {
             zCenter = posZ;
-            xCenter += itemPos.x > xCenter ? 0.25 : -0.25;
+            xCenter += posX > xCenter ? 0.25 : -0.25;
         }
 
-        return new Vec3d(posX, pos.getY() + 0.25, posZ);
+        return new Vec3d(xCenter, pos.getY() + 0.25, zCenter);
     }
 }

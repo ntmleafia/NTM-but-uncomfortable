@@ -2,6 +2,8 @@ package com.hbm.entity.item;
 
 import api.hbm.block.IConveyorBelt;
 import api.hbm.block.IEnterableBlock;
+import com.hbm.lib.ForgeDirection;
+import com.hbm.lib.Library;
 import com.hbm.tileentity.network.TileEntityCraneBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -102,10 +104,6 @@ public abstract class EntityMovingConveyorObject extends Entity {
 
                 if(newBlock instanceof IEnterableBlock) {
                     IEnterableBlock enterable = (IEnterableBlock) newBlock;
-                    TileEntity tileEntity = world.getTileEntity(newPos);
-                    if(tileEntity instanceof TileEntityCraneBase) {
-                        TileEntityCraneBase craneBase = (TileEntityCraneBase) tileEntity;
-                        EnumFacing inputSide = craneBase.getInputSide();
 
                     EnumFacing dir = null;
 
@@ -122,10 +120,16 @@ public abstract class EntityMovingConveyorObject extends Entity {
                     else if (lastPos.getX() == newPos.getX() && lastPos.getY() == newPos.getY() && lastPos.getZ() < newPos.getZ())
                         dir = EnumFacing.NORTH;
 
-                    if (dir == inputSide) {
+                    TileEntity tileEntity = world.getTileEntity(newPos);
+                    if(tileEntity instanceof TileEntityCraneBase) {
+                        TileEntityCraneBase craneBase = (TileEntityCraneBase) tileEntity;
+                        EnumFacing inputSide = craneBase.getInputSide();
+                        if (dir == inputSide) {
+                            enterBlock(enterable, newPos, dir);
+                        }
+                    } else {
                         enterBlock(enterable, newPos, dir);
                     }
-                }
 
                 } else {
                     if(!newBlock.getMaterial(world.getBlockState(newPos)).isSolid()) {

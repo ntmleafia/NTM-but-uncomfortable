@@ -1,9 +1,10 @@
 package com.hbm.blocks.network;
 
-import api.hbm.block.IConveyorBelt;
 import api.hbm.block.IToolable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.item.EntityMovingItem;
+import api.hbm.block.IConveyorBelt;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -17,11 +18,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -45,7 +50,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	@Override
 	public Vec3d getTravelLocation(World world, int x, int y, int z, Vec3d itemPos, double speed) {
 		BlockPos pos = new BlockPos(x, y, z);
-		EnumFacing dir = this.getTravelDirection(world, pos);
+		EnumFacing dir = this.getTravelDirection(world, pos, itemPos);
 		Vec3d snap = this.getClosestSnappingPosition(world, pos, itemPos);
 		Vec3d dest = new Vec3d(
 				snap.x - dir.getXOffset() * speed,
@@ -64,13 +69,13 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	}
 
 
-	public EnumFacing getTravelDirection(World world, BlockPos pos) {
+	public EnumFacing getTravelDirection(World world, BlockPos pos, Vec3d itemPos) {
 		return EnumFacing.byIndex(world.getBlockState(pos).getBlock().getMetaFromState(world.getBlockState(pos)));
 	}
 
 	@Override
 	public Vec3d getClosestSnappingPosition(World world, BlockPos pos, Vec3d itemPos) {
-		EnumFacing dir = this.getTravelDirection(world, pos);
+		EnumFacing dir = this.getTravelDirection(world, pos, itemPos);
 
 		double posX = MathHelper.clamp(itemPos.x, pos.getX(), pos.getX() + 1);
 		double posZ = MathHelper.clamp(itemPos.z, pos.getZ(), pos.getZ() + 1);
@@ -154,7 +159,7 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	}
 	
 	@Override
-	protected BlockStateContainer createBlockState() {
+	public BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[]{FACING});
 	}
 	
@@ -182,8 +187,8 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 		return 0;
 	}
 
-	public boolean onScrew(World world, EntityPlayer player, int x, int y, int z, EnumFacing side, float fX, float fY, float fZ, EnumHand hand, IToolable.ToolType tool) {
-		if(tool != IToolable.ToolType.SCREWDRIVER)
+	public boolean onScrew(World world, EntityPlayer player, int x, int y, int z, EnumFacing side, float fX, float fY, float fZ, EnumHand hand, ToolType tool) {
+		if(tool != ToolType.SCREWDRIVER)
 			return false;
 		BlockPos pos = new BlockPos(x, y, z);
 		IBlockState state = world.getBlockState(pos);
@@ -224,5 +229,4 @@ public class BlockConveyor extends Block implements IConveyorBelt, IToolable {
 	{
 	   return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
 	}
-
 }

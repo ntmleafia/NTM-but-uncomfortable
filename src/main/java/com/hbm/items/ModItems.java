@@ -399,7 +399,7 @@ public class ModItems {
 	public static final Item laser_crystal_dem = new ItemFELCrystal(EnumWavelengths.XRAY, "laser_crystal_dem").setCreativeTab(MainRegistry.controlTab);
 	public static final Item laser_crystal_bale = new ItemFELCrystal(EnumWavelengths.GAMMA, "laser_crystal_bale").setCreativeTab(MainRegistry.controlTab);
 	public static final Item laser_crystal_digamma = new ItemFELCrystal(EnumWavelengths.DRX, "laser_crystal_digamma").setCreativeTab(MainRegistry.controlTab);
-		
+
 
 	public static class Upgrades {
 		//Upgrade

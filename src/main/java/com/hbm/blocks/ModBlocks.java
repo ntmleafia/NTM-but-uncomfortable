@@ -28,12 +28,6 @@ import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulley;
 import com.leafia.contents.machines.elevators.EvShaft;
 import com.leafia.contents.machines.elevators.floors.EvFloor;
-import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderBlock;
-import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
-import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
-import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
-import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
-import com.leafia.contents.machines.processing.solidifier.SolidifierBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRHull;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRSource;
@@ -78,14 +72,6 @@ import java.util.List;
 import static com.hbm.blocks.ModBlocks.GenericBlockResistance.*;
 
 public class ModBlocks {
-
-	public static final int guiID_arcwelder = 274;
-	public static final int guiID_assemfac = 275;
-	public static final int guiID_soldering = 276;
-	public static final int guiID_electrolyzer = 277;
-	public static final int guiID_liquefactor = 278;
-	public static final int guiID_pyrooven = 279;
-	public static final int guiID_solidifier = 280;
 
 	//present gui id: 126
 	public static List<Block> ALL_BLOCKS = new ArrayList<Block>();
@@ -1107,13 +1093,21 @@ public class ModBlocks {
 	public static final Block anvil_dnt = new NTMAnvil(Material.IRON, 7, "anvil_dnt").setCreativeTab(MainRegistry.machineTab);
 	public static final Block anvil_osmiridium = new NTMAnvil(Material.IRON, 8, "anvil_osmiridium").setCreativeTab(MainRegistry.machineTab);
 	public static final Block anvil_murky = new NTMAnvil(Material.IRON, 1916169, "anvil_murky").setCreativeTab(MainRegistry.machineTab);
-	
+
 	public static final Block conveyor = new BlockConveyor(Material.IRON, "conveyor").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
-	// public static final Block conveyor_double = new BlockConveyorDouble(Material.IRON, "conveyor_double").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block conveyor_double = new BlockConveyorDouble(Material.IRON, "conveyor_double").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block conveyor_triple = new BlockConveyorTriple(Material.IRON, "conveyor_triple").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block conveyor_express = new BlockConveyorExpress(Material.IRON, "conveyor_express").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block conveyor_chute = new BlockConveyorChute(Material.IRON, "conveyor_chute").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block conveyor_lift = new BlockConveyorLift(Material.IRON, "conveyor_lift").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block crane_ejector = new CraneExtractor(Material.IRON, "crane_ejector").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block crane_inserter = new CraneInserter(Material.IRON, "crane_inserter").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
-	
+	public static final Block crane_splitter = new CraneSplitter(Material.IRON, "crane_splitter").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block crane_boxer = new CraneBoxer(Material.IRON, "crane_boxer").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block crane_unboxer = new CraneUnboxer(Material.IRON, "crane_unboxer").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block crane_router = new CraneRouter(Material.IRON, "crane_router").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block crane_grabber = new CraneGrabber(Material.IRON, "crane_grabber").setHardness(3.0F).setResistance(2.0F).setCreativeTab(MainRegistry.machineTab);
+
 	//The usual machines
 	public static final Block machine_nuke_furnace_off = new MachineNukeFurnace(false, "machine_nuke_furnace_off").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block machine_nuke_furnace_on = new MachineNukeFurnace(true, "machine_nuke_furnace_on").setHardness(5.0F).setLightLevel(1.0F).setResistance(10.0F);
@@ -1145,12 +1139,8 @@ public class ModBlocks {
 	public static final Block machine_acidizer = new MachineAcidizer(Material.IRON, "machine_acidizer").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_crystallizer = 95;
 
-	public static final Block machine_arcwelder = new ArcWelderBlock(Material.IRON,"machine_arcwelder").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
-	public static final Block machine_soldering = new SolderingBlock(Material.IRON,"machine_soldering").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
-	public static final Block machine_electrolyzer = new ElectrolyzerBlock(Material.IRON,"machine_electrolyzer").setHardness(10).setResistance(20).setCreativeTab(MainRegistry.machineTab);
-	public static final Block machine_liquefactor = new LiquefactorBlock(Material.IRON,"machine_liquefactor").setHardness(10).setResistance(20).setCreativeTab(MainRegistry.machineTab);
-	public static final Block machine_pyrolysis = new PyroOvenBlock(Material.IRON,"machine_pyrolysis").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
-	public static final Block machine_solidifier = new SolidifierBlock(Material.IRON,"machine_solidifier").setHardness(10).setResistance(20).setCreativeTab(null);
+	//public static final Block machine_arc_welder = new MachineArcWelder(Material.IRON, "machine_arc_welder").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(50.0F);
+	//public static final Block machine_soldering_station = new MachineSolderingStation(Material.IRON, "machine_soldering_station").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(50.0F);
 
 	public static final Block machine_shredder = new MachineShredder(Material.IRON, "machine_shredder").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_machine_shredder = 34;

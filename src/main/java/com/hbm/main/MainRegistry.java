@@ -65,10 +65,7 @@ import com.hbm.tileentity.machine.oil.*;
 import com.hbm.tileentity.machine.pile.TileEntityPileFuel;
 import com.hbm.tileentity.machine.pile.TileEntityPileSource;
 import com.hbm.tileentity.machine.rbmk.*;
-import com.hbm.tileentity.network.TileEntityCraneExtractor;
-import com.hbm.tileentity.network.TileEntityCraneInserter;
-import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
-import com.hbm.tileentity.network.TileEntityRadioTorchSender;
+import com.hbm.tileentity.network.*;
 import com.hbm.tileentity.network.energy.*;
 import com.hbm.tileentity.turret.*;
 import com.hbm.world.generator.CellularDungeonFactory;
@@ -81,14 +78,8 @@ import com.leafia.contents.machines.elevators.EvPulleyTE;
 import com.leafia.contents.machines.elevators.EvShaftTE;
 import com.leafia.contents.machines.elevators.car.ElevatorEntity;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
-import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
-import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
-import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
-import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
-import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
-import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
@@ -378,12 +369,12 @@ public class MainRegistry {
 			rendererWaiting.add(new TileEntityPylonConnector());
 			rendererWaiting.add(new TileEntityMachineAcidizer());
 
-			rendererWaiting.add(new ArcWelderTE());
+			/*rendererWaiting.add(new ArcWelderTE());
 			rendererWaiting.add(new SolderingTE());
 			rendererWaiting.add(new ElectrolyzerTE());
 			rendererWaiting.add(new LiquefactorTE());
 			rendererWaiting.add(new PyroOvenTE());
-			rendererWaiting.add(new SolidifierTE());
+			rendererWaiting.add(new SolidifierTE());*/
 		}
 
 		proxy.registerRenderInfo();
@@ -671,6 +662,11 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityRadioTorchReceiver.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_receiver"));
 		GameRegistry.registerTileEntity(TileEntityCraneExtractor.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneejector"));
 		GameRegistry.registerTileEntity(TileEntityCraneInserter.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneinserter"));
+		GameRegistry.registerTileEntity(TileEntityCraneSplitter.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranesplitter"));
+		GameRegistry.registerTileEntity(TileEntityCraneBoxer.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneboxer"));
+		GameRegistry.registerTileEntity(TileEntityCraneUnboxer.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneunboxer"));
+		GameRegistry.registerTileEntity(TileEntityCraneRouter.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranerouter"));
+		GameRegistry.registerTileEntity(TileEntityCraneGrabber.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranegrabber"));
 
 		GameRegistry.registerTileEntity(EvFloorTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_floor"));
 		GameRegistry.registerTileEntity(EvPulleyTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_pulley"));

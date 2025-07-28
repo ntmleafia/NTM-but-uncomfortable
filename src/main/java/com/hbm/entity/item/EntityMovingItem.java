@@ -2,6 +2,8 @@ package com.hbm.entity.item;
 
 import api.hbm.block.IConveyorItem;
 import api.hbm.block.IEnterableBlock;
+
+import com.hbm.lib.ForgeDirection;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -10,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -38,14 +41,6 @@ public class EntityMovingItem extends EntityMovingConveyorObject implements ICon
     public boolean canBeCollidedWith() {
         return true;
     }
-
-	@Override
-	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote && player.inventory.addItemStackToInventory(this.getItemStack().copy())) {
-			this.setDead();
-		}
-		return false;
-	}
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
 
@@ -109,4 +104,10 @@ public class EntityMovingItem extends EntityMovingConveyorObject implements ICon
 		return true;
 	}
 
+	@Override
+	public ItemStack getPickedResult(RayTraceResult target){
+		if(target.entityHit != null && target.entityHit instanceof EntityMovingItem)
+			return ((EntityMovingItem)target.entityHit).getItemStack();
+		return null;
+	}
 }

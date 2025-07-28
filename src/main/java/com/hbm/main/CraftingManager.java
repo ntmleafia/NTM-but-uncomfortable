@@ -89,22 +89,33 @@ public class CraftingManager {
 
         addRecipeAuto(new ItemStack(ModBlocks.marker_structure, 1), "L", "G", "R", 'L', LAPIS.dust(), 'G', Items.GLOWSTONE_DUST, 'R', Blocks.REDSTONE_TORCH);
 
-        addRecipeAuto(new ItemStack(ModBlocks.conveyor, 16), "LLL", "I I", "LLL", 'L', Items.LEATHER, 'I', IRON.ingot());
-        addRecipeAuto(new ItemStack(ModBlocks.conveyor, 64), "LLL", "I I", "LLL", 'L', RUBBER.ingot(), 'I', IRON.ingot());
-        addRecipeAuto(new ItemStack(ModBlocks.conveyor_express, 8), "CCC", "CLC", "CCC", 'C', ModBlocks.conveyor, 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)));
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor, 16), new Object[] { "LLL", "I I", "LLL", 'L', Items.LEATHER, 'I', IRON.ingot() });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor, 64), new Object[] { "LLL", "I I", "LLL", 'L', RUBBER.ingot(), 'I', IRON.ingot() });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor_express, 8), new Object[] { "CCC", "CLC", "CCC", 'C', ModBlocks.conveyor, 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)) });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor_double, 3), new Object[] { "CPC", "CPC", "CPC", 'C', ModBlocks.conveyor, 'P', IRON.plate() });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor_triple, 3), new Object[] { "CPC", "CPC", "CPC", 'C', ModBlocks.conveyor_double, 'P', STEEL.plate() });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor_chute, 3), new Object[] { "IGI", "IGI", "ICI" , 'I', IRON.ingot(), 'G', ModBlocks.steel_grate, 'C', ModBlocks.conveyor });
+        addRecipeAuto(new ItemStack(ModBlocks.conveyor_lift, 3), new Object[] { "IGI", "IGI", "ICI" , 'I', IRON.ingot(), 'G', ModBlocks.chain, 'C', ModBlocks.conveyor });
 
-        Object[] craneCasing = new Object[]{
+        Object[] craneCasing = new Object[] {
                 Blocks.STONEBRICK, 1,
                 IRON.ingot(), 2,
                 STEEL.ingot(), 4
         };
 
-        for (int i = 0; i < craneCasing.length / 2; i++) {
+        for(int i = 0; i < craneCasing.length / 2; i++) {
             Object casing = craneCasing[i * 2];
             int amount = (int) craneCasing[i * 2 + 1];
-            addRecipeAuto(new ItemStack(ModBlocks.crane_inserter, amount), "CCC", "C C", "CBC", 'C', casing, 'B', ModBlocks.conveyor);
-            addRecipeAuto(new ItemStack(ModBlocks.crane_ejector, amount), "CCC", "CPC", "CBC", 'C', casing, 'B', ModBlocks.conveyor, 'P', ModItems.piston_pneumatic);
+            addRecipeAuto(new ItemStack(ModBlocks.crane_inserter, amount), new Object[] { "CCC", "C C", "CBC", 'C', casing, 'B', ModBlocks.conveyor });
+            addRecipeAuto(new ItemStack(ModBlocks.crane_ejector, amount), new Object[] { "CCC", "CPC", "CBC", 'C', casing, 'B', ModBlocks.conveyor, 'P', ModItems.piston_pneumatic });
+            addRecipeAuto(new ItemStack(ModBlocks.crane_grabber, amount), new Object[] { "C C", "P P", "CBC", 'C', casing, 'B', ModBlocks.conveyor, 'P', ModItems.piston_pneumatic });
         }
+
+        addRecipeAuto(new ItemStack(ModBlocks.crane_boxer, 1), new Object[] { "WWW", "WPW", "CCC", 'W', KEY_PLANKS, 'P', ModItems.piston_pneumatic, 'C', ModBlocks.conveyor });
+        addRecipeAuto(new ItemStack(ModBlocks.crane_unboxer, 1), new Object[] { "WWW", "WPW", "CCC", 'W', KEY_STICK, 'P', Items.SHEARS, 'C', ModBlocks.conveyor });
+        addRecipeAuto(new ItemStack(ModBlocks.crane_splitter), new Object[] { "III", "PCP", "III", 'P', ModItems.piston_pneumatic, 'I', STEEL.ingot(), 'C', ModItems.circuit_aluminium });
+        addRecipeAuto(new ItemStack(ModBlocks.crane_router), new Object[] { "PIP", "ICI", "PIP", 'P', ModItems.piston_pneumatic, 'I', ModItems.plate_polymer, 'C', ModItems.circuit_copper });
+
 
         addRecipeAuto(new ItemStack(ModItems.circuit_raw, 1), "A", "R", "S", 'S', STEEL.plate(), 'R', REDSTONE.dust(), 'A', ModItems.wire_aluminium);
         addRecipeAuto(new ItemStack(ModItems.circuit_targeting_tier1, 1), "CPC", 'C', ModItems.circuit_aluminium, 'P', REDSTONE.dust());
