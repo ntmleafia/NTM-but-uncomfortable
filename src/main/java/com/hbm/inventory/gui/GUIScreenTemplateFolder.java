@@ -3,6 +3,7 @@ package com.hbm.inventory.gui;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.ChemplantRecipes;
+import com.hbm.inventory.CrucibleRecipes;
 import com.hbm.inventory.PressRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCassette;
@@ -115,6 +116,10 @@ public class GUIScreenTemplateFolder extends GuiScreen {
     	for (int i: ChemplantRecipes.recipeNames.keySet()){
 			allStacks.add(new ItemStack(ModItems.chemistry_template, 1, i));
 		}
+	    //Crucible Templates
+	    for (int i: CrucibleRecipes.recipes.keySet()){
+		    allStacks.add(new ItemStack(ModItems.crucible_template, 1, i));
+	    }
 		search(null);
     }
     

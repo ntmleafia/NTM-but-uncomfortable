@@ -58,6 +58,20 @@ public class JEIConfig implements IModPlugin {
 	public static final String DFC = "hbm.dfc";
 	public static final String TRANSMUTATION = "hbm.transmutation";
 
+	public static final String COMBINATION = "hbm.combination";
+	public static final String FOUNDRYSMELT = "hbm.foundrysmelt";
+	public static final String FOUNDRYMIX = "hbm.foundrymix";
+	public static final String FOUNDRYPOUR = "hbm.foundrypour";
+	public static final String ARCWELDER = "hbm.arcwelder";
+	public static final String SOLDERINGSTATION = "hbm.solderingstation";
+	public static final String LIQUEFACTION = "hbm.liquefaction";
+	public static final String SOLIDIFCATION = "hbm.solidification";
+	public static final String HYDROTREATER = "hbm.hydrotreater";
+	public static final String REFORMER = "hbm.reformer";
+	public static final String VACUUMDISTILL = "hbm.vacuumdistill";
+	public static final String COKER = "hbm.coker";
+	public static final String RBMKFUEL = "hbm.rbmkfueluncrafting";
+
 	@Override
 	public void register(IModRegistry registry) {
 		if(!GeneralConfig.jei)

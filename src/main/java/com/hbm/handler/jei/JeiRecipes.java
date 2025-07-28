@@ -15,6 +15,7 @@ import com.hbm.inventory.MagicRecipes.MagicRecipe;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
+import com.hbm.inventory.material.Mats;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Batteries;
 import com.hbm.items.ModItems.Materials.Ingots;
@@ -76,6 +77,9 @@ public class JeiRecipes {
 	private static List<SmithingRecipe> smithingRecipes = null;
 	private static List<AnvilRecipe> anvilRecipes = null;
 	private static List<TransmutationRecipe> transmutationRecipes = null;
+	private static List<FoundrySmeltRecipe> foundrySmeltRecipes = null;
+	private static List<FoundryMixRecipe> foundryMixRecipes = null;
+	private static List<FoundryPourRecipe> foundryPourRecipes = null;
 	
 	private static List<ItemStack> batteries = null;
 	private static Map<Integer, List<ItemStack>> reactorFuelMap = new HashMap<Integer, List<ItemStack>>();
@@ -699,6 +703,72 @@ public class JeiRecipes {
 		return chemRecipes;
 	}
 
+	public static List<FoundrySmeltRecipe> getFoundrySmeltRecipes() {
+		if(foundrySmeltRecipes != null)
+			return foundrySmeltRecipes;
+		foundrySmeltRecipes = new ArrayList<FoundrySmeltRecipe>();
+		/*
+		for(NTMMaterial mat : Mats.orderedList){ //iron, gold
+			for(Entry<String, MaterialShapes> prefixEntry : Mats.prefixByName.entrySet()) { //iron ingot, nugget
+				String prefix = prefixEntry.getKey();
+				List<ItemStack> shapeMatItemStacks = new ArrayList<>();
+				for (String name : mat.names) { // iron/eisen ingot
+					shapeMatItemStacks.addAll(new OreDictStack(prefix + name).getStackList());
+				}
+				if (shapeMatItemStacks.isEmpty()) continue;
+				List<MaterialStack> mats = new ArrayList<MaterialStack>();
+				mats.add(new MaterialStack(mat.smeltsInto, prefixEntry.getValue().q(1)));
+				foundrySmeltRecipes.add(new FoundrySmeltRecipe(shapeMatItemStacks, Mats.matsToScrap(mats, false)));
+			}
+		}
+
+		for(Map.Entry<ComparableStack, List<MaterialStack>>  entry: Mats.materialEntries.entrySet()){
+			foundrySmeltRecipes.add(new FoundrySmeltRecipe(entry.getKey().getStackList(), Mats.matsToScrap(entry.getValue(), false)));
+		}
+		for(Map.Entry<String, List<MaterialStack>>  entry: Mats.materialOreEntries.entrySet()){
+			foundrySmeltRecipes.add(new FoundrySmeltRecipe(new OreDictStack(entry.getKey()).getStackList(), Mats.matsToScrap(entry.getValue(), false)));
+		}*/
+
+		return foundrySmeltRecipes;
+	}
+
+	public static List<FoundryMixRecipe> getFoundryMixRecipes() {
+		if(foundryMixRecipes != null)
+			return foundryMixRecipes;
+		foundryMixRecipes = new ArrayList<FoundryMixRecipe>();
+
+		for(CrucibleRecipes.CrucibleRecipe recipe : CrucibleRecipes.recipes.values()){
+			List<ItemStack> inputs = Mats.matsToScrap(recipe.input, false);
+			List<ItemStack> outputs = Mats.matsToScrap(recipe.output, false);
+			foundryMixRecipes.add(new FoundryMixRecipe(new ItemStack(ModItems.crucible_template, 1, recipe.getId()), inputs, outputs));
+		}
+
+		return foundryMixRecipes;
+	}
+
+	public static List<FoundryPourRecipe> getFoundryPourRecipes() {
+		if(foundryPourRecipes != null)
+			return foundryPourRecipes;
+		foundryPourRecipes = new ArrayList<FoundryPourRecipe>();
+/*
+		for(NTMMaterial material : Mats.orderedList) {
+
+			if (material.smeltable != NTMMaterial.SmeltingBehavior.SMELTABLE)
+				continue;
+
+			for (ItemMold.Mold mold : ItemMold.molds) {
+				ItemStack out = mold.getOutput(material);
+				if (out != null) {
+					ItemStack scrap = ItemScraps.create(new MaterialStack(material, mold.getCost()), false);
+					ItemStack moldStack = new ItemStack(ModItems.mold, 1, mold.id);
+					ItemStack basin = new ItemStack(mold.size == 0 ? ModBlocks.foundry_mold : mold.size == 1 ? ModBlocks.foundry_basin : Blocks.FIRE);
+					foundryPourRecipes.add(new FoundryPourRecipe(basin, moldStack, scrap, out));
+				}
+			}
+		}*/
+		return foundryPourRecipes;
+	}
+
 	public static List<MixerRecipe> getMixerRecipes() {
 		if(mixerRecipes != null)
 			return mixerRecipes;
@@ -1167,5 +1237,61 @@ public class JeiRecipes {
 			anvilRecipes.add(new AnvilRecipe(inputs, outputs, chances, r.tierLower, r.tierUpper, r.getOverlay()));
  		}
 		return anvilRecipes;
+	}
+
+	public static class FoundrySmeltRecipe implements IRecipeWrapper {
+
+		private final List<ItemStack> inputs;
+		private final List<ItemStack> outputs;
+
+		public FoundrySmeltRecipe(List<ItemStack> inputs, List<ItemStack> outputs) {
+			this.inputs = inputs;
+			this.outputs = outputs;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInputs(VanillaTypes.ITEM, inputs);
+			ingredients.setOutputs(VanillaTypes.ITEM, outputs);
+		}
+
+	}
+
+	public static class FoundryMixRecipe implements IRecipeWrapper {
+		private final List<ItemStack> inputs;
+		private final List<ItemStack> outputs;
+
+		public FoundryMixRecipe(ItemStack template, List<ItemStack> inputs, List<ItemStack> outputs) {
+			this.inputs = inputs;
+			this.inputs.add(0, template);
+			this.outputs = outputs;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInputs(VanillaTypes.ITEM, inputs);
+			ingredients.setOutputs(VanillaTypes.ITEM, outputs);
+		}
+
+	}
+
+	public static class FoundryPourRecipe implements IRecipeWrapper {
+		private final List<ItemStack> inputs;
+		private final ItemStack output;
+
+		public FoundryPourRecipe(ItemStack basin, ItemStack mold, ItemStack input, ItemStack output) {
+			this.inputs = new ArrayList<ItemStack>();
+			this.inputs.add(basin);
+			this.inputs.add(mold);
+			this.inputs.add(input);
+			this.output = output;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInputs(VanillaTypes.ITEM, inputs);
+			ingredients.setOutput(VanillaTypes.ITEM, output);
+		}
+
 	}
 }

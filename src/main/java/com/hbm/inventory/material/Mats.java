@@ -3,6 +3,8 @@ package com.hbm.inventory.material;
 import com.hbm.inventory.OreDictManager.*;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.material.NTMMaterial.SmeltingBehavior;
+import com.hbm.items.ModItems.Foundry;
+import com.hbm.items.machine.ItemScraps;
 import com.hbm.util.I18nUtil;
 import com.hbm.util.ItemStackUtil;
 import net.minecraft.item.ItemStack;
@@ -171,10 +173,10 @@ public class Mats {
 		}
 		/*
 		  for when crucible becomes real
-		 
-		if(stack.getItem() == ModItems.scraps) {
+		 */
+		if(stack.getItem() == Foundry.scraps) {
 			list.add(ItemScraps.getMats(stack));
-		}*/
+		}
 		
 		return list;
 	}
@@ -184,6 +186,21 @@ public class Mats {
 		List<MaterialStack> smelting = new ArrayList();
 		baseMats.forEach(x -> smelting.add(new MaterialStack(x.material.smeltsInto, (int) (x.amount * x.material.convOut / x.material.convIn))));
 		return smelting;
+	}
+
+	public static List<ItemStack> matsToScrap(List<MaterialStack> mats, boolean liquid) {
+		if(mats.isEmpty()) return new ArrayList<ItemStack>();
+		List<ItemStack> scraps = new ArrayList<ItemStack>();
+		mats.forEach(x -> scraps.add(ItemScraps.create(x, liquid)));
+		return scraps;
+	}
+
+	public static List<ItemStack> matsToScrap(MaterialStack[] mats, boolean liquid) {
+		if(mats == null) return new ArrayList<ItemStack>();
+		List<ItemStack> scraps = new ArrayList<ItemStack>();
+		for (MaterialStack x : mats)
+			scraps.add(ItemScraps.create(x, liquid));
+		return scraps;
 	}
 	
 	public static class MaterialStack {

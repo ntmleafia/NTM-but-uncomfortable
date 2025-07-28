@@ -507,6 +507,13 @@ public class ModEventHandlerClient {
 					item.bakedSpecialRod = (IBakedModel)objectb;
 			}
 		}
+		{
+			Object object = evt.getModelRegistry().getObject(ItemCrucibleTemplate.cruciModel);
+			if (object instanceof IBakedModel model) {
+				CrucibleTemplateRender.INSTANCE.itemModel = model;
+				evt.getModelRegistry().putObject(ItemCrucibleTemplate.cruciModel,new CrucibleTemplateBakedModel());
+			}
+		}
 
 		IRegistry<ModelResourceLocation, IBakedModel> reg = evt.getModelRegistry();
 		swapModelsNoGui(Armory.gun_revolver_nightmare, reg);

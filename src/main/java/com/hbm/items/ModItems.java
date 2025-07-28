@@ -1204,6 +1204,10 @@ public class ModItems {
 	public static final Item pile_rod_source = new ItemPileRod(3 * ItemHazard.rabe, "pile_rod_source").setCreativeTab(MainRegistry.controlTab);
 	public static final Item pile_rod_boron = new ItemPileRod("pile_rod_boron").setCreativeTab(MainRegistry.controlTab);
 
+	public static class Foundry {
+		public static final Item scraps = new ItemScraps("scraps").setCreativeTab(MainRegistry.partsTab);
+	}
+
 	public static class LeafiaRods {
 		public static final Item leafRod = new LeafiaRodItem.EmptyLeafiaRod().setCreativeTab(MainRegistry.controlTab);
 		/*
@@ -2239,6 +2243,8 @@ public class ModItems {
 	public static final Item siren_track = new ItemCassette("siren_track").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
 	public static final Item assembly_template = new ItemAssemblyTemplate("assembly_template").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
 	public static final Item chemistry_template = new ItemChemistryTemplate("chemistry_template").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
+	public static final Item crucible_template = new ItemCrucibleTemplate("crucible_template").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
+
 	public static final Item chemistry_icon = new ItemChemistryIcon("chemistry_icon").setMaxStackSize(1).setCreativeTab(null);
 	public static final Item forge_fluid_identifier = new ItemForgeFluidIdentifier("forge_fluid_identifier").setMaxStackSize(1).setCreativeTab(MainRegistry.templateTab);
 	public static final Item fuzzy_identifier = new ItemFuzzyIdentifier("fuzzy_identifier").setMaxStackSize(1).setCreativeTab(MainRegistry.consumableTab);

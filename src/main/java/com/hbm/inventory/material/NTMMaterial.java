@@ -2,6 +2,11 @@ package com.hbm.inventory.material;
 
 import com.hbm.inventory.OreDictManager.DictFrame;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Encapsulates most materials that are currently listed as DictFrames, even vanilla ones.
  * @author hbm
@@ -11,7 +16,7 @@ public class NTMMaterial {
 
 	public final int id;
 	public String[] names;
-	public MaterialShapes[] shapes = new MaterialShapes[0];
+	public Set<MaterialShapes> shapes = new HashSet<>();
 	public boolean omitItemGen = false;
 	public SmeltingBehavior smeltable = SmeltingBehavior.NOT_SMELTABLE;
 	public int solidColor = 0xFF4A00; //TODO
@@ -51,7 +56,7 @@ public class NTMMaterial {
 	
 	/** Shapes for autogen */
 	public NTMMaterial setShapes(MaterialShapes... shapes) {
-		this.shapes = shapes;
+		this.shapes.addAll(Arrays.asList(shapes));
 		return this;
 	}
 	
