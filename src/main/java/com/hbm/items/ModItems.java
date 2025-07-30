@@ -2330,6 +2330,7 @@ public class ModItems {
 	public static final Item coil_tungsten = new ItemBase("coil_tungsten").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_aluminium = new ItemBase("wire_aluminium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_copper = new ItemBase("wire_copper").setCreativeTab(MainRegistry.partsTab);
+	public static final Item wire_lead = new ItemBase("wire_lead").setCreativeTab(MainRegistry.partsTab);
 	public static final Item coil_copper = new ItemBase("coil_copper").setCreativeTab(MainRegistry.partsTab);
 	public static final Item coil_copper_torus = new ItemBase("coil_copper_torus").setCreativeTab(MainRegistry.partsTab);
 	public static final Item wire_schrabidium = new ItemHazard(ALPHA,1.5F, false, true, "wire_schrabidium").setCreativeTab(MainRegistry.partsTab);

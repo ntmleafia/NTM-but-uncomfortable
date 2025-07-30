@@ -28,6 +28,13 @@ import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulley;
 import com.leafia.contents.machines.elevators.EvShaft;
 import com.leafia.contents.machines.elevators.floors.EvFloor;
+import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderBlock;
+import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryBlock;
+import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
+import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
+import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
+import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
+import com.leafia.contents.machines.processing.solidifier.SolidifierBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRHull;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
 import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRSource;
@@ -72,6 +79,14 @@ import java.util.List;
 import static com.hbm.blocks.ModBlocks.GenericBlockResistance.*;
 
 public class ModBlocks {
+
+	public static final int guiID_arcwelder = 274;
+	public static final int guiID_assemfac = 275;
+	public static final int guiID_soldering = 276;
+	public static final int guiID_electrolyzer = 277;
+	public static final int guiID_liquefactor = 278;
+	public static final int guiID_pyrooven = 279;
+	public static final int guiID_solidifier = 280;
 
 	//present gui id: 126
 	public static List<Block> ALL_BLOCKS = new ArrayList<Block>();
@@ -1057,10 +1072,11 @@ public class ModBlocks {
 	public static final Block block_corium = new BlockHazard(Material.IRON, "block_corium").makeBeaconable().addRad3d(150000).addRadiation(10000F).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(100.0F).setResistance(9000.0F);
 	public static final Block block_corium_cobble = new BlockOutgas(true, 1, true, true, "block_corium_cobble").addRadiation(1000F).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(100.0F).setResistance(6000.0F);
 	
-	public static final Block machine_assembler = new MachineAssembler(Material.IRON, "machine_assembler").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(100.0F);
+	public static final Block machine_assembler = new MachineAssembler(Material.IRON, "machine_assembler").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(5.0F);
+	public static final Block machine_assemfac = new AssemblyFactoryBlock(Material.IRON, "machine_assemfac").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(30);
 	public static final int guiID_machine_assembler = 48;
-	
-	public static final Block machine_chemplant = new MachineChemplant(Material.IRON, "machine_chemplant").setHardness(5.0F).setResistance(100.0F).setCreativeTab(MainRegistry.machineTab);
+
+	public static final Block machine_chemplant = new MachineChemplant(Material.IRON, "machine_chemplant").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block machine_chemfac = new MachineChemfac(Material.IRON, "machine_chemfac").setHardness(5.0F).setResistance(30.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_machine_chemplant = 49;
 	
@@ -1139,8 +1155,12 @@ public class ModBlocks {
 	public static final Block machine_acidizer = new MachineAcidizer(Material.IRON, "machine_acidizer").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_crystallizer = 95;
 
-	//public static final Block machine_arc_welder = new MachineArcWelder(Material.IRON, "machine_arc_welder").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(50.0F);
-	//public static final Block machine_soldering_station = new MachineSolderingStation(Material.IRON, "machine_soldering_station").setCreativeTab(MainRegistry.machineTab).setHardness(5.0F).setResistance(50.0F);
+	public static final Block machine_arcwelder = new ArcWelderBlock(Material.IRON,"machine_arcwelder").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_soldering = new SolderingBlock(Material.IRON,"machine_soldering").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_electrolyzer = new ElectrolyzerBlock(Material.IRON,"machine_electrolyzer").setHardness(10).setResistance(20).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_liquefactor = new LiquefactorBlock(Material.IRON,"machine_liquefactor").setHardness(10).setResistance(20).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_pyrolysis = new PyroOvenBlock(Material.IRON,"machine_pyrolysis").setHardness(5).setResistance(30).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_solidifier = new SolidifierBlock(Material.IRON,"machine_solidifier").setHardness(10).setResistance(20).setCreativeTab(null);
 
 	public static final Block machine_shredder = new MachineShredder(Material.IRON, "machine_shredder").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_machine_shredder = 34;

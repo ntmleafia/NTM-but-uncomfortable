@@ -269,6 +269,34 @@ public class UpgradeDetailsDatabase {
                         )
                 )
         );
+        tryAddMachine(ModBlocks.machine_soldering,
+                Arrays.asList(
+                        UpgradeType.SPEED,
+                        UpgradeType.POWER
+                ),
+                Arrays.asList(
+                        Arrays.asList(
+                                "delay","-1/6x",
+                                "consumption","+1x",
+
+                                "delay","-2/6x",
+                                "consumption","+2x",
+
+                                "delay","-3/6x",
+                                "consumption","+3x"
+                        ),
+                        Arrays.asList(
+                                "consumption","-1/6x",
+                                "delay","+1/3x",
+
+                                "consumption","-2/6x",
+                                "delay","+2/3x",
+
+                                "consumption","-3/6x",
+                                "delay","+3/3x"
+                        )
+                )
+        );
         /*
             this.speedLevel = Math.min(upgradeManager.getLevel(UpgradeType.SPEED), 3);
             this.energyLevel = Math.min(upgradeManager.getLevel(UpgradeType.POWER), 3);

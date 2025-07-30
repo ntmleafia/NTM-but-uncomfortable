@@ -4,6 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Collections;
+import java.util.List;
+
 public interface LeafiaPacketReceiver {
     public String getPacketIdentifier();
     @SideOnly(Side.CLIENT)
@@ -16,6 +19,7 @@ public interface LeafiaPacketReceiver {
      * @return The range
      */
     public default double affectionRange() { return 32; }
+    public default List<EntityPlayer> getListeners() { return Collections.emptyList(); };
 
     /**
      * <tt>[SERVER]</tt> Called by client when they get into range specified by affectionRange().

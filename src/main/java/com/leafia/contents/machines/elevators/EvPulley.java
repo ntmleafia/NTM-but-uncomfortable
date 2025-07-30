@@ -3,6 +3,7 @@ package com.leafia.contents.machines.elevators;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.lib.ForgeDirection;
+import com.hbm.tileentity.TileEntityProxyCombo;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -27,6 +28,8 @@ public class EvPulley extends BlockDummyable {
 	public TileEntity createNewTileEntity(World world,int meta) {
 		if (meta >= 12)
 			return new EvPulleyTE();
+		else if (meta >= extra)
+			return new TileEntityProxyCombo(false,true,false);
 		return null;
 	}
 

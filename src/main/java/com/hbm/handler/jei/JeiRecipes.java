@@ -57,12 +57,14 @@ public class JeiRecipes {
 	private static List<CyclotronRecipe> cyclotronRecipes = null;
 	private static List<PressRecipe> pressRecipes = null;
 	private static List<AlloyFurnaceRecipe> alloyFurnaceRecipes = null;
+	private static List<SolderingRecipe> solderingRecipes = null;
 	private static List<BoilerRecipe> boilerRecipes = null;
 	private static List<CMBFurnaceRecipe> cmbRecipes = null;
 	private static List<GasCentRecipe> gasCentRecipes = null;
 	private static List<ReactorRecipe> reactorRecipes = null;
 	private static List<WasteDrumRecipe> wasteDrumRecipes = null;
 	private static List<StorageDrumRecipe> storageDrumRecipes = null;
+	private static List<RBMKFuelRecipe> rbmkFuelRecipes = null;
 	private static List<RefineryRecipe> refineryRecipes = null;
 	private static List<CrackingRecipe> crackingRecipes = null;
 	private static List<FractioningRecipe> fractioningRecipes = null;
@@ -196,6 +198,47 @@ public class JeiRecipes {
 		}
 		
 	}
+
+	public static class SolderingRecipe implements IRecipeWrapper {
+
+		private final List<List<ItemStack>> inputs;
+		private final ItemStack output;
+		private final int duration;
+		private final long consumption;
+		public final int toppingCount;
+		public final int pcbCount;
+		public final int solderCount;
+
+		public SolderingRecipe(List<AStack> inputs, ItemStack output, int duration, long consumption, int toppingCount, int pcbCount, int solderCount) {
+			List<List<ItemStack>> list = new ArrayList<>(inputs.size());
+			for(AStack s : inputs)
+				list.add(s.getStackList());// list of inputs and their list of possible items
+			this.inputs = list;
+			this.output = output;
+			this.duration = duration;
+			this.consumption = consumption;
+			this.toppingCount = toppingCount;
+			this.pcbCount = pcbCount;
+			this.solderCount = solderCount;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInputLists(VanillaTypes.ITEM, Library.copyItemStackListList(inputs));
+			ingredients.setOutput(VanillaTypes.ITEM, output);
+		}
+
+		@Override
+		public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
+			FontRenderer fontRenderer = minecraft.fontRenderer;
+
+			String timeText = duration/20D+"s";
+			fontRenderer.drawString(timeText, 123-fontRenderer.getStringWidth(timeText), 4, 0x555555);
+			String powerText = Library.getShortNumber(consumption*20)+"HE/s";
+			fontRenderer.drawString(powerText, 123-fontRenderer.getStringWidth(powerText), 43, 0x555555);
+			GlStateManager.color(1, 1, 1, 1);
+		}
+	}
 	
 	public static class BoilerRecipe implements IRecipeWrapper {
 		
@@ -326,6 +369,23 @@ public class JeiRecipes {
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			ingredients.setInputLists(VanillaTypes.ITEM, inputs);
+			ingredients.setOutput(VanillaTypes.ITEM, output);
+		}
+	}
+
+	public static class RBMKFuelRecipe implements IRecipeWrapper {
+
+		private final ItemStack input;
+		private final ItemStack output;
+
+		public RBMKFuelRecipe(ItemStack input, ItemStack output) {
+			this.input = input;
+			this.output = output;
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInput(VanillaTypes.ITEM, input);
 			ingredients.setOutput(VanillaTypes.ITEM, output);
 		}
 	}
@@ -832,6 +892,31 @@ public class JeiRecipes {
 			alloyFurnaceRecipes.add(new AlloyFurnaceRecipe(pairEntry.getKey().getA(), pairEntry.getKey().getB(), pairEntry.getValue()));
 		}
 		return alloyFurnaceRecipes;
+	}
+	public static List<SolderingRecipe> getSolderingRecipes() {
+		if(solderingRecipes != null)
+			return solderingRecipes;
+		solderingRecipes = new ArrayList<SolderingRecipe>();
+
+		for(SolderingRecipes.SolderingRecipe recipe : SolderingRecipes.recipes){
+			List<AStack> recipeItemList = new ArrayList<>(Arrays.asList(recipe.toppings));
+			recipeItemList.addAll(Arrays.asList(recipe.pcb));
+			recipeItemList.addAll(Arrays.asList(recipe.solder));
+			if(recipe.fluid != null) recipeItemList.add(new NbtComparableStack(ItemFluidIcon.getStackWithQuantity(recipe.fluid)));
+			solderingRecipes.add(new SolderingRecipe(recipeItemList, recipe.output, recipe.duration, recipe.consumption, recipe.toppings.length, recipe.pcb.length, recipe.solder.length));
+		}
+		return solderingRecipes;
+	}
+
+	public static List<RBMKFuelRecipe> getRBMKFuelRecipes() {
+		if(rbmkFuelRecipes != null)
+			return rbmkFuelRecipes;
+		rbmkFuelRecipes = new ArrayList<RBMKFuelRecipe>();
+
+		for(Map.Entry<ItemStack, ItemStack> pairEntry : RBMKFuelRecipes.recipes.entrySet()){
+			rbmkFuelRecipes.add(new RBMKFuelRecipe(pairEntry.getKey(), pairEntry.getValue()));
+		}
+		return rbmkFuelRecipes;
 	}
 	
 	public static List<ItemStack> getAlloyFuels() {

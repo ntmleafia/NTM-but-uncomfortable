@@ -8,6 +8,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
 import com.hbm.items.weapon.ItemCustomMissile;
 import com.hbm.main.MainRegistry;
+import com.leafia.contents.machines.manfacturing.soldering.container.SolderingGUI;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
@@ -63,7 +64,7 @@ public class JEIConfig implements IModPlugin {
 	public static final String FOUNDRYMIX = "hbm.foundrymix";
 	public static final String FOUNDRYPOUR = "hbm.foundrypour";
 	public static final String ARCWELDER = "hbm.arcwelder";
-	public static final String SOLDERINGSTATION = "hbm.solderingstation";
+	public static final String SOLDERING = "hbm.soldering";
 	public static final String LIQUEFACTION = "hbm.liquefaction";
 	public static final String SOLIDIFCATION = "hbm.solidification";
 	public static final String HYDROTREATER = "hbm.hydrotreater";
@@ -95,6 +96,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_solar_boiler), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.heat_boiler), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.rbmk_heater), BOILER);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_soldering),SOLDERING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_centrifuge), CENTRIFUGE);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_combine_factory), CMB);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_gascent), GAS_CENT);
@@ -144,6 +146,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getTransmutationRecipes(), TRANSMUTATION);
 		registry.addRecipes(JeiRecipes.getPressRecipes(), PRESS);
 		registry.addRecipes(JeiRecipes.getAlloyRecipes(), ALLOY);
+		registry.addRecipes(JeiRecipes.getSolderingRecipes(),SOLDERING);
 		registry.addRecipes(JeiRecipes.getBoilerRecipes(), BOILER);
 		registry.addRecipes(CentrifugeRecipes.getCentrifugeRecipes(), CENTRIFUGE);
 		registry.addRecipes(JeiRecipes.getCMBRecipes(), CMB);
@@ -186,6 +189,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeClickArea(GUIMachineBoiler.class, 61, 34, 17, 35, BOILER);
 		registry.addRecipeClickArea(GUIMachineBoilerElectric.class, 61, 34, 17, 35, BOILER);
 		registry.addRecipeClickArea(GUIMachineBoilerRTG.class, 61, 34, 17, 17, BOILER);
+		registry.addRecipeClickArea(SolderingGUI.class, 70, 26, 35, 17,SOLDERING);
 		registry.addRecipeClickArea(GUIMachineCentrifuge.class, 35, 9, 106, 40, CENTRIFUGE);
 		registry.addRecipeClickArea(GUIMachineCMBFactory.class, 111, 35, 21, 14, CMB);
 		registry.addRecipeClickArea(GUIMachineGasCent.class, 118, 36, 51, 13, GAS_CENT);
@@ -280,6 +284,7 @@ public class JEIConfig implements IModPlugin {
 				new AssemblerRecipeHandler(help),
 				new ChemplantRecipeHandler(help),
 				new MixerRecipeHandler(help),
+				new SolderingRecipeHandler(help),
 				new BoilerRecipeHandler(help),
 				new RefineryRecipeHandler(help),
 				new CrackingRecipeHandler(help),

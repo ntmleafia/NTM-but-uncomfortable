@@ -79,6 +79,8 @@ public interface LeafiaQuickModel {
     default ItemRenderBase _itemRenderer() {
         return new ItemRenderBase() {
             public void renderInventory() {
+                GL11.glRotated(-65,1,0,0);
+                GL11.glRotated(25,0,0,1);
                 GL11.glTranslated(0,-_itemYoffset(),0);
                 GL11.glScaled(22.5/_sizeReference(), 22.5/_sizeReference(), 22.5/_sizeReference());
             }

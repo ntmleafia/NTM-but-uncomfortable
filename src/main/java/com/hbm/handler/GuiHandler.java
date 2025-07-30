@@ -27,6 +27,9 @@ import com.leafia.contents.machines.elevators.car.ElevatorEntity;
 import com.leafia.contents.machines.elevators.floors.EvFloorGUI;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.elevators.gui.EvCabinGUI;
+import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.manfacturing.soldering.container.SolderingContainer;
+import com.leafia.contents.machines.manfacturing.soldering.container.SolderingGUI;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
@@ -661,6 +664,11 @@ public class GuiHandler implements IGuiHandler {
 					return new ZirnoxContainer(player.inventory, (TileEntityReactorZirnox) entity);
 				}
 				return null;
+			case ModBlocks.guiID_soldering:
+				if(entity instanceof SolderingTE te) {
+					return new SolderingContainer(player.inventory,te);
+				}
+				return null;
 			case PWR.guiID:
 				if(entity instanceof TileEntityPWRTerminal) {
 					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
@@ -1288,6 +1296,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_zirnox:
 				if(entity instanceof TileEntityReactorZirnox) {
 					return new ZirnoxGUI(player.inventory, (TileEntityReactorZirnox) entity);
+				}
+				return null;
+			case ModBlocks.guiID_soldering:
+				if(entity instanceof SolderingTE te) {
+					return new SolderingGUI(player.inventory,te);
 				}
 				return null;
 			case PWR.guiID:

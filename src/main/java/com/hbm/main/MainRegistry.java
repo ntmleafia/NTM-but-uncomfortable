@@ -78,8 +78,15 @@ import com.leafia.contents.machines.elevators.EvPulleyTE;
 import com.leafia.contents.machines.elevators.EvShaftTE;
 import com.leafia.contents.machines.elevators.car.ElevatorEntity;
 import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
+import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryTE;
+import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
+import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
+import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
+import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
+import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
@@ -369,12 +376,14 @@ public class MainRegistry {
 			rendererWaiting.add(new TileEntityPylonConnector());
 			rendererWaiting.add(new TileEntityMachineAcidizer());
 
-			/*rendererWaiting.add(new ArcWelderTE());
+			rendererWaiting.add(new ArcWelderTE());
 			rendererWaiting.add(new SolderingTE());
 			rendererWaiting.add(new ElectrolyzerTE());
 			rendererWaiting.add(new LiquefactorTE());
 			rendererWaiting.add(new PyroOvenTE());
-			rendererWaiting.add(new SolidifierTE());*/
+			rendererWaiting.add(new SolidifierTE());
+
+			rendererWaiting.add(new AssemblyFactoryTE());
 		}
 
 		proxy.registerRenderInfo();
