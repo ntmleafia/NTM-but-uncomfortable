@@ -29,12 +29,14 @@ public class TypedFluidTank {
 		this.tank.setFluid(null);
 	}
 
-	public void writeToNBT(NBTTagCompound nbt) {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		if(this.type != null) {
 			nbt.setString("type", this.type.getName());
 		}
 
 		this.tank.writeToNBT(nbt);
+
+		return nbt;
 	}
 
 	public void readFromNBT(NBTTagCompound nbt) {

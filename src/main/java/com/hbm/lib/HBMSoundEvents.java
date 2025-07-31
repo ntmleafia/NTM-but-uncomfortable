@@ -305,6 +305,15 @@ public final class HBMSoundEvents {
 	public static SoundEvent mus_sfx_a_lithit;
 	public static SoundEvent crucifix;
 	public static SoundEvent crafting_tech1_part;
+
+	public static SoundEvent assemblerStart;
+	public static SoundEvent assemblerStop;
+	public static SoundEvent assemblerStrike;
+	public static SoundEvent motor;
+	public static SoundEvent mechcrafting_lower;
+	public static SoundEvent mechcrafting_weld;
+	public static SoundEvent mechcrafting_raise;
+	public static SoundEvent mechcrafting_loop;
 	
 	
 	public static void init() {
@@ -562,6 +571,15 @@ public final class HBMSoundEvents {
 		mus_sfx_a_lithit = register("external.mus_sfx_a_lithit");
 		crucifix = register("external.lsplash.crucifix");
 		crafting_tech1_part = register("external.crafting_tech1_part");
+
+		assemblerStart = register("block.assembler_start");
+		assemblerStop = register("block.assembler_stop");
+		assemblerStrike = register("block.assembler_strike");
+		motor = register("block.motor");
+		mechcrafting_lower = register("external.mechcrafting_lower");
+		mechcrafting_raise = register("external.mechcrafting_raise");
+		mechcrafting_weld = register("external.mechcrafting_weld");
+		mechcrafting_loop = register("external.mechcrafting_loop");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

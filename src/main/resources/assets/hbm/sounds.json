@@ -310,5 +310,13 @@
   "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]},
   "external.mus_sfx_a_lithit": { "category": "block", "sounds": ["hbm:external/mus_sfx_a_lithit"]},
   "external.lsplash.crucifix": { "category": "block", "sounds": ["hbm:external/lsplash_crucifix"]},
-  "external.crafting_tech1_part": { "category": "block", "sounds": ["hbm:external/crafting_tech1_part"]}
+  "external.crafting_tech1_part": { "category": "block", "sounds": ["hbm:external/crafting_tech1_part"]},
+  "block.assembler_start": { "subtitle": "subtitles.block.assembler_start", "category": "block", "sounds": ["hbm:block/assemblerStart"]},
+  "block.assembler_stop": { "subtitle": "subtitles.block.assembler_stop", "category": "block", "sounds": ["hbm:block/assemblerStop"]},
+  "block.assembler_strike": { "subtitle": "subtitles.block.assembler_strike", "category": "block", "sounds": ["hbm:block/assemblerStrike1","hbm:block/assemblerStrike2"]},
+  "block.motor": { "subtitle": "subtitles.block.motor", "category": "block", "sounds": ["hbm:block/motor"]},
+  "external.mechcrafting_lower": { "category": "block", "sounds": ["hbm:external/mechcrafting_lower"]},
+  "external.mechcrafting_raise": { "category": "block", "sounds": ["hbm:external/mechcrafting_raise"]},
+  "external.mechcrafting_loop": { "category": "block", "sounds": ["hbm:external/mechcrafting_loop"]},
+  "external.mechcrafting_weld": { "category": "block", "sounds": ["hbm:external/mechcrafting_weld"]}
 }

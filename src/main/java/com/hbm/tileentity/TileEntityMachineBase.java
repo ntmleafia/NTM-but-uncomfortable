@@ -48,11 +48,13 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 			}
 		}
 	}
+	public void slotContentsChanged(int slot,ItemStack newStack) { }
 	public ItemStackHandler getNewInventory(int scount, int slotlimit){
 		return new ItemStackHandler(scount){
 			@Override
 			protected void onContentsChanged(int slot) {
 				super.onContentsChanged(slot);
+				slotContentsChanged(slot,this.getStackInSlot(slot));
 				markDirty();
 			}
 			

@@ -81,7 +81,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeRegistryPlugin(new HbmJeiRegistryPlugin());
 
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_assembler), ASSEMBLY);
-		//registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_), ASSEMBLY); <= assembly factory pls
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_assemfac), ASSEMBLY); // finally assembly factory
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_chemplant), CHEMPLANT);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_chemfac), CHEMPLANT);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_mixer), MIXER);
