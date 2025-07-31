@@ -77,16 +77,16 @@ public class ModForgeFluids {
 	public static Fluid DIESEL_REFORM = createFluid("diesel_reform");
 	public static Fluid DIESEL_CRACK_REFORM = createFluid("diesel_crack_reform");
 
-	public static Fluid LIGHTOIL = 				createFluid("lightoil");
-	public static Fluid LIGHTOIL_CRACK = 		createFluid("lightoil_crack");
-	public static Fluid LIGHTOIL_DS = 			createFluid("lightoil_ds");
-	public static Fluid LIGHTOIL_VACUUM = 		createFluid("lightoil_vacuum");
-	public static Fluid KEROSENE = 				createFluid("kerosene");
-	public static Fluid KEROSENE_REFORM = 		createFluid("kerosene_reform");
+	public static Fluid LIGHTOIL = createFluid("lightoil");
+	public static Fluid LIGHTOIL_CRACK = createFluid("lightoil_crack");
+	public static Fluid LIGHTOIL_DS = createFluid("lightoil_ds");
+	public static Fluid LIGHTOIL_VACUUM = createFluid("lightoil_vacuum");
+	public static Fluid KEROSENE = createFluid("kerosene");
+	public static Fluid KEROSENE_REFORM = createFluid("kerosene_reform");
 
-	public static Fluid GAS = 					createFluid("gas").setTemperature(111);
-	public static Fluid GAS_COKER = 			createFluid("gas_coker");
-	public static Fluid PETROLEUM = 			createFluid("petroleum");
+	public static Fluid GAS = createFluid("gas").setTemperature(111);
+	public static Fluid GAS_COKER = createFluid("gas_coker");
+	public static Fluid PETROLEUM = createFluid("petroleum");
 
 	public static Fluid AROMATICS = createFluid("aromatics");
 	public static Fluid UNSATURATEDS = createFluid("unsaturateds");
