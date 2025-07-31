@@ -9,6 +9,10 @@ import org.lwjgl.opengl.GL11;
 
 public class AssemblyFactoryRender extends TileEntitySpecialRenderer<TileEntity> {
 	@Override
+	public boolean isGlobalRenderer(TileEntity te) {
+		return true;
+	}
+	@Override
 	public void render(TileEntity te,double x,double y,double z,float interp,int destroyStage,float alpha) {
 		LeafiaGls.pushMatrix();
 		LeafiaGls.translate(x,y,z);

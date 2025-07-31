@@ -13,6 +13,42 @@ import org.lwjgl.opengl.GL11;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <h3>HOW TO SET UP:
+ * Create a new static instance of LeafiaGripOffsetHelper like so:
+ * <pre>{@code static final offsets = new LeafiaOffsetHelper();}</pre>
+ * Put this in render method:
+ * <pre>{@code offsets.apply(transformType);}</pre>
+ * That's it!
+ * <br><br>
+ * <h3>HOW TO MOVE OFFSETS IN-GAME:</h3>
+ * Enable <b>debug</b> static variable in this class. That's it.
+ * <br>Controls are arrows, IJKL, ctrl+up/down, ctrl+I/K, and space.
+ * <br>Hold ALT for smaller increments.
+ * <br>Keep in mind that offsets are not automatically saved, and you have to write scale, position and rotations manually via code.
+ * <br>FIRST_PERSON_LEFT_HAND is affected by FIRST_PERSON_RIGHT_HAND, and THIRD_PERSON_LEFT_HAND is affected by THIRD_PERSON_RIGHT_HAND.
+ * <br><br>
+ * <h3>HOW TO SET OFFSETS VIA CODE</h3>
+ * Just take this for an example (ZIRNOX item render):
+ * <pre>{@code static final LeafiaGripOffsetHelper offsets = new LeafiaGripOffsetHelper()
+ * 			.get(TransformType.FIRST_PERSON_RIGHT_HAND)
+ * 			.setScale(0.25).setPosition(0,10,-10.25).setRotation(25,0,-95).getHelper()
+ *
+ * 			.get(TransformType.FIRST_PERSON_LEFT_HAND)
+ * 			.setPosition(-4.5,0,9.75).setRotation(0,-60,0).getHelper()
+ *
+ * 			.get(TransformType.GUI)
+ * 			.setScale(2.2).setPosition(-2.55,-0.85,0).setRotation(65,0,-25).getHelper()
+ *
+ * 			.get(TransformType.GROUND)
+ * 			.setScale(0.25).setPosition(5.25,3.25,-5.00).getHelper()
+ *
+ * 			.get(TransformType.FIXED)
+ * 			.setScale(0.4).setPosition(0.75,2.75,-3.15).setRotation(0,0,-90).getHelper()
+ *
+ * 			.get(TransformType.THIRD_PERSON_RIGHT_HAND)
+ * 			.setScale(0.25).setPosition(5,1.5,-3.75).getHelper();}</pre>
+ */
 public class LeafiaGripOffsetHelper {
     static boolean debug = false;
     static boolean blockInput = false;

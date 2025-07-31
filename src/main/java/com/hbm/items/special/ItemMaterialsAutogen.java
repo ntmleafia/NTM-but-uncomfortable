@@ -19,13 +19,14 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAutogen extends Item implements IHasCustomMetaModels {
+// Leafia: Changed name to ItemMaterialsAutogen so its obivious it auto-generates for MATERIALS
+public class ItemMaterialsAutogen extends Item implements IHasCustomMetaModels {
 
 	public Set<Integer> metaValues = new LinkedHashSet();
 
 	MaterialShapes shape;
 	
-	public ItemAutogen(String s, MaterialShapes shape) {
+	public ItemMaterialsAutogen(String s,MaterialShapes shape) {
 		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setHasSubtypes(true);

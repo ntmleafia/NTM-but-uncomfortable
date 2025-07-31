@@ -3,14 +3,21 @@ package com.leafia.contents.machines.manfacturing.assemfac;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
+import com.hbm.util.I18nUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class AssemblyFactoryBlock extends BlockDummyable {
 
@@ -61,5 +68,11 @@ public class AssemblyFactoryBlock extends BlockDummyable {
 		this.makeExtra(world, x - rot.offsetX * 4 - dir.offsetX * 3, y, z - rot.offsetZ * 4 - dir.offsetZ * 3);
 
 		this.safeRem = false;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack,@Nullable World worldIn,List<String> tooltip,ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD+I18nUtil.resolveKey("trait.assemblyload")+" 2000");
+		super.addInformation(stack,worldIn,tooltip,flagIn);
 	}
 }

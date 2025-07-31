@@ -409,6 +409,10 @@ public class ModEventHandlerClient {
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName() + "_empty", "inventory"));
 		} else if(item instanceof IHasCustomModel) {
 			ModelLoader.setCustomModelResourceLocation(item, meta, ((IHasCustomModel) item).getResourceLocation());
+		} else if(item instanceof IHasCustomMetaModels) {
+			for(Integer i: ((IHasCustomMetaModels) item).getMetaValues()){
+				ModelLoader.setCustomModelResourceLocation(item, (int)i, ((IHasCustomMetaModels) item).getResourceLocation((int)i));
+			}
 		} else {
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}

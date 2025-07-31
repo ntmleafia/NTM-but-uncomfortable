@@ -5183,6 +5183,7 @@ trait._machine.nuclear=Nuclear
 trait._machine.modular=Modular
 trait._machine.multiblock=Multiblock
 trait._machine.multiblock.core=Core Component
+trait.assemblyload=Max Load:
 trait.balefirebomb=Balefire Bomb
 trait.blastres=Blast Resistance: %s
 trait.breeding=Worth %s operations in breeding reactor

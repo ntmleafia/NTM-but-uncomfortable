@@ -3,29 +3,23 @@ package com.hbm.items.machine;
 import java.util.List;
 
 import com.hbm.items.ModItems.Foundry;
-import org.lwjgl.input.Keyboard;
 
 import com.hbm.inventory.material.MaterialShapes;
 import com.hbm.inventory.material.Mats;
 import com.hbm.inventory.material.Mats.MaterialStack;
 import net.minecraft.client.util.ITooltipFlag;
 import com.hbm.items.ModItems;
-import com.hbm.items.special.ItemAutogen;
-import com.hbm.lib.RefStrings;
-import com.hbm.util.I18nUtil;
+import com.hbm.items.special.ItemMaterialsAutogen;
 import com.hbm.inventory.material.NTMMaterial;
 import com.hbm.inventory.material.NTMMaterial.SmeltingBehavior;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScraps extends ItemAutogen {
+public class ItemScraps extends ItemMaterialsAutogen {
 
 	public ItemScraps(String s) {
 		super(s, null);
