@@ -357,6 +357,16 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		public final void emit(Vec3d pos,Vec3d motion,int dimension,double range) {
 			PacketDispatcher.wrapper.sendToAllAround(packet(pos,motion),new TargetPoint(dimension,pos.x,pos.y,pos.z,range));
 		}
+		public final void emitLocal(Vec3d pos,Vec3d motion) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setDouble("posX",pos.x);
+			nbt.setDouble("posY",pos.y);
+			nbt.setDouble("posZ",pos.z);
+			nbt.setDouble("mX",(float)motion.x);
+			nbt.setDouble("mY",(float)motion.y);
+			nbt.setDouble("mZ",(float)motion.z);
+			emit(nbt);
+		}
 		/**
 		 * Method used for how the particle is spawned.
 		 * By default, it just uses proxy.effectNT

@@ -81,6 +81,7 @@ import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
 import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.manfacturing.wish.WishTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
@@ -501,6 +502,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineSPP.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_spp"));
 		GameRegistry.registerTileEntity(TileEntityMachineArcFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_arc_furnace"));
 		GameRegistry.registerTileEntity(TileEntityMachineElectricFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_electric_furnace"));
+		GameRegistry.registerTileEntity(WishTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_wish_crucible"));
 		GameRegistry.registerTileEntity(TileEntityWasteDrum.class, new ResourceLocation(RefStrings.MODID, "tileentity_waste_drum"));
 		GameRegistry.registerTileEntity(TileEntityMachineOilWell.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_oil_well"));
 		GameRegistry.registerTileEntity(TileEntityMachinePumpjack.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_pumpjack"));
@@ -961,6 +963,7 @@ public class MainRegistry {
 		MixerRecipes.copyChemplantRecipes();
 		MixerRecipes.registerRecipes();
 		CrackRecipes.registerRecipes();
+		SolderingRecipes.registerDefaults();
 		ExplosionNukeGeneric.loadSoliniumFromFile();
 		CyclotronRecipes.register();
 		HadronRecipes.register();
@@ -968,6 +971,7 @@ public class MainRegistry {
 		SILEXRecipes.register();
 		AnvilRecipes.register();
 		WasteDrumRecipes.registerRecipes();
+		WishRecipes.registerRecipes();
 		RefineryRecipes.registerFractions();
 		RefineryRecipes.registerRefineryRecipes();
 		TileEntityNukeCustom.registerBombItems();

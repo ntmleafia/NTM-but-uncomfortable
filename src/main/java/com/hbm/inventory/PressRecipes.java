@@ -5,6 +5,8 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
+import com.hbm.items.ModItems.CircuitV2;
+import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.ModItems.ToolSets;
@@ -88,6 +90,8 @@ public class PressRecipes {
 		addRecipe(PressType.CIRCUIT, new ComparableStack(ModItems.circuit_bismuth_raw), new ItemStack(ModItems.circuit_bismuth));
 		addRecipe(PressType.CIRCUIT, new ComparableStack(ModItems.circuit_arsenic_raw), new ItemStack(ModItems.circuit_arsenic));
 		addRecipe(PressType.CIRCUIT, new ComparableStack(ModItems.circuit_tantalium_raw), new ItemStack(ModItems.circuit_tantalium));
+
+		addRecipe(PressType.CIRCUIT, new ComparableStack(Billets.billet_silicon), new ItemStack(CircuitV2.circuit_silicon));
 
 		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_iron), new ItemStack(Armory.gun_revolver_iron_ammo));
 		addRecipe(PressType.THREEFIFESEVEN, new ComparableStack(Armory.assembly_steel), new ItemStack(Armory.gun_revolver_ammo));

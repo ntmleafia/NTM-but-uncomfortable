@@ -43,7 +43,7 @@ public class SolderingRecipes {
 		
 		recipes.add(new SolderingRecipe(new ItemStack(CircuitV2.integrated), 200, 250,
 				new AStack[] {
-						new ComparableStack(CircuitV2.analog,4)},
+						new ComparableStack(CircuitV2.chip,4)},
 				new AStack[] {
 						new ComparableStack(CircuitV2.pcb,4)},
 				new AStack[] {

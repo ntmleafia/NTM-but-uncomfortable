@@ -170,6 +170,8 @@ public class OreDictManager {
 	public static final DictFrame CO = new DictFrame("Cobalt");
 	/** BORON */
 	public static final DictFrame B = new DictFrame("Boron");
+	/** SILICON */
+	public static final DictFrame SI = new DictFrame("Silicon");
 	public static final DictFrame GRAPHITE = new DictFrame("Graphite");
 	public static final DictFrame DURA = new DictFrame("DuraSteel");
 	public static final DictFrame POLYMER = new DictFrame("Polymer");

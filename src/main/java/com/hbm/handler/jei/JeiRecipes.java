@@ -63,6 +63,7 @@ public class JeiRecipes {
 	private static List<GasCentRecipe> gasCentRecipes = null;
 	private static List<ReactorRecipe> reactorRecipes = null;
 	private static List<WasteDrumRecipe> wasteDrumRecipes = null;
+	private static List<WishRecipe> wishRecipes = null;
 	private static List<StorageDrumRecipe> storageDrumRecipes = null;
 	private static List<RBMKFuelRecipe> rbmkFuelRecipes = null;
 	private static List<RefineryRecipe> refineryRecipes = null;
@@ -331,6 +332,23 @@ public class JeiRecipes {
 			this.output = output; 
 		}
 		
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInput(VanillaTypes.ITEM, input);
+			ingredients.setOutput(VanillaTypes.ITEM, output);
+		}
+	}
+
+	public static class WishRecipe implements IRecipeWrapper {
+
+		private final ItemStack input;
+		private final ItemStack output;
+
+		public WishRecipe(ItemStack input, ItemStack output) {
+			this.input = input;
+			this.output = output;
+		}
+
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			ingredients.setInput(VanillaTypes.ITEM, input);
@@ -1052,6 +1070,18 @@ public class JeiRecipes {
 		}
 		
 		return wasteDrumRecipes;
+	}
+
+	public static List<WishRecipe> getWishRecipes(){
+		if(wishRecipes != null)
+			return wishRecipes;
+		wishRecipes = new ArrayList<WishRecipe>();
+
+		for(Map.Entry<AStack, ItemStack> entry : WishRecipes.diRecipes.entrySet()){
+			wishRecipes.add(new WishRecipe(entry.getKey().getStack(), entry.getValue()));
+		}
+
+		return wishRecipes;
 	}
 
 	public static List<StorageDrumRecipe> getStorageDrumRecipes(){

@@ -31,6 +31,7 @@ import com.leafia.contents.machines.elevators.floors.EvFloor;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderBlock;
 import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryBlock;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
+import com.leafia.contents.machines.manfacturing.wish.WishBlock;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
@@ -1232,7 +1233,10 @@ public class ModBlocks {
 	public static final Block machine_arc_furnace_on = new MachineArcFurnace(Material.IRON, true, "machine_arc_furnace_on").setHardness(5.0F).setLightLevel(1.0F).setResistance(10.0F);
 	public static final int guiID_electric_furnace = 16;
 	public static final int guiID_machine_arc = 82;
-	
+
+	public static final Block wish_crucible = new WishBlock(Material.IRON, "wish_crucible").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final int guiID_wish = 182;
+
 	public static final int guiID_microwave = 98;
 	public static final Block machine_microwave = new MachineMicrowave(Material.IRON, "machine_microwave").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	

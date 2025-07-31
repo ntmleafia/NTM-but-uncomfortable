@@ -51,6 +51,7 @@ public class JEIConfig implements IModPlugin {
 	public static final String SILEX_GAMMA = "hbm.silexgamma";
 	public static final String SILEX_DIGAMMA = "hbm.silexdigamma";
 	public static final String WASTEDRUM = "hbm.waste_drum";
+	public static final String WISH = "hbm.wish_crucible";
 	public static final String STORAGEDRUM = "hbm.storage_drum";
 	public static final String SMITHING = "hbm.smithing";
 	public static final String ANVIL = "hbm.anvil";
@@ -96,6 +97,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_solar_boiler), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.heat_boiler), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.rbmk_heater), BOILER);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.wish_crucible), WISH);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_soldering),SOLDERING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_centrifuge), CENTRIFUGE);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_combine_factory), CMB);
@@ -153,6 +155,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getGasCentrifugeRecipes(), GAS_CENT);
 		registry.addRecipes(JeiRecipes.getReactorRecipes(), REACTOR);
 		registry.addRecipes(JeiRecipes.getWasteDrumRecipes(), WASTEDRUM);
+		registry.addRecipes(JeiRecipes.getWishRecipes(), WISH);
 		registry.addRecipes(JeiRecipes.getStorageDrumRecipes(), STORAGEDRUM);
 		registry.addRecipes(JeiRecipes.getRefineryRecipe(), REFINERY);
 		registry.addRecipes(JeiRecipes.getCrackingRecipe(), CRACKING);

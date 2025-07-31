@@ -65,6 +65,5 @@ public class SolderingBlock extends BlockDummyable {
 	@Override
 	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
 		super.addInformation(stack,player,tooltip,advanced);
-		MachineTooltip.addWIP(tooltip);
 	}
 }

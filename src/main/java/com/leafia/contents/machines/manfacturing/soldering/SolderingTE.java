@@ -11,12 +11,16 @@ import com.hbm.inventory.UpgradeManager;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.ForgeDirection;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
+import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import com.leafia.dev.optimization.LeafiaParticlePacket.FiaSpark;
 import com.llib.group.LeafiaSet;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -27,6 +31,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -196,6 +202,9 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 			case 6:
 				this.processTime = (int)value;
 				break;
+			case 7:
+				this.display = (ItemStack)value;
+				break;
 		}
 	}
 
@@ -207,7 +216,7 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 				collisionPrevention = !collisionPrevention;
 			else if (signal == 1)
 				tank.drain(8192,true);
-			startPacket().__sendToListeners();
+			//startPacket().__sendToListeners();
 		}
 	}
 
@@ -234,6 +243,19 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 				new DirPos(pos.add(- dir.offsetX + rot.offsetX * 2, 0, - dir.offsetZ + rot.offsetZ * 2), rot),
 		};
 	}
+	AudioWrapper client_sfx = null;
+	boolean sfxPlaying = false;
+
+	@Override
+	public void invalidate() {
+		if (sfxPlaying && client_sfx != null) {
+			client_sfx.stopSound();
+			client_sfx = null;
+			sfxPlaying = false;
+		}
+		super.invalidate();
+	}
+
 	@Override
 	public void update() {
 		// thanks alcater
@@ -291,25 +313,43 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 				}
 
 			} else {
-				this.display = null;
+				this.display = inventory.getStackInSlot(6).isEmpty() ? null : inventory.getStackInSlot(6);
 				this.progress = 0;
 				this.consumption = 100;
 				intendedMaxPower = 2000;
 			}
 
+			startPacket().__sendToListeners();
 			this.maxPower = Math.max(intendedMaxPower, power);
-			LeafiaPacket._start(this).__write(1,wasOn).__sendToAffectedClients();
-		} else if(wasOn){
-			if(world.getTotalWorldTime() % 20 == 0) {
-				ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - 10);
-				ForgeDirection rot = dir.getRotation(ForgeDirection.UP);
+			LeafiaPacket._start(this).__write(1,wasOn).__write(7,display).__sendToAffectedClients();
+		} else {
+			if (client_sfx == null)
+				client_sfx = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.crafting_tech1_part,SoundCategory.BLOCKS,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f,1,1);
+			if(wasOn){
+				if (!sfxPlaying) {
+					sfxPlaying = true;
+					client_sfx.startSound();
+				}
+				if(world.getTotalWorldTime() % 4 == world.rand.nextInt(4)) {
+					ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - 10);
+					ForgeDirection rot = dir.getRotation(ForgeDirection.UP);
+				/*
 				NBTTagCompound data = new NBTTagCompound();
 				data.setString("type", "tau");
 				data.setByte("count", (byte) 3);
 				data.setDouble("posX", pos.getX() + 0.5 - dir.offsetX * 0.5 + rot.offsetX * 0.5);
 				data.setDouble("posY", pos.getY() + 1.125);
 				data.setDouble("posZ", pos.getZ() + 0.5 - dir.offsetZ * 0.5 + rot.offsetZ * 0.5);
-				MainRegistry.proxy.effectNT(data);
+				MainRegistry.proxy.effectNT(data);*/
+					FiaSpark spark = new FiaSpark();
+					spark.color = 0xFFEE80;
+					spark.count = world.rand.nextInt(3)+1;
+					spark.thickness = 0.014f;
+					spark.emitLocal(new Vec3d(pos.getX() + 0.5 - dir.offsetX * 0.5 + rot.offsetX * 0.5,pos.getY() + 1.125,pos.getZ() + 0.5 - dir.offsetZ * 0.5 + rot.offsetZ * 0.5),new Vec3d(0,1,0));
+				}
+			} else if (sfxPlaying) {
+				sfxPlaying = false;
+				client_sfx.stopSound();
 			}
 		}
 	}

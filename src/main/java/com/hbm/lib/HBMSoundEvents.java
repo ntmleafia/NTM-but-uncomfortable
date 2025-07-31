@@ -304,6 +304,7 @@ public final class HBMSoundEvents {
 	public static SoundEvent UI_BUTTON_INVALID;
 	public static SoundEvent mus_sfx_a_lithit;
 	public static SoundEvent crucifix;
+	public static SoundEvent crafting_tech1_part;
 	
 	
 	public static void init() {
@@ -560,6 +561,7 @@ public final class HBMSoundEvents {
 		UI_BUTTON_INVALID = register("ui.button.invalid");
 		mus_sfx_a_lithit = register("external.mus_sfx_a_lithit");
 		crucifix = register("external.lsplash.crucifix");
+		crafting_tech1_part = register("external.crafting_tech1_part");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

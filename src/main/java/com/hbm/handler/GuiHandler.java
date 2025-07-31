@@ -30,6 +30,9 @@ import com.leafia.contents.machines.elevators.gui.EvCabinGUI;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.manfacturing.soldering.container.SolderingContainer;
 import com.leafia.contents.machines.manfacturing.soldering.container.SolderingGUI;
+import com.leafia.contents.machines.manfacturing.wish.WishContainer;
+import com.leafia.contents.machines.manfacturing.wish.WishGUI;
+import com.leafia.contents.machines.manfacturing.wish.WishTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
@@ -280,6 +283,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_electric_furnace:
 				if(entity instanceof TileEntityMachineElectricFurnace) {
 					return new ContainerElectricFurnace(player.inventory, (TileEntityMachineElectricFurnace) entity);
+				}
+				return null;
+			case ModBlocks.guiID_wish:
+				if(entity instanceof WishTE te) {
+					return new WishContainer(player.inventory, te);
 				}
 				return null;
 			case ModBlocks.guiID_machine_arc:
@@ -911,6 +919,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_electric_furnace:
 				if(entity instanceof TileEntityMachineElectricFurnace) {
 					return new GUIMachineElectricFurnace(player.inventory, (TileEntityMachineElectricFurnace) entity);
+				}
+				return null;
+			case ModBlocks.guiID_wish:
+				if(entity instanceof WishTE te) {
+					return new WishGUI(player.inventory, te);
 				}
 				return null;
 			case ModBlocks.guiID_machine_arc:

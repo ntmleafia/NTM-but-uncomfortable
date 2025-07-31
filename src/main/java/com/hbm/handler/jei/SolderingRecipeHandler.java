@@ -27,7 +27,7 @@ public class SolderingRecipeHandler implements IRecipeCategory<SolderingRecipe> 
 
 	@Override
 	public String getTitle() {
-		return I18nUtil.resolveKey("tile.machine_soldering");
+		return I18nUtil.resolveKey("tile.machine_soldering.name");
 	}
 
 	@Override

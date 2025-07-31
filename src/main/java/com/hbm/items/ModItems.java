@@ -766,6 +766,7 @@ public class ModItems {
 		public static class Ingots {
 
 			//Materials
+			public static final Item ingot_silicon = new ItemBase("ingot_silicon").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_steel = new ItemBase("ingot_steel").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_titanium = new ItemBase("ingot_titanium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_copper = new ItemBase("ingot_copper").setCreativeTab(MainRegistry.partsTab);
@@ -998,6 +999,7 @@ public class ModItems {
 		}
 		public static class Nuggies {
 
+			public static final Item nugget_silicon = new ItemBase("nugget_silicon").setCreativeTab(MainRegistry.partsTab);
 			public static final Item nugget_uranium = new ItemHazard(ALPHA,ItemHazard.u * ItemHazard.nugget, "nugget_uranium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item nugget_u233 = new ItemHazard(ALPHA,ItemHazard.u233 * ItemHazard.nugget, "nugget_u233").setCreativeTab(MainRegistry.partsTab);
 			public static final Item nugget_u235 = new ItemHazard(ALPHA,ItemHazard.u235 * ItemHazard.nugget, "nugget_u235").setCreativeTab(MainRegistry.partsTab);
@@ -1063,6 +1065,7 @@ public class ModItems {
 		}
 		public static class Billets {
 
+			public static final Item billet_silicon = new ItemBase("billet_silicon").setCreativeTab(MainRegistry.partsTab);
 			public static final Item billet_th232 = new ItemHazard(ALPHA,ItemHazard.th232 * ItemHazard.billet, "billet_th232").setCreativeTab(MainRegistry.partsTab);
 			public static final Item billet_uranium = new ItemHazard(ALPHA,ItemHazard.u * ItemHazard.billet, "billet_uranium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item billet_u233 = new ItemHazard(ALPHA,ItemHazard.u233 * ItemHazard.billet, "billet_u233").setCreativeTab(MainRegistry.partsTab);
@@ -2315,6 +2318,8 @@ public class ModItems {
 		public static final Item chip = new ItemBase("circuitv2_chip").setCreativeTab(MainRegistry.partsTab);
 		public static final Item capacitor_tantalium = new ItemBase("circuitv2_capacitor_tantalium").setCreativeTab(MainRegistry.partsTab);
 		public static final Item capacitor_board = new ItemBase("circuitv2_capacitor_board").setCreativeTab(MainRegistry.partsTab);
+
+		public static final Item circuit_silicon = new ItemCustomLore("circuit_silicon").setCreativeTab(MainRegistry.partsTab);
 	}
 
 	//Wires and things

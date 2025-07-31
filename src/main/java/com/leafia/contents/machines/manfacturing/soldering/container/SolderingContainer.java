@@ -15,7 +15,6 @@ public class SolderingContainer extends LeafiaItemTransferable {
 	SolderingTE te;
 	public SolderingContainer(InventoryPlayer invPlayer,SolderingTE te) {
 		te.listeners.add(invPlayer.player);
-		LeafiaDebug.debugLog(te.getWorld(),"hello how are you");
 		this.te = te;
 		//Inputs
 		for (int i = 0; i < 2; i++)

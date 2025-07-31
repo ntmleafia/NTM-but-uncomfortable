@@ -309,5 +309,6 @@
   "elevators.skyliftarrive": { "category": "block", "sounds": ["hbm:elevators/skylift_arrive"]},
   "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]},
   "external.mus_sfx_a_lithit": { "category": "block", "sounds": ["hbm:external/mus_sfx_a_lithit"]},
-  "external.lsplash.crucifix": { "category": "block", "sounds": ["hbm:external/lsplash_crucifix"]}
+  "external.lsplash.crucifix": { "category": "block", "sounds": ["hbm:external/lsplash_crucifix"]},
+  "external.crafting_tech1_part": { "category": "block", "sounds": ["hbm:external/crafting_tech1_part"]}
 }
