@@ -276,7 +276,7 @@ public class AssemblyFactoryTE extends TileEntityMachineBase implements LeafiaQu
 					else if (arm.state.equals(ArmActionState.EXTEND_STRIKER))
 						world.playSound(Minecraft.getMinecraft().player,pos,HBMSoundEvents.assemblerStrike,SoundCategory.BLOCKS,0.5f,1+(float)world.rand.nextGaussian()*0.05f);
 					else if (arm.state.equals(ArmActionState.WELD))
-						world.playSound(Minecraft.getMinecraft().player,pos,HBMSoundEvents.mechcrafting_weld,SoundCategory.BLOCKS,0.75f,1);
+						world.playSound(Minecraft.getMinecraft().player,pos,HBMSoundEvents.mechcrafting_weld,SoundCategory.BLOCKS,0.85f,1);
 				}
 				operating = true;
 			} else
