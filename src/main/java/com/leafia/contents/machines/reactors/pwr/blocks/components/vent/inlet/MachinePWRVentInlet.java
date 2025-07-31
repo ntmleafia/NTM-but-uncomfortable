@@ -106,7 +106,7 @@ public class MachinePWRVentInlet extends MachinePWRVentBase {
 			((TileEntityPWRVentInlet) te).rebuildMap();
 		}
 		if(world.getTileEntity(pos.offset(face.getOpposite())) instanceof TileEntityPWRVentDuct)
-			((TileEntityPWRVentDuct)world.getTileEntity(pos.offset(face.getOpposite()))).setType(ModForgeFluids.cryogel);
+			((TileEntityPWRVentDuct)world.getTileEntity(pos.offset(face.getOpposite()))).setType(ModForgeFluids.CRYOGEL);
 	}
 	@Override
 	public void neighborChanged(IBlockState state,World worldIn,BlockPos pos,Block blockIn,BlockPos fromPos) {

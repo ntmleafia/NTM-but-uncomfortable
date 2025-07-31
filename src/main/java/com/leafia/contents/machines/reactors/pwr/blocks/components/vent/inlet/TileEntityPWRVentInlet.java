@@ -134,7 +134,7 @@ public class TileEntityPWRVentInlet extends TileEntity implements IFluidHandler,
 				streams.remove(element);
 		}
 	}
-	Fluid fluid = ModForgeFluids.cryogel;
+	Fluid fluid = ModForgeFluids.CRYOGEL;
 	IFluidTankProperties inlet = new IFluidTankProperties() {
 		@Nullable @Override
 		public FluidStack getContents() { return null; }

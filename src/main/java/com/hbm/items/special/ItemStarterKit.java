@@ -406,7 +406,7 @@ public class ItemStarterKit extends Item {
 			player.inventory.addItemStackToInventory(new ItemStack(Item.getItemFromBlock(ModBlocks.nuke_prototype), 1));
 			player.inventory.addItemStackToInventory(new ItemStack(ModItems.igniter, 1));
 			for(int i = 0; i < 4; i ++)
-				player.inventory.addItemStackToInventory(ItemCell.getFullCell(ModForgeFluids.sas3));
+				player.inventory.addItemStackToInventory(ItemCell.getFullCell(ModForgeFluids.SAS3));
 			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_uranium, 1));
 			player.inventory.addItemStackToInventory(new ItemStack(RetroRods.rod_quad_lead, 1));

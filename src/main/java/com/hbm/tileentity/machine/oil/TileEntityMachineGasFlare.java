@@ -59,9 +59,9 @@ public class TileEntityMachineGasFlare extends TileEntityMachineBase implements 
 
 	public TileEntityMachineGasFlare() {
 		super(6);
-		tankType = ModForgeFluids.gas;
+		tankType = ModForgeFluids.GAS;
 		tank = new FluidTank(64000);
-		cacheEnergy = FluidCombustionRecipes.getFlameEnergy(ModForgeFluids.gas);
+		cacheEnergy = FluidCombustionRecipes.getFlameEnergy(ModForgeFluids.GAS);
 		needsUpdate = false;
 	}
 

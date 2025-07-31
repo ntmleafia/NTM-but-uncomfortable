@@ -81,7 +81,7 @@ public class TileEntityMachineFluidTank extends TileEntityMachineBase implements
 			FFUtils.fillFromFluidContainer(inventory, tank, 2, 3);
 			FFUtils.fillFluidContainer(inventory, tank, 4, 5);
 			
-			if(tank.getFluid() != null && (tank.getFluid().getFluid() == ModForgeFluids.amat || tank.getFluid().getFluid() == ModForgeFluids.aschrab)) {
+			if(tank.getFluid() != null && (tank.getFluid().getFluid() == ModForgeFluids.AMAT || tank.getFluid().getFluid() == ModForgeFluids.ASCHRAB)) {
 				world.destroyBlock(pos, false);
 				world.newExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 5, true, true);
 			}

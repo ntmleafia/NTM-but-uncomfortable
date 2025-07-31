@@ -31,7 +31,7 @@ public class TileEntityRBMKCooler extends TileEntityRBMKBase implements IFluidHa
 
 	public TileEntityRBMKCooler() {
 		super();
-		this.tank = new FluidTank(ModForgeFluids.cryogel, 0, 16000);
+		this.tank = new FluidTank(ModForgeFluids.CRYOGEL, 0, 16000);
 	}
 
 	public void getDiagData(NBTTagCompound nbt) {
@@ -163,7 +163,7 @@ public class TileEntityRBMKCooler extends TileEntityRBMKBase implements IFluidHa
 
 	@Override
 	public int fill(FluidStack resource, boolean doFill){
-		if(resource != null && resource.getFluid() == ModForgeFluids.cryogel){
+		if(resource != null && resource.getFluid() == ModForgeFluids.CRYOGEL){
 			return tank.fill(resource, doFill);
 		}
 		return 0;

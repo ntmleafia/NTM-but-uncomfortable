@@ -1246,12 +1246,12 @@ public class JeiRecipes {
 		if(fusionByproducts != null)
 			return fusionByproducts;
 		fusionByproducts = new ArrayList<>();
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_dt, FusionRecipes.getByproduct(ModForgeFluids.plasma_dt)));
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_hd, FusionRecipes.getByproduct(ModForgeFluids.plasma_hd)));
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_ht, FusionRecipes.getByproduct(ModForgeFluids.plasma_ht)));
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_xm, FusionRecipes.getByproduct(ModForgeFluids.plasma_xm)));
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_put, FusionRecipes.getByproduct(ModForgeFluids.plasma_put)));
-		fusionByproducts.add(new FusionRecipe(ModForgeFluids.plasma_bf, FusionRecipes.getByproduct(ModForgeFluids.plasma_bf)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_DT, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_DT)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_HD, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_HD)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_HT, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_HT)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_MX, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_MX)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_PUT, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_PUT)));
+		fusionByproducts.add(new FusionRecipe(ModForgeFluids.PLASMA_BF, FusionRecipes.getByproduct(ModForgeFluids.PLASMA_BF)));
 		return fusionByproducts;
 	}
 

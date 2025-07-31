@@ -91,8 +91,8 @@ public class TileEntityStorageDrum extends TileEntityMachineBase implements ITic
 				}
 			}
 			
-			this.tanks[0].fill(new FluidStack(ModForgeFluids.wastefluid, liquid), true);
-			this.tanks[1].fill(new FluidStack(ModForgeFluids.wastegas, gas), true);
+			this.tanks[0].fill(new FluidStack(ModForgeFluids.WASTEFLUID, liquid), true);
+			this.tanks[1].fill(new FluidStack(ModForgeFluids.WASTEGAS, gas), true);
 			
 			age++;
 			

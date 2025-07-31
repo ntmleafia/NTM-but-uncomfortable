@@ -103,7 +103,7 @@ public class TileEntityMachineDiesel extends TileEntityMachineBase implements IT
 					needsUpdate = true;
 
 			Fluid type = tank.getFluid() == null ? null : tank.getFluid().getFluid();
-			if(type != null && type == ModForgeFluids.nitan)
+			if(type != null && type == ModForgeFluids.NITAN)
 				powerCap = maxPower * 10;
 			else
 				powerCap = maxPower;

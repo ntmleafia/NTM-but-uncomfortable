@@ -37,8 +37,8 @@ public class TileEntitySolarBoiler extends TileEntity implements INBTPacketRecei
         tanks[0] = new FluidTank(FluidRegistry.WATER, 0, 16000);
         types[0] = FluidRegistry.WATER;
 
-        tanks[1] = new FluidTank(ModForgeFluids.steam, 0, 1600000);
-        types[1] = ModForgeFluids.steam;
+        tanks[1] = new FluidTank(ModForgeFluids.STEAM, 0, 1600000);
+        types[1] = ModForgeFluids.STEAM;
 
     }
 

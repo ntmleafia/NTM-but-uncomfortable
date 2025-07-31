@@ -91,7 +91,7 @@ public class CraftingManager {
 
 		addRecipeAuto(new ItemStack(ModBlocks.conveyor, 16), new Object[] { "LLL", "I I", "LLL", 'L', Items.LEATHER, 'I', IRON.ingot() });
 		addRecipeAuto(new ItemStack(ModBlocks.conveyor, 64), new Object[] { "LLL", "I I", "LLL", 'L', RUBBER.ingot(), 'I', IRON.ingot() });
-		addRecipeAuto(new ItemStack(ModBlocks.conveyor_express, 8), new Object[] { "CCC", "CLC", "CCC", 'C', ModBlocks.conveyor, 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)) });
+		addRecipeAuto(new ItemStack(ModBlocks.conveyor_express, 8), new Object[] { "CCC", "CLC", "CCC", 'C', ModBlocks.conveyor, 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.LUBRICANT)) });
 		addRecipeAuto(new ItemStack(ModBlocks.conveyor_double, 3), new Object[] { "CPC", "CPC", "CPC", 'C', ModBlocks.conveyor, 'P', IRON.plate() });
 		addRecipeAuto(new ItemStack(ModBlocks.conveyor_triple, 3), new Object[] { "CPC", "CPC", "CPC", 'C', ModBlocks.conveyor_double, 'P', STEEL.plate() });
 		addRecipeAuto(new ItemStack(ModBlocks.conveyor_chute, 3), new Object[] { "IGI", "IGI", "ICI" , 'I', IRON.ingot(), 'G', ModBlocks.steel_grate, 'C', ModBlocks.conveyor });
@@ -135,7 +135,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(Items.GUNPOWDER, 3), S.dust(), KNO.dust(), new ItemStack(Items.COAL, 1, 1));
 
 		addRecipeAuto(new ItemStack(ModItems.cell, 6), "SSS", "G G", "SSS", 'S', STEEL.plate(), 'G', KEY_ANYPANE);
-		addRecipeAuto(ItemCell.getFullCell(ModForgeFluids.deuterium, 8), "DDD", "DTD", "DDD", 'D', new IngredientNBT2(new ItemStack(ModItems.cell)), 'T', ModItems.mike_deut);
+		addRecipeAuto(ItemCell.getFullCell(ModForgeFluids.DEUTERIUM, 8), "DDD", "DTD", "DDD", 'D', new IngredientNBT2(new ItemStack(ModItems.cell)), 'T', ModItems.mike_deut);
 
 		addRecipeAuto(new ItemStack(ModItems.canister_generic, 2), "S ", "AA", "AA", 'S', STEEL.plate(), 'A', AL.plate());
 		addRecipeAuto(new ItemStack(ModBlocks.yellow_barrel, 1), " D ", "LTL", 'D', ModBlocks.block_waste, 'T', ModItems.tank_steel, 'L', PB.plate());
@@ -504,9 +504,9 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(RetroRods.rod_lithium, 1), RetroRods.rod_empty, LI.ingot());
 		addShapelessAuto(new ItemStack(RetroRods.rod_dual_lithium, 1), RetroRods.rod_dual_empty, LI.ingot(), LI.ingot());
 		addShapelessAuto(new ItemStack(RetroRods.rod_quad_lithium, 1), RetroRods.rod_quad_empty, LI.ingot(), LI.ingot(), LI.ingot(), LI.ingot());
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.tritium, 1), RetroRods.rod_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)));
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.tritium, 2), RetroRods.rod_dual_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)));
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.tritium, 4), RetroRods.rod_quad_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)));
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.TRITIUM, 1), RetroRods.rod_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)));
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.TRITIUM, 2), RetroRods.rod_dual_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)));
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.TRITIUM, 4), RetroRods.rod_quad_tritium, new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)), new IngredientNBT2(new ItemStack(ModItems.cell)));
 
 		addShapelessAuto(new ItemStack(RetroRods.rod_empty, 4), RetroRods.rod_quad_empty);
 		addShapelessAuto(new ItemStack(RetroRods.rod_quad_empty, 1), RetroRods.rod_empty, RetroRods.rod_empty, RetroRods.rod_empty, RetroRods.rod_empty);
@@ -707,11 +707,11 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.ducttape, 6), "FSF", "SPS", "FSF", 'F', Items.STRING, 'S', Items.SLIME_BALL, 'P', Items.PAPER);
 		addRecipeAuto(new ItemStack(ModItems.ball_resin), "DD", "DD", 'D', Blocks.YELLOW_FLOWER);
 
-		addShapelessAuto(new ItemStack(ModItems.missile_taint, 1), ModItems.missile_assembly, new IngredientContainsTag(FluidUtil.getFilledBucket(new FluidStack(ModForgeFluids.mud_fluid, 1000))), Powders.powder_spark_mix, Powders.powder_magic);
+		addShapelessAuto(new ItemStack(ModItems.missile_taint, 1), ModItems.missile_assembly, new IngredientContainsTag(FluidUtil.getFilledBucket(new FluidStack(ModForgeFluids.MUD_FLUID, 1000))), Powders.powder_spark_mix, Powders.powder_magic);
 		addShapelessAuto(new ItemStack(ModItems.missile_micro, 1), ModItems.missile_assembly, ModItems.ducttape, Armory.ammo_nuke);
 		addShapelessAuto(new ItemStack(ModItems.missile_bhole, 1), ModItems.missile_assembly, ModItems.ducttape, Armory.grenade_black_hole);
 		addShapelessAuto(new ItemStack(ModItems.missile_schrabidium, 1), ModItems.missile_assembly, ModItems.ducttape, Armory.grenade_aschrab);
-		addShapelessAuto(new ItemStack(ModItems.missile_schrabidium, 1), ModItems.missile_assembly, ModItems.ducttape, new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.sas3)), ModItems.circuit_targeting_tier4);
+		addShapelessAuto(new ItemStack(ModItems.missile_schrabidium, 1), ModItems.missile_assembly, ModItems.ducttape, new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.SAS3)), ModItems.circuit_targeting_tier4);
 		addShapelessAuto(new ItemStack(ModItems.missile_emp, 1), ModItems.missile_assembly, ModItems.ducttape, ModBlocks.emp_bomb, ModItems.circuit_targeting_tier3);
 		addShapelessAuto(new ItemStack(ModItems.missile_anti_ballistic, 1), ModItems.missile_generic, ModItems.circuit_targeting_tier3);
 
@@ -810,7 +810,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.blades_schrabidium, 1), "PIP", 'P', SA326.plate(), 'I', new ItemStack(ModItems.blades_schrabidium, 1, OreDictionary.WILDCARD_VALUE));
 
 		addRecipeAuto(new ItemStack(ModItems.laser_crystal_nano, 1), "QPQ", "ACA", "QPQ", 'Q', ModBlocks.glass_quartz, 'P', GRAPHITE.ingot(), 'A', ANY_PLASTIC.dust(), 'C', ModItems.filter_coal);
-		addRecipeAuto(new ItemStack(ModItems.laser_crystal_pentacene, 1), "QSQ", "AEA", "QSQ", 'Q', ModBlocks.glass_quartz, 'A', ALLOY.dust(), 'S', CE.ingot(), 'E', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.biogas)));
+		addRecipeAuto(new ItemStack(ModItems.laser_crystal_pentacene, 1), "QSQ", "AEA", "QSQ", 'Q', ModBlocks.glass_quartz, 'A', ALLOY.dust(), 'S', CE.ingot(), 'E', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.BIOGAS)));
 		addRecipeAuto(new ItemStack(ModItems.laser_crystal_co2, 1), "QDQ", "NCN", "QDQ", 'Q', ModBlocks.glass_quartz, 'D', DESH.ingot(), 'N', NB.ingot(), 'C', ModItems.part_carbon);
 		addRecipeAuto(new ItemStack(ModItems.laser_crystal_bismuth, 1), "QUQ", "BCB", "QTQ", 'Q', ModBlocks.glass_quartz, 'U', U.ingot(), 'T', TH232.ingot(), 'B', ANY_BISMOID.nugget(), 'C', Crystals.crystal_rare);
 		addRecipeAuto(new ItemStack(ModItems.laser_crystal_cmb, 1), "QBQ", "CSC", "QBQ", 'Q', ModBlocks.glass_quartz, 'B', STAR.ingot(), 'C', PB209.nugget(), 'S', XE135.dust());
@@ -981,7 +981,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire, 16), "AIA", "I I", "AIA", 'A', ModItems.wire_aluminium, 'I', IRON.ingot());
 		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_fire, 8), "BBB", "BIB", "BBB", 'B', ModBlocks.barbed_wire, 'I', P_RED.dust());
 		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_poison, 8), "BBB", "BIB", "BBB", 'B', ModBlocks.barbed_wire, 'I', Powders.powder_poison);
-		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_acid, 8), "BBB", "BIB", "BBB", 'B', ModBlocks.barbed_wire, 'I', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.acid)));
+		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_acid, 8), "BBB", "BIB", "BBB", 'B', ModBlocks.barbed_wire, 'I', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.ACID)));
 		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_wither, 8), "BBB", "BIB", "BBB", 'B', ModBlocks.barbed_wire, 'I', new ItemStack(Items.SKULL, 1, 1));
 		addRecipeAuto(new ItemStack(ModBlocks.barbed_wire_ultradeath, 4), "BCB", "CIC", "BCB", 'B', ModBlocks.barbed_wire, 'C', Powders.powder_cloud, 'I', ModItems.nuclear_waste);
 
@@ -1032,10 +1032,10 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.gun_osipr, 1), "CCT", "WWI", "MCC", 'C', CMB.plate(), 'T', W.ingot(), 'W', ModItems.wire_magnetized_tungsten, 'I', Armory.mechanism_rifle_2, 'M', ModItems.coil_magnetized_tungsten);
 		addRecipeAuto(new ItemStack(Armory.gun_immolator, 1), "WCC", "PMT", "WAA", 'W', ModItems.wire_gold, 'C', CU.plate(), 'P', ALLOY.plate(), 'M', Armory.mechanism_launcher_1, 'T', ModItems.tank_steel, 'A', STEEL.plate());
 		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 16), "SPS", "PCP", "SPS", 'S', STEEL.plate(), 'C', COAL.dust(), 'P', P_RED.dust());
-		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 16), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)));
-		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 16), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.kerosene)));
+		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 16), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)));
+		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 16), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.KEROSENE)));
 		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 24), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', ModItems.canister_napalm);
-		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 32), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.nitan)));
+		addRecipeAuto(new ItemStack(Armory.gun_immolator_ammo, 32), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.NITAN)));
 		addRecipeAuto(new ItemStack(Armory.gun_cryolator, 1), "SSS", "IWL", "LMI", 'S', STEEL.plate(), 'I', IRON.plate(), 'L', Items.LEATHER, 'M', Armory.mechanism_launcher_1, 'W', ModItems.wire_aluminium);
 		addRecipeAuto(new ItemStack(Armory.gun_cryolator_ammo, 16), "SPS", "PCP", "SPS", 'S', STEEL.plate(), 'C', KNO.dust(), 'P', Items.SNOWBALL);
 		addRecipeAuto(new ItemStack(Armory.gun_cryolator_ammo, 16), " F ", "SFS", " F ", 'S', STEEL.plate(), 'F', Powders.powder_ice);
@@ -1059,7 +1059,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.gun_bolt_action_saturnite, 1), "PPI", "SWD", 'P', BIGMT.plate(), 'I', Armory.mechanism_rifle_1, 'S', Items.STICK, 'D', KEY_PLANKS, 'W', ModItems.wire_tungsten);
 		addRecipeAuto(new ItemStack(Armory.gun_b92, 1), "DDD", "SSC", "  R", 'D', ModItems.plate_dineutronium, 'S', STAR.ingot(), 'C', ModItems.circuit_targeting_tier6, 'R', Armory.gun_revolver_schrabidium);
 		addRecipeAuto(new ItemStack(Armory.gun_b92_ammo, 1), "PSP", "ESE", "PSP", 'P', STEEL.plate(), 'S', STAR.ingot(), 'E', Powders.powder_spark_mix);
-		addShapelessAuto(new ItemStack(Armory.weaponized_starblaster_cell, 1), new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.acid)), new IngredientContainsTag(GunB92Cell.getFullCell()), ModItems.wire_copper);
+		addShapelessAuto(new ItemStack(Armory.weaponized_starblaster_cell, 1), new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.ACID)), new IngredientContainsTag(GunB92Cell.getFullCell()), ModItems.wire_copper);
 		addRecipeAuto(new ItemStack(Armory.gun_uzi, 1), "SMS", " PB", " P ", 'S', STEEL.ingot(), 'M', Armory.mechanism_rifle_2, 'P', STEEL.plate(), 'B', ModItems.bolt_dura_steel);
 		addRecipeAuto(new ItemStack(Armory.gun_uzi_silencer, 1), "P  ", " P ", "  U", 'P', ANY_PLASTIC.ingot(), 'U', Armory.gun_uzi);
 		addRecipeAuto(new ItemStack(Armory.gun_uzi_saturnite, 1), "SMS", " PB", " P ", 'S', BIGMT.ingot(), 'M', Armory.mechanism_rifle_2, 'P', BIGMT.plate(), 'B', ModItems.bolt_tungsten);
@@ -1111,7 +1111,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.gun_revolver_nightmare2_ammo, 12), "I", "C", "P", 'I', Powders.powder_power, 'C', Armory.casing_buckshot, 'P', Armory.primer_buckshot);
 		addRecipeAuto(new ItemStack(Armory.assembly_calamity, 12), " I ", "GCG", " P ", 'I', PB.ingot(), 'G', ModItems.cordite, 'C', Armory.casing_50, 'P', Armory.primer_50);
 		addRecipeAuto(new ItemStack(Armory.assembly_actionexpress, 12), " I", "GC", " P", 'I', PB.ingot(), 'G', ModItems.cordite, 'C', Armory.casing_50, 'P', Armory.primer_50);
-		addRecipeAuto(new ItemStack(Armory.ammo_dart, 16), "IPI", "ICI", "IPI", 'I', ModItems.plate_polymer, 'P', IRON.plate(), 'C', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.watz)));
+		addRecipeAuto(new ItemStack(Armory.ammo_dart, 16), "IPI", "ICI", "IPI", 'I', ModItems.plate_polymer, 'P', IRON.plate(), 'C', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.WATZ)));
 
 		addRecipeAuto(new ItemStack(Armory.ammo_12gauge_incendiary, 8), "BBB", "BAB", "BBB", 'B', Armory.ammo_12gauge, 'A', P_RED.dust());
 		addRecipeAuto(new ItemStack(Armory.ammo_12gauge_shrapnel, 8), "BBB", "BAB", "BBB", 'B', Armory.ammo_12gauge, 'A', ModBlocks.gravel_obsidian);
@@ -1174,9 +1174,9 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.ammo_rocket_glare, 1), "GGG", "GRG", "GGG", 'G', Items.REDSTONE, 'R', Armory.ammo_rocket);
 		addRecipeAuto(new ItemStack(Armory.ammo_rocket_toxic, 1), "G", "R", 'G', ModItems.pellet_gas, 'R', Armory.ammo_rocket);
 		addRecipeAuto(new ItemStack(Armory.ammo_rocket_nuclear, 1), " P ", "NRN", " P ", 'P', PU239.nugget(), 'N', OreDictManager.getReflector(), 'R', Armory.ammo_rocket);
-		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
-		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.petroil)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
-		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.biofuel)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
+		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
+		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.PETROIL)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
+		addRecipeAuto(new ItemStack(Armory.ammo_rocket_rpc, 2), "BP ", "CBH", " DR", 'B', ModItems.blades_steel, 'P', STEEL.plate(), 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.BIOFUEL)), 'H', ModItems.hull_small_steel, 'D', ModItems.piston_selenium, 'R', Armory.ammo_rocket);
 		addRecipeAuto(new ItemStack(Armory.ammo_rocket_sleek, 64), "GGG", "GRG", "GGG", 'G', Armory.ammo_rocket, 'R', ModItems.coin_maskman);
 
 		addRecipeAuto(new ItemStack(Armory.ammo_grenade, 2), " T ", "GCI", 'T', ANY_HIGHEXPLOSIVE.ingot(), 'G', ANY_SMOKELESS.dust(), 'C', Armory.casing_50, 'I', IRON.plate());
@@ -1231,12 +1231,12 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.grenade_frag, 2), " G ", "WGW", " K ", 'G', Armory.grenade_generic, 'W', Item.getItemFromBlock(Blocks.PLANKS), 'K', Item.getItemFromBlock(Blocks.GRAVEL));
 		addRecipeAuto(new ItemStack(Armory.grenade_poison, 2), " G ", "PGP", " P ", 'G', Armory.grenade_generic, 'P', Powders.powder_poison);
 		addRecipeAuto(new ItemStack(Armory.grenade_gas, 2), " G ", "CGC", " C ", 'G', Armory.grenade_generic, 'C', ModItems.pellet_gas);
-		addRecipeAuto(new ItemStack(Armory.grenade_aschrab, 1), "RS ", "ITI", " S ", 'I', "paneGlassColorless", 'R', ModItems.wire_red_copper, 'S', STEEL.plate(), 'T', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.aschrab)));
+		addRecipeAuto(new ItemStack(Armory.grenade_aschrab, 1), "RS ", "ITI", " S ", 'I', "paneGlassColorless", 'R', ModItems.wire_red_copper, 'S', STEEL.plate(), 'T', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.ASCHRAB)));
 		addRecipeAuto(new ItemStack(Armory.grenade_mk2, 2), " G ", "SGS", " S ", 'G', Armory.grenade_strong, 'S', Items.GUNPOWDER);
-		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)), Items.FLINT);
-		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.biofuel)), Items.FLINT);
-		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.petroil)), Items.FLINT);
-		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.kerosene)), Items.FLINT);
+		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)), Items.FLINT);
+		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.BIOFUEL)), Items.FLINT);
+		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.PETROIL)), Items.FLINT);
+		addShapelessAuto(new ItemStack(Armory.grenade_gascan, 1), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.KEROSENE)), Items.FLINT);
 		addShapelessAuto(new ItemStack(Armory.grenade_lemon, 1), Foods.lemon, Armory.grenade_strong);
 		addShapelessAuto(new ItemStack(Armory.gun_moist_nugget, 12), Items.BREAD, Items.WHEAT, Items.COOKED_CHICKEN, Items.EGG);
 		addRecipeAuto(new ItemStack(Armory.grenade_smart, 4), " A ", "ACA", " A ", 'A', Armory.grenade_strong, 'C', ModItems.circuit_aluminium);
@@ -1280,7 +1280,7 @@ public class CraftingManager {
 
 		addRecipeAuto(new ItemStack(Foods.can_empty, 1), "P", "P", 'P', AL.plate());
 		addShapelessAuto(new ItemStack(Foods.can_smart, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, KNO.dust());
-		addShapelessAuto(new ItemStack(Foods.can_creature, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)));
+		addShapelessAuto(new ItemStack(Foods.can_creature, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)));
 		addShapelessAuto(new ItemStack(Foods.can_redbomb, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, ModItems.pellet_cluster);
 		addShapelessAuto(new ItemStack(Foods.can_mrsugar, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, F.dust());
 		addShapelessAuto(new ItemStack(Foods.can_overcharge, 1), Foods.can_empty, Items.POTIONITEM, Items.SUGAR, S.dust());
@@ -1353,7 +1353,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.pellet_gas, 2), Items.WATER_BUCKET, "dustGlowstone", STEEL.plate(), Ingots.ingot_iodine);
 
 		addRecipeAuto(new ItemStack(ModItems.flame_pony, 1), " O ", "DPD", " O ", 'D', new ItemStack(Items.DYE, 1, 11), 'O', new ItemStack(Items.DYE, 1, 9), 'P', Items.PAPER);
-		addRecipeAuto(new ItemStack(ModItems.flame_conspiracy, 1), " S ", "STS", " S ", 'S', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)), 'T', STEEL.ingot());
+		addRecipeAuto(new ItemStack(ModItems.flame_conspiracy, 1), " S ", "STS", " S ", 'S', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)), 'T', STEEL.ingot());
 		addRecipeAuto(new ItemStack(ModItems.flame_politics, 1), " I ", "IPI", " I ", 'P', Items.PAPER, 'I', new ItemStack(Items.DYE, 1, 0));
 		addRecipeAuto(new ItemStack(ModItems.flame_opinion, 1), " R ", "RPR", " R ", 'P', Items.PAPER, 'R', new ItemStack(Items.DYE, 1, 1));
 
@@ -1371,8 +1371,8 @@ public class CraftingManager {
 
 		addRecipeAuto(new ItemStack(ModItems.custom_tnt, 1), " C ", "TIT", "TIT", 'C', CU.plate(), 'I', IRON.plate(), 'T', ANY_HIGHEXPLOSIVE.ingot());
 		addRecipeAuto(new ItemStack(ModItems.custom_nuke, 1), " C ", "LUL", "LUL", 'C', CU.plate(), 'L', PB.plate(), 'U', U235.ingot());
-		addRecipeAuto(new ItemStack(ModItems.custom_hydro, 1), " C ", "LTL", "LIL", 'C', CU.plate(), 'L', PB.plate(), 'I', IRON.plate(), 'T', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)));
-		addRecipeAuto(new ItemStack(ModItems.custom_amat, 1), " C ", "MMM", "AAA", 'C', CU.plate(), 'A', AL.plate(), 'M', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)));
+		addRecipeAuto(new ItemStack(ModItems.custom_hydro, 1), " C ", "LTL", "LIL", 'C', CU.plate(), 'L', PB.plate(), 'I', IRON.plate(), 'T', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)));
+		addRecipeAuto(new ItemStack(ModItems.custom_amat, 1), " C ", "MMM", "AAA", 'C', CU.plate(), 'A', AL.plate(), 'M', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)));
 		addRecipeAuto(new ItemStack(ModItems.custom_dirty, 1), " C ", "WLW", "WLW", 'C', CU.plate(), 'L', PB.plate(), 'W', ModItems.nuclear_waste);
 		addRecipeAuto(new ItemStack(ModItems.custom_schrab, 1), " C ", "LUL", "LUL", 'C', CU.plate(), 'L', PB.plate(), 'U', SA326.ingot());
 		addRecipeAuto(new ItemStack(ModItems.custom_sol, 1), " C ", "LUL", "LUL", 'C', CU.plate(), 'L', PB.plate(), 'U', SA327.ingot());
@@ -1387,8 +1387,8 @@ public class CraftingManager {
 		addRecipeAuto(ItemBattery.getEmptyBattery(Batteries.battery_schrabidium), " A ", "PSP", "PNP", 'A', ModItems.wire_schrabidium, 'P', SA326.plate(), 'S', SA326.dust(), 'N', NP237.dust());
 		addRecipeAuto(ItemBattery.getEmptyBattery(Batteries.battery_trixite), " A ", "PSP", "PTP", 'A', ModItems.wire_aluminium, 'P', AL.plate(), 'S', Powders.powder_power, 'T', Crystals.crystal_trixite);
 		addRecipeAuto(ItemBattery.getEmptyBattery(Batteries.battery_trixite), " A ", "PTP", "PSP", 'A', ModItems.wire_aluminium, 'P', AL.plate(), 'S', Powders.powder_power, 'T', Crystals.crystal_trixite);
-		addRecipeAuto(ItemBattery.getFullBattery(ModItems.energy_core), "PCW", "TRD", "PCW", 'P', ALLOY.plate(), 'C', ModItems.coil_advanced_alloy, 'W', ModItems.wire_advanced_alloy, 'R', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), 'D', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.deuterium)), 'T', W.ingot());
-		addRecipeAuto(ItemBattery.getFullBattery(ModItems.energy_core), "PCW", "TDR", "PCW", 'P', ALLOY.plate(), 'C', ModItems.coil_advanced_alloy, 'W', ModItems.wire_advanced_alloy, 'R', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), 'D', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.deuterium)), 'T', W.ingot());
+		addRecipeAuto(ItemBattery.getFullBattery(ModItems.energy_core), "PCW", "TRD", "PCW", 'P', ALLOY.plate(), 'C', ModItems.coil_advanced_alloy, 'W', ModItems.wire_advanced_alloy, 'R', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), 'D', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.DEUTERIUM)), 'T', W.ingot());
+		addRecipeAuto(ItemBattery.getFullBattery(ModItems.energy_core), "PCW", "TDR", "PCW", 'P', ALLOY.plate(), 'C', ModItems.coil_advanced_alloy, 'W', ModItems.wire_advanced_alloy, 'R', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), 'D', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.DEUTERIUM)), 'T', W.ingot());
 
 		addRecipeAuto(ItemBattery.getEmptyBattery(Batteries.battery_red_cell), "WBW", "PBP", "WBW", 'W', ModItems.wire_aluminium, 'P', AL.plate(), 'B', ItemBattery.getEmptyBattery(Batteries.battery_generic));
 		addRecipeAuto(ItemBattery.getEmptyBattery(Batteries.battery_advanced_cell), "WBW", "PBP", "WBW", 'W', ModItems.wire_red_copper, 'P', CU.plate(), 'B', ItemBattery.getEmptyBattery(Batteries.battery_advanced));
@@ -1515,9 +1515,9 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.jetpack_break, 1), "PTP", "SLS", "P P", 'P', STEEL.plate(), 'T', ModItems.cap_aluminium, 'S', ModItems.coil_tungsten, 'L', ModItems.jetpack_boost);
 		addRecipeAuto(new ItemStack(ModItems.jetpack_vector, 1), "PTP", "SLS", "W W", 'P', TI.plate(), 'T', ModItems.circuit_copper, 'S', ModItems.motor, 'L', ModItems.jetpack_fly, 'W', ModItems.thruster_small);
 
-		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)));
-		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.petroil)));
-		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.biofuel)));
+		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)));
+		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.PETROIL)));
+		addRecipeAuto(new ItemStack(ModItems.chainsaw, 1), "  H", "BBP", "  C", 'H', ModItems.hull_small_steel, 'B', ModItems.blades_steel, 'P', ModItems.piston_selenium, 'C', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.BIOFUEL)));
 
 		addRecipeAuto(new ItemStack(ModItems.wiring_red_copper, 1), "PPP", "PIP", "PPP", 'P', STEEL.plate(), 'I', STEEL.ingot());
 
@@ -1565,8 +1565,8 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.mask_damp, 1), "RRR", 'R', ModItems.rag_damp);
 		addRecipeAuto(new ItemStack(ModItems.mask_piss, 1), "RRR", 'R', ModItems.rag_piss);
 		addRecipeAuto(new ItemStack(ModItems.mask_rag, 1), "RRR", 'R', ModItems.rag);
-		addRecipeAuto(new ItemStack(ModItems.jetpack_tank, 1), " S ", "BKB", " S ", 'S', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'K', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.kerosene)));
-		addRecipeAuto(new ItemStack(ModItems.gun_kit_1, 4), "I ", "LB", "P ", 'I', ANY_RUBBER.ingot(), 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)), 'B', ModItems.bolt_tungsten, 'P', IRON.plate());
+		addRecipeAuto(new ItemStack(ModItems.jetpack_tank, 1), " S ", "BKB", " S ", 'S', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'K', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.KEROSENE)));
+		addRecipeAuto(new ItemStack(ModItems.gun_kit_1, 4), "I ", "LB", "P ", 'I', ANY_RUBBER.ingot(), 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.LUBRICANT)), 'B', ModItems.bolt_tungsten, 'P', IRON.plate());
 		addRecipeAuto(new ItemStack(ModItems.gun_kit_2, 1), "III", "GLG", "PPP", 'I', ANY_RUBBER.ingot(), 'L', ModItems.ducttape, 'G', ModItems.gun_kit_1, 'P', IRON.plate());
 
 		addRecipeAuto(new ItemStack(ModItems.igniter, 1), " W", "SC", "CE", 'S', STEEL.plate(), 'W', ModItems.wire_schrabidium, 'C', ModItems.circuit_schrabidium, 'E', EUPH.ingot());
@@ -1634,7 +1634,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(Powders.powder_thermite, 4), IRON.dust(), IRON.dust(), IRON.dust(), AL.dust());
 		addShapelessAuto(new ItemStack(Powders.powder_semtex_mix, 3), ModItems.solid_fuel, ModItems.cordite, KNO.dust());
 
-		addRecipeAuto(ItemFluidCanister.getFullCanister(ModForgeFluids.petroil, 9), "RRR", "RLR", "RRR", 'R', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.reclaimed)), 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)));
+		addRecipeAuto(ItemFluidCanister.getFullCanister(ModForgeFluids.PETROIL, 9), "RRR", "RLR", "RRR", 'R', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.RECLAIMED)), 'L', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.LUBRICANT)));
 
 		addRecipeAuto(new ItemStack(ModItems.record_lc, 1), " S ", "SDS", " S ", 'S', POLYMER.ingot(), 'D', LAPIS.dust());
 		addRecipeAuto(new ItemStack(ModItems.record_ss, 1), " S ", "SDS", " S ", 'S', POLYMER.ingot(), 'D', ALLOY.dust());
@@ -1660,7 +1660,7 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.crystal_horn, 1), NP237.dust(), I.dust(), TH232.dust(), AT.dust(), ND.dust(), CS.dust(), ModBlocks.block_meteor, ModBlocks.gravel_obsidian, Items.WATER_BUCKET);
 		addShapelessAuto(new ItemStack(ModItems.crystal_charred, 1), SR.dust(), CO.dust(), BR.dust(), NB.dust(), TS.dust(), CE.dust(), ModBlocks.block_meteor, AL.block(), Items.WATER_BUCKET);
 		addRecipeAuto(new ItemStack(ModBlocks.crystal_virus, 1), "STS", "THT", "STS", 'S', ModItems.particle_strange, 'T', W.dust(), 'H', ModItems.crystal_horn);
-		addRecipeAuto(new ItemStack(ModBlocks.crystal_pulsar, 32), "STS", "THT", "STS", 'S', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.uf6)), 'T', AL.dust(), 'H', ModItems.crystal_charred);
+		addRecipeAuto(new ItemStack(ModBlocks.crystal_pulsar, 32), "STS", "THT", "STS", 'S', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.UF6)), 'T', AL.dust(), 'H', ModItems.crystal_charred);
 
 		addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_mk2, 8), "SAS", "   ", "SAS", 'S', STEEL.plate(), 'A', AL.plate());
 		addRecipeAuto(new ItemStack(ModBlocks.fluid_duct_solid, 8), "SAS", "ADA", "SAS", 'S', STEEL.ingot(), 'A', AL.plate(), 'D', ModItems.ducttape);
@@ -1671,7 +1671,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.machine_assembler, 1), "WWW", "MCM", "ISI", 'W', KEY_ANYPANE, 'M', ModItems.motor, 'C', ModItems.circuit_aluminium, 'I', CU.block(), 'S', STEEL.block());
 		addRecipeAuto(new ItemStack(ModItems.template_folder, 1), "LPL", "BPB", "LPL", 'P', Items.PAPER, 'L', "dyeBlue", 'B', "dyeWhite");
 		addRecipeAuto(new ItemStack(Armory.turret_control, 1), "R12", "PPI", "  I", 'R', Items.REDSTONE, '1', ModItems.circuit_aluminium, '2', ModItems.circuit_red_copper, 'P', STEEL.plate(), 'I', STEEL.ingot());
-		addRecipeAuto(new ItemStack(ModItems.pellet_antimatter, 1), "###", "###", "###", '#', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)));
+		addRecipeAuto(new ItemStack(ModItems.pellet_antimatter, 1), "###", "###", "###", '#', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)));
 		addRecipeAuto(new ItemStack(ModItems.fluid_tank_full, 8), "121", "1 1", "121", '1', AL.plate(), '2', IRON.plate());
 		addRecipeAuto(new ItemStack(ModItems.fluid_barrel_full, 2), "121", "1 1", "121", '1', STEEL.plate(), '2', AL.plate());
 		addRecipeAuto(new ItemStack(ModItems.inf_water, 1), "222", "131", "222", '1', Items.WATER_BUCKET, '2', AL.plate(), '3', Items.DIAMOND);
@@ -1689,7 +1689,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.plate_desh, 4), "PIP", "IDI", "PIP", 'P', ANY_PLASTIC.dust(), 'I', DESH.ingot(), 'D', DURA.ingot());
 		addRecipeAuto(new ItemStack(ModItems.piston_selenium, 1), "SSS", "STS", " D ", 'S', STEEL.plate(), 'T', W.ingot(), 'D', ModItems.bolt_dura_steel);
 		addShapelessAuto(new ItemStack(ModItems.catalyst_clay), IRON.dust(), Items.CLAY_BALL);
-		addRecipeAuto(new ItemStack(ModItems.ams_core_sing, 1), "EAE", "ASA", "EAE", 'E', ModItems.plate_euphemium, 'A', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.aschrab)), 'S', ModItems.singularity);
+		addRecipeAuto(new ItemStack(ModItems.ams_core_sing, 1), "EAE", "ASA", "EAE", 'E', ModItems.plate_euphemium, 'A', new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.ASCHRAB)), 'S', ModItems.singularity);
 		addRecipeAuto(new ItemStack(ModItems.ams_core_wormhole, 1), "DPD", "PSP", "DPD", 'D', ModItems.plate_dineutronium, 'P', Powders.powder_spark_mix, 'S', ModItems.singularity);
 		addRecipeAuto(new ItemStack(ModItems.ams_core_eyeofharmony, 1), "ALA", "LSL", "ALA", 'A', ModItems.plate_dalekanium, 'L', new IngredientContainsTag(ItemFluidTank.getFullBarrel(FluidRegistry.LAVA)), 'S', ModItems.black_hole);
 		addRecipeAuto(new ItemStack(ModItems.ams_core_thingy), "GGG", "N N", " S ", 'N', GOLD.nugget(), 'G', GOLD.ingot(), 'S', Batteries.battery_spark_cell_10000);
@@ -1735,7 +1735,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModBlocks.radiorec), "  W", "PCP", "PIP", 'W', ModItems.wire_copper, 'P', STEEL.plate(), 'C', ModItems.circuit_red_copper, 'I', ANY_PLASTIC.ingot());
 		addRecipeAuto(new ItemStack(ArmorSets.jackt), "S S", "LIL", "LIL", 'S', STEEL.plate(), 'L', Items.LEATHER, 'I', ANY_RUBBER.ingot());
 		addRecipeAuto(new ItemStack(ArmorSets.jackt2), "S S", "LIL", "III", 'S', STEEL.plate(), 'L', Items.LEATHER, 'I', ANY_RUBBER.ingot());
-		addRecipeAuto(new ItemStack(Armory.grenade_cloud), "SPS", "CAC", "SPS", 'S', S.dust(), 'P', Powders.powder_poison, 'C', CU.dust(), 'A', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.acid)));
+		addRecipeAuto(new ItemStack(Armory.grenade_cloud), "SPS", "CAC", "SPS", 'S', S.dust(), 'P', Powders.powder_poison, 'C', CU.dust(), 'A', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.ACID)));
 		addRecipeAuto(new ItemStack(Armory.grenade_pink_cloud), " S ", "ECE", " E ", 'S', Powders.powder_spark_mix, 'E', Powders.powder_magic, 'C', Armory.grenade_cloud);
 		addRecipeAuto(new ItemStack(ModBlocks.vent_chlorine), "IGI", "ICI", "IDI", 'I', IRON.plate(), 'G', Blocks.IRON_BARS, 'C', ModItems.pellet_gas, 'D', Blocks.DISPENSER);
 		addRecipeAuto(new ItemStack(ModBlocks.vent_chlorine_seal), "ISI", "SCS", "ISI", 'I', BIGMT.ingot(), 'S', STAR.ingot(), 'C', ModItems.chlorine_pinwheel);
@@ -2008,7 +2008,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.gun_ks23, 1), "PPM", "SWL", 'P', STEEL.plate(), 'M', Armory.mechanism_rifle_1, 'S', Items.STICK, 'W', ModItems.wire_tungsten, 'L', KEY_LOG);
 		addShapelessAuto(new ItemStack(Armory.gun_sauer, 1), ModItems.ducttape, Armory.gun_ks23, Blocks.LEVER, Armory.gun_ks23);
 		addRecipeAuto(new ItemStack(Armory.gun_flamer, 1), "WPP", "SCT", "WMI", 'W', ModItems.wire_gold, 'P', ModItems.pipes_steel, 'S', ModItems.hull_small_steel, 'C', ModItems.coil_tungsten, 'T', ModItems.tank_steel, 'M', Armory.mechanism_launcher_1, 'I', STEEL.ingot());
-		addRecipeAuto(new ItemStack(Armory.ammo_fuel, 1), " P ", "BDB", " P ", 'P', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'D', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel)));
+		addRecipeAuto(new ItemStack(Armory.ammo_fuel, 1), " P ", "BDB", " P ", 'P', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'D', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL)));
 		addRecipeAuto(new ItemStack(Armory.ammo_fuel_napalm, 1), " P ", "BDB", " P ", 'P', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'D', ModItems.canister_napalm);
 		addRecipeAuto(new ItemStack(Armory.ammo_fuel_phosphorus, 1), "CPC", "CDC", "CPC", 'C', COAL.dust(), 'P', P_WHITE.ingot(), 'D', Armory.ammo_fuel);
 		addRecipeAuto(new ItemStack(Armory.ammo_fuel_gas, 1), "PDP", "BDB", "PDP", 'P', STEEL.plate(), 'B', ModItems.bolt_tungsten, 'D', ModItems.pellet_gas);
@@ -2031,7 +2031,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ArmorSets.t45_boots, 1), "P P", "PBP", 'P', ModItems.plate_armor_titanium, 'B', ArmorSets.titanium_boots);
 		addRecipeAuto(new ItemStack(ArmorSets.bj_helmet, 1), "SBS", " C ", " I ", 'S', Items.STRING, 'B', new ItemStack(Blocks.WOOL, 1, 15), 'C', ModItems.circuit_targeting_tier4, 'I', STAR.ingot());
 		addRecipeAuto(new ItemStack(ArmorSets.bj_plate, 1), "N N", "MSM", "NCN", 'N', ModItems.plate_armor_lunar, 'M', ModItems.motor_desh, 'S', ArmorSets.starmetal_plate, 'C', ModItems.circuit_targeting_tier5);
-		addRecipeAuto(new ItemStack(ArmorSets.bj_plate_jetpack, 1), "NFN", "TPT", "ICI", 'N', ModItems.plate_armor_lunar, 'F', ModItems.fins_quad_titanium, 'T', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.xenon)), 'P', ArmorSets.bj_plate, 'I', MissileParts.mp_thruster_10_xenon, 'C', P_RED.crystal());
+		addRecipeAuto(new ItemStack(ArmorSets.bj_plate_jetpack, 1), "NFN", "TPT", "ICI", 'N', ModItems.plate_armor_lunar, 'F', ModItems.fins_quad_titanium, 'T', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.XENON)), 'P', ArmorSets.bj_plate, 'I', MissileParts.mp_thruster_10_xenon, 'C', P_RED.crystal());
 		addRecipeAuto(new ItemStack(ArmorSets.bj_legs, 1), "NBN", "MSM", "N N", 'N', ModItems.plate_armor_lunar, 'M', ModItems.motor_desh, 'S', ArmorSets.starmetal_legs, 'B', STAR.block());
 		addRecipeAuto(new ItemStack(ArmorSets.bj_boots, 1), "N N", "BSB", 'N', ModItems.plate_armor_lunar, 'S', ArmorSets.starmetal_boots, 'B', STAR.block());
 
@@ -2384,7 +2384,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_smelter, 1), "PHP", "CUC", "DTD", 'P', CU.plate(), 'H', Blocks.HOPPER, 'C', ModItems.coil_tungsten, 'U', ModItems.upgrade_template, 'D', ModItems.coil_copper, 'T', ModBlocks.machine_transformer);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_shredder, 1), "PHP", "CUC", "DTD", 'P', ModItems.motor, 'H', Blocks.HOPPER, 'C', ModItems.blades_advanced_alloy, 'U', Upgrades.upgrade_smelter, 'D', TI.plate(), 'T', ModBlocks.machine_transformer);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_centrifuge, 1), "PHP", "PUP", "DTD", 'P', ModItems.centrifuge_element, 'H', Blocks.HOPPER, 'U', Upgrades.upgrade_shredder, 'D', ANY_PLASTIC.ingot(), 'T', ModBlocks.machine_transformer);
-		addRecipeAuto(new ItemStack(Upgrades.upgrade_crystallizer, 1), "PHP", "CUC", "DTD", 'P', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.acid)), 'H', ModItems.circuit_targeting_tier4, 'C', ModBlocks.barrel_steel, 'U', Upgrades.upgrade_centrifuge, 'D', ModItems.motor, 'T', ModBlocks.machine_transformer);
+		addRecipeAuto(new ItemStack(Upgrades.upgrade_crystallizer, 1), "PHP", "CUC", "DTD", 'P', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.ACID)), 'H', ModItems.circuit_targeting_tier4, 'C', ModBlocks.barrel_steel, 'U', Upgrades.upgrade_centrifuge, 'D', ModItems.motor, 'T', ModBlocks.machine_transformer);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_screm, 1), "SUS", "SCS", "SUS", 'S', STEEL.plate(), 'U', Upgrades.upgrade_overdrive_3, 'C', ModItems.crystal_xen);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_stack_1, 1), " C ", "PUP", " C ", 'C', ModItems.circuit_aluminium, 'P', ModItems.piston_pneumatic, 'U', ModItems.upgrade_template);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_stack_2, 1), " C ", "PUP", " C ", 'C', ModItems.circuit_copper, 'P', ModItems.piston_hydraulic, 'U', new ItemStack(Upgrades.upgrade_stack_1));
@@ -2394,10 +2394,10 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_ejector_3, 1), " C ", "PUP", " C ", 'C', ModItems.plate_saturnite, 'P', ModItems.motor, 'U', new ItemStack(Upgrades.upgrade_ejector_2));
 
 		addRecipeAuto(new ItemStack(ModItems.piston_pneumatic, 4), " I ", "CPC", " I ", 'I', IRON.ingot(), 'C', CU.ingot(), 'P', IRON.plate());
-		addRecipeAuto(new ItemStack(ModItems.piston_hydraulic, 4), " I ", "CPC", " I ", 'I', STEEL.ingot(), 'C', TI.ingot(), 'P', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.lubricant)));
+		addRecipeAuto(new ItemStack(ModItems.piston_hydraulic, 4), " I ", "CPC", " I ", 'I', STEEL.ingot(), 'C', TI.ingot(), 'P', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.LUBRICANT)));
 		addRecipeAuto(new ItemStack(ModItems.piston_electro, 4), " I ", "CPC", " I ", 'I', ANY_RESISTANTALLOY.ingot(), 'C', ANY_PLASTIC.ingot(), 'P', ModItems.motor);
 
-		addRecipeAuto(new ItemStack(Armory.charge_railgun), "PDP", "DDD", "PDP", 'P', STEEL.plate(), 'D', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.deuterium)));
+		addRecipeAuto(new ItemStack(Armory.charge_railgun), "PDP", "DDD", "PDP", 'P', STEEL.plate(), 'D', new IngredientContainsTag(ItemFluidTank.getFullTank(ModForgeFluids.DEUTERIUM)));
 
 		addRecipeAuto(new ItemStack(Armory.ammo_4gauge_canister, 4), " B ", "BAB", " B ", 'B', Armory.ammo_4gauge_kampf, 'A', ModItems.pellet_canister);
 		addRecipeAuto(new ItemStack(Armory.ammo_44_chlorophyte, 8), "BBB", "BAB", "BBB", 'B', Armory.ammo_44, 'A', ModItems.pellet_chlorophyte);
@@ -2426,11 +2426,11 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.particle_empty, 2), "STS", "G G", "STS", 'S', STEEL.plate(), 'T', W.ingot(), 'G', KEY_ANYPANE);
 		addShapelessAuto(new ItemStack(ModItems.particle_copper, 1), ModItems.particle_empty, CU.dust(), ModItems.pellet_charged);
 		addShapelessAuto(new ItemStack(ModItems.particle_lead, 1), ModItems.particle_empty, PB.dust(), ModItems.pellet_charged);
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.amat), ModItems.particle_aproton, ModItems.particle_aelectron, new IngredientNBT2(new ItemStack(ModItems.cell)));
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.AMAT), ModItems.particle_aproton, ModItems.particle_aelectron, new IngredientNBT2(new ItemStack(ModItems.cell)));
 		addShapelessAuto(new ItemStack(ModItems.particle_amat, 1), ModItems.particle_aproton, ModItems.particle_aelectron, ModItems.particle_empty);
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.aschrab), ModItems.particle_aschrab, new IngredientNBT2(new ItemStack(ModItems.cell)));
-		addShapelessAuto(new ItemStack(ModItems.particle_aschrab), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.aschrab)), ModItems.particle_empty);
-		addShapelessAuto(new ItemStack(ModItems.particle_amat), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)), ModItems.particle_empty);
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.ASCHRAB), ModItems.particle_aschrab, new IngredientNBT2(new ItemStack(ModItems.cell)));
+		addShapelessAuto(new ItemStack(ModItems.particle_aschrab), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.ASCHRAB)), ModItems.particle_empty);
+		addShapelessAuto(new ItemStack(ModItems.particle_amat), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)), ModItems.particle_empty);
 		addRecipeAuto(new ItemStack(ModItems.capsule_empty, 1), "STS", "GXG", "STS", 'S', ModItems.plate_armor_lunar, 'T', ModItems.coil_advanced_torus, 'G', GH336.ingot(), 'X', ModItems.particle_empty);
 		addShapelessAuto(new ItemStack(ModItems.capsule_xen), ModItems.capsule_empty, ModItems.crystal_xen);
 
@@ -2486,8 +2486,8 @@ public class CraftingManager {
 		add1To9Pair(Powders.powder_paleogenite, Powders.powder_paleogenite_tiny);
 		add1To9Pair(ModBlocks.block_lanthanium, Ingots.ingot_lanthanium);
 		add1To9Pair(ModBlocks.block_actinium, Ingots.ingot_actinium);
-		addShapelessAuto(new ItemStack(ModBlocks.block_tritium), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.tritium)));
-		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.tritium, 9), ModBlocks.block_tritium);
+		addShapelessAuto(new ItemStack(ModBlocks.block_tritium), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.TRITIUM)));
+		addShapelessAuto(ItemCell.getFullCell(ModForgeFluids.TRITIUM, 9), ModBlocks.block_tritium);
 		add1To9Pair(ModBlocks.block_schrabidate, Ingots.ingot_schrabidate);
 
 		add9To1(Ingots.ingot_dineutronium, ModBlocks.block_dineutronium);
@@ -2745,9 +2745,9 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(Ingots.ingot_schrabidium_fuel, 2), Billets.billet_schrabidium_fuel, Billets.billet_schrabidium_fuel, Billets.billet_schrabidium_fuel);
 		addShapelessAuto(new ItemStack(Ingots.ingot_hes, 2), Billets.billet_hes, Billets.billet_hes, Billets.billet_hes);
 
-		addShapelessAuto(new ItemStack(Billets.billet_balefire_gold, 1), AU198.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)), ModItems.pellet_charged);
-		addShapelessAuto(new ItemStack(Billets.billet_flashlead, 2), Billets.billet_balefire_gold, PB209.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)));
-		addShapelessAuto(new ItemStack(Billets.billet_flashlead, 2), AU198.billet(), PB209.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.amat)), ModItems.pellet_charged);
+		addShapelessAuto(new ItemStack(Billets.billet_balefire_gold, 1), AU198.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)), ModItems.pellet_charged);
+		addShapelessAuto(new ItemStack(Billets.billet_flashlead, 2), Billets.billet_balefire_gold, PB209.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)));
+		addShapelessAuto(new ItemStack(Billets.billet_flashlead, 2), AU198.billet(), PB209.billet(), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)), new IngredientContainsTag(ItemCell.getFullCell(ModForgeFluids.AMAT)), ModItems.pellet_charged);
 
 		addRecipeAuto(new ItemStack(Armory.ammo_dgk, 1), "LLL", "GGG", "CCC", 'L', PB.plate(), 'G', ANY_SMOKELESS.dust(), 'C', CU.ingot());
 
@@ -2807,7 +2807,7 @@ public class CraftingManager {
 		if (GeneralConfig.enableBabyMode) {
 			addShapelessAuto(new ItemStack(ModItems.cordite, 3), ModItems.ballistite, Items.GUNPOWDER, new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE));
 			addShapelessAuto(new ItemStack(ModItems.ingot_semtex, 3), Items.SLIME_BALL, Blocks.TNT, KNO.dust());
-			addShapelessAuto(ItemFluidCanister.getFullCanister(ModForgeFluids.diesel), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.oil)), Items.REDSTONE);
+			addShapelessAuto(ItemFluidCanister.getFullCanister(ModForgeFluids.DIESEL), new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.OIL)), Items.REDSTONE);
 
 			addShapelessAuto(new ItemStack(ModBlocks.ore_uranium, 1), ModBlocks.ore_uranium_scorched, Items.WATER_BUCKET);
 			addRecipeAuto(new ItemStack(ModBlocks.ore_uranium, 8), "OOO", "OBO", "OOO", 'O', ModBlocks.ore_uranium_scorched, 'B', Items.WATER_BUCKET);

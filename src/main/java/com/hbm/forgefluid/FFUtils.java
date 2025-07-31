@@ -539,8 +539,8 @@ public class FFUtils {
 
 		//Mercury override
 		//Oh god, these overrides are getting worse and worse, but it would take a large amount of effort to make the code good
-		if(in.getItem() == Nuggies.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.mercury, 100), false) == 100){
-			tank.fill(new FluidStack(ModForgeFluids.mercury, 100), true);
+		if(in.getItem() == Nuggies.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.MERCURY, 100), false) == 100){
+			tank.fill(new FluidStack(ModForgeFluids.MERCURY, 100), true);
 			in.shrink(1);
 			return true;
 		}
@@ -768,7 +768,7 @@ public class FFUtils {
 		// Rod override (extra messy because I don't feel like restarting
 		// minecraft to make a helper method)
 		if(in.getItem() == RetroRods.rod_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 1000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 1000 && out.isEmpty()) {
 				tank.drain(1000, true);
 
 				in.shrink(1);
@@ -779,7 +779,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 1000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 1000 && out.isEmpty()) {
 				tank.drain(1000, true);
 
 				in.shrink(1);
@@ -803,7 +803,7 @@ public class FFUtils {
 			}
 		}
 		if(in.getItem() == RetroRods.rod_dual_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 2000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 2000 && out.isEmpty()) {
 				tank.drain(2000, true);
 
 				in.shrink(1);
@@ -814,7 +814,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 2000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 2000 && out.isEmpty()) {
 				tank.drain(2000, true);
 
 				in.shrink(1);
@@ -838,7 +838,7 @@ public class FFUtils {
 			}
 		}
 		if(in.getItem() == RetroRods.rod_quad_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 4000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 4000 && out.isEmpty()) {
 				tank.drain(4000, true);
 
 				in.shrink(1);
@@ -849,7 +849,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 4000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 4000 && out.isEmpty()) {
 				tank.drain(4000, true);
 
 				in.shrink(1);

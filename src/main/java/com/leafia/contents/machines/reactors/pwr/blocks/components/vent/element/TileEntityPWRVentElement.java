@@ -18,7 +18,7 @@ public class TileEntityPWRVentElement extends TileEntity {
 	@SideOnly(Side.CLIENT) EnumFacing face = null;
 	@SideOnly(Side.CLIENT) public boolean topConnected = false;
 	@SideOnly(Side.CLIENT) public boolean btmConnected = false;
-	public Fluid fluid = ModForgeFluids.cryogel;
+	public Fluid fluid = ModForgeFluids.CRYOGEL;
 	@Override
 	public void validate() {
 		super.validate();

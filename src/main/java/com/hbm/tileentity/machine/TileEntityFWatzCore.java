@@ -56,11 +56,11 @@ public class TileEntityFWatzCore extends TileEntityLoadedBase implements IContro
 		tanks = new FluidTank[3];
 		tankTypes = new Fluid[3];
 		tanks[0] = new FluidTank(128000);
-		tankTypes[0] = ModForgeFluids.coolant;
+		tankTypes[0] = ModForgeFluids.COOLANT;
 		tanks[1] = new FluidTank(64000);
-		tankTypes[1] = ModForgeFluids.amat;
+		tankTypes[1] = ModForgeFluids.AMAT;
 		tanks[2] = new FluidTank(64000);
-		tankTypes[2] = ModForgeFluids.aschrab;
+		tankTypes[2] = ModForgeFluids.ASCHRAB;
 		needsUpdate = false;
 	}
 
@@ -107,9 +107,9 @@ public class TileEntityFWatzCore extends TileEntityLoadedBase implements IContro
 	public void readFromNBT(NBTTagCompound compound) {
 		power = compound.getLong("power");
 		isOn = compound.getBoolean("isOn");
-		tankTypes[0] = ModForgeFluids.coolant;
-		tankTypes[1] = ModForgeFluids.amat;
-		tankTypes[2] = ModForgeFluids.aschrab;
+		tankTypes[0] = ModForgeFluids.COOLANT;
+		tankTypes[1] = ModForgeFluids.AMAT;
+		tankTypes[2] = ModForgeFluids.ASCHRAB;
 		if(compound.hasKey("tanks"))
 			FFUtils.deserializeTankArray(compound.getTagList("tanks", 10), tanks);
 		if(compound.hasKey("inventory"))

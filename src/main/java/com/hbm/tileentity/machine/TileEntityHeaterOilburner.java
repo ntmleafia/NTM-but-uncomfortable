@@ -57,7 +57,7 @@ public class TileEntityHeaterOilburner extends TileEntityMachineBase implements 
         super(3);
 
         tank = new FluidTank(16000);
-        fluidType = ModForgeFluids.gas;
+        fluidType = ModForgeFluids.GAS;
         cacheHeat = FluidCombustionRecipes.getFlameEnergy(fluidType);
     }
 

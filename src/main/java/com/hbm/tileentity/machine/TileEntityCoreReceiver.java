@@ -214,7 +214,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
 
     @Override
     public int fill(FluidStack resource, boolean doFill) {
-        if (resource == null || resource.getFluid() != ModForgeFluids.cryogel)
+        if (resource == null || resource.getFluid() != ModForgeFluids.CRYOGEL)
             return 0;
         return tank.fill(resource, doFill);
     }

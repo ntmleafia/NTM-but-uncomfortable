@@ -180,7 +180,7 @@ public class AssemblyFactoryTE extends TileEntityMachineBase implements LeafiaQu
 		}
 
 		water = new TypedFluidTank(FluidRegistry.WATER, new FluidTank(64_000));
-		steam = new TypedFluidTank(ModForgeFluids.spentsteam, new FluidTank(64_000));
+		steam = new TypedFluidTank(ModForgeFluids.SPENTSTEAM, new FluidTank(64_000));
 	}
 
 	@Override

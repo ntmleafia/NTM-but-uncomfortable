@@ -1,6 +1,5 @@
 package com.hbm.inventory;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.hbm.inventory.OreDictManager.*;
@@ -51,7 +50,7 @@ public class SolderingRecipes {
 		));
 		
 		recipes.add(new SolderingRecipe(new ItemStack(CircuitV2.military), 300, 1_000,
-				new FluidStack(ModForgeFluids.sulfuric_acid, 1_000),
+				new FluidStack(ModForgeFluids.SULFURIC_ACID, 1_000),
 				new AStack[] {
 						new ComparableStack(CircuitV2.chip, lbsm ? 4 : 16),
 						new ComparableStack(CircuitV2.capacitor, 4)},
@@ -63,7 +62,7 @@ public class SolderingRecipes {
 		));
 		
 		recipes.add(new SolderingRecipe(new ItemStack(CircuitV2.capacitor_board), 200, 300,
-				new FluidStack(ModForgeFluids.acid, 250),
+				new FluidStack(ModForgeFluids.ACID, 250),
 				new AStack[] {
 						new ComparableStack(CircuitV2.capacitor_tantalium,3)},
 				new AStack[] {
@@ -204,7 +203,7 @@ public class SolderingRecipes {
 	public static void addSecondUpgrade(Item lower, Item higher) {
 		boolean lbsm = false;//GeneralConfig.enableLBSM && GeneralConfig.enableLBSMSimpleCrafting;
 		recipes.add(new SolderingRecipe(new ItemStack(higher), 400, 25_000,
-				new FluidStack(ModForgeFluids.solvent, 500),
+				new FluidStack(ModForgeFluids.SOLVENT, 500),
 				new AStack[] {new ComparableStack(CircuitV2.chip,lbsm ? 6 : 16), new ComparableStack(CircuitV2.capacitor,lbsm ? 4 : 16)},
 				new AStack[] {new ComparableStack(lower), new OreDictStack(RUBBER.ingot(), 4)},
 				new AStack[] {}

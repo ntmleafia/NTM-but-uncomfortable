@@ -46,7 +46,7 @@ public class TileEntityMachineRefinery extends TileEntityMachineBase implements 
 	public TileEntityMachineRefinery() {
 		super(12);
 		tanks = new FluidTank[5];
-		tankTypes = new Fluid[] {ModForgeFluids.hotoil, ModForgeFluids.heavyoil, ModForgeFluids.naphtha, ModForgeFluids.lightoil, ModForgeFluids.petroleum};
+		tankTypes = new Fluid[] {ModForgeFluids.HOTOIL, ModForgeFluids.HEAVYOIL, ModForgeFluids.NAPHTHA, ModForgeFluids.LIGHTOIL, ModForgeFluids.PETROLEUM};
 		tanks[0] = new FluidTank(64000);
 		tanks[1] = new FluidTank(24000);
 		tanks[2] = new FluidTank(24000);

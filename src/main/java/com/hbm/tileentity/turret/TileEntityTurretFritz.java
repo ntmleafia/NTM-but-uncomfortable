@@ -114,8 +114,8 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 			PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos, tank), new TargetPoint(world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 10));
 			for(int i = 1; i < 10; i++) {
 				if(inventory.getStackInSlot(i).getItem() == Armory.ammo_fuel) {
-					if((this.tank.getFluid() == null || tank.getFluid().getFluid() == ModForgeFluids.diesel) && this.tank.getFluidAmount() + 1000 <= this.tank.getCapacity()) {
-						this.tank.fill(new FluidStack(ModForgeFluids.diesel, 1000), true);
+					if((this.tank.getFluid() == null || tank.getFluid().getFluid() == ModForgeFluids.DIESEL) && this.tank.getFluidAmount() + 1000 <= this.tank.getCapacity()) {
+						this.tank.fill(new FluidStack(ModForgeFluids.DIESEL, 1000), true);
 						inventory.getStackInSlot(i).shrink(1);
 						if(inventory.getStackInSlot(i).isEmpty())
 							inventory.setStackInSlot(i, ItemStack.EMPTY);

@@ -95,7 +95,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 					if(FFUtils.containsFluid(itemStack, FluidRegistry.WATER))
 						return true;
 				if(i == 14)
-					if(FFUtils.containsFluid(itemStack, ModForgeFluids.coolant))
+					if(FFUtils.containsFluid(itemStack, ModForgeFluids.COOLANT))
 						return true;
 				return false;
 			}
@@ -113,9 +113,9 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		tanks[0] = new FluidTank(32000);
 		tankTypes[0] = FluidRegistry.WATER;
 		tanks[1] = new FluidTank(16000);
-		tankTypes[1] = ModForgeFluids.coolant;
+		tankTypes[1] = ModForgeFluids.COOLANT;
 		tanks[2] = new FluidTank(8000);
-		tankTypes[2] = ModForgeFluids.steam;
+		tankTypes[2] = ModForgeFluids.STEAM;
 		needsUpdate = true;
 
 	}
@@ -146,13 +146,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		if(level >= 0 && level < 3) {
 			if(compression == 0) {
 				if(level == 1) {
-					tankTypes[2] = ModForgeFluids.hotsteam;
+					tankTypes[2] = ModForgeFluids.HOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 2) {
-					tankTypes[2] = ModForgeFluids.superhotsteam;
+					tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 100D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -160,13 +160,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			}
 			if(compression == 1) {
 				if(level == 0) {
-					tankTypes[2] = ModForgeFluids.steam;
+					tankTypes[2] = ModForgeFluids.STEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 10);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 2) {
-					tankTypes[2] = ModForgeFluids.superhotsteam;
+					tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -174,13 +174,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			}
 			if(compression == 2) {
 				if(level == 0) {
-					tankTypes[2] = ModForgeFluids.steam;
+					tankTypes[2] = ModForgeFluids.STEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 100);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 1) {
-					tankTypes[2] = ModForgeFluids.hotsteam;
+					tankTypes[2] = ModForgeFluids.HOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -449,9 +449,9 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 		double water = steam;
 
-		if(tankTypes[2] == ModForgeFluids.steam) {
+		if(tankTypes[2] == ModForgeFluids.STEAM) {
 			water /= 100D;
-		} else if(tankTypes[2] == ModForgeFluids.hotsteam) {
+		} else if(tankTypes[2] == ModForgeFluids.HOTSTEAM) {
 			water /= 10D;
 		}
 
@@ -689,16 +689,16 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		if(nbt.hasKey("tanks"))
 			FFUtils.deserializeTankArray(nbt.getTagList("tanks", 10), tanks);
 		tankTypes[0] = FluidRegistry.WATER;
-		tankTypes[1] = ModForgeFluids.coolant;
+		tankTypes[1] = ModForgeFluids.COOLANT;
 		compression = nbt.getInteger("compression");
 		detectCompression = compression + 1;
 
 		if(compression == 0) {
-			tankTypes[2] = ModForgeFluids.steam;
+			tankTypes[2] = ModForgeFluids.STEAM;
 		} else if(compression == 1) {
-			tankTypes[2] = ModForgeFluids.hotsteam;
+			tankTypes[2] = ModForgeFluids.HOTSTEAM;
 		} else if(compression == 2) {
-			tankTypes[2] = ModForgeFluids.superhotsteam;
+			tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 		}
 		super.readFromNBT(nbt);
 	}

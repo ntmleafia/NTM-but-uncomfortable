@@ -39,8 +39,8 @@ public class TileEntityHeatBoiler extends TileEntity implements INBTPacketReceiv
         tanks[0] = new FluidTank(FluidRegistry.WATER, 0, 640000);
         types[0] = FluidRegistry.WATER;
 
-        tanks[1] = new FluidTank(ModForgeFluids.steam, 0, 64000000);
-        types[1] = ModForgeFluids.steam;
+        tanks[1] = new FluidTank(ModForgeFluids.STEAM, 0, 64000000);
+        types[1] = ModForgeFluids.STEAM;
 
     }
 

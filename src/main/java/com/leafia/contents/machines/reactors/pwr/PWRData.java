@@ -29,7 +29,6 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileE
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck.Erosion;
 import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
-import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -76,7 +75,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public BlockPos corePos;
 	public FluidTank[] tanks;
 	public Fluid[] tankTypes;
-	public String coolantName = ModForgeFluids.coolant.getName();
+	public String coolantName = ModForgeFluids.COOLANT.getName();
 	public int compression = 0;
 	//public double heat = 20;
 	public int lastTickDrain;
@@ -246,12 +245,12 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				new FluidTank(256_000)
 		};
 		tankTypes = new Fluid[]{
-				ModForgeFluids.coolant,
-				ModForgeFluids.hotcoolant,
-				ModForgeFluids.malcoolant,
+				ModForgeFluids.COOLANT,
+				ModForgeFluids.HOTCOOLANT,
+				ModForgeFluids.MALCOOLANT,
 
 				FluidRegistry.WATER,
-				ModForgeFluids.steam
+				ModForgeFluids.STEAM
 		};
 		this.companion = entity;
 		this.corePos = companion.getPos();
@@ -264,17 +263,17 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 
 	public void onUpdateCompression() {
 		if (compression == 0) {
-			if (tankTypes[4] != ModForgeFluids.steam)
+			if (tankTypes[4] != ModForgeFluids.STEAM)
 				tanks[4].drain(tanks[4].getCapacity(), true);
-			tankTypes[4] = ModForgeFluids.steam;
+			tankTypes[4] = ModForgeFluids.STEAM;
 		} else if (compression == 1) {
-			if (tankTypes[4] != ModForgeFluids.hotsteam)
+			if (tankTypes[4] != ModForgeFluids.HOTSTEAM)
 				tanks[4].drain(tanks[4].getCapacity(), true);
-			tankTypes[4] = ModForgeFluids.hotsteam;
+			tankTypes[4] = ModForgeFluids.HOTSTEAM;
 		} else if (compression == 2) {
-			if (tankTypes[4] != ModForgeFluids.superhotsteam)
+			if (tankTypes[4] != ModForgeFluids.SUPERHOTSTEAM)
 				tanks[4].drain(tanks[4].getCapacity(), true);
-			tankTypes[4] = ModForgeFluids.superhotsteam;
+			tankTypes[4] = ModForgeFluids.SUPERHOTSTEAM;
 		}
 	}
 
@@ -314,9 +313,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		if (nbt.hasKey("compression"))
 			compression = nbt.getInteger("compression");
 		onUpdateCompression();
-		tankTypes[0] = ModForgeFluids.coolant;
-		tankTypes[1] = ModForgeFluids.hotcoolant;
-		tankTypes[2] = ModForgeFluids.malcoolant;
+		tankTypes[0] = ModForgeFluids.COOLANT;
+		tankTypes[1] = ModForgeFluids.HOTCOOLANT;
+		tankTypes[2] = ModForgeFluids.MALCOOLANT;
 		if (nbt.hasKey("coolantName")) {
 			coolantName = nbt.getString("coolantName");
 			updateCoolantType(coolantName);
@@ -348,7 +347,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	public NBTTagCompound writeToNBT(NBTTagCompound mainCompound) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		//nbt.setDouble("heat", heat);
-		if (!ModForgeFluids.coolant.getName().equals(coolantName))
+		if (!ModForgeFluids.COOLANT.getName().equals(coolantName))
 			nbt.setString("coolantName",coolantName);
 		nbt.setInteger("compression", compression);
 		nbt.setTag("tanks", FFUtils.serializeTankArray(tanks));

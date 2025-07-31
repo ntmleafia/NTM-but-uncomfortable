@@ -238,7 +238,7 @@ public class ItemSyringe extends Item {
 				ItemStack jetpack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 				JetpackBase jetItem = (JetpackBase) jetpack.getItem();
 
-            	if(jetItem.fuel != ModForgeFluids.kerosene)
+            	if(jetItem.fuel != ModForgeFluids.KEROSENE)
             		return super.onItemRightClick(world, player, hand);
 
             	int fill = JetpackBase.getFuel(jetpack) + 1000;

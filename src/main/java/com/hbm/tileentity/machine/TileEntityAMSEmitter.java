@@ -68,7 +68,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 			}
 		};
 		tank = new FluidTank(16000);
-		tankType = ModForgeFluids.coolant;
+		tankType = ModForgeFluids.COOLANT;
 	}
 	
 	public String getInventoryName() {
@@ -102,7 +102,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 		if(compound.hasKey("inventory"))
 			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		tankType = FluidRegistry.getFluid(compound.getString("coolant"));
-		if (tankType == null) tankType = ModForgeFluids.coolant;
+		if (tankType == null) tankType = ModForgeFluids.COOLANT;
 		super.readFromNBT(compound);
 	}
 	
@@ -133,7 +133,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					Fluid f = ItemForgeFluidIdentifier.getType(inventory.getStackInSlot(0));
 					inventory.setStackInSlot(1,inventory.getStackInSlot(0));
 					inventory.setStackInSlot(0,ItemStack.EMPTY);
-					if (f == ModForgeFluids.cryogel || f == ModForgeFluids.coolant || f == FluidRegistry.WATER) {
+					if (f == ModForgeFluids.CRYOGEL || f == ModForgeFluids.COOLANT || f == FluidRegistry.WATER) {
 						if(tankType != f)
 							tank.setFluid(null);
 						tankType = f;
@@ -150,7 +150,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					warning = 1;
 				}
 				
-				if(tankType == ModForgeFluids.cryogel) {
+				if(tankType == ModForgeFluids.CRYOGEL) {
 					
 					if(tank.getFluidAmount() >= 15) {
 						if(heat > 0){
@@ -172,7 +172,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					} else {
 						heat += efficiency;
 					}
-				} else if(tankType == ModForgeFluids.coolant) {
+				} else if(tankType == ModForgeFluids.COOLANT) {
 					
 					if(tank.getFluidAmount() >= 15) {
 						if(heat > 0){
@@ -305,7 +305,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 	}
 	
 	public boolean isValidFluid(Fluid fluid){
-		if(fluid != null && (fluid == FluidRegistry.WATER || fluid == ModForgeFluids.coolant || fluid == ModForgeFluids.cryogel))
+		if(fluid != null && (fluid == FluidRegistry.WATER || fluid == ModForgeFluids.COOLANT || fluid == ModForgeFluids.CRYOGEL))
 			return true;
 		return false;
 	}

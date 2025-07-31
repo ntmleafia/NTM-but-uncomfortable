@@ -43,7 +43,7 @@ public class TileEntityMachinePuF6Tank extends TileEntity implements ITickable, 
 			}
 		};
 		tank = new FluidTank(64000);
-		tankType = ModForgeFluids.puf6;
+		tankType = ModForgeFluids.PUF6;
 	}
 	
 	public String getInventoryName() {
@@ -70,7 +70,7 @@ public class TileEntityMachinePuF6Tank extends TileEntity implements ITickable, 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		tank.readFromNBT(compound);
-		tankType = ModForgeFluids.puf6;
+		tankType = ModForgeFluids.PUF6;
 		if(compound.hasKey("inventory"))
 			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		super.readFromNBT(compound);

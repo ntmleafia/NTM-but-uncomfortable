@@ -78,13 +78,13 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
     @SideOnly(Side.CLIENT)
     public int dialY = 0;
     private short getCompressionLevel(Fluid fluid) {
-        if (fluid == ModForgeFluids.steam)
+        if (fluid == ModForgeFluids.STEAM)
             return 1;
-        else if (fluid == ModForgeFluids.hotsteam)
+        else if (fluid == ModForgeFluids.HOTSTEAM)
             return 10;
-        else if (fluid == ModForgeFluids.superhotsteam)
+        else if (fluid == ModForgeFluids.SUPERHOTSTEAM)
             return 100;
-        else if (fluid == ModForgeFluids.ultrahotsteam)
+        else if (fluid == ModForgeFluids.ULTRAHOTSTEAM)
             return 1000;
         return 0;
     }
@@ -98,10 +98,10 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
     }
     private void updateCompression() {
         switch(compression) {
-            case 0: setCompression(ModForgeFluids.steam); break;
-            case 1: setCompression(ModForgeFluids.hotsteam); break;
-            case 2: setCompression(ModForgeFluids.superhotsteam); break;
-            case 3: setCompression(ModForgeFluids.ultrahotsteam); break;
+            case 0: setCompression(ModForgeFluids.STEAM); break;
+            case 1: setCompression(ModForgeFluids.HOTSTEAM); break;
+            case 2: setCompression(ModForgeFluids.SUPERHOTSTEAM); break;
+            case 3: setCompression(ModForgeFluids.ULTRAHOTSTEAM); break;
         }
     }
     private void spawnDebris(EntityZirnoxDebris.DebrisType type) {
@@ -202,9 +202,9 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
         tanks[0] = new FluidTank(32000);
         tankTypes[0] = FluidRegistry.WATER;
         tanks[1] = new FluidTank(16000);
-        tankTypes[1] = ModForgeFluids.carbondioxide;
+        tankTypes[1] = ModForgeFluids.CARBONDIOXIDE;
         tanks[2] = new FluidTank(8000);
-        tankTypes[2] = ModForgeFluids.steam;
+        tankTypes[2] = ModForgeFluids.STEAM;
     }
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
@@ -230,15 +230,15 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
         if(compound.hasKey("compression"))
             compression = compound.getByte("compression");
         tankTypes[0] = FluidRegistry.WATER;
-        tankTypes[1] = ModForgeFluids.carbondioxide;
+        tankTypes[1] = ModForgeFluids.CARBONDIOXIDE;
         if(compression == 0){
-            tankTypes[2] = ModForgeFluids.steam;
+            tankTypes[2] = ModForgeFluids.STEAM;
         } else if(compression == 1){
-            tankTypes[2] = ModForgeFluids.hotsteam;
+            tankTypes[2] = ModForgeFluids.HOTSTEAM;
         } else if(compression == 2){
-            tankTypes[2] = ModForgeFluids.superhotsteam;
+            tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
         } else if(compression == 3){
-            tankTypes[2] = ModForgeFluids.ultrahotsteam;
+            tankTypes[2] = ModForgeFluids.ULTRAHOTSTEAM;
         }
         if(compound.hasKey("inventory"))
             inventory.deserializeNBT(compound.getCompoundTag("inventory"));
@@ -527,10 +527,10 @@ public class TileEntityReactorZirnox extends TileEntityMachineBase implements Le
         if (key == packetKeys.COMPRESSION.key) {
             compression = (byte) value;
             switch(compression) {
-                case 0: tankTypes[2] = ModForgeFluids.steam; break;
-                case 1: tankTypes[2] = ModForgeFluids.hotsteam; break;
-                case 2: tankTypes[2] = ModForgeFluids.superhotsteam; break;
-                case 3: tankTypes[2] = ModForgeFluids.ultrahotsteam; break;
+                case 0: tankTypes[2] = ModForgeFluids.STEAM; break;
+                case 1: tankTypes[2] = ModForgeFluids.HOTSTEAM; break;
+                case 2: tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM; break;
+                case 3: tankTypes[2] = ModForgeFluids.ULTRAHOTSTEAM; break;
             }
         } if (key == packetKeys.OPENVALVE.key)
             valveOpen = (boolean)value;

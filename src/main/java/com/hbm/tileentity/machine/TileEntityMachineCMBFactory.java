@@ -37,7 +37,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 	public static final long maxPower = 100000000;
 	public static final int processSpeed = 200;
 	public FluidTank tank;
-	public Fluid tankType = ModForgeFluids.watz;
+	public Fluid tankType = ModForgeFluids.WATZ;
 	public boolean needsUpdate = false;
 
 	private static final int[] slots_top = new int[] {1, 3};
@@ -73,7 +73,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 			if (itemStack.getItem() instanceof IBatteryItem && ((IBatteryItem)itemStack.getItem()).getCharge(itemStack) == 0)
 				return true;
 		if(i == 2)
-			if(FFUtils.containsFluid(itemStack, ModForgeFluids.watz))
+			if(FFUtils.containsFluid(itemStack, ModForgeFluids.WATZ))
 				return true;
 		return false;
 	}
@@ -87,7 +87,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 		case 1:
 			return (stack.getItem() == Ingots.ingot_magnetized_tungsten || stack.getItem() == Powders.powder_magnetized_tungsten);
 		case 2:
-			return (FFUtils.containsFluid(stack, ModForgeFluids.watz));
+			return (FFUtils.containsFluid(stack, ModForgeFluids.WATZ));
 		case 3:
 			return (stack.getItem() == Ingots.ingot_advanced_alloy || stack.getItem() == Powders.powder_advanced_alloy);
 		}
@@ -226,7 +226,7 @@ public class TileEntityMachineCMBFactory extends TileEntityMachineBase implement
 	private boolean isValidFluid(FluidStack stack) {
 		if(stack == null)
 			return false;
-		return stack.getFluid() == ModForgeFluids.watz;
+		return stack.getFluid() == ModForgeFluids.WATZ;
 	}
 	
 	@Override

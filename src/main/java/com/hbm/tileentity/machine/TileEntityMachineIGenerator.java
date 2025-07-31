@@ -64,8 +64,8 @@ public class TileEntityMachineIGenerator extends TileEntityMachineBase implement
 		tanks[2] = new FluidTank(4000);
 		tankTypes = new Fluid[3];
 		tankTypes[0] = FluidRegistry.WATER;
-		tankTypes[1] = ModForgeFluids.heatingoil;
-		tankTypes[2] = ModForgeFluids.lubricant;
+		tankTypes[1] = ModForgeFluids.HEATINGOIL;
+		tankTypes[2] = ModForgeFluids.LUBRICANT;
 		
 	}
 
@@ -241,14 +241,14 @@ public class TileEntityMachineIGenerator extends TileEntityMachineBase implement
 	public static final Map<Fluid, Integer> fluidHeat = new HashMap<>();
 	
 	static {
-		fluidHeat.put(ModForgeFluids.smear, 75);
-		fluidHeat.put(ModForgeFluids.heatingoil, 150);
-		fluidHeat.put(ModForgeFluids.diesel, 225);
-		fluidHeat.put(ModForgeFluids.kerosene, 300);
-		fluidHeat.put(ModForgeFluids.reclaimed, 100);
-		fluidHeat.put(ModForgeFluids.petroil, 125);
-		fluidHeat.put(ModForgeFluids.biofuel, 200);
-		fluidHeat.put(ModForgeFluids.nitan, 2500);
+		fluidHeat.put(ModForgeFluids.SMEAR, 75);
+		fluidHeat.put(ModForgeFluids.HEATINGOIL, 150);
+		fluidHeat.put(ModForgeFluids.DIESEL, 225);
+		fluidHeat.put(ModForgeFluids.KEROSENE, 300);
+		fluidHeat.put(ModForgeFluids.RECLAIMED, 100);
+		fluidHeat.put(ModForgeFluids.PETROIL, 125);
+		fluidHeat.put(ModForgeFluids.BIOFUEL, 200);
+		fluidHeat.put(ModForgeFluids.NITAN, 2500);
 	}
 	
 	public int getHeatFromFuel(FluidStack fluid) {

@@ -7,7 +7,6 @@ import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.leafia.dev.container_utility.LeafiaPacket;
-import com.llib.LeafiaLib;
 import com.llib.LeafiaLib.NumScale;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -52,7 +51,7 @@ public class GUICoreReceiver extends GuiInfoContainer {
 	public void drawScreen(int mouseX, int mouseY, float f) {
 		super.drawScreen(mouseX, mouseY, f);
 
-		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 17-7, guiTop + 16-11, 16, 52, receiver.tank, ModForgeFluids.cryogel);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 17-7, guiTop + 16-11, 16, 52, receiver.tank, ModForgeFluids.CRYOGEL);
 		//this.drawElectricityInfo(this,mouseX, mouseY, guiLeft + 46, guiTop + 6, 16, 52, receiver.power, NumScale.PETA);
 		this.drawCustomInfo(this,mouseX, mouseY, guiLeft + 46, guiTop + 6, 16, 52, new String[]{Library.getShortNumber(receiver.power)+"HE"});
 		super.renderHoveredToolTip(mouseX, mouseY);

@@ -79,21 +79,21 @@ public class MachineChungus extends BlockDummyable implements ILookOverlay {
 					
 					if(!world.isRemote) {
 						int newFill = 0;
-						if(entity.types[0] == ModForgeFluids.steam){
-							entity.types[0] = ModForgeFluids.hotsteam;
-							entity.types[1] = ModForgeFluids.steam;
+						if(entity.types[0] == ModForgeFluids.STEAM){
+							entity.types[0] = ModForgeFluids.HOTSTEAM;
+							entity.types[1] = ModForgeFluids.STEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.hotsteam){
-							entity.types[0] = ModForgeFluids.superhotsteam;
-							entity.types[1] = ModForgeFluids.hotsteam;
+						} else if(entity.types[0] == ModForgeFluids.HOTSTEAM){
+							entity.types[0] = ModForgeFluids.SUPERHOTSTEAM;
+							entity.types[1] = ModForgeFluids.HOTSTEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.superhotsteam){
-							entity.types[0] = ModForgeFluids.ultrahotsteam;
-							entity.types[1] = ModForgeFluids.superhotsteam;
+						} else if(entity.types[0] == ModForgeFluids.SUPERHOTSTEAM){
+							entity.types[0] = ModForgeFluids.ULTRAHOTSTEAM;
+							entity.types[1] = ModForgeFluids.SUPERHOTSTEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.ultrahotsteam){
-							entity.types[0] = ModForgeFluids.steam;
-							entity.types[1] = ModForgeFluids.spentsteam;
+						} else if(entity.types[0] == ModForgeFluids.ULTRAHOTSTEAM){
+							entity.types[0] = ModForgeFluids.STEAM;
+							entity.types[1] = ModForgeFluids.SPENTSTEAM;
 							newFill = Math.min(entity.tanks[0].getFluidAmount() * 1000, entity.tanks[0].getCapacity());
 						}
 						entity.tanks[0].setFluid(new FluidStack(entity.types[0], newFill));

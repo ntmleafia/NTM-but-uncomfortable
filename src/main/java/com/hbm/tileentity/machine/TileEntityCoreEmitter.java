@@ -9,7 +9,6 @@ import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
-import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -282,7 +281,7 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
-		if (resource != null && resource.getFluid() == ModForgeFluids.cryogel)
+		if (resource != null && resource.getFluid() == ModForgeFluids.CRYOGEL)
 			return tank.fill(resource, doFill);
 		return 0;
 	}

@@ -494,7 +494,7 @@ public class ItemCustomLore extends Item {
 			this == Crystals.crystal_schrabidium ||
     		this == Crystals.crystal_schraranium ||
     		this == Crystals.crystal_trixite ||
-    		ItemCell.hasFluid(stack, ModForgeFluids.sas3) || 
+    		ItemCell.hasFluid(stack, ModForgeFluids.SAS3) ||
     		this == RetroRods.rod_unobtainium ||
     		this == RetroRods.rod_schrabidium ||
 			this == RetroRods.rod_dual_schrabidium ||
