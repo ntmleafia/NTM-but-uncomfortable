@@ -174,147 +174,147 @@ public class ModForgeFluids {
 			.setEmptySound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA).setFillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
 	
 	public static void init() {
-		registerOrGet(SPENTSTEAM,"spentsteam");
-		registerOrGet(STEAM,"steam");
-		registerOrGet(HOTSTEAM,"hotsteam");
-		registerOrGet(SUPERHOTSTEAM,"superhotsteam");
-		registerOrGet(ULTRAHOTSTEAM,"ultrahotsteam");
-		registerOrGet(DEATHSTEAM,"deathsteam");
-		registerOrGet(COOLANT,"coolant");
-		registerOrGet(HOTCOOLANT,"hotcoolant");
-		registerOrGet(MALCOOLANT,"malcoolant");
-		registerOrGet(PERFLUOROMETHYL,"perfluoromethyl");
+		SPENTSTEAM = registerOrGet(SPENTSTEAM,"spentsteam");
+		STEAM = registerOrGet(STEAM,"steam");
+		HOTSTEAM = registerOrGet(HOTSTEAM,"hotsteam");
+		SUPERHOTSTEAM = registerOrGet(SUPERHOTSTEAM,"superhotsteam");
+		ULTRAHOTSTEAM = registerOrGet(ULTRAHOTSTEAM,"ultrahotsteam");
+		DEATHSTEAM = registerOrGet(DEATHSTEAM,"deathsteam");
+		COOLANT = registerOrGet(COOLANT,"coolant");
+		HOTCOOLANT = registerOrGet(HOTCOOLANT,"hotcoolant");
+		MALCOOLANT = registerOrGet(MALCOOLANT,"malcoolant");
+		PERFLUOROMETHYL = registerOrGet(PERFLUOROMETHYL,"perfluoromethyl");
 
-		registerOrGet(HEAVYWATER,"heavywater");
-		registerOrGet(DEUTERIUM,"deuterium");
-		registerOrGet(TRITIUM,"tritium");
+		HEAVYWATER = registerOrGet(HEAVYWATER,"heavywater");
+		DEUTERIUM = registerOrGet(DEUTERIUM,"deuterium");
+		TRITIUM = registerOrGet(TRITIUM,"tritium");
 
-		registerOrGet(OIL,"oil");
-		registerOrGet(HOTOIL,"hotoil");
-		registerOrGet(CRACKOIL,"crackoil");
-		registerOrGet(HOTCRACKOIL,"hotcrackoil");
-		registerOrGet(OIL_DS,"oil_ds");
-		registerOrGet(HOTOIL_DS,"hotoil_ds");
-		registerOrGet(CRACKOIL_DS,"crackoil_ds");
-		registerOrGet(HOTCRACKOIL_DS,"hotcrackoil_ds");
-		registerOrGet(OIL_COKER,"oil_coker");
+		OIL = registerOrGet(OIL,"oil");
+		HOTOIL = registerOrGet(HOTOIL,"hotoil");
+		CRACKOIL = registerOrGet(CRACKOIL,"crackoil");
+		HOTCRACKOIL = registerOrGet(HOTCRACKOIL,"hotcrackoil");
+		OIL_DS = registerOrGet(OIL_DS,"oil_ds");
+		HOTOIL_DS = registerOrGet(HOTOIL_DS,"hotoil_ds");
+		CRACKOIL_DS = registerOrGet(CRACKOIL_DS,"crackoil_ds");
+		HOTCRACKOIL_DS = registerOrGet(HOTCRACKOIL_DS,"hotcrackoil_ds");
+		OIL_COKER = registerOrGet(OIL_COKER,"oil_coker");
 
-		registerOrGet(HEAVYOIL,"heavyoil");
-		registerOrGet(HEAVYOIL_VACUUM,"heavyoil_vacuum");
-		registerOrGet(BITUMEN,"bitumen");
-		registerOrGet(SMEAR,"smear");
-		registerOrGet(HEATINGOIL,"heatingoil");
-		registerOrGet(HEATINGOIL_VACUUM,"heatingoil_vacuum");
+		HEAVYOIL = registerOrGet(HEAVYOIL,"heavyoil");
+		HEAVYOIL_VACUUM = registerOrGet(HEAVYOIL_VACUUM,"heavyoil_vacuum");
+		BITUMEN = registerOrGet(BITUMEN,"bitumen");
+		SMEAR = registerOrGet(SMEAR,"smear");
+		HEATINGOIL = registerOrGet(HEATINGOIL,"heatingoil");
+		HEATINGOIL_VACUUM = registerOrGet(HEATINGOIL_VACUUM,"heatingoil_vacuum");
 
-		registerOrGet(RECLAIMED,"reclaimed");
-		registerOrGet(PETROIL,"petroil");
+		RECLAIMED = registerOrGet(RECLAIMED,"reclaimed");
+		PETROIL = registerOrGet(PETROIL,"petroil");
 
-		registerOrGet(FRACKSOL,"fracksol");
+		FRACKSOL = registerOrGet(FRACKSOL,"fracksol");
 
-		registerOrGet(LUBRICANT,"lubricant");
+		LUBRICANT = registerOrGet(LUBRICANT,"lubricant");
 
-		registerOrGet(NAPHTHA,"naphtha");
-		registerOrGet(NAPHTHA_CRACK,"naphtha_crack");
-		registerOrGet(NAPHTHA_DS,"naphtha_ds");
-		registerOrGet(NAPHTHA_COKER,"naphtha_coker");
+		NAPHTHA = registerOrGet(NAPHTHA,"naphtha");
+		NAPHTHA_CRACK = registerOrGet(NAPHTHA_CRACK,"naphtha_crack");
+		NAPHTHA_DS = registerOrGet(NAPHTHA_DS,"naphtha_ds");
+		NAPHTHA_COKER = registerOrGet(NAPHTHA_COKER,"naphtha_coker");
 
-		registerOrGet(DIESEL,"diesel");
-		registerOrGet(DIESEL_CRACK,"diesel_crack");
-		registerOrGet(DIESEL_REFORM,"diesel_reform");
-		registerOrGet(DIESEL_CRACK_REFORM,"diesel_crack_reform");
+		DIESEL = registerOrGet(DIESEL,"diesel");
+		DIESEL_CRACK = registerOrGet(DIESEL_CRACK,"diesel_crack");
+		DIESEL_REFORM = registerOrGet(DIESEL_REFORM,"diesel_reform");
+		DIESEL_CRACK_REFORM = registerOrGet(DIESEL_CRACK_REFORM,"diesel_crack_reform");
 
-		registerOrGet(LIGHTOIL,"lightoil");
-		registerOrGet(LIGHTOIL_CRACK,"lightoil_crack");
-		registerOrGet(LIGHTOIL_DS,"lightoil_ds");
-		registerOrGet(LIGHTOIL_VACUUM,"lightoil_vacuum");
+		LIGHTOIL = registerOrGet(LIGHTOIL,"lightoil");
+		LIGHTOIL_CRACK = registerOrGet(LIGHTOIL_CRACK,"lightoil_crack");
+		LIGHTOIL_DS = registerOrGet(LIGHTOIL_DS,"lightoil_ds");
+		LIGHTOIL_VACUUM = registerOrGet(LIGHTOIL_VACUUM,"lightoil_vacuum");
 
-		registerOrGet(KEROSENE,"kerosene");
-		registerOrGet(KEROSENE_REFORM,"kerosene_reform");
+		KEROSENE = registerOrGet(KEROSENE,"kerosene");
+		KEROSENE_REFORM = registerOrGet(KEROSENE_REFORM,"kerosene_reform");
 
-		registerOrGet(GAS,"gas");
-		registerOrGet(GAS_COKER,"gas_coker");
-		registerOrGet(PETROLEUM,"petroleum");
+		GAS = registerOrGet(GAS,"gas");
+		GAS_COKER = registerOrGet(GAS_COKER,"gas_coker");
+		PETROLEUM = registerOrGet(PETROLEUM,"petroleum");
 
-		registerOrGet(AROMATICS,"aromatics");
-		registerOrGet(UNSATURATEDS,"unsaturateds");
-		registerOrGet(XYLENE,"xylene");
+		AROMATICS = registerOrGet(AROMATICS,"aromatics");
+		UNSATURATEDS = registerOrGet(UNSATURATEDS,"unsaturateds");
+		XYLENE = registerOrGet(XYLENE,"xylene");
 
-		registerOrGet(CHLORINE, "chlorine");
-		registerOrGet(PHOSGENE, "phosgene");
-		registerOrGet(WOODOIL, "woodoil");
-		registerOrGet(COALCREOSOTE, "coalcreosote");
-		registerOrGet(COALOIL, "coaloil");
-		registerOrGet(COALGAS, "coalgas");
-		registerOrGet(COALGAS_LEADED, "coalgas_leaded");
-		registerOrGet(PETROIL_LEADED, "petroil_leaded");
-		registerOrGet(GASOLINE_LEADED, "gasoline_leaded");
-		registerOrGet(SYNGAS, "syngas");
-		registerOrGet(IONGEL, "iongel");
+		CHLORINE = registerOrGet(CHLORINE, "chlorine");
+		PHOSGENE = registerOrGet(PHOSGENE, "phosgene");
+		WOODOIL = registerOrGet(WOODOIL, "woodoil");
+		COALCREOSOTE = registerOrGet(COALCREOSOTE, "coalcreosote");
+		COALOIL = registerOrGet(COALOIL, "coaloil");
+		COALGAS = registerOrGet(COALGAS, "coalgas");
+		COALGAS_LEADED = registerOrGet(COALGAS_LEADED, "coalgas_leaded");
+		PETROIL_LEADED = registerOrGet(PETROIL_LEADED, "petroil_leaded");
+		GASOLINE_LEADED = registerOrGet(GASOLINE_LEADED, "gasoline_leaded");
+		SYNGAS = registerOrGet(SYNGAS, "syngas");
+		IONGEL = registerOrGet(IONGEL, "iongel");
 
-		registerOrGet(REFORMATE, "reformate");
-		registerOrGet(REFORMGAS, "reformgas");
+		REFORMATE = registerOrGet(REFORMATE, "reformate");
+		REFORMGAS = registerOrGet(REFORMGAS, "reformgas");
 
-		registerOrGet(BIOGAS, "biogas");
-		registerOrGet(BIOFUEL, "biofuel");
-		registerOrGet(SOURGAS, "sourgas");
+		BIOGAS = registerOrGet(BIOGAS, "biogas");
+		BIOFUEL = registerOrGet(BIOFUEL, "biofuel");
+		SOURGAS = registerOrGet(SOURGAS, "sourgas");
 
-		registerOrGet(ETHANOL, "ethanol");
-		registerOrGet(FISHOIL, "fishoil");
-		registerOrGet(SUNFLOWEROIL, "sunfloweroil");
-		registerOrGet(COLLOID, "colloid");
+		ETHANOL = registerOrGet(ETHANOL, "ethanol");
+		FISHOIL = registerOrGet(FISHOIL, "fishoil");
+		SUNFLOWEROIL = registerOrGet(SUNFLOWEROIL, "sunfloweroil");
+		COLLOID = registerOrGet(COLLOID, "colloid");
 
-		registerOrGet(NITAN, "nitan");
+		NITAN = registerOrGet(NITAN, "nitan");
 
-		registerOrGet(UF6, "uf6");
-		registerOrGet(PUF6, "puf6");
-		registerOrGet(SAS3, "sas3");
+		UF6 = registerOrGet(UF6, "uf6");
+		PUF6 = registerOrGet(PUF6, "puf6");
+		SAS3 = registerOrGet(SAS3, "sas3");
 
-		registerOrGet(AMAT, "amat");
-		registerOrGet(ASCHRAB, "aschrab");
+		AMAT = registerOrGet(AMAT, "amat");
+		ASCHRAB = registerOrGet(ASCHRAB, "aschrab");
 
-		registerOrGet(ACID, "acid");
-		registerOrGet(SULFURIC_ACID, "sulfuric_acid");
-		registerOrGet(NITRIC_ACID, "nitric_acid");
-		registerOrGet(SOLVENT, "solvent");
-		registerOrGet(RADIOSOLVENT, "radiosolvent");
-		registerOrGet(NITROGLYCERIN, "nitroglycerin");
+		ACID = registerOrGet(ACID, "acid");
+		SULFURIC_ACID = registerOrGet(SULFURIC_ACID, "sulfuric_acid");
+		NITRIC_ACID = registerOrGet(NITRIC_ACID, "nitric_acid");
+		SOLVENT = registerOrGet(SOLVENT, "solvent");
+		RADIOSOLVENT = registerOrGet(RADIOSOLVENT, "radiosolvent");
+		NITROGLYCERIN = registerOrGet(NITROGLYCERIN, "nitroglycerin");
 
-		registerOrGet(LIQUID_OSMIRIDIUM, "liquid_osmiridium");
-		registerOrGet(WATZ, "watz");
-		registerOrGet(CRYOGEL, "cryogel");
+		LIQUID_OSMIRIDIUM = registerOrGet(LIQUID_OSMIRIDIUM, "liquid_osmiridium");
+		WATZ = registerOrGet(WATZ, "watz");
+		CRYOGEL = registerOrGet(CRYOGEL, "cryogel");
 
-		registerOrGet(HYDROGEN, "hydrogen");
-		registerOrGet(OXYGEN, "oxygen");
-		registerOrGet(CARBONDIOXIDE, "carbondioxide");
-		registerOrGet(XENON, "xenon");
-		registerOrGet(BALEFIRE, "balefire");
+		HYDROGEN = registerOrGet(HYDROGEN, "hydrogen");
+		OXYGEN = registerOrGet(OXYGEN, "oxygen");
+		CARBONDIOXIDE = registerOrGet(CARBONDIOXIDE, "carbondioxide");
+		XENON = registerOrGet(XENON, "xenon");
+		BALEFIRE = registerOrGet(BALEFIRE, "balefire");
 
-		registerOrGet(MERCURY, "mercury");
+		MERCURY = registerOrGet(MERCURY, "mercury");
 
-		registerOrGet(PLASMA_DT, "plasma_dt");
-		registerOrGet(PLASMA_HD, "plasma_hd");
-		registerOrGet(PLASMA_HT, "plasma_ht");
-		registerOrGet(PLASMA_PUT, "plasma_put");
-		registerOrGet(PLASMA_MX, "plasma_xm");
-		registerOrGet(PLASMA_BF, "plasma_bf");
+		PLASMA_DT = registerOrGet(PLASMA_DT, "plasma_dt");
+		PLASMA_HD = registerOrGet(PLASMA_HD, "plasma_hd");
+		PLASMA_HT = registerOrGet(PLASMA_HT, "plasma_ht");
+		PLASMA_PUT = registerOrGet(PLASMA_PUT, "plasma_put");
+		PLASMA_MX = registerOrGet(PLASMA_MX, "plasma_xm");
+		PLASMA_BF = registerOrGet(PLASMA_BF, "plasma_bf");
 
 
-		registerOrGet(IONGEL, "iongel");
-		registerOrGet(UU_MATTER, "ic2uu_matter");
+		IONGEL = registerOrGet(IONGEL, "iongel");
+		UU_MATTER = registerOrGet(UU_MATTER, "ic2uu_matter");
 
-		registerOrGet(PAIN,"pain");
-		registerOrGet(WASTEFLUID,"wastefluid");
-		registerOrGet(WASTEGAS,"wastegas");
-		registerOrGet(GASOLINE,"gasoline");
-		registerOrGet(EXPERIENCE,"experience");
-		registerOrGet(ENDERJUICE,"ender");
+		PAIN = registerOrGet(PAIN,"pain");
+		WASTEFLUID = registerOrGet(WASTEFLUID,"wastefluid");
+		WASTEGAS = registerOrGet(WASTEGAS,"wastegas");
+		GASOLINE = registerOrGet(GASOLINE,"gasoline");
+		EXPERIENCE = registerOrGet(EXPERIENCE,"experience");
+		ENDERJUICE = registerOrGet(ENDERJUICE,"ender");
 
-		registerOrGet(TOXIC_FLUID,"toxic_fluid");
-		registerOrGet(RADWATER_FLUID,"radwater_fluid");
-		registerOrGet(MUD_FLUID,"mud_fluid");
-		registerOrGet(SCHRABIDIC,"schrabidic");
-		registerOrGet(CORIUM_FLUID,"corium_fluid");
-		registerOrGet(VOLCANIC_LAVA_FLUID,"volcanic_lava_fluid");
+		TOXIC_FLUID = registerOrGet(TOXIC_FLUID,"toxic_fluid");
+		RADWATER_FLUID = registerOrGet(RADWATER_FLUID,"radwater_fluid");
+		MUD_FLUID = registerOrGet(MUD_FLUID,"mud_fluid");
+		SCHRABIDIC = registerOrGet(SCHRABIDIC,"schrabidic");
+		CORIUM_FLUID = registerOrGet(CORIUM_FLUID,"corium_fluid");
+		VOLCANIC_LAVA_FLUID = registerOrGet(VOLCANIC_LAVA_FLUID,"volcanic_lava_fluid");
 
 		ModBlocks.toxic_block = new ToxicBlock(ModForgeFluids.TOXIC_FLUID, ModBlocks.fluidtoxic, ModDamageSource.radiation, "toxic_block").setResistance(500F);
 		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.RADWATER_FLUID, ModBlocks.fluidradwater, ModDamageSource.radiation, "radwater_block").setResistance(500F);
@@ -372,11 +372,12 @@ public class ModForgeFluids {
 		f = FluidRegistry.getFluid(name);
 	}
 
-	public static void registerOrGet(Fluid f, String name){
+	public static Fluid registerOrGet(Fluid f, String name){
 		if(!FluidRegistry.registerFluid(f)) {
 			f = FluidRegistry.getFluid(name);
 			noBlockFluids.put(f, name);
 		}
+		return f;
 	}
 
 	@SubscribeEvent
