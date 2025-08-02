@@ -137,6 +137,8 @@ public class OreDictManager {
 	/*
 	 * STABLE
 	 */
+	public static final DictFrame CARBON = new DictFrame("Carbon");
+	public static final DictFrame CA = new DictFrame("Calcium");
 	public static final DictFrame RAREEARTH = new DictFrame("RareEarth");
 	public static final DictFrame NITANIUM = new DictFrame("Nitanium");
 	/** TITANIUM */
@@ -184,6 +186,8 @@ public class OreDictManager {
 	public static final DictFrame STAR = new DictFrame("Starmetal");
 	public static final DictFrame BIGMT = new DictFrame("Saturnite");
 	public static final DictFrame FERRO = new DictFrame("Ferrouranium");
+	/** BISMUTH STRONTIUM CALCIUM COPPER OXIDE */
+	public static final DictFrame BSCCO = new DictFrame("BSCCO");
 	public static final DictFrame EUPH = new DictFrame("Euphemium");
 	public static final DictFrame DNT = new DictFrame("Dineutronium");
 	public static final DictFrame FIBER = new DictFrame("Fiberglass");
@@ -209,6 +213,7 @@ public class OreDictManager {
 	public static final DictFrame MALACHITE = new DictFrame("Malachite");
 	public static final DictFrame SLAG = new DictFrame("Slag");
 	public static final DictFrame INFERNAL = new DictFrame("InfernalCoal");
+	public static final DictFrame METEOR = new DictFrame("Meteor");
 
 	/*
 	 * HAZARDS, MISC

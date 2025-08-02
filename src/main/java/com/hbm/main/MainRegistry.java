@@ -68,6 +68,7 @@ import com.hbm.tileentity.machine.rbmk.*;
 import com.hbm.tileentity.network.*;
 import com.hbm.tileentity.network.energy.*;
 import com.hbm.tileentity.turret.*;
+import com.hbm.world.feature.OreLayer3D;
 import com.hbm.world.generator.CellularDungeonFactory;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
@@ -671,6 +672,10 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityFurnaceSteel.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_steel"));
 		GameRegistry.registerTileEntity(TileEntityFurnaceCombination.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_combination"));
 		GameRegistry.registerTileEntity(TileEntityCrucible.class, new ResourceLocation(RefStrings.MODID, "tileentity_crucible"));
+		GameRegistry.registerTileEntity(TileEntityFoundryMold.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_mold"));
+		GameRegistry.registerTileEntity(TileEntityFoundryBasin.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_basin"));
+		GameRegistry.registerTileEntity(TileEntityFoundryChannel.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_channel"));
+		GameRegistry.registerTileEntity(TileEntityFoundryOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_outlet"));
 		GameRegistry.registerTileEntity(TileEntityDoorGeneric.class, new ResourceLocation(RefStrings.MODID, "tileentity_door_generic"));
 		GameRegistry.registerTileEntity(TileEntityBMPowerBox.class, new ResourceLocation(RefStrings.MODID, "tileentity_bm_power_box"));
 		GameRegistry.registerTileEntity(TileEntityRadioTorchSender.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_sender"));
@@ -1002,7 +1007,9 @@ public class MainRegistry {
 		FluidContainerRegistry.registerContainer(ModItems.particle_amat, ModItems.particle_empty, new FluidStack(ModForgeFluids.AMAT, 1000));
 		FluidContainerRegistry.registerContainer(ModItems.particle_aschrab, ModItems.particle_empty, new FluidStack(ModForgeFluids.ASCHRAB, 1000));
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.ore_gneiss_gas), Item.getItemFromBlock(ModBlocks.stone_gneiss), new FluidStack(ModForgeFluids.PETROLEUM, 250));
-		
+		MinecraftForge.EVENT_BUS.register(new OreLayer3D(ModBlocks.ore_hematite).setScaleH(0.05D).setScaleV(0.1D).setThreshold(230));
+		MinecraftForge.EVENT_BUS.register(new OreLayer3D(ModBlocks.ore_malachite).setScaleH(0.03D).setScaleV(0.15D).setThreshold(300));
+
 		//Drillgon200: expand the max entity radius for the hunter chopper
 		if(World.MAX_ENTITY_RADIUS < 5)
 			World.MAX_ENTITY_RADIUS = 5;

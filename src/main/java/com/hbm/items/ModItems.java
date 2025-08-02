@@ -767,6 +767,7 @@ public class ModItems {
 		public static class Ingots {
 
 			//Materials
+			public static final Item ingot_bscco = new ItemCustomLore("ingot_bscco").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_silicon = new ItemBase("ingot_silicon").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_steel = new ItemBase("ingot_steel").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_titanium = new ItemBase("ingot_titanium").setCreativeTab(MainRegistry.partsTab);
@@ -1210,6 +1211,8 @@ public class ModItems {
 
 	public static class Foundry {
 		public static final Item scraps = new ItemScraps("scraps").setCreativeTab(MainRegistry.partsTab);
+		public static final Item mold_base = new ItemBase("mold_base").setCreativeTab(MainRegistry.controlTab);
+		public static final Item mold = new ItemMold("mold").setCreativeTab(MainRegistry.controlTab);
 	}
 
 	public static class LeafiaRods {

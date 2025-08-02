@@ -395,9 +395,12 @@ public class ModBlocks {
 	public static final Block ore_gneiss_schrabidium = new BlockNTMOre("ore_gneiss_schrabidium", 3).addRadiation(ItemHazard.ore * ItemHazard.sa326).addBlinding().toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(1.5F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_gneiss_rare = new BlockNTMOre("ore_gneiss_rare", 3).setCreativeTab(MainRegistry.resourceTab).setHardness(1.5F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_gneiss_gas = new BlockNTMOre("ore_gneiss_gas", 0).setCreativeTab(MainRegistry.resourceTab).setHardness(1.5F).setResistance(ORE_VANILLA.v);
-	
-	public static final Block ore_tikite = new BlockNTMOre("ore_tikite", 4).addRadiation(6.0F).toBlock().setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(ORE_VANILLA.v);
-		
+
+	public static final Block ore_hematite = new BlockNTMOre("ore_hematite", 1).setCreativeTab(MainRegistry.resourceTab).setHardness(7.0F).setResistance(20F);
+	public static final Block ore_malachite = new BlockNTMOre("ore_malachite", 2).setCreativeTab(MainRegistry.resourceTab).setHardness(7.0F).setResistance(20F);
+
+	public static final Block ore_tikite = new BlockNTMOre("ore_tikite", 4).setCreativeTab(MainRegistry.resourceTab).setHardness(5.0F).setResistance(10.0F);
+
 	public static final Block ore_nether_coal = new BlockNetherCoal(false, 5, true, "ore_nether_coal").setCreativeTab(MainRegistry.resourceTab).setLightLevel(10F/15F).setHardness(0.4F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_nether_smoldering = new BlockSmolder(Material.ROCK, "ore_nether_smoldering").setCreativeTab(MainRegistry.resourceTab).setLightLevel(1F).setHardness(0.4F).setResistance(ORE_VANILLA.v);
 	public static final Block ore_nether_cobalt = new BlockNTMOre("ore_nether_cobalt", 3).setCreativeTab(MainRegistry.resourceTab).setHardness(0.4F).setResistance(ORE_VANILLA.v);
@@ -1260,6 +1263,12 @@ public class ModBlocks {
 	public static final Block furnace_combination = new FurnaceCombination(Material.IRON, "furnace_combination").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block heat_boiler = new HeatBoiler(Material.IRON, "heat_boiler").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block machine_crucible = new MachineCrucible(Material.IRON, "machine_crucible").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
+	public static final Block foundry_mold = new FoundryMold("foundry_mold").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block foundry_basin = new FoundryBasin("foundry_basin").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
+	public static final Block foundry_channel = new FoundryChannel("foundry_channel").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block foundry_outlet = new FoundryOutlet("foundry_outlet").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 
 	//Misc
 	public static final Block radsensor = new RadSensor(Material.IRON, "radsensor").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);

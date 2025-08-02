@@ -279,6 +279,8 @@ public class GUIScreenTemplateFolder extends GuiScreen {
 						itemRender.renderItemAndEffectIntoGUI(player, AssemblerRecipes.getOutputFromTempate(stack), xPos + 1, yPos + 1);
 					else if(stack.getItem() == ModItems.chemistry_template)
 						itemRender.renderItemAndEffectIntoGUI(player, new ItemStack(ModItems.chemistry_icon, 1, stack.getItemDamage()), xPos + 1, yPos + 1);
+					else if(stack.getItem() == ModItems.crucible_template)
+						itemRender.renderItemAndEffectIntoGUI(player, CrucibleRecipes.getIcon(stack), xPos + 1, yPos + 1);
 					else
 						itemRender.renderItemAndEffectIntoGUI(player, stack, xPos + 1, yPos + 1);
 				}

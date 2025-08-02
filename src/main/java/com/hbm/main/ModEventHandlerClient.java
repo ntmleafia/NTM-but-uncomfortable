@@ -25,6 +25,7 @@ import com.hbm.inventory.OreDictManager;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
+import com.hbm.inventory.material.Mats;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.ElevatorStyles;
@@ -356,7 +357,7 @@ public class ModEventHandlerClient {
 			for(int i: ChemplantRecipes.recipeNames.keySet()){
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(RefStrings.MODID + ":chem_icon_" + ChemplantRecipes.getName(i).toLowerCase(), "inventory"));
 			}
-		} else if(item == ModItems.chemistry_template) { /// Might be unnecessary?
+		} else if(item == ModItems.chemistry_template) {
 			for(int i: ChemplantRecipes.recipeNames.keySet()){
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			}
@@ -2273,6 +2274,11 @@ public class ModEventHandlerClient {
 					}
 				}
 			}
+		}
+
+		//Foundry
+		if(event.getFlags().isAdvanced()) {
+			Mats.drawFoundryTips(stack, list, Keyboard.isKeyDown(Keyboard.KEY_LSHIFT));
 		}
 
 		/// CUSTOM NUKE ///

@@ -807,6 +807,10 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSteel.class, new RenderFurnaceSteel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceCombination.class, new RenderFurnaceCombination());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrucible.class, new RenderCrucible());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryMold.class, new RenderFoundryMold());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryBasin.class, new RenderFoundryBasin());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryChannel.class, new RenderFoundryChannel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryOutlet.class, new RenderFoundryOutlet());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorGeneric.class, new RenderDoorGeneric());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRControl.class, new RenderPWRControl());
 		ClientRegistry.bindTileEntitySpecialRenderer(PWRMeshedWreckEntity.class, new RenderPWRMeshedWreck());

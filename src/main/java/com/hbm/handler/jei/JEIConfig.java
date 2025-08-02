@@ -92,6 +92,9 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_difurnace_off), ALLOY);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_difurnace_rtg_off), ALLOY);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.furnace_combination), COMBINATION);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_crucible), FOUNDRYSMELT);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_crucible), FOUNDRYMIX);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_crucible), FOUNDRYPOUR);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_off), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_electric_off), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_rtg_off), BOILER);
@@ -150,6 +153,9 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getPressRecipes(), PRESS);
 		registry.addRecipes(JeiRecipes.getAlloyRecipes(), ALLOY);
 		registry.addRecipes(JeiRecipes.getCombinationFurnaceRecipes(), COMBINATION);
+		registry.addRecipes(JeiRecipes.getFoundrySmeltRecipes(), FOUNDRYSMELT);
+		registry.addRecipes(JeiRecipes.getFoundryMixRecipes(), FOUNDRYMIX);
+		registry.addRecipes(JeiRecipes.getFoundryPourRecipes(), FOUNDRYPOUR);
 		registry.addRecipes(JeiRecipes.getSolderingRecipes(),SOLDERING);
 		registry.addRecipes(JeiRecipes.getBoilerRecipes(), BOILER);
 		registry.addRecipes(CentrifugeRecipes.getCentrifugeRecipes(), CENTRIFUGE);
@@ -291,6 +297,9 @@ public class JEIConfig implements IModPlugin {
 				new ChemplantRecipeHandler(help),
 				new MixerRecipeHandler(help),
 				new CombinationRecipeHandler(help),
+				new FoundrySmeltRecipeHandler(help),
+				new FoundryMixRecipeHandler(help),
+				new FoundryPourRecipeHandler(help),
 				new SolderingRecipeHandler(help),
 				new BoilerRecipeHandler(help),
 				new RefineryRecipeHandler(help),

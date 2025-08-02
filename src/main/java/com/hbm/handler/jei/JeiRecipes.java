@@ -1,5 +1,6 @@
 package com.hbm.handler.jei;
 
+import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.forgefluid.SpecialContainerFillLists.EnumCanister;
 import com.hbm.forgefluid.SpecialContainerFillLists.EnumCell;
@@ -15,15 +16,18 @@ import com.hbm.inventory.MagicRecipes.MagicRecipe;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
+import com.hbm.inventory.RecipesCommon.OreDictStack;
+import com.hbm.inventory.material.MaterialShapes;
 import com.hbm.inventory.material.Mats;
+import com.hbm.inventory.material.Mats.MaterialStack;
+import com.hbm.inventory.material.NTMMaterial;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Batteries;
+import com.hbm.items.ModItems.Foundry;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
-import com.hbm.items.machine.ItemAssemblyTemplate;
+import com.hbm.items.machine.*;
 import com.hbm.items.machine.ItemFELCrystal.EnumWavelengths;
-import com.hbm.items.machine.ItemFluidIcon;
-import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
@@ -40,6 +44,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
@@ -797,9 +802,9 @@ public class JeiRecipes {
 		if(foundrySmeltRecipes != null)
 			return foundrySmeltRecipes;
 		foundrySmeltRecipes = new ArrayList<FoundrySmeltRecipe>();
-		/*
+
 		for(NTMMaterial mat : Mats.orderedList){ //iron, gold
-			for(Entry<String, MaterialShapes> prefixEntry : Mats.prefixByName.entrySet()) { //iron ingot, nugget
+			for(Entry<String,MaterialShapes> prefixEntry : Mats.prefixByName.entrySet()) { //iron ingot, nugget
 				String prefix = prefixEntry.getKey();
 				List<ItemStack> shapeMatItemStacks = new ArrayList<>();
 				for (String name : mat.names) { // iron/eisen ingot
@@ -817,7 +822,7 @@ public class JeiRecipes {
 		}
 		for(Map.Entry<String, List<MaterialStack>>  entry: Mats.materialOreEntries.entrySet()){
 			foundrySmeltRecipes.add(new FoundrySmeltRecipe(new OreDictStack(entry.getKey()).getStackList(), Mats.matsToScrap(entry.getValue(), false)));
-		}*/
+		}
 
 		return foundrySmeltRecipes;
 	}
@@ -840,7 +845,7 @@ public class JeiRecipes {
 		if(foundryPourRecipes != null)
 			return foundryPourRecipes;
 		foundryPourRecipes = new ArrayList<FoundryPourRecipe>();
-/*
+
 		for(NTMMaterial material : Mats.orderedList) {
 
 			if (material.smeltable != NTMMaterial.SmeltingBehavior.SMELTABLE)
@@ -850,12 +855,12 @@ public class JeiRecipes {
 				ItemStack out = mold.getOutput(material);
 				if (out != null) {
 					ItemStack scrap = ItemScraps.create(new MaterialStack(material, mold.getCost()), false);
-					ItemStack moldStack = new ItemStack(ModItems.mold, 1, mold.id);
+					ItemStack moldStack = new ItemStack(Foundry.mold, 1, mold.id);
 					ItemStack basin = new ItemStack(mold.size == 0 ? ModBlocks.foundry_mold : mold.size == 1 ? ModBlocks.foundry_basin : Blocks.FIRE);
 					foundryPourRecipes.add(new FoundryPourRecipe(basin, moldStack, scrap, out));
 				}
 			}
-		}*/
+		}
 		return foundryPourRecipes;
 	}
 
