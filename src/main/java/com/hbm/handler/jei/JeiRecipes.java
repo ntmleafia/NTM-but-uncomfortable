@@ -57,6 +57,10 @@ public class JeiRecipes {
 	private static List<CyclotronRecipe> cyclotronRecipes = null;
 	private static List<PressRecipe> pressRecipes = null;
 	private static List<AlloyFurnaceRecipe> alloyFurnaceRecipes = null;
+	private static List<CombinationFurnaceRecipe> combinationFurnaceRecipes = null;
+	private static List<FoundrySmeltRecipe> foundrySmeltRecipes = null;
+	private static List<FoundryMixRecipe> foundryMixRecipes = null;
+	private static List<FoundryPourRecipe> foundryPourRecipes = null;
 	private static List<SolderingRecipe> solderingRecipes = null;
 	private static List<BoilerRecipe> boilerRecipes = null;
 	private static List<CMBFurnaceRecipe> cmbRecipes = null;
@@ -80,9 +84,6 @@ public class JeiRecipes {
 	private static List<SmithingRecipe> smithingRecipes = null;
 	private static List<AnvilRecipe> anvilRecipes = null;
 	private static List<TransmutationRecipe> transmutationRecipes = null;
-	private static List<FoundrySmeltRecipe> foundrySmeltRecipes = null;
-	private static List<FoundryMixRecipe> foundryMixRecipes = null;
-	private static List<FoundryPourRecipe> foundryPourRecipes = null;
 	
 	private static List<ItemStack> batteries = null;
 	private static Map<Integer, List<ItemStack>> reactorFuelMap = new HashMap<Integer, List<ItemStack>>();
@@ -781,6 +782,17 @@ public class JeiRecipes {
 		return chemRecipes;
 	}
 
+	public static List<CombinationFurnaceRecipe> getCombinationFurnaceRecipes() {
+		if(combinationFurnaceRecipes != null)
+			return combinationFurnaceRecipes;
+		combinationFurnaceRecipes = new ArrayList<CombinationFurnaceRecipe>();
+
+		for(Map.Entry<AStack, Pair<ItemStack, FluidStack>> pairEntry : CombinationRecipes.recipes.entrySet()){
+			combinationFurnaceRecipes.add(new CombinationFurnaceRecipe(pairEntry.getKey(), pairEntry.getValue().getKey(), pairEntry.getValue().getValue()));
+		}
+		return combinationFurnaceRecipes;
+	}
+
 	public static List<FoundrySmeltRecipe> getFoundrySmeltRecipes() {
 		if(foundrySmeltRecipes != null)
 			return foundrySmeltRecipes;
@@ -1352,6 +1364,26 @@ public class JeiRecipes {
 			anvilRecipes.add(new AnvilRecipe(inputs, outputs, chances, r.tierLower, r.tierUpper, r.getOverlay()));
  		}
 		return anvilRecipes;
+	}
+
+	public static class CombinationFurnaceRecipe implements IRecipeWrapper {
+
+		private final ItemStack input;
+		private final List<ItemStack> outputs;
+
+		public CombinationFurnaceRecipe(AStack input, ItemStack outputItem, FluidStack outputFluid) {
+			this.input = input.getStack();
+			this.outputs = new ArrayList<ItemStack>();
+			if(!outputItem.isEmpty()) outputs.add(outputItem);
+			if(outputFluid != null) outputs.add(ItemFluidIcon.getStackWithQuantity(outputFluid));
+		}
+
+		@Override
+		public void getIngredients(IIngredients ingredients) {
+			ingredients.setInput(VanillaTypes.ITEM, input);
+			ingredients.setOutputs(VanillaTypes.ITEM, outputs);
+		}
+
 	}
 
 	public static class FoundrySmeltRecipe implements IRecipeWrapper {

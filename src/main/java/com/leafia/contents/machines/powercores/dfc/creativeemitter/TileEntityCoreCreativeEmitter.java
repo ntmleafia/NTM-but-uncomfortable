@@ -60,7 +60,8 @@ public class TileEntityCoreCreativeEmitter extends TileEntityCoreEmitter {
 		compound.setLong("1",joulesT[1]);
 		compound.setLong("2",joulesT[2]);
 		compound.setLong("3",joulesT[3]);
-		return compound;
+		compound.setInteger("selecting",selecting);
+		return super.writeToNBT(compound);
 	}
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -69,11 +70,15 @@ public class TileEntityCoreCreativeEmitter extends TileEntityCoreEmitter {
 		joulesT[1] = compound.getLong("1");
 		joulesT[2] = compound.getLong("2");
 		joulesT[3] = compound.getLong("3");
+		selecting = compound.getInteger("selecting");
+		super.readFromNBT(compound);
 	}
 
 	boolean changed = false;
 	@Override
 	public void onReceivePacketLocal(byte key,Object value) {
+		if (key == 0)
+			isActive = (boolean)value;
 		if (key == 3)
 			selecting = (int)value;
 		else if (key >= 4 && key <= 7) {

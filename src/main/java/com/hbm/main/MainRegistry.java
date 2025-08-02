@@ -84,6 +84,7 @@ import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.manfacturing.wish.WishTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
+import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
@@ -385,6 +386,7 @@ public class MainRegistry {
 			rendererWaiting.add(new SolidifierTE());
 
 			rendererWaiting.add(new AssemblyFactoryTE());
+			rendererWaiting.add(new ChemTableTE());
 		}
 
 		proxy.registerRenderInfo();
@@ -667,6 +669,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityHeaterRadioThermal.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_rt"));
 		GameRegistry.registerTileEntity(TileEntityFurnaceIron.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_iron"));
 		GameRegistry.registerTileEntity(TileEntityFurnaceSteel.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_steel"));
+		GameRegistry.registerTileEntity(TileEntityFurnaceCombination.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_combination"));
+		GameRegistry.registerTileEntity(TileEntityCrucible.class, new ResourceLocation(RefStrings.MODID, "tileentity_crucible"));
 		GameRegistry.registerTileEntity(TileEntityDoorGeneric.class, new ResourceLocation(RefStrings.MODID, "tileentity_door_generic"));
 		GameRegistry.registerTileEntity(TileEntityBMPowerBox.class, new ResourceLocation(RefStrings.MODID, "tileentity_bm_power_box"));
 		GameRegistry.registerTileEntity(TileEntityRadioTorchSender.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_sender"));
@@ -955,6 +959,7 @@ public class MainRegistry {
 		DiFurnaceRecipes.registerFuels();
 		CrystallizerRecipes.register();
 		CentrifugeRecipes.register();
+		CrucibleRecipes.registerDefaults();
 		PressRecipes.registerOverrides();
 		BreederRecipes.registerFuels();
 		BreederRecipes.registerRecipes();
@@ -966,6 +971,7 @@ public class MainRegistry {
 		SolderingRecipes.registerDefaults();
 		ExplosionNukeGeneric.loadSoliniumFromFile();
 		CyclotronRecipes.register();
+		CombinationRecipes.registerDefaults();
 		HadronRecipes.register();
 		MagicRecipes.register();
 		SILEXRecipes.register();

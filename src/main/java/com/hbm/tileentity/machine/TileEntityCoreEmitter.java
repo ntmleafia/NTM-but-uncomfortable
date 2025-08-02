@@ -9,6 +9,7 @@ import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;

@@ -3,6 +3,7 @@ package com.leafia.contents.machines.powercores.dfc;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.tileentity.machine.TileEntityCore;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
@@ -22,6 +24,13 @@ public abstract class DFCBaseTE extends TileEntityMachineBase implements LeafiaP
 	public DFCBaseTE(int scount) {
 		super(scount);
 	}
+
+	@Override
+	public void setWorld(World worldIn) {
+		super.setWorld(worldIn);
+		LeafiaDebug.debugLog(worldIn,"TileEntity regenerated");
+	}
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("x1",targetPosition.getX());

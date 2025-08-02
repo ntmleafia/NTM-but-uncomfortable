@@ -546,6 +546,19 @@ public class ItemRenderLibrary {
 				ResourceManager.heater_oven.renderAll();
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_crucible), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+				GlStateManager.shadeModel(GL11.GL_SMOOTH);
+				bindTexture(ResourceManager.crucible_tex);
+				ResourceManager.crucible_heat.renderAll();
+				GlStateManager.shadeModel(GL11.GL_FLAT);
+			}});
 		renderers.put(Item.getItemFromBlock(ModBlocks.heater_oilburner), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -1, 0);
@@ -594,6 +607,18 @@ public class ItemRenderLibrary {
 		        GlStateManager.shadeModel(GL11.GL_SMOOTH);
 				bindTexture(ResourceManager.furnace_steel_tex);  ResourceManager.furnace_steel.renderAll();
 		        GlStateManager.shadeModel(GL11.GL_FLAT);
+			}});
+		renderers.put(Item.getItemFromBlock(ModBlocks.furnace_combination), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+				GlStateManager.shadeModel(GL11.GL_SMOOTH);
+				bindTexture(ResourceManager.combination_oven_tex);  ResourceManager.combination_oven.renderAll();
+				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
 		renderers.put(Item.getItemFromBlock(ModBlocks.tesla), new ItemRenderBase() {
 			public void renderInventory() {

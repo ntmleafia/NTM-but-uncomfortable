@@ -13,6 +13,7 @@ import com.hbm.handler.ToolAbility.LuckAbility;
 import com.hbm.handler.WeaponAbility;
 import com.hbm.handler.guncfg.*;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
@@ -1819,7 +1820,8 @@ public class ModItems {
 	public static final Item solid_fuel_presto_triplet = new ItemFuel("solid_fuel_presto_triplet", 19200).setCreativeTab(MainRegistry.partsTab);
 	public static final Item rocket_fuel = new ItemFuel("rocket_fuel", 6400).setCreativeTab(MainRegistry.partsTab);
 	public static final Item briquette_lignite = new ItemFuelHazard("briquette_lignite", 1600, false).addCoal(3).toItem().setCreativeTab(MainRegistry.partsTab);
-	public static final Item coke = new ItemFuelHazard("coke", 3200, false).addCoal(4).toItem().setCreativeTab(MainRegistry.partsTab);
+	//public static final Item coke = new ItemFuelHazard("coke", 3200, false).addCoal(4).toItem().setCreativeTab(MainRegistry.partsTab);
+	public static final Item coke = new ItemEnumMulti(EnumCokeType.class, "coke").setCreativeTab(MainRegistry.partsTab);
 	public static final Item lignite = new ItemFuelHazard("lignite", 1200, false).addCoal(1).toItem().setCreativeTab(MainRegistry.partsTab);
 	
 	//Fragments

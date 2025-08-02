@@ -91,6 +91,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_epress), PRESS);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_difurnace_off), ALLOY);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_difurnace_rtg_off), ALLOY);
+		registry.addRecipeCatalyst(new ItemStack(ModBlocks.furnace_combination), COMBINATION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_off), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_electric_off), BOILER);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_boiler_rtg_off), BOILER);
@@ -148,6 +149,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getTransmutationRecipes(), TRANSMUTATION);
 		registry.addRecipes(JeiRecipes.getPressRecipes(), PRESS);
 		registry.addRecipes(JeiRecipes.getAlloyRecipes(), ALLOY);
+		registry.addRecipes(JeiRecipes.getCombinationFurnaceRecipes(), COMBINATION);
 		registry.addRecipes(JeiRecipes.getSolderingRecipes(),SOLDERING);
 		registry.addRecipes(JeiRecipes.getBoilerRecipes(), BOILER);
 		registry.addRecipes(CentrifugeRecipes.getCentrifugeRecipes(), CENTRIFUGE);
@@ -189,6 +191,7 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeClickArea(GUIWorkstationPressElectric.class, 80, 35, 15, 15, PRESS);
 		registry.addRecipeClickArea(GUIWorkstationDiFurnace.class, 102, 36, 21, 14, ALLOY);
 		registry.addRecipeClickArea(GUIWorkstationDiFurnaceRTG.class, 102, 36, 21, 14, ALLOY);
+		registry.addRecipeClickArea(GUIFurnaceCombo.class, 44, 53, 39, 18, COMBINATION);
 		registry.addRecipeClickArea(GUIMachineBoiler.class, 61, 34, 17, 35, BOILER);
 		registry.addRecipeClickArea(GUIMachineBoilerElectric.class, 61, 34, 17, 35, BOILER);
 		registry.addRecipeClickArea(GUIMachineBoilerRTG.class, 61, 34, 17, 17, BOILER);
@@ -287,6 +290,7 @@ public class JEIConfig implements IModPlugin {
 				new AssemblerRecipeHandler(help),
 				new ChemplantRecipeHandler(help),
 				new MixerRecipeHandler(help),
+				new CombinationRecipeHandler(help),
 				new SolderingRecipeHandler(help),
 				new BoilerRecipeHandler(help),
 				new RefineryRecipeHandler(help),

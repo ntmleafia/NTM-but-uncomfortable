@@ -32,6 +32,7 @@ import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderBlock;
 import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryBlock;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
 import com.leafia.contents.machines.manfacturing.wish.WishBlock;
+import com.leafia.contents.machines.processing.chemtable.ChemTableBlock;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
@@ -1080,7 +1081,8 @@ public class ModBlocks {
 	public static final Block machine_chemplant = new MachineChemplant(Material.IRON, "machine_chemplant").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block machine_chemfac = new MachineChemfac(Material.IRON, "machine_chemfac").setHardness(5.0F).setResistance(30.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_machine_chemplant = 49;
-	
+	public static final Block chemtable = new ChemTableBlock(Material.IRON, "chemtable").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
+
 	public static final Block machine_mixer = new MachineMixer(Material.IRON, "machine_mixer").setHardness(5.0F).setResistance(30.0F).setCreativeTab(MainRegistry.machineTab);
 
 	public static final Block machine_rtg_grey = new MachineRTG(Material.IRON, "machine_rtg_grey").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
@@ -1255,7 +1257,10 @@ public class ModBlocks {
 	public static final Block heater_rt = new HeaterRadioThermal(Material.IRON, "heater_rt").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block furnace_iron = new FurnaceIron(Material.IRON, "furnace_iron").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block furnace_steel = new FurnaceSteel(Material.IRON, "furnace_steel").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block furnace_combination = new FurnaceCombination(Material.IRON, "furnace_combination").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block heat_boiler = new HeatBoiler(Material.IRON, "heat_boiler").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block machine_crucible = new MachineCrucible(Material.IRON, "machine_crucible").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
 	//Misc
 	public static final Block radsensor = new RadSensor(Material.IRON, "radsensor").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	
