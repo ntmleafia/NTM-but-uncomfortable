@@ -13,6 +13,7 @@ import com.hbm.handler.ToolAbility.LuckAbility;
 import com.hbm.handler.WeaponAbility;
 import com.hbm.handler.guncfg.*;
 import com.hbm.interfaces.IItemHazard;
+import com.hbm.inventory.material.MaterialShapes;
 import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
@@ -764,8 +765,8 @@ public class ModItems {
 	public static final Item multitool_decon = new ItemMultitoolPassive("multitool_decon").setCreativeTab(null);
 
 	public static class Materials {
+		public static final Item plate_cast = new ItemMaterialsAutogen("plate_cast", MaterialShapes.CASTPLATE).setCreativeTab(MainRegistry.partsTab);
 		public static class Ingots {
-
 			//Materials
 			public static final Item ingot_bscco = new ItemCustomLore("ingot_bscco").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_silicon = new ItemBase("ingot_silicon").setCreativeTab(MainRegistry.partsTab);
