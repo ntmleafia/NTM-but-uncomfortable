@@ -20,6 +20,7 @@ import com.hbm.handler.*;
 import com.hbm.interfaces.*;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.ChemplantRecipes;
+import com.hbm.inventory.CrucibleRecipes;
 import com.hbm.inventory.OreDictManager;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
@@ -355,8 +356,13 @@ public class ModEventHandlerClient {
 			for(int i: ChemplantRecipes.recipeNames.keySet()){
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(RefStrings.MODID + ":chem_icon_" + ChemplantRecipes.getName(i).toLowerCase(), "inventory"));
 			}
-		} else if(item == ModItems.chemistry_template) {
+		} else if(item == ModItems.chemistry_template) { /// Might be unnecessary?
 			for(int i: ChemplantRecipes.recipeNames.keySet()){
+				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+			}
+		} else if(item == ModItems.crucible_template) {
+			CrucibleRecipes.registerDefaults();
+			for(int i: CrucibleRecipes.recipes.keySet()) {
 				ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 			}
 		} else if(item == ModItems.siren_track) {

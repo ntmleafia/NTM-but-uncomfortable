@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemCrucibleTemplate extends Item {
+public class ItemCrucibleTemplate extends Item implements IHasCustomModel {
 	
 	public static final ModelResourceLocation cruciModel = new ModelResourceLocation(RefStrings.MODID + ":crucible_template", "inventory");
 	
@@ -78,5 +78,10 @@ public class ItemCrucibleTemplate extends Item {
 		for(MaterialStack in : recipe.input) {
 			list.add(" §c"+I18nUtil.resolveKey(in.material.getTranslationKey()) + ": " + Mats.formatAmount(in.amount, Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)));
 		}
+	}
+
+	@Override
+	public ModelResourceLocation getResourceLocation() {
+		return cruciModel;
 	}
 }
