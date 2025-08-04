@@ -318,6 +318,7 @@ public class ModForgeFluids {
 		SCHRABIDIC = registerOrGet(SCHRABIDIC,"schrabidic");
 		CORIUM_FLUID = registerOrGet(CORIUM_FLUID,"corium_fluid");
 		VOLCANIC_LAVA_FLUID = registerOrGet(VOLCANIC_LAVA_FLUID,"volcanic_lava_fluid");
+		FLUORIDE = registerOrGet(FLUORIDE,"fluoride");
 
 		ModBlocks.toxic_block = new ToxicBlock(ModForgeFluids.TOXIC_FLUID, ModBlocks.fluidtoxic, ModDamageSource.radiation, "toxic_block").setResistance(500F);
 		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.RADWATER_FLUID, ModBlocks.fluidradwater, ModDamageSource.radiation, "radwater_block").setResistance(500F);
@@ -333,12 +334,14 @@ public class ModForgeFluids {
 		SCHRABIDIC.setBlock(ModBlocks.schrabidic_block);
 		CORIUM_FLUID.setBlock(ModBlocks.corium_block);
 		VOLCANIC_LAVA_FLUID.setBlock(ModBlocks.volcanic_lava_block);
+		FLUORIDE.setBlock(ModBlocks.fluoride_block);
 		FluidRegistry.addBucketForFluid(TOXIC_FLUID);
 		FluidRegistry.addBucketForFluid(RADWATER_FLUID);
 		FluidRegistry.addBucketForFluid(MUD_FLUID);
 		FluidRegistry.addBucketForFluid(SCHRABIDIC);
 		FluidRegistry.addBucketForFluid(CORIUM_FLUID);
 		FluidRegistry.addBucketForFluid(VOLCANIC_LAVA_FLUID);
+		FluidRegistry.addBucketForFluid(FLUORIDE);
 	}
 
 	//Stupid forge reads a bunch of default fluids from NBT when the world loads, which screws up my logic for replacing my fluids with fluids from other mods.

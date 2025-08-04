@@ -223,6 +223,10 @@ public class ExplosionNukeGeneric {
 				world.setBlockState(pos, ModBlocks.waste_earth.getDefaultState());
 			}
 
+			else if (b == Blocks.WATER) {
+				world.setBlockState(pos, ModBlocks.radwater_block.getDefaultState());
+			}
+
 			else if (b == Blocks.MYCELIUM) {
 				world.setBlockState(pos, ModBlocks.waste_mycelium.getDefaultState());
 			}
@@ -384,6 +388,10 @@ public class ExplosionNukeGeneric {
 
 			else if (b == Blocks.GRASS) {
 				world.setBlockState(pos, ModBlocks.waste_earth.getDefaultState());
+			}
+
+			else if(b == ModBlocks.radwater_block) {
+				world.setBlockState(pos, Blocks.WATER.getDefaultState());
 			}
 
 			else if (b == Blocks.MYCELIUM) {

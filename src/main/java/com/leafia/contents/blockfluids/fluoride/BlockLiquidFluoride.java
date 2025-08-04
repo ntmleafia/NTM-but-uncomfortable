@@ -29,6 +29,7 @@ public class BlockLiquidFluoride extends BlockFluidClassic {
 		this.setQuantaPerBlock(4);
 		this.damageSource = DamageSource.ON_FIRE;
 		this.displacements.put(this, false);
+		this.tickRate = 30;
 		
 		ModBlocks.ALL_BLOCKS.add(this);
 	}

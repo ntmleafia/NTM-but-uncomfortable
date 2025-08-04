@@ -372,9 +372,9 @@ public class EntityFalloutRain extends Entity implements IConstantRenderer, IChu
 				continue;
 			}
 
-			if(b.getBlock() == Blocks.WATER) {
-				world.setBlockState(pos, ModBlocks.radwater_block.getDefaultState());
-			}
+			// if(b.getBlock() == Blocks.WATER) {
+			// 	world.setBlockState(pos, ModBlocks.radwater_block.getDefaultState());
+			// }
 
 			if(bblock instanceof BlockOre && reachedStone && !lastReachedStone && dist < s1){
 				world.setBlockState(pos, ModBlocks.toxic_block.getDefaultState());
