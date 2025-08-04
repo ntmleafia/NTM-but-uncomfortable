@@ -4,6 +4,8 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.fluid.*;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.RefStrings;
+import com.leafia.contents.blockfluids.fluoride.BlockLiquidFluoride;
+import com.leafia.contents.blockfluids.fluoride.FluorideFluid;
 import com.leafia.dev.fluids.LeafiaFluid;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
@@ -172,6 +174,7 @@ public class ModForgeFluids {
 			.setEmptySound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA).setFillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
 	public static Fluid VOLCANIC_LAVA_FLUID = new VolcanicFluid().setLuminosity(15).setDensity(3000).setViscosity(3000).setTemperature(1300)
 			.setEmptySound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA).setFillSound(SoundEvents.ITEM_BUCKET_FILL_LAVA);
+	public static Fluid FLUORIDE = new FluorideFluid("fluoride").setDensity(1000);
 	
 	public static void init() {
 		SPENTSTEAM = registerOrGet(SPENTSTEAM,"spentsteam");
@@ -322,6 +325,8 @@ public class ModForgeFluids {
 		ModBlocks.schrabidic_block = new SchrabidicBlock(SCHRABIDIC, ModBlocks.fluidschrabidic.setReplaceable(), ModDamageSource.radiation, "schrabidic_block").setResistance(500F);
 		ModBlocks.corium_block = new BlockLiquidCorium(CORIUM_FLUID, ModBlocks.fluidcorium, "corium_block").setResistance(500F);
 		ModBlocks.volcanic_lava_block = new VolcanicBlock(VOLCANIC_LAVA_FLUID, ModBlocks.fluidvolcanic, "volcanic_lava_block").setResistance(500F);
+		ModBlocks.fluoride_block = new BlockLiquidFluoride(FLUORIDE, ModBlocks.fluidfluoride, "fluoride_fluid");
+
 		TOXIC_FLUID.setBlock(ModBlocks.toxic_block);
 		RADWATER_FLUID.setBlock(ModBlocks.radwater_block);
 		MUD_FLUID.setBlock(ModBlocks.mud_block);

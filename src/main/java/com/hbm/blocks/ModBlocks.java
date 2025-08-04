@@ -37,6 +37,12 @@ import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
 import com.leafia.contents.machines.processing.solidifier.SolidifierBlock;
+import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryBlock;
+import com.leafia.contents.machines.reactors.msr.control.MSRControlBlock;
+import com.leafia.contents.machines.reactors.msr.control.MSRControlExtensionBlock;
+import com.leafia.contents.machines.reactors.msr.ejector.MSREjectorBlock;
+import com.leafia.contents.machines.reactors.msr.element.MSRElementBlock;
+import com.leafia.contents.machines.reactors.msr.plug.MSRPlugBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRHullBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRReflectorBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRSourceBlock;
@@ -1305,6 +1311,19 @@ public class ModBlocks {
 	public static final Block factory_advanced_conductor = new BlockCableConnect(Material.IRON, "factory_advanced_conductor").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block factory_advanced_core = new FactoryCoreAdvanced(Material.IRON, "factory_advanced_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_factory_advanced = 25;
+	static boolean msr_dummy = MSR.dummy;
+
+	public static class MSR {
+		static boolean dummy = false;
+		public static final float generalHardness = 12;
+		public static final Block element = new MSRElementBlock(Material.IRON,"msr_element").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+		public static final Block plug = new MSRPlugBlock(Material.IRON,"msr_plug").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+		public static final Block control = new MSRControlBlock(Material.IRON,"msr_control").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+		public static final Block extension = new BlockPipe(Material.IRON,"msr_control_extension").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+		public static final Block arbitrary = new MSRArbitraryBlock(Material.IRON,"msr_arbitrary").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+		public static final Block ejector = new MSREjectorBlock(Material.IRON,"msr_ejector").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+
+	}
 
 	public static class PWR {
 		public static final int guiID = 273;
@@ -1339,15 +1358,16 @@ public class ModBlocks {
 		public static final PWRMeshedWreck wreck_stone = new PWRWreckStone();
 		public static final PWRMeshedWreck wreck_metal = new PWRWreckMetal();
 	}
+	static boolean ev_dummy = Elevators.dummy;
 	public static class Elevators {
+		static boolean dummy = false;
 		public static final int guiIdFloor = 365;
 		public static final int guiIdCabin = 366;
-	} // fuck the grouping since it doesnt work
-	public static final Block pulley = new EvPulley(Material.IRON,"elevator_pulley");
-	public static final Block shaft = new EvShaft(Material.IRON,"elevator_shaft");
-	public static final Block buffer = new EvBuffer(Material.IRON,"elevator_buffer");
-
-	public static final Block s6_floor = new EvFloor(Material.IRON,"elevator_s6floor");
+		public static final Block pulley = new EvPulley(Material.IRON,"elevator_pulley");
+		public static final Block shaft = new EvShaft(Material.IRON,"elevator_shaft");
+		public static final Block buffer = new EvBuffer(Material.IRON,"elevator_buffer");
+		public static final Block s6_floor = new EvFloor(Material.IRON,"elevator_s6floor");
+	}
 
 	//Big reactor
 	public static final Block reactor_element = PWR.element; // retroompat redirection
@@ -1548,7 +1568,12 @@ public class ModBlocks {
 	public static final Material fluidtoxic = new MaterialLiquid(MapColor.BLACK).setReplaceable();
 	public static Block toxic_block;
 
-	public static final Material fluidradwater = new MaterialLiquid(MapColor.GREEN).setReplaceable();
+	public static final Material fluidradwater = new MaterialLiquid(MapColor.WATER) {
+		@Override
+		public boolean blocksMovement() {
+			return true;
+		}
+	};
 	public static Block radwater_block;
 	
 	public static final Material fluidmud = (new MaterialLiquid(MapColor.ADOBE).setReplaceable());
@@ -1570,9 +1595,25 @@ public class ModBlocks {
 		}
 		
 	}.setImmovableMobility());
+
+	public static final Material fluidfluoride = (new MaterialLiquid(MapColor.SAND) {
+
+		@Override
+		public boolean blocksMovement() {
+			return true;
+		}
+
+		@Override
+		public Material setImmovableMobility() {
+			return super.setImmovableMobility();
+		}
+
+	}.setImmovableMobility());
+
 	public static Block corium_block;
 	public static final Material fluidvolcanic = (new MaterialLiquid(MapColor.RED));
 	public static Block volcanic_lava_block;
+	public static Block fluoride_block;
 	
 	//Weird stuff
 	public static final Block boxcar = new DecoBlock(Material.IRON, "boxcar").setSoundType(SoundType.METAL).setHardness(10.0F).setResistance(10.0F).setCreativeTab(MainRegistry.blockTab);

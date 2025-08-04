@@ -27,6 +27,8 @@ import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
+import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryRender;
+import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementRender;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletRender;
@@ -819,6 +821,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(EvShaftTE.class, new EvShaftRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(EvBufferTE.class, new EvBufferRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(FluidDuctGaugeTE.class, new FluidDuctEquipmentRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(MSRArbitraryTE.class, new MSRArbitraryRender());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());

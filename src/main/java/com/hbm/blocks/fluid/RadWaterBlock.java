@@ -83,5 +83,4 @@ public class RadWaterBlock extends BlockFluidClassic {
 	public int tickRate(World world) {
 		return 15;
 	}
-	
 }

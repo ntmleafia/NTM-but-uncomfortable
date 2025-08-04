@@ -617,6 +617,11 @@ public class ExplosionNukeGeneric {
 				return;
 			}
 
+			if(b.getBlock() == ModBlocks.radwater_block) {
+				world.setBlockState(pos, Blocks.WATER.getDefaultState());
+				return;
+			}
+
 			if(b.getBlock() == ModBlocks.waste_trinitite || b.getBlock() == ModBlocks.waste_sand) {
 				world.setBlockState(pos, Blocks.SAND.getDefaultState());
 				return;

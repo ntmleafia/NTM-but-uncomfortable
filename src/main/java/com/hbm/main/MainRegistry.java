@@ -90,6 +90,7 @@ import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
+import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.PWRPortTE;
@@ -887,6 +888,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(PWRVentDuctTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
 
 		GameRegistry.registerTileEntity(PWRMeshedWreckEntity.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwrwreck_base"));
+
+		GameRegistry.registerTileEntity(MSRArbitraryTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_arbitrary"));
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
 
