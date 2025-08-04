@@ -1,5 +1,6 @@
 package com.leafia.contents.control.fuel.nuclearfuel;
 
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -13,7 +14,8 @@ import javax.vecmath.Matrix4f;
 import java.util.Collections;
 import java.util.List;
 
-public class LeafiaRodBakedModel implements IBakedModel {
+public class
+LeafiaRodBakedModel implements IBakedModel {
 
 	@Override
 	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
@@ -51,5 +53,4 @@ public class LeafiaRodBakedModel implements IBakedModel {
 		Pair<? extends IBakedModel, Matrix4f> par = LeafiaRodRender.INSTANCE.itemModel.handlePerspective(cameraTransformType);
 		return Pair.of(this, par.getRight());
 	}
-
 }

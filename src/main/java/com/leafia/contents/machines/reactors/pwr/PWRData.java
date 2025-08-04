@@ -28,7 +28,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.element.Machi
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck.Erosion;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
 import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -732,7 +732,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			}
 			LeafiaMap<BlockPos, IBlockState> placeMap = new LeafiaMap<>();
 			LeafiaSet<BlockPos> antiPlaceSet = new LeafiaSet<>();
-			List<EntityPWRDebris> entitiesToSpawn = new ArrayList<>();
+			List<PWRDebrisEntity> entitiesToSpawn = new ArrayList<>();
 			for (BlockPos pos : vaporized) {
 				if (placeWrecks.contains(pos)) continue; // Somehow
 				boolean converted = false;
@@ -752,7 +752,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 					if (!(block instanceof IFluidBlock) && LeafiaUtil.isSolidVisibleCube(world.getBlockState(pos))) {
 						if (world.getBlockState(pos).getBlockHardness(world, pos) >= 1) {
 							Vec3d ray = new Vec3d(pos).add(0.5, 0.5, 0.5).subtract(centerPoint);
-							EntityPWRDebris debris = new EntityPWRDebris(world, pos.getX() + 0.5D, pos.getY() + 0.5, pos.getZ() + 0.5D, world.getBlockState(pos));
+							PWRDebrisEntity debris = new PWRDebrisEntity(world, pos.getX() + 0.5D, pos.getY() + 0.5, pos.getZ() + 0.5D, world.getBlockState(pos));
 							debris.motionX = signedPow(ray.x, 1) / reactorSize * (1 + world.rand.nextDouble() * 4) + signedPow(pressure.x, 0.8) / 2;
 							debris.motionY = signedPow(ray.y, 1) / reactorSize * (1 + world.rand.nextDouble() * 4) + signedPow(pressure.y, 0.8) / 2;
 							debris.motionZ = signedPow(ray.z, 1) / reactorSize * (1 + world.rand.nextDouble() * 4) + signedPow(pressure.z, 0.8) / 2;
@@ -959,7 +959,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				if (!antiPlaceSet.contains(entry.getKey()))
 					world.setBlockState(entry.getKey(), entry.getValue());
 			}
-			for (EntityPWRDebris debris : entitiesToSpawn)
+			for (PWRDebrisEntity debris : entitiesToSpawn)
 				world.spawnEntity(debris);
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "rbmkmush");

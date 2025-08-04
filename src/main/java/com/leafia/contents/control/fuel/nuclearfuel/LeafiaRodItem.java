@@ -263,21 +263,26 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 				temp = TextFormatting.GOLD+"("+String.format("%01.2f",data.getDouble("heat"))+"°C-20)"+TextFormatting.YELLOW;
 			}
 		}
+		boolean disableDecay = false;
 		String n = "0";
+		double tempx = heat-20;
 		double y = 0; // x = 20+~~
 		switch(functionId) {
 				// DEPLETED
 			case "depleteduranium": case "depletedmox":
-				y = 80;
+				y = 80-20;
 				n = "80";
+				disableDecay = true;
 				break;
 			case "depletedplutonium":
-				y = 90;
+				y = 90-20;
 				n = "90";
+				disableDecay = true;
 				break;
 			case "depletedthorium":
-				y = 60;
+				y = 60-20;
 				n = "60";
+				disableDecay = true;
 				break;
 
 				// URANIUM
@@ -358,6 +363,12 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 				y = 100*Math.pow(z/1000-2,3)-500*Math.pow(z/1000-2,2)+z/600+2800;
 				n = "100(("+flux+"/1000-1)³)-500(("+flux+"/1000-1)²)+("+flux+"+1000)/600+2800 "+TextFormatting.RED+"(DANGEROUS)";
 				break;
+
+			case "debug":
+				y = Math.max(heat,0)+Math.sqrt(x);
+				n = temp+"+20+√"+flux+TextFormatting.GRAY+" (DEBUG)";
+				disableDecay = true;
+				break;
 		}
 		lastY = y;
 		if (updateHeat) {
@@ -379,7 +390,7 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 				//cool = 0; // it's only a matter of time until your machine explodes >:)
 				data.setInteger("spillage",data.getInteger("spillage")+1);
 			}
-			if (data.getDouble("depletion") >= life)
+			if (data.getDouble("depletion") >= life && life > 0)
 				y = 0;
 			heat = data.getDouble("heat");
 			decay = data.getDouble("decay");
@@ -392,12 +403,13 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 			if (Math.abs(heatMg) < 0.00001)
 				heatMg = 0;
 			if (!meltdown && (heatMg != 0)) {
-				double curDepletion = data.getDouble("depletion") + Math.max(heatMg / 2, 0) + Math.pow(x / 2 + 1, 0.1) - 1; // +y is preferred but it doesnt really work with inert materials like lithium soo
+				double curDepletion = data.getDouble("depletion") + Math.max(heatMg, 0) + Math.pow(x, 0.9)/2000 - 1; // +y is preferred but it doesnt really work with inert materials like lithium soo
 				data.setDouble("depletion", curDepletion);
 			}
 			double newTemp = heat+heatMg;
 			if (heatMg*2 > decay)
 				decay += (heatMg*2-decay)*0.01;
+			if (disableDecay) decay = 0;
 			decay *= 0.99992694932; // this is f*cked lmao //0.99854;
 			data.setDouble("decay",decay);
 			newTemp += decay * Math.pow(Math.max(1-Math.max(newTemp,20)/1300,0),0.2);
@@ -450,9 +462,8 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 	public double getFlux(@Nullable ItemStack stack) {
 		if (stack == null)
 			return 0;
-		if(stack.getItem() instanceof LeafiaRodItem) {
+		if(stack.getItem() instanceof LeafiaRodItem otherRod) {
 			double compat = 1;
-			LeafiaRodItem otherRod = (LeafiaRodItem)stack.getItem();
 			if (this.splitWithAny || otherRod.splitIntoFast == this.splitWithFast)
 				compat = 2;
 			compat = compat * otherRod.emission * this.reactivity;

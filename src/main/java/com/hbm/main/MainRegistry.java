@@ -94,15 +94,15 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileE
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentDuct;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentInlet;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentDuctTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentInletTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
-import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
+import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
+import com.leafia.contents.machines.reactors.zirnox.container.DestroyedZirnoxTE;
+import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
 import com.leafia.contents.network.computers.cable.ComputerCableTE;
 import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveTE;
@@ -660,8 +660,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityTowerLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_tower_large"));
 		GameRegistry.registerTileEntity(TileEntitySILEX.class, new ResourceLocation(RefStrings.MODID, "tileentity_silex"));
 		GameRegistry.registerTileEntity(TileEntityFEL.class, new ResourceLocation(RefStrings.MODID, "tileentity_fel"));
-		GameRegistry.registerTileEntity(TileEntityReactorZirnox.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnox"));
-		GameRegistry.registerTileEntity(TileEntityReactorZirnoxDestroyed.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnoxdestroyed"));
+		GameRegistry.registerTileEntity(ZirnoxTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnox"));
+		GameRegistry.registerTileEntity(DestroyedZirnoxTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnoxdestroyed"));
 		GameRegistry.registerTileEntity(TileEntityHeaterFirebox.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_firebox"));
 		GameRegistry.registerTileEntity(TileEntityHeaterOven.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_oven"));
 		GameRegistry.registerTileEntity(TileEntityHeaterOilburner.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_oilburner"));
@@ -865,8 +865,8 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_firework_ball"), EntityFireworks.class, "entity_firework_ball", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_rbmk_debris"), EntityRBMKDebris.class, "entity_rbmk_debris", i++, MainRegistry.instance, 1000, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_zirnox_debris"), EntityZirnoxDebris.class, "entity_zirnox_debris", i++, MainRegistry.instance, 1000, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_pwr_debris"), EntityPWRDebris.class, "entity_pwr_debris", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_zirnox_debris"), ZirnoxDebrisEntity.class, "entity_zirnox_debris", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_pwr_debris"), PWRDebrisEntity.class, "entity_pwr_debris", i++, MainRegistry.instance, 1000, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_dfc_absorber_shrapnel"), AbsorberShrapnelEntity.class, "entity_dfc_absorber_shrapnel", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_spear"), EntitySpear.class, "entity_spear", i++, MainRegistry.instance, 1000, 1, true);
@@ -881,10 +881,10 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
 		GameRegistry.registerTileEntity(TileEntityPWRPort.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_port"));
 		GameRegistry.registerTileEntity(TileEntityPWRTerminal.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentInlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_inlet"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentDuct.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
+		GameRegistry.registerTileEntity(PWRVentElementTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
+		GameRegistry.registerTileEntity(PWRVentOutletTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
+		GameRegistry.registerTileEntity(PWRVentInletTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_inlet"));
+		GameRegistry.registerTileEntity(PWRVentDuctTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
 
 		GameRegistry.registerTileEntity(PWRMeshedWreckEntity.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwrwreck_base"));
 

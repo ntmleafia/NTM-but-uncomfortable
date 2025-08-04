@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.lwjgl.opengl.GLContext;
 
 public class GeneralConfig {
-
+	public static boolean enableGlobalRenderers = true;
 	public static boolean enableDebugMode = false;
 	public static boolean enableSkybox = true;
 	public static boolean enableWelcomeMessage = true;
@@ -78,6 +78,7 @@ public class GeneralConfig {
 	
 	public static void loadFromConfig(Configuration config){
 		final String CATEGORY_GENERAL = "01_general";
+		enableGlobalRenderers = CommonConfig.createConfigBool(config, CATEGORY_GENERAL, "0.00_enableGlobalRenderers", "Enabling this will fix models from turning invisible when looking away. Set this to false if you experience lag.", true);
 		enableDebugMode = config.get(CATEGORY_GENERAL, "1.00_enableDebugMode", false).getBoolean(false);
 		enableSkybox = config.get(CATEGORY_GENERAL, "1.00_enableSkybox", true).getBoolean(true);
 		enableMycelium = config.get(CATEGORY_GENERAL, "1.01_enableMyceliumSpread", false).getBoolean(false);

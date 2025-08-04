@@ -2,10 +2,7 @@ package com.hbm.packet;
 
 import com.hbm.inventory.gui.GUIScreenTemplateFolder;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemAssemblyTemplate;
-import com.hbm.items.machine.ItemCassette;
-import com.hbm.items.machine.ItemChemistryTemplate;
-import com.hbm.items.machine.ItemForgeFluidIdentifier;
+import com.hbm.items.machine.*;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
@@ -126,6 +123,15 @@ public class ItemFolderPacket extends RecordablePacket {
 					}
 				}
 				if(stack.getItem() instanceof ItemChemistryTemplate) {
+					if(Library.hasInventoryItem(p.inventory, Items.PAPER) && Library.hasInventoryItem(p.inventory, Items.DYE)) {
+						Library.consumeInventoryItem(p.inventory, Items.PAPER);
+						Library.consumeInventoryItem(p.inventory, Items.DYE);
+						if(!p.inventory.addItemStackToInventory(stack.copy()))
+							p.dropItem(stack, true);
+						success = true;
+					}
+				}
+				if(stack.getItem() instanceof ItemCrucibleTemplate) {
 					if(Library.hasInventoryItem(p.inventory, Items.PAPER) && Library.hasInventoryItem(p.inventory, Items.DYE)) {
 						Library.consumeInventoryItem(p.inventory, Items.PAPER);
 						Library.consumeInventoryItem(p.inventory, Items.DYE);

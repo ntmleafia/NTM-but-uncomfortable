@@ -22,7 +22,19 @@ public class NTMMaterial {
 	public int solidColorLight = 0xFF4A00;
 	public int solidColorDark = 0x802000;
 	public int moltenColor = 0xFF4A00;
-	
+
+	public int detonationTicks = -1; // :leafeon_troll:
+	public float radiation = 0;
+
+	public NTMMaterial setDetonationTicks(int detonationTicks) {
+		this.detonationTicks = detonationTicks;
+		return this;
+	}
+	public NTMMaterial setRadiation(float radiation) {
+		this.radiation = radiation;
+		return this;
+	}
+
 	public NTMMaterial smeltsInto;
 	public int convIn;
 	public int convOut;

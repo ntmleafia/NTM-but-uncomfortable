@@ -8,10 +8,6 @@ import com.hbm.inventory.material.Mats;
 import com.hbm.inventory.material.Mats.MaterialStack;
 
 import static com.hbm.items.ModItems.Materials.Ingots.*;
-import static com.hbm.items.ModItems.Materials.Billets.*;
-import static com.hbm.items.ModItems.Materials.Nuggies.*;
-import static com.hbm.items.ModItems.Materials.Powders.*;
-import static com.hbm.items.ModItems.Materials.Crystals.*;
 
 import com.hbm.items.ModItems.Materials.Ingots;
 import net.minecraft.item.ItemStack;
@@ -71,7 +67,7 @@ public class CrucibleRecipes {
 				.outputs(new MaterialStack(Mats.MAT_FERRO, n * 3)));
 		
 		recipes.put(7, new CrucibleRecipe(7, "crucible.tcalloy", 9, new ItemStack(Ingots.ingot_tcalloy))
-				.inputs(new MaterialStack(Mats.MAT_STEEL, n * 8), new MaterialStack(Mats.MAT_TECHNIETIUM, n))
+				.inputs(new MaterialStack(Mats.MAT_STEEL, n * 8), new MaterialStack(Mats.MAT_TECHNETIUM, n))
 				.outputs(new MaterialStack(Mats.MAT_TCALLOY, i)));
 		
 		recipes.put(8, new CrucibleRecipe(8, "crucible.cdalloy", 9, new ItemStack(Ingots.ingot_cdalloy))

@@ -36,6 +36,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -188,14 +189,19 @@ public class FFUtils {
 	}
 
 	public static void renderTankInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, FluidTank fluidTank, Fluid fluid){
-		if(fluidTank.getFluid() != null) {
+		/*if(fluidTank.getFluid() != null) {
 			renderFluidInfo(gui, mouseX, mouseY, x, y, width, height, fluidTank.getFluid().getFluid(), fluidTank.getFluidAmount(), fluidTank.getCapacity());
 		} else {
 			renderFluidInfo(gui, mouseX, mouseY, x, y, width, height, fluid, 0, fluidTank.getCapacity());
-		}
+		}*/
+		if(fluidTank.getFluid() != null)
+			renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluidTank.getFluid(),fluidTank.getCapacity());
+		else
+			renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluid != null ? new FluidStack(fluid,0) : null,fluidTank.getCapacity());
 	}
 
-	public static void addFluidInfo(Fluid fluid, List<String> texts){
+	public static void addFluidInfo(FluidStack stack, List<String> texts){
+		Fluid fluid = stack.getFluid();
 		int temp = fluid.getTemperature()-273;
 		if(temp != 27){
 			String tempColor = "";
@@ -297,6 +303,12 @@ public class FFUtils {
 			}
 			hasInfo = true;
 		}
+		if (stack.tag != null) {
+			for (String s : stack.tag.getKeySet()) {
+				NBTBase tag = stack.tag.getTag(s);
+				texts.add("TAG >> "+s+": "+tag.toString());
+			}
+		}
 
 		if (hasInfo && !isKeyPressed) {
 			texts.add(I18nUtil.resolveKey("desc.tooltip.hold", "LSHIFT"));
@@ -328,31 +340,34 @@ public class FFUtils {
 			};
 		}
 	}
-	private static void renderFluidInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, Fluid fluid, int amount, int capacity) {
+	private static void renderFluidInfo(GuiInfoContainer gui,int mouseX,int mouseY,int x,int y,int width,int height,FluidStack stack,int capacity) {
 		if (x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			List<String> texts = new ArrayList<>();
-			if (fluid != null) {
-				texts.add(fluid.getLocalizedName(new FluidStack(fluid, 1)));
-				texts.add(amount + "/" + capacity + "mB");
-				addFluidInfo(fluid, texts);
+			if (stack != null) {
+				texts.add(stack.getLocalizedName());
+				texts.add(stack.amount + "/" + capacity + "mB");
+				addFluidInfo(stack, texts);
 				if (!lastClicked && gui.clickDown) {
-					ItemStack stack = Minecraft.getMinecraft().player.inventory.getItemStack();
-					if (stack != null && !stack.isEmpty()) {
-						if (stack.getItem() instanceof ItemFuzzyIdentifier) {
+					ItemStack item = Minecraft.getMinecraft().player.inventory.getItemStack();
+					if (item != null && !item.isEmpty()) {
+						if (item.getItem() instanceof ItemFuzzyIdentifier) {
 							FuzzyIdentifierPacket packet = new FuzzyIdentifierPacket();
-							packet.fluidRsc = fluid.getName();
+							packet.fluidRsc = stack.getFluid().getName();
 							LeafiaCustomPacket.__start(packet).__sendToServer();
-							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",stack.getLocalizedName()).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 						}
 					}
 				}
 			} else {
 				texts.add(I18nUtil.resolveKey("desc.none"));
-				texts.add(amount + "/" + capacity + "mB");
+				texts.add("0/" + capacity + "mB");
 			}
 			gui.drawFluidInfo(texts, mouseX, mouseY);
 			lastClicked = gui.clickDown;
 		}
+	}
+	private static void renderFluidInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, Fluid fluid, int amount, int capacity) {
+		renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluid != null ? new FluidStack(fluid, amount) : null,capacity);
 	}
 
 	public static boolean hasEnoughFluid(FluidTank t, FluidStack f){
@@ -401,7 +416,9 @@ public class FFUtils {
 			try{
 				IFluidHandler tef = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 				if(tef != null && tef.fill(new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount())), false) > 0) {
-					tank.drain(tef.fill(new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount())), true), true);
+					FluidStack stack = new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount()));
+					stack.tag = tank.getFluid().tag;
+					tank.drain(tef.fill(stack, true), true);
 					return true;
 				}
 			} catch(Throwable t){

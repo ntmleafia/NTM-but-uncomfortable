@@ -28,6 +28,9 @@ public class MaterialShapes {
 	public static final MaterialShapes BLOCK = new MaterialShapes(INGOT.quantity * 9, "block");
 	public static final MaterialShapes HEAVY_COMPONENT = new MaterialShapes(CASTPLATE.quantity * 256, "componentHeavy");
 
+	public static final MaterialShapes FRAGMENT = new MaterialShapes(8, "bedrockorefragment");
+	public static final MaterialShapes STOCK = new MaterialShapes(INGOT.quantity * 4, "stock");
+	public static final MaterialShapes GRIP = new MaterialShapes(INGOT.quantity * 2, "grip");
 
 	private final int quantity;
 	public final String[] prefixes;

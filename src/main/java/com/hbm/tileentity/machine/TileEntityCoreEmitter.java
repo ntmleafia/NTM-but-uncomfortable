@@ -126,6 +126,7 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			LeafiaPacket._start(this).__write(31,targetPosition).__sendToAffectedClients();
 
 			this.updateStandardConnections(world, pos);
 			this.updateSPKConnections(world, pos);

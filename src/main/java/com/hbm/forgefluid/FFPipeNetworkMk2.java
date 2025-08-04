@@ -50,7 +50,7 @@ public class FFPipeNetworkMk2 implements IFluidHandler {
 			}
 			if(te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)){
 				IFluidHandler h = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-				if(h != null && h.fill(new FluidStack(resource.getFluid(), 1), false) > 0){
+				if(h != null && h.fill(new FluidStack(resource, 1), false) > 0){
 					handlers.add(h);
 				}
 			}
@@ -68,7 +68,7 @@ public class FFPipeNetworkMk2 implements IFluidHandler {
 		int randomFillIndex = rand.nextInt(handlers.size());
 		for(int i = 0; i < handlers.size(); i++){
 			IFluidHandler consumer = handlers.get(i);
-			int vol = consumer.fill(new FluidStack(resource.getFluid(), randomFillIndex == i ? part + intRoundingCompensation : part), doFill);
+			int vol = consumer.fill(new FluidStack(resource, randomFillIndex == i ? part + intRoundingCompensation : part), doFill);
 			totalDrained += vol;
 			remaining -= vol;
 			if(remaining <= 0)

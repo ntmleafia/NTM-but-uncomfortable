@@ -1,5 +1,6 @@
 package com.hbm.render.tileentity;
 
+import com.hbm.config.GeneralConfig;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.RefStrings;
@@ -17,7 +18,11 @@ import org.lwjgl.opengl.GL11;
 import java.io.IOException;
 
 public class RenderFluidTank extends TileEntitySpecialRenderer<TileEntityMachineFluidTank> {
-	
+	@Override
+	public boolean isGlobalRenderer(TileEntityMachineFluidTank te) {
+		return GeneralConfig.enableGlobalRenderers;
+	}
+
 	@Override
 	public void render(TileEntityMachineFluidTank te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		GL11.glPushMatrix();

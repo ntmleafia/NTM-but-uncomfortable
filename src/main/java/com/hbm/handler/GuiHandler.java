@@ -40,7 +40,7 @@ import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
+import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxContainer;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxGUI;
 import net.minecraft.block.state.IBlockState;
@@ -668,8 +668,8 @@ public class GuiHandler implements IGuiHandler {
 			case ModItems.guiID_item_book:
 				return new ContainerBook(player.inventory);
 			case ModBlocks.guiID_zirnox:
-				if(entity instanceof TileEntityReactorZirnox) {
-					return new ZirnoxContainer(player.inventory, (TileEntityReactorZirnox) entity);
+				if(entity instanceof ZirnoxTE) {
+					return new ZirnoxContainer(player.inventory, (ZirnoxTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_soldering:
@@ -1307,8 +1307,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_zirnox:
-				if(entity instanceof TileEntityReactorZirnox) {
-					return new ZirnoxGUI(player.inventory, (TileEntityReactorZirnox) entity);
+				if(entity instanceof ZirnoxTE) {
+					return new ZirnoxGUI(player.inventory, (ZirnoxTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_soldering:

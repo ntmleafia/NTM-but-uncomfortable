@@ -154,7 +154,7 @@ public class AssemblyFactoryTE extends TileEntityMachineBase implements LeafiaQu
 			case 2: steam.readFromNBT((NBTTagCompound)value); break;
 			case 3: {
 				if (!value.getClass().isArray()) {
-					LeafiaDebug.debugLog(world,new TextWarningLeafia("PROGRESSES NOT AN ARRAY"));
+					LeafiaDebug.debugLog(world,new TextWarningLeafia("PROGRESSES NOT AN ARRAY").toString());
 					break;
 				}
 				for (int i = 0; i < progresses.length; i++)
@@ -163,7 +163,7 @@ public class AssemblyFactoryTE extends TileEntityMachineBase implements LeafiaQu
 			}
 			case 4:
 				if (!value.getClass().isArray()) {
-					LeafiaDebug.debugLog(world,new TextWarningLeafia("MAXPROGRESSES NOT AN ARRAY"));
+					LeafiaDebug.debugLog(world,new TextWarningLeafia("MAXPROGRESSES NOT AN ARRAY").toString());
 					break;
 				}
 				for (int i = 0; i < maxProgresses.length; i++)

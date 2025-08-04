@@ -97,6 +97,13 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.gear.utility.FuzzyIdentifierBakedModel;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2BakedModel;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Grade;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Overlay;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Type;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2OverlayDummyItem;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Render;
 import com.leafia.contents.worldgen.ModBiome;
 import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -421,6 +428,14 @@ public class ModEventHandlerClient {
 			for(Integer i: ((IHasCustomMetaModels) item).getMetaValues()){
 				ModelLoader.setCustomModelResourceLocation(item, (int)i, ((IHasCustomMetaModels) item).getResourceLocation((int)i));
 			}
+		} else if (item instanceof BedrockOreV2Item ore) {
+			V2Grade[] values = V2Grade.values();
+			for (int i = 0; i < values.length; i++)
+				ModelLoader.setCustomModelResourceLocation(item,i,new ModelResourceLocation(RefStrings.MODID+":"+values[i].type.toPath()+"_"+ore.type.suffix,"inventory"));
+		} else if (item instanceof BedrockOreV2OverlayDummyItem) {
+			V2Overlay[] values = V2Overlay.values();
+			for (int i = 0; i < values.length; i++)
+				ModelLoader.setCustomModelResourceLocation(item,i,new ModelResourceLocation(RefStrings.MODID+":"+values[i].toPath()));
 		} else {
 			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
@@ -504,7 +519,31 @@ public class ModEventHandlerClient {
 			LeafiaRodRender.INSTANCE.itemModel = model;
 			evt.getModelRegistry().putObject(LeafiaRodItem.rodModel, new LeafiaRodBakedModel());
 		}
-
+		for (V2Type type : V2Type.values()) {
+			V2Grade[] values = V2Grade.values();
+			for (int i = 0; i < values.length; i++) {
+				ModelResourceLocation loc = new ModelResourceLocation(RefStrings.MODID+":"+values[i].type.toPath()+"_"+type.suffix,"inventory");
+				Object object = evt.getModelRegistry().getObject(loc);
+				if (object instanceof IBakedModel baked) {
+					if (baked instanceof BedrockOreV2BakedModel already) {
+						BedrockOreV2Render.INSTANCE.itemModels.get(type)[i] = already.original;
+					} else {
+						BedrockOreV2Render.INSTANCE.itemModels.get(type)[i] = baked;
+						evt.getModelRegistry().putObject(loc,new BedrockOreV2BakedModel(type,i,baked));
+					}
+				}
+			}
+		}
+		{
+			V2Overlay[] values = V2Overlay.values();
+			for (int i = 0; i < values.length; i++) {
+				ModelResourceLocation loc = new ModelResourceLocation(RefStrings.MODID+":"+values[i].toPath());
+				Object object = evt.getModelRegistry().getObject(loc);
+				if (object instanceof IBakedModel baked) {
+					BedrockOreV2Render.INSTANCE.overlays[i] = baked;
+				}
+			}
+		}
 		Object objecta = evt.getModelRegistry().getObject(ItemFuzzyIdentifier.fuzzyModel);
 		if(objecta instanceof IBakedModel) {
 			IBakedModel model = (IBakedModel) objecta;

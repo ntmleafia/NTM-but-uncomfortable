@@ -9,7 +9,6 @@ import com.hbm.interfaces.IItemHazard;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ItemEnums.EnumTarType;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.*;
 		import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
@@ -180,6 +179,8 @@ public class OreDictManager {
 	public static final DictFrame BAKELITE = new DictFrame("Bakelite");
 	public static final DictFrame RUBBER = new DictFrame("Rubber");
 	public static final DictFrame LATEX = new DictFrame("Latex");
+	public static final DictFrame PC = new DictFrame("Polycarbonate");
+	public static final DictFrame PVC = new DictFrame("PVC");
 	public static final DictFrame MAGTUNG = new DictFrame("MagnetizedTungsten");
 	public static final DictFrame CMB = new DictFrame("CMBSteel");
 	public static final DictFrame DESH = new DictFrame("WorkersAlloy");
@@ -208,18 +209,27 @@ public class OreDictManager {
 	public static final DictFrame LIGCOKE = new DictFrame("LigniteCoke");
 	public static final DictFrame CINNABAR = new DictFrame("Cinnabar");
 	public static final DictFrame BORAX = new DictFrame("Borax");
+	public static final DictFrame CHLOROCALCITE = new DictFrame("Chlorocalcite");
+	public static final DictFrame MOLYSITE = new DictFrame("Molysite");
+	public static final DictFrame SODALITE = new DictFrame("Sodalite");
 	public static final DictFrame VOLCANIC = new DictFrame("Volcanic");
 	public static final DictFrame HEMATITE = new DictFrame("Hematite");
 	public static final DictFrame MALACHITE = new DictFrame("Malachite");
 	public static final DictFrame SLAG = new DictFrame("Slag");
 	public static final DictFrame INFERNAL = new DictFrame("InfernalCoal");
 	public static final DictFrame METEOR = new DictFrame("Meteor");
+	public static final DictFrame BAUXITE = new DictFrame("Bauxite");
+	public static final DictFrame CRYOLITE = new DictFrame("Cryolite");
 
 	/*
 	 * HAZARDS, MISC
 	 */
 	/** LITHIUM */
 	public static final DictFrame LI = new DictFrame("Lithium");
+	/**
+	 * SODIUM
+	 */
+	public static final DictFrame NA = new DictFrame("Sodium");
 	/*
 	 * PHOSPHORUS
 	 */
@@ -294,9 +304,19 @@ public class OreDictManager {
 	/** Any special psot-RBMK gating material, namely bismuth and arsenic */
 	public static final DictFrame ANY_BISMOID = new DictFrame("AnyBismoid");
 
+	/*
+	 *LEAFIA
+	 */
+	public static final DictFrame ELECTRONIUM = new DictFrame("Electronium");
+	public static final DictFrame U238_2 = new DictFrame("U238-2");
+	public static final DictFrame RADSPICE = new DictFrame("Radspice");
 
 	// order: nugget billet ingot dust dustTiny block crystal plate gem ore oreNether
 	public static void registerOres() {
+		// LEAFIA
+		ELECTRONIUM.ingot(Ingots.ingot_electronium);
+		U238_2.ingot(Ingots.ingot_u238m2).nugget(Nuggies.nugget_u238m2);
+		RADSPICE.ingot(Ingots.ingot_radspice).nugget(Nuggies.nugget_radspice).dust(Powders.powder_radspice).dustTiny(Powders.powder_radspice_tiny);
 
 //VANILLA - Fixed
 		COAL.dust(Powders.powder_coal).dustSmall(Powders.powder_coal_tiny).gem(Items.COAL).crystal(Crystals.crystal_coal);
@@ -338,6 +358,7 @@ public class OreDictManager {
 		INFERNAL.block(block_coal_infernal).gem(coal_infernal).ore(ore_nether_coal);
 		RAREEARTH.dust(Powders.powder_desh_mix).gem(rare_earth_chunk).crystal(Crystals.crystal_rare).ore(ore_rare, ore_gneiss_rare);
 		NITANIUM.dust(Powders.powder_nitan_mix).ore(ore_depth_nether_nitan);
+		NA.ingot(Ingots.ingot_sodium);
 
 //Compounds
 		MINGRADE.ingot(Ingots.ingot_red_copper).dust(Powders.powder_red_copper).block(block_red_copper).wire(wire_red_copper);
@@ -682,6 +703,10 @@ public class OreDictManager {
 		public DictFrame dust(Object... dust) {
 			hazMult = HazardRegistry.powder;
 			return makeObject(DUST, dust);
+		}
+		public DictFrame dustTiny(Object... dust) {
+			hazMult = HazardRegistry.powder_tiny;
+			return makeObject(DUSTTINY, dust);
 		}
 		public DictFrame gem(Object... gem) {
 			hazMult = HazardRegistry.gem;

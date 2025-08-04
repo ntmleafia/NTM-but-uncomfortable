@@ -112,6 +112,9 @@ public class LeafiaColor { // Color utility for doing complex color mixing
 	public int toInARGB() {
 		return (int)(Math.round(red*255)<<0_20|Math.round(green*255)<<0_10|Math.round(blue*255)|Math.round(255-alpha*255)<<0_30);
 	}
+	public int toARGB() {
+		return (int)(Math.round(red*255)<<0_20|Math.round(green*255)<<0_10|Math.round(blue*255)|Math.round(alpha*255)<<0_30);
+	}
 
 	/**
 	 * @return The <tt>red</tt> field in float

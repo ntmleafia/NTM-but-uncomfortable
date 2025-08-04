@@ -35,6 +35,8 @@ public class TileEntityCoreCreativeEmitter extends TileEntityCoreEmitter {
 					.__write(1, watts)
 					.__write(2, prev);
 			packet.__sendToAffectedClients();
+			sendChanges(null);
+			LeafiaPacket._start(this).__write(31,targetPosition).__sendToAffectedClients(); // why does this have to be done??
 		} else if (isOn) {
 			lastRaycast = raycast(0);
 		}
@@ -51,6 +53,16 @@ public class TileEntityCoreCreativeEmitter extends TileEntityCoreEmitter {
 			packet.__sendToAffectedClients();
 		else
 			packet.__sendToClient(plr);
+	}
+
+	@Override
+	public LeafiaPacket syncClients(LeafiaPacket packet) {
+		packet.__write(3, selecting)
+				.__write(4, joulesT[0])
+				.__write(5, joulesT[1])
+				.__write(6, joulesT[2])
+				.__write(7, joulesT[3]);
+		return super.syncClients(packet);
 	}
 
 	@Override

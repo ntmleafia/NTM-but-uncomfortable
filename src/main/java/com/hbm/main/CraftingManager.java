@@ -22,7 +22,7 @@ import com.hbm.lib.RefStrings;
 import com.hbm.util.EnchantmentUtil;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
-import com.leafia.contents.machines.reactors.pwr.debris.CraftingPWRDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisCrafting;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -68,7 +68,7 @@ public class CraftingManager {
 		hack.getRegistry().register(new SmallReactorFuelCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "reactor_fuel_crafting_handler")));
 		hack.getRegistry().register(new RBMKFuelCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "rbmk_fuel_crafting_handler")));
 		hack.getRegistry().register(new MKUCraftingHandler().setRegistryName(new ResourceLocation(RefStrings.MODID, "mku_crafting_handler")));
-		hack.getRegistry().register(new CraftingPWRDebris().setRegistryName(new ResourceLocation(RefStrings.MODID, "pwr_debris_crafting_handler")));
+		hack.getRegistry().register(new PWRDebrisCrafting().setRegistryName(new ResourceLocation(RefStrings.MODID, "pwr_debris_crafting_handler")));
 	}
 
 	public static void addCrafting() {
@@ -706,6 +706,14 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(ModItems.toothpicks, 3), Items.STICK, Items.STICK, Items.STICK);
 		addRecipeAuto(new ItemStack(ModItems.ducttape, 6), "FSF", "SPS", "FSF", 'F', Items.STRING, 'S', Items.SLIME_BALL, 'P', Items.PAPER);
 		addRecipeAuto(new ItemStack(ModItems.ball_resin), "DD", "DD", 'D', Blocks.YELLOW_FLOWER);
+		addRecipeAuto(new ItemStack(Foundry.mold_base), new Object[] { " B ", "BIB", " B ", 'B', Ingots.ingot_firebrick, 'I', IRON.ingot() });
+
+		addRecipeAuto(new ItemStack(ModBlocks.foundry_basin), new Object[] { "B B", "B B", "BSB", 'B', Ingots.ingot_firebrick, 'S', Blocks.STONE_SLAB });
+		addRecipeAuto(new ItemStack(ModBlocks.foundry_mold), new Object[] { "B B", "BSB", 'B', Ingots.ingot_firebrick, 'S', Blocks.STONE_SLAB });
+		addRecipeAuto(new ItemStack(ModBlocks.foundry_channel, 4), new Object[] { "B B", " S ", 'B', Ingots.ingot_firebrick, 'S', Blocks.STONE_SLAB });
+		// addRecipeAuto(new ItemStack(ModBlocks.foundry_tank), new Object[] { "B B", "I I", "BSB", 'B', ModItems.ingot_firebrick, 'I', STEEL.ingot(), 'S', Blocks.STONE_SLAB });
+		addShapelessAuto(new ItemStack(ModBlocks.foundry_outlet), new Object[] { ModBlocks.foundry_channel, STEEL.plate() });
+		// addShapelessAuto(new ItemStack(ModBlocks.foundry_slagtap), new Object[] { ModBlocks.foundry_channel, Blocks.stonebrick });
 
 		addShapelessAuto(new ItemStack(ModItems.missile_taint, 1), ModItems.missile_assembly, new IngredientContainsTag(FluidUtil.getFilledBucket(new FluidStack(ModForgeFluids.MUD_FLUID, 1000))), Powders.powder_spark_mix, Powders.powder_magic);
 		addShapelessAuto(new ItemStack(ModItems.missile_micro, 1), ModItems.missile_assembly, ModItems.ducttape, Armory.ammo_nuke);

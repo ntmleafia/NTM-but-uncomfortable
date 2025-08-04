@@ -23,11 +23,11 @@ public class ZirnoxGUI extends GuiInfoContainer {
 	private static ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/reactors/leafia_zirnox.png");
 	private static ResourceLocation texture_02 = new ResourceLocation(RefStrings.MODID + ":textures/gui/reactors/leafia_zirnox_02.png");
 
-	private TileEntityReactorZirnox entity;
+	private ZirnoxTE entity;
 	private boolean barGrabbed = false;
 	private boolean valveOpen = false;
 
-	public ZirnoxGUI(InventoryPlayer invPlayer, TileEntityReactorZirnox entity) {
+	public ZirnoxGUI(InventoryPlayer invPlayer, ZirnoxTE entity) {
 		super(new ZirnoxContainer(invPlayer, entity));
 		this.entity = entity;
 		this.xSize = 215;
@@ -126,7 +126,7 @@ public class ZirnoxGUI extends GuiInfoContainer {
 			
     		//PacketDispatcher.wrapper.sendToServer(new AuxButtonPacket(entity.getPos(), rods, 0));
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.CONTROL_RODS.key,(byte)rods)
+					.__write(ZirnoxTE.packetKeys.CONTROL_RODS.key,(byte)rods)
 					.__sendToServer();
     	}
 		
@@ -136,14 +136,14 @@ public class ZirnoxGUI extends GuiInfoContainer {
 			
     		//PacketDispatcher.wrapper.sendToServer(new AuxButtonPacket(entity.getPos(), c, 3));
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.COMPRESSION.key,(byte)((entity.compression+1)%4))
+					.__write(ZirnoxTE.packetKeys.COMPRESSION.key,(byte)((entity.compression+1)%4))
 					.__sendToServer();
     	}
 
 		if (isHovering(x,y,ui.valve)) {
 			valveOpen = true;
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.OPENVALVE.key,true)
+					.__write(ZirnoxTE.packetKeys.OPENVALVE.key,true)
 					.__sendToServer();
 		}
     }
@@ -155,7 +155,7 @@ public class ZirnoxGUI extends GuiInfoContainer {
 			rods = 100 - rods;
 			//PacketDispatcher.wrapper.sendToServer(new AuxButtonPacket(entity.getPos(), rods, 0));
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.CONTROL_RODS.key,(byte)rods)
+					.__write(ZirnoxTE.packetKeys.CONTROL_RODS.key,(byte)rods)
 					.__sendToServer();
 		}
 		super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
@@ -166,7 +166,7 @@ public class ZirnoxGUI extends GuiInfoContainer {
 		barGrabbed = false;
 		if (valveOpen)
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.OPENVALVE.key,false)
+					.__write(ZirnoxTE.packetKeys.OPENVALVE.key,false)
 					.__sendToServer();
 		valveOpen = false;
 		super.mouseReleased(mouseX, mouseY, state);
@@ -175,7 +175,7 @@ public class ZirnoxGUI extends GuiInfoContainer {
 	public void onGuiClosed() {
 		if (valveOpen)
 			LeafiaPacket._start(entity)
-					.__write(TileEntityReactorZirnox.packetKeys.OPENVALVE.key,false)
+					.__write(ZirnoxTE.packetKeys.OPENVALVE.key,false)
 					.__sendToServer();
 		valveOpen = false;
 		super.onGuiClosed();

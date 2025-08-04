@@ -58,6 +58,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 
     @Override
     public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {
+        super.onReceivePacketServer(key,value,plr);
     }
 
     @Override
@@ -239,6 +240,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
     @Override
     public void update() {
         if (!world.isRemote) {
+            LeafiaPacket._start(this).__write(31,targetPosition).__sendToAffectedClients();
 
             this.updateStandardConnections(world, pos);
 

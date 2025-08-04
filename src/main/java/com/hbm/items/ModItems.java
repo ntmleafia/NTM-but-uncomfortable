@@ -53,8 +53,11 @@ import com.leafia.contents.gear.wands.ItemWandSaving;
 import com.leafia.contents.machines.elevators.car.chips.EvChipItem;
 import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
 import com.leafia.contents.machines.powercores.dfc.CrucifixItem;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType;
-import com.leafia.contents.machines.reactors.pwr.debris.ItemPWRDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity.DebrisType;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisItem;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Type;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2OverlayDummyItem;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
@@ -1394,6 +1397,7 @@ public class ModItems {
 				leafRodEmitter
 				= new LeafiaRodItem("Emitter",90000, 6000)
 				.setAppearance(Billets.billet_unobtainium, BILLET, SOURCE)
+				.setEmission(1000).setReactivity(1/1000d)
 				.addRadiation(ItemHazard.unof * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
@@ -1464,7 +1468,7 @@ public class ModItems {
 				leafRodSa327
 				= new LeafiaRodItem("Sa-327",800000, 2250)
 				.setAppearance(Billets.billet_solinium, BILLET, RAW)
-				.setEmission(25).setReactivity(1/45d)
+				.setEmission(65).setReactivity(1/45d)
 				.addAlpha(ItemHazard.sa327 * ItemHazard.billet)
 				.addBlinding()
 				.toItem().setCreativeTab(MainRegistry.controlTab);
@@ -1561,6 +1565,13 @@ public class ModItems {
 				= new LeafiaRodItem("Pb-209",600000, 4300)
 				.setAppearance(Billets.billet_pb209, BILLET, ISOTOPE)
 				.addBeta(ItemHazard.pb209 * ItemHazard.billet)
+				.toItem().setCreativeTab(MainRegistry.controlTab);
+
+
+		public static final Item
+				leafRodDebug
+				= new LeafiaRodItem("Debug",0, 0)
+				.setAppearance(wand_d, BILLET, UNSTABLE)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		static {
 			LeafiaRodItem.confirmDecayProducts();
@@ -2348,7 +2359,14 @@ public class ModItems {
 	public static final Item wire_magnetized_tungsten = new ItemHazard(ALPHA,ItemHazard.magt * ItemHazard.wire, "wire_magnetized_tungsten").setCreativeTab(MainRegistry.partsTab);
 	public static final Item coil_magnetized_tungsten = new ItemHazard(ALPHA,ItemHazard.magt, "coil_magnetized_tungsten").setCreativeTab(MainRegistry.partsTab);
 	
-	
+	public static class BedrockOreV2 {
+		public static final Item[] types = new Item[V2Type.values().length];
+		static {
+			for (int i = 0; i < types.length; i++)
+				types[i] = new BedrockOreV2Item("bedrockorev2_"+V2Type.values()[i].suffix,V2Type.values()[i]);
+		}
+		static final Item shit = new BedrockOreV2OverlayDummyItem("bedrockorev2_overlay");
+	}
 	
 	public static class Armory {
 		//Gun ammo assemblies and ammo
@@ -2754,9 +2772,9 @@ public class ModItems {
 	public static final Item debris_shrapnel = new ItemHazard("debris_shrapnel").addRadiation(8F).addSharp(1).toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item debris_exchanger = new ItemHazard("debris_exchanger").addRadiation(35F).toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item debris_element = new ItemHazard("debris_element").addRadiation(150F).toItem().setCreativeTab(MainRegistry.controlTab);
-	public static final Item pwr_piece = new ItemPWRDebris("pwr_piece",DebrisType.CONCRETE).addRadiation(12F).toItem();
-	public static final Item pwr_shrapnel = new ItemPWRDebris("pwr_shrapnel",DebrisType.SHRAPNEL).addRadiation(12F).addSharp(35).toItem();
-	public static final Item pwr_shard = new ItemPWRDebris("pwr_shard",DebrisType.BLANK).disableCrafting().addRadiation(7F).addSharp(85).toItem();
+	public static final Item pwr_piece = new PWRDebrisItem("pwr_piece",DebrisType.CONCRETE).addRadiation(12F).toItem();
+	public static final Item pwr_shrapnel = new PWRDebrisItem("pwr_shrapnel",DebrisType.SHRAPNEL).addRadiation(12F).addSharp(35).toItem();
+	public static final Item pwr_shard = new PWRDebrisItem("pwr_shard",DebrisType.BLANK).disableCrafting().addRadiation(7F).addSharp(85).toItem();
 	public static final Item dfcsh_cable = new ItemHazard("dfcsh_cable").addDigamma(0.003F).addSharp(5).toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item dfcsh_core = new ItemHazard("dfcsh_core").addFire(10).toItem().setCreativeTab(MainRegistry.controlTab);
 	public static final Item dfcsh_corner = new ItemHazard("dfcsh_corner").addDigamma(0.005F).addSharp(5).toItem().setCreativeTab(MainRegistry.controlTab);

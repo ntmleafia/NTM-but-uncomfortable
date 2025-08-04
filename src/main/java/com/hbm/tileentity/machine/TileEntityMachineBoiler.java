@@ -9,6 +9,7 @@ import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.dev.LeafiaDebug;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -107,6 +108,8 @@ public class TileEntityMachineBoiler extends TileEntityMachineBase implements IT
 	@Override
 	public void update() {
 		if (!world.isRemote) {
+			if (tanks[1].getFluid() != null && tanks[1].getFluid().tag != null)
+				LeafiaDebug.debugLog(world,tanks[1].getFluid().tag);
 			age++;
 			if (age >= 20) {
 				age = 0;
@@ -171,6 +174,14 @@ public class TileEntityMachineBoiler extends TileEntityMachineBase implements IT
 					if(tanks[0].getFluidAmount() >= ((Integer) outs[2]).intValue()*5 && tanks[1].getFluidAmount() + ((Integer) outs[1]).intValue()*5 <= tanks[1].getCapacity()) {
 						tanks[0].drain(((Integer) outs[2])*5, true);
 						tanks[1].fill(new FluidStack((Fluid) outs[0], ((Integer) outs[1]*5)), true);
+						FluidStack stack = tanks[1].getFluid();
+						if (stack != null) {
+							if (stack.tag == null) {
+								stack.tag = new NBTTagCompound();
+								LeafiaDebug.debugLog(world,"Created new tag");
+							}
+							stack.tag.setBoolean("uwu",true);
+						}
 						needsUpdate = true;
 						if (i == 0)
 							heat -= 25;
