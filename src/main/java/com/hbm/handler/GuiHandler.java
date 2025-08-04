@@ -37,7 +37,7 @@ import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCor
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalTE;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
@@ -678,8 +678,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case PWR.guiID:
-				if(entity instanceof TileEntityPWRTerminal) {
-					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+				if(entity instanceof PWRTerminalTE) {
+					PWRData core = ((PWRTerminalTE) entity).getLinkedCore();
 					if (core != null)
 						return new PWRTerminalContainer(player.inventory,entity,core);
 				}
@@ -1317,8 +1317,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case PWR.guiID:
-				if(entity instanceof TileEntityPWRTerminal) {
-					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+				if(entity instanceof PWRTerminalTE) {
+					PWRData core = ((PWRTerminalTE) entity).getLinkedCore();
 					if (core != null)
 						return new PWRTerminalUI(player.inventory,entity,core);
 				}

@@ -40,13 +40,13 @@ import com.leafia.contents.machines.processing.solidifier.SolidifierBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRHullBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRReflectorBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRSourceBlock;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRExchanger;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.port.MachinePWRPort;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.MachinePWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRChannelBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRConductorBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRExchangerBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.port.PWRPortBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentDuctBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentInletBlock;
@@ -1321,15 +1321,15 @@ public class ModBlocks {
 		public static final Block reflector = new PWRReflectorBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
 		public static final Block source = new PWRSourceBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block element = new MachinePWRElement().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block control = new MachinePWRControl().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element = new PWRElementBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block control = new PWRControlBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block channel = new MachinePWRChannel().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block conductor = new MachinePWRConductor().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block exchanger = new MachinePWRExchanger().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block channel = new PWRChannelBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block conductor = new PWRConductorBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block exchanger = new PWRExchangerBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
-		public static final Block terminal = new MachinePWRTerminal().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
-		public static final Block port = new MachinePWRPort().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block terminal = new PWRTerminalBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
+		public static final Block port = new PWRPortBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
 		public static final Block ventElement = new PWRVentElementBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 		public static final Block ventOutlet = new PWRVentOutletBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);

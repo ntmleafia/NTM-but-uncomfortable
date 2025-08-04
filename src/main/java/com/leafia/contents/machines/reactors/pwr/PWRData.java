@@ -20,12 +20,12 @@ import com.leafia.CommandLeaf;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRChannelBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRConductorBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck.Erosion;
 import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
@@ -117,7 +117,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			for (BlockPos pos : projection) {
 				PWRComponentBlock block = getPWRComponent(world, pos);
 				if (block != null) {
-					if (block instanceof MachinePWRElement) {
+					if (block instanceof PWRElementBlock) {
 						slots++;
 					}
 				}
@@ -138,9 +138,9 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		Pair<LeafiaSet<BlockPos>, LeafiaSet<BlockPos>> output = new Pair<>(new LeafiaSet<>(), new LeafiaSet<>());
 		for (BlockPos pos : projection) {
 			Block block = getWorld().getBlockState(pos).getBlock();
-			if (block instanceof MachinePWRElement)
+			if (block instanceof PWRElementBlock)
 				output.getA().add(pos);
-			else if (block instanceof MachinePWRControl)
+			else if (block instanceof PWRControlBlock)
 				output.getB().add(pos);
 		}
 		return output;
@@ -380,8 +380,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		NBTTagList nbt = new NBTTagList();
 		for (BlockPos pos : controls) {
 			TileEntity entity = getWorld().getTileEntity(pos);
-			if (entity instanceof TileEntityPWRControl) {
-				TileEntityPWRControl control = (TileEntityPWRControl) entity;
+			if (entity instanceof PWRControlTE) {
+				PWRControlTE control = (PWRControlTE) entity;
 				nbt.appendTag(control.writeControlDateToNBT());
 			}
 		}
@@ -394,8 +394,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		Set<String> existingNames = new LeafiaSet<>();
 		for (BlockPos pos : controls) {
 			TileEntity entity = getWorld().getTileEntity(pos);
-			if (entity instanceof TileEntityPWRControl) {
-				TileEntityPWRControl control = (TileEntityPWRControl) entity;
+			if (entity instanceof PWRControlTE) {
+				PWRControlTE control = (PWRControlTE) entity;
 				existingNames.add(control.name);
 			}
 		}
@@ -611,7 +611,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 		protected void explodeLv1() {
 			for (BlockPos member : members) {
 				Block block = world.getBlockState(member).getBlock();
-				if (block instanceof MachinePWRChannel || block instanceof MachinePWRConductor) {
+				if (block instanceof PWRChannelBlock || block instanceof PWRConductorBlock) {
 					world.setBlockToAir(member);
 					for (EnumFacing face : EnumFacing.values()) {
 						BlockPos offs = member.offset(face);
@@ -674,7 +674,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				Block block = state.getBlock();
 				if (block instanceof BlockFire) continue;
 				if (block instanceof BlockLiquidCorium) continue;
-				if (block instanceof MachinePWRElement) {
+				if (block instanceof PWRElementBlock) {
 					//world.newExplosion(null,member.getX()+0.5,member.getY()+0.5,member.getZ()+0.5,11,true,true);
 					//world.setBlockState(member,ModBlocks.corium_block.getDefaultState());
 					world.setBlockToAir(member);
@@ -812,7 +812,7 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 				Material material = block.getMaterial(state);
 				Vec3d ray = new Vec3d(member).add(0.5, 0.5, 0.5).subtract(centerPoint);
 
-				if (block instanceof MachinePWRControl) {
+				if (block instanceof PWRControlBlock) {
 					world.setBlockState(member, ModBlocks.block_electrical_scrap.getDefaultState());
 					antiPlaceSet.add(member);
 					//continue;
@@ -991,12 +991,12 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 			centerPoint = centerPoint.add(new Vec3d(member.getX(), member.getY(), member.getZ()).scale(1d / members.size()));
 			Block block = world.getBlockState(member).getBlock();
 			if (block instanceof PWRComponentBlock) {
-				if (block instanceof MachinePWRElement) {
-					if (((MachinePWRElement) block).tileEntityShouldCreate(world, member)) {
+				if (block instanceof PWRElementBlock) {
+					if (((PWRElementBlock) block).tileEntityShouldCreate(world, member)) {
 						TileEntity entity = world.getTileEntity(member);
 						if (entity != null) {
-							if (entity instanceof TileEntityPWRElement) {
-								TileEntityPWRElement element = (TileEntityPWRElement) entity;
+							if (entity instanceof PWRElementTE) {
+								PWRElementTE element = (PWRElementTE) entity;
 								if (element.inventory != null) {
 									prevStack = LeafiaRodItem.comparePriority(element.inventory.getStackInSlot(0), prevStack);
 									element.inventory.setStackInSlot(0,ItemStack.EMPTY);
@@ -1133,8 +1133,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 						BlockPos pos = new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
 						if (controls.contains(pos)) {
 							TileEntity entity = getWorld().getTileEntity(pos);
-							if (entity instanceof TileEntityPWRControl) {
-								TileEntityPWRControl control = (TileEntityPWRControl) entity;
+							if (entity instanceof PWRControlTE) {
+								PWRControlTE control = (PWRControlTE) entity;
 								control.readControlDataFromNBT(nbt);
 							}
 						}
@@ -1176,8 +1176,8 @@ public class PWRData implements ITickable, IFluidHandler, ITankPacketAcceptor, L
 	void manipulateRod(String name) {
 		for (BlockPos pos : controls) {
 			TileEntity entity = getWorld().getTileEntity(pos);
-			if (entity instanceof TileEntityPWRControl) {
-				TileEntityPWRControl control = (TileEntityPWRControl) entity;
+			if (entity instanceof PWRControlTE) {
+				PWRControlTE control = (PWRControlTE) entity;
 				double newTarget = 0;
 				if (controlDemand.containsKey(control.name))
 					newTarget = controlDemand.get(control.name) * masterControl;

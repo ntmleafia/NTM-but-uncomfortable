@@ -8,18 +8,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
-public class RenderPWRControl extends TileEntitySpecialRenderer<TileEntityPWRControl> {
+public class PWRControlRender extends TileEntitySpecialRenderer<PWRControlTE> {
 
 	public static final ResourceLocation controlSide = new ResourceLocation(RefStrings.MODID, "textures/blocks/pwr/pwr_control_side.png");
 	public static final ResourceLocation controlTop = new ResourceLocation(RefStrings.MODID, "textures/blocks/pwr/pwr_control_top.png");
 	public static final IModelCustom mesh = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/leafia/pwr_control_final.obj"));
 	@Override
-	public boolean isGlobalRenderer(TileEntityPWRControl entity) {
+	public boolean isGlobalRenderer(PWRControlTE entity) {
 		return true;
 	}
 
 	@Override
-	public void render(TileEntityPWRControl entity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+	public void render(PWRControlTE entity,double x,double y,double z,float partialTicks,int destroyStage,float alpha) {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x + 0.5D, y, z + 0.5D);
 		GL11.glEnable(GL11.GL_LIGHTING);

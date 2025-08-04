@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import javax.annotation.Nullable;
 
-public class TileEntityPWRTerminal extends TileEntity implements PWRComponentEntity, IFluidHandler, LeafiaPacketReceiver {
+public class PWRTerminalTE extends TileEntity implements PWRComponentEntity, IFluidHandler, LeafiaPacketReceiver {
 	//static {
 	//	MainRegistry.registerTileEntities.put(TileEntityPWRTerminal.class,"pwr_terminal"); // didnt work. I hate this game
 	//}

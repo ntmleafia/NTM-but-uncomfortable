@@ -8,9 +8,9 @@ import com.hbm.inventory.ShredderRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.main.MainRegistry;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRChannelBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRConductorBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -55,9 +55,9 @@ public class PWRDebrisEntity extends EntityDebrisBase {
 			this.getDataManager().set(FLAMMABILITY,(int)Math.max(Math.pow(300-flammability-190,3),600));
 		this.getDataManager().set(BLOCK_RSC,block.getRegistryName().toString());
 		this.getDataManager().set(BLOCK_META,block.getMetaFromState(state));
-		if (block instanceof MachinePWRControl)
+		if (block instanceof PWRControlBlock)
 			type = (world.rand.nextInt(3) == 0) ? CONTROL_FRAME : CONTROL_ROD;
-		else if (block instanceof MachinePWRChannel || block instanceof MachinePWRConductor)
+		else if (block instanceof PWRChannelBlock || block instanceof PWRConductorBlock)
 			type = (world.rand.nextInt(3) == 0) ? CHANNEL_3X : CHANNEL_1X;
 		else if (block instanceof BlockGraphite || block instanceof BlockGraphiteDrilledBase)
 			type = GRAPHITE;

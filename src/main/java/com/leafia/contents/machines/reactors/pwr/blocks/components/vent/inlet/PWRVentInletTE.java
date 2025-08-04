@@ -1,8 +1,8 @@
 package com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet;
 
 import com.hbm.forgefluid.ModForgeFluids;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.PWRVentBlockBase;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementTE;
@@ -40,7 +40,7 @@ public class PWRVentInletTE extends TileEntity implements IFluidHandler, ITickab
 	}
 	static double consumptionScale = 1;
 	static class DemandStream {
-		final TileEntityPWRElement element;
+		final PWRElementTE element;
 		double multiplier = 0;
 		int accumTicks = 0;
 		int accumDemand = 0;
@@ -49,7 +49,7 @@ public class PWRVentInletTE extends TileEntity implements IFluidHandler, ITickab
 		double accumCool = 0; // my brain exploded so i became lazy now
 		double cool = 0; // my brain exploded so i became lazy now
 		int spentTicks = 0;
-		public DemandStream(TileEntityPWRElement element) {
+		public DemandStream(PWRElementTE element) {
 			this.element = element;
 		}
 		/*public int spend(int demand) {
@@ -60,7 +60,7 @@ public class PWRVentInletTE extends TileEntity implements IFluidHandler, ITickab
 			return spent;
 		}*/
 	}
-	LeafiaMap<TileEntityPWRElement,DemandStream> streams = new LeafiaMap<>();
+	LeafiaMap<PWRElementTE,DemandStream> streams = new LeafiaMap<>();
 	int lastLength = 0;
 	boolean valid = false;
 	public void rebuildMap() {
@@ -102,11 +102,11 @@ public class PWRVentInletTE extends TileEntity implements IFluidHandler, ITickab
 					if (!world.isValid(pos2)) continue;
 					if (updateListen)
 						listenPositions().add(pos2);
-					if (world.getBlockState(pos2).getBlock() instanceof MachinePWRElement) {
-						MachinePWRElement machine = (MachinePWRElement)world.getBlockState(pos2).getBlock();
+					if (world.getBlockState(pos2).getBlock() instanceof PWRElementBlock) {
+						PWRElementBlock machine = (PWRElementBlock)world.getBlockState(pos2).getBlock();
 						TileEntity entity = world.getTileEntity(machine.getTopElement(world,pos2));
-						if (entity instanceof TileEntityPWRElement) {
-							TileEntityPWRElement element = (TileEntityPWRElement)entity;
+						if (entity instanceof PWRElementTE) {
+							PWRElementTE element = (PWRElementTE)entity;
 							DemandStream stream = streams.get(element);
 							LeafiaDebug.debugLog(world,"ELEMENT FOUND");
 							if (!streams.containsKey(element)) {
@@ -123,14 +123,14 @@ public class PWRVentInletTE extends TileEntity implements IFluidHandler, ITickab
 				}
 			}
 		}
-		for (Entry<TileEntityPWRElement,DemandStream> entry : streams.entrySet()) {
+		for (Entry<PWRElementTE,DemandStream> entry : streams.entrySet()) {
 			if (!addedStreams.contains(entry.getValue()) || entry.getKey().isInvalid())
 				streams.remove(entry.getKey());
 		}
 		Tracker._endProfile(this);
 	}
 	protected void removeInvalidStreams() {
-		for (TileEntityPWRElement element : streams.keySet()) {
+		for (PWRElementTE element : streams.keySet()) {
 			if (element.isInvalid())
 				streams.remove(element);
 		}

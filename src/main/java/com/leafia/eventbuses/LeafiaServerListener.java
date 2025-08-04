@@ -8,7 +8,7 @@ import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.modules.ItemHazardModule;
 import com.hbm.potion.HbmPotion;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentInletTE;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.optimization.LeafiaParticlePacket;
@@ -72,9 +72,9 @@ public class LeafiaServerListener {
 		public void onBlockNotify(NeighborNotifyEvent evt) {
 			if (!evt.getWorld().isRemote) {
 				LeafiaDebug.debugPos(evt.getWorld(),evt.getPos(),3,0xFF0000,"NeighborNotifyEvent");
-				for (Entry<TileEntityPWRElement,LeafiaSet<BlockPos>> entry : TileEntityPWRElement.listeners.entrySet()) {
+				for (Entry<PWRElementTE,LeafiaSet<BlockPos>> entry : PWRElementTE.listeners.entrySet()) {
 					if (entry.getKey().isInvalid()) {
-						TileEntityPWRElement.listeners.remove(entry.getKey());
+						PWRElementTE.listeners.remove(entry.getKey());
 						continue;
 					}
 					if (entry.getValue().contains(evt.getPos()))

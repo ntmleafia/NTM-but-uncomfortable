@@ -19,11 +19,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public class TileEntityPWRControl extends TileEntity implements PWRComponentEntity, ITickable, LeafiaPacketReceiver {
+public class PWRControlTE extends TileEntity implements PWRComponentEntity, ITickable, LeafiaPacketReceiver {
     BlockPos corePos = null;
     PWRData data = null;
 
-    public TileEntityPWRControl() {
+    public PWRControlTE() {
         super();
     }
     public int height = 1;
@@ -41,13 +41,13 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
             BlockPos downPos = pos.down();
             height = 1;
             while (world.isValid(downPos)) {
-                if (world.getBlockState(downPos).getBlock() instanceof MachinePWRControl) {
+                if (world.getBlockState(downPos).getBlock() instanceof PWRControlBlock) {
                     height++;
                     if (world.isRemote) { // manually kill TEs below
                         TileEntity entity = chunk.getTileEntity(downPos,Chunk.EnumCreateEntityType.CHECK);
                         if (entity != null) {
-                            if (entity instanceof TileEntityPWRControl) {
-                                ((TileEntityPWRControl)entity).connectUpper();
+                            if (entity instanceof PWRControlTE) {
+                                ((PWRControlTE)entity).connectUpper();
                             }
                         }
                     }
@@ -60,7 +60,7 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
 
     public void connectUpper() { // For clients, called only on validate()
         if (!this.isInvalid() && world.isBlockLoaded(pos)) {
-            if (world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl)
+            if (world.getBlockState(pos.up()).getBlock() instanceof PWRControlBlock)
                 this.invalidate();
         }
     }
@@ -184,7 +184,7 @@ public class TileEntityPWRControl extends TileEntity implements PWRComponentEnti
                 stupidworkaroundcooldown--;
                 return;
             }
-            if (!(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl)) {
+            if (!(world.getBlockState(pos.up()).getBlock() instanceof PWRControlBlock)) {
                 if (sound == null)
                     sound = MainRegistry.proxy.getLoopedSoundStartStop(world,HBMSoundEvents.pwrRodLoop,HBMSoundEvents.pwrRodStart,HBMSoundEvents.pwrRodStop,SoundCategory.BLOCKS,pos.getX(),pos.getY(),pos.getZ(),0.0175f,0.75f);
                 if (playing) {

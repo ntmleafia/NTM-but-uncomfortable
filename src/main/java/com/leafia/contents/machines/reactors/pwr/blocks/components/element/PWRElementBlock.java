@@ -36,10 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static net.minecraft.block.BlockSnow.LAYERS;
-
-public class MachinePWRElement extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
-	public MachinePWRElement() {
+public class PWRElementBlock extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
+	public PWRElementBlock() {
 		super(Material.IRON,-1,"reactor_element");
 		this.setTranslationKey("pwr_element");
 		this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
@@ -52,12 +50,12 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 		Chunk chunk = world.getChunk(pos);
 		TileEntity entity = chunk.getTileEntity(pos,Chunk.EnumCreateEntityType.CHECK);
 		if (entity != null) {
-			if (entity instanceof TileEntityPWRElement) {
+			if (entity instanceof PWRElementTE) {
 				if (!entity.isInvalid())
-					((TileEntityPWRElement) entity).connectUpper();
+					((PWRElementTE) entity).connectUpper();
 			}
 		} else {
-			if (!(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement))
+			if (!(world.getBlockState(pos.up()).getBlock() instanceof PWRElementBlock))
 				chunk.getTileEntity(pos,Chunk.EnumCreateEntityType.QUEUED);
 		}
 	}
@@ -79,13 +77,13 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 	}
 	@Override
 	public TileEntity createNewTileEntity(World worldIn,int meta) {
-		return new TileEntityPWRElement();
+		return new PWRElementTE();
 	}
 
 	public BlockPos getTopElement(World world,BlockPos pos) {
 		BlockPos upPos = pos.up();
 		while (world.isValid(upPos)) {
-			if (world.getBlockState(upPos).getBlock() instanceof MachinePWRElement) {
+			if (world.getBlockState(upPos).getBlock() instanceof PWRElementBlock) {
 				pos = upPos;
 			} else break;
 			upPos = pos.up();
@@ -96,13 +94,13 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 	@Override
 	public boolean onBlockActivated(World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
 		pos = getTopElement(world,pos);
-		if (world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement)
+		if (world.getBlockState(pos.up()).getBlock() instanceof PWRElementBlock)
 			return false;
 		TileEntity entity = world.getTileEntity(pos);
-		if (!(entity instanceof TileEntityPWRElement))
+		if (!(entity instanceof PWRElementTE))
 			return false;
 
-		TileEntityPWRElement element = (TileEntityPWRElement)entity;
+		PWRElementTE element = (PWRElementTE)entity;
 		if (element.inventory == null) return false;
 
 		ItemStack held = player.getHeldItem(hand);
@@ -146,13 +144,13 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 	@Override
 	public void printHook(RenderGameOverlayEvent.Pre event,World world,int x,int y,int z) {
 		BlockPos pos = getTopElement(world,new BlockPos(x,y,z));
-		if (world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement)
+		if (world.getBlockState(pos.up()).getBlock() instanceof PWRElementBlock)
 			return;
 		TileEntity entity = world.getTileEntity(pos);
-		if (!(entity instanceof TileEntityPWRElement))
+		if (!(entity instanceof PWRElementTE))
 			return;
 		List<String> texts = new ArrayList<>();
-		TileEntityPWRElement element = (TileEntityPWRElement)entity;
+		PWRElementTE element = (PWRElementTE)entity;
 
 		if (element.inventory != null) {
 			ItemStack stack = element.inventory.getStackInSlot(0);
@@ -169,15 +167,15 @@ public class MachinePWRElement extends BlockMachineBase implements ITooltipProvi
 
 	@Override
 	public boolean tileEntityShouldCreate(World world,BlockPos pos) {
-		return !(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement);
+		return !(world.getBlockState(pos.up()).getBlock() instanceof PWRElementBlock);
 	}
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("incomplete-switch")
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		super.randomDisplayTick(state, world, pos, rand);
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileEntityPWRElement) {
-			TileEntityPWRElement element = (TileEntityPWRElement)te;
+		if (te instanceof PWRElementTE) {
+			PWRElementTE element = (PWRElementTE)te;
 			if (element.inventory != null) {
 				Item item = element.inventory.getStackInSlot(0).getItem();
 				if (item != null) {

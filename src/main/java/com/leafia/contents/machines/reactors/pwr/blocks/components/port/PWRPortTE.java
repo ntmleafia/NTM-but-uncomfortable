@@ -16,9 +16,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
 import javax.annotation.Nullable;
 
-public class TileEntityPWRPort extends TileEntity implements PWRComponentEntity, IFluidHandler, LeafiaRegisterTileEntity {
+public class PWRPortTE extends TileEntity implements PWRComponentEntity, IFluidHandler, LeafiaRegisterTileEntity {
 	static {
-		MainRegistry.registerTileEntities.put(TileEntityPWRPort.class,"pwr_port"); // didnt work. I hate this game
+		MainRegistry.registerTileEntities.put(PWRPortTE.class,"pwr_port"); // didnt work. I hate this game
 	}
 	BlockPos corePos = null;
 	@Override

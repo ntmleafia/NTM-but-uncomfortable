@@ -1,9 +1,9 @@
 package com.hbm.oc;
 
 import com.leafia.contents.machines.reactors.pwr.PWRData;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalTE;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
@@ -22,25 +22,25 @@ import java.util.Optional;
 public class PWRDriver extends DriverSidedTileEntity {
     @Override
     public Class<?> getTileEntityClass() {
-        return TileEntityPWRTerminal.class;
+        return PWRTerminalTE.class;
     }
 
     @Override
     public ManagedEnvironment createEnvironment(World world, BlockPos blockPos, EnumFacing enumFacing) {
         TileEntity entity = world.getTileEntity(blockPos);
 
-        if (entity instanceof TileEntityPWRTerminal) {
-            TileEntityPWRTerminal te = (TileEntityPWRTerminal) entity;
+        if (entity instanceof PWRTerminalTE) {
+            PWRTerminalTE te = (PWRTerminalTE) entity;
             return new PWREnvironment(world, te.getPos());
         }
 
         return null;
     }
 
-    public static class PWREnvironment extends HBMDriver<TileEntityPWRTerminal> {
+    public static class PWREnvironment extends HBMDriver<PWRTerminalTE> {
 
         public PWREnvironment(World w, BlockPos pos) {
-            super(TileEntityPWRTerminal.class, w, pos);
+            super(PWRTerminalTE.class, w, pos);
         }
 
         @Override
@@ -65,8 +65,8 @@ public class PWRDriver extends DriverSidedTileEntity {
             int i = 1;
             for (BlockPos pos : controlRodPositions) {
                 TileEntity control = world.getTileEntity(pos);
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     result.put(i, new HashMap<String, Object>() {{
                         put("world_pos", OCHBMHelper.toHashMap(c.getPos()));
                         put("target_pos", c.targetPosition);
@@ -89,8 +89,8 @@ public class PWRDriver extends DriverSidedTileEntity {
             int i = 1;
             for (BlockPos pos : core.fuels) {
                 TileEntity fuel = world.getTileEntity(pos);
-                if (fuel instanceof TileEntityPWRElement) {
-                    TileEntityPWRElement f = (TileEntityPWRElement) fuel;
+                if (fuel instanceof PWRElementTE) {
+                    PWRElementTE f = (PWRElementTE) fuel;
                     result.put(i, new HashMap<String, Object>() {{
                         put("world_pos", OCHBMHelper.toHashMap(f.getPos()));
                         put("scale", f.channelScale);
@@ -173,8 +173,8 @@ public class PWRDriver extends DriverSidedTileEntity {
             boolean found = false;
             for (BlockPos pos : core.controls) {
                 TileEntity control = world.getTileEntity(pos);
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     if (c.name.equals(args.checkString(0))) {
                         c.targetPosition = args.checkDouble(1);
                         found = true;
@@ -196,8 +196,8 @@ public class PWRDriver extends DriverSidedTileEntity {
                     return new Object[]{false};
                 }
                 TileEntity control = world.getTileEntity(pos.get());
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     c.targetPosition = args.checkDouble(1);
                     return new Object[]{true};
                 }
@@ -225,8 +225,8 @@ public class PWRDriver extends DriverSidedTileEntity {
                     return new Object[]{null};
                 }
                 TileEntity control = world.getTileEntity(pos.get());
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     return new Object[]{c.name};
                 }
             }
@@ -245,8 +245,8 @@ public class PWRDriver extends DriverSidedTileEntity {
                     return new Object[]{false};
                 }
                 TileEntity control = world.getTileEntity(pos.get());
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     c.name = args.checkString(1);
                     core.resyncControls();
                     return new Object[]{true};
@@ -270,8 +270,8 @@ public class PWRDriver extends DriverSidedTileEntity {
             if (core == null) return new Object[]{null};
             for (BlockPos pos : core.controls) {
                 TileEntity control = world.getTileEntity(pos);
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     c.name = args.checkString(0);
                 }
             }
@@ -286,8 +286,8 @@ public class PWRDriver extends DriverSidedTileEntity {
             if (core == null) return new Object[]{null};
             for (BlockPos pos : core.controls) {
                 TileEntity control = world.getTileEntity(pos);
-                if (control instanceof TileEntityPWRControl) {
-                    TileEntityPWRControl c = (TileEntityPWRControl) control;
+                if (control instanceof PWRControlTE) {
+                    PWRControlTE c = (PWRControlTE) control;
                     c.targetPosition = args.checkDouble(0);
                 }
             }

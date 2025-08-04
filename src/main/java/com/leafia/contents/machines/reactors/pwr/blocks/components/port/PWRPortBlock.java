@@ -1,23 +1,25 @@
-package com.leafia.contents.machines.reactors.pwr.blocks.components.channel;
+package com.leafia.contents.machines.reactors.pwr.blocks.components.port;
 
-import com.hbm.blocks.BlockBase;
 import com.hbm.blocks.ITooltipProvider;
+import com.hbm.blocks.generic.BlockRadResistant;
+import com.hbm.main.MainRegistry;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.dev.MachineTooltip;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MachinePWRExchanger extends BlockBase implements ITooltipProvider, PWRComponentBlock {
-    public MachinePWRExchanger() {
-        super(Material.IRON,"pwr_exchanger");
-        setSoundType(SoundType.METAL);
+public class PWRPortBlock extends BlockRadResistant implements ITooltipProvider, ITileEntityProvider, PWRComponentBlock {
+    public PWRPortBlock() {
+        super(Material.IRON,"pwr_port");
+        this.setCreativeTab(MainRegistry.machineTab);
     }
     @Override
     public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
@@ -28,12 +30,13 @@ public class MachinePWRExchanger extends BlockBase implements ITooltipProvider, 
     }
 
     @Override
-    public boolean shouldRenderOnGUI() {
+    public boolean tileEntityShouldCreate(World world,BlockPos pos) {
         return true;
     }
 
+    @Nullable
     @Override
-    public boolean tileEntityShouldCreate(World world,BlockPos pos) {
-        return false;
+    public TileEntity createNewTileEntity(World worldIn,int meta) {
+        return new PWRPortTE();
     }
 }

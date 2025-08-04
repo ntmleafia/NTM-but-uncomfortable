@@ -8,7 +8,7 @@ import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer.RemoteSlot;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.transformer.LeafiaGls;
@@ -242,8 +242,8 @@ public class PWRTerminalUI extends GuiInfoContainer {
 		controlsByName = new HashMap<>();
 		for (BlockPos pos : core.controls) {
 			TileEntity entity1 = core.getWorld().getTileEntity(pos);
-			if (entity1 instanceof TileEntityPWRControl) {
-				TileEntityPWRControl control = (TileEntityPWRControl)entity1;
+			if (entity1 instanceof PWRControlTE) {
+				PWRControlTE control = (PWRControlTE)entity1;
 				if (!controlsByName.containsKey(control.name))
 					controlsByName.put(control.name,new LeafiaSet<>());
 				controlsByName.get(control.name).add(pos);
@@ -575,8 +575,8 @@ public class PWRTerminalUI extends GuiInfoContainer {
 			Double lastPosition = null;
 			for (BlockPos pos : controlsByName.get(s)) {
 				TileEntity entity = core.getWorld().getTileEntity(pos);
-				if (entity instanceof TileEntityPWRControl) {
-					TileEntityPWRControl control = (TileEntityPWRControl)entity;
+				if (entity instanceof PWRControlTE) {
+					PWRControlTE control = (PWRControlTE)entity;
 					number++;
 					position += control.position;
 					if (lastPosition != null) {
@@ -632,8 +632,8 @@ public class PWRTerminalUI extends GuiInfoContainer {
 				// Control
 				drawTexturedModalRect(getSlotX(cpos),getSlotY(cpos),172,120,18,18);
 				TileEntity entity = core.getWorld().getTileEntity(worldPos);
-				if (entity instanceof TileEntityPWRControl) {
-					TileEntityPWRControl control = (TileEntityPWRControl)entity;
+				if (entity instanceof PWRControlTE) {
+					PWRControlTE control = (PWRControlTE)entity;
 					int level = (int)Math.min(Math.floor(control.position*5),4);
 					drawTexturedModalRect(getSlotX(cpos)+5,getSlotY(cpos)+5,153+level*8,181,8,8);
 				}

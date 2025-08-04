@@ -35,8 +35,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MachinePWRControl extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRComponentBlock {
-    public MachinePWRControl() {
+public class PWRControlBlock extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRComponentBlock {
+    public PWRControlBlock() {
         super(Material.IRON,"reactor_control");
         this.setTranslationKey("pwr_control");
         setSoundType(SoundType.METAL);
@@ -56,7 +56,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
 
     @Override
     public TileEntity createNewTileEntity(World worldIn,int meta) {
-        return new TileEntityPWRControl();
+        return new PWRControlTE();
     }
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
@@ -70,9 +70,9 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
     public boolean onBlockActivated(World worldIn,BlockPos pos,IBlockState state,EntityPlayer playerIn,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
         pos = getTopControl(worldIn,pos);
         TileEntity entity = worldIn.getTileEntity(pos);
-        if (!(entity instanceof TileEntityPWRControl))
+        if (!(entity instanceof PWRControlTE))
             return true;
-        TileEntityPWRControl control = (TileEntityPWRControl)entity;
+        PWRControlTE control = (PWRControlTE)entity;
         control.updateHeight();
         if (playerIn.getHeldItem(hand).getItem() instanceof ItemTooling) {
             ItemTooling tool = (ItemTooling)(playerIn.getHeldItem(hand).getItem());
@@ -96,7 +96,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
                 if (stack.getSubCompound("display") != null) {
                     control.name = stack.getDisplayName();
                 } else {
-                    control.name = TileEntityPWRControl.defaultName;
+                    control.name = PWRControlTE.defaultName;
                 }
                 LeafiaPacket._start(entity).__write(2,control.name).__sendToAffectedClients();
                 control.markDirty();
@@ -121,7 +121,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
     public BlockPos getTopControl(World world,BlockPos pos) {
         BlockPos upPos = pos.up();
         while (world.isValid(upPos)) {
-            if (world.getBlockState(upPos).getBlock() instanceof MachinePWRControl) {
+            if (world.getBlockState(upPos).getBlock() instanceof PWRControlBlock) {
                 pos = upPos;
             } else break;
             upPos = pos.up();
@@ -132,13 +132,13 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
     @Override
     public void printHook(RenderGameOverlayEvent.Pre event,World world,int x,int y,int z) {
         BlockPos pos = getTopControl(world,new BlockPos(x,y,z));
-        if (world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl)
+        if (world.getBlockState(pos.up()).getBlock() instanceof PWRControlBlock)
             return;
         TileEntity entity = world.getTileEntity(pos);
-        if (!(entity instanceof TileEntityPWRControl))
+        if (!(entity instanceof PWRControlTE))
             return;
         List<String> texts = new ArrayList<>();
-        TileEntityPWRControl control = (TileEntityPWRControl)entity;
+        PWRControlTE control = (PWRControlTE)entity;
 
         texts.add("§e"+String.format("%01.2f",control.position*control.height)+"m");
         texts.add("Use screwdriver to raise rods");
@@ -152,7 +152,7 @@ public class MachinePWRControl extends BlockBase implements ITooltipProvider, IT
 
     @Override
     public boolean tileEntityShouldCreate(World world,BlockPos pos) {
-        return !(world.getBlockState(pos.up()).getBlock() instanceof MachinePWRControl);
+        return !(world.getBlockState(pos.up()).getBlock() instanceof PWRControlBlock);
     }
     @Override
     public void neighborChanged(IBlockState state,World worldIn,BlockPos pos,Block blockIn,BlockPos fromPos) { // Fired only on server

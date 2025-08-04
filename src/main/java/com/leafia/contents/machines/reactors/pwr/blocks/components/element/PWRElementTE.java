@@ -9,12 +9,12 @@ import com.hbm.util.I18nUtil;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
-import com.leafia.contents.machines.reactors.pwr.blocks.MachinePWRReflector;
+import com.leafia.contents.machines.reactors.pwr.blocks.PWRReflectorBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRChannelBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRConductorBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -44,8 +44,8 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.Map.Entry;
 
-public class TileEntityPWRElement extends TileEntityInventoryBase implements PWRComponentEntity, ITickable, LeafiaPacketReceiver {
-	public static LeafiaMap<TileEntityPWRElement,LeafiaSet<BlockPos>> listeners = new LeafiaMap<>();
+public class PWRElementTE extends TileEntityInventoryBase implements PWRComponentEntity, ITickable, LeafiaPacketReceiver {
+	public static LeafiaMap<PWRElementTE,LeafiaSet<BlockPos>> listeners = new LeafiaMap<>();
 	BlockPos corePos = null;
 	PWRData data = null;
 	int height = 1;
@@ -75,7 +75,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		int height = 1;
 		for (BlockPos p = pos.down(); world.isValid(p); p = p.down()) {
 			Tracker._tracePosition(this,p);
-			if (world.getBlockState(p).getBlock() instanceof MachinePWRElement)
+			if (world.getBlockState(p).getBlock() instanceof PWRElementBlock)
 				height++;
 			else
 				break;
@@ -112,7 +112,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					@Override
 					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
-						retrival.entity = TileEntityPWRElement.this;
+						retrival.entity = PWRElementTE.this;
 						if (pairRef.getA() == null)
 							pairRef.setA(retrival);
 						else {
@@ -126,7 +126,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					@Override
 					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas);
-						retrival.entity = TileEntityPWRElement.this;
+						retrival.entity = PWRElementTE.this;
 						if (pair.getA() == null)
 							pair.setA(retrival);
 						else {
@@ -158,7 +158,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					@Override
 					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas,this.i);
-						retrival.entity = TileEntityPWRElement.this;
+						retrival.entity = PWRElementTE.this;
 						linearFuelMap.add(retrival);
 						return retrival;
 					}
@@ -168,7 +168,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					@Override
 					HeatRetrival accept(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> areas) {
 						HeatRetrival retrival = new HeatRetrival(fuelPos,controls,areas,this.i);
-						retrival.entity = TileEntityPWRElement.this;
+						retrival.entity = PWRElementTE.this;
 						linearFuelMap.add(retrival);
 						return retrival;
 					}
@@ -220,11 +220,11 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 					blocked.add(curDepth);
 					Block block = world.getBlockState(basePos.down(curDepth)).getBlock();
 					Tracker._tracePosition(this,basePos.down(curDepth),"Searching fuels");
-					if (block instanceof MachinePWRElement) {
-						if (((MachinePWRElement) block).tileEntityShouldCreate(world,basePos.down(curDepth))) {
+					if (block instanceof PWRElementBlock) {
+						if (((PWRElementBlock) block).tileEntityShouldCreate(world,basePos.down(curDepth))) {
 							int bottomDepth = depth;
 							while (world.isValid(basePos.down(bottomDepth+1))) {
-								if (world.getBlockState(basePos.down(bottomDepth + 1)).getBlock() instanceof MachinePWRElement) {
+								if (world.getBlockState(basePos.down(bottomDepth + 1)).getBlock() instanceof PWRElementBlock) {
 									bottomDepth++;
 									blocked.add(bottomDepth);
 								} else
@@ -286,11 +286,11 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 				if (world.isValid(searchPos)) {
 					Tracker._tracePosition(this,searchPos,"Looking for graphite");
 					if (block.getRegistryName() != null) {
-						if (("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*") || block instanceof MachinePWRChannel || block instanceof MachinePWRConductor || block == Blocks.WATER || block == Blocks.FLOWING_WATER)
+						if (("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*") || block instanceof PWRChannelBlock || block instanceof PWRConductorBlock || block == Blocks.WATER || block == Blocks.FLOWING_WATER)
 							moderatedRows.add(depth);
 					}
 				}
-				if (block instanceof MachinePWRReflector) {
+				if (block instanceof PWRReflectorBlock) {
 					Tracker._tracePosition(this,searchPos,"Detected reflector");
 					reflectors[depth] = true;
 					doReflect = true;
@@ -350,10 +350,10 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 
 		/* detect rods */ {
 			Integer rodTop = null;
-			if (world.getBlockState(basePos).getBlock() instanceof MachinePWRControl) {
+			if (world.getBlockState(basePos).getBlock() instanceof PWRControlBlock) {
 				rodTop = 0;
 				for (BlockPos searchPos = basePos.up(); world.isValid(searchPos); searchPos = searchPos.up()) {
-					if (world.getBlockState(searchPos).getBlock() instanceof MachinePWRControl)
+					if (world.getBlockState(searchPos).getBlock() instanceof PWRControlBlock)
 						rodTop -= 1;
 					else
 						break;
@@ -361,7 +361,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			}
 			int depth = 0;
 			for (BlockPos searchPos = basePos; (world.isValid(searchPos) || (rodTop != null)); searchPos = searchPos.down()) {
-				boolean isControl = world.isValid(searchPos); if (isControl) isControl = world.getBlockState(searchPos).getBlock() instanceof MachinePWRControl;
+				boolean isControl = world.isValid(searchPos); if (isControl) isControl = world.getBlockState(searchPos).getBlock() instanceof PWRControlBlock;
 				if (rodTop == null) {
 					if (isControl)
 						rodTop = depth;
@@ -414,7 +414,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		public final double divisor;
 		public final Set<RangeDouble> areas;
 		public double moderation;
-		TileEntityPWRElement entity;
+		PWRElementTE entity;
 		public HeatRetrival(BlockPos fuelPos,Map<BlockPos,Pair<RangeDouble,RangeDouble>> controls,Set<RangeDouble> copiedAreas,int distance) {
 			this.fuelPos = fuelPos;
 			this.divisor = Math.pow(2,distance/2d-1);
@@ -485,8 +485,8 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		public double getControl(World world,BlockPos pos) {
 			TileEntity entity = world.getTileEntity(pos);
 			if (entity != null) {
-				if (entity instanceof TileEntityPWRControl) {
-					return ((TileEntityPWRControl) entity).position;
+				if (entity instanceof PWRControlTE) {
+					return ((PWRControlTE) entity).position;
 				}
 			}
 			if (world.getBlockState(pos).getBlock() instanceof IRadResistantBlock) {
@@ -497,12 +497,12 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 	}
 	public double getHeatFromHeatRetrival(HeatRetrival retrival,LeafiaRodItem rod) {
 		BlockPos pos = retrival.fuelPos;
-		if (world.getBlockState(pos).getBlock() instanceof MachinePWRElement) {
-			if (((MachinePWRElement) world.getBlockState(pos).getBlock()).tileEntityShouldCreate(world,pos)) {
+		if (world.getBlockState(pos).getBlock() instanceof PWRElementBlock) {
+			if (((PWRElementBlock) world.getBlockState(pos).getBlock()).tileEntityShouldCreate(world,pos)) {
 				TileEntity entity = world.getTileEntity(pos);
 				if (entity != null) {
-					if (entity instanceof TileEntityPWRElement) {
-						ItemStackHandler items = ((TileEntityPWRElement) entity).inventory;
+					if (entity instanceof PWRElementTE) {
+						ItemStackHandler items = ((PWRElementTE) entity).inventory;
 						if (items != null) {
 							return rod.getFlux(items.getStackInSlot(0))*(1-retrival.moderation)+rod.getFlux(items.getStackInSlot(0),true)*retrival.moderation;
 						}
@@ -513,7 +513,7 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		return 0;
 	}
 
-	public TileEntityPWRElement() {
+	public PWRElementTE() {
 		super(1);
 	}
 
@@ -521,15 +521,15 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 		if (!this.isInvalid() && world.isBlockLoaded(pos)) {
 			Chunk chunk = world.getChunk(pos);
 			if (world.isRemote) { // Keep in mind that neighborChanged in Block does NOT get called for Remotes
-				if (world.getBlockState(pos.down()).getBlock() instanceof MachinePWRElement) {
+				if (world.getBlockState(pos.down()).getBlock() instanceof PWRElementBlock) {
 					TileEntity entityBelow = chunk.getTileEntity(pos.down(),Chunk.EnumCreateEntityType.CHECK);
 					if (entityBelow != null) {
-						if (entityBelow instanceof TileEntityPWRElement) {
-							((TileEntityPWRElement)entityBelow).connectUpper();
+						if (entityBelow instanceof PWRElementTE) {
+							((PWRElementTE)entityBelow).connectUpper();
 						}
 					}
 				}
-				if (world.getBlockState(pos.up()).getBlock() instanceof MachinePWRElement) {
+				if (world.getBlockState(pos.up()).getBlock() instanceof PWRElementBlock) {
 					inventory.setStackInSlot(0,ItemStack.EMPTY);
 					invalidate();
 				}
@@ -537,16 +537,16 @@ public class TileEntityPWRElement extends TileEntityInventoryBase implements PWR
 			}
 			BlockPos upPos = pos.up();
 			boolean mustTransmit = false;
-			TileEntityPWRElement target = null;
+			PWRElementTE target = null;
 			while (world.isValid(upPos)) {
-				if (world.getBlockState(upPos).getBlock() instanceof MachinePWRElement) {
+				if (world.getBlockState(upPos).getBlock() instanceof PWRElementBlock) {
 					mustTransmit = true;
 					TileEntity entity = chunk.getTileEntity(upPos,Chunk.EnumCreateEntityType.CHECK);
 					target = null;
 					if (entity != null) {
-						if (entity instanceof TileEntityPWRElement) {
+						if (entity instanceof PWRElementTE) {
 							if (!entity.isInvalid()) {
-								target = (TileEntityPWRElement) entity;
+								target = (PWRElementTE) entity;
 								if (!target.inventory.getStackInSlot(0).isEmpty())
 									target = null;
 							}

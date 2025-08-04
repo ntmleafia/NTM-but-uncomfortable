@@ -25,8 +25,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProvider, PWRComponentBlock, IRadResistantBlock {
-	public MachinePWRTerminal() {
+public class PWRTerminalBlock extends BlockMachineBase implements ITooltipProvider, PWRComponentBlock, IRadResistantBlock {
+	public PWRTerminalBlock() {
 		super(Material.IRON,ModBlocks.PWR.guiID,"reactor_hatch");
 		this.setTranslationKey("pwr_terminal");
 		this.setCreativeTab(MainRegistry.machineTab);
@@ -59,7 +59,7 @@ public class MachinePWRTerminal extends BlockMachineBase implements ITooltipProv
 	}
 	@Override
 	public TileEntity createNewTileEntity(World worldIn,int meta) {
-		return new TileEntityPWRTerminal();
+		return new PWRTerminalTE();
 	}
 
 	@Override
