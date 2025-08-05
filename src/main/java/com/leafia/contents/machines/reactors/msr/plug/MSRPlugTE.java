@@ -1,5 +1,6 @@
 package com.leafia.contents.machines.reactors.msr.plug;
 
+import com.hbm.forgefluid.ModForgeFluids;
 import com.leafia.contents.machines.reactors.msr.MSRTEBase;
 import com.leafia.contents.machines.reactors.msr.ejector.MSREjectorBlock;
 import net.minecraft.block.state.IBlockState;
@@ -40,7 +41,10 @@ public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
 	}
 	@Override
 	public int fill(FluidStack resource,boolean doFill) {
-		return tank.fill(resource,doFill);
+		if (resource.getFluid().equals(ModForgeFluids.FLUORIDE))
+			return tank.fill(resource,doFill);
+		else
+			return 0;
 	}
 	@Override
 	public @Nullable FluidStack drain(FluidStack resource,boolean doDrain) {
