@@ -24,6 +24,7 @@ import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
+import com.leafia.contents.machines.reactors.msr.MSRTEBase;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -59,6 +60,8 @@ import org.lwjgl.input.Keyboard;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 //Drillgon200: This is Library.java except for fluids
@@ -199,10 +202,17 @@ public class FFUtils {
 		else
 			renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluid != null ? new FluidStack(fluid,0) : null,fluidTank.getCapacity());
 	}
-
 	public static void addFluidInfo(FluidStack stack, List<String> texts){
+		addFluidInfo(stack,texts,"");
+	}
+
+	public static void addFluidInfo(FluidStack stack, List<String> texts, String prefix){
 		Fluid fluid = stack.getFluid();
 		int temp = fluid.getTemperature()-273;
+		if (fluid.equals(ModForgeFluids.FLUORIDE)) {
+			NBTTagCompound tag = MSRTEBase.nbtProtocol(stack.tag);
+			temp = (int)(MSRTEBase.baseTemperature+tag.getDouble("heat"));
+		}
 		if(temp != 27){
 			String tempColor = "";
 			if(temp < -130) {
@@ -222,27 +232,27 @@ public class FFUtils {
 			} else {
 				tempColor = "§d";
 			}
-			texts.add(String.format("%s%d°C", tempColor, temp));
+			texts.add(prefix+String.format("%s%d°C", tempColor, temp));
 		}
 		boolean hasInfo = false;
 		boolean isKeyPressed = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.HIGH_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait._hazardfluid.pressure.high")+"]");
+				texts.add(prefix+"§c["+I18n.format("trait._hazardfluid.pressure.high")+"]");
 			}
 			hasInfo = true;
 		}
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.EXTREME_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait._hazardfluid.pressure.extreme")+"]");
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.pressure.extreme")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (ModFluidProperties.isAntimatter(fluid)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait._hazardfluid.antimatter")+"]");
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.antimatter")+"]");
 			}
 			hasInfo = true;
 		}
@@ -250,27 +260,27 @@ public class FFUtils {
 		if (ModFluidProperties.isCorrosivePlastic(fluid)) {
 			if (ModFluidProperties.isCorrosiveIron(fluid)) {
 				if(isKeyPressed){
-					texts.add("§2["+I18n.format("trait._hazardfluid.corrosiveIron")+"]");
+					texts.add(prefix+"§2["+I18n.format("trait._hazardfluid.corrosiveIron")+"]");
 				}
 			} else if(isKeyPressed){
-				texts.add("§a["+I18n.format("trait._hazardfluid.corrosivePlastic")+"]");
+				texts.add(prefix+"§a["+I18n.format("trait._hazardfluid.corrosivePlastic")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (FluidCombustionRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§6["+I18n.format("trait._hazardfluid.flammable")+"]");
-				texts.add(" "+I18n.format("trait._hazardfluid.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
+				texts.add(prefix+"§6["+I18n.format("trait._hazardfluid.flammable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
 			}
 			hasInfo = true;
 		}
 		if (EngineRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait._hazardfluid.combustable")+"]");
+				texts.add(prefix+"§c["+I18n.format("trait._hazardfluid.combustable")+"]");
 				
-				texts.add(" "+I18n.format("trait._hazardfluid.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
-				texts.add(" "+I18n.format("trait._hazardfluid.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
 			}
 			hasInfo = true;
 		}
@@ -278,8 +288,8 @@ public class FFUtils {
 		if (HeatRecipes.hasCoolRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getResultingHeat(fluid) * 1000 / HeatRecipes.getInputAmountCold(fluid));
-				texts.add("§4["+I18n.format("trait._hazardfluid.coolable")+"]");
-				texts.add(" "+I18n.format("trait._hazardfluid.coolable.desc", heat));
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.coolable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.coolable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -287,8 +297,8 @@ public class FFUtils {
 		if (HeatRecipes.hasBoilRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getRequiredHeat(fluid) * 1000 / HeatRecipes.getInputAmountHot(fluid));
-				texts.add("§3["+I18n.format("trait._hazardfluid.boilable")+"]");
-				texts.add(" "+I18n.format("trait._hazardfluid.boilable.desc", heat));
+				texts.add(prefix+"§3["+I18n.format("trait._hazardfluid.boilable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.boilable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -297,12 +307,23 @@ public class FFUtils {
 
 		if(dfcEff >= 1){
 			if(isKeyPressed){
-				texts.add("§5["+I18n.format("trait._hazardfluid.dfcFuel")+"]");
+				texts.add(prefix+"§5["+I18n.format("trait._hazardfluid.dfcFuel")+"]");
 				dfcEff = (dfcEff-1F);
-				texts.add(" "+I18n.format("trait._hazardfluid.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
 			}
 			hasInfo = true;
 		}
+
+		if (fluid.equals(ModForgeFluids.FLUORIDE)) {
+			NBTTagCompound tag = MSRTEBase.nbtProtocol(stack.tag);
+			Map<String,Double> mixture = MSRTEBase.readMixture(tag);
+			if (!mixture.isEmpty()) {
+				texts.add(I18nUtil.resolveKey("tile.msr.mixture"));
+				for (Entry<String,Double> entry : mixture.entrySet())
+					texts.add(prefix+" "+String.format("%01.1f",entry.getValue())+"x "+I18nUtil.resolveKey("item."+entry.getKey()+".name"));
+			}
+		}
+
 		if (stack.tag != null) {
 			for (String s : stack.tag.getKeySet()) {
 				NBTBase tag = stack.tag.getTag(s);

@@ -18,8 +18,9 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class MSREjectorBlock extends Block {
+public class MSREjectorBlock extends BlockContainer {
 
 	public static final PropertyDirection FACING = BlockDirectional.FACING;
 
@@ -29,6 +30,11 @@ public class MSREjectorBlock extends Block {
 		this.setRegistryName(s);
 
 		ModBlocks.ALL_BLOCKS.add(this);
+	}
+
+	@Override
+	public @Nullable TileEntity createNewTileEntity(World worldIn,int meta) {
+		return new MSREjectorTE();
 	}
 
 	@Override

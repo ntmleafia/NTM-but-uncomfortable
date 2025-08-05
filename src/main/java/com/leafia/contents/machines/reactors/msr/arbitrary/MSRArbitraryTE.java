@@ -3,6 +3,7 @@ package com.leafia.contents.machines.reactors.msr.arbitrary;
 import com.hbm.tileentity.TileEntityInventoryBase;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
+import com.leafia.contents.machines.reactors.msr.MSRTEBase;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
@@ -10,14 +11,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
 
-public class MSRArbitraryTE extends TileEntityInventoryBase implements LeafiaPacketReceiver {
+public class MSRArbitraryTE extends MSRTEBase {
+	public ItemStackHandler inventory;
 	public MSRArbitraryTE() {
-		super(1);
+		inventory = new ItemStackHandler(1);
 	}
 	@Override
-	public String getName() {
-		return I18nUtil.resolveKey("tile.msr_arbitrary.name");
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setTag("inventory", inventory.serializeNBT());
+		return super.writeToNBT(compound);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		if(compound.hasKey("inventory"))
+			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+		super.readFromNBT(compound);
 	}
 	@Override
 	public String getPacketIdentifier() {
@@ -38,6 +49,7 @@ public class MSRArbitraryTE extends TileEntityInventoryBase implements LeafiaPac
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void onReceivePacketLocal(byte key,Object value) {
+		super.onReceivePacketLocal(key,value);
 		if (key == 0) {
 			if (value instanceof NBTTagCompound nbt)
 				readFromNBT(nbt);

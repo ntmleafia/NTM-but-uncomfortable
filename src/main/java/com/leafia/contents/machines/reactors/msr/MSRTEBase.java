@@ -1,13 +1,21 @@
 package com.leafia.contents.machines.reactors.msr;
 
-import com.hbm.util.Tuple.Pair;
+import com.hbm.forgefluid.FFUtils;
+import com.hbm.util.I18nUtil;
+import com.leafia.dev.LeafiaDebug;
+import com.leafia.dev.LeafiaDebug.Tracker;
+import com.leafia.dev.container_utility.LeafiaPacket;
+import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.llib.group.LeafiaMap;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
@@ -16,9 +24,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class MSRTEBase extends TileEntity {
-	FluidTank tank = new FluidTank(1000);
-	NBTTagCompound nbtProtocol(NBTTagCompound tag) {
+public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaPacketReceiver {
+	protected FluidTank tank = new FluidTank(1000);
+	public static double baseTemperature = 500;
+	public static NBTTagCompound nbtProtocol(NBTTagCompound tag) {
 		if (tag == null) tag = new NBTTagCompound();
 		if (!tag.hasKey("itemMixture"))
 			tag.setTag("itemMixture",new NBTTagList());
@@ -26,7 +35,7 @@ public class MSRTEBase extends TileEntity {
 			tag.setDouble("heat",0);
 		return tag;
 	}
-	Map<String,Double> readMixture(NBTTagCompound tag) {
+	public static Map<String,Double> readMixture(NBTTagCompound tag) {
 		Map<String,Double> mixture = new LeafiaMap<>();
 		NBTTagList list = tag.getTagList("itemMixture",10);
 		for (NBTBase nbtBase : list) {
@@ -35,7 +44,7 @@ public class MSRTEBase extends TileEntity {
 		}
 		return mixture;
 	}
-	NBTTagList writeMixture(Map<String,Double> mixture) {
+	public static NBTTagList writeMixture(Map<String,Double> mixture) {
 		NBTTagList list = new NBTTagList();
 		for (Entry<String,Double> entry : mixture.entrySet()) {
 			NBTTagCompound compound = new NBTTagCompound();
@@ -47,6 +56,7 @@ public class MSRTEBase extends TileEntity {
 	}
 	void transferStats(FluidStack stack,double div) {
 		if (tank.getFluid() == null) return;
+		if (stack == null) return;
 		NBTTagCompound compound = nbtProtocol(tank.getFluid().tag);
 		NBTTagCompound target = nbtProtocol(stack.tag);
 		Map<String,Double> mixture0 = readMixture(compound);
@@ -73,24 +83,79 @@ public class MSRTEBase extends TileEntity {
 		}
 	}
 	public void sendFluids() {
+		Tracker._startProfile(this,"sendFluids");
 		int demand = 0;
+		int average = 0;
 		List<MSRTEBase> list = new ArrayList<>();
 		for (EnumFacing facing : EnumFacing.values()) {
 			BlockPos target = pos.add(facing.getDirectionVec());
 			if (world.getTileEntity(target) instanceof MSRTEBase te) {
-				demand += te.tank.getCapacity()-te.tank.getFluidAmount();
-				list.add(te);
+				if (te.tank.getFluidAmount() < tank.getFluidAmount()) {
+					int a = te.tank.getCapacity()-te.tank.getFluidAmount();
+					int b = (tank.getFluidAmount()-te.tank.getFluidAmount())/2;
+					int addDemand = Math.min(a,b);
+					Tracker._tracePosition(this,te.pos,"+"+addDemand+"mB",a,b);
+					demand += addDemand;
+					list.add(te);
+				}
 			}
 		}
 		demand = Math.min(demand,tank.getFluidAmount());
 		if (!list.isEmpty()) {
-			demand = demand/list.size();
-			for (MSRTEBase te : list) {
-				transferStats(te.tank.getFluid(),list.size());
-				FluidStack stack = tank.drain(demand,true);
-				assert stack != null;
-				te.tank.fill(new FluidStack(te.tank.getFluid() == null ? stack : te.tank.getFluid(),stack.amount),true);
+			demand /= list.size();
+			if (demand > 0) {
+				for (MSRTEBase te : list) {
+					//Tracker._tracePosition(this,te.pos,"+"+demand+"mB");
+					transferStats(te.tank.getFluid(),list.size());
+					assert tank.getFluid() != null;
+					tank.drain(te.tank.fill(new FluidStack(te.tank.getFluid() == null ? tank.getFluid() : te.tank.getFluid(),demand),true),true);
+				}
 			}
 		}
+		Tracker._endProfile(this);
 	}
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		if (compound.hasKey("tank"))
+			tank.readFromNBT(compound.getCompoundTag("tank"));
+	}
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setTag("tank",tank.writeToNBT(new NBTTagCompound()));
+		return super.writeToNBT(compound);
+	}
+	public static void appendPrintHook(List<String> list,World world,int x,int y,int z) {
+		TileEntity entity = world.getTileEntity(new BlockPos(x,y,z));
+		if (entity instanceof MSRTEBase msr) {
+			list.add(I18nUtil.resolveKey("tile.msr.status"));
+			list.add("  "+I18nUtil.resolveKey("tile.msr.fill",msr.tank.getFluidAmount()+"/"+msr.tank.getCapacity()+"mB"));
+			if (msr.tank.getFluid() != null)
+				FFUtils.addFluidInfo(msr.tank.getFluid(),list);
+		}
+	}
+
+	@Override
+	public void update() {
+		if (!world.isRemote) {
+			sendFluids();
+			LeafiaDebug.debugPos(world,pos,0.05f,0xFFFF00,tank.getFluidAmount()+"mB");
+			generateTankPacket().__sendToAffectedClients();
+		}
+	}
+	LeafiaPacket generateTankPacket() {
+		LeafiaPacket packet = LeafiaPacket._start(this);
+		packet.__write(31,tank.writeToNBT(new NBTTagCompound()));
+		return packet;
+	}
+	@Override
+	public void onReceivePacketLocal(byte key,Object value) {
+		if (key == 31) {
+			tank.readFromNBT((NBTTagCompound)value);
+		}
+	}
+	@Override
+	public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) { }
+	@Override
+	public void onPlayerValidate(EntityPlayer plr) { }
 }

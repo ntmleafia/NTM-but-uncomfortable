@@ -9,6 +9,7 @@ import com.hbm.items.tool.ItemTooling;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.machines.reactors.msr.MSRTEBase;
 import com.leafia.dev.LeafiaDebug;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -106,6 +107,8 @@ public class MSRArbitraryBlock extends BlockMachineBase implements ITooltipProvi
 				stack.getItem().addInformation(stack,world,texts,ITooltipFlag.TooltipFlags.NORMAL);
 			}
 		}
+
+		MSRTEBase.appendPrintHook(texts,world,x,y,z);
 
 		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
 	}
