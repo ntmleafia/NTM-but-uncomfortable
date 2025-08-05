@@ -443,6 +443,19 @@ public class ItemRenderLibrary {
 		        GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
 
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_drill), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -2, 0);
+				GL11.glScaled(3, 3, 3);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GlStateManager.disableCull();
+				bindTexture(ResourceManager.drill_body_tex); ResourceManager.drill_body.renderAll();
+				bindTexture(ResourceManager.drill_bolt_tex); ResourceManager.drill_bolt.renderAll();
+				GlStateManager.enableCull();
+			}});
+
 		renderers.put(Item.getItemFromBlock(ModBlocks.machine_mining_laser), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -0.5, 0);

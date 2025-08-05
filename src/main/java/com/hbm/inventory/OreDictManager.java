@@ -9,6 +9,7 @@ import com.hbm.interfaces.IItemHazard;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ItemEnums.EnumTarType;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.*;
 		import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
@@ -333,6 +334,7 @@ public class OreDictManager {
 		TI.ingot(Ingots.ingot_titanium).dust(Powders.powder_titanium).block(block_titanium).crystal(Crystals.crystal_titanium).plate(plate_titanium).ore(ore_titanium, cluster_titanium, cluster_depth_titanium, ore_meteor_titanium);
 		CU.wire(wire_copper).ingot(Ingots.ingot_copper).dust(Powders.powder_copper).block(block_copper).crystal(Crystals.crystal_copper).plate(plate_copper).ore(ore_copper, cluster_copper, ore_gneiss_copper, ore_meteor_copper);
 		W.ingot(Ingots.ingot_tungsten).dust(Powders.powder_tungsten).block(block_tungsten).crystal(Crystals.crystal_tungsten).ore(ore_tungsten, cluster_depth_tungsten, ore_nether_tungsten, ore_meteor_tungsten).oreNether(ore_nether_tungsten);
+		W.bolt(bolt_tungsten);
 		AL.wire(wire_aluminium).ingot(Ingots.ingot_aluminium).dust(Powders.powder_aluminium).block(block_aluminium).crystal(Crystals.crystal_aluminium).plate(plate_aluminium).ore(ore_aluminium, cluster_aluminium, ore_meteor_aluminium);
 		PB.nugget(Nuggies.nugget_lead).ingot(Ingots.ingot_lead).dust(Powders.powder_lead).block(block_lead).crystal(Crystals.crystal_lead).plate(plate_lead).ore(ore_lead, ore_meteor_lead).wire(wire_lead);
 		AS.nugget(Nuggies.nugget_arsenic).ingot(Ingots.ingot_arsenic);
@@ -695,6 +697,10 @@ public class OreDictManager {
 		public DictFrame ingot(Object... ingot) {
 			hazMult = HazardRegistry.ingot;
 			return makeObject(INGOT, ingot);
+		}
+		public DictFrame bolt(Object... bolt) {
+			hazMult = HazardRegistry.nugget;
+			return makeObject(BOLT, bolt);
 		}
 		public DictFrame dustSmall(Object... dustSmall) {
 			hazMult = HazardRegistry.powder_tiny;

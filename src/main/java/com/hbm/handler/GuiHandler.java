@@ -315,6 +315,11 @@ public class GuiHandler implements IGuiHandler {
 					return new ContainerMachineFrackingTower(player.inventory, (TileEntityMachineFrackingTower) entity);
 				}
 				return null;
+			case ModBlocks.guiID_machine_drill:
+				if(entity instanceof TileEntityMachineMiningDrill) {
+					return new ContainerMachineMiningDrill(player.inventory, (TileEntityMachineMiningDrill) entity);
+				}
+				return null;
 			case ModBlocks.guiID_machine_turbofan:
 				if(entity instanceof TileEntityMachineTurbofan) {
 					return new ContainerMachineTurbofan(player.inventory, (TileEntityMachineTurbofan) entity);
@@ -949,6 +954,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_machine_fracking_tower:
 				if (entity instanceof TileEntityMachineFrackingTower) {
 					return new GUIMachineFrackingTower(player.inventory, (TileEntityMachineFrackingTower) entity);
+				}
+				return null;
+			case ModBlocks.guiID_machine_drill:
+				if(entity instanceof TileEntityMachineMiningDrill) {
+					return new GUIMachineMiningDrill(player.inventory, (TileEntityMachineMiningDrill) entity);
 				}
 				return null;
 			case ModBlocks.guiID_machine_turbofan:
