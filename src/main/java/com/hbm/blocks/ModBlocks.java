@@ -24,6 +24,7 @@ import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 import com.leafia.contents.building.BlockPinkDoor;
+import com.leafia.contents.machines.Reserved6Block;
 import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulley;
 import com.leafia.contents.machines.elevators.EvShaft;
@@ -76,6 +77,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Loader;
@@ -1154,10 +1156,12 @@ public class ModBlocks {
 	
 	public static final Block machine_centrifuge = new MachineCentrifuge(Material.IRON, "machine_centrifuge").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_centrifuge = 5;
-	
-	public static final Block machine_gascent = new MachineGasCent(Material.IRON, "machine_gascent").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+
+	public static final Block machine_gascent = new MachineGasCent(Material.IRON, "machine_gascentv2").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_gascent = 71;
-	
+
+	// ah fuck it public static final Block gascent_deprecated = new Reserved6Block("machine_gascent",9,new ItemStack(machine_gascent,1));
+
 	public static final Block machine_silex = new MachineSILEX(Material.IRON, "machine_silex").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_silex = 124;
 

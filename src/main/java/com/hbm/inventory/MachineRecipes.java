@@ -6,6 +6,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
+import com.llib.group.LeafiaMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -91,6 +92,49 @@ public class MachineRecipes {
 		}
 		
 		return null;
+	}
+
+	public static final LeafiaMap<Fluid,GasCentRecipeV2> gasCentRecipes = new LeafiaMap<>();
+	static void addGasCentRecipe(Fluid fluid,GasCentOutputV2... grades) {
+		gasCentRecipes.put(fluid,new GasCentRecipeV2(fluid,grades));
+	}
+	public static void registerGasCentRecipes() {
+		addGasCentRecipe(ModForgeFluids.UF6,
+				new GasCentOutputV2(400,300,
+						new ItemStack(Nuggies.nugget_u238,1)
+				),
+				new GasCentOutputV2(300,200,
+						new ItemStack(Nuggies.nugget_u238,1),
+						new ItemStack(Ingots.fluorite,1)
+				),
+				new GasCentOutputV2(200,100,
+						new ItemStack(Nuggies.nugget_u238,1)
+				),
+				new GasCentOutputV2(300,0,
+						new ItemStack(Nuggies.nugget_u238,2),
+						new ItemStack(Nuggies.nugget_u235,1),
+						new ItemStack(Ingots.fluorite,1)
+				)
+		);
+	}
+
+	public static class GasCentRecipeV2 {
+		public final GasCentOutputV2[] grades;
+		public final Fluid fluid;
+		public GasCentRecipeV2(Fluid fluid,GasCentOutputV2... grades) {
+			this.grades = grades;
+			this.fluid = fluid;
+		}
+	}
+	public static class GasCentOutputV2 {
+		public final ItemStack[] outputs;
+		public final int consumption;
+		public final int production;
+		public GasCentOutputV2(int consumption,int production,ItemStack... outputs) {
+			this.outputs = outputs;
+			this.consumption = consumption;
+			this.production = production;
+		}
 	}
 	
 	public static class GasCentOutput {

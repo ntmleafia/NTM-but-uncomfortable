@@ -6,6 +6,7 @@ import com.hbm.interfaces.IMultiBlock;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityMachineGasCent;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -69,7 +70,7 @@ public class MachineGasCent extends BlockContainer implements IMultiBlock {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityMachineGasCent();
+		return new GasCentTE();
 	}
 	
 	@Override

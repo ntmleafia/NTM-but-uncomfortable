@@ -87,6 +87,7 @@ import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCor
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
@@ -109,6 +110,7 @@ import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.container.DestroyedZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
+import com.leafia.contents.machines.Reserved6TE;
 import com.leafia.contents.network.computers.cable.ComputerCableTE;
 import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveTE;
@@ -432,6 +434,7 @@ public class MainRegistry {
 		aMatDNS.setRepairItem(new ItemStack(ModItems.plate_armor_dnt));
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		GameRegistry.registerTileEntity(Reserved6TE.class, new ResourceLocation(RefStrings.MODID, "tileentity_reserved6"));
 		GameRegistry.registerTileEntity(TileEntityDummy.class, new ResourceLocation(RefStrings.MODID, "tileentity_dummy"));
 		GameRegistry.registerTileEntity(TileEntityMachineAssembler.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_assembler"));
 		GameRegistry.registerTileEntity(TileEntityDiFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_difurnace"));
@@ -478,7 +481,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityPylonLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_large"));
 		GameRegistry.registerTileEntity(TileEntitySubstation.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_substation"));
 		GameRegistry.registerTileEntity(TileEntityMachineCentrifuge.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_centrifuge"));
-		GameRegistry.registerTileEntity(TileEntityMachineGasCent.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gascent"));
+		GameRegistry.registerTileEntity(GasCentTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gascent"));
 		GameRegistry.registerTileEntity(TileEntityMachineUF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_uf6_tank"));
 		GameRegistry.registerTileEntity(TileEntityMachinePuF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_puf6_tank"));
 		GameRegistry.registerTileEntity(TileEntityRailgun.class, new ResourceLocation(RefStrings.MODID, "tileentity_railgun"));
@@ -996,6 +999,7 @@ public class MainRegistry {
 		MagicRecipes.register();
 		SILEXRecipes.register();
 		AnvilRecipes.register();
+		MachineRecipes.registerGasCentRecipes();
 		WasteDrumRecipes.registerRecipes();
 		WishRecipes.registerRecipes();
 		RefineryRecipes.registerFractions();

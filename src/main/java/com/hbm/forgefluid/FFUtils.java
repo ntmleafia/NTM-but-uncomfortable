@@ -34,6 +34,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -324,10 +325,13 @@ public class FFUtils {
 			}
 		}
 
-		if (stack.tag != null) {
-			for (String s : stack.tag.getKeySet()) {
-				NBTBase tag = stack.tag.getTag(s);
-				texts.add("TAG >> "+s+": "+tag.toString());
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.getHeldItemMainhand().getItem() == ModItems.wand_d || player.getHeldItemOffhand().getItem() == ModItems.wand_d) {
+			if (stack.tag != null) {
+				for (String s : stack.tag.getKeySet()) {
+					NBTBase tag = stack.tag.getTag(s);
+					texts.add("TAG >> "+s+": "+tag.toString());
+				}
 			}
 		}
 
@@ -365,7 +369,13 @@ public class FFUtils {
 		if (x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			List<String> texts = new ArrayList<>();
 			if (stack != null) {
-				texts.add(stack.getLocalizedName());
+				String name = stack.getLocalizedName();
+				if (stack.tag != null) {
+					if (stack.tag.hasKey("enrichment")) {
+						name = I18nUtil.resolveKey("fluid._enrichment."+stack.tag.getByte("enrichment"),name);
+					}
+				}
+				texts.add(name);
 				texts.add(stack.amount + "/" + capacity + "mB");
 				addFluidInfo(stack, texts);
 				if (!lastClicked && gui.clickDown) {

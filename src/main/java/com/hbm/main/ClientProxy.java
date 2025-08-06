@@ -27,6 +27,7 @@ import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryRender;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementRender;
@@ -39,6 +40,8 @@ import com.leafia.contents.machines.reactors.pwr.debris.RenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
 import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
+import com.leafia.contents.machines.Reserved6Render;
+import com.leafia.contents.machines.Reserved6TE;
 import com.leafia.contents.network.fluid.FluidDuctEquipmentRender;
 import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.spk_cable.SPKCableRender;
@@ -635,7 +638,8 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.registerKeyBinding(fsbFlashlight);
 
 		HbmKeybinds.register();
-		
+		ClientRegistry.bindTileEntitySpecialRenderer(Reserved6TE.class, new Reserved6Render());
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachinePress.class, new RenderPress());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineAssembler.class, new RenderAssembler());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTestRender.class, new RenderTestRender());
@@ -666,7 +670,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPylonLarge.class, new RenderPylonLarge());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySubstation.class, new RenderPylonSubstation());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineCentrifuge.class, new RenderCentrifuge());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineGasCent.class, new RenderGasCent());
+		ClientRegistry.bindTileEntitySpecialRenderer(GasCentTE.class, new RenderGasCent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineUF6Tank.class, new RenderUF6Tank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachinePuF6Tank.class, new RenderPuF6Tank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailgun.class, new RenderRailgun());

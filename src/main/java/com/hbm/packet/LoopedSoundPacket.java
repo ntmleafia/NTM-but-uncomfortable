@@ -3,6 +3,7 @@ package com.hbm.packet;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.sound.*;
 import com.hbm.tileentity.machine.*;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
@@ -191,7 +192,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundEvents.centrifugeOperate, te));
 				}
 				
-				if (te != null && te instanceof TileEntityMachineGasCent) {
+				if (te != null && te instanceof GasCentTE) {
 					
 					boolean flag = true;
 					for(int i = 0; i < SoundLoopCentrifuge.list.size(); i++)  {
@@ -199,7 +200,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 							flag = false;
 					}
 					
-					if(flag && te.getWorld().isRemote && ((TileEntityMachineGasCent)te).isProgressing)
+					if(flag && te.getWorld().isRemote && ((GasCentTE)te).isProgressing)
 						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundEvents.centrifugeOperate, te));
 				}
 			});

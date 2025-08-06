@@ -36,6 +36,7 @@ import com.leafia.contents.machines.manfacturing.wish.WishTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalTE;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
@@ -171,8 +172,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_gascent:
-				if(entity instanceof TileEntityMachineGasCent) {
-					return new ContainerMachineGasCent(player.inventory, (TileEntityMachineGasCent) entity);
+				if(entity instanceof GasCentTE) {
+					return new ContainerMachineGasCent(player.inventory, (GasCentTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_uf6_tank:
@@ -812,8 +813,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_gascent:
-				if(entity instanceof TileEntityMachineGasCent) {
-					return new GUIMachineGasCent(player.inventory, (TileEntityMachineGasCent) entity);
+				if(entity instanceof GasCentTE) {
+					return new GUIMachineGasCent(player.inventory, (GasCentTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_uf6_tank:
