@@ -24,7 +24,7 @@ import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
-import com.leafia.contents.machines.reactors.msr.MSRTEBase;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -318,9 +318,9 @@ public class FFUtils {
 			NBTTagCompound tag = MSRTEBase.nbtProtocol(stack.tag);
 			Map<String,Double> mixture = MSRTEBase.readMixture(tag);
 			if (!mixture.isEmpty()) {
-				texts.add(I18nUtil.resolveKey("tile.msr.mixture"));
+				texts.add(prefix+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.mixture"));
 				for (Entry<String,Double> entry : mixture.entrySet())
-					texts.add(prefix+" "+String.format("%01.1f",entry.getValue())+"x "+I18nUtil.resolveKey("item."+entry.getKey()+".name"));
+					texts.add(prefix+" "+TextFormatting.LIGHT_PURPLE+String.format("%01.1f",entry.getValue())+"/B "+I18nUtil.resolveKey("item."+entry.getKey()+".name"));
 			}
 		}
 

@@ -15,6 +15,8 @@ import com.leafia.unsorted.ParticleBalefire;
 import com.leafia.unsorted.ParticleBalefireLava;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -37,8 +39,8 @@ import java.util.List;
 import java.util.Random;
 
 public class PWRElementBlock extends BlockMachineBase implements ITooltipProvider, ILookOverlay, PWRComponentBlock {
-	public PWRElementBlock() {
-		super(Material.IRON,-1,"reactor_element");
+	public PWRElementBlock(String s) {
+		super(Material.IRON,-1,s);
 		this.setTranslationKey("pwr_element");
 		this.setSoundType(ModBlocks.PWR.soundTypePWRTube);
 	}

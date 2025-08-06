@@ -58,11 +58,11 @@ public class PyroOvenTE extends TileEntityMachineBase implements LeafiaQuickMode
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 11.5;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 0;
+		return 0.03;
 	}
 }

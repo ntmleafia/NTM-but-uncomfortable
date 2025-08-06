@@ -1,9 +1,9 @@
-package com.leafia.contents.machines.reactors.msr.plug;
+package com.leafia.contents.machines.reactors.msr.components.plug;
 
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.util.I18nUtil;
-import com.leafia.contents.machines.reactors.msr.MSRTEBase;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;

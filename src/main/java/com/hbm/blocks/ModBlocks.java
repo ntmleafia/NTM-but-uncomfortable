@@ -37,12 +37,12 @@ import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenBlock;
 import com.leafia.contents.machines.processing.solidifier.SolidifierBlock;
-import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryBlock;
-import com.leafia.contents.machines.reactors.msr.control.MSRControlBlock;
-import com.leafia.contents.machines.reactors.msr.control.MSRControlExtensionBlock;
-import com.leafia.contents.machines.reactors.msr.ejector.MSREjectorBlock;
-import com.leafia.contents.machines.reactors.msr.element.MSRElementBlock;
-import com.leafia.contents.machines.reactors.msr.plug.MSRPlugBlock;
+import com.leafia.contents.machines.reactors.msr.MSRMixerTest;
+import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryBlock;
+import com.leafia.contents.machines.reactors.msr.components.control.MSRControlBlock;
+import com.leafia.contents.machines.reactors.msr.components.ejector.MSREjectorBlock;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementBlock;
+import com.leafia.contents.machines.reactors.msr.components.plug.MSRPlugBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRHullBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRReflectorBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.PWRSourceBlock;
@@ -85,6 +85,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.hbm.blocks.ModBlocks.GenericBlockResistance.*;
+import static com.hbm.blocks.ModBlocks.PWR.innerHardness;
 
 public class ModBlocks {
 
@@ -1324,6 +1325,8 @@ public class ModBlocks {
 		public static final Block arbitrary = new MSRArbitraryBlock(Material.IRON,"msr_arbitrary").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
 		public static final Block ejector = new MSREjectorBlock(Material.IRON,"msr_ejector").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
 
+		public static final Block mixer = new MSRMixerTest(Material.IRON,"msr_mixer").setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness);
+
 	}
 
 	public static class PWR {
@@ -1341,8 +1344,10 @@ public class ModBlocks {
 		public static final Block reflector = new PWRReflectorBlock().setCreativeTab(MainRegistry.machineTab).setHardness(generalHardness).setResistance(PWR_CASING.v);
 
 		public static final Block source = new PWRSourceBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block element = new PWRElementBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
-		public static final Block control = new PWRControlBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element = new PWRElementBlock("pwr_element").setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element_old = new PWRElementBlock("reactor_element").setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block element_old_blank = new PWRElementBlock("reactor_element_blank").setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+		public static final Block control = new PWRControlBlock("pwr_control").setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 
 		public static final Block channel = new PWRChannelBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
 		public static final Block conductor = new PWRConductorBlock().setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
@@ -1371,9 +1376,10 @@ public class ModBlocks {
 	}
 
 	//Big reactor
-	public static final Block reactor_element = PWR.element; // retroompat redirection
+	public static final Block reactor_element = PWR.element_old; // retroompat redirection
 	//public static final Block reactor_element = new BlockReactor(Material.IRON, "reactor_element").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
-	public static final Block reactor_control = PWR.control;//new BlockReactor(Material.IRON, "reactor_control").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block reactor_control = new PWRControlBlock("reactor_control").setCreativeTab(MainRegistry.machineTab).setHardness(innerHardness).setResistance(PWR_INSIDE.v);
+	//new BlockReactor(Material.IRON, "reactor_control").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block reactor_hatch = PWR.terminal;//new ReactorHatch(Material.IRON, "reactor_hatch").setHardness(5.0F).setResistance(1000.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block reactor_ejector = new BlockRotatable(Material.IRON, "reactor_ejector").setHardness(5.0F).setResistance(1000.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block reactor_inserter = new BlockRotatable(Material.IRON, "reactor_inserter").setHardness(5.0F).setResistance(1000.0F).setCreativeTab(MainRegistry.machineTab);

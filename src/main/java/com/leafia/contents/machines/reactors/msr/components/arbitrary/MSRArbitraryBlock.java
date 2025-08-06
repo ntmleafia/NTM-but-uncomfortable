@@ -1,22 +1,18 @@
-package com.leafia.contents.machines.reactors.msr.arbitrary;
+package com.leafia.contents.machines.reactors.msr.components.arbitrary;
 
 import api.hbm.block.IToolable;
 import com.hbm.blocks.ILookOverlay;
 import com.hbm.blocks.ITooltipProvider;
-import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.items.tool.ItemTooling;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
-import com.leafia.contents.machines.reactors.msr.MSRTEBase;
-import com.leafia.dev.LeafiaDebug;
-import net.minecraft.block.Block;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

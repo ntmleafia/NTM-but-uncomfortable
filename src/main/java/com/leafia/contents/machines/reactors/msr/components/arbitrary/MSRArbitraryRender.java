@@ -1,4 +1,4 @@
-package com.leafia.contents.machines.reactors.msr.arbitrary;
+package com.leafia.contents.machines.reactors.msr.components.arbitrary;
 
 import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.leafia.dev.math.FiaMatrix;

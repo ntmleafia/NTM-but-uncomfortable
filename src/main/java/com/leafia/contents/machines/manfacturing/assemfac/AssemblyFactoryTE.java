@@ -606,11 +606,11 @@ public class AssemblyFactoryTE extends TileEntityMachineBase implements LeafiaQu
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 14.9;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 3;
+		return 0.07;
 	}
 }

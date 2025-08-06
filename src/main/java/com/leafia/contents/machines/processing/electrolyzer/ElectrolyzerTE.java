@@ -64,11 +64,11 @@ public class ElectrolyzerTE extends TileEntityMachineBase implements LeafiaQuick
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 16.2;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 0;
+		return 0.05;
 	}
 }

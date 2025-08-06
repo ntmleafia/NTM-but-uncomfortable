@@ -1,10 +1,10 @@
-package com.leafia.contents.machines.reactors.msr.plug;
+package com.leafia.contents.machines.reactors.msr.components.ejector;
 
-import com.hbm.forgefluid.ModForgeFluids;
-import com.leafia.contents.machines.reactors.msr.MSRTEBase;
-import com.leafia.contents.machines.reactors.msr.ejector.MSREjectorBlock;
+import com.hbm.forgefluid.FFUtils;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -13,15 +13,19 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import org.jetbrains.annotations.Nullable;
 
-public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
+public class MSREjectorTE extends MSRTEBase implements IFluidHandler {
 	EnumFacing getDirection() {
 		IBlockState state = world.getBlockState(pos);
 		if (state.getBlock() instanceof MSREjectorBlock)
 			return state.getValue(MSREjectorBlock.FACING);
 		return EnumFacing.NORTH;
 	}
-	public MSRPlugTE() {
-		tank = new FluidTank(10000);
+	@Override
+	public void update() {
+		fillFluid(pos.add(getDirection().getDirectionVec()),tank);
+	}
+	public void fillFluid(BlockPos pos1,FluidTank tank) {
+		FFUtils.fillFluid(this, tank, world, pos1, 100);
 	}
 	@Override
 	public <T> T getCapability(Capability<T> capability,EnumFacing facing) {
@@ -33,7 +37,7 @@ public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && (facing == null || facing.equals(getDirection()) || facing.equals(EnumFacing.DOWN))) || super.hasCapability(capability, facing);
+		return (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY && (facing == null || facing.equals(getDirection()))) || super.hasCapability(capability, facing);
 	}
 	@Override
 	public IFluidTankProperties[] getTankProperties() {
@@ -41,21 +45,18 @@ public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
 	}
 	@Override
 	public int fill(FluidStack resource,boolean doFill) {
-		if (resource.getFluid().equals(ModForgeFluids.FLUORIDE))
-			return tank.fill(resource,doFill);
-		else
-			return 0;
+		return 0;
 	}
 	@Override
 	public @Nullable FluidStack drain(FluidStack resource,boolean doDrain) {
-		return null;
+		return tank.drain(resource,doDrain);
 	}
 	@Override
 	public @Nullable FluidStack drain(int maxDrain,boolean doDrain) {
-		return null;
+		return tank.drain(maxDrain,doDrain);
 	}
 	@Override
 	public String getPacketIdentifier() {
-		return "MSRPlug";
+		return "MSREjector";
 	}
 }

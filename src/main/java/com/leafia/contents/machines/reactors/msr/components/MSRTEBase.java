@@ -1,7 +1,10 @@
-package com.leafia.contents.machines.reactors.msr;
+package com.leafia.contents.machines.reactors.msr.components;
 
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.util.I18nUtil;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementBlock;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE;
+import com.leafia.contents.machines.reactors.msr.components.plug.MSRPlugTE;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -15,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -25,7 +29,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaPacketReceiver {
-	protected FluidTank tank = new FluidTank(1000);
+	public FluidTank tank = new FluidTank(1000);
 	public static double baseTemperature = 500;
 	public static NBTTagCompound nbtProtocol(NBTTagCompound tag) {
 		if (tag == null) tag = new NBTTagCompound();
@@ -54,7 +58,7 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 		}
 		return list;
 	}
-	void transferStats(FluidStack stack,double div) {
+	protected void transferStats(FluidStack stack,double div) {
 		if (tank.getFluid() == null) return;
 		if (stack == null) return;
 		NBTTagCompound compound = nbtProtocol(tank.getFluid().tag);
@@ -68,16 +72,18 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 				amount1 = mixture1.get(fluid);
 			double transfer = amount0-amount1;
 			if (transfer > 0) {
-				transfer /= div;
+				transfer /= div * 2;
 				amount0 -= transfer;
 				amount1 += transfer;
 				mixture0.put(fluid,amount0);
 				mixture1.put(fluid,amount1);
 			}
 		}
+		compound.setTag("itemMixture",writeMixture(mixture0));
+		target.setTag("itemMixture",writeMixture(mixture1));
 		double heatTransfer = compound.getDouble("heat")-target.getDouble("heat");
 		if (heatTransfer > 0) {
-			heatTransfer /= div;
+			heatTransfer /= div * 2;
 			compound.setDouble("heat",compound.getDouble("heat")-heatTransfer);
 			target.setDouble("heat",target.getDouble("heat")+heatTransfer);
 		}
@@ -89,7 +95,7 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 		List<MSRTEBase> list = new ArrayList<>();
 		for (EnumFacing facing : EnumFacing.values()) {
 			BlockPos target = pos.add(facing.getDirectionVec());
-			if (world.getTileEntity(target) instanceof MSRTEBase te) {
+			if (world.getTileEntity(target) instanceof MSRTEBase te && !(te instanceof MSRPlugTE)) {
 				if (te.tank.getFluidAmount() < tank.getFluidAmount()) {
 					int a = te.tank.getCapacity()-te.tank.getFluidAmount();
 					int b = (tank.getFluidAmount()-te.tank.getFluidAmount())/2;
@@ -128,10 +134,12 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 	public static void appendPrintHook(List<String> list,World world,int x,int y,int z) {
 		TileEntity entity = world.getTileEntity(new BlockPos(x,y,z));
 		if (entity instanceof MSRTEBase msr) {
-			list.add(I18nUtil.resolveKey("tile.msr.status"));
+			list.add(TextFormatting.GOLD+I18nUtil.resolveKey("tile.msr.status"));
+			if (entity instanceof MSRElementTE element)
+				list.add("  "+I18nUtil.resolveKey("tile.msr_element.restriction",(int)(element.restriction*100)));
 			list.add("  "+I18nUtil.resolveKey("tile.msr.fill",msr.tank.getFluidAmount()+"/"+msr.tank.getCapacity()+"mB"));
 			if (msr.tank.getFluid() != null)
-				FFUtils.addFluidInfo(msr.tank.getFluid(),list);
+				FFUtils.addFluidInfo(msr.tank.getFluid(),list,"  ");
 		}
 	}
 
@@ -143,7 +151,7 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 			generateTankPacket().__sendToAffectedClients();
 		}
 	}
-	LeafiaPacket generateTankPacket() {
+	protected LeafiaPacket generateTankPacket() {
 		LeafiaPacket packet = LeafiaPacket._start(this);
 		packet.__write(31,tank.writeToNBT(new NBTTagCompound()));
 		return packet;

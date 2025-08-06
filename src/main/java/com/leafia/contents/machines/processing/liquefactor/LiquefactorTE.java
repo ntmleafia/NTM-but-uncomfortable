@@ -50,11 +50,11 @@ public class LiquefactorTE extends TileEntityMachineBase implements LeafiaQuickM
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 6.6;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 0;
+		return -0.1;
 	}
 }

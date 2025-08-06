@@ -34,12 +34,12 @@ public class ChemTableTE extends TileEntity implements LeafiaQuickModel, IGUIPro
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 3.8;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 3;
+		return -0.1;
 	}
 
 	@Override

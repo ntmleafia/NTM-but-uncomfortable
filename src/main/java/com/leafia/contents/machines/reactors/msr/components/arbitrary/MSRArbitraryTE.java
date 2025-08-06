@@ -1,12 +1,7 @@
-package com.leafia.contents.machines.reactors.msr.arbitrary;
+package com.leafia.contents.machines.reactors.msr.components.arbitrary;
 
-import com.hbm.tileentity.TileEntityInventoryBase;
-import com.hbm.util.I18nUtil;
-import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
-import com.leafia.contents.machines.reactors.msr.MSRTEBase;
-import com.leafia.contents.machines.reactors.pwr.PWRData;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import com.leafia.dev.container_utility.LeafiaPacket;
-import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;

@@ -108,12 +108,12 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 4.2;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 3;
+		return 0.01;
 	}
 
 	@Override

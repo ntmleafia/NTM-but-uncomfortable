@@ -90,11 +90,12 @@ import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
-import com.leafia.contents.machines.reactors.msr.arbitrary.MSRArbitraryTE;
-import com.leafia.contents.machines.reactors.msr.control.MSRControlTE;
-import com.leafia.contents.machines.reactors.msr.ejector.MSREjectorTE;
-import com.leafia.contents.machines.reactors.msr.element.MSRElementTE;
-import com.leafia.contents.machines.reactors.msr.plug.MSRPlugTE;
+import com.leafia.contents.machines.reactors.msr.MSRMixerTE;
+import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
+import com.leafia.contents.machines.reactors.msr.components.control.MSRControlTE;
+import com.leafia.contents.machines.reactors.msr.components.ejector.MSREjectorTE;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE;
+import com.leafia.contents.machines.reactors.msr.components.plug.MSRPlugTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.port.PWRPortTE;
@@ -899,6 +900,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(MSRControlTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_control"));
 		GameRegistry.registerTileEntity(MSRPlugTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_plug"));
 		GameRegistry.registerTileEntity(MSREjectorTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_ejector"));
+
+		GameRegistry.registerTileEntity(MSRMixerTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_mixer"));
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
 

@@ -1,4 +1,4 @@
-package com.leafia.contents.machines.reactors.msr.control;
+package com.leafia.contents.machines.reactors.msr.components.ejector;
 
 import com.hbm.blocks.ModBlocks;
 import net.minecraft.block.BlockContainer;
@@ -11,20 +11,29 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class MSRControlBlock extends BlockContainer {
+public class MSREjectorBlock extends BlockContainer {
 
 	public static final PropertyDirection FACING = BlockDirectional.FACING;
 
-	public MSRControlBlock(Material materialIn,String s) {
+	public MSREjectorBlock(Material materialIn,String s) {
 		super(materialIn);
 		this.setTranslationKey(s);
 		this.setRegistryName(s);
 
 		ModBlocks.ALL_BLOCKS.add(this);
+	}
+
+	@Override
+	public @Nullable TileEntity createNewTileEntity(World worldIn,int meta) {
+		return new MSREjectorTE();
 	}
 
 	@Override
@@ -55,12 +64,7 @@ public class MSRControlBlock extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn,BlockPos pos,IBlockState state,EntityLivingBase placer,ItemStack stack) {
-		worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite()));
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return null;
+		worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)));
 	}
 
 	@Override

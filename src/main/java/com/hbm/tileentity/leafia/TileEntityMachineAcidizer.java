@@ -38,11 +38,11 @@ public class TileEntityMachineAcidizer extends CrystallizerCopyBase implements L
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 9.7;
 	}
 
 	@Override
 	public double _itemYoffset() {
-		return 3;
+		return -0.15;
 	}
 }

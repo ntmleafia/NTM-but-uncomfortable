@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PWRControlBlock extends BlockBase implements ITooltipProvider, ITileEntityProvider, ILookOverlay, PWRComponentBlock {
-    public PWRControlBlock() {
-        super(Material.IRON,"reactor_control");
+    public PWRControlBlock(String s) {
+        super(Material.IRON,s);
         this.setTranslationKey("pwr_control");
         setSoundType(SoundType.METAL);
     }
