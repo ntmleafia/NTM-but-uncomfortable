@@ -14,6 +14,9 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class MSREjectorTE extends MSRTEBase implements IFluidHandler {
+	public MSREjectorTE() {
+		tank = new FluidTank(10000);
+	}
 	EnumFacing getDirection() {
 		IBlockState state = world.getBlockState(pos);
 		if (state.getBlock() instanceof MSREjectorBlock)
@@ -25,7 +28,7 @@ public class MSREjectorTE extends MSRTEBase implements IFluidHandler {
 		fillFluid(pos.add(getDirection().getDirectionVec()),tank);
 	}
 	public void fillFluid(BlockPos pos1,FluidTank tank) {
-		FFUtils.fillFluid(this, tank, world, pos1, 100);
+		FFUtils.fillFluid(this, tank, world, pos1, 4000);
 	}
 	@Override
 	public <T> T getCapability(Capability<T> capability,EnumFacing facing) {

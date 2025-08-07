@@ -420,6 +420,7 @@ public class ModItems {
 		public static final Item upgrade_fortune_1 = new ItemMachineUpgrade("upgrade_fortune_1", UpgradeType.FORTUNE, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_fortune_2 = new ItemMachineUpgrade("upgrade_fortune_2", UpgradeType.FORTUNE, 2).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_fortune_3 = new ItemMachineUpgrade("upgrade_fortune_3", UpgradeType.FORTUNE, 3).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+		public static final Item upgrade_gc_speed = new ItemMachineUpgrade("upgrade_gc_speed").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_afterburn_1 = new ItemMachineUpgrade("upgrade_afterburn_1", UpgradeType.AFTERBURN, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_afterburn_2 = new ItemMachineUpgrade("upgrade_afterburn_2", UpgradeType.AFTERBURN, 2).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 		public static final Item upgrade_afterburn_3 = new ItemMachineUpgrade("upgrade_afterburn_3", UpgradeType.AFTERBURN, 3).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);

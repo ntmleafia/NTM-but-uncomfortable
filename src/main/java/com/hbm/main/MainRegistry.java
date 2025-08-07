@@ -107,6 +107,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PW
 import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
+import com.leafia.contents.machines.reactors.tokamakt2.TokamakT2TE;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.container.DestroyedZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
@@ -607,6 +608,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineUUCreator.class, new ResourceLocation(RefStrings.MODID, "tileentity_uu_creator"));
 		GameRegistry.registerTileEntity(TileEntityMachineMiniRTG.class, new ResourceLocation(RefStrings.MODID, "tileentity_mini_rtg"));
 		GameRegistry.registerTileEntity(TileEntityITER.class, new ResourceLocation(RefStrings.MODID, "tileentity_iter"));
+		GameRegistry.registerTileEntity(TokamakT2TE.class, new ResourceLocation(RefStrings.MODID, "tileentity_tokamakt2"));
 		GameRegistry.registerTileEntity(TileEntityMachinePlasmaHeater.class, new ResourceLocation(RefStrings.MODID, "tileentity_plasma_heater"));
 		GameRegistry.registerTileEntity(TileEntityMachineFENSU.class, new ResourceLocation(RefStrings.MODID, "tileentity_fensu"));
 		GameRegistry.registerTileEntity(TileEntityTrappedBrick.class, new ResourceLocation(RefStrings.MODID, "tileentity_trapped_brick"));

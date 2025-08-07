@@ -25,6 +25,7 @@ import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE.MSRFuel;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -320,8 +321,12 @@ public class FFUtils {
 			Map<String,Double> mixture = MSRTEBase.readMixture(tag);
 			if (!mixture.isEmpty()) {
 				texts.add(prefix+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.mixture"));
-				for (Entry<String,Double> entry : mixture.entrySet())
-					texts.add(prefix+" "+TextFormatting.LIGHT_PURPLE+String.format("%01.1f",entry.getValue())+"/B "+I18nUtil.resolveKey("item."+entry.getKey()+".name"));
+				for (Entry<String,Double> entry : mixture.entrySet()) {
+					texts.add(prefix+" "+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.fuel."+entry.getKey())+" "+String.format("%01.1f",entry.getValue())+"/B ");
+					try {
+						texts.add(prefix+TextFormatting.LIGHT_PURPLE+"  Heat Function: "+MSRFuel.valueOf(entry.getKey()).funcString);
+					} catch (IllegalArgumentException ignored) {}
+				}
 			}
 		}
 

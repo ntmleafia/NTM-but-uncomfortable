@@ -3,7 +3,6 @@ package com.hbm.inventory.gui;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.inventory.container.ContainerMachineGasCent;
 import com.hbm.lib.RefStrings;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
 import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -33,7 +32,7 @@ public class GUIMachineGasCent extends GuiInfoContainer {
 
 		//this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 92, guiTop + 15, 28, 54, mouseX, mouseY, new String[] {String.valueOf((int)((double)diFurnace.progress / (double)TileEntityMachineGasCent.processingSpeed * 100D)) + "%"});
 		
-		this.drawElectricityInfo(this, mouseX, mouseY, guiLeft + 182, guiTop + 17, 16, 52, diFurnace.power, TileEntityMachineGasCent.maxPower);
+		this.drawElectricityInfo(this, mouseX, mouseY, guiLeft + 182, guiTop + 17, 16, 52, diFurnace.power, GasCentTE.maxPower);
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 	

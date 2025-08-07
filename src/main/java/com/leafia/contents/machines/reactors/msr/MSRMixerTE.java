@@ -3,13 +3,12 @@ package com.leafia.contents.machines.reactors.msr;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
-import com.leafia.contents.machines.reactors.msr.components.ejector.MSREjectorBlock;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE.MSRFuel;
 import com.leafia.contents.machines.reactors.msr.container.MSRMixerContainer;
 import com.leafia.contents.machines.reactors.msr.container.MSRMixerGUI;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -120,14 +119,24 @@ public class MSRMixerTE extends TileEntityMachineBase implements ITickable, Leaf
 		return tank1.drain(maxDrain,doDrain);
 	}
 
-	String getFuelType(ItemStack stack) {
+	MSRFuel getFuelType(ItemStack stack) {
 		Item item = stack.getItem();
+		/*
 		if (item == Nuggies.nugget_uranium_fuel)
-			return "nugget_uranium_fuel";
+			return MSRFuel.meu;
+		 */
+		for (MSRFuel fuel : MSRFuel.values()) {
+			for (Item i : fuel.items)
+				if (i.equals(item))
+					return fuel;
+		}
 		if (!stack.isEmpty()) {
 			for (int oreID : OreDictionary.getOreIDs(stack)) {
 				String id = OreDictionary.getOreName(oreID);
-				switch(id) {
+				for (MSRFuel fuel : MSRFuel.values()) {
+					for (String dict : fuel.dicts)
+						if (dict.equals(id))
+							return fuel;
 				}
 			}
 		}
@@ -138,9 +147,9 @@ public class MSRMixerTE extends TileEntityMachineBase implements ITickable, Leaf
 		Map<String,Double> mixture = new LeafiaMap<>();
 		for (int i = 3; i < 9; i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			String fuel = getFuelType(stack);
+			MSRFuel fuel = getFuelType(stack);
 			if (fuel != null)
-				mixture.put(fuel,mixture.getOrDefault(fuel,0d)+1);
+				mixture.put(fuel.name(),mixture.getOrDefault(fuel.name(),0d)+1);
 		}
 		return mixture;
 	}

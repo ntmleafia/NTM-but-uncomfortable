@@ -6,9 +6,13 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.inventory.MachineRecipes;
 import com.hbm.inventory.MachineRecipes.GasCentOutputV2;
 import com.hbm.inventory.MachineRecipes.GasCentRecipeV2;
+import com.hbm.items.ModItems.Upgrades;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
+import com.hbm.main.MainRegistry;
 import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
+import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -21,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -38,8 +43,9 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 	public int progress;
 	public boolean isProgressing;
 	public static final int maxPower = 100000;
-	public static final int processingSpeed = 200;
+	public static final int processingSpeed = 150; //200;
 	public boolean needsUpdate = false;
+	public boolean isSicko = false;
 
 	public FluidTank tank0;
 	public FluidTank tank1;
@@ -69,6 +75,12 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 				break;
 			case 3:
 				tank1.readFromNBT((NBTTagCompound)value);
+				break;
+			case 4:
+				isProgressing = (boolean)value;
+				break;
+			case 5:
+				isSicko = (boolean)value;
 				break;
 		}
 	}
@@ -138,17 +150,21 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 			}
 			isProgressing = false;
 			power = Library.chargeTEFromItems(inventory, 0, power, maxPower);
+			boolean sicko = inventory.getStackInSlot(1).getItem() == Upgrades.upgrade_gc_speed;
 			FluidStack stack = tank0.getFluid();
-			if (stack != null && power >= 200) {
+			if (stack != null && power >= (sicko ? 300 : 200)) {
 				GasCentRecipeV2 reciple = MachineRecipes.gasCentRecipes.get(tank0.getFluid().getFluid());
 				if (reciple != null) {
 					int grade = getGrade(stack);
-					if (grade < reciple.grades.length) {
+					if (grade < reciple.grades.length && (grade < 3 || sicko)) {
 						GasCentOutputV2 output = reciple.grades[grade];
 						if (tank0.getFluidAmount() >= output.consumption && tank1.getCapacity()-tank1.getFluidAmount() >= output.production) {
 							if (yieldItems(cloneItemStackProper(inventory),output.outputs)) {
 								progress++;
 								this.power -= 200;
+								if (sicko)
+									power -= 100;
+
 								isProgressing = true;
 								if (progress >= processingSpeed) {
 									progress = 0;
@@ -177,7 +193,30 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 					.__write(2,tank0.writeToNBT(new NBTTagCompound()))
 					.__write(3,tank1.writeToNBT(new NBTTagCompound()))
 					.__sendToListeners();
+			LeafiaPacket._start(this).__write(4,isProgressing).__write(5,sicko && isProgressing).__sendToAffectedClients();
+		} else {
+			if (isSicko) {
+				if (sound == null) {
+					sound = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.centrifugeOperate,SoundCategory.BLOCKS,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f,1,2);
+					sound.startSound();
+				}
+			} else {
+				if (sound != null) {
+					sound.stopSound();
+					sound = null;
+				}
+			}
 		}
+	}
+	AudioWrapper sound = null;
+
+	@Override
+	public void invalidate() {
+		if (sound != null) {
+			sound.stopSound();
+			sound = null;
+		}
+		super.invalidate();
 	}
 
 	@Override

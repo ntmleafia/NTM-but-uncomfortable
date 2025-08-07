@@ -1,7 +1,6 @@
 package com.leafia.contents.machines.reactors.msr.container;
 
 import com.hbm.inventory.SlotMachineOutput;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
 import com.leafia.contents.machines.reactors.msr.MSRMixerTE;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

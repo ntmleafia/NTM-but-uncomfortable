@@ -8,6 +8,8 @@ import com.hbm.crafting.handlers.SmallReactorFuelCraftingHandler;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.inventory.OreDictManager;
+import com.hbm.inventory.RecipesCommon;
+import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.*;
 import com.hbm.items.ModItems.Materials.*;
@@ -2400,6 +2402,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_ejector_1, 1), " C ", "PUP", " C ", 'C', ModItems.plate_copper, 'P', ModItems.motor, 'U', ModItems.upgrade_template);
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_ejector_2, 1), " C ", "PUP", " C ", 'C', ModItems.plate_gold, 'P', ModItems.motor, 'U', new ItemStack(Upgrades.upgrade_ejector_1));
 		addRecipeAuto(new ItemStack(Upgrades.upgrade_ejector_3, 1), " C ", "PUP", " C ", 'C', ModItems.plate_saturnite, 'P', ModItems.motor, 'U', new ItemStack(Upgrades.upgrade_ejector_2));
+		addRecipeAuto(new ItemStack(Upgrades.upgrade_gc_speed, 1), "CNC", "RUR", "CMC", 'C', ModItems.coil_gold, 'M', ModItems.motor, 'U', new ItemStack(ModItems.upgrade_template),'R',new OreDictStack("ingotRubber"));
 
 		addRecipeAuto(new ItemStack(ModItems.piston_pneumatic, 4), " I ", "CPC", " I ", 'I', IRON.ingot(), 'C', CU.ingot(), 'P', IRON.plate());
 		addRecipeAuto(new ItemStack(ModItems.piston_hydraulic, 4), " I ", "CPC", " I ", 'I', STEEL.ingot(), 'C', TI.ingot(), 'P', new IngredientContainsTag(ItemFluidCanister.getFullCanister(ModForgeFluids.LUBRICANT)));

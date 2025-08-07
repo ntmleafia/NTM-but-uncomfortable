@@ -61,6 +61,7 @@ import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.P
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreck;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckMetal;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRWreckStone;
+import com.leafia.contents.machines.reactors.tokamakt2.TokamakT2Block;
 import com.leafia.contents.machines.reactors.zirnox.ZirnoxBlock;
 import com.leafia.contents.machines.reactors.zirnox.DestroyedZirnoxBlock;
 import com.leafia.contents.network.computers.audiocable.AudioCableBlock;
@@ -1305,7 +1306,9 @@ public class ModBlocks {
 	public static final Block struct_soyuz_core = new BlockSoyuzStruct(Material.IRON, "struct_soyuz_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
 	public static final Block struct_iter_core = new BlockITERStruct(Material.IRON, "struct_iter_core").setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block struct_plasma_core = new BlockPlasmaStruct(Material.IRON, "struct_plasma_core").setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
-	
+
+	public static final Block tokamakt2 = new TokamakT2Block(Material.IRON,"tokamakt2");
+
 	//Sin upon gods earth
 	public static final int guiID_factory_titanium = 24;
 	public static final Block factory_titanium_hull = new BlockBase(Material.IRON, "factory_titanium_hull").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);

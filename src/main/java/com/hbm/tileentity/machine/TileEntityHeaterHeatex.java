@@ -17,6 +17,7 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityMachineBase;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -132,13 +133,21 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     }
 
     public void setFluidTypes(Fluid f){
-        if(HeatRecipes.hasCoolRecipe(f) && tankTypes[0] != f) {
-            tankTypes[0] = f;
-            tankTypes[1] = HeatRecipes.getCoolFluid(f);
-            // clear input tank fluid
-            tanks[0].setFluid(new FluidStack(f, 0));
-            tanks[1].setFluid(new FluidStack(tankTypes[1], 0));
-            this.markDirty();
+        if (tankTypes[0] != f) {
+            if (HeatRecipes.hasCoolRecipe(f)) {
+                tankTypes[0] = f;
+                tankTypes[1] = HeatRecipes.getCoolFluid(f);
+                // clear input tank fluid
+                tanks[0].setFluid(new FluidStack(f,0));
+                tanks[1].setFluid(new FluidStack(tankTypes[1],0));
+                this.markDirty();
+            } else if (f == ModForgeFluids.FLUORIDE) {
+                tankTypes[0] = f;
+                tankTypes[1] = f;
+                tanks[0].setFluid(new FluidStack(f,0));
+                tanks[1].setFluid(new FluidStack(f,0));
+                this.markDirty();
+            }
         }
     }
 
@@ -146,21 +155,41 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
         if(tickDelay < 1) tickDelay = 1;
         if(world.getTotalWorldTime() % tickDelay != 0) return;
 
-        if(!HeatRecipes.hasCoolRecipe(tankTypes[0])) {
-            return;
-        }
+        int amountReq = 0;
+        int amountProduced = 0;
+        int heat = 0;
 
-        int amountReq = HeatRecipes.getInputAmountCold(tankTypes[0]);
-        int amountProduced = HeatRecipes.getOutputAmountCold(tankTypes[0]);
-        int heat = HeatRecipes.getResultingHeat(tankTypes[0]);
+        FluidStack stack1 = new FluidStack(tankTypes[1],1);
+
+        if(HeatRecipes.hasCoolRecipe(tankTypes[0])) {
+            amountReq = HeatRecipes.getInputAmountCold(tankTypes[0]);
+            amountProduced = HeatRecipes.getOutputAmountCold(tankTypes[0]);
+            heat = HeatRecipes.getResultingHeat(tankTypes[0]);
+        } else if (tankTypes[0] == ModForgeFluids.FLUORIDE) {
+            amountProduced = 1;
+            amountReq = 1;
+            FluidStack stack = tanks[0].getFluid();
+            if (stack != null) {
+                NBTTagCompound compound = MSRTEBase.nbtProtocol(stack.tag);
+                double h = compound.getDouble("heat");
+                compound.setDouble("heat",0);
+                heat = (int)(h*8);
+                stack.tag = compound;
+                stack1 = stack;
+            } else return;
+        } else
+            return;
 
         int inputOps = tanks[0].getFluidAmount() / amountReq;
         int outputOps = (tanks[1].getCapacity() - tanks[1].getFluidAmount()) / amountProduced;
         int opCap = this.amountToCool;
 
         int ops = Math.min(inputOps, Math.min(outputOps, opCap));
+        if (tanks[1].getFluidAmount() == 0)
+            tanks[1].setFluid(null);
+        int filled = tanks[1].fill(new FluidStack(stack1, ops * amountProduced), true);
+        if (filled == 0) return; // failure
         tanks[0].drain(ops * amountReq, true);
-        tanks[1].fill(new FluidStack(tankTypes[1], ops * amountProduced), true);
 
         this.heatGen = (heat * ops)>>1;
         this.heatEnergy += heatGen;
@@ -221,6 +250,11 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     @Override
     public int fill(FluidStack resource, boolean doFill) {
         if (resource != null && resource.getFluid() == tankTypes[0] && resource.amount > 0) {
+            if (resource.getFluid() == ModForgeFluids.FLUORIDE) {
+                if (MSRTEBase.nbtProtocol(resource.tag).getDouble("heat") <= 0) return 0; // deny non-heated fluorides
+            }
+            if (tanks[0].getFluidAmount() == 0)
+                tanks[0].setFluid(null);
             return tanks[0].fill(resource, doFill);
         }
 

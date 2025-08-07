@@ -1,7 +1,7 @@
 package com.hbm.sound;
 
 import com.hbm.tileentity.machine.TileEntityMachineCentrifuge;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
@@ -32,8 +32,8 @@ public class SoundLoopCentrifuge extends SoundLoopMachine {
 				this.donePlaying = true;
 		}
 		
-		if(te instanceof TileEntityMachineGasCent) {
-			TileEntityMachineGasCent plant = (TileEntityMachineGasCent)te;
+		if(te instanceof GasCentTE) {
+			GasCentTE plant = (GasCentTE)te;
 			
 			if(this.volume != 1)
 				volume = 1;

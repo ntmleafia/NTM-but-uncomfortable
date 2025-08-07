@@ -44,7 +44,7 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 		NBTTagList list = tag.getTagList("itemMixture",10);
 		for (NBTBase nbtBase : list) {
 			if (nbtBase instanceof NBTTagCompound compound)
-				mixture.put(compound.getString("item"),compound.getDouble("amount"));
+				mixture.put(compound.getString("type"),compound.getDouble("amount"));
 		}
 		return mixture;
 	}
@@ -52,15 +52,15 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 		NBTTagList list = new NBTTagList();
 		for (Entry<String,Double> entry : mixture.entrySet()) {
 			NBTTagCompound compound = new NBTTagCompound();
-			compound.setString("item",entry.getKey());
+			compound.setString("type",entry.getKey());
 			compound.setDouble("amount",entry.getValue());
 			list.appendTag(compound);
 		}
 		return list;
 	}
-	protected void transferStats(FluidStack stack,double div) {
-		if (tank.getFluid() == null) return;
-		if (stack == null) return;
+	protected FluidStack transferStats(FluidStack stack,double div) {
+		if (tank.getFluid() == null) return stack;
+		if (stack == null) return stack; //stack = new FluidStack(tank.getFluid().getFluid(),0);
 		NBTTagCompound compound = nbtProtocol(tank.getFluid().tag);
 		NBTTagCompound target = nbtProtocol(stack.tag);
 		Map<String,Double> mixture0 = readMixture(compound);
@@ -87,12 +87,15 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 			compound.setDouble("heat",compound.getDouble("heat")-heatTransfer);
 			target.setDouble("heat",target.getDouble("heat")+heatTransfer);
 		}
+		tank.getFluid().tag = compound;
+		stack.tag = target;
+		return stack;
 	}
 	public void sendFluids() {
 		Tracker._startProfile(this,"sendFluids");
 		int demand = 0;
 		int average = 0;
-		List<MSRTEBase> list = new ArrayList<>();
+		Map<MSRTEBase,Integer> list = new LeafiaMap<>();
 		for (EnumFacing facing : EnumFacing.values()) {
 			BlockPos target = pos.add(facing.getDirectionVec());
 			if (world.getTileEntity(target) instanceof MSRTEBase te && !(te instanceof MSRPlugTE)) {
@@ -102,19 +105,21 @@ public abstract class MSRTEBase extends TileEntity implements ITickable, LeafiaP
 					int addDemand = Math.min(a,b);
 					Tracker._tracePosition(this,te.pos,"+"+addDemand+"mB",a,b);
 					demand += addDemand;
-					list.add(te);
+					list.put(te,addDemand);
 				}
 			}
 		}
-		demand = Math.min(demand,tank.getFluidAmount());
+		double canSend = Math.min(demand,tank.getFluidAmount());
+		double multiplier = canSend/demand;
 		if (!list.isEmpty()) {
-			demand /= list.size();
-			if (demand > 0) {
-				for (MSRTEBase te : list) {
+			for (Entry<MSRTEBase,Integer> entry : list.entrySet()) {
+				int amt = (int)(entry.getValue()*multiplier/list.size());
+				if (amt > 0) {
+					MSRTEBase te = entry.getKey();
 					//Tracker._tracePosition(this,te.pos,"+"+demand+"mB");
-					transferStats(te.tank.getFluid(),list.size());
+					FluidStack stack = transferStats(te.tank.getFluid(),list.size());
 					assert tank.getFluid() != null;
-					tank.drain(te.tank.fill(new FluidStack(te.tank.getFluid() == null ? tank.getFluid() : te.tank.getFluid(),demand),true),true);
+					tank.drain(te.tank.fill(new FluidStack(te.tank.getFluid() == null ? tank.getFluid() : te.tank.getFluid(),amt),true),true);
 				}
 			}
 		}

@@ -1,9 +1,12 @@
 package com.leafia.contents.machines.reactors.msr.components.element;
 
+import com.hbm.interfaces.IRadResistantBlock;
+import com.hbm.items.ModItems.Materials.Nuggies;
 import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryBlock;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
 import com.leafia.contents.machines.reactors.msr.components.control.MSRControlTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.PWRReflectorBlock;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.math.FiaMatrix;
@@ -18,18 +21,30 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class MSRElementTE extends MSRTEBase {
-	public enum MSRFuels {
-		MEU
-		;
-		Item[] items;
-		String[] dicts;
-		public String funcString;
-		public Function<Double,Double> function;
+	public enum MSRFuel {
+		meu(
+				new Item[]{Nuggies.nugget_uranium_fuel},
+				new String[0],
+				"(x×3)^0.7/B",
+				(x)->Math.pow(x*3,0.7)
+		);
+		final public Item[] items;
+		final public String[] dicts;
+		final public String funcString;
+		final public Function<Double,Double> function;
+		MSRFuel(Item[] items,String[] dicts,String funcString,Function<Double,Double> function) {
+			this.items = items;
+			this.dicts = dicts;
+			this.funcString = funcString;
+			this.function = function;
+		}
 	}
 	Block getBlockArbitrary(BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
@@ -56,6 +71,48 @@ public class MSRElementTE extends MSRTEBase {
 		return ("_"+block.getRegistryName().getPath()+"_").matches(".*[^a-z]graphite[^a-z].*");
 	}
 
+	boolean isRadResistant(Block block) {
+		return block instanceof IRadResistantBlock;
+	}
+
+	MSRElementTE getReactionTarget(BlockPos pos) {
+		Block block = getBlockArbitrary(pos);
+		if (block instanceof PWRReflectorBlock)
+			return this;
+		if (world.getTileEntity(pos) instanceof MSRElementTE te)
+			return te;
+		return null;
+	}
+
+	void react(MSRElementTE te,double distance,double multiplier) {
+		double B = te.tank.getFluidAmount()/2000d+tank.getFluidAmount()/2000d;
+		FluidStack stack0 = tank.getFluid();
+		FluidStack stack1 = te.tank.getFluid();
+		if (stack0 != null) {
+			double y = 0;
+			NBTTagCompound nbt = nbtProtocol(stack0.tag);
+			double curRestriction = restriction;
+			if (stack1 != null) {
+				Map<String,Double> mixture = readMixture(nbt);
+				for (Entry<String,Double> entry : mixture.entrySet()) {
+					try {
+						MSRFuel type = MSRFuel.valueOf(entry.getKey());
+						y += type.function.apply(nbtProtocol(stack1.tag).getDouble("heat")+baseTemperature)*entry.getValue();
+					} catch (IllegalArgumentException ignored) {}
+				}
+				curRestriction = Math.max(curRestriction,te.restriction);
+			}
+			y *= (1-curRestriction);
+			double heat = nbt.getDouble("heat");
+			y /= distance/2;
+			y *= multiplier;
+			double heatMg = y-heat;
+			heat += Math.pow(Math.abs(heatMg),0.2)*Math.signum(heatMg);
+			nbt.setDouble("heat",heat);
+			stack0.tag = nbt;
+		}
+	}
+
 	void reactCorners2D(FiaMatrix mat,Map<BlockPos,Block> blocks) {
 		Tracker._startProfile(this,"reactCorners2D");
 		for (int x = -1; x <= 2; x+=2) {
@@ -67,6 +124,13 @@ public class MSRElementTE extends MSRTEBase {
 				Block blockB = blocks.getOrDefault(b,Blocks.AIR);
 				boolean moderatedA = isModerator(blockA);
 				boolean moderatedB = isModerator(blockB);
+				boolean resistantA = isRadResistant(blockA);
+				boolean resistantB = isRadResistant(blockA);
+				if (!resistantA && !resistantB) {
+					MSRElementTE te = getReactionTarget(c);
+					if (te != null)
+						react(te,2,(moderatedA || moderatedB) ? 2 : 0.5);
+				}
 				Tracker._tracePosition(this,c,moderatedA,moderatedB);
 			}
 		}
@@ -87,6 +151,24 @@ public class MSRElementTE extends MSRTEBase {
 		Tracker._endProfile(this);
 	}
 
+	void reactLine(EnumFacing facing) {
+		Tracker._startProfile(this,"reactLine");
+		boolean moderated = false;
+		for (int i = 1; i <= 4; i++) {
+			BlockPos p = pos.offset(facing,i);
+			Tracker._tracePosition(this,p,"moderated: "+moderated);
+			Block block = getBlockArbitrary(p);
+			if (isModerator(block)) moderated = true;
+			MSRElementTE te = getReactionTarget(p);
+			if (te != null) {
+				react(te,i,moderated ? 2 : 0.5);
+				return;
+			}
+			if (isRadResistant(block)) return;
+		}
+		Tracker._endProfile(this);
+	}
+
 	@Override
 	public String getPacketIdentifier() {
 		return "MSRElement";
@@ -103,6 +185,8 @@ public class MSRElementTE extends MSRTEBase {
 				restriction = 0;
 			}*/
 			reactCorners();
+			for (EnumFacing face : EnumFacing.values())
+				reactLine(face);
 			LeafiaPacket._start(this).__write(0,restriction).__sendToAffectedClients();
 		}
 	}

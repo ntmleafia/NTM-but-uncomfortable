@@ -463,7 +463,7 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 		if (stack == null)
 			return 0;
 		if(stack.getItem() instanceof LeafiaRodItem otherRod) {
-			double compat = 1;
+			double compat = 0.5;
 			if (this.splitWithAny || otherRod.splitIntoFast == this.splitWithFast)
 				compat = 2;
 			compat = compat * otherRod.emission * this.reactivity;
