@@ -75,10 +75,10 @@ public class VolcanicBlock extends BlockFluidClassic {
 	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity){
 		entity.setInWeb();
 		entity.setFire(3);
-		entity.attackEntityFrom(ModDamageSource.radiation, 2F);
+		entity.attackEntityFrom(ModDamageSource.LAVA, 2F);
 		
-		if(entity instanceof EntityLivingBase)
-			ContaminationUtil.contaminate((EntityLivingBase)entity, HazardType.RADIATION, ContaminationType.CREATIVE, 0.05F);
+		//if(entity instanceof EntityLivingBase) no, just why
+		//	ContaminationUtil.contaminate((EntityLivingBase)entity, HazardType.RADIATION, ContaminationType.CREATIVE, 0.05F);
 	}
 	
 	@Override

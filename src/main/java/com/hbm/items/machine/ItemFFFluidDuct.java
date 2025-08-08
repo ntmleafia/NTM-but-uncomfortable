@@ -3,7 +3,7 @@ package com.hbm.items.machine;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.conductor.TileEntityFFFluidDuctMk2;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.resources.I18n;
@@ -81,7 +81,7 @@ public class ItemFFFluidDuct extends Item {
             	((TileEntityFFFluidDuctMk2)world.getTileEntity(pos)).setType(getFluidFromStack(stack));;
             }
             stack.shrink(1);
-            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),HBMSoundHandler.pipePlaced, SoundCategory.PLAYERS, 1F, 0.6F + world.rand.nextFloat() * 0.2F);
+            world.playSound(null, pos.getX(), pos.getY(), pos.getZ(),HBMSoundEvents.pipePlaced, SoundCategory.PLAYERS, 1F, 0.6F + world.rand.nextFloat() * 0.2F);
 
             return EnumActionResult.SUCCESS;
         }

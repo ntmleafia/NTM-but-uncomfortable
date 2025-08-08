@@ -6,7 +6,7 @@
     import com.hbm.interfaces.IHasCustomModel;
     import com.hbm.items.ModItems;
     import com.hbm.items.ModItems.Armory;
-    import com.hbm.lib.HBMSoundHandler;
+    import com.hbm.lib.HBMSoundEvents;
     import com.hbm.main.MainRegistry;
     import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
     import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -97,7 +97,7 @@ public class GunB92 extends Item implements IHasCustomModel {
 						worldIn.spawnEntity(entityarrow1);
 					}
 
-				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, HBMSoundHandler.sparkShoot, SoundCategory.AMBIENT, 5.0F, 1.0F);
+				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, HBMSoundEvents.sparkShoot, SoundCategory.AMBIENT, 5.0F, 1.0F);
 				// Well that was a failure. Maybe I'll make it work one day
 				// if(worldIn.isRemote)
 				// ItemRenderGunAnim.b92Ani.start();
@@ -121,7 +121,7 @@ public class GunB92 extends Item implements IHasCustomModel {
 					setAnim(stack, 0);
 
 				if (j == 15) {
-					world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.b92Reload, SoundCategory.AMBIENT, 2.0F, 0.9F);
+					world.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.b92Reload, SoundCategory.AMBIENT, 2.0F, 0.9F);
 					setPower(stack, getPower(stack) + 1);
 
 					if (getPower(stack) > 10) {

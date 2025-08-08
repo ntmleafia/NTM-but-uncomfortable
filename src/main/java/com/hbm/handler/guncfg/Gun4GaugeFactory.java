@@ -11,7 +11,7 @@ import com.hbm.interfaces.IBulletHurtBehavior;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -58,7 +58,7 @@ public class Gun4GaugeFactory {
 		
 		config.durability = 3000;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShootAlt;
+		config.firingSound = HBMSoundEvents.revolverShootAlt;
 		config.firingPitch = 0.65F;
 		
 		config.name = "KS-23";
@@ -133,7 +133,7 @@ public class Gun4GaugeFactory {
 		config.firingMode = GunConfiguration.FIRE_AUTO;
 		config.durability = 3000;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.sauerGun;
+		config.firingSound = HBMSoundEvents.sauerGun;
 		config.firingPitch = 1.0F;
 
 		config.name = "Sauer Shotgun";

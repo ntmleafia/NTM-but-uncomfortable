@@ -3,7 +3,7 @@ package com.hbm.tileentity.machine;
 import com.hbm.inventory.WasteDrumRecipes;
 import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.tileentity.TileEntityMachineBase;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -44,7 +44,7 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 		if(item instanceof ItemRBMKRod)
 			return true;
 
-		if (item instanceof ItemLeafiaRod)
+		if (item instanceof LeafiaRodItem)
 			return true;
 		
 		return WasteDrumRecipes.hasRecipe(item);
@@ -67,7 +67,7 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 		if(item instanceof ItemRBMKRod) {
 			return ItemRBMKRod.getCoreHeat(itemStack) < 50 && ItemRBMKRod.getHullHeat(itemStack) < 50;
 		}
-		if(item instanceof ItemLeafiaRod) {
+		if(item instanceof LeafiaRodItem) {
 			NBTTagCompound data = itemStack.getTagCompound();
 			if (data == null)
 				return true;
@@ -132,8 +132,8 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 							ItemRBMKRod rod = (ItemRBMKRod) inventory.getStackInSlot(i).getItem();
 							rod.updateHeat(world, inventory.getStackInSlot(i), 0.025D);
 							rod.provideHeat(world, inventory.getStackInSlot(i), 20D, 0.025D);
-						} else if (stack.getItem() instanceof ItemLeafiaRod) {
-							ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+						} else if (stack.getItem() instanceof LeafiaRodItem) {
+							LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
 							rod.HeatFunction(stack,true,0,r/(float)(60*60*20*3),20,100);
 						} else if(world.rand.nextInt(r) == 0) {
 							Item waste_hot = inventory.getStackInSlot(i).getItem();

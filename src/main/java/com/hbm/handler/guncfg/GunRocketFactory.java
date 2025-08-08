@@ -7,7 +7,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletRicochetBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
 import com.hbm.render.anim.BusAnimationSequence;
@@ -35,7 +35,7 @@ public class GunRocketFactory {
 		config.reloadType = GunConfiguration.RELOAD_SINGLE;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
-		config.firingSound = HBMSoundHandler.rpgShoot;
+		config.firingSound = HBMSoundEvents.rpgShoot;
 		config.reloadSound = GunConfiguration.RSOUND_LAUNCHER;
 		config.reloadSoundEnd = false;
 		
@@ -76,8 +76,8 @@ public class GunRocketFactory {
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
-		config.firingSound = HBMSoundHandler.rpgShoot;
-		config.reloadSound = HBMSoundHandler.quadroReload;
+		config.firingSound = HBMSoundEvents.rpgShoot;
+		config.reloadSound = HBMSoundEvents.quadroReload;
 		config.reloadSoundEnd = false;
 
 		config.animations.put(AnimType.CYCLE, new BusAnimation()

@@ -26,7 +26,7 @@ public class TileEntityDeuteriumExtractor extends TileEntityLoadedBase implement
 	public TileEntityDeuteriumExtractor() {
 		tanks = new FluidTank[2];
 		tanks[0] = new FluidTank(FluidRegistry.WATER, 0, 1000);
-		tanks[1] = new FluidTank(ModForgeFluids.heavywater, 0, 100);
+		tanks[1] = new FluidTank(ModForgeFluids.HEAVYWATER, 0, 100);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class TileEntityDeuteriumExtractor extends TileEntityLoadedBase implement
 				convert = Math.min(convert, tanks[1].getCapacity() - tanks[1].getFluidAmount());
 				
 				tanks[0].drain(convert * 50, true); //dividing first, then multiplying, will remove any rounding issues
-				tanks[1].fill(new FluidStack(ModForgeFluids.heavywater, convert), true);
+				tanks[1].fill(new FluidStack(ModForgeFluids.HEAVYWATER, convert), true);
 				power -= this.getMaxPower() / 20;
 				this.markDirty();
 			}

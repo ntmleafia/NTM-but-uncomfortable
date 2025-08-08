@@ -5,7 +5,7 @@ import com.hbm.entity.missile.EntityBombletSelena;
 import com.hbm.entity.projectile.EntityRocket;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -64,9 +64,9 @@ public class GunDampfmaschine extends Item {
 			if(!player.isSneaking()) {
 				EntityRocket entitybullet = new EntityRocket(world, player, 3.0F, player.getHeldItemMainhand() == stack ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
 				
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.crateBreak, SoundCategory.PLAYERS, 10.0F, 0.9F + (rand.nextFloat() * 0.2F));
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.crateBreak, SoundCategory.PLAYERS, 10.0F, 0.9F + (rand.nextFloat() * 0.2F));
 				if(count == this.getMaxItemUseDuration(stack))
-					world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.alarmAutopilot, SoundCategory.PLAYERS, 100.0F, 1.0F);
+					world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.alarmAutopilot, SoundCategory.PLAYERS, 100.0F, 1.0F);
 				
 				if (!world.isRemote) {
 					world.spawnEntity(entitybullet);
@@ -84,7 +84,7 @@ public class GunDampfmaschine extends Item {
 					bomb.motionY = player.getLookVec().y * 5;
 					bomb.motionZ = player.getLookVec().z * 5;
 					if(count == this.getMaxItemUseDuration(stack))
-						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.chopperDrop, SoundCategory.PLAYERS, 10.0F, 1.0F);
+						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.chopperDrop, SoundCategory.PLAYERS, 10.0F, 1.0F);
 					
 					if (!world.isRemote) {
 						world.spawnEntity(bomb);

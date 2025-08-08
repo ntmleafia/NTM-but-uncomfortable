@@ -131,7 +131,7 @@ public class ModEventHandler {
 	@SubscribeEvent
 	public void soundRegistering(RegistryEvent.Register<SoundEvent> evt) {
 
-		for(SoundEvent e : HBMSoundHandler.ALL_SOUNDS) {
+		for(SoundEvent e : HBMSoundEvents.ALL_SOUNDS) {
 			evt.getRegistry().register(e);
 		}
 	}
@@ -645,7 +645,7 @@ public class ModEventHandler {
 
 			if(!Float.isFinite(player.getHealth()) || !Float.isFinite(player.getAbsorptionAmount())) {
 				player.sendMessage(new TextComponentString("Your health has been restored!"));
-				player.world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.syringeUse, SoundCategory.PLAYERS, 1.0F, 1.0F);
 				player.setHealth(player.getMaxHealth());
 				player.setAbsorptionAmount(0);
 			}

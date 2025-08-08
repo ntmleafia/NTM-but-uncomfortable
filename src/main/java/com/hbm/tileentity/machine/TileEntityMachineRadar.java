@@ -7,7 +7,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.capability.HbmLivingProps;
 import com.hbm.config.WeaponConfig;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityTickingBase;
@@ -88,7 +88,7 @@ public class TileEntityMachineRadar extends TileEntityTickingBase implements ITi
 				pingTimer++;
 
 				if(power > 0 && pingTimer >= maxTimer) {
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.sonarPing, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.sonarPing, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					pingTimer = 0;
 				}
 			}

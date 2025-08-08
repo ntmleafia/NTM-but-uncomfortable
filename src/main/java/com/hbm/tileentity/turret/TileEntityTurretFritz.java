@@ -7,7 +7,7 @@ import com.hbm.handler.BulletConfiguration;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.FluidCombustionRecipes;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -91,7 +91,7 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 			vec.rotateAroundZ((float) -this.rotationPitch);
 			vec.rotateAroundY((float) -(this.rotationYaw + Math.PI * 0.5));
 			
-			world.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(), HBMSoundHandler.flamethrowerShoot, SoundCategory.BLOCKS, 2F, 1F + world.rand.nextFloat() * 0.5F);
+			world.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(), HBMSoundEvents.flamethrowerShoot, SoundCategory.BLOCKS, 2F, 1F + world.rand.nextFloat() * 0.5F);
 			
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "vanillaburst");
@@ -114,8 +114,8 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 			PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos, tank), new TargetPoint(world.provider.getDimension(), this.pos.getX(), this.pos.getY(), this.pos.getZ(), 10));
 			for(int i = 1; i < 10; i++) {
 				if(inventory.getStackInSlot(i).getItem() == Armory.ammo_fuel) {
-					if((this.tank.getFluid() == null || tank.getFluid().getFluid() == ModForgeFluids.diesel) && this.tank.getFluidAmount() + 1000 <= this.tank.getCapacity()) {
-						this.tank.fill(new FluidStack(ModForgeFluids.diesel, 1000), true);
+					if((this.tank.getFluid() == null || tank.getFluid().getFluid() == ModForgeFluids.DIESEL) && this.tank.getFluidAmount() + 1000 <= this.tank.getCapacity()) {
+						this.tank.fill(new FluidStack(ModForgeFluids.DIESEL, 1000), true);
 						inventory.getStackInSlot(i).shrink(1);
 						if(inventory.getStackInSlot(i).isEmpty())
 							inventory.setStackInSlot(i, ItemStack.EMPTY);

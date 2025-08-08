@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public static GunConfiguration getMinigunConfig() {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCLE;
 		config.durability = 10000;
-		config.firingSound = HBMSoundHandler.lacunaeShoot;
+		config.firingSound = HBMSoundEvents.lacunaeShoot;
 		
 		config.config = new ArrayList<Integer>();
 		config.config.add(BulletConfigSyncingUtil.R5_NORMAL);

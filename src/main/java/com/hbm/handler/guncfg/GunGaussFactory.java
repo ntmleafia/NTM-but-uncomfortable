@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
 import com.hbm.render.anim.BusAnimationSequence;
@@ -30,7 +30,7 @@ public class GunGaussFactory {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_RAD;
 		config.durability = 6000;
-		config.firingSound = HBMSoundHandler.tauShoot;
+		config.firingSound = HBMSoundEvents.tauShoot;
 		
 		config.animations.put(AnimType.CYCLE, new BusAnimation().addBus("RECOIL", new BusAnimationSequence()
 				.addKeyframe(new BusAnimationKeyframe(0, 90, -4, 50))

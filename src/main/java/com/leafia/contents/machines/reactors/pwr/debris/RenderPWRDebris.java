@@ -4,7 +4,7 @@ import com.hbm.hfr.render.loader.HFRWavefrontObject;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.IModelCustom;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris.DebrisType;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity.DebrisType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -20,9 +20,9 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class RenderPWRDebris extends Render<EntityPWRDebris> {
+public class RenderPWRDebris extends Render<PWRDebrisEntity> {
 
-	public static final IRenderFactory<EntityPWRDebris> FACTORY = man -> new RenderPWRDebris(man);
+	public static final IRenderFactory<PWRDebrisEntity> FACTORY = man -> new RenderPWRDebris(man);
 
 	//for fallback only
 	private static class Meshes {
@@ -65,16 +65,16 @@ public class RenderPWRDebris extends Render<EntityPWRDebris> {
 	}
 
 	@Override
-	public void doRender(EntityPWRDebris entity,double x,double y,double z,float entityYaw,float partialTicks){
+	public void doRender(PWRDebrisEntity entity,double x,double y,double z,float entityYaw,float partialTicks){
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y + 0.125D, z);
 
-		EntityPWRDebris debris = (EntityPWRDebris)entity;
+		PWRDebrisEntity debris = (PWRDebrisEntity)entity;
 
 		GL11.glRotatef(debris.getEntityId() % 360, 0, 1, 0); //rotate based on entity ID to add unique randomness
 		GL11.glRotatef(debris.lastRot + (debris.rot - debris.lastRot) * partialTicks, 1, 1, 1);
 
-		drawModel(debris.getType(),entity.getDataManager().get(EntityPWRDebris.BLOCK_RSC),entity.getDataManager().get(EntityPWRDebris.BLOCK_META));
+		drawModel(debris.getType(),entity.getDataManager().get(PWRDebrisEntity.BLOCK_RSC),entity.getDataManager().get(PWRDebrisEntity.BLOCK_META));
 
 		GL11.glPopMatrix();
 	}
@@ -101,7 +101,7 @@ public class RenderPWRDebris extends Render<EntityPWRDebris> {
 		bindTexture(new ResourceLocation(resource.replaceFirst("(\\w+:)?(.*)","$1textures/$2.png")));
 	}
 	@Override
-	protected ResourceLocation getEntityTexture(EntityPWRDebris entity){
+	protected ResourceLocation getEntityTexture(PWRDebrisEntity entity){
 		return Meshes.channelTop;
 	}
 }

@@ -103,5 +103,9 @@ public class ControlEvent {
 		register(new ControlEvent("rbmk_crane_load"));
 		register(new ControlEvent("ctrl_press").setVar("isSneaking", false));
 		register(new ControlEvent("initialize"));
+		register(new ControlEvent("set_booster_level").setVar("level",0));
+		register(new ControlEvent("set_booster_active").setVar("active",0));
+		register(new ControlEvent("set_absorber_level").setVar("level",0));
+		register(new ControlEvent("set_stabilizer_level").setVar("level",0));
 	}
 }

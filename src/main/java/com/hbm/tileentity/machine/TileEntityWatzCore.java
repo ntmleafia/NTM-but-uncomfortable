@@ -73,7 +73,7 @@ public class TileEntityWatzCore extends TileEntityLoadedBase implements ITickabl
 			}
 		};
 		tank = new FluidTank(64000);
-		tankType = ModForgeFluids.watz;
+		tankType = ModForgeFluids.WATZ;
 		needsUpdate = false;
 	}
 	
@@ -102,7 +102,7 @@ public class TileEntityWatzCore extends TileEntityLoadedBase implements ITickabl
 	public void readFromNBT(NBTTagCompound compound) {
 		power = compound.getLong("power");
 		tank.readFromNBT(compound);
-		tankType = ModForgeFluids.watz;
+		tankType = ModForgeFluids.WATZ;
 		if(compound.hasKey("inventory"))
 			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		super.readFromNBT(compound);

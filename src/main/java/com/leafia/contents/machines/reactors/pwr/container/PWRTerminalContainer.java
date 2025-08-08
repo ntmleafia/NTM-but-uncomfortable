@@ -3,7 +3,7 @@ package com.leafia.contents.machines.reactors.pwr.container;
 import com.hbm.items.ModItems;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.dev.container_utility.LeafiaItemTransferable;
 import com.llib.group.LeafiaSet;
 import net.minecraft.block.state.IBlockState;
@@ -67,8 +67,8 @@ public class PWRTerminalContainer extends LeafiaItemTransferable {
 		int slotsAdded = 0;
 		for (BlockPos fuel : fuels) {
 			TileEntity tileEntity = core.getWorld().getTileEntity(fuel);
-			if (tileEntity instanceof TileEntityPWRElement) {
-				TileEntityPWRElement fuelEntity = (TileEntityPWRElement)tileEntity;
+			if (tileEntity instanceof PWRElementTE) {
+				PWRElementTE fuelEntity = (PWRElementTE)tileEntity;
 				BlockPos pos = core.terminal_toLocal(terminalState,terminalPos,fuel);
 				this.addSlotToContainer(new RemoteSlot(fuelEntity.inventory,0,pos));
 				slotsAdded++;

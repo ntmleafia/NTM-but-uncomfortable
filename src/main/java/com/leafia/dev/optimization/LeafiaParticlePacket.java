@@ -10,7 +10,7 @@ import com.leafia.unsorted.ParticleFireLavaK;
 import com.leafia.unsorted.ParticleSpark;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.llib.group.LeafiaSet;
-import com.llib.math.FiaMatrix;
+import com.leafia.dev.math.FiaMatrix;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -356,6 +356,16 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		public final void emit(Vec3d pos,Vec3d motion,int dimension) { emit(pos,motion,dimension,getDefaultRange()); }
 		public final void emit(Vec3d pos,Vec3d motion,int dimension,double range) {
 			PacketDispatcher.wrapper.sendToAllAround(packet(pos,motion),new TargetPoint(dimension,pos.x,pos.y,pos.z,range));
+		}
+		public final void emitLocal(Vec3d pos,Vec3d motion) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setDouble("posX",pos.x);
+			nbt.setDouble("posY",pos.y);
+			nbt.setDouble("posZ",pos.z);
+			nbt.setDouble("mX",(float)motion.x);
+			nbt.setDouble("mY",(float)motion.y);
+			nbt.setDouble("mZ",(float)motion.z);
+			emit(nbt);
 		}
 		/**
 		 * Method used for how the particle is spawned.

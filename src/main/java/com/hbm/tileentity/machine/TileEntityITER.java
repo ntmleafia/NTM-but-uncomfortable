@@ -15,7 +15,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.special.ItemFusionShield;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.AdvancementManager;
 import com.hbm.packet.FluidTankPacket;
@@ -74,7 +74,7 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 		tanks[0] = new FluidTank(12800000);
 		types[0] = FluidRegistry.WATER;
 		tanks[1] = new FluidTank(1280000);
-		types[1] = ModForgeFluids.ultrahotsteam;
+		types[1] = ModForgeFluids.ULTRAHOTSTEAM;
 		plasma = new FluidTank(16000);
 	}
 
@@ -109,7 +109,7 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 				this.disassemble();
 				Vec3 vec = Vec3.createVectorHelper(5.5, 0, 0);
 				vec.rotateAroundY(world.rand.nextFloat() * (float) Math.PI * 2F);
-				if (this.plasmaType == ModForgeFluids.plasma_bf) {
+				if (this.plasmaType == ModForgeFluids.PLASMA_BF) {
 					EntityBalefire bf = new EntityBalefire(world);
 					bf.posX = pos.getX();
 					bf.posY = pos.getY();
@@ -139,7 +139,7 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 
 					if(ItemFusionShield.getShieldDamage(inventory.getStackInSlot(3)) > ((ItemFusionShield)inventory.getStackInSlot(3).getItem()).maxDamage){
 						inventory.setStackInSlot(3, ItemStack.EMPTY);
-						world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 5F, 1F);
+						world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.shutdown, SoundCategory.BLOCKS, 5F, 1F);
 						this.isOn = false;
 						this.markDirty();
 					}
@@ -422,7 +422,7 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 
 	@Override
 	public FluidStack drain(FluidStack resource, boolean doDrain) {
-		if(resource != null && resource.getFluid() == ModForgeFluids.ultrahotsteam) {
+		if(resource != null && resource.getFluid() == ModForgeFluids.ULTRAHOTSTEAM) {
 			return tanks[1].drain(resource, doDrain);
 		}
 		return null;

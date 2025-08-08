@@ -4,7 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.hbm.handler.WeaponAbility;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -75,7 +75,7 @@ public class ItemSwordAbility extends ItemSword implements IItemAbility {
 
 			//hacky hacky hack
 			if(this == ModItems.mese_gavel)
-				attacker.world.playSound(null, target.posX, target.posY, target.posZ, HBMSoundHandler.whack, SoundCategory.HOSTILE, 3.0F, 1.F);
+				attacker.world.playSound(null, target.posX, target.posY, target.posZ, HBMSoundEvents.whack, SoundCategory.HOSTILE, 3.0F, 1.F);
 
 			for(WeaponAbility ability : this.hitAbility) {
 				ability.onHit(attacker.world, (EntityPlayer) attacker, target, this);

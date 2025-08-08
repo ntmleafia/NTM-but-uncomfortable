@@ -2,7 +2,7 @@ package com.leafia.passive;
 
 import com.hbm.entity.projectile.EntityBulletBase;
 import com.hbm.handler.BulletConfigSyncingUtil;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IBlockSource;
@@ -38,7 +38,7 @@ public class DispenserBullet extends BehaviorProjectileDispense {
     @Override
     protected void playDispenseSound(IBlockSource source)
     {
-        source.getWorld().playSound(null,source.getBlockPos(),HBMSoundHandler.fatmanShoot,SoundCategory.BLOCKS,1,1);
+        source.getWorld().playSound(null,source.getBlockPos(),HBMSoundEvents.fatmanShoot,SoundCategory.BLOCKS,1,1);
     }
     @Override
     protected IProjectile getProjectileEntity(World world,IPosition position,ItemStack stackIn) {

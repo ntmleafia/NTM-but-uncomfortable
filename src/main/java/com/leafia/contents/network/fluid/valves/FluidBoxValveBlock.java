@@ -1,6 +1,6 @@
 package com.leafia.contents.network.fluid.valves;
 
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,8 +18,8 @@ public class FluidBoxValveBlock extends FluidBoxValveBase {
 		if (!player.isSneaking()) {
 			boolean isOn = state.getValue(STATE);
 			setState(world,pos,!isOn);
-			if(!isOn) world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			else world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.85F);
+			if(!isOn) world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			else world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.85F);
 			return true;
 		}
 		return false;

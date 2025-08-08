@@ -3,7 +3,7 @@ package com.hbm.items.armor;
 import com.hbm.capability.HbmCapability;
 import com.hbm.capability.HbmCapability.IHBMData;
 import com.hbm.handler.ArmorUtil;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
@@ -71,7 +71,7 @@ public class ArmorBJJetpack extends ArmorBJ {
 				
 				player.fallDistance = 0;
 				
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.immolatorShoot, SoundCategory.PLAYERS, 0.125F, 1.5F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.immolatorShoot, SoundCategory.PLAYERS, 0.125F, 1.5F);
 				
 			} else if(player.isSneaking()) {
 				

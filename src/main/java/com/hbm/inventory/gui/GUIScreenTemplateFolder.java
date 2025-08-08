@@ -3,6 +3,7 @@ package com.hbm.inventory.gui;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.inventory.AssemblerRecipes;
 import com.hbm.inventory.ChemplantRecipes;
+import com.hbm.inventory.CrucibleRecipes;
 import com.hbm.inventory.PressRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCassette;
@@ -34,7 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GUIScreenTemplateFolder extends GuiScreen {
-	
+	public static boolean cooldown = false;
     protected static final ResourceLocation texture = new ResourceLocation(RefStrings.MODID + ":textures/gui/gui_planner.png");
     protected int xSize = 176;
     protected int ySize = 229;
@@ -84,6 +85,7 @@ public class GUIScreenTemplateFolder extends GuiScreen {
     	
     	this.player = player;
 		this.allStacks = new ArrayList<>();
+		cooldown = false;
 
     	//Stamps
 		for(Item i : PressRecipes.stamps_plate)
@@ -114,6 +116,10 @@ public class GUIScreenTemplateFolder extends GuiScreen {
     	for (int i: ChemplantRecipes.recipeNames.keySet()){
 			allStacks.add(new ItemStack(ModItems.chemistry_template, 1, i));
 		}
+	    //Crucible Templates
+	    for (int i: CrucibleRecipes.recipes.keySet()){
+		    allStacks.add(new ItemStack(ModItems.crucible_template, 1, i));
+	    }
 		search(null);
     }
     
@@ -273,6 +279,8 @@ public class GUIScreenTemplateFolder extends GuiScreen {
 						itemRender.renderItemAndEffectIntoGUI(player, AssemblerRecipes.getOutputFromTempate(stack), xPos + 1, yPos + 1);
 					else if(stack.getItem() == ModItems.chemistry_template)
 						itemRender.renderItemAndEffectIntoGUI(player, new ItemStack(ModItems.chemistry_icon, 1, stack.getItemDamage()), xPos + 1, yPos + 1);
+					else if(stack.getItem() == ModItems.crucible_template)
+						itemRender.renderItemAndEffectIntoGUI(player, CrucibleRecipes.getIcon(stack), xPos + 1, yPos + 1);
 					else
 						itemRender.renderItemAndEffectIntoGUI(player, stack, xPos + 1, yPos + 1);
 				}
@@ -296,9 +304,9 @@ public class GUIScreenTemplateFolder extends GuiScreen {
 		}
 		
 		public void executeAction() {
-			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 			if(type == 0) {
-				PacketDispatcher.wrapper.sendToServer(new ItemFolderPacket(stack.copy()));
+				if (!cooldown)
+					PacketDispatcher.wrapper.sendToServer(new ItemFolderPacket(stack.copy()));
 			} else if(type == 1) {
 				if(currentPage > 0)
 					currentPage--;

@@ -168,7 +168,7 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder buf = Tessellator.getInstance().getBuffer();
 
-		ItemLeafiaRod rod = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getPath());
+		LeafiaRodItem rod = LeafiaRodItem.fromResourceMap.get(stack.getItem().getRegistryName().getPath());
 
 		ItemStack renderStack = new ItemStack(rod.baseItem, 1, 0);
 		IBakedModel submodel = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(renderStack, Minecraft.getMinecraft().world, Minecraft.getMinecraft().player);
@@ -179,9 +179,9 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 
 
 		final double HALF_A_PIXEL = 0.03125;
-		ItemLeafiaRod.ItemType type = rod.baseItemType;
+		LeafiaRodItem.ItemType type = rod.baseItemType;
 
-		if (true) {
+		if (rod.specialRodModel == null) {
 			GlStateManager.color(1F, 1F, 1F, 1F);
 			//GlStateManager.disableLighting();
 			GL11.glTranslated(0, 0, 0.5 + HALF_A_PIXEL);
@@ -189,11 +189,17 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 			Brush brush = new Brush(buf,submodelTex);
 			// oekaki time?
 			if (true) /* Fuel drawing! */ {
+				/// If you're wondering why the fuck I have so many setBrush calls on
+				/// literally same colored pixels on billets, that's for Bismuth billets.
+
 				// Outlines
 				//(1) Top
 				switch (type) {
 					case BILLET:
 						brush.setBrush(7, 3, 2, 1);
+						break;
+					case BONEMEAL:
+						brush.setBrush(9, 7, 1, 1);
 						break;
 				}
 				brush.set(7, 0, 2, 1);
@@ -253,6 +259,9 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 					case BILLET:
 						brush.setBrush(3, 10, 1, 1);
 						break;
+					case BONEMEAL:
+						brush.setBrush(10, 7, 1, 1);
+						break;
 				}
 				brush.set(6, 6, 1, 1);
 				brush.paint(Face.NORMAL);
@@ -310,6 +319,9 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 					case BILLET:
 						brush.setBrush(3, 8, 1, 1);
 						break;
+					case BONEMEAL:
+						brush.setBrush(7, 6, 1, 1);
+						break;
 				}
 				brush.set(7, 1, 1, 1);
 				brush.paint(Face.NORMAL);
@@ -347,6 +359,9 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 				switch (type) {
 					case BILLET:
 						brush.setBrush(4, 7, 1, 1);
+						break;
+					case BONEMEAL:
+						brush.setBrush(7, 7, 1, 1);
 						break;
 				}
 				brush.set(8, 1, 1, 1);
@@ -397,6 +412,9 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 				switch (type) {
 					case BILLET:
 						brush.setBrush(5, 10, 1, 1);
+						break;
+					case BONEMEAL:
+						brush.setBrush(8, 7, 1, 1);
 						break;
 				}
 				brush.set(8, 3, 1, 1);
@@ -605,12 +623,15 @@ public class LeafiaRodRender extends TileEntityItemStackRenderer {
 
 		GL11.glPushMatrix();
 		GL11.glTranslated(0.5, 0.5, -HALF_A_PIXEL);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, itemModel);
+		if (rod.specialRodModel == null)
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, itemModel);
+		else
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, rod.bakedSpecialRod);
 		GL11.glPopMatrix();
 
 		NBTTagCompound data = stack.getTagCompound();
 		if (data != null) {
-			double meltingPoint = ItemLeafiaRod.fromResourceMap.get(stack.getItem().getRegistryName().getPath()).meltingPoint;
+			double meltingPoint = LeafiaRodItem.fromResourceMap.get(stack.getItem().getRegistryName().getPath()).meltingPoint;
 			if (meltingPoint != 0) {
 				double heat = data.getDouble("heat");
 				double opacity = (heat-meltingPoint/2)/(meltingPoint/2);

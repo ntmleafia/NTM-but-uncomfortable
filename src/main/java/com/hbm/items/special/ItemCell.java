@@ -55,7 +55,7 @@ public class ItemCell extends Item {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if(entityItem.onGround || entityItem.isBurning()) {
-			if(hasFluid(entityItem.getItem(), ModForgeFluids.aschrab) && WeaponConfig.dropCell) {
+			if(hasFluid(entityItem.getItem(), ModForgeFluids.ASCHRAB) && WeaponConfig.dropCell) {
 				if(!entityItem.world.isRemote) {
 					entityItem.setDead();
 					entityItem.world.playSound(null, entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.AMBIENT, 100.0f, entityItem.world.rand.nextFloat() * 0.1F + 0.9F);
@@ -81,7 +81,7 @@ public class ItemCell extends Item {
 				}
 				return true;
 			}
-			if(hasFluid(entityItem.getItem(), ModForgeFluids.amat) && WeaponConfig.dropCell) {
+			if(hasFluid(entityItem.getItem(), ModForgeFluids.AMAT) && WeaponConfig.dropCell) {
 				if(!entityItem.world.isRemote) {
 					entityItem.setDead();
 					entityItem.world.createExplosion(entityItem, entityItem.posX, entityItem.posY, entityItem.posZ, 10.0F * (FluidUtil.getFluidContained(entityItem.getItem()).amount / 1000.0F), true);
@@ -103,14 +103,14 @@ public class ItemCell extends Item {
 		if(!(entityIn instanceof EntityLivingBase))
 			return;
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-		if(hasFluid(stack, ModForgeFluids.tritium)){
+		if(hasFluid(stack, ModForgeFluids.TRITIUM)){
 			ContaminationUtil.contaminate((EntityLivingBase)entityIn, HazardType.RADIATION, ContaminationType.CREATIVE, 0.5F / 20F);
-		} else if(hasFluid(stack, ModForgeFluids.sas3)){
+		} else if(hasFluid(stack, ModForgeFluids.SAS3)){
 			ContaminationUtil.contaminate((EntityLivingBase)entityIn, HazardType.RADIATION, ContaminationType.CREATIVE, 20F / 20F);
 			((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0));
-		} else if(hasFluid(stack, ModForgeFluids.uf6)){
+		} else if(hasFluid(stack, ModForgeFluids.UF6)){
 			ContaminationUtil.contaminate((EntityLivingBase)entityIn, HazardType.RADIATION, ContaminationType.CREATIVE, 2F / 20F);
-		} else if(hasFluid(stack, ModForgeFluids.puf6)){
+		} else if(hasFluid(stack, ModForgeFluids.PUF6)){
 			ContaminationUtil.contaminate((EntityLivingBase)entityIn, HazardType.RADIATION, ContaminationType.CREATIVE, 10F / 20F);
 		}
 	}
@@ -127,10 +127,10 @@ public class ItemCell extends Item {
 				}
 			} else if(i < 90) {
 				if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null))
-					stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).fill(new FluidStack(ModForgeFluids.amat, 1000), true);
+					stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).fill(new FluidStack(ModForgeFluids.AMAT, 1000), true);
 			} else {
 				if(stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null))
-					stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).fill(new FluidStack(ModForgeFluids.aschrab, 1000), true);
+					stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null).fill(new FluidStack(ModForgeFluids.ASCHRAB, 1000), true);
 			}
 			ContaminationUtil.contaminate(player, HazardType.RADIATION, ContaminationType.CREATIVE, 50.0F);
 			return EnumActionResult.SUCCESS;
@@ -166,22 +166,22 @@ public class ItemCell extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-		if(ItemCell.hasFluid(stack, ModForgeFluids.amat)){
+		if(ItemCell.hasFluid(stack, ModForgeFluids.AMAT)){
 			tooltip.add("§eExposure to matter will lead to violent annihilation!§r");
 			tooltip.add("§c[Dangerous Drop]§r");
-		} else if(ItemCell.hasFluid(stack, ModForgeFluids.aschrab)){
+		} else if(ItemCell.hasFluid(stack, ModForgeFluids.ASCHRAB)){
 			tooltip.add("§eExposure to matter will create a fólkvangr field!§r");
 			tooltip.add("§c[Dangerous Drop]§r");
-		} else if(ItemCell.hasFluid(stack, ModForgeFluids.tritium)){
+		} else if(ItemCell.hasFluid(stack, ModForgeFluids.TRITIUM)){
 			tooltip.add("§a[Radioactive]§r");
 			tooltip.add("§e0.5 RAD/s§r");
-		} else if(ItemCell.hasFluid(stack, ModForgeFluids.uf6)){
+		} else if(ItemCell.hasFluid(stack, ModForgeFluids.UF6)){
 			tooltip.add("§a[Radioactive]§r");
 			tooltip.add("§e2.0 RAD/s§r");
-		} else if(ItemCell.hasFluid(stack, ModForgeFluids.puf6)){
+		} else if(ItemCell.hasFluid(stack, ModForgeFluids.PUF6)){
 			tooltip.add("§a[Radioactive]§r");
 			tooltip.add("§e10.0 RAD/s§r");
-		} else if(ItemCell.hasFluid(stack, ModForgeFluids.sas3)){
+		} else if(ItemCell.hasFluid(stack, ModForgeFluids.SAS3)){
 			tooltip.add("§a[Radioactive]§r");
 			tooltip.add("§e20.0 RAD/s§r");
 			tooltip.add("§3[Blinding]§r");

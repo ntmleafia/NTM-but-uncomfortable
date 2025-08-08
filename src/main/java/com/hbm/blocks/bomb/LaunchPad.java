@@ -5,7 +5,7 @@ import com.hbm.config.GeneralConfig;
 import com.hbm.entity.missile.*;
 import com.hbm.interfaces.IBomb;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.bomb.TileEntityLaunchPad;
@@ -132,7 +132,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_incendiary && entity.power >= 75000) {
@@ -143,7 +143,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_cluster && entity.power >= 75000) {
@@ -154,7 +154,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_buster && entity.power >= 75000) {
@@ -165,7 +165,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_strong && entity.power >= 75000) {
@@ -176,7 +176,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_incendiary_strong && entity.power >= 75000) {
@@ -187,7 +187,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_cluster_strong && entity.power >= 75000) {
@@ -198,7 +198,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_buster_strong && entity.power >= 75000) {
@@ -209,7 +209,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_burst && entity.power >= 75000) {
@@ -219,7 +219,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_inferno && entity.power >= 75000) {
@@ -229,7 +229,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_rain && entity.power >= 75000) {
@@ -239,7 +239,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_drill && entity.power >= 75000) {
@@ -249,7 +249,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_nuclear && entity.power >= 75000) {
@@ -260,7 +260,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_n2 && entity.power >= 75000) {
@@ -271,7 +271,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_endo && entity.power >= 75000) {
@@ -282,7 +282,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_exo && entity.power >= 75000) {
@@ -293,7 +293,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_nuclear_cluster && entity.power >= 75000) {
@@ -304,7 +304,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_doomsday && entity.power >= 75000) {
@@ -315,7 +315,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_taint && entity.power >= 75000) {
@@ -326,7 +326,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_micro && entity.power >= 75000) {
@@ -337,7 +337,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_bhole && entity.power >= 75000) {
@@ -348,7 +348,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_schrabidium && entity.power >= 75000) {
@@ -359,7 +359,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_emp && entity.power >= 75000) {
@@ -370,7 +370,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_emp_strong && entity.power >= 75000) {
@@ -381,7 +381,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if(entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_volcano) {
@@ -392,7 +392,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 
@@ -412,7 +412,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.rocketTakeoff, SoundCategory.BLOCKS, 100.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.rocketTakeoff, SoundCategory.BLOCKS, 100.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 
@@ -428,7 +428,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_customnuke && entity.power >= 75000) {
@@ -451,7 +451,7 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					entity.power -= 75000;
 
 					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
 			}

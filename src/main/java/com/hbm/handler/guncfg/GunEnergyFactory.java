@@ -9,7 +9,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Materials.Nuggies;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.potion.HbmPotion;
@@ -44,8 +44,8 @@ public class GunEnergyFactory {
 		config.ammoCap = 1000;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_ARROWS;
-		config.firingSound = HBMSoundHandler.zomgShoot;
-		config.reloadSound = HBMSoundHandler.b92Reload;
+		config.firingSound = HBMSoundEvents.zomgShoot;
+		config.reloadSound = HBMSoundEvents.b92Reload;
 
 		config.name = "EMC101 Prismatic Negative Energy Cannon";
 		config.manufacturer = "MWT Prototype Labs";
@@ -73,7 +73,7 @@ public class GunEnergyFactory {
 		config.reloadType = GunConfiguration.RELOAD_NONE;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_SPLIT;
-		config.firingSound = HBMSoundHandler.teslaShoot;
+		config.firingSound = HBMSoundEvents.teslaShoot;
 
 		config.name = "EMP Orb Projector";
 		config.manufacturer = "MWT Prototype Labs";
@@ -129,8 +129,8 @@ public class GunEnergyFactory {
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCLE;
-		config.firingSound = HBMSoundHandler.flamethrowerShoot;
-		config.reloadSound = HBMSoundHandler.flamerReload;
+		config.firingSound = HBMSoundEvents.flamethrowerShoot;
+		config.reloadSound = HBMSoundEvents.flamerReload;
 
 		config.name = "Heavy Duty Flamer";
 		config.manufacturer = "MWT Prototype Labs";
@@ -167,7 +167,7 @@ public class GunEnergyFactory {
 		config.crosshair = Crosshair.NONE;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.hksShoot;
+		config.firingSound = HBMSoundEvents.hksShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "Visual Operation Ranged Tactical Electromagnetic Xenoblaster";
@@ -204,7 +204,7 @@ public class GunEnergyFactory {
 		config.crosshair = Crosshair.NONE;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.osiprShoot;
+		config.firingSound = HBMSoundEvents.osiprShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "ChickenCom Light Duty Plasma Gun";
@@ -249,7 +249,7 @@ public class GunEnergyFactory {
 		config.crosshair = Crosshair.NONE;
 		config.durability = 10000;
 		config.reloadSound = GunConfiguration.RSOUND_MAG;
-		config.firingSound = HBMSoundHandler.osiprShoot;
+		config.firingSound = HBMSoundEvents.osiprShoot;
 		config.reloadSoundEnd = false;
 
 		config.name = "Gluon Gun";
@@ -428,7 +428,7 @@ public class GunEnergyFactory {
 
 				if(!bullet.world.isRemote) {
 					ExplosionChaos.explodeZOMG(bullet.world, (int) bullet.posX, (int) bullet.posY, (int) bullet.posZ, 5);
-					bullet.world.playSound(null, bullet.posX, bullet.posY, bullet.posZ, HBMSoundHandler.bombDet, SoundCategory.HOSTILE, 5.0F, 1.0F);
+					bullet.world.playSound(null, bullet.posX, bullet.posY, bullet.posZ, HBMSoundEvents.bombDet, SoundCategory.HOSTILE, 5.0F, 1.0F);
 					ExplosionLarge.spawnParticles(bullet.world, bullet.posX, bullet.posY, bullet.posZ, 5);
 				}
 			}

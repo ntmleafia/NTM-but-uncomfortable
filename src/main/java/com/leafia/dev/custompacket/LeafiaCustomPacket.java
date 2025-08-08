@@ -2,10 +2,13 @@ package com.leafia.dev.custompacket;
 
 import com.hbm.forgefluid.FFUtils.FuzzyIdentifierPacket;
 import com.hbm.items.tool.ItemWandS.WandStructurePacket;
+import com.hbm.packet.ItemFolderPacket.FolderResponsePacket;
 import com.hbm.packet.PacketDispatcher;
+import com.hbm.tileentity.machine.TileEntityCore.DFCShockPacket;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandProduct;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandRemove;
 import com.leafia.contents.gear.wands.ItemWandSaving.HighlightSavingWandSave;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity.*;
 import com.leafia.dev.LeafiaDebug.Tracker.VisualizerPacket;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
@@ -24,7 +27,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.util.function.Consumer;
 
 public class LeafiaCustomPacket extends RecordablePacket {
-	public enum CustomPacketType {
+	public enum CustomPacketType { // add your packets here, that's literally all registering you have to do!
 		NONE,
 		VISUALIZER_TRACE(new VisualizerPacket()),
 		HIGHLIGHT_SAVING_SAVE(new HighlightSavingWandSave()),
@@ -32,6 +35,16 @@ public class LeafiaCustomPacket extends RecordablePacket {
 		HIGHLIGHT_SAVING_PRODUCT(new HighlightSavingWandProduct()),
 		WAND_STRUCTURE(new WandStructurePacket()),
 		FUZZY_IDENTIFIER(new FuzzyIdentifierPacket()),
+		DFC_SHOCK(new DFCShockPacket()),
+		ELEVATOR_BUTTON_SYNC(new EvButtonSyncPacket()),
+		ELEVATOR_BUTTON_ENABLED_SYNC(new EvButtonEnablePacket()),
+		ELEVATOR_BUTTON_CLICK_SYNC(new EvButtonClickPacket()),
+		ELEVATOR_BUTTON_CLICKED(new EvButtonInteractPacket()),
+		ELEVATOR_BUTTON_MODIFY(new EvButtonModifyPacket()),
+		ELEVATOR_SPECIAL_SYNC(new EvSpecialFloorsSyncPacket()),
+		ELEVATOR_SYNC_REQUEST(new EvSyncRequestPacket()),
+		ELEVATOR_INVENTORY_SYNC(new EvInventorySyncPacket()),
+		CLOSE_GUI(new FolderResponsePacket()),
 		;
 		final LeafiaCustomPacketEncoder encoder;
 		CustomPacketType() { encoder = null; }

@@ -221,7 +221,7 @@ public class ShredderRecipes {
 		ShredderRecipes.setRecipe(Crystals.crystal_copper, new ItemStack(Powders.powder_copper, 3));
 		ShredderRecipes.setRecipe(Crystals.crystal_tungsten, new ItemStack(Powders.powder_tungsten, 3));
 		ShredderRecipes.setRecipe(Crystals.crystal_aluminium, new ItemStack(Powders.powder_aluminium, 3));
-		ShredderRecipes.setRecipe(Crystals.crystal_fluorite, new ItemStack(ModItems.fluorite, 8));
+		ShredderRecipes.setRecipe(Crystals.crystal_fluorite, new ItemStack(Ingots.fluorite, 8));
 		ShredderRecipes.setRecipe(Crystals.crystal_beryllium, new ItemStack(Powders.powder_beryllium, 3));
 		ShredderRecipes.setRecipe(Crystals.crystal_schraranium, new ItemStack(Nuggies.nugget_schrabidium, 3));
 		ShredderRecipes.setRecipe(Crystals.crystal_lead, new ItemStack(Powders.powder_lead, 3));

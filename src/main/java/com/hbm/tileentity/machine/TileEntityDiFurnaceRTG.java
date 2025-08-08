@@ -5,7 +5,7 @@ import com.hbm.inventory.DiFurnaceRecipes;
 import com.hbm.items.machine.ItemRTGPellet;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.RTGUtil;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -53,9 +53,9 @@ public class TileEntityDiFurnaceRTG extends TileEntityMachineBase implements ITi
 		if(!world.isRemote)	{
 			migrateSlotCount(10);
 			rtgPower = Math.min(RTGUtil.updateRTGs(inventory, new int[] {3, 4, 5, 6, 7, 8}), maxRTGPower);
-			if (inventory.getStackInSlot(9).getItem() instanceof ItemLeafiaRod) {
+			if (inventory.getStackInSlot(9).getItem() instanceof LeafiaRodItem) {
 				ItemStack stack = inventory.getStackInSlot(9);
-				ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+				LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
 				NBTTagCompound nbt = stack.getTagCompound();
 				double fuelHeat = 20;
 				if (nbt != null) {
@@ -64,11 +64,11 @@ public class TileEntityDiFurnaceRTG extends TileEntityMachineBase implements ITi
 					if (nbt.getInteger("spillage") > 20*5) {
 						ItemStack prevStack = null;
 						for (int i = 0; i < inventory.getSlots(); i++) {
-							prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i), prevStack);
+							prevStack = LeafiaRodItem.comparePriority(inventory.getStackInSlot(i), prevStack);
 							inventory.setStackInSlot(i, ItemStack.EMPTY);
 						}
 						world.setBlockToAir(pos);
-						ItemLeafiaRod detonate = (ItemLeafiaRod)prevStack.getItem();
+						LeafiaRodItem detonate = (LeafiaRodItem)prevStack.getItem();
 						detonate.resetDetonate();
 						detonate.detonateRadius = 2;
 						detonate.detonate(world, pos);
@@ -130,7 +130,7 @@ public class TileEntityDiFurnaceRTG extends TileEntityMachineBase implements ITi
 		} else if ((i >= 3) && (i <= 8)) {
 			return stack.getItem() instanceof ItemRTGPellet;
 		} else if (i == 9)
-			return stack.getItem() instanceof ItemLeafiaRod;
+			return stack.getItem() instanceof LeafiaRodItem;
 		return true;
 	}
 	

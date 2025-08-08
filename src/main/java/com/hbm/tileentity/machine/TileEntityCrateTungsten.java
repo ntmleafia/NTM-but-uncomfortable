@@ -6,7 +6,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.tool.ItemKeyPin;
 import com.hbm.items.weapon.ItemCrucible;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxParticlePacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.INBTPacketReceiver;
@@ -59,12 +59,12 @@ public class TileEntityCrateTungsten extends TileEntityLockableBase implements I
 			ItemStack stack = player.getHeldItemMainhand();
 			
 			if(stack.getItem() instanceof ItemKeyPin && ItemKeyPin.getPins(stack) == this.lock) {
-	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
+	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return true;
 			}
 			
 			if(stack.getItem() == ModItems.key_red) {
-	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
+	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return true;
 			}
 			

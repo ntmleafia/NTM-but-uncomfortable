@@ -6,7 +6,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
@@ -68,7 +68,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 			}
 		};
 		tank = new FluidTank(16000);
-		tankType = ModForgeFluids.coolant;
+		tankType = ModForgeFluids.COOLANT;
 	}
 	
 	public String getInventoryName() {
@@ -102,7 +102,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 		if(compound.hasKey("inventory"))
 			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		tankType = FluidRegistry.getFluid(compound.getString("coolant"));
-		if (tankType == null) tankType = ModForgeFluids.coolant;
+		if (tankType == null) tankType = ModForgeFluids.COOLANT;
 		super.readFromNBT(compound);
 	}
 	
@@ -133,7 +133,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					Fluid f = ItemForgeFluidIdentifier.getType(inventory.getStackInSlot(0));
 					inventory.setStackInSlot(1,inventory.getStackInSlot(0));
 					inventory.setStackInSlot(0,ItemStack.EMPTY);
-					if (f == ModForgeFluids.cryogel || f == ModForgeFluids.coolant || f == FluidRegistry.WATER) {
+					if (f == ModForgeFluids.CRYOGEL || f == ModForgeFluids.COOLANT || f == FluidRegistry.WATER) {
 						if(tankType != f)
 							tank.setFluid(null);
 						tankType = f;
@@ -150,7 +150,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					warning = 1;
 				}
 				
-				if(tankType == ModForgeFluids.cryogel) {
+				if(tankType == ModForgeFluids.CRYOGEL) {
 					
 					if(tank.getFluidAmount() >= 15) {
 						if(heat > 0){
@@ -172,7 +172,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					} else {
 						heat += efficiency;
 					}
-				} else if(tankType == ModForgeFluids.coolant) {
+				} else if(tankType == ModForgeFluids.COOLANT) {
 					
 					if(tank.getFluidAmount() >= 15) {
 						if(heat > 0){
@@ -242,8 +242,8 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 2);
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 1.5);
 					ExplosionLarge.spawnBurst(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 36, 1);
-		            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.oldExplosion, SoundCategory.BLOCKS, 10.0F, 1);
-			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
+		            this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.oldExplosion, SoundCategory.BLOCKS, 10.0F, 1);
+			        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
 				}
 	
 				power = Library.chargeTEFromItems(inventory, 3, power, maxPower);
@@ -305,7 +305,7 @@ public class TileEntityAMSEmitter extends TileEntity implements ITickable, IFlui
 	}
 	
 	public boolean isValidFluid(Fluid fluid){
-		if(fluid != null && (fluid == FluidRegistry.WATER || fluid == ModForgeFluids.coolant || fluid == ModForgeFluids.cryogel))
+		if(fluid != null && (fluid == FluidRegistry.WATER || fluid == ModForgeFluids.COOLANT || fluid == ModForgeFluids.CRYOGEL))
 			return true;
 		return false;
 	}

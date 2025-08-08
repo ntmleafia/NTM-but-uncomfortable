@@ -115,14 +115,14 @@ public class BedrockOreRegistry {
 	}
 
 	public static FluidStack getFluidRequirement(int tier){
-		if(tier == 1) return new FluidStack(ModForgeFluids.acid, 8000);
-		if(tier == 2) return new FluidStack(ModForgeFluids.sulfuric_acid, 500);
-		if(tier == 3) return new FluidStack(ModForgeFluids.nitric_acid, 500);
-		if(tier == 4) return new FluidStack(ModForgeFluids.radiosolvent, 200);
-		if(tier == 5) return new FluidStack(ModForgeFluids.schrabidic, 200);
-		if(tier == 6) return new FluidStack(ModForgeFluids.uu_matter, 200);
-		if(tier > 6) return new FluidStack(ModForgeFluids.liquid_osmiridium, 100);
-		return new FluidStack(ModForgeFluids.solvent, 300);
+		if(tier == 1) return new FluidStack(ModForgeFluids.ACID, 8000);
+		if(tier == 2) return new FluidStack(ModForgeFluids.SULFURIC_ACID, 500);
+		if(tier == 3) return new FluidStack(ModForgeFluids.NITRIC_ACID, 500);
+		if(tier == 4) return new FluidStack(ModForgeFluids.RADIOSOLVENT, 200);
+		if(tier == 5) return new FluidStack(ModForgeFluids.SCHRABIDIC, 200);
+		if(tier == 6) return new FluidStack(ModForgeFluids.UU_MATTER, 200);
+		if(tier > 6) return new FluidStack(ModForgeFluids.LIQUID_OSMIRIDIUM, 100);
+		return new FluidStack(ModForgeFluids.SOLVENT, 300);
 	}
 
 	public static int getTierWeight(int tier){

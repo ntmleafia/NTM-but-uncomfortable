@@ -4,6 +4,7 @@ import com.hbm.blocks.generic.BlockClean;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.effect.EntityFalloutUnderGround;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
@@ -30,6 +31,21 @@ public class ItemContaminating extends ItemHazard {
 
 	public ItemContaminating(float radiation, boolean fire, boolean blinding, String s){
 		super(radiation, fire, blinding, s);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(radiation)+0.5D, 500);
+	}
+
+	public ItemContaminating(RadiationType type,float radiation,String s){
+		super(type,radiation, s);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(radiation)+0.5D, 500);
+	}
+
+	public ItemContaminating(RadiationType type,float radiation, boolean fire, String s){
+		super(type,radiation, fire, s);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(radiation)+0.5D, 500);
+	}
+
+	public ItemContaminating(RadiationType type,float radiation, boolean fire, boolean blinding, String s){
+		super(type,radiation, fire, blinding, s);
 		this.falloutBallRadius = (int)Math.min(Math.sqrt(radiation)+0.5D, 500);
 	}
 	

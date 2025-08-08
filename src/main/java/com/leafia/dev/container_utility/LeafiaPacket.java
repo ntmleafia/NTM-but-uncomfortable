@@ -352,6 +352,14 @@ public class LeafiaPacket extends RecordablePacket {
         this.__sendToClients(((LeafiaPacketReceiver) te).affectionRange() * 1.3);
     }
 
+    public void __sendToListeners() {
+        if (te instanceof LeafiaPacketReceiver rec) {
+            for (EntityPlayer plr : rec.getListeners())
+                __sendToClient(plr);
+        } else
+            throw new LeafiaDevFlaw("__sendToListeners used when the TileEntity isn't a LeafiaPacketReceiver. How?!");
+    }
+
     public void __sendToServer() {
         if (onSending()) return;
         PacketDispatcher.wrapper.sendToServer(this);

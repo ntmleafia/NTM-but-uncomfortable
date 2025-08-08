@@ -302,5 +302,21 @@
     "block.chungusLever": {"subtitle": "subtitles.block.chungusLever", "category": "block", "sounds": [{"name": "hbm:block/chungusLever", "stream": false}]},
 	"item.upgradePlug": {"subtitle": "subtitles.item.upgradePlug", "category": "player", "sounds": [{"name": "hbm:tool/upgradePlug", "stream": false}]},
 	"item.battery": {"category": "player", "sounds": [{"name": "hbm:tool/battery", "stream": false}]},
-  "item.pointed": {"subtitle": "subtitles.item.pointed", "category": "neutral", "sounds": ["hbm:entity/slicer3","hbm:weapon/hit_metal0"]}
+  "item.pointed": {"subtitle": "subtitles.item.pointed", "category": "neutral", "sounds": ["hbm:entity/slicer3","hbm:weapon/hit_metal0"]},
+  "elevators.s6beep": { "category": "block", "sounds": ["hbm:elevators/s6_beep"]},
+  "elevators.s6bell": { "category": "block", "sounds": ["hbm:elevators/s6_bell"]},
+  "elevators.electronicpingshort": { "category": "block", "sounds": ["hbm:elevators/electronicpingshort"]},
+  "elevators.skyliftarrive": { "category": "block", "sounds": ["hbm:elevators/skylift_arrive"]},
+  "ui.button.invalid": { "category": "block", "sounds": ["hbm:external/clickon_error"]},
+  "external.mus_sfx_a_lithit": { "category": "block", "sounds": ["hbm:external/mus_sfx_a_lithit"]},
+  "external.lsplash.crucifix": { "category": "block", "sounds": ["hbm:external/lsplash_crucifix"]},
+  "external.crafting_tech1_part": { "category": "block", "sounds": ["hbm:external/crafting_tech1_part"]},
+  "block.assembler_start": { "subtitle": "subtitles.block.assembler_start", "category": "block", "sounds": ["hbm:block/assemblerStart"]},
+  "block.assembler_stop": { "subtitle": "subtitles.block.assembler_stop", "category": "block", "sounds": ["hbm:block/assemblerStop"]},
+  "block.assembler_strike": { "subtitle": "subtitles.block.assembler_strike", "category": "block", "sounds": ["hbm:block/assemblerStrike1","hbm:block/assemblerStrike2"]},
+  "block.motor": { "subtitle": "subtitles.block.motor", "category": "block", "sounds": ["hbm:block/motor"]},
+  "external.mechcrafting_lower": { "category": "block", "sounds": ["hbm:external/mechcrafting_lower"]},
+  "external.mechcrafting_raise": { "category": "block", "sounds": ["hbm:external/mechcrafting_raise"]},
+  "external.mechcrafting_loop": { "category": "block", "sounds": ["hbm:external/mechcrafting_loop"]},
+  "external.mechcrafting_weld": { "category": "block", "sounds": ["hbm:external/mechcrafting_weld"]}
 }

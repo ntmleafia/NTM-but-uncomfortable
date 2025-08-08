@@ -4,6 +4,7 @@ import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.TileEntityProxyCombo;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -44,8 +45,10 @@ public class SolderingBlock extends BlockDummyable {
 				return false;
 
 			SolderingTE te = (SolderingTE)worldIn.getTileEntity(new BlockPos(pos1[0], pos1[1], pos1[2]));
-			if (te != null)
+			if (te != null) {
+				te.startPacket().__sendToClient(playerIn);
 				playerIn.openGui(MainRegistry.instance,ModBlocks.guiID_soldering,worldIn,pos1[0],pos1[1],pos1[2]);
+			}
 			return true;
 		} else
 			return false;
@@ -62,6 +65,5 @@ public class SolderingBlock extends BlockDummyable {
 	@Override
 	public void addInformation(ItemStack stack,@Nullable World player,List<String> tooltip,ITooltipFlag advanced) {
 		super.addInformation(stack,player,tooltip,advanced);
-		MachineTooltip.addWIP(tooltip);
 	}
 }

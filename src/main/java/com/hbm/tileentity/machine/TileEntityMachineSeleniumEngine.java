@@ -63,7 +63,7 @@ public class TileEntityMachineSeleniumEngine extends TileEntityLoadedBase implem
 			}
 		};
 		tank = new FluidTank(16000);
-		tankType = ModForgeFluids.diesel;
+		tankType = ModForgeFluids.DIESEL;
 	}
 	
 	public String getInventoryName() {
@@ -127,7 +127,7 @@ public class TileEntityMachineSeleniumEngine extends TileEntityLoadedBase implem
 				if(FFUtils.fillFromFluidContainer(inventory, tank, 9, 10))
 					needsUpdate = true;
 
-			if(tankType == ModForgeFluids.nitan)
+			if(tankType == ModForgeFluids.NITAN)
 				powerCap = maxPower * 10;
 			else
 				powerCap = maxPower;

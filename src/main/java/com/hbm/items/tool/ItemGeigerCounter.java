@@ -7,7 +7,7 @@ import com.hbm.handler.RadiationSystemNT;
 import com.hbm.handler.RadiationSystemNT.RadPocket;
 import com.hbm.items.ModItems;
 import com.hbm.items.gear.ArmorFSB;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
@@ -106,11 +106,11 @@ public class ItemGeigerCounter extends Item implements IBauble {
 					int r = list.get(world.rand.nextInt(list.size()));
 					
 					if(r > 0){
-						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.geigerSounds[r-1], SoundCategory.PLAYERS, 1.0F, 1.0F);
+						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.geigerSounds[r-1], SoundCategory.PLAYERS, 1.0F, 1.0F);
 					}
 				}
 			} else if(world.rand.nextInt(100) == 0) {
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.geigerSounds[(world.rand.nextInt(1))], SoundCategory.PLAYERS, 1.0F, 1.0F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.geigerSounds[(world.rand.nextInt(1))], SoundCategory.PLAYERS, 1.0F, 1.0F);
 			}
 		}
 	}
@@ -163,10 +163,10 @@ public class ItemGeigerCounter extends Item implements IBauble {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand handIn) {
 		if(!world.isRemote) {
 			if (!player.isSneaking()) {
-				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBoop,SoundCategory.PLAYERS,1.0F,1.0F);
+				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundEvents.techBoop,SoundCategory.PLAYERS,1.0F,1.0F);
 				ContaminationUtil.printGeigerData(player);
 			} else {
-				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1.0F,1.0F);
+				world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundEvents.techBleep,SoundCategory.PLAYERS,1.0F,1.0F);
 				RadPocket pocket = RadiationSystemNT.getPocket(world,player.getPosition());
 				RadiationSavedData data = RadiationSavedData.getData(player.world);
 				boolean sealed = data.isSealed(player.getPosition(),false);

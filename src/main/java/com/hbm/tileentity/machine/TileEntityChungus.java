@@ -36,7 +36,7 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 	public float lastRotor;
 	
 	public FluidTank[] tanks;
-	public Fluid[] types = new Fluid[]{ ModForgeFluids.steam, ModForgeFluids.spentsteam };
+	public Fluid[] types = new Fluid[]{ ModForgeFluids.STEAM, ModForgeFluids.SPENTSTEAM};
 	
 	public TileEntityChungus() {
 		super();
@@ -44,8 +44,8 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 		types = new Fluid[2];
 		tanks[0] = new FluidTank(2000000000);
 		tanks[1] = new FluidTank(2000000000);
-		types[0] = ModForgeFluids.steam;
-		types[1] = ModForgeFluids.spentsteam;
+		types[0] = ModForgeFluids.STEAM;
+		types[1] = ModForgeFluids.SPENTSTEAM;
 	}
 
 	@Override

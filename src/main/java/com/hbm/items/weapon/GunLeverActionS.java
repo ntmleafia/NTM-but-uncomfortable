@@ -3,7 +3,7 @@ package com.hbm.items.weapon;
 import com.google.common.collect.Multimap;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
@@ -94,7 +94,7 @@ public class GunLeverActionS extends Item {
         	if(!player.capabilities.isCreativeMode)
         		player.setHealth(0.0F);
 
-			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.revolverShootAlt, SoundCategory.PLAYERS, 5.0F, 0.75F);
+			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.revolverShootAlt, SoundCategory.PLAYERS, 5.0F, 0.75F);
 			
 			setAnim(stack, 1);
 		}
@@ -111,7 +111,7 @@ public class GunLeverActionS extends Item {
     			setAnim(stack, 0);
     		
         	if(j == 15)
-        		worldIn.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundHandler.leverActionReload, SoundCategory.PLAYERS, 2F, 0.85F);
+        		worldIn.playSound(null, entity.posX, entity.posY, entity.posZ, HBMSoundEvents.leverActionReload, SoundCategory.PLAYERS, 2F, 0.85F);
     	}
 	}
 	

@@ -2,7 +2,7 @@ package com.hbm.blocks.turret;
 
 import com.hbm.config.WeaponConfig;
 import com.hbm.entity.particle.EntityGasFlameFX;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.tileentity.turret.TileEntityTurretCIWS;
 import net.minecraft.block.material.Material;
@@ -46,7 +46,7 @@ public class TurretCIWS extends TurretBase {
 		TileEntityTurretCIWS te = (TileEntityTurretCIWS)world.getTileEntity(pos);
 		
 		if(i == 0 && te.spin < 10)
-			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundHandler.ciwsSpinup, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundEvents.ciwsSpinup, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		
 		if(te.spin < 35)
 			te.spin += 5;
@@ -69,7 +69,7 @@ public class TurretCIWS extends TurretBase {
 				world.spawnEntity(smoke);
 			}
 
-			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundHandler.ciwsFiringLoop, SoundCategory.BLOCKS, 1.0F, 1.25F);
+			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundEvents.ciwsFiringLoop, SoundCategory.BLOCKS, 1.0F, 1.25F);
 			
 			flag = true;
 		}
@@ -126,7 +126,7 @@ public class TurretCIWS extends TurretBase {
 		TileEntityTurretCIWS te = (TileEntityTurretCIWS)world.getTileEntity(pos);
 		
 		if(te.spin > 10)
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.ciwsSpindown, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.ciwsSpindown, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		
 	}
 	

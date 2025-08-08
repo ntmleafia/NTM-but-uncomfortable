@@ -2,7 +2,7 @@ package com.hbm.tileentity.turret;
 
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -122,7 +122,7 @@ public class TileEntityTurretTauon extends TileEntityTurretBaseNT {
 			if(conf != null && this.target != null) {
 				this.target.attackEntityFrom(ModDamageSource.electricity, 30F + world.rand.nextInt(11));
 				this.conusmeAmmo(conf.ammo);
-				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.tauShoot, SoundCategory.BLOCKS, 4.0F, 0.9F + world.rand.nextFloat() * 0.3F);
+				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.tauShoot, SoundCategory.BLOCKS, 4.0F, 0.9F + world.rand.nextFloat() * 0.3F);
 				
 				NBTTagCompound data = new NBTTagCompound();
 				data.setBoolean("shot", true);

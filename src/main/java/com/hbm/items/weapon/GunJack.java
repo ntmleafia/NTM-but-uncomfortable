@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -85,7 +85,7 @@ public class GunJack extends Item {
 
 			stack.damageItem(1, player);
 
-			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.shotgunShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
+			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.shotgunShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 			if (flag) { } else {
 				Library.consumeInventoryItem(player.inventory, Armory.gun_jack_ammo);

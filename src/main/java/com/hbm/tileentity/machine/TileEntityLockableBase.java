@@ -6,7 +6,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.tool.ItemKeyPin;
 import com.hbm.items.tool.ItemTooling;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -93,7 +93,7 @@ public class TileEntityLockableBase extends TileEntity {
 					return false;
 				}
 				if (ItemKeyPin.getPins(stack) == this.lock) {
-					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundHandler.lockOpen,SoundCategory.BLOCKS,1.0F,1.0F);
+					world.playSound(null,player.posX,player.posY,player.posZ,HBMSoundEvents.lockOpen,SoundCategory.BLOCKS,1.0F,1.0F);
 					return true;
 				}
 			}
@@ -103,7 +103,7 @@ public class TileEntityLockableBase extends TileEntity {
 					player.sendStatusMessage(new TextComponentTranslation("chat.digital").setStyle(new Style().setColor(TextFormatting.RED)),true);
 					return false;
 				}
-	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
+	        	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.lockOpen, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return true;
 			}
 			
@@ -150,11 +150,11 @@ public class TileEntityLockableBase extends TileEntity {
 			double rand = player.world.rand.nextDouble() * 100;
 			
 			if(chanceOfSuccess > rand) {
-        		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.pinUnlock, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.pinUnlock, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				return true;
 			}
 
-    		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.pinBreak, SoundCategory.BLOCKS, 1.0F, 0.8F + player.world.rand.nextFloat() * 0.2F);
+    		world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.pinBreak, SoundCategory.BLOCKS, 1.0F, 0.8F + player.world.rand.nextFloat() * 0.2F);
 		}
 		
 		return false;

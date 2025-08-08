@@ -2,7 +2,7 @@ package com.hbm.tileentity.bomb;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.bomb.Landmine;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -61,7 +61,7 @@ public class TileEntityLandmine extends TileEntity implements ITickable {
 			
 			if(!isPrimed && !flag) {
 	
-				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.fstbmbStart, SoundCategory.BLOCKS, 2.0F, 1.0F);
+				this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.fstbmbStart, SoundCategory.BLOCKS, 2.0F, 1.0F);
 				isPrimed = true;
 			}
 		}

@@ -2,10 +2,9 @@ package com.hbm.blocks.generic;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.tool.ItemToolAbility;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.leafia.dev.optimization.LeafiaParticlePacket.FiaSpark;
-import com.leafia.dev.optimization.LeafiaParticlePacket.TauSpark;
 import com.leafia.dev.optimization.LeafiaParticlePacket.VanillaExt;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
@@ -66,7 +65,7 @@ public class BlockCoalOil extends BlockOre {
 		ItemTool tool = (ItemTool)player.getHeldItemMainhand().getItem();
 
 		if(!tool.getToolMaterialName().equals(ToolMaterial.WOOD.toString())) {
-			world.playSound(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,HBMSoundHandler.sbPickaxeOre,SoundCategory.BLOCKS,0.4f+world.rand.nextFloat()*0.2f,1);
+			world.playSound(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,HBMSoundEvents.sbPickaxeOre,SoundCategory.BLOCKS,0.4f+world.rand.nextFloat()*0.2f,1);
 			if (world.rand.nextBoolean()) {
 				RayTraceResult res = Library.rayTrace(player,20,0);
 				FiaSpark spark = new FiaSpark();

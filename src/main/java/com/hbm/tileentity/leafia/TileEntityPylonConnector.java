@@ -66,10 +66,10 @@ public class TileEntityPylonConnector extends TileEntityPylonBase implements Lea
 
 	@Override
 	public double _sizeReference() {
-		return 0.8;
+		return 1.5;
 	}
 	@Override
 	public double _itemYoffset() {
-		return 1.25;
+		return 0.15;
 	}
 }

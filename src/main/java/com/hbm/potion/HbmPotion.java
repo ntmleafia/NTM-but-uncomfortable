@@ -7,7 +7,7 @@ import com.hbm.config.CompatibilityConfig;
 import com.hbm.config.GeneralConfig;
 import com.hbm.entity.mob.EntityTaintedCreeper;
 import com.hbm.explosion.ExplosionLarge;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.lib.RefStrings;
 import com.hbm.util.ContaminationUtil;
@@ -186,7 +186,7 @@ public class HbmPotion extends Potion {
 					entity.setHealth(0);
 				}
 			}
-			entity.world.playSound(null, new BlockPos(entity), HBMSoundHandler.laserBang, SoundCategory.AMBIENT, 100.0F, 1.0F);
+			entity.world.playSound(null, new BlockPos(entity), HBMSoundEvents.laserBang, SoundCategory.AMBIENT, 100.0F, 1.0F);
 			ExplosionLarge.spawnParticles(entity.world, entity.posX, entity.posY, entity.posZ, 10);
 		}
 		if(this == lead) {

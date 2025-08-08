@@ -3,7 +3,7 @@ package com.leafia.contents.gear;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.items.armor.ItemArmorMod;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -73,11 +73,11 @@ public class ItemGasSensor extends ItemArmorMod {
 		if(explosive) {
 			if (entity instanceof EntityPlayer)
 				((EntityPlayer) entity).sendStatusMessage(new TextComponentString(TextFormatting.RED+""+TextFormatting.BOLD+I18nUtil.resolveKey("chat.gas_sensor.flammable")),true);
-			entity.world.playSound(null,entity.posX,entity.posY,entity.posZ,HBMSoundHandler.follyAquired,SoundCategory.PLAYERS,0.5F,1.0F);
+			entity.world.playSound(null,entity.posX,entity.posY,entity.posZ,HBMSoundEvents.follyAquired,SoundCategory.PLAYERS,0.5F,1.0F);
 		} else if(poison) {
 			if (entity instanceof EntityPlayer)
 				((EntityPlayer) entity).sendStatusMessage(new TextComponentString(TextFormatting.GOLD+""+TextFormatting.BOLD+I18nUtil.resolveKey("chat.gas_sensor.poison")),true);
-			entity.world.playSound(null,entity.posX,entity.posY,entity.posZ,HBMSoundHandler.techBoop,SoundCategory.PLAYERS,2F,1.5F);
+			entity.world.playSound(null,entity.posX,entity.posY,entity.posZ,HBMSoundEvents.techBoop,SoundCategory.PLAYERS,2F,1.5F);
 		}
 	}
 }

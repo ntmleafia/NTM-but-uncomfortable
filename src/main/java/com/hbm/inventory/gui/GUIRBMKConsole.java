@@ -1,7 +1,7 @@
 package com.hbm.inventory.gui;
 
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RefStrings;
 import com.hbm.packet.NBTControlPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -190,9 +190,9 @@ public class GUIRBMKConsole extends GuiScreen {
 			
 			if(az5Lid) {
 				az5Lid = false;
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundHandler.rbmk_az5_cover, 0.5F));
+				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundEvents.rbmk_az5_cover, 0.5F));
 			} else if(lastPress + 3000 < System.currentTimeMillis()) {
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundHandler.shutdown, 1));
+				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(HBMSoundEvents.shutdown, 1));
 				lastPress = System.currentTimeMillis();
 				
 				NBTTagCompound control = new NBTTagCompound();
@@ -379,13 +379,13 @@ public class GUIRBMKConsole extends GuiScreen {
 
 				Fluid fluid = FluidRegistry.getFluid(col.data.getString("type"));
 				
-				if(fluid == ModForgeFluids.steam)
+				if(fluid == ModForgeFluids.STEAM)
 					drawTexturedModalRect(guiLeft + x + 4, guiTop + y + 1, 44, 183, 2, 2);
-				if(fluid == ModForgeFluids.hotsteam)
+				if(fluid == ModForgeFluids.HOTSTEAM)
 					drawTexturedModalRect(guiLeft + x + 4, guiTop + y + 3, 44, 185, 2, 2);
-				if(fluid == ModForgeFluids.superhotsteam)
+				if(fluid == ModForgeFluids.SUPERHOTSTEAM)
 					drawTexturedModalRect(guiLeft + x + 4, guiTop + y + 5, 44, 187, 2, 2);
-				if(fluid == ModForgeFluids.ultrahotsteam)
+				if(fluid == ModForgeFluids.ULTRAHOTSTEAM)
 					drawTexturedModalRect(guiLeft + x + 4, guiTop + y + 7, 44, 189, 2, 2);
 				
 				break;

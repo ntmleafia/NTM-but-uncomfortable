@@ -1,14 +1,15 @@
 package com.hbm.tileentity.network;
 
 import api.hbm.block.IConveyorBelt;
+import com.hbm.lib.Library;
 import com.hbm.entity.item.EntityMovingItem;
 import com.hbm.interfaces.IControlReceiver;
 import com.hbm.inventory.container.ContainerCraneExtractor;
 import com.hbm.inventory.gui.GUICraneExtractor;
-import com.hbm.items.ModItems.Upgrades;
-import com.hbm.lib.Library;
+import com.hbm.items.ModItems;
 import com.hbm.modules.ModulePatternMatcher;
 import com.hbm.tileentity.IGUIProvider;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,11 +23,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import javax.annotation.Nonnull;
 
 public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGUIProvider, IControlReceiver {
     public boolean isWhitelist = false;
@@ -57,11 +62,11 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
             int zCoord = pos.getZ();
             int delay = 20;
             if(inventory.getStackInSlot(19) != null && inventory.getStackInSlot(19) != ItemStack.EMPTY){
-                if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_1) {
+                if(inventory.getStackInSlot(19).getItem() == ModItems.Upgrades.upgrade_ejector_1) {
                     delay = 10;
-                } else if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_2){
+                } else if(inventory.getStackInSlot(19).getItem() == ModItems.Upgrades.upgrade_ejector_2){
                     delay = 5;
-                } else if(inventory.getStackInSlot(19).getItem() == Upgrades.upgrade_ejector_3){
+                } else if(inventory.getStackInSlot(19).getItem() == ModItems.Upgrades.upgrade_ejector_3){
                     delay = 2;
                 }
             }
@@ -71,11 +76,11 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
                 int amount = 1;
 
                 if(inventory.getStackInSlot(18)!=null && inventory.getStackInSlot(18) != ItemStack.EMPTY){
-                    if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_1) {
+                    if(inventory.getStackInSlot(18).getItem() == ModItems.Upgrades.upgrade_stack_1) {
                         amount = 4;
-                    } else if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_2){
+                    } else if(inventory.getStackInSlot(18).getItem() == ModItems.Upgrades.upgrade_stack_2){
                         amount = 16;
-                    } else if(inventory.getStackInSlot(18).getItem() == Upgrades.upgrade_stack_3){
+                    } else if(inventory.getStackInSlot(18).getItem() == ModItems.Upgrades.upgrade_stack_3){
                         amount = 64;
                     }
                 }
@@ -224,8 +229,12 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
         this.matcher.nextMode(world, inventory.getStackInSlot(i), i);
     }
 
+    public void initPattern(ItemStack stack, int index) {
+        this.matcher.initPatternSmart(world, stack, index);
+    }
+
     @Override
-    public boolean isItemValidForSlotHopper(int i, ItemStack itemStack) {
+    public boolean isItemValidForSlot(int i, ItemStack itemStack) {
         return i > 8 && i < 18;
     }
 
@@ -277,12 +286,12 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
     }
     
     @Override
-    public boolean canInsertItemHopper(int slot, ItemStack itemStack, int amount) {
-        return this.isItemValidForSlotHopper(slot, itemStack);
+    public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
+        return this.isItemValidForSlot(slot, itemStack);
     }
 
     @Override
-    public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
+    public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
         return false;
     }
 }

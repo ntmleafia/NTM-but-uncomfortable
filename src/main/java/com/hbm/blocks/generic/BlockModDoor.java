@@ -2,7 +2,7 @@ package com.hbm.blocks.generic;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.ModItems.BlockItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockHorizontal;
@@ -114,7 +114,7 @@ public class BlockModDoor extends BlockDoor {
 			if (this == ModBlocks.door_fuckoff)
 				worldIn.playEvent(playerIn, state.getValue(OPEN) ? 1006 : 1012, pos, 0);
 			else
-				worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+				worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 			return true;
 		}
 	}
@@ -132,7 +132,7 @@ public class BlockModDoor extends BlockDoor {
 				if (this == ModBlocks.door_fuckoff)
 					worldIn.playEvent(null, open ? 1006 : 1012, pos, 0);
 				else
-					worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+					worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 			}
 		}
 	}
@@ -188,7 +188,7 @@ public class BlockModDoor extends BlockDoor {
 						if (this == ModBlocks.door_fuckoff)
 							worldIn.playEvent(null, flag ? 1006 : 1012, pos, 0);
 						else
-							worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+							worldIn.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.openDoor, SoundCategory.BLOCKS, 1.0F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 					}
 				}
 			}

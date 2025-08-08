@@ -3,6 +3,7 @@ package com.hbm.items.bomb;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ItemTsar extends ItemHazard {
 
 	public ItemTsar(float radiation, String s) {
-		super(radiation, s);
+		super(RadiationType.ALPHA, radiation, s);
 		this.setCreativeTab(MainRegistry.nukeTab);
 	}
 	

@@ -1,8 +1,9 @@
 package com.hbm.packet;
 
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.sound.*;
 import com.hbm.tileentity.machine.*;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
 import net.minecraft.client.Minecraft;
@@ -73,7 +74,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineChemplant)te).isProgressing)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopChemplant(HBMSoundHandler.chemplantOperate, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopChemplant(HBMSoundEvents.chemplantOperate, te));
 				}
 
 				if (te != null && te instanceof TileEntityMachineChemfac) {
@@ -85,7 +86,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineChemfac)te).isProgressing)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopChemplant(HBMSoundHandler.chemplantOperate, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopChemplant(HBMSoundEvents.chemplantOperate, te));
 				}
 
 				if (te != null && te instanceof TileEntityFEL) {
@@ -97,7 +98,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityFEL)te).isOn)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopFel(HBMSoundHandler.fel, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopFel(HBMSoundEvents.fel, te));
 				}
 
 				if (te != null && te instanceof TileEntityMachineMiningLaser) {
@@ -109,7 +110,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineMiningLaser)te).isOn)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopFel(HBMSoundHandler.fel, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopFel(HBMSoundEvents.fel, te));
 				}
 				
 				if (te != null && te instanceof TileEntityMachineAssembler) {
@@ -121,7 +122,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineAssembler)te).isProgressing)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopAssembler(HBMSoundHandler.assemblerOperate, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopAssembler(HBMSoundEvents.assemblerOperate, te));
 				}
 				
 			/*	if (te != null && te instanceof TileEntityMachineIGenerator) {
@@ -145,7 +146,7 @@ public class LoopedSoundPacket extends RecordablePacket {
 					}
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineTurbofan)te).isRunning)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopTurbofan(HBMSoundHandler.turbofanOperate, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopTurbofan(HBMSoundEvents.turbofanOperate, te));
 				}
 				
 				if (te != null && te instanceof TileEntityBroadcaster) {
@@ -161,16 +162,16 @@ public class LoopedSoundPacket extends RecordablePacket {
 					SoundEvent sound;
 					switch(rand){
 					case 1:
-						sound = HBMSoundHandler.broadcast1;
+						sound = HBMSoundEvents.broadcast1;
 						break;
 					case 2:
-						sound = HBMSoundHandler.broadcast2;
+						sound = HBMSoundEvents.broadcast2;
 						break;
 					case 3:
-						sound = HBMSoundHandler.broadcast3;
+						sound = HBMSoundEvents.broadcast3;
 						break;
 					default:
-						sound = HBMSoundHandler.broadcast1;
+						sound = HBMSoundEvents.broadcast1;
 						break;
 					}
 					
@@ -188,10 +189,10 @@ public class LoopedSoundPacket extends RecordablePacket {
 					
 					
 					if(flag && te.getWorld().isRemote && ((TileEntityMachineCentrifuge)te).isProgressing)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundHandler.centrifugeOperate, te));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundEvents.centrifugeOperate, te));
 				}
 				
-				if (te != null && te instanceof TileEntityMachineGasCent) {
+				if (te != null && te instanceof GasCentTE) {
 					
 					boolean flag = true;
 					for(int i = 0; i < SoundLoopCentrifuge.list.size(); i++)  {
@@ -199,8 +200,8 @@ public class LoopedSoundPacket extends RecordablePacket {
 							flag = false;
 					}
 					
-					if(flag && te.getWorld().isRemote && ((TileEntityMachineGasCent)te).isProgressing)
-						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundHandler.centrifugeOperate, te));
+					if(flag && te.getWorld().isRemote && ((GasCentTE)te).isProgressing)
+						Minecraft.getMinecraft().getSoundHandler().playSound(new SoundLoopCentrifuge(HBMSoundEvents.centrifugeOperate, te));
 				}
 			});
 			

@@ -3,7 +3,7 @@ package com.hbm.packet;
 import com.hbm.entity.logic.EntityBomber;
 import com.hbm.entity.missile.EntityMissileBaseAdvanced;
 import com.hbm.entity.missile.EntityMissileCustom;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.sound.MovingSoundBomber;
 import com.hbm.sound.MovingSoundRocket;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -57,7 +57,7 @@ public class LoopedEntitySoundPacket extends RecordablePacket {
 						}
 					}
 					if(startNew){
-						Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundRocket(HBMSoundHandler.rocketEngine, e));
+						Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundRocket(HBMSoundEvents.rocketEngine, e));
 					}
 				}
 						
@@ -89,9 +89,9 @@ public class LoopedEntitySoundPacket extends RecordablePacket {
 					
 					if(flag) {
 						if(n == 2)
-							Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundBomber(HBMSoundHandler.bomberSmallLoop, SoundCategory.HOSTILE, (EntityBomber)e));
+							Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundBomber(HBMSoundEvents.bomberSmallLoop, SoundCategory.HOSTILE, (EntityBomber)e));
 						if(n == 1)
-							Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundBomber(HBMSoundHandler.bomberLoop, SoundCategory.HOSTILE, (EntityBomber)e));
+							Minecraft.getMinecraft().getSoundHandler().playSound(new MovingSoundBomber(HBMSoundEvents.bomberLoop, SoundCategory.HOSTILE, (EntityBomber)e));
 					}
 				}
 			});

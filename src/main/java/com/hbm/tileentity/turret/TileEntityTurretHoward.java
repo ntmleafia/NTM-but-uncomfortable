@@ -3,7 +3,7 @@ package com.hbm.tileentity.turret;
 import com.hbm.config.WeaponConfig;
 import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.PacketDispatcher;
@@ -111,7 +111,7 @@ public class TileEntityTurretHoward extends TileEntityTurretBaseNT {
 
 				if(conf != null) {
 					this.conusmeAmmo(conf.ammo);
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.howard_reload, SoundCategory.BLOCKS, 4.0F, 1F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.howard_reload, SoundCategory.BLOCKS, 4.0F, 1F);
 					loaded = 200;
 				}
 			}
@@ -125,8 +125,8 @@ public class TileEntityTurretHoward extends TileEntityTurretBaseNT {
 
 		if(loaded > 0 && this.target != null) {
 
-			this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.howard_fire, SoundCategory.BLOCKS, 4.0F, 0.9F + world.rand.nextFloat() * 0.3F);
-			this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.howard_fire, SoundCategory.BLOCKS, 4.0F, 1F + world.rand.nextFloat() * 0.3F);
+			this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.howard_fire, SoundCategory.BLOCKS, 4.0F, 0.9F + world.rand.nextFloat() * 0.3F);
+			this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.howard_fire, SoundCategory.BLOCKS, 4.0F, 1F + world.rand.nextFloat() * 0.3F);
 
 			if(timer % 2 == 0) {
 				loaded--;

@@ -1,6 +1,7 @@
 package com.hbm.handler;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.blocks.ModBlocks.Elevators;
 import com.hbm.blocks.ModBlocks.PWR;
 import com.hbm.blocks.machine.NTMAnvil;
 import com.hbm.interfaces.Spaghetti;
@@ -22,11 +23,25 @@ import com.hbm.tileentity.machine.rbmk.*;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.turret.*;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
+import com.leafia.contents.machines.elevators.floors.EvFloorGUI;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.contents.machines.elevators.gui.EvCabinGUI;
+import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.manfacturing.soldering.container.SolderingContainer;
+import com.leafia.contents.machines.manfacturing.soldering.container.SolderingGUI;
+import com.leafia.contents.machines.manfacturing.wish.WishContainer;
+import com.leafia.contents.machines.manfacturing.wish.WishGUI;
+import com.leafia.contents.machines.manfacturing.wish.WishTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.ContainerCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.GUICoreCreativeEmitter;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.reactors.pwr.PWRData;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalTE;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalContainer;
 import com.leafia.contents.machines.reactors.pwr.container.PWRTerminalUI;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
+import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxContainer;
 import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxGUI;
 import net.minecraft.block.state.IBlockState;
@@ -157,8 +172,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_gascent:
-				if(entity instanceof TileEntityMachineGasCent) {
-					return new ContainerMachineGasCent(player.inventory, (TileEntityMachineGasCent) entity);
+				if(entity instanceof GasCentTE) {
+					return new ContainerMachineGasCent(player.inventory, (GasCentTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_uf6_tank:
@@ -271,6 +286,11 @@ public class GuiHandler implements IGuiHandler {
 					return new ContainerElectricFurnace(player.inventory, (TileEntityMachineElectricFurnace) entity);
 				}
 				return null;
+			case ModBlocks.guiID_wish:
+				if(entity instanceof WishTE te) {
+					return new WishContainer(player.inventory, te);
+				}
+				return null;
 			case ModBlocks.guiID_machine_arc:
 				if(entity instanceof TileEntityMachineArcFurnace) {
 					return new ContainerMachineArcFurnace(player.inventory, (TileEntityMachineArcFurnace) entity);
@@ -294,6 +314,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_machine_fracking_tower:
 				if(entity instanceof TileEntityMachineFrackingTower) {
 					return new ContainerMachineFrackingTower(player.inventory, (TileEntityMachineFrackingTower) entity);
+				}
+				return null;
+			case ModBlocks.guiID_machine_drill:
+				if(entity instanceof TileEntityMachineMiningDrill) {
+					return new ContainerMachineMiningDrill(player.inventory, (TileEntityMachineMiningDrill) entity);
 				}
 				return null;
 			case ModBlocks.guiID_machine_turbofan:
@@ -449,6 +474,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_dfc_emitter:
 				if(entity instanceof TileEntityCoreEmitter) {
 					return new ContainerCoreEmitter(player, (TileEntityCoreEmitter) entity);
+				}
+				return null;
+			case ModBlocks.guiID_dfc_cemitter:
+				if(entity instanceof TileEntityCoreCreativeEmitter) {
+					return new ContainerCoreCreativeEmitter(player, (TileEntityCoreCreativeEmitter) entity);
 				}
 				return null;
 			case ModBlocks.guiID_dfc_receiver:
@@ -644,13 +674,18 @@ public class GuiHandler implements IGuiHandler {
 			case ModItems.guiID_item_book:
 				return new ContainerBook(player.inventory);
 			case ModBlocks.guiID_zirnox:
-				if(entity instanceof TileEntityReactorZirnox) {
-					return new ZirnoxContainer(player.inventory, (TileEntityReactorZirnox) entity);
+				if(entity instanceof ZirnoxTE) {
+					return new ZirnoxContainer(player.inventory, (ZirnoxTE) entity);
+				}
+				return null;
+			case ModBlocks.guiID_soldering:
+				if(entity instanceof SolderingTE te) {
+					return new SolderingContainer(player.inventory,te);
 				}
 				return null;
 			case PWR.guiID:
-				if(entity instanceof TileEntityPWRTerminal) {
-					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+				if(entity instanceof PWRTerminalTE) {
+					PWRData core = ((PWRTerminalTE) entity).getLinkedCore();
 					if (core != null)
 						return new PWRTerminalContainer(player.inventory,entity,core);
 				}
@@ -778,8 +813,8 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_gascent:
-				if(entity instanceof TileEntityMachineGasCent) {
-					return new GUIMachineGasCent(player.inventory, (TileEntityMachineGasCent) entity);
+				if(entity instanceof GasCentTE) {
+					return new GUIMachineGasCent(player.inventory, (GasCentTE) entity);
 				}
 				return null;
 			case ModBlocks.guiID_uf6_tank:
@@ -892,6 +927,11 @@ public class GuiHandler implements IGuiHandler {
 					return new GUIMachineElectricFurnace(player.inventory, (TileEntityMachineElectricFurnace) entity);
 				}
 				return null;
+			case ModBlocks.guiID_wish:
+				if(entity instanceof WishTE te) {
+					return new WishGUI(player.inventory, te);
+				}
+				return null;
 			case ModBlocks.guiID_machine_arc:
 				if(entity instanceof TileEntityMachineArcFurnace) {
 					return new GUIMachineArcFurnace(player.inventory, (TileEntityMachineArcFurnace) entity);
@@ -915,6 +955,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_machine_fracking_tower:
 				if (entity instanceof TileEntityMachineFrackingTower) {
 					return new GUIMachineFrackingTower(player.inventory, (TileEntityMachineFrackingTower) entity);
+				}
+				return null;
+			case ModBlocks.guiID_machine_drill:
+				if(entity instanceof TileEntityMachineMiningDrill) {
+					return new GUIMachineMiningDrill(player.inventory, (TileEntityMachineMiningDrill) entity);
 				}
 				return null;
 			case ModBlocks.guiID_machine_turbofan:
@@ -1070,6 +1115,11 @@ public class GuiHandler implements IGuiHandler {
 			case ModBlocks.guiID_dfc_emitter:
 				if(entity instanceof TileEntityCoreEmitter) {
 					return new GUICoreEmitter(player, (TileEntityCoreEmitter) entity);
+				}
+				return null;
+			case ModBlocks.guiID_dfc_cemitter:
+				if(entity instanceof TileEntityCoreCreativeEmitter) {
+					return new GUICoreCreativeEmitter(player, (TileEntityCoreCreativeEmitter) entity);
 				}
 				return null;
 			case ModBlocks.guiID_dfc_receiver:
@@ -1268,17 +1318,29 @@ public class GuiHandler implements IGuiHandler {
 				}
 				return null;
 			case ModBlocks.guiID_zirnox:
-				if(entity instanceof TileEntityReactorZirnox) {
-					return new ZirnoxGUI(player.inventory, (TileEntityReactorZirnox) entity);
+				if(entity instanceof ZirnoxTE) {
+					return new ZirnoxGUI(player.inventory, (ZirnoxTE) entity);
+				}
+				return null;
+			case ModBlocks.guiID_soldering:
+				if(entity instanceof SolderingTE te) {
+					return new SolderingGUI(player.inventory,te);
 				}
 				return null;
 			case PWR.guiID:
-				if(entity instanceof TileEntityPWRTerminal) {
-					PWRData core = ((TileEntityPWRTerminal) entity).getLinkedCore();
+				if(entity instanceof PWRTerminalTE) {
+					PWRData core = ((PWRTerminalTE) entity).getLinkedCore();
 					if (core != null)
 						return new PWRTerminalUI(player.inventory,entity,core);
 				}
 				return null;
+			case Elevators.guiIdFloor:
+				if(entity instanceof EvFloorTE) {
+					return new EvFloorGUI((EvFloorTE)entity);
+				}
+				return null;
+			case Elevators.guiIdCabin:
+				return new EvCabinGUI(ElevatorEntity.lastEntityEw);
 			// ITEM GUIS
 			case ModItems.guiID_item_folder:
 				return new GUIScreenTemplateFolder(player);

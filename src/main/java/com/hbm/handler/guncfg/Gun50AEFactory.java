@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Gun50AEFactory {
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CLASSIC;
 		config.reloadSound = GunConfiguration.RSOUND_REVOLVER;
-		config.firingSound = HBMSoundHandler.deagleShoot;
+		config.firingSound = HBMSoundEvents.deagleShoot;
 		config.reloadSoundEnd = false;
 		
 		return config;

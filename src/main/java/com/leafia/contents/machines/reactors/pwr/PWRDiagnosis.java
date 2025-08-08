@@ -7,12 +7,12 @@ import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentBlock;
 import com.leafia.contents.machines.reactors.pwr.blocks.components.PWRComponentEntity;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRChannel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRConductor;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.MachinePWRExchanger;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.MachinePWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.MachinePWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRChannelBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRConductorBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.channel.PWRExchangerBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementBlock;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.llib.exceptions.messages.TextWarningLeafia;
@@ -217,10 +217,10 @@ public class PWRDiagnosis {
 						if (entity instanceof ITickable) // only assign tickable entities as a core
 							potentialPos.add(pos);
 					}
-					if (pwr instanceof MachinePWRElement) {
+					if (pwr instanceof PWRElementBlock) {
 						fuelPositions.add(pos);
 						isFuel = true;
-					} if (pwr instanceof MachinePWRControl)
+					} if (pwr instanceof PWRControlBlock)
 						controlPositions.add(pos);
 				}
 				if (pwr.shouldRenderOnGUI())
@@ -284,7 +284,7 @@ public class PWRDiagnosis {
 		// iterate over all members (blocks)
 		Set<BlockPos> channels = new LeafiaSet<>();
 		Set<BlockPos> exchangers = new LeafiaSet<>();
-		Set<TileEntityPWRElement> teElements = new LeafiaSet<>();
+		Set<PWRElementTE> teElements = new LeafiaSet<>();
 		int conductors = 0;
 		for (BlockPos pos : members) {
 			boolean shouldHaveCoreCoords = false;
@@ -292,13 +292,13 @@ public class PWRDiagnosis {
 			// check if it should have a tile entity
 			if (pwr != null) {
 				shouldHaveCoreCoords = pwr.tileEntityShouldCreate(world,pos);
-				if (pwr instanceof MachinePWRChannel)
+				if (pwr instanceof PWRChannelBlock)
 					channels.add(pos);
-				if (pwr instanceof MachinePWRConductor) {
+				if (pwr instanceof PWRConductorBlock) {
 					channels.add(pos);
 					conductors++;
 				}
-				if (pwr instanceof MachinePWRExchanger)
+				if (pwr instanceof PWRExchangerBlock)
 					exchangers.add(pos);
 			}
 			PWRComponentEntity entity = getPWREntity(pos);
@@ -308,13 +308,13 @@ public class PWRDiagnosis {
 					if (link != null) {
 						if (!members.contains(link.corePos)) {
 							if (isMeltdown) {
-								link.explode(world,null);
+								link.explode(world,null,null);
 								return;
 							}
 						}
 					}
-					if (entity instanceof TileEntityPWRElement)
-						teElements.add((TileEntityPWRElement)entity);
+					if (entity instanceof PWRElementTE)
+						teElements.add((PWRElementTE)entity);
 				}
 				entity.setCoreLink(shouldHaveCoreCoords ? outCorePos : null);
 			}
@@ -338,6 +338,8 @@ public class PWRDiagnosis {
 					float avg = sumHardness/Math.max(divide,1);
 					float hardness = avg*0.8f+maxHardness*0.2f;
 					core.toughness = (int)(Math.pow(hardness,0.25)*4800);
+					core.lastChannels = channels.size();
+					core.lastConductors = conductors;
 					core.resizeTanks(channels.size(),conductors);
 					gridFill();
 					LeafiaSet<BlockPos> projection = new LeafiaSet<>();
@@ -357,7 +359,7 @@ public class PWRDiagnosis {
 		}
 		float channelRange = 3f;
 		float channelExponent = 0.2f;
-		for (TileEntityPWRElement elm : teElements) {
+		for (PWRElementTE elm : teElements) {
 			if (!elm.isInvalid()) {
 				BlockPos pos = elm.getPos();
 				int height = elm.getHeight();

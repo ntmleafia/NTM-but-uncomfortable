@@ -41,7 +41,7 @@ import com.hbm.items.ModItems.Materials.Billets;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.HbmWorld;
 import com.hbm.lib.Library;
 import com.hbm.lib.RefStrings;
@@ -65,38 +65,55 @@ import com.hbm.tileentity.machine.oil.*;
 import com.hbm.tileentity.machine.pile.TileEntityPileFuel;
 import com.hbm.tileentity.machine.pile.TileEntityPileSource;
 import com.hbm.tileentity.machine.rbmk.*;
-import com.hbm.tileentity.network.TileEntityCraneExtractor;
-import com.hbm.tileentity.network.TileEntityCraneInserter;
-import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
-import com.hbm.tileentity.network.TileEntityRadioTorchSender;
+import com.hbm.tileentity.network.*;
 import com.hbm.tileentity.network.energy.*;
 import com.hbm.tileentity.turret.*;
+import com.hbm.world.feature.OreLayer3D;
 import com.hbm.world.generator.CellularDungeonFactory;
 import com.leafia.CommandLeaf;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleija;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
+import com.leafia.contents.machines.elevators.EvBufferTE;
+import com.leafia.contents.machines.elevators.EvPulleyTE;
+import com.leafia.contents.machines.elevators.EvShaftTE;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
 import com.leafia.contents.machines.manfacturing.arcwelder.ArcWelderTE;
+import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryTE;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
+import com.leafia.contents.machines.manfacturing.wish.WishTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
+import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.element.TileEntityPWRElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.port.TileEntityPWRPort;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.TileEntityPWRTerminal;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentDuct;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.TileEntityPWRVentInlet;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
+import com.leafia.contents.machines.reactors.msr.MSRMixerTE;
+import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
+import com.leafia.contents.machines.reactors.msr.components.control.MSRControlTE;
+import com.leafia.contents.machines.reactors.msr.components.ejector.MSREjectorTE;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE;
+import com.leafia.contents.machines.reactors.msr.components.plug.MSRPlugTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.element.PWRElementTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.port.PWRPortTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.terminal.PWRTerminalTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentDuctTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.inlet.PWRVentInletTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletTE;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
-import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
+import com.leafia.contents.machines.reactors.tokamakt2.TokamakT2TE;
+import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
+import com.leafia.contents.machines.reactors.zirnox.container.DestroyedZirnoxTE;
+import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
+import com.leafia.contents.machines.Reserved6TE;
 import com.leafia.contents.network.computers.cable.ComputerCableTE;
+import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.fluid.valves.FluidBoxValveTE;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
@@ -157,7 +174,7 @@ import java.util.*;
 public class MainRegistry {
 
 	static {
-		HBMSoundHandler.init();
+		HBMSoundEvents.init();
 		FluidRegistry.enableUniversalBucket();
 	}
 
@@ -377,6 +394,9 @@ public class MainRegistry {
 			rendererWaiting.add(new LiquefactorTE());
 			rendererWaiting.add(new PyroOvenTE());
 			rendererWaiting.add(new SolidifierTE());
+
+			rendererWaiting.add(new AssemblyFactoryTE());
+			rendererWaiting.add(new ChemTableTE());
 		}
 
 		proxy.registerRenderInfo();
@@ -415,6 +435,7 @@ public class MainRegistry {
 		aMatDNS.setRepairItem(new ItemStack(ModItems.plate_armor_dnt));
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		GameRegistry.registerTileEntity(Reserved6TE.class, new ResourceLocation(RefStrings.MODID, "tileentity_reserved6"));
 		GameRegistry.registerTileEntity(TileEntityDummy.class, new ResourceLocation(RefStrings.MODID, "tileentity_dummy"));
 		GameRegistry.registerTileEntity(TileEntityMachineAssembler.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_assembler"));
 		GameRegistry.registerTileEntity(TileEntityDiFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_difurnace"));
@@ -461,7 +482,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityPylonLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_large"));
 		GameRegistry.registerTileEntity(TileEntitySubstation.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_substation"));
 		GameRegistry.registerTileEntity(TileEntityMachineCentrifuge.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_centrifuge"));
-		GameRegistry.registerTileEntity(TileEntityMachineGasCent.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gascent"));
+		GameRegistry.registerTileEntity(GasCentTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gascent"));
 		GameRegistry.registerTileEntity(TileEntityMachineUF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_uf6_tank"));
 		GameRegistry.registerTileEntity(TileEntityMachinePuF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_puf6_tank"));
 		GameRegistry.registerTileEntity(TileEntityRailgun.class, new ResourceLocation(RefStrings.MODID, "tileentity_railgun"));
@@ -494,12 +515,14 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineSPP.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_spp"));
 		GameRegistry.registerTileEntity(TileEntityMachineArcFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_arc_furnace"));
 		GameRegistry.registerTileEntity(TileEntityMachineElectricFurnace.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_electric_furnace"));
+		GameRegistry.registerTileEntity(WishTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_wish_crucible"));
 		GameRegistry.registerTileEntity(TileEntityWasteDrum.class, new ResourceLocation(RefStrings.MODID, "tileentity_waste_drum"));
 		GameRegistry.registerTileEntity(TileEntityMachineOilWell.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_oil_well"));
 		GameRegistry.registerTileEntity(TileEntityMachinePumpjack.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_pumpjack"));
 		GameRegistry.registerTileEntity(TileEntityMachineFrackingTower.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_fracking_tower"));
 		GameRegistry.registerTileEntity(TileEntityMachineCatalyticCracker.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_catalytic_cracker"));
 		GameRegistry.registerTileEntity(TileEntityMachineGasFlare.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gas_flare"));
+		GameRegistry.registerTileEntity(TileEntityMachineMiningDrill.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_mining_drill"));
 		GameRegistry.registerTileEntity(TileEntityMachineExcavator.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_excavator"));
 		GameRegistry.registerTileEntity(TileEntityMachineTurbofan.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_turbofan"));
 		GameRegistry.registerTileEntity(TileEntityMachineCMBFactory.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_cmb_factory"));
@@ -554,6 +577,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityFFFluidDuctMk2.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2"));
 		GameRegistry.registerTileEntity(TileEntityFFFluidDuctMk2Solid.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_solid"));
 		GameRegistry.registerTileEntity(FluidBoxValveTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_box_valve"));
+		GameRegistry.registerTileEntity(FluidDuctGaugeTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_ff_fludi_duct_mk2_duct_gauge"));
+
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, new ResourceLocation(RefStrings.MODID, "tileentity_barrel"));
 		GameRegistry.registerTileEntity(TileEntityTesla.class, new ResourceLocation(RefStrings.MODID, "tileentity_tesla"));
 		GameRegistry.registerTileEntity(TileEntityCyberCrab.class, new ResourceLocation(RefStrings.MODID, "tileentity_cybercrab"));
@@ -562,6 +587,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCoreInjector.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_injector"));
 		GameRegistry.registerTileEntity(TileEntityCoreStabilizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_stabilizer"));
 		GameRegistry.registerTileEntity(TileEntityCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_core"));
+		GameRegistry.registerTileEntity(TileEntityCoreCreativeEmitter.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_cemitter"));
 		GameRegistry.registerTileEntity(SPKCableTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_spk"));
 
 		GameRegistry.registerTileEntity(TileEntitySoyuzCapsule.class, new ResourceLocation(RefStrings.MODID, "tileentity_soyuz_capsule"));
@@ -582,6 +608,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineUUCreator.class, new ResourceLocation(RefStrings.MODID, "tileentity_uu_creator"));
 		GameRegistry.registerTileEntity(TileEntityMachineMiniRTG.class, new ResourceLocation(RefStrings.MODID, "tileentity_mini_rtg"));
 		GameRegistry.registerTileEntity(TileEntityITER.class, new ResourceLocation(RefStrings.MODID, "tileentity_iter"));
+		GameRegistry.registerTileEntity(TokamakT2TE.class, new ResourceLocation(RefStrings.MODID, "tileentity_tokamakt2"));
 		GameRegistry.registerTileEntity(TileEntityMachinePlasmaHeater.class, new ResourceLocation(RefStrings.MODID, "tileentity_plasma_heater"));
 		GameRegistry.registerTileEntity(TileEntityMachineFENSU.class, new ResourceLocation(RefStrings.MODID, "tileentity_fensu"));
 		GameRegistry.registerTileEntity(TileEntityTrappedBrick.class, new ResourceLocation(RefStrings.MODID, "tileentity_trapped_brick"));
@@ -645,8 +672,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityTowerLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_tower_large"));
 		GameRegistry.registerTileEntity(TileEntitySILEX.class, new ResourceLocation(RefStrings.MODID, "tileentity_silex"));
 		GameRegistry.registerTileEntity(TileEntityFEL.class, new ResourceLocation(RefStrings.MODID, "tileentity_fel"));
-		GameRegistry.registerTileEntity(TileEntityReactorZirnox.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnox"));
-		GameRegistry.registerTileEntity(TileEntityReactorZirnoxDestroyed.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnoxdestroyed"));
+		GameRegistry.registerTileEntity(ZirnoxTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnox"));
+		GameRegistry.registerTileEntity(DestroyedZirnoxTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_zirnoxdestroyed"));
 		GameRegistry.registerTileEntity(TileEntityHeaterFirebox.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_firebox"));
 		GameRegistry.registerTileEntity(TileEntityHeaterOven.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_oven"));
 		GameRegistry.registerTileEntity(TileEntityHeaterOilburner.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_oilburner"));
@@ -655,12 +682,28 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityHeaterRadioThermal.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_rt"));
 		GameRegistry.registerTileEntity(TileEntityFurnaceIron.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_iron"));
 		GameRegistry.registerTileEntity(TileEntityFurnaceSteel.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_steel"));
+		GameRegistry.registerTileEntity(TileEntityFurnaceCombination.class, new ResourceLocation(RefStrings.MODID, "tileentity_furnace_combination"));
+		GameRegistry.registerTileEntity(TileEntityCrucible.class, new ResourceLocation(RefStrings.MODID, "tileentity_crucible"));
+		GameRegistry.registerTileEntity(TileEntityFoundryMold.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_mold"));
+		GameRegistry.registerTileEntity(TileEntityFoundryBasin.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_basin"));
+		GameRegistry.registerTileEntity(TileEntityFoundryChannel.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_channel"));
+		GameRegistry.registerTileEntity(TileEntityFoundryOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_foundry_outlet"));
 		GameRegistry.registerTileEntity(TileEntityDoorGeneric.class, new ResourceLocation(RefStrings.MODID, "tileentity_door_generic"));
 		GameRegistry.registerTileEntity(TileEntityBMPowerBox.class, new ResourceLocation(RefStrings.MODID, "tileentity_bm_power_box"));
 		GameRegistry.registerTileEntity(TileEntityRadioTorchSender.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_sender"));
 		GameRegistry.registerTileEntity(TileEntityRadioTorchReceiver.class, new ResourceLocation(RefStrings.MODID, "tileentity_radio_torch_receiver"));
 		GameRegistry.registerTileEntity(TileEntityCraneExtractor.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneejector"));
 		GameRegistry.registerTileEntity(TileEntityCraneInserter.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneinserter"));
+		GameRegistry.registerTileEntity(TileEntityCraneSplitter.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranesplitter"));
+		GameRegistry.registerTileEntity(TileEntityCraneBoxer.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneboxer"));
+		GameRegistry.registerTileEntity(TileEntityCraneUnboxer.class, new ResourceLocation(RefStrings.MODID, "tileentity_craneunboxer"));
+		GameRegistry.registerTileEntity(TileEntityCraneRouter.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranerouter"));
+		GameRegistry.registerTileEntity(TileEntityCraneGrabber.class, new ResourceLocation(RefStrings.MODID, "tileentity_cranegrabber"));
+
+		GameRegistry.registerTileEntity(EvFloorTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_floor"));
+		GameRegistry.registerTileEntity(EvPulleyTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_pulley"));
+		GameRegistry.registerTileEntity(EvShaftTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_shaft"));
+		GameRegistry.registerTileEntity(EvBufferTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_buffer"));
 
 		for (LeafiaQuickModel te : rendererWaiting) {
 			LeafiaQuickModel._loadResources(te,te._assetPath());
@@ -834,8 +877,8 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_firework_ball"), EntityFireworks.class, "entity_firework_ball", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_rbmk_debris"), EntityRBMKDebris.class, "entity_rbmk_debris", i++, MainRegistry.instance, 1000, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_zirnox_debris"), EntityZirnoxDebris.class, "entity_zirnox_debris", i++, MainRegistry.instance, 1000, 1, true);
-		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_pwr_debris"), EntityPWRDebris.class, "entity_pwr_debris", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_zirnox_debris"), ZirnoxDebrisEntity.class, "entity_zirnox_debris", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_pwr_debris"), PWRDebrisEntity.class, "entity_pwr_debris", i++, MainRegistry.instance, 1000, 1, true);
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_dfc_absorber_shrapnel"), AbsorberShrapnelEntity.class, "entity_dfc_absorber_shrapnel", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_spear"), EntitySpear.class, "entity_spear", i++, MainRegistry.instance, 1000, 1, true);
@@ -844,17 +887,26 @@ public class MainRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_digamma_quasar"), EntityQuasar.class, "entity_digamma_quasar", i++, MainRegistry.instance, 1000, 1, true);
 
 		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_nuke_folkvangr"), EntityNukeFolkvangr.class, "entity_nuke_folkvangr", i++, MainRegistry.instance, 1000, 1, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(RefStrings.MODID, "entity_elevator"), ElevatorEntity.class, "entity_elevator", i++, MainRegistry.instance, 1000, 1, true);
 
-		GameRegistry.registerTileEntity(TileEntityPWRElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
-		GameRegistry.registerTileEntity(TileEntityPWRControl.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
-		GameRegistry.registerTileEntity(TileEntityPWRPort.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_port"));
-		GameRegistry.registerTileEntity(TileEntityPWRTerminal.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentElement.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentOutlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentInlet.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_inlet"));
-		GameRegistry.registerTileEntity(TileEntityPWRVentDuct.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
+		GameRegistry.registerTileEntity(PWRElementTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_element"));
+		GameRegistry.registerTileEntity(PWRControlTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_control"));
+		GameRegistry.registerTileEntity(PWRPortTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_port"));
+		GameRegistry.registerTileEntity(PWRTerminalTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_terminal"));
+		GameRegistry.registerTileEntity(PWRVentElementTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_element"));
+		GameRegistry.registerTileEntity(PWRVentOutletTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_outlet"));
+		GameRegistry.registerTileEntity(PWRVentInletTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_inlet"));
+		GameRegistry.registerTileEntity(PWRVentDuctTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwr_vent_duct"));
 
 		GameRegistry.registerTileEntity(PWRMeshedWreckEntity.class, new ResourceLocation(RefStrings.MODID, "tileentity_pwrwreck_base"));
+
+		GameRegistry.registerTileEntity(MSRArbitraryTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_arbitrary"));
+		GameRegistry.registerTileEntity(MSRElementTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_element"));
+		GameRegistry.registerTileEntity(MSRControlTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_control"));
+		GameRegistry.registerTileEntity(MSRPlugTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_plug"));
+		GameRegistry.registerTileEntity(MSREjectorTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_ejector"));
+
+		GameRegistry.registerTileEntity(MSRMixerTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_msr_mixer"));
 
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new LoadingCallback() {
 
@@ -932,6 +984,7 @@ public class MainRegistry {
 		DiFurnaceRecipes.registerFuels();
 		CrystallizerRecipes.register();
 		CentrifugeRecipes.register();
+		CrucibleRecipes.registerDefaults();
 		PressRecipes.registerOverrides();
 		BreederRecipes.registerFuels();
 		BreederRecipes.registerRecipes();
@@ -940,13 +993,17 @@ public class MainRegistry {
 		MixerRecipes.copyChemplantRecipes();
 		MixerRecipes.registerRecipes();
 		CrackRecipes.registerRecipes();
+		SolderingRecipes.registerDefaults();
 		ExplosionNukeGeneric.loadSoliniumFromFile();
 		CyclotronRecipes.register();
+		CombinationRecipes.registerDefaults();
 		HadronRecipes.register();
 		MagicRecipes.register();
 		SILEXRecipes.register();
 		AnvilRecipes.register();
+		MachineRecipes.registerGasCentRecipes();
 		WasteDrumRecipes.registerRecipes();
+		WishRecipes.registerRecipes();
 		RefineryRecipes.registerFractions();
 		RefineryRecipes.registerRefineryRecipes();
 		TileEntityNukeCustom.registerBombItems();
@@ -961,17 +1018,19 @@ public class MainRegistry {
 		FluidCombustionRecipes.registerFluidCombustionRecipes();
 		HbmDetox.init();
 
-		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.lox_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.oxygen, 10000));
-		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.pink_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.kerosene, 10000));
-		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.red_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.diesel, 10000));
-		FluidContainerRegistry.registerContainer(ModItems.iv_xp, ModItems.iv_xp_empty, new FluidStack(ModForgeFluids.experience, 100));
-		FluidContainerRegistry.registerContainer(Nuggies.nugget_mercury, null, new FluidStack(ModForgeFluids.mercury, 100));
-		FluidContainerRegistry.registerContainer(ModItems.bottle_mercury, Items.GLASS_BOTTLE, new FluidStack(ModForgeFluids.mercury, 1000));
-		FluidContainerRegistry.registerContainer(ModItems.particle_hydrogen, ModItems.particle_empty, new FluidStack(ModForgeFluids.hydrogen, 1000));
-		FluidContainerRegistry.registerContainer(ModItems.particle_amat, ModItems.particle_empty, new FluidStack(ModForgeFluids.amat, 1000));
-		FluidContainerRegistry.registerContainer(ModItems.particle_aschrab, ModItems.particle_empty, new FluidStack(ModForgeFluids.aschrab, 1000));
-		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.ore_gneiss_gas), Item.getItemFromBlock(ModBlocks.stone_gneiss), new FluidStack(ModForgeFluids.petroleum, 250));
-		
+		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.lox_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.OXYGEN, 10000));
+		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.pink_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.KEROSENE, 10000));
+		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.red_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.DIESEL, 10000));
+		FluidContainerRegistry.registerContainer(ModItems.iv_xp, ModItems.iv_xp_empty, new FluidStack(ModForgeFluids.EXPERIENCE, 100));
+		FluidContainerRegistry.registerContainer(Nuggies.nugget_mercury, null, new FluidStack(ModForgeFluids.MERCURY, 100));
+		FluidContainerRegistry.registerContainer(ModItems.bottle_mercury, Items.GLASS_BOTTLE, new FluidStack(ModForgeFluids.MERCURY, 1000));
+		FluidContainerRegistry.registerContainer(ModItems.particle_hydrogen, ModItems.particle_empty, new FluidStack(ModForgeFluids.HYDROGEN, 1000));
+		FluidContainerRegistry.registerContainer(ModItems.particle_amat, ModItems.particle_empty, new FluidStack(ModForgeFluids.AMAT, 1000));
+		FluidContainerRegistry.registerContainer(ModItems.particle_aschrab, ModItems.particle_empty, new FluidStack(ModForgeFluids.ASCHRAB, 1000));
+		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.ore_gneiss_gas), Item.getItemFromBlock(ModBlocks.stone_gneiss), new FluidStack(ModForgeFluids.PETROLEUM, 250));
+		MinecraftForge.EVENT_BUS.register(new OreLayer3D(ModBlocks.ore_hematite).setScaleH(0.05D).setScaleV(0.1D).setThreshold(230));
+		MinecraftForge.EVENT_BUS.register(new OreLayer3D(ModBlocks.ore_malachite).setScaleH(0.03D).setScaleV(0.15D).setThreshold(300));
+
 		//Drillgon200: expand the max entity radius for the hunter chopper
 		if(World.MAX_ENTITY_RADIUS < 5)
 			World.MAX_ENTITY_RADIUS = 5;

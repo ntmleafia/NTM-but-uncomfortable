@@ -111,6 +111,7 @@ public class LeafiaSet<E> extends AbstractSet<E> implements Set<E>, List<E>, Clo
 		for (int i = 0; i < quickAccessSize; i++) {
 			int item = quickAccess[(quickAccessIndex-i)&sizeSub];
 			if (item >= 0) {
+				if (item >= contents.length) continue; // failsafe
 				if (isEquals(contents[item],element)) {
 					// swap out the position of this entry with the latest one
 					// do not call sortQuickAccess as this does not change values, just the order
@@ -247,12 +248,15 @@ public class LeafiaSet<E> extends AbstractSet<E> implements Set<E>, List<E>, Clo
 			add(e);
 		return index;
 	}
-	@Override
-	public boolean remove(Object o) {
+	public boolean removeElement(Object o) {
 		int index = indexOf(o);
 		if (index < 0) return false;
 		remove(index);
 		return true;
+	}
+	@Override
+	public boolean remove(Object o) {
+		return removeElement(o);
 	}
 	@Override
 	public E remove(int index) {

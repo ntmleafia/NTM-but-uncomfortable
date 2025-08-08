@@ -3,7 +3,7 @@ package com.hbm.items.weapon;
 import com.hbm.entity.projectile.EntitySparkBeam;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
@@ -77,7 +77,7 @@ public class GunSpark extends Item {
 
 			stack.damageItem(1, entityLiving);
 
-			world.playSound(entityLiving.posX, entityLiving.posY, entityLiving.posZ, HBMSoundHandler.sparkShoot, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
+			world.playSound(entityLiving.posX, entityLiving.posY, entityLiving.posZ, HBMSoundEvents.sparkShoot, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
 
 			if (flag) {
 			} else {

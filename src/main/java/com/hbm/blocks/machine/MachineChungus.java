@@ -5,7 +5,7 @@ import com.hbm.blocks.ILookOverlay;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.MultiblockHandlerXR;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityProxyCombo;
 import com.hbm.tileentity.machine.TileEntityChungus;
@@ -75,25 +75,25 @@ public class MachineChungus extends BlockDummyable implements ILookOverlay {
 				int iZ2 = entity.getPos().getZ() + dir.offsetZ * 2 + turn.offsetZ * 2;
 				
 				if((x == iX || x == iX2) && (z == iZ || z == iZ2) && y < entity.getPos().getY() + 2) {
-					world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundHandler.chungus_lever, SoundCategory.BLOCKS, 1.5F, 1.0F);
+					world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundEvents.chungus_lever, SoundCategory.BLOCKS, 1.5F, 1.0F);
 					
 					if(!world.isRemote) {
 						int newFill = 0;
-						if(entity.types[0] == ModForgeFluids.steam){
-							entity.types[0] = ModForgeFluids.hotsteam;
-							entity.types[1] = ModForgeFluids.steam;
+						if(entity.types[0] == ModForgeFluids.STEAM){
+							entity.types[0] = ModForgeFluids.HOTSTEAM;
+							entity.types[1] = ModForgeFluids.STEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.hotsteam){
-							entity.types[0] = ModForgeFluids.superhotsteam;
-							entity.types[1] = ModForgeFluids.hotsteam;
+						} else if(entity.types[0] == ModForgeFluids.HOTSTEAM){
+							entity.types[0] = ModForgeFluids.SUPERHOTSTEAM;
+							entity.types[1] = ModForgeFluids.HOTSTEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.superhotsteam){
-							entity.types[0] = ModForgeFluids.ultrahotsteam;
-							entity.types[1] = ModForgeFluids.superhotsteam;
+						} else if(entity.types[0] == ModForgeFluids.SUPERHOTSTEAM){
+							entity.types[0] = ModForgeFluids.ULTRAHOTSTEAM;
+							entity.types[1] = ModForgeFluids.SUPERHOTSTEAM;
 							newFill = entity.tanks[0].getFluidAmount() / 10;
-						} else if(entity.types[0] == ModForgeFluids.ultrahotsteam){
-							entity.types[0] = ModForgeFluids.steam;
-							entity.types[1] = ModForgeFluids.spentsteam;
+						} else if(entity.types[0] == ModForgeFluids.ULTRAHOTSTEAM){
+							entity.types[0] = ModForgeFluids.STEAM;
+							entity.types[1] = ModForgeFluids.SPENTSTEAM;
 							newFill = Math.min(entity.tanks[0].getFluidAmount() * 1000, entity.tanks[0].getCapacity());
 						}
 						entity.tanks[0].setFluid(new FluidStack(entity.types[0], newFill));

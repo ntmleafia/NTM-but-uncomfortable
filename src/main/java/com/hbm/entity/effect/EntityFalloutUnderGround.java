@@ -212,6 +212,10 @@ public class EntityFalloutUnderGround extends Entity implements IConstantRendere
 				if(world.isAirBlock(pos.add(0, 1, 0))) world.setBlockState(pos.add(0, 1, 0), ModBlocks.toxic_block.getDefaultState());
 				return;
 			
+			} else if(b.getBlock() == Blocks.WATER) {
+				world.setBlockState(pos, ModBlocks.radwater_block.getDefaultState());
+				continue;
+
 			} else if(bblock instanceof BlockLeaves) {
 				if(l > s1){
 					world.setBlockState(pos, ModBlocks.waste_leaves.getDefaultState());

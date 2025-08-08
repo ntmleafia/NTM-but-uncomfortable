@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityMiniMIRV;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import net.minecraft.client.util.ITooltipFlag;
@@ -73,7 +73,7 @@ public class GunMIRV extends Item {
 			entityarrow.setDamage(1000);
 
 			stack.damageItem(1, player);
-			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
+			worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.fatmanShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 			if (!flag) {
 				Library.consumeInventoryItem(player.inventory, Armory.ammo_mirv);

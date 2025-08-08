@@ -7,7 +7,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
@@ -162,7 +162,7 @@ public class GunZOMG extends Item {
 						entityarrow4.setDamage(35 + rand.nextInt(45 - 35));
 						entityarrow5.setDamage(35 + rand.nextInt(45 - 35));
 
-						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.osiprShoot, SoundCategory.PLAYERS, 1.0F, 0.6F + (rand.nextFloat() * 0.4F));
+						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.osiprShoot, SoundCategory.PLAYERS, 1.0F, 0.6F + (rand.nextFloat() * 0.4F));
 
 						if (!world.isRemote) {
 							world.spawnEntity(entityarrow);
@@ -186,7 +186,7 @@ public class GunZOMG extends Item {
 						entityarrow4.setDamage(10000 + rand.nextInt(90000));
 
 						//world.playSoundAtEntity(player, "random.explode", 1.0F, 1.5F + (rand.nextFloat() / 4));
-						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.zomgShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
+						world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.zomgShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
 
 						if (!world.isRemote) {
 							world.spawnEntity(entityarrow);

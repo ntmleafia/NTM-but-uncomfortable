@@ -5,7 +5,7 @@ import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.entity.projectile.EntityCombineBall;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -73,7 +73,7 @@ public class GunOSIPR extends Item {
 				entityarrow.setDamage(5 + rand.nextInt(10));
 
 				//world.playSoundAtEntity(player, "random.explode", 1.0F, 1.5F + (rand.nextFloat() / 4));
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.osiprShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.osiprShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
 
 				if (flag) {
 					entityarrow.canBePickedUp = 2;
@@ -93,7 +93,7 @@ public class GunOSIPR extends Item {
 				entityarrow.setDamage(35 + rand.nextInt(45 - 35));
 
 				//world.playSoundAtEntity(player, "tile.piston.in", 1.0F, 0.75F);
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.singFlyby, SoundCategory.PLAYERS, 1.0F, 1F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.singFlyby, SoundCategory.PLAYERS, 1.0F, 1F);
 
 				if (flag) {
 					entityarrow.canBePickedUp = 2;
@@ -107,7 +107,7 @@ public class GunOSIPR extends Item {
 			}
 			
 			if((this.getMaxItemUseDuration(stack) - count) % 30 == 15 && (player.capabilities.isCreativeMode || Library.hasInventoryItem(player.inventory, Armory.gun_osipr_ammo2)))
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.osiprCharging, SoundCategory.PLAYERS, 1.0F, 1F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.osiprCharging, SoundCategory.PLAYERS, 1.0F, 1F);
 		}
 	}
 	

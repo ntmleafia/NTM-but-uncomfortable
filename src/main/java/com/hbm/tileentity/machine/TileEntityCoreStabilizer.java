@@ -1,6 +1,7 @@
 package com.hbm.tileentity.machine;
 
 import api.hbm.energy.IEnergyUser;
+import com.hbm.inventory.control_panel.*;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemLens;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
@@ -17,16 +18,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 @Optional.InterfaceList({@Optional.Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = "OpenComputers")})
-public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent {
+public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IEnergyUser, LeafiaPacketReceiver, SimpleComponent, IControllable {
 
     public long power;
     public static final long maxPower = 10000000000000L;
@@ -55,6 +58,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 
     @Override
     public void onReceivePacketServer(byte key, Object value, EntityPlayer plr) {
+        super.onReceivePacketServer(key,value,plr);
     }
 
     @Override
@@ -72,10 +76,12 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
         TileEntityCore core = getCore();
         if (isOn && core != null) {
             LinkedHashMap<String, Object> mop = new LinkedHashMap<>();
-            mop.put("heat", core.heat);
-            mop.put("restriction", core.field);
-            mop.put("stress", core.heat / (float) core.field);
-            mop.put("corruption", core.overload / 60F);
+            mop.put("temperature", core.temperature);
+            mop.put("stabilization", core.stabilization);
+            mop.put("containedEnergy", core.containedEnergy*1000_000);
+            mop.put("expellingEnergy", core.expellingEnergy*1000_000);
+            mop.put("potentialRelease", core.potentialGain*100);
+            mop.put("collapse", Math.pow(core.collapsing,4)*100);
             mop.put("fuelA", core.tanks[0].getFluidAmount());
             mop.put("fuelB", core.tanks[1].getFluidAmount());
             return new Object[]{mop};
@@ -148,6 +154,60 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
 		return null;*/
     }
 
+    @Override
+    public BlockPos getControlPos() {
+        return getPos();
+    }
+
+    @Override
+    public World getControlWorld() {
+        return getWorld();
+    }
+
+    @Override
+    public void receiveEvent(BlockPos from,ControlEvent e) {
+        if (e.name.equals("set_stabilizer_level")) {
+            watts = Math.round(e.vars.get("level").getNumber());
+        }
+    }
+    @Override
+    public Map<String,DataValue> getQueryData() {
+        Map<String,DataValue> map = new HashMap<>();
+        map.put("active",new DataValueFloat(isOn ? 1 : 0));
+        map.put("level",new DataValueFloat(watts));
+        map.put("core_temp",new DataValueFloat(0));
+        map.put("core_energy",new DataValueFloat(0));
+        map.put("core_expel",new DataValueFloat(0));
+        map.put("core_potent",new DataValueFloat(0));
+        map.put("core_collapse",new DataValueFloat(0));
+        TileEntityCore core = getCore();
+        if (isOn && core != null) {
+            map.put("core_temp",new DataValueFloat((float)core.temperature));
+            map.put("core_energy",new DataValueFloat((float)core.containedEnergy*1000_000));
+            map.put("core_expel",new DataValueFloat((float)core.expellingEnergy*1000_000));
+            map.put("core_potent",new DataValueFloat((float)core.potentialGain*100));
+            map.put("core_collapse",new DataValueFloat((float)Math.pow(core.collapsing,4)*100));
+        }
+        return map;
+    }
+
+    @Override
+    public List<String> getInEvents() {
+        return Collections.singletonList("set_stabilizer_level");
+    }
+
+    @Override
+    public void validate(){
+        super.validate();
+        ControlEventSystem.get(world).addControllable(this);
+    }
+
+    @Override
+    public void invalidate(){
+        super.invalidate();
+        ControlEventSystem.get(world).removeControllable(this);
+    }
+
     public enum LensType {
         STANDARD(0x0c222c, 0x7F7F7F, ModItems.ams_lens),
         BLANK(0x121212, 0x646464, ModItems.ams_focus_blank),
@@ -170,7 +230,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
     public LensType lens = LensType.STANDARD;
     public boolean isOn;
 
-    public static final int range = 15;
+    public static final int range = 50;
 
     public TileEntityCoreStabilizer() {
         super(1);
@@ -180,6 +240,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
     @Override
     public void update() {
         if (!world.isRemote) {
+            LeafiaPacket._start(this).__write(31,targetPosition).__sendToAffectedClients();
 
             this.updateStandardConnections(world, pos);
 

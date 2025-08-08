@@ -70,7 +70,7 @@ public class RadiationWorldHandler {
 									if(bblock == Blocks.GRASS) {
 										world.setBlockState(pos, ModBlocks.waste_earth.getDefaultState());
 									
-									} else if(bblock == Blocks.DIRT || bblock == Blocks.FARMLAND) {
+									/*} else if(bblock == Blocks.DIRT || bblock == Blocks.FARMLAND) {
 										world.setBlockState(pos, ModBlocks.waste_dirt.getDefaultState());
 									} else if(bblock == Blocks.SANDSTONE) {
 										world.setBlockState(pos, ModBlocks.waste_sandstone.getDefaultState());
@@ -83,7 +83,8 @@ public class RadiationWorldHandler {
 										world.setBlockState(pos, meta == BlockSand.EnumType.SAND ? ModBlocks.waste_sand.getDefaultState() : ModBlocks.waste_sand_red.getDefaultState());
 									} else if(bblock == Blocks.GRAVEL) {
 										world.setBlockState(pos, ModBlocks.waste_gravel.getDefaultState());
-
+									*/ // What's with making contaminated blocks that looks EXACTLY same as normal blocks?
+										// That's just horrible.
 									} else if(bblock == Blocks.MYCELIUM) {
 										world.setBlockState(pos, ModBlocks.waste_mycelium.getDefaultState());
 

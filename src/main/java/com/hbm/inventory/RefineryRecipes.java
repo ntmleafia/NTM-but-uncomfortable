@@ -27,25 +27,25 @@ public class RefineryRecipes {
 	public static HashMap<Fluid, Pair<FluidStack[], ItemStack>> refineryRecipesMap = new HashMap<>();
 	
 	public static void registerRefineryRecipes() {
-		refineryRecipesMap.put(ModForgeFluids.hotoil, new Pair(new FluidStack[]{ 
-			new FluidStack(ModForgeFluids.heavyoil, 50), 
-			new FluidStack(ModForgeFluids.naphtha, 25),
-			new FluidStack(ModForgeFluids.lightoil, 15),
-			new FluidStack(ModForgeFluids.petroleum, 10) }, 
+		refineryRecipesMap.put(ModForgeFluids.HOTOIL, new Pair(new FluidStack[]{
+			new FluidStack(ModForgeFluids.HEAVYOIL, 50),
+			new FluidStack(ModForgeFluids.NAPHTHA, 25),
+			new FluidStack(ModForgeFluids.LIGHTOIL, 15),
+			new FluidStack(ModForgeFluids.PETROLEUM, 10) },
 			new ItemStack(ModItems.sulfur, 1)));
 		
-		refineryRecipesMap.put(ModForgeFluids.hotcrackoil, new Pair(new FluidStack[]{ 
-			new FluidStack(ModForgeFluids.naphtha, 40), 
-			new FluidStack(ModForgeFluids.lightoil, 30),
-			new FluidStack(ModForgeFluids.aromatics, 15),
-			new FluidStack(ModForgeFluids.unsaturateds, 15)	}, 
+		refineryRecipesMap.put(ModForgeFluids.HOTCRACKOIL, new Pair(new FluidStack[]{
+			new FluidStack(ModForgeFluids.NAPHTHA, 40),
+			new FluidStack(ModForgeFluids.LIGHTOIL, 30),
+			new FluidStack(ModForgeFluids.AROMATICS, 15),
+			new FluidStack(ModForgeFluids.UNSATURATEDS, 15)	},
 			new ItemStack(ModItems.oil_tar, 1)));
 
-		refineryRecipesMap.put(ModForgeFluids.toxic_fluid, new Pair(new FluidStack[]{ 
-			new FluidStack(ModForgeFluids.wastefluid, 50),
-			new FluidStack(ModForgeFluids.wastegas, 40),
-			new FluidStack(ModForgeFluids.corium_fluid, 4), 
-			new FluidStack(ModForgeFluids.watz, 1)}, 
+		refineryRecipesMap.put(ModForgeFluids.TOXIC_FLUID, new Pair(new FluidStack[]{
+			new FluidStack(ModForgeFluids.WASTEFLUID, 50),
+			new FluidStack(ModForgeFluids.WASTEGAS, 40),
+			new FluidStack(ModForgeFluids.CORIUM_FLUID, 4),
+			new FluidStack(ModForgeFluids.WATZ, 1)},
 			new ItemStack(ModItems.nuclear_waste_tiny, 1)));
 	}
 
@@ -56,10 +56,10 @@ public class RefineryRecipes {
 	}
 	
 	public static void registerFractions() {
-		fractions.put(ModForgeFluids.heavyoil, new Quartet<>(ModForgeFluids.bitumen, ModForgeFluids.smear, heavy_frac_bitu, heavy_frac_smear));
-		fractions.put(ModForgeFluids.smear, new Quartet<>(ModForgeFluids.heatingoil, ModForgeFluids.lubricant, smear_frac_heat, smear_frac_lube));
-		fractions.put(ModForgeFluids.naphtha, new Quartet<>(ModForgeFluids.heatingoil, ModForgeFluids.diesel, napht_frac_heat, napht_frac_diesel));
-		fractions.put(ModForgeFluids.lightoil, new Quartet<>(ModForgeFluids.diesel, ModForgeFluids.kerosene, light_frac_diesel, light_frac_kero));
+		fractions.put(ModForgeFluids.HEAVYOIL, new Quartet<>(ModForgeFluids.BITUMEN, ModForgeFluids.SMEAR, heavy_frac_bitu, heavy_frac_smear));
+		fractions.put(ModForgeFluids.SMEAR, new Quartet<>(ModForgeFluids.HEATINGOIL, ModForgeFluids.LUBRICANT, smear_frac_heat, smear_frac_lube));
+		fractions.put(ModForgeFluids.NAPHTHA, new Quartet<>(ModForgeFluids.HEATINGOIL, ModForgeFluids.DIESEL, napht_frac_heat, napht_frac_diesel));
+		fractions.put(ModForgeFluids.LIGHTOIL, new Quartet<>(ModForgeFluids.DIESEL, ModForgeFluids.KEROSENE, light_frac_diesel, light_frac_kero));
 	}
 	
 	public static Quartet<Fluid, Fluid, Integer, Integer> getFractions(Fluid oil) {

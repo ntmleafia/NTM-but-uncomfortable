@@ -4,7 +4,7 @@ import com.hbm.capability.HbmCapability;
 import com.hbm.capability.HbmCapability.IHBMData;
 import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.items.armor.JetpackBase;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.KeybindPacket;
@@ -71,7 +71,7 @@ public class JetpackRegular extends JetpackBase {
 			if(player.motionY < 0.4D)
 				player.motionY += 0.1D;
 
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.flamethrowerShoot, SoundCategory.PLAYERS, 0.25F, 1.5F);
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.flamethrowerShoot, SoundCategory.PLAYERS, 0.25F, 1.5F);
 			this.useUpFuel(player, stack, 5);
 		}
 	}

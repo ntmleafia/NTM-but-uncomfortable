@@ -41,7 +41,7 @@ public class TileEntityRBMKOutgasser extends TileEntityRBMKSlottedBase implement
 	public TileEntityRBMKOutgasser() {
 		super(2);
 		gas = new FluidTank(64000);
-		gasType = ModForgeFluids.tritium;
+		gasType = ModForgeFluids.TRITIUM;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class TileEntityDeuteriumTower extends TileEntityDeuteriumExtractor {
 	public TileEntityDeuteriumTower() {
 		super();
 		tanks[0] = new FluidTank(FluidRegistry.WATER, 0, 50000);
-		tanks[1] = new FluidTank(ModForgeFluids.heavywater, 0, 5000);
+		tanks[1] = new FluidTank(ModForgeFluids.HEAVYWATER, 0, 5000);
 	}
 
 	@Override

@@ -103,7 +103,7 @@ public class LeafiaBuf extends BitByteBuf {
 		}
 	}*/
 	ByteBuf substitute(int startBit) {
-		System.out.println("Creating substitute!");
+		//System.out.println("Creating substitute!");
 		byte[] subBytes = shift(startBit);
 		ByteBuf buf = buffer.alloc().buffer(subBytes.length,buffer.maxCapacity());
 		for (int i = subBytes.length-1; i >= 0; i--)/*
@@ -117,7 +117,7 @@ public class LeafiaBuf extends BitByteBuf {
 				System.out.println(s+" (Value: "+b+", unsigned: "+b+")");
 			}*/
 			buf.writeByte(subBytes[i]);
-		System.out.println("Shifted "+startBit+" bits | Own bytes: "+bytes.length+" -> "+(subBytes.length+startBit*8));
+		//System.out.println("Shifted "+startBit+" bits | Own bytes: "+bytes.length+" -> "+(subBytes.length+startBit*8));
 		return buf;
 	}
 

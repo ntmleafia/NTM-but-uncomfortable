@@ -8,7 +8,7 @@ import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.items.ModItems.ToolSets;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemAssemblyTemplate;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
@@ -251,7 +251,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 			if(isProgressing && volume > 0) {
 
 				if(audio == null) {
-					audio = MainRegistry.proxy.getLoopedSound(HBMSoundHandler.assemblerOperate, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), volume, 1.0F);
+					audio = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.assemblerOperate, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), volume, 1.0F);
 					audio.startSound();
 				}
 

@@ -87,16 +87,16 @@ public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHa
 		needsUpdate = false;
 		
 		tanks[0] = new FluidTank(8000);
-		tankTypes[0] = ModForgeFluids.coolant;
+		tankTypes[0] = ModForgeFluids.COOLANT;
 		
 		tanks[1] = new FluidTank(8000);
-		tankTypes[1] = ModForgeFluids.cryogel;
+		tankTypes[1] = ModForgeFluids.CRYOGEL;
 		
 		tanks[2] = new FluidTank(8000);
-		tankTypes[2] = ModForgeFluids.deuterium;
+		tankTypes[2] = ModForgeFluids.DEUTERIUM;
 		
 		tanks[3] = new FluidTank(8000);
-		tankTypes[3] = ModForgeFluids.tritium;
+		tankTypes[3] = ModForgeFluids.TRITIUM;
 	}
 	
 	public String getInventoryName() {
@@ -132,13 +132,13 @@ public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHa
 		if(compound.hasKey("inventory"))
 			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		tankTypes[0] = FluidRegistry.getFluid(compound.getString("coolantA"));
-		if (tankTypes[0] == null) tankTypes[0] =  ModForgeFluids.coolant;
+		if (tankTypes[0] == null) tankTypes[0] =  ModForgeFluids.COOLANT;
 		tankTypes[1] = FluidRegistry.getFluid(compound.getString("coolantB"));
-		if (tankTypes[1] == null) tankTypes[1] = ModForgeFluids.cryogel;
+		if (tankTypes[1] == null) tankTypes[1] = ModForgeFluids.CRYOGEL;
 		tankTypes[2] = FluidRegistry.getFluid(compound.getString("fuelA"));
-		if (tankTypes[2] == null) tankTypes[2] = ModForgeFluids.deuterium;
+		if (tankTypes[2] == null) tankTypes[2] = ModForgeFluids.DEUTERIUM;
 		tankTypes[3] = FluidRegistry.getFluid(compound.getString("fuelB"));
-		if (tankTypes[3] == null) tankTypes[3] = ModForgeFluids.tritium;
+		if (tankTypes[3] == null) tankTypes[3] = ModForgeFluids.TRITIUM;
 		super.readFromNBT(compound);
 	}
 	
@@ -181,7 +181,7 @@ public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHa
 						if (tankTypes[t/4*2] == f || tankTypes[t/4*2+1] == f) continue;
 						inventory.setStackInSlot(t+1,inventory.getStackInSlot(t));
 						inventory.setStackInSlot(t,ItemStack.EMPTY);
-						if (f == ModForgeFluids.cryogel || f == ModForgeFluids.coolant || f == FluidRegistry.WATER || f == ModForgeFluids.oil) {
+						if (f == ModForgeFluids.CRYOGEL || f == ModForgeFluids.COOLANT || f == FluidRegistry.WATER || f == ModForgeFluids.OIL) {
 							if(tankTypes[t/2] != f)
 								tanks[t/2].setFluid(null);
 							tankTypes[t/2] = f;
@@ -396,11 +396,11 @@ public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHa
 			return 0;
 		else if(type.getFluid() == FluidRegistry.WATER){
 			return 5;
-		} else if(type.getFluid() == ModForgeFluids.oil){
+		} else if(type.getFluid() == ModForgeFluids.OIL){
 			return 15;
-		} else if(type.getFluid() == ModForgeFluids.coolant){
+		} else if(type.getFluid() == ModForgeFluids.COOLANT){
 			return this.heat / 250;
-		} else if(type.getFluid() == ModForgeFluids.cryogel){
+		} else if(type.getFluid() == ModForgeFluids.CRYOGEL){
 			return this.heat > heat/2 ? 25 : 5;
 		} else {
 			return 0;
@@ -410,9 +410,9 @@ public class TileEntityAMSBase extends TileEntity implements ITickable, IFluidHa
 	private int getFuelPower(FluidStack type) {
 		if(type == null)
 			return 0;
-		else if(type.getFluid() == ModForgeFluids.deuterium){
+		else if(type.getFluid() == ModForgeFluids.DEUTERIUM){
 			return 50;
-		} else if(type.getFluid() == ModForgeFluids.tritium){
+		} else if(type.getFluid() == ModForgeFluids.TRITIUM){
 			return 75;
 		} else {
 			return 0;

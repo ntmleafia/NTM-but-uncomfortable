@@ -10,12 +10,12 @@ import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.machine.ItemFuelRod;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.saveddata.RadiationSavedData;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,14 +88,14 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 				if((i >= 0) && (i < 12)) {
 					if (itemStack.getItem() instanceof ItemFuelRod)
 						return true;
-					else if (itemStack.getItem() instanceof ItemLeafiaRod)
+					else if (itemStack.getItem() instanceof LeafiaRodItem)
 						return true;
 				}
 				if(i == 12)
 					if(FFUtils.containsFluid(itemStack, FluidRegistry.WATER))
 						return true;
 				if(i == 14)
-					if(FFUtils.containsFluid(itemStack, ModForgeFluids.coolant))
+					if(FFUtils.containsFluid(itemStack, ModForgeFluids.COOLANT))
 						return true;
 				return false;
 			}
@@ -113,9 +113,9 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		tanks[0] = new FluidTank(32000);
 		tankTypes[0] = FluidRegistry.WATER;
 		tanks[1] = new FluidTank(16000);
-		tankTypes[1] = ModForgeFluids.coolant;
+		tankTypes[1] = ModForgeFluids.COOLANT;
 		tanks[2] = new FluidTank(8000);
-		tankTypes[2] = ModForgeFluids.steam;
+		tankTypes[2] = ModForgeFluids.STEAM;
 		needsUpdate = true;
 
 	}
@@ -146,13 +146,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		if(level >= 0 && level < 3) {
 			if(compression == 0) {
 				if(level == 1) {
-					tankTypes[2] = ModForgeFluids.hotsteam;
+					tankTypes[2] = ModForgeFluids.HOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 2) {
-					tankTypes[2] = ModForgeFluids.superhotsteam;
+					tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 100D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -160,13 +160,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			}
 			if(compression == 1) {
 				if(level == 0) {
-					tankTypes[2] = ModForgeFluids.steam;
+					tankTypes[2] = ModForgeFluids.STEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 10);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 2) {
-					tankTypes[2] = ModForgeFluids.superhotsteam;
+					tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() / 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -174,13 +174,13 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			}
 			if(compression == 2) {
 				if(level == 0) {
-					tankTypes[2] = ModForgeFluids.steam;
+					tankTypes[2] = ModForgeFluids.STEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 100);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
 				}
 				if(level == 1) {
-					tankTypes[2] = ModForgeFluids.hotsteam;
+					tankTypes[2] = ModForgeFluids.HOTSTEAM;
 					int newAmount = (int) (tanks[2].getFluidAmount() * 10D);
 					tanks[2].drain(tanks[2].getCapacity(), true);
 					tanks[2].fill(new FluidStack(tankTypes[2], newAmount), true);
@@ -190,12 +190,12 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			compression = level;
 		}
 	}
-	double getHeatInSlot(int slot,ItemLeafiaRod rod) {
+	double getHeatInSlot(int slot,LeafiaRodItem rod) {
 		return rod.getFlux(inventory.getStackInSlot(slot));
 	}
 	double handleLeafiaFuel(int slot,double cool) {
 		ItemStack stack = inventory.getStackInSlot(slot);
-		ItemLeafiaRod rod = (ItemLeafiaRod)stack.getItem();
+		LeafiaRodItem rod = (LeafiaRodItem)stack.getItem();
 		double detectedHeat = 0;
 		for (int offset = 1; slot-offset*5 >= 0; offset += 1) {
 			detectedHeat += getHeatInSlot(slot-offset*5,rod)/Math.pow(2,offset-1);
@@ -282,21 +282,21 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			if(retracting && rods > 0) {
 
 				if(rods == rodsMax)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
 				rods--;
 
 				if(rods == 0)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 			if(!retracting && rods < rodsMax) {
 
 				if(rods == 0)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStart, SoundCategory.BLOCKS, 1.0F, 0.75F);
 
 				rods++;
 
 				if(rods == rodsMax)
-					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.reactorStop, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			}
 
 			if(rods > 0)
@@ -318,7 +318,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			float feedwatr = (float) Math.pow(this.tanks[0].getFluidAmount()/32000f,0.4);
 			double cooledSum = 0;
 			for (int i = 0; i < 12; i++) {
-				if (inventory.getStackInSlot(i).getItem() instanceof ItemLeafiaRod)
+				if (inventory.getStackInSlot(i).getItem() instanceof LeafiaRodItem)
 					cooledSum += handleLeafiaFuel(i,coolin);
 			}
 			coreHeatAddition = (int)Math.floor(fuelHeat/12000*(maxCoreHeat-coreHeat/2));
@@ -371,15 +371,15 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 	private void explode() {
 		ItemStack prevStack = null;
 		for(int i = 0; i < inventory.getSlots(); i++) {
-			prevStack = ItemLeafiaRod.comparePriority(inventory.getStackInSlot(i),prevStack);
+			prevStack = LeafiaRodItem.comparePriority(inventory.getStackInSlot(i),prevStack);
 			inventory.setStackInSlot(i, ItemStack.EMPTY);
 		}
 		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 18.0F, true);
 		boolean nope = true;
 		if (prevStack != null) {
-			if (prevStack.getItem() instanceof ItemLeafiaRod) {
+			if (prevStack.getItem() instanceof LeafiaRodItem) {
 				nope = false;
-				ItemLeafiaRod rod = (ItemLeafiaRod)(prevStack.getItem());
+				LeafiaRodItem rod = (LeafiaRodItem)(prevStack.getItem());
 				rod.resetDetonate();
 				rod.detonateRadius = 18;
 				rod.detonateNuclear = true;
@@ -449,9 +449,9 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 		double water = steam;
 
-		if(tankTypes[2] == ModForgeFluids.steam) {
+		if(tankTypes[2] == ModForgeFluids.STEAM) {
 			water /= 100D;
-		} else if(tankTypes[2] == ModForgeFluids.hotsteam) {
+		} else if(tankTypes[2] == ModForgeFluids.HOTSTEAM) {
 			water /= 10D;
 		}
 
@@ -689,16 +689,16 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		if(nbt.hasKey("tanks"))
 			FFUtils.deserializeTankArray(nbt.getTagList("tanks", 10), tanks);
 		tankTypes[0] = FluidRegistry.WATER;
-		tankTypes[1] = ModForgeFluids.coolant;
+		tankTypes[1] = ModForgeFluids.COOLANT;
 		compression = nbt.getInteger("compression");
 		detectCompression = compression + 1;
 
 		if(compression == 0) {
-			tankTypes[2] = ModForgeFluids.steam;
+			tankTypes[2] = ModForgeFluids.STEAM;
 		} else if(compression == 1) {
-			tankTypes[2] = ModForgeFluids.hotsteam;
+			tankTypes[2] = ModForgeFluids.HOTSTEAM;
 		} else if(compression == 2) {
-			tankTypes[2] = ModForgeFluids.superhotsteam;
+			tankTypes[2] = ModForgeFluids.SUPERHOTSTEAM;
 		}
 		super.readFromNBT(nbt);
 	}

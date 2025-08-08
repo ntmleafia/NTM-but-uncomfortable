@@ -6,7 +6,7 @@ import com.hbm.entity.projectile.EntityRailgunBlast;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.AuxGaugePacket;
@@ -214,7 +214,7 @@ public class TileEntityRailgun extends TileEntityLoadedBase implements ITickable
 				power = 0;
 			PacketDispatcher.wrapper.sendToAll(new AuxGaugePacket(pos.getX(), pos.getY(), pos.getZ(), 0, 0));
 		} else {
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.buttonNo, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.buttonNo, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 	}
 	
@@ -242,7 +242,7 @@ public class TileEntityRailgun extends TileEntityLoadedBase implements ITickable
 		fart.motionZ = motionZ;
 		fart.rotation();
 		world.spawnEntity(fart);
-		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.railgunFire, SoundCategory.BLOCKS, 100.0F, 1.0F);
+		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.railgunFire, SoundCategory.BLOCKS, 100.0F, 1.0F);
 	}
 	
 	@Override

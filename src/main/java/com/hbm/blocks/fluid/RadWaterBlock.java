@@ -36,7 +36,7 @@ public class RadWaterBlock extends BlockFluidClassic {
 	@Override
 	public boolean canDisplace(IBlockAccess world, BlockPos pos) {
 		if(world.getBlockState(pos).getMaterial().isLiquid())
-			return true;
+			return world.getBlockState(pos.up()).getBlock() instanceof RadWaterBlock;
 		return super.canDisplace(world, pos);
 	}
 	
@@ -83,5 +83,4 @@ public class RadWaterBlock extends BlockFluidClassic {
 	public int tickRate(World world) {
 		return 15;
 	}
-	
 }

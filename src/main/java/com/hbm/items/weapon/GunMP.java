@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -72,7 +72,7 @@ public class GunMP extends Item {
 
 			// world.playSoundAtEntity(player, "random.explode", 1.0F, 1.5F +
 			// (rand.nextFloat() / 4));
-			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.rifleShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
+			world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.rifleShoot, SoundCategory.PLAYERS, 1.0F, 0.8F + (rand.nextFloat() * 0.4F));
 
 			if (flag) {
 				entityarrow.canBePickedUp = 2;

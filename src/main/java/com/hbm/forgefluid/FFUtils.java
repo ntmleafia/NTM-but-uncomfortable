@@ -18,12 +18,14 @@ import com.hbm.items.machine.ItemFluidTank;
 import com.hbm.items.special.ItemCell;
 import com.hbm.items.tool.ItemFluidCanister;
 import com.hbm.items.tool.ItemGasCanister;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.render.RenderHelper;
 import com.hbm.tileentity.machine.TileEntityDummy;
 import com.hbm.util.I18nUtil;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
+import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
+import com.leafia.contents.machines.reactors.msr.components.element.MSRElementTE.MSRFuel;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
@@ -33,9 +35,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
@@ -58,6 +62,8 @@ import org.lwjgl.input.Keyboard;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 //Drillgon200: This is Library.java except for fluids
@@ -188,15 +194,27 @@ public class FFUtils {
 	}
 
 	public static void renderTankInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, FluidTank fluidTank, Fluid fluid){
-		if(fluidTank.getFluid() != null) {
+		/*if(fluidTank.getFluid() != null) {
 			renderFluidInfo(gui, mouseX, mouseY, x, y, width, height, fluidTank.getFluid().getFluid(), fluidTank.getFluidAmount(), fluidTank.getCapacity());
 		} else {
 			renderFluidInfo(gui, mouseX, mouseY, x, y, width, height, fluid, 0, fluidTank.getCapacity());
-		}
+		}*/
+		if(fluidTank.getFluid() != null)
+			renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluidTank.getFluid(),fluidTank.getCapacity());
+		else
+			renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluid != null ? new FluidStack(fluid,0) : null,fluidTank.getCapacity());
+	}
+	public static void addFluidInfo(FluidStack stack, List<String> texts){
+		addFluidInfo(stack,texts,"");
 	}
 
-	public static void addFluidInfo(Fluid fluid, List<String> texts){
+	public static void addFluidInfo(FluidStack stack, List<String> texts, String prefix){
+		Fluid fluid = stack.getFluid();
 		int temp = fluid.getTemperature()-273;
+		if (fluid.equals(ModForgeFluids.FLUORIDE)) {
+			NBTTagCompound tag = MSRTEBase.nbtProtocol(stack.tag);
+			temp = (int)(MSRTEBase.baseTemperature+tag.getDouble("heat"));
+		}
 		if(temp != 27){
 			String tempColor = "";
 			if(temp < -130) {
@@ -216,27 +234,27 @@ public class FFUtils {
 			} else {
 				tempColor = "§d";
 			}
-			texts.add(String.format("%s%d°C", tempColor, temp));
+			texts.add(prefix+String.format("%s%d°C", tempColor, temp));
 		}
 		boolean hasInfo = false;
 		boolean isKeyPressed = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
 
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.HIGH_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait.pressure.high")+"]");
+				texts.add(prefix+"§c["+I18n.format("trait._hazardfluid.pressure.high")+"]");
 			}
 			hasInfo = true;
 		}
 		if (ModFluidProperties.containsTrait(fluid,ModFluidProperties.FluidTrait.EXTREME_PRESSURE)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait.pressure.extreme")+"]");
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.pressure.extreme")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (ModFluidProperties.isAntimatter(fluid)) {
 			if(isKeyPressed){
-				texts.add("§4["+I18n.format("trait.antimatter")+"]");
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.antimatter")+"]");
 			}
 			hasInfo = true;
 		}
@@ -244,27 +262,27 @@ public class FFUtils {
 		if (ModFluidProperties.isCorrosivePlastic(fluid)) {
 			if (ModFluidProperties.isCorrosiveIron(fluid)) {
 				if(isKeyPressed){
-					texts.add("§2["+I18n.format("trait.corrosiveIron")+"]");
+					texts.add(prefix+"§2["+I18n.format("trait._hazardfluid.corrosiveIron")+"]");
 				}
 			} else if(isKeyPressed){
-				texts.add("§a["+I18n.format("trait.corrosivePlastic")+"]");
+				texts.add(prefix+"§a["+I18n.format("trait._hazardfluid.corrosivePlastic")+"]");
 			}
 			hasInfo = true;
 		}
 
 		if (FluidCombustionRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§6["+I18n.format("trait.flammable")+"]");
-				texts.add(" "+I18n.format("trait.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
+				texts.add(prefix+"§6["+I18n.format("trait._hazardfluid.flammable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.flammable.desc", Library.getShortNumber(FluidCombustionRecipes.getFlameEnergy(fluid) * 1000L)));
 			}
 			hasInfo = true;
 		}
 		if (EngineRecipes.hasFuelRecipe(fluid)) {
 			if(isKeyPressed){
-				texts.add("§c["+I18n.format("trait.combustable")+"]");
+				texts.add(prefix+"§c["+I18n.format("trait._hazardfluid.combustable")+"]");
 				
-				texts.add(" "+I18n.format("trait.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
-				texts.add(" "+I18n.format("trait.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.combustable.desc", Library.getShortNumber(EngineRecipes.getEnergy(fluid))));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.combustable.desc2", I18n.format(EngineRecipes.getFuelGrade(fluid).getGrade())));
 			}
 			hasInfo = true;
 		}
@@ -272,8 +290,8 @@ public class FFUtils {
 		if (HeatRecipes.hasCoolRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getResultingHeat(fluid) * 1000 / HeatRecipes.getInputAmountCold(fluid));
-				texts.add("§4["+I18n.format("trait.coolable")+"]");
-				texts.add(" "+I18n.format("trait.coolable.desc", heat));
+				texts.add(prefix+"§4["+I18n.format("trait._hazardfluid.coolable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.coolable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -281,8 +299,8 @@ public class FFUtils {
 		if (HeatRecipes.hasBoilRecipe(fluid)) {
 			if(isKeyPressed){
 				String heat = Library.getShortNumber(HeatRecipes.getRequiredHeat(fluid) * 1000 / HeatRecipes.getInputAmountHot(fluid));
-				texts.add("§3["+I18n.format("trait.boilable")+"]");
-				texts.add(" "+I18n.format("trait.boilable.desc", heat));
+				texts.add(prefix+"§3["+I18n.format("trait._hazardfluid.boilable")+"]");
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.boilable.desc", heat));
 			}
 			hasInfo = true;
 		}
@@ -291,11 +309,35 @@ public class FFUtils {
 
 		if(dfcEff >= 1){
 			if(isKeyPressed){
-				texts.add("§5["+I18n.format("trait.dfcFuel")+"]");
+				texts.add(prefix+"§5["+I18n.format("trait._hazardfluid.dfcFuel")+"]");
 				dfcEff = (dfcEff-1F);
-				texts.add(" "+I18n.format("trait.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
+				texts.add(prefix+" "+I18n.format("trait._hazardfluid.dfcFuel.desc", dfcEff >= 0 ? "+"+Library.getPercentage(dfcEff) : Library.getPercentage(dfcEff)));
 			}
 			hasInfo = true;
+		}
+
+		if (fluid.equals(ModForgeFluids.FLUORIDE)) {
+			NBTTagCompound tag = MSRTEBase.nbtProtocol(stack.tag);
+			Map<String,Double> mixture = MSRTEBase.readMixture(tag);
+			if (!mixture.isEmpty()) {
+				texts.add(prefix+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.mixture"));
+				for (Entry<String,Double> entry : mixture.entrySet()) {
+					texts.add(prefix+" "+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.fuel."+entry.getKey())+" "+String.format("%01.1f",entry.getValue())+"/B ");
+					try {
+						texts.add(prefix+TextFormatting.LIGHT_PURPLE+"  Heat Function: "+MSRFuel.valueOf(entry.getKey()).funcString);
+					} catch (IllegalArgumentException ignored) {}
+				}
+			}
+		}
+
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.getHeldItemMainhand().getItem() == ModItems.wand_d || player.getHeldItemOffhand().getItem() == ModItems.wand_d) {
+			if (stack.tag != null) {
+				for (String s : stack.tag.getKeySet()) {
+					NBTBase tag = stack.tag.getTag(s);
+					texts.add("TAG >> "+s+": "+tag.toString());
+				}
+			}
 		}
 
 		if (hasInfo && !isKeyPressed) {
@@ -322,37 +364,46 @@ public class FFUtils {
 						nbt.setString("fluidtype",fluidRsc);
 						stack.setTagCompound(nbt);
 						ctx.getServerHandler().player.updateHeldItem();
-						ctx.getServerHandler().player.world.playSound(null,ctx.getServerHandler().player.getPosition(),HBMSoundHandler.techBleep,SoundCategory.PLAYERS,1,1);
+						ctx.getServerHandler().player.world.playSound(null,ctx.getServerHandler().player.getPosition(),HBMSoundEvents.techBleep,SoundCategory.PLAYERS,1,1);
 					}
 				}
 			};
 		}
 	}
-	private static void renderFluidInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, Fluid fluid, int amount, int capacity) {
+	private static void renderFluidInfo(GuiInfoContainer gui,int mouseX,int mouseY,int x,int y,int width,int height,FluidStack stack,int capacity) {
 		if (x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			List<String> texts = new ArrayList<>();
-			if (fluid != null) {
-				texts.add(fluid.getLocalizedName(new FluidStack(fluid, 1)));
-				texts.add(amount + "/" + capacity + "mB");
-				addFluidInfo(fluid, texts);
+			if (stack != null) {
+				String name = stack.getLocalizedName();
+				if (stack.tag != null) {
+					if (stack.tag.hasKey("enrichment")) {
+						name = I18nUtil.resolveKey("fluid._enrichment."+stack.tag.getByte("enrichment"),name);
+					}
+				}
+				texts.add(name);
+				texts.add(stack.amount + "/" + capacity + "mB");
+				addFluidInfo(stack, texts);
 				if (!lastClicked && gui.clickDown) {
-					ItemStack stack = Minecraft.getMinecraft().player.inventory.getItemStack();
-					if (stack != null && !stack.isEmpty()) {
-						if (stack.getItem() instanceof ItemFuzzyIdentifier) {
+					ItemStack item = Minecraft.getMinecraft().player.inventory.getItemStack();
+					if (item != null && !item.isEmpty()) {
+						if (item.getItem() instanceof ItemFuzzyIdentifier) {
 							FuzzyIdentifierPacket packet = new FuzzyIdentifierPacket();
-							packet.fluidRsc = fluid.getName();
+							packet.fluidRsc = stack.getFluid().getName();
 							LeafiaCustomPacket.__start(packet).__sendToServer();
-							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+							Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",stack.getLocalizedName()).setStyle(new Style().setColor(TextFormatting.YELLOW)));
 						}
 					}
 				}
 			} else {
 				texts.add(I18nUtil.resolveKey("desc.none"));
-				texts.add(amount + "/" + capacity + "mB");
+				texts.add("0/" + capacity + "mB");
 			}
 			gui.drawFluidInfo(texts, mouseX, mouseY);
 			lastClicked = gui.clickDown;
 		}
+	}
+	private static void renderFluidInfo(GuiInfoContainer gui, int mouseX, int mouseY, int x, int y, int width, int height, Fluid fluid, int amount, int capacity) {
+		renderFluidInfo(gui,mouseX,mouseY,x,y,width,height,fluid != null ? new FluidStack(fluid, amount) : null,capacity);
 	}
 
 	public static boolean hasEnoughFluid(FluidTank t, FluidStack f){
@@ -401,7 +452,9 @@ public class FFUtils {
 			try{
 				IFluidHandler tef = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 				if(tef != null && tef.fill(new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount())), false) > 0) {
-					tank.drain(tef.fill(new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount())), true), true);
+					FluidStack stack = new FluidStack(tank.getFluid(), Math.min(maxDrain, tank.getFluidAmount()));
+					stack.tag = tank.getFluid().tag;
+					tank.drain(tef.fill(stack, true), true);
 					return true;
 				}
 			} catch(Throwable t){
@@ -539,8 +592,8 @@ public class FFUtils {
 
 		//Mercury override
 		//Oh god, these overrides are getting worse and worse, but it would take a large amount of effort to make the code good
-		if(in.getItem() == Nuggies.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.mercury, 100), false) == 100){
-			tank.fill(new FluidStack(ModForgeFluids.mercury, 100), true);
+		if(in.getItem() == Nuggies.nugget_mercury && tank.fill(new FluidStack(ModForgeFluids.MERCURY, 100), false) == 100){
+			tank.fill(new FluidStack(ModForgeFluids.MERCURY, 100), true);
 			in.shrink(1);
 			return true;
 		}
@@ -768,7 +821,7 @@ public class FFUtils {
 		// Rod override (extra messy because I don't feel like restarting
 		// minecraft to make a helper method)
 		if(in.getItem() == RetroRods.rod_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 1000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 1000 && out.isEmpty()) {
 				tank.drain(1000, true);
 
 				in.shrink(1);
@@ -779,7 +832,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 1000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 1000 && out.isEmpty()) {
 				tank.drain(1000, true);
 
 				in.shrink(1);
@@ -803,7 +856,7 @@ public class FFUtils {
 			}
 		}
 		if(in.getItem() == RetroRods.rod_dual_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 2000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 2000 && out.isEmpty()) {
 				tank.drain(2000, true);
 
 				in.shrink(1);
@@ -814,7 +867,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 2000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 2000 && out.isEmpty()) {
 				tank.drain(2000, true);
 
 				in.shrink(1);
@@ -838,7 +891,7 @@ public class FFUtils {
 			}
 		}
 		if(in.getItem() == RetroRods.rod_quad_empty) {
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.coolant && tank.getFluid().amount >= 4000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.COOLANT && tank.getFluid().amount >= 4000 && out.isEmpty()) {
 				tank.drain(4000, true);
 
 				in.shrink(1);
@@ -849,7 +902,7 @@ public class FFUtils {
 				}
 				return true;
 			}
-			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.tritium && tank.getFluid().amount >= 4000 && out.isEmpty()) {
+			if(tank.getFluid() != null && tank.getFluid().getFluid() == ModForgeFluids.TRITIUM && tank.getFluid().amount >= 4000 && out.isEmpty()) {
 				tank.drain(4000, true);
 
 				in.shrink(1);

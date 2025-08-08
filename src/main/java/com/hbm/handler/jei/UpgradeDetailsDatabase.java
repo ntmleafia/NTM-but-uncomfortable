@@ -269,6 +269,34 @@ public class UpgradeDetailsDatabase {
                         )
                 )
         );
+        tryAddMachine(ModBlocks.machine_soldering,
+                Arrays.asList(
+                        UpgradeType.SPEED,
+                        UpgradeType.POWER
+                ),
+                Arrays.asList(
+                        Arrays.asList(
+                                "delay","-1/6x",
+                                "consumption","+1x",
+
+                                "delay","-2/6x",
+                                "consumption","+2x",
+
+                                "delay","-3/6x",
+                                "consumption","+3x"
+                        ),
+                        Arrays.asList(
+                                "consumption","-1/6x",
+                                "delay","+1/3x",
+
+                                "consumption","-2/6x",
+                                "delay","+2/3x",
+
+                                "consumption","-3/6x",
+                                "delay","+3/3x"
+                        )
+                )
+        );
         /*
             this.speedLevel = Math.min(upgradeManager.getLevel(UpgradeType.SPEED), 3);
             this.energyLevel = Math.min(upgradeManager.getLevel(UpgradeType.POWER), 3);
@@ -362,6 +390,56 @@ public class UpgradeDetailsDatabase {
                         )
                 )
         );
+        tryAddMachine(ModBlocks.machine_drill,
+                Arrays.asList(
+                        UpgradeType.SPEED,
+                        UpgradeType.EFFECT,
+                        UpgradeType.POWER,
+                        UpgradeType.FORTUNE
+                ),
+                Arrays.asList(
+                        Arrays.asList(
+                                "delay","-0.75s",
+                                "consumption","+300",
+
+                                "delay","-1.50s",
+                                "consumption","+600",
+
+                                "delay","-2.25s",
+                                "consumption","+900"
+                        ),
+                        Arrays.asList(
+                                "diameter","+4",
+                                "consumption","+80",
+
+                                "diameter","+8",
+                                "consumption","+160",
+
+                                "diameter","+12",
+                                "consumption","+240"
+                        ),
+                        Arrays.asList(
+                                "consumption","-30",
+                                "delay","+0.25",
+
+                                "consumption","-60",
+                                "delay","+0.50",
+
+                                "consumption","-90",
+                                "delay","+0.75"
+                        ),
+                        Arrays.asList(
+                                "fortune","1",
+                                "delay","+0.75s",
+
+                                "fortune","2",
+                                "delay","+1.50s",
+
+                                "fortune","3",
+                                "delay","+2.25s"
+                        )
+                )
+        );
         tryAddMachine(ModBlocks.machine_mining_laser,
                 Arrays.asList(
                         UpgradeType.SPEED,
@@ -383,13 +461,13 @@ public class UpgradeDetailsDatabase {
                                 "consumption","+6x"
                         ),
                         Arrays.asList(
-                                "range","+4",
+                                "diameter","+2",
                                 null,null,
 
-                                "range","+8",
+                                "diameter","+4",
                                 null,null,
 
-                                "range","+12",
+                                "diameter","+6",
                                 null,null
                         ),
                         Arrays.asList(

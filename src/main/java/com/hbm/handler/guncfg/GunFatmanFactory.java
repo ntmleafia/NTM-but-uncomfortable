@@ -12,7 +12,7 @@ import com.hbm.handler.GunConfiguration;
 import com.hbm.interfaces.IBulletImpactBehavior;
 import com.hbm.interfaces.IBulletUpdateBehavior;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.misc.RenderScreenOverlay.Crosshair;
 import net.minecraft.util.SoundCategory;
 
@@ -34,7 +34,7 @@ public static GunConfiguration getFatmanConfig() {
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
-		config.firingSound = HBMSoundHandler.fatmanShoot;
+		config.firingSound = HBMSoundEvents.fatmanShoot;
 		config.reloadSound = GunConfiguration.RSOUND_FATMAN;
 		config.reloadSoundEnd = false;
 		
@@ -98,7 +98,7 @@ public static GunConfiguration getFatmanConfig() {
 		config.reloadType = GunConfiguration.RELOAD_FULL;
 		config.allowsInfinity = true;
 		config.crosshair = Crosshair.L_CIRCUMFLEX;
-		config.firingSound = HBMSoundHandler.fatmanShoot;
+		config.firingSound = HBMSoundEvents.fatmanShoot;
 		config.reloadSound = GunConfiguration.RSOUND_FATMAN;
 		config.reloadSoundEnd = false;
 		
@@ -450,7 +450,7 @@ public static GunConfiguration getFatmanConfig() {
 						posZ = z + 0.5;
 					}
 					
-					bullet.world.playSound(null, x, y, z, HBMSoundHandler.mukeExplosion, SoundCategory.HOSTILE, 15.0F, 1.0F);
+					bullet.world.playSound(null, x, y, z, HBMSoundEvents.mukeExplosion, SoundCategory.HOSTILE, 15.0F, 1.0F);
 					
 					ExplosionLarge.spawnShrapnels(bullet.world, posX, posY, posZ, 25);
 					

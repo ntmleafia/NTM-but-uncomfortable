@@ -9,44 +9,62 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.hbm.items.ModItems.*;
+import com.hbm.render.item.*;
+import com.hbm.tileentity.network.TileEntityCraneSplitter;
+import com.leafia.contents.machines.elevators.*;
+import com.leafia.contents.machines.elevators.car.ElevatorEntity;
+import com.leafia.contents.machines.elevators.car.ElevatorRender;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
+import com.leafia.contents.machines.elevators.car.styles.EvStyleItemRender;
+import com.leafia.contents.machines.elevators.floors.EvFloorRender;
+import com.leafia.contents.machines.elevators.floors.EvFloorTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
-import com.hbm.items.ModItems.Armory;
-import com.hbm.items.ModItems.DummyTexs;
 import com.hbm.items.ModItems.Materials.Ingots;
-import com.hbm.items.ModItems.ToolSets;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
-import com.leafia.contents.control.fuel.nuclearfuel.ItemLeafiaRod;
+import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.RenderPWRVentElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.TileEntityPWRVentElement;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.RenderPWRVentOutlet;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.TileEntityPWRVentOutlet;
-import com.leafia.contents.machines.reactors.pwr.debris.EntityPWRDebris;
-import com.leafia.contents.machines.reactors.pwr.debris.ItemRenderPWRDebris;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
+import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryRender;
+import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementRender;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.element.PWRVentElementTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletRender;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.vent.outlet.PWRVentOutletTE;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity;
+import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisItemRender;
 import com.leafia.contents.machines.reactors.pwr.debris.RenderPWRDebris;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.PWRMeshedWreckEntity;
 import com.leafia.contents.machines.reactors.pwr.blocks.wreckage.RenderPWRMeshedWreck;
-import com.leafia.contents.machines.reactors.zirnox.debris.EntityZirnoxDebris;
+import com.leafia.contents.machines.reactors.tokamakt2.TokamakT2Render;
+import com.leafia.contents.machines.reactors.tokamakt2.TokamakT2TE;
+import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisEntity;
+import com.leafia.contents.machines.Reserved6Render;
+import com.leafia.contents.machines.Reserved6TE;
+import com.leafia.contents.network.fluid.FluidDuctEquipmentRender;
+import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.spk_cable.SPKCableRender;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Render;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaClientListener;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.leafia.unsorted.ParticleBalefire;
 import com.leafia.unsorted.ParticleRedstoneLight;
 import com.hbm.render.entity.missile.*;
-import com.leafia.contents.machines.reactors.zirnox.debris.RenderZirnoxDebris;
+import com.leafia.contents.machines.reactors.zirnox.debris.ZirnoxDebrisRender;
 import com.leafia.contents.gear.detonator_laser.ItemRenderLaserDetonator;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodRender;
 import com.leafia.contents.storage.crates.RenderCrateSteel;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.RenderPWRControl;
-import com.leafia.contents.machines.reactors.zirnox.RenderZirnox;
-import com.leafia.contents.machines.reactors.zirnox.RenderZirnoxDestroyed;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnox;
-import com.leafia.contents.machines.reactors.zirnox.container.TileEntityReactorZirnoxDestroyed;
-import com.leafia.contents.machines.reactors.pwr.blocks.components.control.TileEntityPWRControl;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlRender;
+import com.leafia.contents.machines.reactors.zirnox.ZirnoxRender;
+import com.leafia.contents.machines.reactors.zirnox.DestroyedZirnoxRender;
+import com.leafia.contents.machines.reactors.zirnox.container.ZirnoxTE;
+import com.leafia.contents.machines.reactors.zirnox.container.DestroyedZirnoxTE;
+import com.leafia.contents.machines.reactors.pwr.blocks.components.control.PWRControlTE;
 import com.hbm.tileentity.machine.*;
 import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.client.particle.*;
@@ -171,7 +189,7 @@ import com.hbm.handler.HbmKeybinds.EnumKeybind;
 import com.hbm.handler.HbmShaderManager;
 import com.hbm.handler.JetpackHandler;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RecoilHandler;
 import com.hbm.lib.RefStrings;
 import com.hbm.particle.ParticleBatchRenderer;
@@ -293,29 +311,7 @@ import com.hbm.render.factories.RenderRubbleFactory;
 import com.hbm.render.factories.RenderSSmokeFactory;
 import com.hbm.render.factories.RenderTaintedCreeperFactory;
 import com.hbm.render.factories.ShrapnelRendererFactory;
-import com.hbm.render.item.AssemblyTemplateRender;
-import com.hbm.render.item.ChemTemplateRender;
-import com.hbm.render.item.FFIdentifierRender;
-import com.hbm.render.item.FluidBarrelRender;
-import com.hbm.render.item.FluidCanisterRender;
-import com.hbm.render.item.FluidTankRender;
-import com.hbm.render.item.ItemRenderBase;
-import com.hbm.render.item.ItemRenderCell;
-import com.hbm.render.item.ItemRenderFFFluidDuct;
-import com.hbm.render.item.ItemRenderFluidIcon;
-import com.hbm.render.item.ItemRenderGasCanister;
-import com.hbm.render.item.ItemRenderLibrary;
-import com.hbm.render.item.ItemRenderMissile;
-import com.hbm.render.item.ItemRenderMissilePart;
-import com.hbm.render.item.ItemRenderMissileGeneric;
 import com.hbm.render.item.ItemRenderMissileGeneric.RenderMissileType;
-import com.hbm.render.item.ItemRenderMultitool;
-import com.hbm.render.item.ItemRenderObj;
-import com.hbm.render.item.ItemRenderShim;
-import com.hbm.render.item.ItemRendererHot;
-import com.hbm.render.item.ItemRendererMachine;
-import com.hbm.render.item.ItemRendererMeteorSword;
-import com.hbm.render.item.ItemRendererBedrockOre;
 import com.hbm.render.item.weapon.ItemRedstoneSwordRender;
 import com.hbm.render.item.weapon.ItemRenderBFLauncher;
 import com.hbm.render.item.weapon.ItemRenderBigSword;
@@ -446,7 +442,6 @@ import com.hbm.tileentity.machine.TileEntityDeuteriumTower;
 import com.hbm.tileentity.machine.TileEntityMachineEPress;
 import com.hbm.tileentity.machine.TileEntityMachineFENSU;
 import com.hbm.tileentity.machine.TileEntityMachineFluidTank;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
 import com.hbm.tileentity.machine.TileEntityMachineIGenerator;
 import com.hbm.tileentity.machine.TileEntityMachineLargeTurbine;
 import com.hbm.tileentity.machine.TileEntityMachineMiniRTG;
@@ -644,7 +639,8 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.registerKeyBinding(fsbFlashlight);
 
 		HbmKeybinds.register();
-		
+		ClientRegistry.bindTileEntitySpecialRenderer(Reserved6TE.class, new Reserved6Render());
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachinePress.class, new RenderPress());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineAssembler.class, new RenderAssembler());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTestRender.class, new RenderTestRender());
@@ -675,7 +671,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPylonLarge.class, new RenderPylonLarge());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySubstation.class, new RenderPylonSubstation());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineCentrifuge.class, new RenderCentrifuge());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineGasCent.class, new RenderGasCent());
+		ClientRegistry.bindTileEntitySpecialRenderer(GasCentTE.class, new RenderGasCent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineUF6Tank.class, new RenderUF6Tank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachinePuF6Tank.class, new RenderPuF6Tank());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityRailgun.class, new RenderRailgun());
@@ -694,6 +690,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineFrackingTower.class, new RenderFrackingTower());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineCatalyticCracker.class, new RenderCatalyticCracker());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineGasFlare.class, new RenderGasFlare());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineMiningDrill.class, new RenderMiningDrill());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineExcavator.class, new RenderExcavator());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineTurbofan.class, new RenderTurbofan());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineUUCreator.class, new RenderUUCreator());
@@ -728,6 +725,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDecoBlockAlt.class, new RenderDecoBlockAlt());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFFFluidDuctMk2.class, new RenderFluidDuctMk2<TileEntityFFFluidDuctMk2>());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFFFluidSuccMk2.class, new RenderFluidDuctMk2<TileEntityFFFluidSuccMk2>());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCraneSplitter.class, new RenderCraneSplitter());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new RenderFluidBarrel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTesla.class, new RenderTesla());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreEmitter.class, new RenderCoreComponent());
@@ -735,6 +733,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreInjector.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreStabilizer.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCore.class, new RenderCore());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreCreativeEmitter.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(SPKCableTE.class, new SPKCableRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoyuzCapsule.class, new RenderCapsule());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySoyuzStruct.class, new RenderSoyuzMultiblock());
@@ -746,6 +745,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineRTG.class, new RenderRTG());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineMiniRTG.class, new RenderRTG());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityITER.class, new RenderITER());
+		ClientRegistry.bindTileEntitySpecialRenderer(TokamakT2TE.class, new TokamakT2Render());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachineFENSU.class, new RenderFENSU());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMachinePlasmaHeater.class, new RenderPlasmaHeater());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPlasmaStruct.class, new RenderPlasmaMultiblock());
@@ -802,8 +802,8 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTowerLarge.class, new RenderLargeTower());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySILEX.class, new RenderSILEX());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFEL.class, new RenderFEL());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityReactorZirnox.class, new RenderZirnox());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityReactorZirnoxDestroyed.class, new RenderZirnoxDestroyed());
+        ClientRegistry.bindTileEntitySpecialRenderer(ZirnoxTE.class, new ZirnoxRender());
+        ClientRegistry.bindTileEntitySpecialRenderer(DestroyedZirnoxTE.class, new DestroyedZirnoxRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHeaterFirebox.class, new RenderFirebox());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHeaterOven.class, new RenderHeatingOven());
     	ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHeaterOilburner.class, new RenderOilburner());
@@ -812,11 +812,23 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityHeaterHeatex.class, new RenderHeaterHeatex());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceIron.class, new RenderFurnaceIron());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceSteel.class, new RenderFurnaceSteel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFurnaceCombination.class, new RenderFurnaceCombination());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrucible.class, new RenderCrucible());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryMold.class, new RenderFoundryMold());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryBasin.class, new RenderFoundryBasin());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryChannel.class, new RenderFoundryChannel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityFoundryOutlet.class, new RenderFoundryOutlet());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityDoorGeneric.class, new RenderDoorGeneric());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRControl.class, new RenderPWRControl());
+        ClientRegistry.bindTileEntitySpecialRenderer(PWRControlTE.class, new PWRControlRender());
 		ClientRegistry.bindTileEntitySpecialRenderer(PWRMeshedWreckEntity.class, new RenderPWRMeshedWreck());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentElement.class, new RenderPWRVentElement());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPWRVentOutlet.class, new RenderPWRVentOutlet());
+		ClientRegistry.bindTileEntitySpecialRenderer(PWRVentElementTE.class, new PWRVentElementRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(PWRVentOutletTE.class, new PWRVentOutletRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvFloorTE.class, new EvFloorRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvPulleyTE.class, new EvPulleyRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvShaftTE.class, new EvShaftRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(EvBufferTE.class, new EvBufferRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(FluidDuctGaugeTE.class, new FluidDuctEquipmentRender());
+		ClientRegistry.bindTileEntitySpecialRenderer(MSRArbitraryTE.class, new MSRArbitraryRender());
 
         for (LeafiaQuickModel te : rendererWaiting) {
             ClientRegistry.bindTileEntitySpecialRenderer(((TileEntity)te).getClass(),te._renderer());
@@ -992,13 +1004,14 @@ public class ClientProxy extends ServerProxy {
 	    RenderingRegistry.registerEntityRenderingHandler(EntityRADBeast.class, RenderRADBeast.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityFireworks.class, RenderShrapnel.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityRBMKDebris.class, RenderRBMKDebris.FACTORY);
-        RenderingRegistry.registerEntityRenderingHandler(EntityZirnoxDebris.class, RenderZirnoxDebris.FACTORY);
-		RenderingRegistry.registerEntityRenderingHandler(EntityPWRDebris.class, RenderPWRDebris.FACTORY);
+        RenderingRegistry.registerEntityRenderingHandler(ZirnoxDebrisEntity.class, ZirnoxDebrisRender.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(PWRDebrisEntity.class, RenderPWRDebris.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(AbsorberShrapnelEntity.class, AbsorberShrapnelRender.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, RenderSpear.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityMissileVolcano.class, RenderMissileNuclear.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityUFO.class, RenderUFO.FACTORY);
 	    RenderingRegistry.registerEntityRenderingHandler(EntityQuasar.class, RenderQuasar.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(ElevatorEntity.class,ElevatorRender.FACTORY);
 		
 		ModelLoader.setCustomStateMapper(ModBlocks.toxic_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.radwater_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
@@ -1010,6 +1023,7 @@ public class ClientProxy extends ServerProxy {
 		ModelLoader.setCustomStateMapper(ModBlocks.schrabidic_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.corium_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.volcanic_lava_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
+		ModelLoader.setCustomStateMapper(ModBlocks.fluoride_block, new StateMap.Builder().ignore(BlockFluidClassic.LEVEL).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.seal_controller, new StateMap.Builder().ignore(BlockSeal.ACTIVATED).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.ntm_dirt, new StateMap.Builder().ignore(BlockDirt.SNOWY).ignore(BlockDirt.VARIANT).build());
 		ModelLoader.setCustomStateMapper(ModBlocks.brick_jungle_trap, new StateMap.Builder().ignore(TrappedBrick.TYPE).build());
@@ -1850,9 +1864,9 @@ public class ClientProxy extends ServerProxy {
 				int smokeScale = 5;
 				int smokeLife = 15;
 				if(mat == Material.IRON){
-					world.playSound(x, y, z, HBMSoundHandler.hit_metal, SoundCategory.BLOCKS, 1, 0.9F+world.rand.nextFloat()*0.2F, false);
+					world.playSound(x, y, z, HBMSoundEvents.hit_metal, SoundCategory.BLOCKS, 1, 0.9F+world.rand.nextFloat()*0.2F, false);
 				} else {
-					world.playSound(x, y, z, HBMSoundHandler.hit_dirt, SoundCategory.BLOCKS, 1, 0.7F+world.rand.nextFloat()*0.3F, false);
+					world.playSound(x, y, z, HBMSoundEvents.hit_dirt, SoundCategory.BLOCKS, 1, 0.7F+world.rand.nextFloat()*0.3F, false);
 				}
 				if(mat == Material.ROCK || mat == Material.GROUND || mat == Material.GRASS || mat == Material.WOOD || mat == Material.LEAVES || mat == Material.SAND){
 					ResourceLocation tex = ResourceManager.rock_fragments;
@@ -1947,7 +1961,7 @@ public class ClientProxy extends ServerProxy {
 				}
 				
 			} else if(hitType == Type.ENTITY){
-				world.playSound(x, y, z, HBMSoundHandler.hit_flesh, SoundCategory.BLOCKS, 1, 0.8F+world.rand.nextFloat()*0.4F, false);
+				world.playSound(x, y, z, HBMSoundEvents.hit_flesh, SoundCategory.BLOCKS, 1, 0.8F+world.rand.nextFloat()*0.4F, false);
 				Vec3d bulletDirection = new Vec3d(data.getFloat("dirX"), data.getFloat("dirY"), data.getFloat("dirZ"));
 				if(GeneralConfig.bloodFX){
 					for(int i = 0; i < 2; i ++){
@@ -2233,13 +2247,17 @@ public class ClientProxy extends ServerProxy {
 		ModItems.redstone_sword.setTileEntityItemStackRenderer(ItemRedstoneSwordRender.INSTANCE);
 		ModItems.assembly_template.setTileEntityItemStackRenderer(AssemblyTemplateRender.INSTANCE);
 		ModItems.chemistry_template.setTileEntityItemStackRenderer(ChemTemplateRender.INSTANCE);
+		ModItems.crucible_template.setTileEntityItemStackRenderer(CrucibleTemplateRender.INSTANCE);
 		Armory.gun_b92.setTileEntityItemStackRenderer(ItemRenderGunAnim.INSTANCE);
 		ModItems.fluid_tank_full.setTileEntityItemStackRenderer(FluidTankRender.INSTANCE);
 		ModItems.fluid_barrel_full.setTileEntityItemStackRenderer(FluidBarrelRender.INSTANCE);
 
-        for (ItemLeafiaRod rod : ItemLeafiaRod.fromResourceMap.values()) {
+        for (LeafiaRodItem rod : LeafiaRodItem.fromResourceMap.values()) {
             rod.setTileEntityItemStackRenderer(LeafiaRodRender.INSTANCE);
         }
+		for (Item item : BedrockOreV2.types) {
+			item.setTileEntityItemStackRenderer(BedrockOreV2Render.INSTANCE);
+		}
 
 		ModItems.canister_generic.setTileEntityItemStackRenderer(FluidCanisterRender.INSTANCE);
 		ModItems.forge_fluid_identifier.setTileEntityItemStackRenderer(FFIdentifierRender.INSTANCE);
@@ -2378,10 +2396,12 @@ public class ClientProxy extends ServerProxy {
 		ModItems.ore_bedrock_enriched.setTileEntityItemStackRenderer(new ItemRendererBedrockOre(0x55595D, 1F));
 
         ModItems.detonator_laser.setTileEntityItemStackRenderer(new ItemRenderLaserDetonator());
+		for (EvStyleItem styleItem : ElevatorStyles.styleItems)
+			styleItem.setTileEntityItemStackRenderer(new EvStyleItemRender());
 
-		ModItems.pwr_piece.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
-		ModItems.pwr_shrapnel.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
-		ModItems.pwr_shard.setTileEntityItemStackRenderer(new ItemRenderPWRDebris());
+		ModItems.pwr_piece.setTileEntityItemStackRenderer(new PWRDebrisItemRender());
+		ModItems.pwr_shrapnel.setTileEntityItemStackRenderer(new PWRDebrisItemRender());
+		ModItems.pwr_shard.setTileEntityItemStackRenderer(new PWRDebrisItemRender());
 
 		for(Entry<Item, ItemRenderBase> entry : ItemRenderLibrary.renderers.entrySet()){
 			entry.getKey().setTileEntityItemStackRenderer(entry.getValue());

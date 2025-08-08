@@ -257,7 +257,7 @@ public class NodeConnection extends NodeElement {
 				builder.deleteCharAt(builder.length()-1);
 		} else if(key == Keyboard.KEY_RETURN){
 			stopTyping();
-		} else {
+		} else if (key != Keyboard.KEY_LSHIFT && key != Keyboard.KEY_RSHIFT) {
 			builder.append(c);
 		}
 	}

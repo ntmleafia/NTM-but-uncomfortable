@@ -1,6 +1,10 @@
 package com.hbm.inventory.control_panel;
 
 import com.hbm.inventory.control_panel.nodes.*;
+import com.hbm.inventory.control_panel.nodes.leafia.NodeAddString;
+import com.hbm.inventory.control_panel.nodes.leafia.NodeSIPfx;
+import com.hbm.inventory.control_panel.nodes.leafia.NodeSounder;
+import com.hbm.inventory.control_panel.nodes.leafia.NodeSubString;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ClientProxy;
 import com.hbm.render.RenderHelper;
@@ -184,6 +188,8 @@ public class SubElementNodeEditor extends SubElement {
 							node = new NodeCancelEvent(x, y);
 						} else if(s2.equals("Set Variable")){
 							node = new NodeSetVar(x, y, gui.currentEditControl);
+						} else if (s2.equals("Play Sound")) {
+							node = new NodeSounder(x,y);
 						}
 						if(node != null){
 							addMenu.close();
@@ -200,11 +206,38 @@ public class SubElementNodeEditor extends SubElement {
 						list.addItems("Cancel");
 					}
 					list.addItems("Set Variable");
+					list.addItems("Play Sound");
+					return list;
+				} else if(s.endsWith("Text")){
+					ItemList list = new ItemList(0, 0, 32, s2 -> {
+						final float x = (gui.mouseX-gui.getGuiLeft())*gridScale + gui.getGuiLeft() + gridX;
+						final float y = (gui.mouseY-gui.getGuiTop())*gridScale + gui.getGuiTop() - gridY;
+						Node node = null;
+						if (s2.equals("Add String")) {
+							node = new NodeAddString(x, y);
+						}
+						else if (s2.equals("Substring")) {
+							node = new NodeSubString(x, y);
+						}
+						else if (s2.equals("SIPfx")) {
+							node = new NodeSIPfx(x, y);
+						}
+						if (node != null) {
+							addMenu.close();
+							addMenu = null;
+							currentSystem.addNode(node);
+							currentSystem.activeNode = node;
+						}
+						return null;
+					});
+					list.addItems("Add String");
+					list.addItems("Substring");
+					list.addItems("SIPfx");
 					return list;
 				}
 				return null;
 			});
-			addMenu.addItems("{expandable}Input", "{expandable}Output", "{expandable}Math", "{expandable}Boolean", "{expandable}Logic");
+			addMenu.addItems("{expandable}Input", "{expandable}Output", "{expandable}Math", "{expandable}Boolean", "{expandable}Logic", "{expandable}Text");
 		}
 		if(code == Keyboard.KEY_DELETE || code == Keyboard.KEY_X){
 			List<Node> selected = new ArrayList<>(currentSystem.selectedNodes);

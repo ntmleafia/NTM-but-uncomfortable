@@ -32,12 +32,12 @@ public class TileEntityMachineFractionTower extends TileEntity  implements INBTP
 		
 		tanks = new FluidTank[3];
 		types = new Fluid[3];
-		types[0] = ModForgeFluids.heavyoil;
-		types[1] = ModForgeFluids.bitumen;
-		types[2] = ModForgeFluids.smear;
-		tanks[0] = new FluidTank(ModForgeFluids.heavyoil, 0, 4000);
-		tanks[1] = new FluidTank(ModForgeFluids.bitumen, 0, 4000);
-		tanks[2] = new FluidTank(ModForgeFluids.smear, 0, 4000);
+		types[0] = ModForgeFluids.HEAVYOIL;
+		types[1] = ModForgeFluids.BITUMEN;
+		types[2] = ModForgeFluids.SMEAR;
+		tanks[0] = new FluidTank(ModForgeFluids.HEAVYOIL, 0, 4000);
+		tanks[1] = new FluidTank(ModForgeFluids.BITUMEN, 0, 4000);
+		tanks[2] = new FluidTank(ModForgeFluids.SMEAR, 0, 4000);
 	}
 	
 	public void setTankType(int idx, Fluid type){

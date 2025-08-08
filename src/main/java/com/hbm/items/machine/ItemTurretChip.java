@@ -1,7 +1,7 @@
 package com.hbm.items.machine;
 
 import com.hbm.blocks.turret.TurretBase;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.turret.TileEntityTurretBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -42,7 +42,7 @@ public class ItemTurretChip extends ItemTurretBiometry {
 			{
 	        	player.sendMessage(new TextComponentTranslation("chat.turret.ownertransfer"));
 			}
-			world.playSound(player.posX, player.posY, player.posZ, HBMSoundHandler.techBleep, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
+			world.playSound(player.posX, player.posY, player.posZ, HBMSoundEvents.techBleep, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
         	
 	        return EnumActionResult.SUCCESS;
 		}

@@ -99,7 +99,7 @@ public class CyclotronRecipes {
 		makeRecipe(plutonium, plAmat, PU.dust(), new ItemStack(Powders.powder_tennessine), plA);
 		makeRecipe(plutonium, plAmat, new ComparableStack(Powders.powder_tennessine), new ItemStack(Powders.powder_reiium), plA);
 		makeRecipe(plutonium, plAmat, new ComparableStack(ModItems.pellet_charged), new ItemStack(Nuggies.nugget_schrabidium), 200);
-		makeRecipe(plutonium, plAmat, new NbtComparableStack(ItemCell.getFullCell(ModForgeFluids.amat)), ItemCell.getFullCell(ModForgeFluids.aschrab), 0);
+		makeRecipe(plutonium, plAmat, new NbtComparableStack(ItemCell.getFullCell(ModForgeFluids.AMAT)), ItemCell.getFullCell(ModForgeFluids.ASCHRAB), 0);
 		/// PLUTONIUM END ///
 
 		///TODO: fictional elements

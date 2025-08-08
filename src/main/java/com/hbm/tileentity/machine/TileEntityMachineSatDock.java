@@ -2,8 +2,8 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.missile.EntityMinerRocket;
-import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Crystals;
+import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.machine.ItemSatChip;
 import com.hbm.saveddata.satellites.Satellite;
@@ -170,7 +170,7 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 		new WeightedRandomObject(new ItemStack(Powders.powder_power, 2), 5),
 		new WeightedRandomObject(new ItemStack(Powders.powder_copper, 5), 15),
 		new WeightedRandomObject(new ItemStack(Powders.powder_lead, 3), 10),
-		new WeightedRandomObject(new ItemStack(ModItems.fluorite, 4), 15), 
+		new WeightedRandomObject(new ItemStack(Ingots.fluorite, 4), 15),
 		new WeightedRandomObject(new ItemStack(Powders.powder_lapis, 4), 10),
 		new WeightedRandomObject(new ItemStack(Powders.powder_combine_steel, 1), 1),
 		new WeightedRandomObject(new ItemStack(Crystals.crystal_aluminium, 1), 5),

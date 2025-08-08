@@ -3,7 +3,7 @@ package com.hbm.items.weapon;
 import com.google.common.collect.Multimap;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import net.minecraft.client.util.ITooltipFlag;
@@ -73,7 +73,7 @@ public class GunSuicide extends Item {
             }
             
             stack.damageItem(1, player);
-            worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.revolverShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
+            worldIn.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.revolverShoot, SoundCategory.PLAYERS, 1.0F, 1.0F);
             
             if (flag)
             { }

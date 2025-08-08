@@ -2,7 +2,7 @@ package com.leafia.contents.effects.folkvangr;
 
 import com.hbm.entity.logic.IChunkLoader;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
@@ -17,6 +17,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.*;
@@ -99,9 +100,10 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 		if (world.isRemote) return;
 		if (postEffect >= 0) {
 			postEffect--;
-			if (postEffect <= 0)
+			if (postEffect <= 0) {
 				this.setDead();
-			else {
+				unloadMainChunk();
+			} else {
 				List<Entity> entities = world.getEntitiesWithinAABB(
 						Entity.class,
 						new AxisAlignedBB(
@@ -155,7 +157,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 		}
 		if ((cloudUUID != null) && (cloudBound != null)) {
 			if (!played) {
-				world.playSound(null,getPosition(),HBMSoundHandler.nuke_folkvangr,SoundCategory.BLOCKS,cloudBound.getMaxAge(),1);
+				world.playSound(null,getPosition(),HBMSoundEvents.nuke_folkvangr,SoundCategory.BLOCKS,cloudBound.getMaxAge(),1);
 				PacketDispatcher.wrapper.sendToAllAround(
 						new CommandLeaf.ShakecamPacket(new String[]{
 								"duration="+cloudBound.getMaxAge(),
@@ -175,6 +177,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 				}
 			}
 			played = true;
+			loadMainChunk();
 			double curRange = cloudBound.scale/16d;
 			short start = (short)Math.floor(curRange);
 			int destColumn = (int)Math.floor((curRange-Math.floor(curRange))*getRowTotal(start));
@@ -255,8 +258,8 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 		Chunk chunk = world.getChunk(chunkCoordX+x,chunkCoordZ+z);
 		ExtendedBlockStorage[] storage = chunk.getBlockStorageArray();
 		if (
-				((Math.ceil((posX-radius*0.707)/16) <= x) && (x+15 <= Math.floor((posX+radius*0.707)/16)))
-						&& ((Math.ceil((posZ-radius*0.707)/16) <= z) && (z+15 <= Math.floor((posZ+radius*0.707)/16)))
+				((Math.ceil((posX-radius*0.707)/16) <= chunkCoordX+x) && (chunkCoordX+x+1 < Math.floor((posX+radius*0.707)/16)))
+						&& ((Math.ceil((posZ-radius*0.707)/16) <= chunkCoordZ+z) && (chunkCoordZ+z+1 < Math.floor((posZ+radius*0.707)/16)))
 		) {
 			int minCY = (int)MathHelper.clamp(Math.ceil((posY-radius*0.707)/16),1,storage.length-1);
 			int maxCY = (int)MathHelper.clamp(Math.floor((posY+radius*0.707)/16),1,storage.length-1);
@@ -296,7 +299,12 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 	}
 	protected void eraseBlock(BlockPos pos) {
 		if (world.isValid(pos))
-			world.setBlockToAir(pos);
+			// FLAGS: [Block update]
+			//        [Sends the change to clients]
+			//        [Prevents the block from being re-rendered]
+			//        [If remote, forces re-renders to work on main thread instead of worker pool]
+			//        [Prevent observers from seeing this change]
+			world.setBlockState(pos,Blocks.AIR.getDefaultState(),0b00010);
 	}
 	protected static boolean eraseChunk(Chunk chunk,byte min,byte max) {
 		if (min > max) return false;
@@ -375,6 +383,18 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 			{
 				ForgeChunkManager.forceChunk(loaderTicket, chunk);
 			}
+		}
+	}
+	private ChunkPos mainChunk;
+	public void loadMainChunk() {
+		if(!world.isRemote && loaderTicket != null && this.mainChunk == null) {
+			this.mainChunk = new ChunkPos((int) Math.floor(this.posX / 16D), (int) Math.floor(this.posZ / 16D));
+			ForgeChunkManager.forceChunk(loaderTicket, this.mainChunk);
+		}
+	}
+	public void unloadMainChunk() {
+		if(!world.isRemote && loaderTicket != null && this.mainChunk != null) {
+			ForgeChunkManager.unforceChunk(loaderTicket, this.mainChunk);
 		}
 	}
 

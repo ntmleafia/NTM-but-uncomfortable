@@ -2,7 +2,7 @@ package com.hbm.blocks.turret;
 
 import com.hbm.entity.particle.EntityGasFlameFX;
 import com.hbm.entity.projectile.EntityAAShell;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.tileentity.turret.TileEntityTurretSpitfire;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -71,7 +71,7 @@ public class TurretSpitfire extends TurretBase {
 				world.spawnEntity(smoke);
 			}
 
-			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundHandler.oldExplosion, SoundCategory.BLOCKS, 1.0F, 0.5F);
+			world.playSound(null, x + 0.5, y + 0.5, z + 0.5, HBMSoundEvents.oldExplosion, SoundCategory.BLOCKS, 1.0F, 0.5F);
 			
 			flag = true;
 		}

@@ -30,6 +30,9 @@ public class ItemRenderLaserDetonator extends TEISRBase {
 			.get(TransformType.GUI)
 			.setScale(0.25).setPosition(-2.25,1.45,-1.25).setRotation(-40,0,0).getHelper()
 
+			.get(TransformType.FIXED)
+			.copySettings(TransformType.GUI).getHelper()
+
 			.get(TransformType.FIRST_PERSON_RIGHT_HAND)
 			.setScale(0.25).setPosition(-2.25,1,-1.25).setRotation(-10,0,5).getHelper()
 			.get(TransformType.FIRST_PERSON_LEFT_HAND) // Whoops

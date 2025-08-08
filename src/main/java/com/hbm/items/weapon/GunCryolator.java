@@ -4,7 +4,7 @@ import com.google.common.collect.Multimap;
 import com.hbm.entity.projectile.EntityLN2;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -75,7 +75,7 @@ public class GunCryolator extends Item {
 			}
 
 			if (count % 5 == 0)
-				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.cryolatorShoot, SoundCategory.PLAYERS, 1.0F, 1F);
+				world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.cryolatorShoot, SoundCategory.PLAYERS, 1.0F, 1F);
 
 			if (!world.isRemote) {
 				world.spawnEntity(entityarrow);

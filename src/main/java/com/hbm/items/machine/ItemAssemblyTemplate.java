@@ -141,6 +141,27 @@ public class ItemAssemblyTemplate extends Item implements IHasCustomModel {
 
 		list.add("§l" + I18nUtil.resolveKey("info.template_time"));
     	list.add(" §3" + Math.floor((float)(getProcessTime(stack)) / 20 * 100) / 100 + " " + I18nUtil.resolveKey("info.template_seconds"));
+
+		list.add("§l" + I18nUtil.resolveKey("info.template_load"));
+		list.add(" §2" + getLoad(stack));
+	}
+
+	public static int getLoad(ItemStack stack) {
+		if (!(stack.getItem() instanceof ItemAssemblyTemplate))
+			return 10;
+
+		int i = getTagWithRecipeNumber(stack).getInteger("type");
+
+		if(i < 0 || i >= AssemblerRecipes.recipeList.size())
+			return 10;
+
+		ComparableStack out = AssemblerRecipes.recipeList.get(i);
+		Integer load = AssemblerRecipes.loads.get(out);
+
+		if(load != null)
+			return load;
+		else
+			return 10;
 	}
 
 	public static int getProcessTime(ItemStack stack) {

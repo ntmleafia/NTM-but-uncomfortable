@@ -5,7 +5,7 @@ import api.hbm.energy.IEnergyUser;
 import com.hbm.inventory.NuclearTransmutationRecipes;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCapacitor;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
@@ -117,7 +117,7 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 			if(process > 0) {
 
 				if(audio == null) {
-					audio = MainRegistry.proxy.getLoopedSound(HBMSoundHandler.tauChargeLoop, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F);
+					audio = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.tauChargeLoop, SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F);
 					audio.startSound();
 				}
 			} else {

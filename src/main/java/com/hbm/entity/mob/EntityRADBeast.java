@@ -4,7 +4,7 @@ import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.RetroRods;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.saveddata.RadiationSavedData;
@@ -84,7 +84,7 @@ public class EntityRADBeast extends EntityMob implements IRadiationImmune {
     
     @Override
     protected SoundEvent getAmbientSound() {
-    	return HBMSoundHandler.geigerSounds[rand.nextInt(6)];
+    	return HBMSoundEvents.geigerSounds[rand.nextInt(6)];
     }
     
     @Override
@@ -94,7 +94,7 @@ public class EntityRADBeast extends EntityMob implements IRadiationImmune {
     
     @Override
     protected SoundEvent getDeathSound() {
-    	return HBMSoundHandler.metalStep;
+    	return HBMSoundEvents.metalStep;
     }
     
     @SideOnly(Side.CLIENT)

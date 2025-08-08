@@ -1,5 +1,6 @@
 package com.hbm.tileentity.machine;
 
+import com.custom.TypedFluidTank;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
@@ -9,7 +10,7 @@ import com.hbm.inventory.gui.GUIChemfac;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.items.machine.ItemMachineUpgrade.UpgradeType;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -53,8 +54,8 @@ public class TileEntityMachineChemfac extends TileEntityMachineChemplantBase imp
 	public TileEntityMachineChemfac() {
 		super(77);
 
-		water = new TypedFluidTank(ModForgeFluids.coolant, new FluidTank(6400));
-		steam = new TypedFluidTank(ModForgeFluids.hotcoolant, new FluidTank(6400));
+		water = new TypedFluidTank(ModForgeFluids.COOLANT, new FluidTank(6400));
+		steam = new TypedFluidTank(ModForgeFluids.HOTCOOLANT, new FluidTank(6400));
 
 		inventory = new ItemStackHandler(77) {
 			@Override
@@ -67,7 +68,7 @@ public class TileEntityMachineChemfac extends TileEntityMachineChemplantBase imp
 			public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
 				super.setStackInSlot(slot, stack);
 				if(!stack.isEmpty() && slot >= 1 && slot <= 4 && stack.getItem() instanceof ItemMachineUpgrade) {
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.upgradePlug, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.upgradePlug, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				}
 			}
 		};
@@ -187,7 +188,7 @@ public class TileEntityMachineChemfac extends TileEntityMachineChemplantBase imp
 	protected void process(int index) {
 		super.process(index);
 		this.water.tank.drain(getWaterRequired(), true);
-		this.steam.tank.fill(new FluidStack(ModForgeFluids.hotcoolant, getWaterRequired()), true);
+		this.steam.tank.fill(new FluidStack(ModForgeFluids.HOTCOOLANT, getWaterRequired()), true);
 	}
 
 

@@ -9,6 +9,8 @@ import com.hbm.items.ModItems;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.hbm.render.tileentity.RenderDemonLamp;
+import com.leafia.contents.machines.reactors.zirnox.ZirnoxItemRender;
+import com.leafia.contents.machines.reactors.zirnox.DestroyedZirnoxItemRender;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -441,6 +443,19 @@ public class ItemRenderLibrary {
 		        GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
 
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_drill), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -2, 0);
+				GL11.glScaled(3, 3, 3);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GlStateManager.disableCull();
+				bindTexture(ResourceManager.drill_body_tex); ResourceManager.drill_body.renderAll();
+				bindTexture(ResourceManager.drill_bolt_tex); ResourceManager.drill_bolt.renderAll();
+				GlStateManager.enableCull();
+			}});
+
 		renderers.put(Item.getItemFromBlock(ModBlocks.machine_mining_laser), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -0.5, 0);
@@ -544,6 +559,19 @@ public class ItemRenderLibrary {
 				ResourceManager.heater_oven.renderAll();
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_crucible), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+				GlStateManager.shadeModel(GL11.GL_SMOOTH);
+				bindTexture(ResourceManager.crucible_tex);
+				ResourceManager.crucible_heat.renderAll();
+				GlStateManager.shadeModel(GL11.GL_FLAT);
+			}});
 		renderers.put(Item.getItemFromBlock(ModBlocks.heater_oilburner), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -1, 0);
@@ -592,6 +620,18 @@ public class ItemRenderLibrary {
 		        GlStateManager.shadeModel(GL11.GL_SMOOTH);
 				bindTexture(ResourceManager.furnace_steel_tex);  ResourceManager.furnace_steel.renderAll();
 		        GlStateManager.shadeModel(GL11.GL_FLAT);
+			}});
+		renderers.put(Item.getItemFromBlock(ModBlocks.furnace_combination), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(0, -1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+			}
+			public void renderCommon() {
+				GL11.glRotated(180, 0, 1, 0);
+				GL11.glScaled(1.9, 1.9, 1.9);
+				GlStateManager.shadeModel(GL11.GL_SMOOTH);
+				bindTexture(ResourceManager.combination_oven_tex);  ResourceManager.combination_oven.renderAll();
+				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}});
 		renderers.put(Item.getItemFromBlock(ModBlocks.tesla), new ItemRenderBase() {
 			public void renderInventory() {
@@ -1437,7 +1477,15 @@ public class ItemRenderLibrary {
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_outgasser), rbmkPassive);
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_storage), rbmkPassive);
 		renderers.put(Item.getItemFromBlock(ModBlocks.rbmk_cooler), rbmkPassive);
-		
+
+		renderers.put(Item.getItemFromBlock(ModBlocks.crane_splitter), new ItemRenderBase() {
+			public void renderInventory() {
+				GL11.glTranslated(3.25D, 1.125D, 0D);
+				GL11.glScaled(6.5, 6.5, 6.5);
+			}
+			public void renderCommon() {
+				bindTexture(ResourceManager.splitter_tex); ResourceManager.crane_splitter.renderAll();
+			}});
 		renderers.put(Item.getItemFromBlock(ModBlocks.machine_bat9000), new ItemRenderBase() {
 			public void renderInventory() {
 				GL11.glTranslated(0, -3, 0);
@@ -1742,6 +1790,8 @@ public class ItemRenderLibrary {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
 		});
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_zirnox),new ZirnoxItemRender());
+		renderers.put(Item.getItemFromBlock(ModBlocks.machine_zirnox_destroyed),new DestroyedZirnoxItemRender());
 	}
 
 	private static void bindTexture(ResourceLocation res) {

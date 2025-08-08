@@ -21,7 +21,7 @@ public class FiaLatch<T> {
 		stored = initialValue;
 		this.getter = getter;
 	}
-	public void update() { stored = cur; }
+	public T update() { stored = cur; return cur; }
 	public boolean needsUpdate() {
 		if (stored == null)
 			return cur == null;
@@ -30,6 +30,9 @@ public class FiaLatch<T> {
 
 	public T getStore() { return stored; }
 	public FiaLatch<T> setStore(T newValue) { stored = newValue; return this; }
+
+	public T get() { return cur; }
+	public FiaLatch<T> set(T newValue) { cur = newValue; return this; }
 
 	public Object getInterest() { return getter.apply(cur); }
 }

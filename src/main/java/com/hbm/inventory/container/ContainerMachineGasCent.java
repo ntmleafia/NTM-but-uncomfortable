@@ -1,54 +1,74 @@
 package com.hbm.inventory.container;
 
-import com.hbm.inventory.SlotMachineOutput;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
+import com.leafia.dev.container_utility.LeafiaItemTransferable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineGasCent extends Container {
+public class ContainerMachineGasCent extends LeafiaItemTransferable {
 
-	private TileEntityMachineGasCent diFurnace;
+	private GasCentTE diFurnace;
 	
-	public ContainerMachineGasCent(InventoryPlayer invPlayer, TileEntityMachineGasCent tedf) {
+	public ContainerMachineGasCent(InventoryPlayer invPlayer, GasCentTE tedf) {
 		
 		diFurnace = tedf;
+		tedf.listeners.add(invPlayer.player);
 
 		//Battery
-		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 0, 8, 53));
+		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 0, 182, 71));
+		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 1, 80, 15));
+		for (int x = 0; x <= 1; x++) {
+			for (int y = 0; y <= 1; y++)
+				this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 2+x+y*2, 71+18*x, 53+18*y));
+		}
 		//Fluid ID IO
 		//Drillgon200 - Don't need you anymore.
 		//this.addSlotToContainer(new Slot(tedf, 1, 35, 17));
 		//this.addSlotToContainer(new SlotMachineOutput(invPlayer.player, tedf, 2, 35, 53));
 		//Fluid IO
-		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 3, 62, 17));
-		this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 4, 62, 53));
+		//this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 3, 62, 17));
+		//this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 4, 62, 53));
 		//Output
-		this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 5, 134, 17));
-		this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 6, 152, 17));
-		this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 7, 134, 53));
-		this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 8, 152, 53));
+		//this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 5, 134, 17));
+		//this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 6, 152, 17));
+		//this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 7, 134, 53));
+		//this.addSlotToContainer(new SlotMachineOutput(tedf.inventory, 8, 152, 53));
 		
 		for(int i = 0; i < 3; i++)
 		{
 			for(int j = 0; j < 9; j++)
 			{
-				this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 122 + i * 18));
 			}
 		}
 		
 		for(int i = 0; i < 9; i++)
 		{
-			this.addSlotToContainer(new Slot(invPlayer, i, 8 + i * 18, 142));
+			this.addSlotToContainer(new Slot(invPlayer, i, 8 + i * 18, 180));
 		}
 	}
-	
+
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn) {
+		diFurnace.listeners.remove(playerIn);
+		super.onContainerClosed(playerIn);
+	}
+
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int par2)
     {
+	    LeafiaItemTransfer transfer = new LeafiaItemTransfer(6)._selected(par2);
+	    return transfer.__forSlots(0,9999)
+			    .__tryMoveToInventory(true)
+
+			    .__forInventory()
+			    .__tryMoveToSlot(0,transfer.__maxIndex,false)
+
+			    .__getReturn();
+		/*
 		ItemStack var3 = ItemStack.EMPTY;
 		Slot var4 = (Slot) this.inventorySlots.get(par2);
 		
@@ -79,7 +99,7 @@ public class ContainerMachineGasCent extends Container {
 			}
 		}
 		
-		return var3;
+		return var3;*/
     }
 
 	@Override

@@ -4,7 +4,7 @@ import api.hbm.energy.IBatteryItem;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.inventory.PressRecipes;
 import com.hbm.items.machine.ItemStamp;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -135,7 +135,7 @@ public class TileEntityMachineEPress extends TileEntityMachineBase implements IT
 									inventory.setStackInSlot(1, ItemStack.EMPTY);
 							}
 
-					        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.pressOperate, SoundCategory.BLOCKS, 1.5F, 1.0F);
+					        this.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.pressOperate, SoundCategory.BLOCKS, 1.5F, 1.0F);
 						}
 						
 						if(!isRetracting)

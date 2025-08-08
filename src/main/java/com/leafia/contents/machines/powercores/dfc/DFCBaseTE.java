@@ -3,6 +3,7 @@ package com.leafia.contents.machines.powercores.dfc;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.tileentity.machine.TileEntityCore;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
@@ -22,6 +24,13 @@ public abstract class DFCBaseTE extends TileEntityMachineBase implements LeafiaP
 	public DFCBaseTE(int scount) {
 		super(scount);
 	}
+
+	@Override
+	public void setWorld(World worldIn) {
+		super.setWorld(worldIn);
+		LeafiaDebug.debugLog(worldIn,"TileEntity regenerated");
+	}
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("x1",targetPosition.getX());
@@ -33,6 +42,8 @@ public abstract class DFCBaseTE extends TileEntityMachineBase implements LeafiaP
 	public void readFromNBT(NBTTagCompound compound) {
 		targetPosition = new BlockPos(compound.getInteger("x1"),compound.getInteger("y1"),compound.getInteger("z1"));
 		super.readFromNBT(compound);
+		if (world != null && world.isRemote)
+			LeafiaPacket._start(this).__write(31,true).__sendToServer();
 	}
 	public Vec3d getDirection() {
 		return new Vec3d(targetPosition.subtract(pos)).normalize();
@@ -42,14 +53,26 @@ public abstract class DFCBaseTE extends TileEntityMachineBase implements LeafiaP
 		if (key == 31) targetPosition = (BlockPos)value;
 	}
 	@Override
-	public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {}
+	public void onReceivePacketServer(byte key,Object value,EntityPlayer plr) {
+		if (key == 31) {
+			LeafiaPacket packet = LeafiaPacket._start(this);
+			syncClients(packet);
+			packet.__sendToClient(plr);
+		}
+	}
+	public LeafiaPacket syncClients(LeafiaPacket packet) {
+		LeafiaDebug.debugLog(world,"syncClients");
+		packet.__write(31,targetPosition);
+		return packet;
+	}
 	@Override
 	public void onPlayerValidate(EntityPlayer plr) {
 		LeafiaPacket._start(this).__write(31,targetPosition).__sendToClient(plr);
 	}
 	public void setTargetPosition(BlockPos pos) {
 		targetPosition = pos;
-		LeafiaPacket._start(this).__write(31,pos).__sendToAffectedClients();
+		if (!world.isRemote)
+			LeafiaPacket._start(this).__write(31,pos).__sendToAffectedClients();
 	}
 	public EnumFacing getFront() {
 		Vec3i relative = targetPosition.subtract(pos);

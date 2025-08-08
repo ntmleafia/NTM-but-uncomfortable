@@ -18,7 +18,7 @@ import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.ModItems.Upgrades;
 import com.hbm.items.machine.ItemMachineUpgrade;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxParticlePacketNT;
 import com.hbm.packet.FluidTankPacket;
@@ -86,7 +86,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			@Override
 			public void setStackInSlot(int slot, ItemStack stack) {
 				if(stack != null && slot >= 14 && slot <= 15 && stack.getItem() instanceof ItemMachineUpgrade)
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundHandler.upgradePlug, SoundCategory.BLOCKS, 1.5F, 1.0F);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundEvents.upgradePlug, SoundCategory.BLOCKS, 1.5F, 1.0F);
 				super.setStackInSlot(slot, stack);
 			}
 		};
@@ -325,7 +325,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 			this.power = Library.chargeTEFromItems(inventory, 13, power, maxPower);
 			FFUtils.fillFromFluidContainer(inventory, coolant, 11, 12);
-			if(coolant.getFluid() != null && coolant.getFluid().getFluid() != ModForgeFluids.coolant){
+			if(coolant.getFluid() != null && coolant.getFluid().getFluid() != ModForgeFluids.COOLANT){
 				coolant.setFluid(null);
 			}
 			FFUtils.fillFluidContainer(inventory, amat, 9, 10);
@@ -378,7 +378,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 						}
 
 						if(countdown == 1140)
-							world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundHandler.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
+							world.playSound(null, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, HBMSoundEvents.shutdown, SoundCategory.BLOCKS, 10.0F, 1.0F);
 
 						if(countdown > 1200)
 							explode();
@@ -458,7 +458,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			NBTTagCompound data = new NBTTagCompound();
 			data.setString("type", "muke");
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), new TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 250));
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
 		} else if(rand < 4) {
 			EntityBalefire bf = new EntityBalefire(world).mute();
 			bf.posX = pos.getX() + 0.5;
@@ -471,7 +471,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 			data.setString("type", "muke");
 			data.setBoolean("balefire", true);
 			PacketDispatcher.wrapper.sendToAllAround(new AuxParticlePacketNT(data, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), new TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 250));
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundEvents.mukeExplosion, SoundCategory.BLOCKS, 15.0F, 1.0F);
 		} else if(rand < 5) {
 			EntityBlackHole bl = new EntityBlackHole(world, 1.5F + world.rand.nextFloat());
 			bl.posX = pos.getX() + 0.5F;
@@ -518,7 +518,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 				continue;
 
 			if(inventory.getStackInSlot(i+6).isEmpty()) {
-				amat.fill(new FluidStack(ModForgeFluids.amat, (Integer)res[1]), true);
+				amat.fill(new FluidStack(ModForgeFluids.AMAT, (Integer)res[1]), true);
 				inventory.getStackInSlot(i).shrink(1);
 				inventory.getStackInSlot(i+3).shrink(1);
 				inventory.setStackInSlot(i+6, out);
@@ -527,7 +527,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 			if(inventory.getStackInSlot(i+6).getItem() == out.getItem() && inventory.getStackInSlot(i+6).getItemDamage() == out.getItemDamage() && inventory.getStackInSlot(i+6).getCount() < out.getMaxStackSize()) {
 
-				amat.fill(new FluidStack(ModForgeFluids.amat, (Integer)res[1]), true);
+				amat.fill(new FluidStack(ModForgeFluids.AMAT, (Integer)res[1]), true);
 				inventory.getStackInSlot(i).shrink(1);
 				inventory.getStackInSlot(i+3).shrink(1);
 				inventory.getStackInSlot(i+6).grow(1);
@@ -702,7 +702,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
-		if(resource != null && resource.getFluid() == ModForgeFluids.coolant){
+		if(resource != null && resource.getFluid() == ModForgeFluids.COOLANT){
 			return coolant.fill(resource, doFill);
 		}
 		return 0;

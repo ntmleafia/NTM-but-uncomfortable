@@ -28,6 +28,14 @@ public class Tuple {
 			return this.B;
 		}
 
+		public X getKey() {
+			return this.A;
+		}
+
+		public Y getValue() {
+			return this.B;
+		}
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;

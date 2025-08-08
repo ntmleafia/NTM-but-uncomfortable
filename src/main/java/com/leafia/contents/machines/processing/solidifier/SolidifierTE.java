@@ -51,7 +51,7 @@ public class SolidifierTE extends TileEntityMachineBase implements LeafiaQuickMo
 
 	@Override
 	public double _sizeReference() {
-		return 5;
+		return 15;
 	}
 
 	@Override

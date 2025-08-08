@@ -10,7 +10,7 @@ import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.special.ItemCell;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
@@ -64,7 +64,7 @@ public class BlockCrate extends BlockFalling {
     	{
     		dropItems(world, pos.getX(), pos.getY(), pos.getZ());
     		world.setBlockToAir(pos);
-    		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundHandler.crateBreak, SoundCategory.BLOCKS, 0.5F, 1.0F);
+    		world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), HBMSoundEvents.crateBreak, SoundCategory.BLOCKS, 0.5F, 1.0F);
     		return true;
     	} else {
 			if(world.isRemote)
@@ -141,10 +141,10 @@ public class BlockCrate extends BlockFalling {
     	BlockCrate.addToListWithWeight(leadList, Nuggies.nugget_uranium_fuel, 8);
     	BlockCrate.addToListWithWeight(leadList, Nuggies.nugget_plutonium_fuel, 7);
     	BlockCrate.addToListWithWeight(leadList, Nuggies.nugget_mox_fuel, 6);
-    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.deuterium), 8);
-    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.tritium), 8);
-    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.uf6), 8);
-    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.puf6), 8);
+    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.DEUTERIUM), 8);
+    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.TRITIUM), 8);
+    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.UF6), 8);
+    	BlockCrate.addToListWithWeight(leadList, ItemCell.getFullCell(ModForgeFluids.PUF6), 8);
     	BlockCrate.addToListWithWeight(leadList, ModItems.pellet_rtg, 6);
     	BlockCrate.addToListWithWeight(leadList, ModItems.pellet_rtg_weak, 7);
     	BlockCrate.addToListWithWeight(leadList, ModItems.tritium_deuterium_cake, 5);
@@ -165,6 +165,7 @@ public class BlockCrate extends BlockFalling {
     	BlockCrate.addToListWithWeight(metalList, Item.getItemFromBlock(ModBlocks.machine_electric_furnace_off), 8);
     	BlockCrate.addToListWithWeight(metalList, Item.getItemFromBlock(ModBlocks.machine_assembler), 10);
     	BlockCrate.addToListWithWeight(metalList, Item.getItemFromBlock(ModBlocks.machine_fluidtank), 7);
+		BlockCrate.addToListWithWeight(metalList, Item.getItemFromBlock(ModBlocks.machine_drill), 4);
     	BlockCrate.addToListWithWeight(metalList, Item.getItemFromBlock(ModBlocks.machine_excavator), 4);
     	
     	BlockCrate.addToListWithWeight(metalList, ModItems.centrifuge_element, 6);

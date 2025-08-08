@@ -2,13 +2,14 @@ package com.hbm.blocks.machine;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.items.tool.ItemDesignator;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityCoreEmitter;
 import com.hbm.tileentity.machine.TileEntityCoreInjector;
 import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
@@ -47,7 +48,7 @@ public class CoreComponent extends BlockContainer {
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced) {
         MachineTooltip.addMultiblock(tooltip);
         MachineTooltip.addModular(tooltip);
-        if (this == ModBlocks.dfc_receiver)
+        if (this == ModBlocks.dfc_receiver || this == ModBlocks.dfc_reinforced)
             MachineTooltip.addGenerator(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }
@@ -56,12 +57,16 @@ public class CoreComponent extends BlockContainer {
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         if (this == ModBlocks.dfc_emitter)
             return new TileEntityCoreEmitter();
+        if (this == ModBlocks.dfc_cemitter)
+            return new TileEntityCoreCreativeEmitter();
         if (this == ModBlocks.dfc_receiver)
             return new TileEntityCoreReceiver();
         if (this == ModBlocks.dfc_injector)
             return new TileEntityCoreInjector();
         if (this == ModBlocks.dfc_stabilizer)
             return new TileEntityCoreStabilizer();
+        if (this == ModBlocks.dfc_reinforced)
+            return new TileEntityCoreReceiver();
 
         return null;
     }
@@ -89,11 +94,11 @@ public class CoreComponent extends BlockContainer {
                     BlockPos target =
                             new BlockPos(nbt.getInteger("xCoord"), nbt.getInteger("yCoord"), nbt.getInteger("zCoord"));
                     if (target.equals(pos)) {
-                        world.playSound(null, pos, HBMSoundHandler.buttonNo, SoundCategory.BLOCKS, 1, 1);
+                        world.playSound(null, pos, HBMSoundEvents.buttonNo, SoundCategory.BLOCKS, 1, 1);
                         return true;
                     }
                     ((DFCBaseTE) te).setTargetPosition(target);
-                    world.playSound(null, pos, HBMSoundHandler.buttonYes, SoundCategory.BLOCKS, 1, 1);
+                    world.playSound(null, pos, HBMSoundEvents.buttonYes, SoundCategory.BLOCKS, 1, 1);
                     return true;
                 }
             }
@@ -101,7 +106,7 @@ public class CoreComponent extends BlockContainer {
             if (this == ModBlocks.dfc_emitter)
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_emitter, world, pos.getX(), pos.getY(), pos.getZ());
 
-            if (this == ModBlocks.dfc_receiver)
+            if (this == ModBlocks.dfc_receiver || this == ModBlocks.dfc_reinforced)
 
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_receiver, world, pos.getX(), pos.getY(), pos.getZ());
 
@@ -113,6 +118,8 @@ public class CoreComponent extends BlockContainer {
 
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_stabilizer, world, pos.getX(), pos.getY(), pos.getZ());
 
+            if (this == ModBlocks.dfc_cemitter)
+                player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_cemitter, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
 
         } else {

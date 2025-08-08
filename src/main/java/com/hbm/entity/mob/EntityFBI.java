@@ -8,7 +8,7 @@ import com.hbm.entity.projectile.EntityBullet;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.amlfrom1710.Vec3;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -133,7 +133,7 @@ public class EntityFBI extends EntityMob implements IRangedAttackMob {
 				EntityBullet bullet = new EntityBullet(world, this, target, 3F, 2);
 				bullet.damage = 10;
 		        this.world.spawnEntity(bullet);
-		        this.playSound(HBMSoundHandler.revolverShootAlt, 1.0F, 1.0F);
+		        this.playSound(HBMSoundEvents.revolverShootAlt, 1.0F, 1.0F);
 			}
 
 			if(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).getItem() == Armory.gun_ks23) {
@@ -142,7 +142,7 @@ public class EntityFBI extends EntityMob implements IRangedAttackMob {
 					bullet.damage = 3;
 			        this.world.spawnEntity(bullet);
 				}
-		        this.playSound(HBMSoundHandler.shotgunShoot, 1.0F, 1.0F);
+		        this.playSound(HBMSoundEvents.shotgunShoot, 1.0F, 1.0F);
 			}
 		}
 	}

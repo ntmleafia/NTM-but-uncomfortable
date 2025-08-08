@@ -3,7 +3,7 @@ package com.hbm.items.tool;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.IBomb;
 import com.hbm.items.ModItems;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
@@ -94,7 +94,7 @@ public class ItemSurveyScanner extends Item {
 		if(player.isSneaking()) {
 			int mode = getMode(stack);
 			setMode(stack, (mode == 1 ? 0 : 1));
-	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.techBoop, SoundCategory.PLAYERS, 1.0F, 1.0F);
+	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.techBoop, SoundCategory.PLAYERS, 1.0F, 1.0F);
 
 			if(world.isRemote)
 			{
@@ -122,7 +122,7 @@ public class ItemSurveyScanner extends Item {
 				}
 			}
 
-	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundHandler.techBleep, SoundCategory.PLAYERS, 1.0F, 1.0F);
+	    	world.playSound(null, player.posX, player.posY, player.posZ, HBMSoundEvents.techBleep, SoundCategory.PLAYERS, 1.0F, 1.0F);
 	    	
 			if(world.isRemote)
 			{

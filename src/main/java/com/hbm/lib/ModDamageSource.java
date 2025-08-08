@@ -51,6 +51,8 @@ public class ModDamageSource extends DamageSource {
     public static DamageSource fleija = (new DamageSource("fleija")).setDamageBypassesArmor();
     public static DamageSource back = (new DamageSource("back")).setDamageBypassesArmor().setDamageIsAbsolute().setDamageAllowedInCreativeMode(); // fuck you :D
 	public static DamageSource mine = (new DamageSource("mine")).setExplosion().setDamageBypassesArmor();
+	public static DamageSource dfc = (new DamageSource("dfc")).setDamageIsAbsolute().setDamageBypassesArmor();
+	public static DamageSource dfcMeltdown = (new DamageSource("dfcMeltdown")).setDamageIsAbsolute().setDamageBypassesArmor().setDamageAllowedInCreativeMode();
 
 	public ModDamageSource(String p_i1566_1_) {
 		super(p_i1566_1_);

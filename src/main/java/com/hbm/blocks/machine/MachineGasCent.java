@@ -5,7 +5,7 @@ import com.hbm.handler.MultiblockHandler;
 import com.hbm.interfaces.IMultiBlock;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
+import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -69,7 +69,7 @@ public class MachineGasCent extends BlockContainer implements IMultiBlock {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityMachineGasCent();
+		return new GasCentTE();
 	}
 	
 	@Override
@@ -92,8 +92,8 @@ public class MachineGasCent extends BlockContainer implements IMultiBlock {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
-		if (tileentity instanceof TileEntityMachineGasCent) {
-			InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityMachineGasCent) tileentity);
+		if (tileentity instanceof GasCentTE) {
+			InventoryHelper.dropInventoryItems(worldIn, pos, (GasCentTE) tileentity);
 			worldIn.updateComparatorOutputLevel(pos, this);
 		}
 		super.breakBlock(worldIn, pos, state);
@@ -106,7 +106,7 @@ public class MachineGasCent extends BlockContainer implements IMultiBlock {
 			return true;
 		} else if(!player.isSneaking())
 		{
-			TileEntityMachineGasCent entity = (TileEntityMachineGasCent) world.getTileEntity(pos);
+			GasCentTE entity = (GasCentTE) world.getTileEntity(pos);
 			if(entity != null)
 			{
 				player.openGui(MainRegistry.instance, ModBlocks.guiID_gascent, world, pos.getX(), pos.getY(), pos.getZ());

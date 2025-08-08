@@ -10,10 +10,10 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ZirnoxContainer extends LeafiaItemTransferable {
 
-	private TileEntityReactorZirnox entity;
+	private ZirnoxTE entity;
 
 
-	public ZirnoxContainer(InventoryPlayer invPlayer, TileEntityReactorZirnox entity) {
+	public ZirnoxContainer(InventoryPlayer invPlayer, ZirnoxTE entity) {
 		this.entity = entity;
 		// fuel sllots
 		for (int i = 0; i < 24; i++) {

@@ -4,7 +4,7 @@ import com.hbm.handler.BulletConfigSyncingUtil;
 import com.hbm.handler.BulletConfiguration;
 import com.hbm.handler.GunConfiguration;
 import com.hbm.items.ModItems.Armory;
-import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.HBMSoundEvents;
 import com.hbm.render.anim.BusAnimation;
 import com.hbm.render.anim.BusAnimationKeyframe;
 import com.hbm.render.anim.BusAnimationSequence;
@@ -69,7 +69,7 @@ public class Gun20GaugeFactory {
 		
 		config.durability = 2000;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShootAlt;
+		config.firingSound = HBMSoundEvents.revolverShootAlt;
 		config.firingPitch = 0.75F;
 		
 		config.name = "Winchester Model 1887";
@@ -96,7 +96,7 @@ public class Gun20GaugeFactory {
 		
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShootAlt;
+		config.firingSound = HBMSoundEvents.revolverShootAlt;
 		config.firingPitch = 0.75F;
 		
 		config.name = "Winchester Model 1887 Inox";
@@ -124,7 +124,7 @@ public class Gun20GaugeFactory {
 		config.ammoCap = 1;
 		config.durability = 3000;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShoot;
+		config.firingSound = HBMSoundEvents.revolverShoot;
 		config.firingPitch = 0.75F;
 		
 		config.name = "Winchester Model 20 Inox";
@@ -152,7 +152,7 @@ public class Gun20GaugeFactory {
 		config.ammoCap = 1;
 		config.durability = 2500;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShoot;
+		config.firingSound = HBMSoundEvents.revolverShoot;
 		config.firingPitch = 0.75F;
 		
 		config.name = "Winchester Model 20 Polymer";
@@ -180,7 +180,7 @@ public class Gun20GaugeFactory {
 		config.ammoCap = 1;
 		config.durability = 4000;
 		config.reloadSound = GunConfiguration.RSOUND_SHOTGUN;
-		config.firingSound = HBMSoundHandler.revolverShoot;
+		config.firingSound = HBMSoundEvents.revolverShoot;
 		config.firingPitch = 0.75F;
 		
 		config.name = "Winchester Model 20 D-25A";
