@@ -8,6 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,8 +38,12 @@ public class MSRPlugBlock extends BlockMachineBase implements ILookOverlay {
 	@Override
 	public void printHook(RenderGameOverlayEvent.Pre event,World world,int x,int y,int z) {
 		List<String> texts = new ArrayList<>();
+		TileEntity te = world.getTileEntity(new BlockPos(x,y,z));
+		if (te instanceof MSRPlugTE plug) {
+			if (plug.molten)
+				texts.add(TextFormatting.DARK_RED+I18nUtil.resolveKey("tile.msr_plug.molten"));
+		}
 		MSRTEBase.appendPrintHook(texts,world,x,y,z);
-
 		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
 	}
 }

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MSREjectorTE extends MSRTEBase implements IFluidHandler {
 	public MSREjectorTE() {
-		tank = new FluidTank(10000);
+		tank = new FluidTank(1000);
 	}
 	EnumFacing getDirection() {
 		IBlockState state = world.getBlockState(pos);
@@ -28,7 +28,7 @@ public class MSREjectorTE extends MSRTEBase implements IFluidHandler {
 		fillFluid(pos.add(getDirection().getDirectionVec()),tank);
 	}
 	public void fillFluid(BlockPos pos1,FluidTank tank) {
-		FFUtils.fillFluid(this, tank, world, pos1, 4000);
+		FFUtils.fillFluid(this, tank, world, pos1, 100);
 	}
 	@Override
 	public <T> T getCapability(Capability<T> capability,EnumFacing facing) {

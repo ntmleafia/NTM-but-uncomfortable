@@ -885,6 +885,7 @@ public class ModItems {
 		}
 		public static class Powders {
 			//POWDERS
+			public static final Item powder_flux = new ItemBase("powder_flux").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_iron = new ItemBase("powder_iron").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_gold = new ItemBase("powder_gold").setCreativeTab(MainRegistry.partsTab);
 			public static final Item powder_diamond = new ItemBase("powder_diamond").setCreativeTab(MainRegistry.partsTab);

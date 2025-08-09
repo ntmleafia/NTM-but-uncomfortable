@@ -35,6 +35,7 @@ import com.hbm.hazard.HazardRegistry;
 import com.hbm.inventory.*;
 import com.hbm.inventory.control_panel.ControlEvent;
 import com.hbm.inventory.control_panel.ControlRegistry;
+import com.hbm.inventory.material.MatDistribution;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.Materials.Billets;
@@ -974,6 +975,7 @@ public class MainRegistry {
 	public void postInit(FMLPostInitializationEvent event) {
 		ModItems.postInit();
 		ModBlocks.postInit();
+		MatDistribution.registerDefaults();
 		BlockCrate.setDrops();
 		BedrockOreRegistry.registerBedrockOres();
 		ModFluidProperties.registerFluidProperties();

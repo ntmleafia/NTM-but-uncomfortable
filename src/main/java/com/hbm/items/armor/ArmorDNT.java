@@ -8,6 +8,7 @@ import com.hbm.items.ModItems.ArmorSets;
 import com.hbm.items.gear.ArmorFSB;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
+import com.hbm.lib.ModDamageSource;
 import com.hbm.render.model.ModelArmorDNT;
 import com.hbm.util.I18nUtil;
 import net.minecraft.client.model.ModelBiped;
@@ -134,7 +135,7 @@ public class ArmorDNT extends ArmorFSBPowered {
 	
 	@Override
 	public void handleHurt(LivingHurtEvent event, ArmorFSB chestplate) {
-
+		if (event.getSource() == ModDamageSource.fleija) return;
 		EntityLivingBase e = event.getEntityLiving();
 
 		if(ArmorFSB.hasFSBArmor(e)) {

@@ -26,10 +26,10 @@ public class BlockLiquidFluoride extends BlockFluidClassic {
 		this.setTranslationKey(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(null);
-		this.setQuantaPerBlock(4);
+		//this.setQuantaPerBlock(4);
 		this.damageSource = DamageSource.ON_FIRE;
 		this.displacements.put(this, false);
-		this.tickRate = 30;
+		//this.tickRate = 30;
 		
 		ModBlocks.ALL_BLOCKS.add(this);
 	}
@@ -48,7 +48,7 @@ public class BlockLiquidFluoride extends BlockFluidClassic {
 
 	@Override
 	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entity) {
-		entity.setInWeb();
+		//entity.setInWeb();
 		entity.setFire(3);
 	}
 

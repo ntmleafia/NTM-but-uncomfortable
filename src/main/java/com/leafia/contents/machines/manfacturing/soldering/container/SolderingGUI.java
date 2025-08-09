@@ -43,6 +43,8 @@ public class SolderingGUI extends GuiInfoContainer {
 	public void drawScreen(int mouseX,int mouseY,float partialTicks) {
 		super.drawScreen(mouseX,mouseY,partialTicks);
 		super.renderHoveredToolTip(mouseX,mouseY);
+		drawElectricityInfo(this,mouseX,mouseY,guiLeft+152,guiTop+18,16,52,te.power,te.maxPower);
+		FFUtils.renderTankInfo(this, mouseX, mouseY, guiLeft + 17, guiTop + 63, 52, 16, te.tank);
 		if (empty.isMouseIn(mouseX,mouseY))
 			drawHoveringText(I18nUtil.resolveKey("gui.desc.voidcontents"),mouseX,mouseY);
 		else if (collision.isMouseIn(mouseX,mouseY)) {

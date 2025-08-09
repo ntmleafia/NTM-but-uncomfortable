@@ -18,14 +18,10 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class MachineShredder extends BlockContainer {
+public class MachineShredder extends BlockMachineBase {
 
 	public MachineShredder(Material m, String s) {
-		super(m);
-		this.setTranslationKey(s);
-		this.setRegistryName(s);
-
-		ModBlocks.ALL_BLOCKS.add(this);
+		super(m,ModBlocks.guiID_machine_shredder,s);
 	}
 
 	@Override
@@ -68,5 +64,10 @@ public class MachineShredder extends BlockContainer {
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
+	}
+
+	@Override
+	protected boolean rotatable() {
+		return true;
 	}
 }

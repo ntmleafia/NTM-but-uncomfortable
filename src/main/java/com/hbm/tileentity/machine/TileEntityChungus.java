@@ -54,6 +54,8 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 		if(!world.isRemote) {
 			
 			Object[] outs = MachineRecipes.getTurbineOutput(types[0]);
+
+			if (outs == null) return; // Fuck you nullpointer
 			
 			types[1] = (Fluid)outs[0];
 			

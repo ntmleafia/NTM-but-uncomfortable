@@ -97,7 +97,7 @@ public class MSRElementTE extends MSRTEBase {
 				for (Entry<String,Double> entry : mixture.entrySet()) {
 					try {
 						MSRFuel type = MSRFuel.valueOf(entry.getKey());
-						y += type.function.apply(nbtProtocol(stack1.tag).getDouble("heat")+baseTemperature)*entry.getValue();
+						y += type.function.apply(nbtProtocol(stack1.tag).getDouble("heat")+baseTemperature)*entry.getValue()*B;
 					} catch (IllegalArgumentException ignored) {}
 				}
 				curRestriction = Math.max(curRestriction,te.restriction);

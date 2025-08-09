@@ -450,8 +450,8 @@ public class OreDictManager {
 		CINNABAR.gem(cinnebar).crystal(Crystals.crystal_cinnebar).ore(ore_cinnebar, ore_depth_cinnebar);
 		BORAX.dust(Powders.powder_borax).ore(ore_depth_borax);
 		VOLCANIC.gem(gem_volcanic).ore(basalt_gem);
-//HEMATITE.ore(fromOne(stone_resource, EnumStoneType.HEMATITE));
-//MALACHITE.ore(fromOne(stone_resource, EnumStoneType.MALACHITE));
+		HEMATITE.ore(ore_hematite);
+		MALACHITE.ore(ore_malachite);
 //SLAG.block(block_slag);
 
 		OreDictionary.registerOre(KEY_OIL_TAR, fromOne(oil_tar, EnumTarType.CRUDE));

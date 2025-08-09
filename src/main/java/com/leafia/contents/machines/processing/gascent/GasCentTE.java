@@ -197,7 +197,7 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 		} else {
 			if (isSicko) {
 				if (sound == null) {
-					sound = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.centrifugeOperate,SoundCategory.BLOCKS,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f,1,2);
+					sound = MainRegistry.proxy.getLoopedSound(HBMSoundEvents.centrifugeOperate,SoundCategory.BLOCKS,pos.getX()+0.5f,pos.getY()+0.5f,pos.getZ()+0.5f,2,2);
 					sound.startSound();
 				}
 			} else {

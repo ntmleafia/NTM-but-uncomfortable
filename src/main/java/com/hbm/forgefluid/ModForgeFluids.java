@@ -7,6 +7,7 @@ import com.hbm.lib.RefStrings;
 import com.leafia.contents.blockfluids.fluoride.BlockLiquidFluoride;
 import com.leafia.contents.blockfluids.fluoride.FluorideFluid;
 import com.leafia.dev.fluids.LeafiaFluid;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
@@ -321,7 +322,7 @@ public class ModForgeFluids {
 		FLUORIDE = registerOrGet(FLUORIDE,"fluoride");
 
 		ModBlocks.toxic_block = new ToxicBlock(ModForgeFluids.TOXIC_FLUID, ModBlocks.fluidtoxic, ModDamageSource.radiation, "toxic_block").setResistance(500F);
-		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.RADWATER_FLUID, ModBlocks.fluidradwater, ModDamageSource.radiation, "radwater_block").setResistance(500F);
+		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.RADWATER_FLUID,Material.WATER, ModDamageSource.radiation, "radwater_block").setResistance(500F);
 		ModBlocks.mud_block = new MudBlock(ModForgeFluids.MUD_FLUID, ModBlocks.fluidmud, ModDamageSource.mudPoisoning, "mud_block").setResistance(500F);
 		ModBlocks.schrabidic_block = new SchrabidicBlock(SCHRABIDIC, ModBlocks.fluidschrabidic.setReplaceable(), ModDamageSource.radiation, "schrabidic_block").setResistance(500F);
 		ModBlocks.corium_block = new BlockLiquidCorium(CORIUM_FLUID, ModBlocks.fluidcorium, "corium_block").setResistance(500F);
