@@ -59,7 +59,7 @@ public class LeafiaGeneralLocal {
 		splash.add("None may enter The Orb!");
 		splash.add("Wacarb was here");
 		splash.add("SpongeBoy me Bob I am overdosing on keramine agagagagaga");
-		splash.add(TextFormatting.DARK_RED+I18nUtil.resolveKey("zzz.splash",System.getProperty("user.name")));
+		splash.add(TextFormatting.RED+I18nUtil.resolveKey("zzz.splash",System.getProperty("user.name")));
 		splash.add("Nice toes, now hand them over.");
 		splash.add("I smell burnt toast!");
 		splash.add("There are bugs under your skin!");
