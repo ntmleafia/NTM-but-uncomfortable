@@ -327,7 +327,7 @@ public class ModForgeFluids {
 		ModBlocks.schrabidic_block = new SchrabidicBlock(SCHRABIDIC, ModBlocks.fluidschrabidic.setReplaceable(), ModDamageSource.radiation, "schrabidic_block").setResistance(500F);
 		ModBlocks.corium_block = new BlockLiquidCorium(CORIUM_FLUID, ModBlocks.fluidcorium, "corium_block").setResistance(500F);
 		ModBlocks.volcanic_lava_block = new VolcanicBlock(VOLCANIC_LAVA_FLUID, ModBlocks.fluidvolcanic, "volcanic_lava_block").setResistance(500F);
-		ModBlocks.fluoride_block = new BlockLiquidFluoride(FLUORIDE, ModBlocks.fluidfluoride, "fluoride_fluid");
+		ModBlocks.fluoride_block = new BlockLiquidFluoride(FLUORIDE, Material.LAVA, "fluoride_fluid");
 
 		TOXIC_FLUID.setBlock(ModBlocks.toxic_block);
 		RADWATER_FLUID.setBlock(ModBlocks.radwater_block);

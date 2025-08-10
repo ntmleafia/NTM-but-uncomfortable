@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
@@ -33,7 +34,12 @@ public class BlockLiquidFluoride extends BlockFluidClassic {
 		
 		ModBlocks.ALL_BLOCKS.add(this);
 	}
-	
+
+	@Override
+	public Vec3d getFogColor(World world,BlockPos pos,IBlockState state,Entity entity,Vec3d originalColor,float partialTicks) {
+		return new Vec3d(0.851,0.867,0.765);
+	}
+
 	@Override
 	public boolean canDisplace(IBlockAccess world, BlockPos pos) {
 		//if(world.getBlockState(pos).getMaterial().isLiquid())

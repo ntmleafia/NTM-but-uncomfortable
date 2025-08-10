@@ -648,7 +648,7 @@ public class EntityFalloutRain extends Entity implements IConstantRenderer, IChu
 			for(int y = waterLevel-1; y > 1; y--) {
 				pos.setY(y);
 				if(world.isAirBlock(pos) || world.getBlockState(pos).getBlock() == Blocks.FLOWING_WATER){
-					world.setBlockState(pos, Blocks.WATER.getDefaultState());
+					world.setBlockState(pos, ModBlocks.radwater_block.getDefaultState());
 				}
 			}
 		}

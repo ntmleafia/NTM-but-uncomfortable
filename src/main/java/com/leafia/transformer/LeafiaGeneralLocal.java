@@ -1,6 +1,7 @@
 package com.leafia.transformer;
 
 import com.hbm.lib.RefStrings;
+import com.hbm.util.I18nUtil;
 import com.leafia.contents.worldgen.biomes.effects.HasAcidicRain;
 import com.leafia.contents.worldgen.biomes.effects.ParticleCloudSmall;
 import com.leafia.dev.optimization.diagnosis.RecordablePacket;
@@ -58,18 +59,18 @@ public class LeafiaGeneralLocal {
 		splash.add("None may enter The Orb!");
 		splash.add("Wacarb was here");
 		splash.add("SpongeBoy me Bob I am overdosing on keramine agagagagaga");
-		splash.add(TextFormatting.RED+"I know where you live, "+System.getProperty("user.name")+".");
+		splash.add(TextFormatting.DARK_RED+I18nUtil.resolveKey("zzz.splash",System.getProperty("user.name")));
 		splash.add("Nice toes, now hand them over.");
 		splash.add("I smell burnt toast!");
 		splash.add("There are bugs under your skin!");
 		splash.add("Fentanyl!");
-		splash.add("Do drugs!");
+		splash.add("Don't do drugs!");
 		splash.add("Imagine being scared by splash texts!");
 		splash.add("Redditors aren't people!");
 		splash.add("Can someone tell me what corrosive fumes the people on Reddit are huffing so I can avoid those more effectively?");
 		splash.add("Extra information on F3 debug screen! Did you know?");
 		splash.add("This mod sends string characters in just 5 bits!");
 		splash.add("zally jumpscare");
-		splash.add("Computer core community nowadays is really toxic, wtf happened while I was gone?/");
+		splash.add("Computer core community nowadays is really toxic!");
 	}
 }
