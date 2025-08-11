@@ -55,19 +55,20 @@ public class BedrockOreV2Item extends ItemCustomLore {
 		return new BedrockOreOutput(mat, amount);
 	}
 	public enum V2Type {
+		//												                primary									                        sulfuric															                                    solvent																		                                    radsolvent
 		LIGHT_METAL(	0xFFFFFF, 0x353535, "light",	o(MAT_IRON, 9),		o(MAT_COPPER, 9),	o(MAT_TITANIUM, 6),	o(MAT_BAUXITE, 9),	o(MAT_CRYOLITE, 3),	o(MAT_CHLOROCALCITE, 5),	o(MAT_LITHIUM, 5),		o(MAT_SODIUM, 3),		o(MAT_CHLOROCALCITE, 6),	o(MAT_LITHIUM, 6),		o(MAT_SODIUM, 6)),
 		HEAVY_METAL(	0x868686, 0x000000, "heavy",	o(MAT_TUNGSTEN, 9),	o(MAT_LEAD, 9),		o(MAT_GOLD, 2),		o(MAT_GOLD, 2),			o(MAT_BERYLLIUM, 3),	o(MAT_TUNGSTEN, 9),			o(MAT_LEAD, 9),			o(MAT_GOLD, 5),			o(MAT_BISMUTH, 1),			o(MAT_BISMUTH, 1),		o(MAT_GOLD, 6)),
 		RARE_EARTH(		0xE6E6B6, 0x1C1C00, "rare",		o(MAT_COBALT, 5),	o(MAT_RAREEARTH, 5),o(MAT_BORON, 5),	o(MAT_LANTHANIUM, 3),	o(MAT_NIOBIUM, 4),		o(MAT_NEODYMIUM, 3),		o(MAT_STRONTIUM, 3),	o(MAT_ZIRCONIUM, 3),	o(MAT_NIOBIUM, 5),			o(MAT_NEODYMIUM, 5),	o(MAT_STRONTIUM, 3)),
 		ACTINIDE(		0xC1C7BD, 0x2B3227, "actinide",	o(MAT_URANIUM, 4),	o(MAT_THORIUM, 4),	o(MAT_RADIUM, 2),	o(MAT_RADIUM, 2),		o(MAT_POLONIUM, 2),		o(MAT_RADIUM, 2),			o(MAT_RADIUM, 2),		o(MAT_POLONIUM, 2),		o(MAT_TECHNETIUM, 1),		o(MAT_TECHNETIUM, 1),	o(MAT_U238, 1)),
 		NON_METAL(		0xAFAFAF, 0x0F0F0F, "nonmetal",	o(MAT_COAL, 9),		o(MAT_SULFUR, 9),	o(MAT_LIGNITE, 9),	o(MAT_KNO, 6),			o(MAT_FLUORITE, 6),		o(MAT_PHOSPHORUS, 5),		o(MAT_FLUORITE, 6),		o(MAT_SULFUR, 6),		o(MAT_CHLOROCALCITE, 6),	o(MAT_SILICON, 2),		o(MAT_SILICON, 2)),
 		CRYSTALLINE(	0xE2FFFA, 0x1E8A77, "crystal",	o(MAT_REDSTONE, 9),	o(MAT_CINNABAR, 4),	o(MAT_SODALITE, 9),	o(MAT_ASBESTOS, 6),		o(MAT_DIAMOND, 3),		o(MAT_CINNABAR, 3),			o(MAT_ASBESTOS, 5),		o(MAT_EMERALD, 3),		o(MAT_BORAX, 3),			o(MAT_MOLYSITE, 3),		o(MAT_SODALITE, 9));
-		int light;
-		int dark;
-		public String suffix;
-		public BedrockOreOutput primary1, primary2;
-		public BedrockOreOutput byproductAcid1, byproductAcid2, byproductAcid3;
-		public BedrockOreOutput byproductSolvent1, byproductSolvent2, byproductSolvent3;
-		public BedrockOreOutput byproductRad1, byproductRad2, byproductRad3;
+		final int light;
+		final int dark;
+		final public String suffix;
+		final public BedrockOreOutput primary1, primary2;
+		final public BedrockOreOutput byproductAcid1, byproductAcid2, byproductAcid3;
+		final public BedrockOreOutput byproductSolvent1, byproductSolvent2, byproductSolvent3;
+		final public BedrockOreOutput byproductRad1, byproductRad2, byproductRad3;
 
 		V2Type(int light, int dark, String suffix, BedrockOreOutput p1, BedrockOreOutput p2, BedrockOreOutput bA1, BedrockOreOutput bA2, BedrockOreOutput bA3, BedrockOreOutput bS1, BedrockOreOutput bS2, BedrockOreOutput bS3, BedrockOreOutput bR1, BedrockOreOutput bR2, BedrockOreOutput bR3) {
 			this.light = light;

@@ -804,7 +804,7 @@ public class JeiRecipes {
 		foundrySmeltRecipes = new ArrayList<FoundrySmeltRecipe>();
 
 		for(NTMMaterial mat : Mats.orderedList){ //iron, gold
-			for(Entry<String,MaterialShapes> prefixEntry : Mats.prefixByName.entrySet()) { //iron ingot, nugget
+			for(Entry<String,MaterialShapes> prefixEntry : MaterialShapes.prefixByName.entrySet()) { //iron ingot, nugget
 				String prefix = prefixEntry.getKey();
 				List<ItemStack> shapeMatItemStacks = new ArrayList<>();
 				for (String name : mat.names) { // iron/eisen ingot

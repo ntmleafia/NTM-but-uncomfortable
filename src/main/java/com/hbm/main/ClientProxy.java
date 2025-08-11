@@ -48,6 +48,8 @@ import com.leafia.contents.network.fluid.FluidDuctEquipmentRender;
 import com.leafia.contents.network.fluid.gauges.FluidDuctGaugeTE;
 import com.leafia.contents.network.spk_cable.SPKCableRender;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
+import com.leafia.contents.resources.ItemMaterialsAutogenTint;
+import com.leafia.contents.resources.ItemMaterialsAutogenTintRender;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2Render;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.eventbuses.LeafiaClientListener;
@@ -2257,6 +2259,9 @@ public class ClientProxy extends ServerProxy {
         }
 		for (Item item : BedrockOreV2.types) {
 			item.setTileEntityItemStackRenderer(BedrockOreV2Render.INSTANCE);
+		}
+		for (Item item : ItemMaterialsAutogenTint.ALL_AUTOGEN) {
+			item.setTileEntityItemStackRenderer(ItemMaterialsAutogenTintRender.INSTANCE);
 		}
 
 		ModItems.canister_generic.setTileEntityItemStackRenderer(FluidCanisterRender.INSTANCE);

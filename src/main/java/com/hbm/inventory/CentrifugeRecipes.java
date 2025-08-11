@@ -3,16 +3,20 @@ package com.hbm.inventory;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.items.ModItems;
+import com.hbm.items.ModItems.BedrockOreV2;
 import com.hbm.items.ModItems.Materials.Crystals;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Nuggies;
 import com.hbm.items.ModItems.Materials.Powders;
 import com.hbm.items.special.ItemBedrockOre;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Grade;
+import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Type;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -28,6 +32,139 @@ public class CentrifugeRecipes {
 
 	private static HashMap<Object, ItemStack[]> recipes = new HashMap<Object, ItemStack[]>();
 	private static List<CentrifugeRecipe> centrifugeRecipes = null;
+
+	public static void registerBedrock() {
+		for (V2Type type : V2Type.values()) {
+			Item item = BedrockOreV2.types[type.ordinal()];
+			{ // RAW
+				{
+					ComparableStack stack0 = new ComparableStack(item,1,V2Grade.BASE.ordinal());
+					ComparableStack stack1 = new ComparableStack(item,1,V2Grade.BASE_ROASTED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(item,1,V2Grade.PRIMARY.ordinal()),
+							new ItemStack(Blocks.GRAVEL,1)
+					};
+					recipes.put(stack0,stacks);
+					recipes.put(stack1,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.BASE_WASHED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(item,1,V2Grade.PRIMARY.ordinal()),
+							new ItemStack(item,1,V2Grade.PRIMARY.ordinal()),
+							new ItemStack(Blocks.GRAVEL,1)
+					};
+					recipes.put(stack,stacks);
+				}
+			}
+			{ // PRIMARY FRACTION
+				// FROM RAW
+				{
+					ComparableStack stack0 = new ComparableStack(item,1,V2Grade.PRIMARY.ordinal());
+					ComparableStack stack1 = new ComparableStack(item,1,V2Grade.PRIMARY_ROASTED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.primary1.amount,type.primary1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary2.amount,type.primary2.mat.id)
+					};
+					recipes.put(stack0,stacks);
+					recipes.put(stack1,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.PRIMARY_SULFURIC.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(item,2,V2Grade.PRIMARY_NOSULFURIC.ordinal()),
+							new ItemStack(item,2,V2Grade.SULFURIC_BYPRODUCT.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack0 = new ComparableStack(item,1,V2Grade.PRIMARY_NOSULFURIC.ordinal());
+					ComparableStack stack1 = new ComparableStack(item,1,V2Grade.PRIMARY_NOSOLVENT.ordinal());
+					ComparableStack stack2 = new ComparableStack(item,1,V2Grade.PRIMARY_NORAD.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.primary1.amount,type.primary1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary2.amount,type.primary2.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack0,stacks);
+					recipes.put(stack1,stacks);
+					recipes.put(stack2,stacks);
+				}
+				// OTHER
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.PRIMARY_SOLVENT.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(item,2,V2Grade.PRIMARY_NOSOLVENT.ordinal()),
+							new ItemStack(item,2,V2Grade.SULFURIC_BYPRODUCT.ordinal()),
+							new ItemStack(item,2,V2Grade.SOLVENT_BYPRODUCT.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.PRIMARY_RAD.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(item,2,V2Grade.PRIMARY_NORAD.ordinal()),
+							new ItemStack(item,2,V2Grade.SULFURIC_BYPRODUCT.ordinal()),
+							new ItemStack(item,2,V2Grade.SOLVENT_BYPRODUCT.ordinal()),
+							new ItemStack(item,2,V2Grade.RAD_BYPRODUCT.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.PRIMARY_FIRST.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.primary1.amount,type.primary1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary1.amount,type.primary1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary2.amount,type.primary2.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.PRIMARY_SECOND.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.primary1.amount,type.primary1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary2.amount,type.primary2.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.primary2.amount,type.primary2.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+			}
+			{ // WASHED BYPRODUCT
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.SULFURIC_WASHED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.byproductAcid1.amount,type.byproductAcid1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductAcid2.amount,type.byproductAcid2.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductAcid3.amount,type.byproductAcid3.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.SOLVENT_WASHED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.byproductSolvent1.amount,type.byproductSolvent1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductSolvent2.amount,type.byproductSolvent2.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductSolvent3.amount,type.byproductSolvent3.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+				{
+					ComparableStack stack = new ComparableStack(item,1,V2Grade.RAD_WASHED.ordinal());
+					ItemStack[] stacks = new ItemStack[]{
+							new ItemStack(BedrockOreV2.fragment,type.byproductRad1.amount,type.byproductRad1.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductRad2.amount,type.byproductRad2.mat.id),
+							new ItemStack(BedrockOreV2.fragment,type.byproductRad3.amount,type.byproductRad3.mat.id),
+							new ItemStack(item,1,V2Grade.CRUMBS.ordinal())
+					};
+					recipes.put(stack,stacks);
+				}
+			}
+		}
+	}
 	
 	public static void register() {
 		
@@ -301,6 +438,7 @@ public class CentrifugeRecipes {
 				ItemBedrockOre.getOut(oreMeta, 1), 
 				ItemBedrockOre.getOut(oreMeta, 1) });
 		}
+		registerBedrock();
 	}
 
 	public static ItemStack getNugget(String oreName){

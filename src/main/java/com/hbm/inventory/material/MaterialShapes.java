@@ -1,11 +1,13 @@
 package com.hbm.inventory.material;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MaterialShapes {
 
 
+	public static final HashMap<String, MaterialShapes> prefixByName = new HashMap<>();
 	public static final List<MaterialShapes> allShapes = new ArrayList();
 
 	public static final MaterialShapes QUANTUM = new MaterialShapes(1); // 1/72 of an ingot, allows the ingot to be divisible through 2, 4, 6, 8, 9, 12, 24 and 36
@@ -40,7 +42,7 @@ public class MaterialShapes {
 		this.prefixes = prefixes;
 
 		for(String prefix : prefixes) {
-			Mats.prefixByName.put(prefix, this);
+			prefixByName.put(prefix, this);
 		}
 
 		allShapes.add(this);

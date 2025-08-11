@@ -55,6 +55,7 @@ import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
 import com.leafia.contents.machines.powercores.dfc.CrucifixItem;
 import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisEntity.DebrisType;
 import com.leafia.contents.machines.reactors.pwr.debris.PWRDebrisItem;
+import com.leafia.contents.resources.ItemMaterialsAutogenTint;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2Item;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Type;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2OverlayDummyItem;
@@ -2367,7 +2368,9 @@ public class ModItems {
 			for (int i = 0; i < types.length; i++)
 				types[i] = new BedrockOreV2Item("bedrockorev2_"+V2Type.values()[i].suffix,V2Type.values()[i]);
 		}
+		//public static final Item fragment = new ItemMaterialsAutogen("bedrockorev2_fragment",MaterialShapes.FRAGMENT).aot(Mats.MAT_BISMUTH, "bedrock_ore_fragment_bismuth").setUnlocalizedName("bedrock_ore_fragment").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":bedrock_ore_fragment");
 		static final Item shit = new BedrockOreV2OverlayDummyItem("bedrockorev2_overlay");
+		public static final Item fragment = new ItemMaterialsAutogenTint("bedrock_ore_fragment",MaterialShapes.FRAGMENT);
 	}
 	
 	public static class Armory {

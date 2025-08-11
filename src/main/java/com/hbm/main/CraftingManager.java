@@ -73,6 +73,15 @@ public class CraftingManager {
 		hack.getRegistry().register(new PWRDebrisCrafting().setRegistryName(new ResourceLocation(RefStrings.MODID, "pwr_debris_crafting_handler")));
 	}
 
+	public static void add9To1ForODM(ItemStack nine, ItemStack one){
+		ResourceLocation name = new ResourceLocation(RefStrings.MODID, one.getItem().getRegistryName().getPath() + "_9to1_odm_" + one.getMetadata());
+		GameRegistry.addShapedRecipe(name, null, one, new Object[] { "###", "###", "###", '#', nine });
+	}
+	public static void addBilletFragmentForODM(ItemStack billet, ItemStack nugget) {
+		ResourceLocation name = new ResourceLocation(RefStrings.MODID, billet.getItem().getRegistryName().getPath() + "_billet_odm_" + billet.getMetadata());
+		GameRegistry.addShapedRecipe(name, null, billet.copy(), "###", "###", '#', nugget);
+	}
+
 	public static void addCrafting() {
 
 		addRecipeAuto(new ItemStack(ModItems.redstone_sword, 1), "R", "R", "S", 'R', Blocks.REDSTONE_BLOCK, 'S', Items.STICK);

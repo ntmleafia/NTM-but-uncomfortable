@@ -38,6 +38,7 @@ public class NTMMaterial {
 	public NTMMaterial smeltsInto;
 	public int convIn;
 	public int convOut;
+	public DictFrame dict;
 	
 	public NTMMaterial(int id, DictFrame dict) {
 		
@@ -47,6 +48,7 @@ public class NTMMaterial {
 		this.smeltsInto = this;
 		this.convIn = 1;
 		this.convOut = 1;
+		this.dict = dict;
 		
 		for(String name : dict.mats) {
 			Mats.matByName.put(name, this);

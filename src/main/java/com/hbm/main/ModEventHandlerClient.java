@@ -97,6 +97,9 @@ import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr;
 import com.leafia.contents.gear.utility.FuzzyIdentifierBakedModel;
 import com.leafia.contents.gear.utility.ItemFuzzyIdentifier;
 import com.leafia.contents.machines.elevators.car.styles.EvStyleItem;
+import com.leafia.contents.resources.ItemMaterialsAutogenTint;
+import com.leafia.contents.resources.ItemMaterialsAutogenTintBakedModel;
+import com.leafia.contents.resources.ItemMaterialsAutogenTintRender;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2BakedModel;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2Item;
 import com.leafia.contents.resources.bedrockore.BedrockOreV2Item.V2Grade;
@@ -541,6 +544,22 @@ public class ModEventHandlerClient {
 				Object object = evt.getModelRegistry().getObject(loc);
 				if (object instanceof IBakedModel baked) {
 					BedrockOreV2Render.INSTANCE.overlays[i] = baked;
+				}
+			}
+		}
+		{
+			for (ItemMaterialsAutogenTint item : ItemMaterialsAutogenTint.ALL_AUTOGEN) {
+				for (Integer meta : item.metaValues) {
+					ModelResourceLocation loc = item.getResourceLocation(meta);
+					Object object = evt.getModelRegistry().getObject(loc);
+					if (object instanceof IBakedModel baked) {
+						if (baked instanceof ItemMaterialsAutogenTintBakedModel already) {
+							ItemMaterialsAutogenTintRender.INSTANCE.itemModels.get(item).put(meta,already.original);
+						} else {
+							ItemMaterialsAutogenTintRender.INSTANCE.itemModels.get(item).put(meta,baked);
+							evt.getModelRegistry().putObject(loc,new ItemMaterialsAutogenTintBakedModel(item,meta,baked));
+						}
+					}
 				}
 			}
 		}

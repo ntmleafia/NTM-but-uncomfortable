@@ -7,11 +7,16 @@ import com.hbm.hazard.HazardRegistry;
 import com.hbm.hazard.HazardSystem;
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.interfaces.Spaghetti;
+import com.hbm.inventory.material.MaterialShapes;
+import com.hbm.inventory.material.Mats;
+import com.hbm.inventory.material.NTMMaterial;
+import com.hbm.inventory.material.NTMMaterial.SmeltingBehavior;
 import com.hbm.items.ItemEnums.EnumCokeType;
 import com.hbm.items.ItemEnums.EnumTarType;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.*;
-		import com.hbm.main.MainRegistry;
+import com.hbm.main.CraftingManager;
+import com.hbm.main.MainRegistry;
 import com.hbm.modules.ItemHazardModule;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -28,7 +33,9 @@ import java.util.*;
 		import static com.hbm.inventory.OreDictManager.DictFrame.fromAll;
 import static com.hbm.inventory.OreDictManager.DictFrame.fromOne;
 import static com.hbm.inventory.OreNames.*;
-		import static com.hbm.items.ModItems.*;
+import static com.hbm.items.ModItems.*;
+import static com.hbm.items.ModItems.Foundry.scraps;
+import static com.hbm.items.ModItems.Materials.plate_cast;
 
 //the more i optimize this, the more it starts looking like gregtech
 @Spaghetti("the more i look at it, the more i decay")
@@ -476,6 +483,22 @@ public class OreDictManager {
 //if this isn't implemented when fracking tower becomes real, yell at me
 		OreDictionary.registerOre("itemRubber", Ingots.ingot_rubber);
 
+		for(NTMMaterial mat : Mats.orderedList) {
+			if(mat.smeltable == SmeltingBehavior.SMELTABLE) {
+				//registerAutoGen(mat, MaterialShapes.BOLT, bolt, HazardRegistry.bolt);
+				registerAutoGen(mat, MaterialShapes.CASTPLATE, plate_cast, HazardRegistry.plateCast);
+				//registerAutoGen(mat, MaterialShapes.WELDEDPLATE, plate_welded, HazardRegistry.plateWeld);
+				//registerAutoGen(mat, MaterialShapes.HEAVY_COMPONENT, heavy_component, HazardRegistry.heavyComp);
+				//registerAutoGen(mat, MaterialShapes.DENSEWIRE, wire_dense, HazardRegistry.wireDense);
+				//registerAutoGen(mat, MaterialShapes.SHELL, shell, HazardRegistry.shell);
+				//registerAutoGen(mat, MaterialShapes.PIPE, pipe, HazardRegistry.pipe);
+			}
+			//registerAutoGen(mat, MaterialShapes.WIRE, wire, HazardRegistry.wire);
+			if(mat.smeltable == SmeltingBehavior.SMELTABLE || mat.smeltable == SmeltingBehavior.ADDITIVE){
+				registerScraps(mat);
+			}
+		}
+
 		OreDictionary.registerOre("coalCoke", fromOne(coke, EnumCokeType.COAL));
 
 		for(String name : new String[] {"fuelCoke", "coke"}) {
@@ -558,7 +581,39 @@ public class OreDictManager {
 		for (Item item : PressRecipes.stamps_circuit) {
 			OreDictionary.registerOre("stampCircuit", item);
 		}
+		for(NTMMaterial mat : Mats.orderedList) {
+			if(mat.shapes.contains(MaterialShapes.FRAGMENT)) {
+				String name = mat.names[0];
+				if(!OreDictionary.getOres(MaterialShapes.DUST.name() + name).isEmpty()) CraftingManager.add9To1ForODM(new ItemStack(BedrockOreV2.fragment,1,mat.id), OreDictionary.getOres(MaterialShapes.DUST.name() + name).get(0));
+				else if(!OreDictionary.getOres(MaterialShapes.GEM.name() + name).isEmpty()) CraftingManager.add9To1ForODM(new ItemStack(BedrockOreV2.fragment,1,mat.id), OreDictionary.getOres(MaterialShapes.GEM.name() + name).get(0));
+				else if(!OreDictionary.getOres(MaterialShapes.CRYSTAL.name() + name).isEmpty()) CraftingManager.add9To1ForODM(new ItemStack(BedrockOreV2.fragment,1,mat.id), OreDictionary.getOres(MaterialShapes.CRYSTAL.name() + name).get(0));
+				else if(!OreDictionary.getOres(MaterialShapes.INGOT.name() + name).isEmpty()) CraftingManager.add9To1ForODM(new ItemStack(BedrockOreV2.fragment,1,mat.id), OreDictionary.getOres(MaterialShapes.INGOT.name() + name).get(0));
+				else if(!OreDictionary.getOres(MaterialShapes.BILLET.name() + name).isEmpty()) CraftingManager.addBilletFragmentForODM(OreDictionary.getOres(MaterialShapes.BILLET.name() + name).get(0), new ItemStack(BedrockOreV2.fragment,1,mat.id));
+				else CraftingManager.add9To1ForODM(new ItemStack(BedrockOreV2.fragment,1,mat.id), new ItemStack(ModItems.nothing));
+			}
+		}
 //MaterialShapes.registerCompatShapes();
+	}
+
+	public static void registerScraps(NTMMaterial mat){
+		registerAutoGen(mat, SCRAP, scraps, 1);
+	}
+
+	public static void registerAutoGen(NTMMaterial mat, MaterialShapes shape, Item item, float mul){
+		if(mat.shapes.contains(shape)){
+			registerAutoGen(mat, shape.name(), item, mul);
+		}
+	}
+
+
+	public static void registerAutoGen(NTMMaterial mat, String shapeName, Item item, float mul){
+		DictFrame oreEntry = mat.dict;
+		if(oreEntry == null){
+			OreDictionary.registerOre(shapeName, new ItemStack(item, 1, mat.id));
+		}else{
+			oreEntry.hazMult = mul;
+			oreEntry.registerStack(shapeName, new ItemStack(item, 1, mat.id));
+		}
 	}
 
 	public static String getReflector() {
