@@ -2,6 +2,8 @@ package com.leafia.dev;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 
 public class LeafiaUtil {
@@ -15,5 +17,9 @@ public class LeafiaUtil {
 	}
 	public static boolean isSolidVisibleCube(IBlockState state) {
 		return state.isFullCube() && state.getMaterial().isSolid() && !state.getMaterial().isReplaceable() && state.getRenderType().equals(EnumBlockRenderType.MODEL);
+	}
+	// For server. Stupid minecraft has SideOnly(Side.CLIENT) on the constructor so this is a bypass to that
+	public static AxisAlignedBB createAABB(Vec3d min,Vec3d max) {
+		return new AxisAlignedBB(min.x,min.y,min.z,max.x,max.y,max.z);
 	}
 }

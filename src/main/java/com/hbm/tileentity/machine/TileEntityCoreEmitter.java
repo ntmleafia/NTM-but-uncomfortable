@@ -10,6 +10,7 @@ import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.dev.LeafiaDebug;
+import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -65,7 +66,7 @@ public class TileEntityCoreEmitter extends DFCBaseTE implements ITickable, IEner
 			if (!world.isRemote) {
 				Vec3d centerVec = current.posIntended.add(new Vec3d(config.pivotAxisFace.getDirectionVec()).scale(0.5)
 						.add(config.secondaryVector.scale(0.5)));
-				List<Entity> list = world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(
+				List<Entity> list = world.getEntitiesWithinAABB(Entity.class, LeafiaUtil.createAABB(
 						centerVec.subtract(0.5, 0.5, 0.5), centerVec.add(0.5, 0.5, 0.5)
 				));
 				for (Entity e : list) {
