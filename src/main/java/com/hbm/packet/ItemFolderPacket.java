@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.function.Consumer;
 
@@ -70,6 +72,7 @@ public class ItemFolderPacket extends RecordablePacket {
 			buf.writeBoolean(serverSuccess);
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			boolean success = buf.readBoolean();
 			return (ctx)->{

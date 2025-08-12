@@ -649,23 +649,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					client_sfx.stopSound();
 				}
 			}
-			if (collapsing > 0.666) {
-				pull(Minecraft.getMinecraft().player);
-				Vec3d p = LeafiaHelper.getBlockPosCenter(pos);
-				VacuumInstance vacuum = new VacuumInstance(p,0,10,getPullRange(),0.1);
-				p = new FiaMatrix(p).rotateY(world.rand.nextDouble()*360).rotateX(world.rand.nextDouble()*360).translate(0,0,world.rand.nextDouble()*getPullRange()).position;
-
-				ParticleFleijaVacuum fx = new ParticleFleijaVacuum(
-						Minecraft.getMinecraft().world,
-						p.x,
-						p.y,
-						p.z,
-						world.rand.nextFloat()*2 + 2,
-						world.rand.nextFloat()*0.1f+0.1f,
-						vacuum
-				);
-				Minecraft.getMinecraft().effectRenderer.addEffect(fx);
-			}
+			if (collapsing > 0.666)
+				pullLocal();
 			for (DFCShock shock : dfcShocks) {
 				shock.ticks++;
 			}
@@ -676,6 +661,24 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			}
 			//TODO: sick particle effects
 		}
+	}
+	@SideOnly(Side.CLIENT)
+	void pullLocal() {
+		pull(Minecraft.getMinecraft().player);
+		Vec3d p = LeafiaHelper.getBlockPosCenter(pos);
+		VacuumInstance vacuum = new VacuumInstance(p,0,10,getPullRange(),0.1);
+		p = new FiaMatrix(p).rotateY(world.rand.nextDouble()*360).rotateX(world.rand.nextDouble()*360).translate(0,0,world.rand.nextDouble()*getPullRange()).position;
+
+		ParticleFleijaVacuum fx = new ParticleFleijaVacuum(
+				Minecraft.getMinecraft().world,
+				p.x,
+				p.y,
+				p.z,
+				world.rand.nextFloat()*2 + 2,
+				world.rand.nextFloat()*0.1f+0.1f,
+				vacuum
+		);
+		Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 	}
 	int shockCooldown = 0;
 	//int testDebug = 0;
@@ -731,6 +734,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		}
 		@Nullable
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			List<Vec3d> poses = new ArrayList<>();
 			TileEntity te = Minecraft.getMinecraft().world.getTileEntity(new BlockPos(buf.readVec3i()));
@@ -967,6 +971,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void onReceivePacketLocal(byte key, Object value) {
 		for (packetKeys pkt : packetKeys.values()) {
 			if (key == pkt.key) {

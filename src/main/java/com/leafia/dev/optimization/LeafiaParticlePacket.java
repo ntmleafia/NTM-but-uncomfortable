@@ -27,6 +27,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LeafiaParticlePacket extends RecordablePacket {
 	/**
@@ -142,6 +144,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		@Override
 		protected void toBits(LeafiaBuf buf) {}
 		@Override
+		@SideOnly(Side.CLIENT)
 		protected void emit(NBTTagCompound nbt) {
 			World world = Minecraft.getMinecraft().world;
 			ParticleRBMKMush mush = new ParticleRBMKMush(
@@ -165,6 +168,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		@Override
 		protected void toBits(LeafiaBuf buf) { buf.writeByte(period); }
 		@Override
+		@SideOnly(Side.CLIENT)
 		protected void emit(NBTTagCompound nbt) {
 			World world = Minecraft.getMinecraft().world;
 			double x = nbt.getDouble("posX") + world.rand.nextDouble()*0.5D - 0.25D;
@@ -209,6 +213,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			buf.writeFloat(width);
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		protected void emit(NBTTagCompound tag) { // stolen from tau cannon lmao
 			World world = Minecraft.getMinecraft().world;
 			tag.setString("type", "spark");
@@ -262,6 +267,7 @@ public class LeafiaParticlePacket extends RecordablePacket {
 			buf.writeFloat(segmentsPerTick);
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		protected void emit(NBTTagCompound tag) { // stolen from tau cannon lmao
 			World world = Minecraft.getMinecraft().world;
 			Vec3d vec = new Vec3d(tag.getDouble("posX"),tag.getDouble("posY"),tag.getDouble("posZ"));
@@ -370,8 +376,10 @@ public class LeafiaParticlePacket extends RecordablePacket {
 		/**
 		 * Method used for how the particle is spawned.
 		 * By default, it just uses proxy.effectNT
+		 * <h3>WHEN OVERRIDING THIS METHOD, ALWAYS ADD @SideOnly(Side.CLIENT) ANNOTATION, OR IT CRASHES WHEN STARTING AS A SERVER!</h3>
 		 * @param nbt NBT data buffer
 		 */
+		@SideOnly(Side.CLIENT)
 		protected void emit(NBTTagCompound nbt) {
 			MainRegistry.proxy.effectNT(nbt);
 		}

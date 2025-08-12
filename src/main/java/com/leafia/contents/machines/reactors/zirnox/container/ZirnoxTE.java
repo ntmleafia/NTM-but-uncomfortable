@@ -73,9 +73,7 @@ public class ZirnoxTE extends TileEntityMachineBase implements LeafiaPacketRecei
             this.key = (byte)key;
         }
     }
-    @SideOnly(Side.CLIENT)
     public int dialX = 0;
-    @SideOnly(Side.CLIENT)
     public int dialY = 0;
     private short getCompressionLevel(Fluid fluid) {
         if (fluid == ModForgeFluids.STEAM)
@@ -298,7 +296,6 @@ public class ZirnoxTE extends TileEntityMachineBase implements LeafiaPacketRecei
         }
         return null;
     }
-    @SideOnly(Side.CLIENT)
     public int valveLevel = 0;
     int movedelay = 0;
     double getHeatInSlot(int slot,LeafiaRodItem rod) {

@@ -123,7 +123,7 @@ public class EvChipS6 extends EvChipBase {
 
 		double ratio = getSpeedRatio();
 		if (entity.pulley != null)
-			entity.setVelocity(0,entity.doorOpen ? 0 : ratio*0.08,0);
+			entity.setMotion(0,entity.doorOpen ? 0 : ratio*0.08,0);
 
 		// MAIN CONTROL
 		if (nextFloor != null && !entity.doorOpen) {

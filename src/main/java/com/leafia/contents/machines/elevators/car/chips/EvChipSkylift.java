@@ -104,7 +104,7 @@ public class EvChipSkylift extends EvChipBase {
 
 		double ratio = getSpeedRatio();
 		if (entity.pulley != null)
-			entity.setVelocity(0,entity.doorOpen ? 0 : ratio,0);
+			entity.setMotion(0,entity.doorOpen ? 0 : ratio,0);
 		LeafiaDebug.debugLog(entity.getWorld(),ratio);
 		LeafiaDebug.debugLog(entity.getWorld(),"park: "+entity.parkFloor);
 		if (!entity.doorOpen && !entity.targetFloors.isEmpty()) {

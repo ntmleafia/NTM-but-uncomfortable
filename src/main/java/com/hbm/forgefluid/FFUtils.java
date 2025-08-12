@@ -56,6 +56,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import org.lwjgl.input.Keyboard;
 
@@ -208,6 +210,7 @@ public class FFUtils {
 		addFluidInfo(stack,texts,"");
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void addFluidInfo(FluidStack stack, List<String> texts, String prefix){
 		Fluid fluid = stack.getFluid();
 		int temp = fluid.getTemperature()-273;
@@ -370,6 +373,7 @@ public class FFUtils {
 			};
 		}
 	}
+	@SideOnly(Side.CLIENT)
 	private static void renderFluidInfo(GuiInfoContainer gui,int mouseX,int mouseY,int x,int y,int width,int height,FluidStack stack,int capacity) {
 		if (x <= mouseX && x + width > mouseX && y < mouseY && y + height >= mouseY) {
 			List<String> texts = new ArrayList<>();
@@ -992,6 +996,7 @@ public class FFUtils {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static TextureAtlasSprite getTextureFromFluid(Fluid f){
 		if(f == null) {
 			return null;

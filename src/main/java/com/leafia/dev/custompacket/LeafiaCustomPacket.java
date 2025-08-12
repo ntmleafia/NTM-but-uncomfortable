@@ -16,10 +16,13 @@ import com.llib.exceptions.LeafiaDevFlaw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -66,6 +69,9 @@ public class LeafiaCustomPacket extends RecordablePacket {
 	}
 	public void __sendToAll() {
 		PacketDispatcher.wrapper.sendToAll(this);
+	}
+	public void __sendToAllAround(int dim,BlockPos pos,double range) {
+		PacketDispatcher.wrapper.sendToAllAround(this,new TargetPoint(dim,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,range));
 	}
 	@Deprecated
 	public void __sendToAllInDimension(int dimension) {

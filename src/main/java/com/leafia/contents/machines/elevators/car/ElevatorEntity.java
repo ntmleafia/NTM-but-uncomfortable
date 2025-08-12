@@ -412,6 +412,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			}
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			int id = buf.readInt();
 			int btnCount = buf.readInt();
@@ -449,6 +450,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 				buf.writeFifthString(new FifthString(id));
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			int id = buf.readInt();
 			String[] enableds = new String[buf.readByte()];
@@ -479,6 +481,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			buf.writeFifthString(new FifthString(serverId));
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			int id = buf.readInt();
 			String pressedButton = buf.readFifthString().toString();
@@ -504,6 +507,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			}
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			int id = buf.readInt();
 			int length = buf.readInt();
@@ -691,6 +695,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			buf.writeNBT(serverEntity.inventory.serializeNBT());
 		}
 		@Override
+		@SideOnly(Side.CLIENT)
 		public Consumer<MessageContext> decode(LeafiaBuf buf) {
 			int id = buf.readInt();
 			NBTTagCompound inventory = buf.readNBT();
@@ -911,7 +916,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 			e.setPosition(e.posX+motionX,e.posY+motionY,e.posZ+motionZ);
 			if (e.posY < posY+motionY) {
 				e.setPosition(e.posX,posY+motionY,e.posZ); // anti-fallthrough
-				e.setVelocity(e.motionX,Math.max(e.motionY,motionY),e.motionZ);
+				setMotion(e,e.motionX,Math.max(e.motionY,motionY),e.motionZ);
 			}
 		}
 		for (List<HitSrf> srfs : surfaces.values()) {
@@ -932,10 +937,20 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 				if (pushed != null) {
 					e.setPosition(pushed.x,pushed.y,pushed.z);
 					Vec3d vel = killVelocity(new Vec3d(e.motionX,e.motionY,e.motionZ),srf,rotationYaw);
-					e.setVelocity(vel.x,vel.y,vel.z);
+					setMotion(e,vel.x,vel.y,vel.z);
 				}
 			}
 		}
+	}
+	public void setMotion(Entity e,double x,double y,double z) {
+		e.motionX = x;
+		e.motionY = y;
+		e.motionZ = z;
+		if (world.isRemote)
+			e.setVelocity(x,y,z);
+	}
+	public void setMotion(double x,double y,double z) {
+		setMotion(this,x,y,z);
 	}
 	String[] localLastWalls = new String[4];
 	boolean sync = true;
@@ -1019,12 +1034,12 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 				if (pulley == null) {
 					findPulley();
 					if (pulley == null)
-						setVelocity(motionX/2,motionY-9.8/400,motionZ/2);
+						setMotion(motionX/2,motionY-9.8/400,motionZ/2);
 				}
 				for (int i = 0; i < 2; i++) {
 					EnumFacing face = EnumFacing.byHorizontalIndex(i);
 					if (world.getBlockState(new BlockPos(posX,posY+0.5,posZ).add(face.getDirectionVec())).getBlock() instanceof EvShaft) {
-						setVelocity(0,motionY,0);
+						setMotion(0,motionY,0);
 						break;
 					}
 				}
@@ -1055,7 +1070,7 @@ public class ElevatorEntity extends Entity implements IEntityMultiPart, IEntityC
 							ItemStack stack = inventory.getStackInSlot(i);
 							EntityItem item = entityDropItem(stack,0);
 							if (item != null)
-								item.setVelocity(world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5);
+								setMotion(item,world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5,world.rand.nextGaussian()*0.5);
 							inventory.setStackInSlot(i,ItemStack.EMPTY);
 						}
 						setDead();
