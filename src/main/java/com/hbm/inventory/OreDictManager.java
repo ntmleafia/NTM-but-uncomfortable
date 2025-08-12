@@ -321,6 +321,9 @@ public class OreDictManager {
 
 	// order: nugget billet ingot dust dustTiny block crystal plate gem ore oreNether
 	public static void registerOres() {
+		// IDFK IM STUPIDI
+		SI.ingot(Ingots.ingot_silicon).nugget(Nuggies.nugget_silicon).billet(Billets.billet_silicon);
+
 		// LEAFIA
 		ELECTRONIUM.ingot(Ingots.ingot_electronium);
 		U238_2.ingot(Ingots.ingot_u238m2).nugget(Nuggies.nugget_u238m2);

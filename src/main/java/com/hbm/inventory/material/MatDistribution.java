@@ -6,6 +6,7 @@ import static com.hbm.inventory.material.MaterialShapes.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.inventory.OreDictManager;
@@ -13,6 +14,7 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.material.Mats.MaterialStack;
 import com.hbm.items.ModItems;
 
+import com.hbm.items.ModItems.BedrockOreV2;
 import com.hbm.items.ModItems.Foundry;
 import com.hbm.items.ModItems.Materials.Ingots;
 import com.hbm.items.ModItems.Materials.Powders;
@@ -270,6 +272,11 @@ public class MatDistribution {
 		// registerEntry(DictFrame.fromOne(ModItems.powder_ash, EnumAshType.WOOD), MAT_CARBON, NUGGET.q(1));
 		// registerEntry(DictFrame.fromOne(ModItems.powder_ash, EnumAshType.COAL), MAT_CARBON, NUGGET.q(2));
 		// registerEntry(DictFrame.fromOne(ModItems.powder_ash, EnumAshType.MISC), MAT_CARBON, NUGGET.q(1));
+
+		for (Entry<Integer,NTMMaterial> entry : matById.entrySet()) {
+			if (BedrockOreV2.fragment.isMaterialValid(entry.getValue()))
+				registerEntry(new ComparableStack(BedrockOreV2.fragment,1,entry.getKey()),entry.getValue(),DUSTTINY.q(1));
+		}
 	}
 	
 	public static void registerEntry(Object key, Object... matDef) {
@@ -278,6 +285,7 @@ public class MatDistribution {
 		if(key instanceof Item) comp = new ComparableStack((Item) key);
 		if(key instanceof Block) comp = new ComparableStack((Block) key);
 		if(key instanceof ItemStack) comp = new ComparableStack((ItemStack) key);
+		if (key instanceof ComparableStack) comp = (ComparableStack)key;
 		
 		if(comp == null) return;
 		if(matDef.length % 2 == 1) return;

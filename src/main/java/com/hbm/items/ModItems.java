@@ -2370,7 +2370,7 @@ public class ModItems {
 		}
 		//public static final Item fragment = new ItemMaterialsAutogen("bedrockorev2_fragment",MaterialShapes.FRAGMENT).aot(Mats.MAT_BISMUTH, "bedrock_ore_fragment_bismuth").setUnlocalizedName("bedrock_ore_fragment").setCreativeTab(MainRegistry.partsTab).setTextureName(RefStrings.MODID + ":bedrock_ore_fragment");
 		static final Item shit = new BedrockOreV2OverlayDummyItem("bedrockorev2_overlay");
-		public static final Item fragment = new ItemMaterialsAutogenTint("bedrock_ore_fragment",MaterialShapes.FRAGMENT);
+		public static final ItemMaterialsAutogenTint fragment = new ItemMaterialsAutogenTint("bedrock_ore_fragment",MaterialShapes.FRAGMENT);
 	}
 	
 	public static class Armory {
