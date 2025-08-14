@@ -1,5 +1,6 @@
 package com.leafia.contents.machines.manfacturing.assemfac;
 
+import com.hbm.blocks.BlockDummyable;
 import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryTE.AssemblerArm;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.transformer.LeafiaGls;
@@ -15,7 +16,7 @@ public class AssemblyFactoryRender extends TileEntitySpecialRenderer<TileEntity>
 	@Override
 	public void render(TileEntity te,double x,double y,double z,float interp,int destroyStage,float alpha) {
 		LeafiaGls.pushMatrix();
-		LeafiaGls.translate(x,y,z);
+		LeafiaGls.translate(x,y,z);/*
 		switch(te.getBlockMetadata() - 10) {
 			case 2:
 				GL11.glRotatef(90, 0F, 1F, 0F); break;
@@ -25,6 +26,12 @@ public class AssemblyFactoryRender extends TileEntitySpecialRenderer<TileEntity>
 				GL11.glRotatef(180, 0F, 1F, 0F); break;
 			case 5:
 				GL11.glRotatef(0, 0F, 1F, 0F); break;
+		}*/
+		switch(te.getBlockMetadata() - BlockDummyable.offset) {
+			case 2: LeafiaGls.rotate(180, 0F, 1F, 0F); break;
+			case 4: LeafiaGls.rotate(270, 0F, 1F, 0F); break;
+			case 3: LeafiaGls.rotate(0, 0F, 1F, 0F); break;
+			case 5: LeafiaGls.rotate(90, 0F, 1F, 0F); break;
 		}
 
 		LeafiaQuickModel mdl = (LeafiaQuickModel)te;

@@ -86,10 +86,12 @@ import com.leafia.contents.machines.manfacturing.soldering.SolderingTE;
 import com.leafia.contents.machines.manfacturing.wish.WishTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
+import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
 import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
+import com.leafia.contents.machines.processing.mixingvat.MixingVatTE;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
 import com.leafia.contents.machines.reactors.msr.MSRMixerTE;
@@ -385,20 +387,22 @@ public class MainRegistry {
 		HazardRegistry.registerItems();
 		PotionRecipes.registerPotionRecipes();
 
-		if (proxy instanceof ClientProxy) {
-			rendererWaiting.add(new TileEntityPylonConnector());
-			rendererWaiting.add(new TileEntityMachineAcidizer());
+		//if (proxy instanceof ClientProxy) {
+		rendererWaiting.add(new TileEntityPylonConnector());
+		rendererWaiting.add(new TileEntityMachineAcidizer());
 
-			rendererWaiting.add(new ArcWelderTE());
-			rendererWaiting.add(new SolderingTE());
-			rendererWaiting.add(new ElectrolyzerTE());
-			rendererWaiting.add(new LiquefactorTE());
-			rendererWaiting.add(new PyroOvenTE());
-			rendererWaiting.add(new SolidifierTE());
+		rendererWaiting.add(new ArcWelderTE());
+		rendererWaiting.add(new SolderingTE());
+		rendererWaiting.add(new ElectrolyzerTE());
+		rendererWaiting.add(new LiquefactorTE());
+		rendererWaiting.add(new PyroOvenTE());
+		rendererWaiting.add(new SolidifierTE());
 
-			rendererWaiting.add(new AssemblyFactoryTE());
-			rendererWaiting.add(new ChemTableTE());
-		}
+		rendererWaiting.add(new AssemblyFactoryTE());
+		rendererWaiting.add(new ChemTableTE());
+
+		rendererWaiting.add(new MixingVatTE());
+		//}
 
 		proxy.registerRenderInfo();
 		HbmWorld.mainRegistry();
@@ -587,6 +591,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCoreReceiver.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_receiver"));
 		GameRegistry.registerTileEntity(TileEntityCoreInjector.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_injector"));
 		GameRegistry.registerTileEntity(TileEntityCoreStabilizer.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_stabilizer"));
+		GameRegistry.registerTileEntity(DFCExchangerTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_exchanger"));
 		GameRegistry.registerTileEntity(TileEntityCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_core"));
 		GameRegistry.registerTileEntity(TileEntityCoreCreativeEmitter.class, new ResourceLocation(RefStrings.MODID, "tileentity_core_cemitter"));
 		GameRegistry.registerTileEntity(SPKCableTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_spk"));
@@ -707,7 +712,8 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(EvBufferTE.class, new ResourceLocation(RefStrings.MODID, "tileentity_elevator_buffer"));
 
 		for (LeafiaQuickModel te : rendererWaiting) {
-			LeafiaQuickModel._loadResources(te,te._assetPath());
+			if (proxy instanceof ClientProxy)
+				LeafiaQuickModel._loadResources(te,te._assetPath());
 			GameRegistry.registerTileEntity(((TileEntity)te).getClass(),new ResourceLocation(RefStrings.MODID,"tileentity_"+te._resourcePath()));
 		}
 		int i = 0;

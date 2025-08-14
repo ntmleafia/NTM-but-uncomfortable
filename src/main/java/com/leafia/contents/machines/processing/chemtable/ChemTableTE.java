@@ -10,6 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ChemTableTE extends TileEntity implements LeafiaQuickModel, IGUIProvider {
 	@Override
@@ -23,6 +25,7 @@ public class ChemTableTE extends TileEntity implements LeafiaQuickModel, IGUIPro
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new ChemTableRender();
 	}

@@ -5,6 +5,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderHelper;
+import com.hbm.render.amlfrom1710.AdvancedModelLoader;
 import com.hbm.render.amlfrom1710.IModelCustom;
 import com.hbm.render.amlfrom1710.Vec3;
 import com.hbm.render.misc.BeamPronter;
@@ -17,6 +18,7 @@ import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -50,7 +52,9 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 		return component > 0.15;
 	}
 
-	ResourceLocation dfc_cemitter_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/core_cemitter.png");
+	static final ResourceLocation dfc_cemitter_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/core_cemitter.png");
+	static final ResourceLocation dfc_exchanger_tex = new ResourceLocation(RefStrings.MODID, "textures/models/leafia/core_exchanger.png");
+	static final IModelCustom dfc_exchanger_mdl = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID,"models/leafia/dfc_rotatable/exchanger.obj"));
 
 	@Override
 	public void render(TileEntityMachineBase tileEntity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -74,6 +78,9 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 		} else if (tileEntity instanceof TileEntityCoreStabilizer) {
 			bindTexture(ResourceManager.dfc_stabilizer_tex);
 			mdl = ResourceManager.dfc_stabilizer;
+		} else if (tileEntity instanceof DFCExchangerTE) {
+			bindTexture(dfc_exchanger_tex);
+			mdl = dfc_exchanger_mdl;
 		} else return;
 		GL11.glPushMatrix();
 		GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
@@ -208,6 +215,19 @@ public class RenderCoreComponent extends TileEntitySpecialRenderer<TileEntityMac
 					}
 				}
 			}
+		}
+		if (tileEntity instanceof DFCExchangerTE) {
+			DFCExchangerTE exchanger = (DFCExchangerTE) tileEntity;
+			//int range = injector.beam;
+
+			if (range > 0) {
+				//0xffa200
+				BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.SPIRAL, EnumBeamType.SOLID, 0x9b4100, 0x9b4100, (int)tileEntity.getWorld().getTotalWorldTime() * -25 % 360, (int)(range * 3), 0.125F/1.5f, 1, 0.01f);
+				BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.SPIRAL, EnumBeamType.SOLID, 0x9b4100, 0x9b4100, (int)tileEntity.getWorld().getTotalWorldTime() * -15 % 360 + 180, (int)(range * 3), 0.125F/1.5f, 1, 0.01f);
+				BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.SPIRAL, EnumBeamType.SOLID, 0x9b4100, 0x9b4100, (int)tileEntity.getWorld().getTotalWorldTime() * -5 % 360 + 180, (int)(range * 3), 0.125F/1.5f, 1, 0.01f);
+				BeamPronter.prontBeam(Vec3.createVectorHelper(0, 0, -range), EnumWaveType.STRAIGHT, EnumBeamType.SOLID, 0xffd000, 0xffd000, 0, 1, 0, 1, 0.01f);
+			}
+			bindTexture(dfc_exchanger_tex);
 		}
 
 		GlStateManager.enableLighting();

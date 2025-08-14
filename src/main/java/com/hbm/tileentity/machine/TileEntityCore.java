@@ -93,7 +93,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		EXPEL_TICK, COLOR, CORE_TYPE,
 
 		PLAY_SOUND, JAMMER,
-		COLLAPSE;
+		COLLAPSE,
+
+		HASCORE;
 
 		public int key;
 
@@ -314,7 +316,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					{ // i wanted to redo everything this sucks ASS
 						//containedEnergy += incomingSpk;
 						double combustionPotential = Math.pow(energyRatio,0.25);
-						int consumption = (int)Math.ceil(Math.pow(incomingSpk*catalystFuelMod,0.75));//(int)(combustionPotential*100);
+						int consumption = (int)Math.ceil(Math.pow(incomingSpk*catalystFuelMod*getCoreFuel(),0.75));//(int)(combustionPotential*100);
 						Tracker._tracePosition(this,pos.up(3),"incomingSpk: ",incomingSpk);
 						tanks[0].drain(consumption,true);
 						tanks[1].drain(consumption,true);
@@ -332,7 +334,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
 
 						//temperature = Math.pow(temperature,0.9);
-						tgtTemp += Math.pow(deltaEnergy*10*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2);//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
+						tgtTemp += Math.pow(deltaEnergy*10*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2)*coreHeatMod;//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
 						double rdc = 1-energyRatio;
 						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
 
@@ -408,6 +410,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						}
 					}
 					Tracker._endProfile(this);
+					/*
 					if (false) {
 
 						double desiredBonus = Math.sqrt(incomingSpk);
@@ -468,7 +471,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						expellingSpk = expelling;
 						expelTicks[Math.floorMod(ticks, 20)] = expelling;
 
-					}
+					}*/
 					double timeToMeltdown = 10;
 					double timeToRegen = 30;
 					tagA.setDouble("damage", MathHelper.clamp(damageA
@@ -618,6 +621,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					.__write(packetKeys.JAMMER.key, jammerPos)
 					.__write(packetKeys.COLLAPSE.key, collapsing)
+
+					.__write(packetKeys.HASCORE.key,hasCore)
 
 					.__sendToAffectedClients();
 
@@ -956,12 +961,16 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public void readFromNBT(NBTTagCompound compound) {
 		if (compound.hasKey("tanks"))
 			FFUtils.deserializeTankArray(compound.getTagList("tanks", 10), tanks);
+		temperature = compound.getDouble("temperature");
+		containedEnergy = compound.getDouble("energy");
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("tanks", FFUtils.serializeTankArray(tanks));
+		compound.setDouble("temperature",temperature);
+		compound.setDouble("energy",containedEnergy);
 		return super.writeToNBT(compound);
 	}
 
@@ -1051,6 +1060,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						break;
 					case COLLAPSE:
 						collapsing = (double)value;
+						break;
+					case HASCORE:
+						hasCore = (boolean)value;
 						break;
 				}
 			}

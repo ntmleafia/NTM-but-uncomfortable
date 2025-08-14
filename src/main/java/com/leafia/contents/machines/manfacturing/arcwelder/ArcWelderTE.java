@@ -8,6 +8,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ArcWelderTE extends TileEntityMachineBase implements LeafiaQuickModel {
 	public long power;
@@ -40,6 +42,7 @@ public class ArcWelderTE extends TileEntityMachineBase implements LeafiaQuickMod
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new ArcWelderRender();
 	}

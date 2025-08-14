@@ -10,6 +10,7 @@ import com.hbm.tileentity.machine.TileEntityCoreReceiver;
 import com.hbm.tileentity.machine.TileEntityCoreStabilizer;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
+import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
 import com.leafia.dev.MachineTooltip;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockDirectional;
@@ -50,6 +51,8 @@ public class CoreComponent extends BlockContainer {
         MachineTooltip.addModular(tooltip);
         if (this == ModBlocks.dfc_receiver || this == ModBlocks.dfc_reinforced)
             MachineTooltip.addGenerator(tooltip);
+        else if (this == ModBlocks.dfc_exchanger)
+            MachineTooltip.addBoiler(tooltip);
         super.addInformation(stack, player, tooltip, advanced);
     }
 
@@ -67,6 +70,8 @@ public class CoreComponent extends BlockContainer {
             return new TileEntityCoreStabilizer();
         if (this == ModBlocks.dfc_reinforced)
             return new TileEntityCoreReceiver();
+        if (this == ModBlocks.dfc_exchanger)
+            return new DFCExchangerTE();
 
         return null;
     }
@@ -120,6 +125,9 @@ public class CoreComponent extends BlockContainer {
 
             if (this == ModBlocks.dfc_cemitter)
                 player.openGui(MainRegistry.instance, ModBlocks.guiID_dfc_cemitter, world, pos.getX(), pos.getY(), pos.getZ());
+
+            if (this == ModBlocks.dfc_exchanger)
+                player.openGui(MainRegistry.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
             return true;
 
         } else {

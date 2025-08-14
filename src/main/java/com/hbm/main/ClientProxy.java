@@ -27,6 +27,7 @@ import com.hbm.entity.missile.*;
 import com.hbm.entity.projectile.*;
 import com.leafia.contents.control.fuel.nuclearfuel.LeafiaRodItem;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelRender;
+import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
 import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryRender;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
@@ -734,6 +735,7 @@ public class ClientProxy extends ServerProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreReceiver.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreInjector.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreStabilizer.class, new RenderCoreComponent());
+		ClientRegistry.bindTileEntitySpecialRenderer(DFCExchangerTE.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCore.class, new RenderCore());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCoreCreativeEmitter.class, new RenderCoreComponent());
 		ClientRegistry.bindTileEntitySpecialRenderer(SPKCableTE.class, new SPKCableRender());

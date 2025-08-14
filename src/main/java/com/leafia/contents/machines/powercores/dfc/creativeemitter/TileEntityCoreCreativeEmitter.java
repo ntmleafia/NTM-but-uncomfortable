@@ -16,6 +16,10 @@ public class TileEntityCoreCreativeEmitter extends TileEntityCoreEmitter {
 	};
 	int selecting = 0;
 	@Override
+	public String getPacketIdentifier() {
+		return "DFC_CBOOSTER";
+	}
+	@Override
 	public void update() {
 		if (!world.isRemote) {
 

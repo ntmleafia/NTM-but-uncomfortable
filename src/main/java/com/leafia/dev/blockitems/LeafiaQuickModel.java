@@ -29,6 +29,7 @@ import java.util.Map;
 import static com.hbm.render.RenderHelper.bindTexture;
 
 public interface LeafiaQuickModel {
+	boolean debug = false;
 	// automate this shit already
 	@SideOnly(Side.CLIENT)
 	Map<String,ResourceLocation> texMap = new HashMap<>();
@@ -39,7 +40,6 @@ public interface LeafiaQuickModel {
 	/**
 	 * @return Should return the path for the TE to be registered.
 	 */
-	@SideOnly(Side.CLIENT)
 	String _resourcePath();
 
 	/**
@@ -100,7 +100,6 @@ public interface LeafiaQuickModel {
 
 			.get(TransformType.FIXED)
 			.setScale(0.25).setPosition(-2,2,-1.25).setRotation(-90,0,0).getHelper();
-	boolean debug = false;
 	@SideOnly(Side.CLIENT)
 	default ItemRenderBase _itemRenderer() {
 		return new ItemRenderBase() {

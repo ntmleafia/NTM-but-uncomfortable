@@ -15,7 +15,7 @@ public class TokamakT2Render extends TileEntitySpecialRenderer<TokamakT2TE> {
 			new ResourceLocation(RefStrings.MODID+":models/xenoulexi/fusion_tier_2.obj")
 	);
 	static ResourceLocation getRsc(String s) {
-		return new ResourceLocation(RefStrings.MODID+":textures/models/xenoulexi/"+s+".png");
+		return new ResourceLocation(RefStrings.MODID+":textures/models/xenoulexi/t2tokamak/"+s+".png");
 	}
 	static final ResourceLocation microwave = getRsc("microwave");
 	static final ResourceLocation plasma = getRsc("plasma");

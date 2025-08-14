@@ -39,6 +39,8 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -97,6 +99,7 @@ public class SolderingTE extends TileEntityMachineBase implements IEnergyUser, I
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new SolderingRender();
 	}

@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PyroOvenTE extends TileEntityMachineBase implements LeafiaQuickModel {
 	public long power;
@@ -47,6 +49,7 @@ public class PyroOvenTE extends TileEntityMachineBase implements LeafiaQuickMode
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new PyroOvenRender();
 	}

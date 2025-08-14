@@ -13,10 +13,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityProxyCombo extends TileEntityProxyBase implements IEnergyUser, IHeatSource {
 
-	TileEntity tile;
-	boolean inventory;
-	boolean power;
-	boolean fluid;
+	protected TileEntity tile;
+	protected boolean inventory;
+	protected boolean power;
+	protected boolean fluid;
 
 	boolean heat;
 

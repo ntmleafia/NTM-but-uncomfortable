@@ -104,6 +104,7 @@ public class ItemFolderPacket extends RecordablePacket {
 				if(p.capabilities.isCreativeMode) {
 					
 					p.inventory.addItemStackToInventory(stack.copy());
+					LeafiaCustomPacket.__start(new FolderResponsePacket(true)).__sendToClient(p);
 					return;
 				}
 				boolean success = false;

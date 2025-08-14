@@ -6,6 +6,7 @@ import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 
+import com.leafia.dev.math.FiaMatrix;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -234,6 +235,25 @@ public abstract class BlockDummyable extends BlockContainer implements ICopiable
 
 	protected void fillSpace(World world, int x, int y, int z, ForgeDirection dir, int o) {
 		MultiblockHandlerXR.fillSpace(world, x + dir.offsetX * o , y + dir.offsetY * o, z + dir.offsetZ * o, getDimensions(), this, dir);
+	}
+
+	public void makeExtra(World world,BlockPos pos) {
+		makeExtra(world,pos.getX(),pos.getY(),pos.getZ());
+	}
+
+	@Nullable
+	public FiaMatrix getMatrix(World world,BlockPos pos) {
+		if(world.getBlockState(pos).getBlock() != this)
+			return null;
+		int meta = world.getBlockState(pos).getValue(META);
+		if (meta < 12) return null;
+		return switch(meta) {
+			case 12 -> new FiaMatrix().rotateY(180);
+			case 14 -> new FiaMatrix().rotateY(270);
+			case 13 -> new FiaMatrix().rotateY(0);
+			case 15 -> new FiaMatrix().rotateY(90);
+			default -> null;
+		};
 	}
 
 	//"upgrades" regular dummy blocks to ones with the extra flag

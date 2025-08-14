@@ -1,0 +1,50 @@
+package com.leafia.contents.machines.processing.mixingvat;
+
+import com.hbm.blocks.BlockDummyable;
+import com.hbm.lib.ForgeDirection;
+import com.leafia.dev.LeafiaDebug;
+import net.minecraft.block.material.Material;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+public class MixingVatBlock extends BlockDummyable {
+	public MixingVatBlock(Material materialIn,String s) {
+		super(materialIn,s);
+	}
+
+	@Override
+	public int[] getDimensions() {
+		return new int[]{1,0,2,0,0,1};
+	}
+
+	@Override
+	public int getOffset() {
+		return 0;
+	}
+
+	@Override
+	public @Nullable TileEntity createNewTileEntity(World worldIn,int meta) {
+		if (meta >= 12)
+			return new MixingVatTE();
+		else if (meta >= extra) {
+
+		}
+		return null;
+	}
+
+	@Override
+	protected void fillSpace(World world,int x,int y,int z,ForgeDirection back,int o) {
+		super.fillSpace(world,x,y,z,back,o);
+		ForgeDirection front = back.getOpposite();
+		ForgeDirection right = front.getRotation(ForgeDirection.UP);
+		BlockPos pos = new BlockPos(x,y,z);
+		LeafiaDebug.debugPos(world,new BlockPos(x,y,z).offset(front.toEnumFacing()),2,0x0000FF,"Front");
+		LeafiaDebug.debugPos(world,new BlockPos(x,y,z).offset(right.toEnumFacing()),2,0xFF0000,"Right");
+		this.makeExtra(world,pos);
+		this.makeExtra(world,pos.offset(right.toEnumFacing()));
+		this.makeExtra(world,pos.offset(front.toEnumFacing(),2).offset(right.toEnumFacing()));
+		this.makeExtra(world,pos.offset(front.toEnumFacing(),2).offset(right.toEnumFacing()));
+	}
+}
