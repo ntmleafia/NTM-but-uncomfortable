@@ -32,6 +32,8 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,6 +61,7 @@ public class MSRMixerTE extends TileEntityMachineBase implements ITickable, Leaf
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public GuiScreen provideGUI(int ID,EntityPlayer player,World world,int x,int y,int z) {
 		return new MSRMixerGUI(player.inventory,this);
 	}

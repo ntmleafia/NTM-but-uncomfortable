@@ -316,7 +316,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					{ // i wanted to redo everything this sucks ASS
 						//containedEnergy += incomingSpk;
 						double combustionPotential = Math.pow(energyRatio,0.25);
-						int consumption = (int)Math.ceil(Math.pow(incomingSpk*catalystFuelMod*getCoreFuel(),0.75));//(int)(combustionPotential*100);
+						int consumption = (int)Math.ceil(Math.pow(incomingSpk*catalystFuelMod*getCoreFuel(),0.5));//(int)(combustionPotential*100);
 						Tracker._tracePosition(this,pos.up(3),"incomingSpk: ",incomingSpk);
 						tanks[0].drain(consumption,true);
 						tanks[1].drain(consumption,true);
@@ -326,7 +326,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
 						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialGain);
-						containedEnergy += (deltaEnergy*corePower+(incomingSpk-deltaEnergy)*0.666)*boost*fill0*fill1;
+						containedEnergy += (deltaEnergy*corePower/*+(incomingSpk-deltaEnergy)*0.666*/)*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
 						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower;
 						double tgtTemp = temperature;
@@ -334,7 +334,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
 
 						//temperature = Math.pow(temperature,0.9);
-						tgtTemp += Math.pow(deltaEnergy*10*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2)*coreHeatMod;//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
+						tgtTemp += Math.pow(deltaEnergy*666*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2)*coreHeatMod;//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
 						double rdc = 1-energyRatio;
 						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
 
@@ -353,7 +353,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						for (TileEntityCoreReceiver absorber : absorbers) {
 							long absorb = (long)(absorbed/absorbDiv*absorber.level*1000_000);
 							containedEnergy -= absorb/1000_000d;
-							absorber.joules += absorb + (long)(catalystPower*Math.pow(tempRatio,0.1)/absorbDiv*absorber.level);
+							absorber.joules += absorb + (long)((catalystPower*Math.pow(tempRatio,0.1)+incomingSpk*2000_000)/absorbDiv*absorber.level);
 						}
 						expellingSpk = absorbed;
 						expelTicks[Math.floorMod(ticks, 20)] = expellingSpk;

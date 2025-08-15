@@ -10,6 +10,7 @@ import com.hbm.util.Tuple.Pair;
 import com.hbm.util.Tuple.Quartet;
 import com.hbm.util.Tuple.Triplet;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.llib.group.LeafiaSet;
 import net.minecraft.client.gui.GuiScreen;
@@ -29,6 +30,8 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -49,7 +52,7 @@ public class DFCExchangerTE extends DFCBaseTE implements ITickable, IGUIProvider
 			Fluid of = HeatRecipes.getBoilFluid(output);
 			if (of != null) {
 				in += HeatRecipes.getInputAmountHot(output);
-				out += HeatRecipes.getOutputAmountHot(of);
+				out += HeatRecipes.getOutputAmountHot(output);
 				output = of;
 				comp++;
 			} else break;
@@ -137,7 +140,7 @@ public class DFCExchangerTE extends DFCBaseTE implements ITickable, IGUIProvider
 						if (amt0 == drain && amt1 == fill) {
 							input.drain(drain,true);
 							output.fill(new FluidStack(outputFluid,fill),true);
-							core.temperature = Math.max(core.temperature-drain/mbPerKelvin,0);
+							core.temperature = Math.max(core.temperature-drain*heatAmt/mbPerKelvin/50,0);
 						}
 					}
 				}
@@ -205,6 +208,7 @@ public class DFCExchangerTE extends DFCBaseTE implements ITickable, IGUIProvider
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public GuiScreen provideGUI(int ID,EntityPlayer player,World world,int x,int y,int z) {
 		return new DFCExchangerGUI(player,this);
 	}
@@ -216,7 +220,9 @@ public class DFCExchangerTE extends DFCBaseTE implements ITickable, IGUIProvider
 
 	@Override
 	public int fill(FluidStack resource,boolean doFill) {
-		return input.fill(resource,doFill);
+		if (inputFluid.equals(resource.getFluid()))
+			return input.fill(resource,doFill);
+		return 0;
 	}
 
 	@Override
