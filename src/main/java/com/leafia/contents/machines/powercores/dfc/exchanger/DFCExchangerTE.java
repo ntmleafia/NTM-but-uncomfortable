@@ -140,7 +140,7 @@ public class DFCExchangerTE extends DFCBaseTE implements ITickable, IGUIProvider
 						if (amt0 == drain && amt1 == fill) {
 							input.drain(drain,true);
 							output.fill(new FluidStack(outputFluid,fill),true);
-							core.temperature = Math.max(core.temperature-drain*heatAmt/mbPerKelvin/50,0);
+							core.temperature = Math.max(core.temperature-drain*heatAmt/mbPerKelvin/20,0);
 						}
 					}
 				}

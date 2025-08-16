@@ -307,7 +307,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					Tracker._startProfile(this,"NeoTick");
 					{
-						potentialGain = Math.max(0,energyMod);
+						potentialGain = Math.max(0,Math.pow(energyMod,0.75));
 						if (temperature >= 100) {
 							double randRange = Math.pow(tempRatio,0.65)*10;
 							potentialGain += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();
@@ -326,17 +326,17 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
 						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialGain);
-						containedEnergy += (deltaEnergy*corePower/*+(incomingSpk-deltaEnergy)*0.666*/)*boost*fill0*fill1;
+						containedEnergy += (deltaEnergy*corePower+Math.pow(Math.max(0,incomingSpk-deltaEnergy),0.9))*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower;
+						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower/666;
 						double tgtTemp = temperature;
 						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
 
 						//temperature = Math.pow(temperature,0.9);
-						tgtTemp += Math.pow(deltaEnergy*666*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2)*coreHeatMod;//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
+						tgtTemp += Math.pow(deltaEnergy*666*catalystHeatMod,2/(1+stabilization))*(1-tempRatio/2)*coreHeatMod*Math.pow(potentialGain,0.25);//Math.pow(deltaEnergy,0.1)*5*Math.pow(potentialRelease,1.5);
 						double rdc = 1-energyRatio;
-						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio*10;
+						tgtTemp -= Math.pow(Math.abs(rdc),0.5)*Math.signum(rdc)*tempRatio;//*10;
 
 
 
