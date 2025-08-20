@@ -329,4 +329,9 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 	public long getMaxPower() {
 		return maxPower;
 	}
+
+	@Override
+	public boolean canExtractItemHopper(int slot,ItemStack itemStack,int amount) {
+		return slot >= 2;
+	}
 }

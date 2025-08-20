@@ -307,7 +307,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					Tracker._startProfile(this,"NeoTick");
 					{
-						potentialGain = Math.max(0,Math.pow(energyMod,0.75));
+						potentialGain = energyMod; //Math.max(0,Math.pow(energyMod,0.75));
 						if (temperature >= 100) {
 							double randRange = Math.pow(tempRatio,0.65)*10;
 							potentialGain += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();

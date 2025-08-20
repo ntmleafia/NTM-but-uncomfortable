@@ -291,7 +291,7 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
     }
 
     @Override
-    public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
+    public boolean canExtractItemHopper(int slot, ItemStack itemStack, int amount) {
         return false;
     }
 }
