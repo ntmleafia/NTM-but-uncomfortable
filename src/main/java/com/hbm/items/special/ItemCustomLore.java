@@ -11,6 +11,7 @@ import com.hbm.items.ModItems.Materials.*;
 import com.hbm.items.ModItems.RetroRods;
 import com.hbm.main.MainRegistry;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MachineTooltip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -218,12 +219,13 @@ public class ItemCustomLore extends Item {
 			list.add("Do NOT operate cyclotron without it!");
 		}
 		if(this == ModItems.fuse) {
+			/*
 			list.add("This item is needed for every large");
 			list.add("nuclear reactor, as it allows the");
 			list.add("reactor to generate electricity and");
 			list.add("use up it's fuel. Removing the fuse");
 			list.add("from a reactor will instantly shut");
-			list.add("it down.");
+			list.add("it down.");*/
 		}
 		if(this == Armory.gun_super_shotgun) {
 			list.add("It's super broken!");

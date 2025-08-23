@@ -5,6 +5,7 @@ import com.hbm.items.ModItems.RetroRods;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.Library;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +23,7 @@ public class ItemFuelRod extends ItemHazard {
 	private boolean iblind;
 
 	public ItemFuelRod(float radiation, boolean blinding, int life, int heat, String s) {
-		super(radiation, false, blinding, s);
+		super(RadiationType.NEUTRONS, radiation, false, blinding, s);
 		this.irad = radiation;
 		this.iblind = blinding;
 		this.lifeTime = life;
@@ -33,11 +34,12 @@ public class ItemFuelRod extends ItemHazard {
 	
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GREEN + "["+ I18nUtil.resolveKey("trait.radioactive") +"]");
-		tooltip.add(TextFormatting.YELLOW + "" + this.irad + " "+I18nUtil.resolveKey("desc.rads"));
-		if(this.iblind){
-			tooltip.add(TextFormatting.DARK_AQUA + "["+I18nUtil.resolveKey("trait.blinding")+"]");
-		}
+		//tooltip.add(TextFormatting.GREEN + "["+ I18nUtil.resolveKey("trait._hazarditem.radioactive") +"]");
+		//tooltip.add(TextFormatting.YELLOW + "" + this.irad + " "+I18nUtil.resolveKey("desc.rads"));
+		//if(this.iblind){
+		//	tooltip.add(TextFormatting.DARK_AQUA + "["+I18nUtil.resolveKey("trait.blinding")+"]");
+		//}
+		getModule().addInformation(stack,tooltip,flagIn);
 		tooltip.add(TextFormatting.GOLD + "["+I18nUtil.resolveKey("trait.reactorrod")+"]");
 		
 		tooltip.add(TextFormatting.DARK_AQUA + "  "+I18nUtil.resolveKey("desc.generates")+" " + heat + " "+I18nUtil.resolveKey("desc.heatpt"));
