@@ -326,9 +326,9 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 				int cooled = (int)Math.ceil(cooledSum/100*maxCoreHeat); // idk wtf is going on here >:( i hate math
 				this.tanks[1].drain((int)Math.ceil(cooled/600f), true);
 				this.hullHeat += cooled * hullHeatMod;
-				if (this.hullHeat > 1000) {
-					int extraHeat = 1000-this.hullHeat;
-					this.hullHeat = 1000;
+				if (this.hullHeat > maxHullHeat) {
+					int extraHeat = this.hullHeat-maxHullHeat;
+					this.hullHeat = maxHullHeat;
 					this.coreHeat += extraHeat;
 				}
 			}
