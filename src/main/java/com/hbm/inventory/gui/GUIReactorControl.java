@@ -46,11 +46,11 @@ public class GUIReactorControl extends GuiInfoContainer {
 			this.drawCustomInfo(this, mouseX, mouseY, guiLeft + 79, guiTop + 16, 18, 18, new String[] { "Reactor link not found!" });
 		}
 
-		if(control.water < control.maxWater * 0.1) {
+		if(control.water < control.maxWater * 0.4) {
 			this.drawCustomInfo(this, mouseX, mouseY, guiLeft + 79 + 18, guiTop + 16, 18, 18, new String[] { "Water level low!" });
 		}
 		
-		if(control.cool < control.maxCool * 0.1) {
+		if(control.cool < control.maxCool * 0.4) {
 			this.drawCustomInfo(this, mouseX, mouseY, guiLeft + 79 + 18 * 2, guiTop + 16, 18, 18, new String[] { "Coolant level low!" });
 		}
 		

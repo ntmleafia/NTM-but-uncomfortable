@@ -767,6 +767,14 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		return null;
 	}
 
+	public boolean hasLeafiaFuels() {
+		for (int i = 0; i < 12; i++) {
+			if (inventory.getStackInSlot(i).getItem() instanceof LeafiaRodItem)
+				return true;
+		}
+		return false;
+	}
+
 	public int getFuelPercent() {
 
 		if(getRodCount() == 0)

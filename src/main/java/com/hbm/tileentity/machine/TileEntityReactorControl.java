@@ -160,7 +160,7 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         			}
         		}
         		
-        		if(auto && (water < maxWater*0.1 || cool < maxCool*0.1 || coreHeat > (50000 * 0.95)) && fuel > 0) {
+        		if(auto && (water < maxWater*0.4 || cool < maxCool*0.4 || coreHeat > (50000 * 0.95)) && (fuel > 0 || reactor.hasLeafiaFuels())) {
         			reactor.retracting = true;
         		}
         	} else if(link != null && world.getTileEntity(link) instanceof TileEntityMachineReactorLarge && ((TileEntityMachineReactorLarge)world.getTileEntity(link)).checkBody()) {

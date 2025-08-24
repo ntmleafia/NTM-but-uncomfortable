@@ -403,7 +403,7 @@ public class LeafiaRodItem extends ItemHazard implements IHasCustomModel, Leafia
 			if (Math.abs(heatMg) < 0.00001)
 				heatMg = 0;
 			if (!meltdown && (heatMg != 0)) {
-				double curDepletion = data.getDouble("depletion") + Math.max(heatMg, 0) + Math.pow(x, 0.9)/2000 - 1; // +y is preferred but it doesnt really work with inert materials like lithium soo
+				double curDepletion = data.getDouble("depletion") + Math.max(heatMg, 0) + Math.max(0,Math.pow(x, 0.9)/2000 - 1); // +y is preferred but it doesnt really work with inert materials like lithium soo
 				data.setDouble("depletion", curDepletion);
 			}
 			double newTemp = heat+heatMg;
