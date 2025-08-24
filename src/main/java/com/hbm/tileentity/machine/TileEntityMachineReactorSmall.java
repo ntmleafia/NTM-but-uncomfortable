@@ -314,8 +314,8 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 			getInteractions();
 
-			float coolin = (float) Math.pow(this.tanks[1].getFluidAmount()/16000f,0.4);
-			float feedwatr = (float) Math.pow(this.tanks[0].getFluidAmount()/32000f,0.4);
+			float coolin = (float) Math.pow(this.tanks[1].getFluidAmount()/16000f,/*0.4*/0.0001);
+			float feedwatr = (float) Math.pow(this.tanks[0].getFluidAmount()/32000f,/*0.4*/0.0001);
 			double cooledSum = 0;
 			for (int i = 0; i < 12; i++) {
 				if (inventory.getStackInSlot(i).getItem() instanceof LeafiaRodItem)
