@@ -497,6 +497,7 @@ public class PWRElementTE extends TileEntityInventoryBase implements PWRComponen
 	}
 	public double getHeatFromHeatRetrival(HeatRetrival retrival,LeafiaRodItem rod) {
 		BlockPos pos = retrival.fuelPos;
+		Tracker._startProfile(this,"getHeatFromRetrival");
 		if (world.getBlockState(pos).getBlock() instanceof PWRElementBlock) {
 			if (((PWRElementBlock) world.getBlockState(pos).getBlock()).tileEntityShouldCreate(world,pos)) {
 				TileEntity entity = world.getTileEntity(pos);
@@ -504,12 +505,16 @@ public class PWRElementTE extends TileEntityInventoryBase implements PWRComponen
 					if (entity instanceof PWRElementTE) {
 						ItemStackHandler items = ((PWRElementTE) entity).inventory;
 						if (items != null) {
-							return rod.getFlux(items.getStackInSlot(0))*(1-retrival.moderation)+rod.getFlux(items.getStackInSlot(0),true)*retrival.moderation;
+							Tracker._endProfile(this);
+							double value = rod.getFlux(items.getStackInSlot(0))*(1-retrival.moderation)+rod.getFlux(items.getStackInSlot(0),true)*retrival.moderation;
+							Tracker._tracePosition(this,pos,value);
+							return value;
 						}
 					}
 				}
 			}
 		}
+		Tracker._endProfile(this);
 		return 0;
 	}
 

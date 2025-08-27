@@ -1234,7 +1234,7 @@ public class ModItems {
 		// rbmk based
 		public static final Item
 				leafRodU38
-				= new LeafiaRodItem("U-238",950000, 2865)
+				= new LeafiaRodItem("U-238",400000, 2865)
 				.setAppearance(Billets.billet_u238, BILLET, ISOTOPE)
 				.setReactivity(0.3)
 				.setDecayProduct("hepu239")
@@ -1242,7 +1242,7 @@ public class ModItems {
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
 				leafRodNU
-				= new LeafiaRodItem("NU",600000, 2865)
+				= new LeafiaRodItem("NU",400000, 2865)
 				.setAppearance(Billets.billet_uranium, BILLET, RAW)
 				.setReactivity(0.4)
 				.setDecayProduct("npu")
@@ -1528,7 +1528,7 @@ public class ModItems {
 				= new LeafiaRodItem("Balefire",200, 8652)
 				.setSpecialRodModel().setBaseItem(ModItems.egg_balefire)
 				.setDecayProduct("blazingbalefire")
-				.setEmission(3).setReactivity(1/2d)
+				.setEmission(8).setReactivity(1/6d)
 				.addGamma(ItemHazard.bf)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		public static final Item
@@ -1536,7 +1536,7 @@ public class ModItems {
 				= new LeafiaRodItem("Blazing Balefire",65000, 8652)
 				.setSpecialRodModel()
 				.setDecayProduct("balefire")
-				.setEmission(5).setReactivity(1/4d)
+				.setEmission(12).setReactivity(1/9d)
 				.addGamma(ItemHazard.bf*2)
 				.toItem().setCreativeTab(MainRegistry.controlTab);
 		// new stuff
@@ -1549,6 +1549,7 @@ public class ModItems {
 		public static final Item
 				leafRodTh232
 				= new LeafiaRodItem("Th-232",450000, 3510)
+				.setDecayProduct("thmeu")
 				.setAppearance(Billets.billet_th232, BILLET, RAW)
 				.addAlpha(ItemHazard.th232 * ItemHazard.billet)
 				.toItem().setCreativeTab(MainRegistry.controlTab);

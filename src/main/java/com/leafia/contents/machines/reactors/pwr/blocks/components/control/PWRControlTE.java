@@ -145,9 +145,8 @@ public class PWRControlTE extends TileEntity implements PWRComponentEntity, ITic
 
     @Override
     public void invalidate() {
-        if (sound != null && playing) {
+        if (sound != null)
             sound.stopSound();
-        }
         sound = null;
         super.invalidate();
         if (this.data != null)
