@@ -2,6 +2,7 @@ package com.hbm.entity.mob.botprime;
 
 import com.hbm.entity.mob.EntityAINearestAttackableTargetNT;
 import com.hbm.items.ModItems;
+import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
@@ -60,6 +61,8 @@ public class EntityBOTPrimeHead extends EntityBOTPrimeBase {
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (source == ModDamageSource.back)
+			amount = 0; // avoid cheap kills using Antischrabidium
 		if(super.attackEntityFrom(source, amount)) {
 			this.dmgCooldown = 4;
 			return true;

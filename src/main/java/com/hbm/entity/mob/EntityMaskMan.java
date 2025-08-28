@@ -7,6 +7,7 @@ import com.hbm.handler.ArmorUtil;
 import com.hbm.interfaces.IRadiationImmune;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Inserts;
+import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -61,11 +62,16 @@ public class EntityMaskMan extends EntityMob implements IRadiationImmune {
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 
-		if(source instanceof EntityDamageSourceIndirect && ((EntityDamageSourceIndirect) source).getImmediateSource() instanceof EntityEgg && rand.nextInt(10) == 0) {
-			this.experienceValue = 0;
-			this.setHealth(0);
-			return true;
+		if (!world.isRemote) {
+			if (source instanceof EntityDamageSourceIndirect && ((EntityDamageSourceIndirect) source).getImmediateSource() instanceof EntityEgg && rand.nextInt(10) == 0) {
+				this.experienceValue = 0;
+				this.setHealth(0);
+				return true;
+			}
 		}
+
+		if (source == ModDamageSource.back)
+			amount = 0; // avoid cheap kills using Antischrabidium
 
 		if(source.isFireDamage())
     		amount = 0;

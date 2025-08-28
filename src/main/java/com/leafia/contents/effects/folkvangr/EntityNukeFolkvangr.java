@@ -16,6 +16,8 @@ import com.llib.technical.LeafiaEase;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -120,6 +122,7 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 						entity.motionY += pullVec.y*vacuumForce*vacuumForceMultiplier*force;
 						entity.motionZ += pullVec.z*vacuumForce*vacuumForceMultiplier*force;
 						if (distance <= vacuumStart) {
+							if (entity instanceof EntityOcelot) continue;
 							entity.attackEntityFrom(ModDamageSource.fleija,3);
 						}
 					}
@@ -208,8 +211,12 @@ public class EntityNukeFolkvangr extends Entity implements IChunkLoader {
 					)
 			);
 			for (Entity entity : entities) {
-				if (entity.getPositionVector().distanceTo(getPositionVector()) <= cloudBound.scale)
+				if (entity instanceof EntityOcelot) continue;
+				if (entity.getPositionVector().distanceTo(getPositionVector()) <= cloudBound.scale) {
 					entity.attackEntityFrom(ModDamageSource.back,2147483647); // :leafeon_troll:
+					if (entity instanceof EntityLivingBase living)
+						living.setHealth(0); // HEHEHEHEHEHEEH
+				}
 			}
 			while ((row < start) || (columnIndex < destColumn)) {
 				byte side = (byte)Math.floorDiv(columnIndex,getSideLength(row));

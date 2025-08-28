@@ -56,6 +56,8 @@ public class EntityHunterChopper extends EntityFlying implements IMob, IRadiatio
 	
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (source == ModDamageSource.back)
+			amount = 0; // avoid cheap kills using Antischrabidium
 		if (this.isEntityInvulnerable(source) || !(source == ModDamageSource.nuclearBlast || source == ModDamageSource.blackhole || source.isExplosion()  || ModDamageSource.getIsTau(source) || ModDamageSource.getIsSubatomic(source) || ModDamageSource.getIsDischarge(source))) {
 			return false;
 		} else if(amount >= this.getHealth()) {
