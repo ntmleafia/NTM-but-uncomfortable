@@ -7,6 +7,9 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.Untested;
 import com.hbm.inventory.MachineRecipes;
+import com.hbm.inventory.control_panel.DataValue;
+import com.hbm.inventory.control_panel.DataValueFloat;
+import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
@@ -21,6 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -30,7 +34,10 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityMachineLargeTurbine extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor {
+import java.util.HashMap;
+import java.util.Map;
+
+public class TileEntityMachineLargeTurbine extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor, IControllable {
 
 	public long power;
 	public static final long maxPower = 100000000;
@@ -41,6 +48,8 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 	private boolean shouldTurn;
 	public float rotor;
 	public float lastRotor;
+	public int[] generateds = new int[20];
+	public int generatedIndex = 0;
 	
 	public TileEntityMachineLargeTurbine() {
 		super(7);
@@ -55,6 +64,8 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 	@Override
 	public void update() {
 		if(!world.isRemote) {
+			generatedIndex = Math.floorMod(generatedIndex+1,20);
+			generateds[generatedIndex] = 0;
 
 			age++;
 			if(age >= 2)
@@ -102,7 +113,9 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 				tanks[0].drain((Integer)outs[2] * cycles, true);
 				tanks[1].fill(new FluidStack(types[1], (Integer)outs[1] * cycles), true);
 
-				power += (Integer)outs[3] * cycles;
+				int generated = (Integer)outs[3] * cycles;
+				generateds[generatedIndex] = generated;
+				power += generated;
 
 				if(power > maxPower)
 					power = maxPower;
@@ -279,5 +292,24 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 	@Override
 	public long getMaxPower() {
 		return maxPower;
+	}
+
+
+	@Override
+	public Map<String,DataValue> getQueryData() {
+		Map<String,DataValue> map = new HashMap<>();
+		float generated = 0;
+		for (int gen : generateds)
+			generated += gen;
+		map.put("generated",new DataValueFloat(generated/20f));
+		return map;
+	}
+	@Override
+	public BlockPos getControlPos() {
+		return getPos();
+	}
+	@Override
+	public World getControlWorld() {
+		return getWorld();
 	}
 }

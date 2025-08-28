@@ -107,5 +107,7 @@ public class ControlEvent {
 		register(new ControlEvent("set_booster_active").setVar("active",0));
 		register(new ControlEvent("set_absorber_level").setVar("level",0));
 		register(new ControlEvent("set_stabilizer_level").setVar("level",0));
+		register(new ControlEvent("torch_set_state").setVar("isOn", 0));
+		register(new ControlEvent("pwr_ctrl_set_level").setVar("level", 0));
 	}
 }

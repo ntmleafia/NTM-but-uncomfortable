@@ -5,6 +5,9 @@ import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.MachineRecipes;
+import com.hbm.inventory.control_panel.DataValue;
+import com.hbm.inventory.control_panel.DataValueFloat;
+import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityLoadedBase;
@@ -15,6 +18,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -26,7 +30,10 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityChungus extends TileEntityLoadedBase implements ITickable, IFluidHandler, IEnergyGenerator, INBTPacketReceiver {
+import java.util.HashMap;
+import java.util.Map;
+
+public class TileEntityChungus extends TileEntityLoadedBase implements ITickable, IFluidHandler, IEnergyGenerator, INBTPacketReceiver, IControllable {
 
 	public long powerProduction = 0;
 	public long power;
@@ -37,6 +44,9 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 	
 	public FluidTank[] tanks;
 	public Fluid[] types = new Fluid[]{ ModForgeFluids.STEAM, ModForgeFluids.SPENTSTEAM};
+
+	public long[] generateds = new long[20];
+	public int generatedIndex = 0;
 	
 	public TileEntityChungus() {
 		super();
@@ -52,6 +62,8 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 	public void update() {
 		
 		if(!world.isRemote) {
+			generatedIndex = Math.floorMod(generatedIndex+1,20);
+			generateds[generatedIndex] = 0;
 			
 			Object[] outs = MachineRecipes.getTurbineOutput(types[0]);
 
@@ -69,6 +81,7 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 			tanks[1].fill(new FluidStack(types[1], (Integer)outs[1] * cycles), true);
 			
 			powerProduction = (Integer)outs[3] * cycles;
+			generateds[generatedIndex] = powerProduction;
 			power += powerProduction;
 			
 			if(power > maxPower)
@@ -232,5 +245,23 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 	@Override
 	public long getMaxPower() {
 		return maxPower;
+	}
+
+	@Override
+	public Map<String,DataValue> getQueryData() {
+		Map<String,DataValue> map = new HashMap<>();
+		float generated = 0;
+		for (long gen : generateds)
+			generated += gen;
+		map.put("generated",new DataValueFloat(generated/20f));
+		return map;
+	}
+	@Override
+	public BlockPos getControlPos() {
+		return getPos();
+	}
+	@Override
+	public World getControlWorld() {
+		return getWorld();
 	}
 }

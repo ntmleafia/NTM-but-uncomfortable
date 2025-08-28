@@ -6,6 +6,9 @@ import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.MachineRecipes;
+import com.hbm.inventory.control_panel.DataValue;
+import com.hbm.inventory.control_panel.DataValueFloat;
+import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.Library;
 import com.hbm.packet.AuxElectricityPacket;
@@ -18,6 +21,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -30,7 +35,10 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityMachineTurbine extends TileEntityLoadedBase implements ITickable, IEnergyGenerator, ITankPacketAcceptor, IFluidHandler {
+import java.util.HashMap;
+import java.util.Map;
+
+public class TileEntityMachineTurbine extends TileEntityLoadedBase implements ITickable, IEnergyGenerator, ITankPacketAcceptor, IFluidHandler, IControllable {
 
 	public ItemStackHandler inventory;
 
@@ -46,6 +54,9 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 	// private static final int[] slots_side = new int[] {4};
 
 	private String customName;
+
+	public int[] generateds = new int[20];
+	public int generatedIndex = 0;
 
 	public TileEntityMachineTurbine() {
 		inventory = new ItemStackHandler(7) {
@@ -85,6 +96,8 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 	@Override
 	public void update() {
 		if(!world.isRemote) {
+			generatedIndex = Math.floorMod(generatedIndex+1,20);
+			generateds[generatedIndex] = 0;
 			
 			if(inventory.getStackInSlot(0).getItem() instanceof ItemForgeFluidIdentifier && inventory.getStackInSlot(1).isEmpty()){
 				Fluid f = ItemForgeFluidIdentifier.getType(inventory.getStackInSlot(0));
@@ -130,7 +143,9 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 				tanks[0].drain((Integer)outs[2] * cycles, true);
 				tanks[1].fill(new FluidStack(tankTypes[1], (Integer)outs[1] * cycles), true);
 
-				power += (Integer)outs[3] * cycles;
+				int generated = (Integer)outs[3] * cycles;
+				generateds[generatedIndex] = generated;
+				power += generated;
 
 				if(power > maxPower)
 					power = maxPower;
@@ -322,5 +337,23 @@ public class TileEntityMachineTurbine extends TileEntityLoadedBase implements IT
 	@Override
 	public long getMaxPower() {
 		return maxPower;
+	}
+
+	@Override
+	public Map<String,DataValue> getQueryData() {
+		Map<String,DataValue> map = new HashMap<>();
+		float generated = 0;
+		for (int gen : generateds)
+			generated += gen;
+		map.put("generated",new DataValueFloat(generated/20f));
+		return map;
+	}
+	@Override
+	public BlockPos getControlPos() {
+		return getPos();
+	}
+	@Override
+	public World getControlWorld() {
+		return getWorld();
 	}
 }

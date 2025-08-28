@@ -1462,6 +1462,8 @@ public class CraftingManager {
 			addRecipeAuto(new ItemStack(ToolSets.schrabidium_axe, 1), "II", "IS", " S", 'I', SA326.ingot(), 'S', Items.STICK);
 			addRecipeAuto(new ItemStack(ToolSets.schrabidium_shovel, 1), "I", "S", "S", 'I', SA326.ingot(), 'S', Items.STICK);
 			addRecipeAuto(new ItemStack(ToolSets.schrabidium_hoe, 1), "II", " S", " S", 'I', SA326.ingot(), 'S', Items.STICK);
+			addShapelessAuto(new ItemStack(Ingots.ingot_schrabidium,4),Ingots.ingot_ralseinium);
+			addShapelessAuto(new ItemStack(Ingots.ingot_ralseinium,1),Ingots.ingot_schraranium);
 		} else {
 			addRecipeAuto(new ItemStack(ArmorSets.starmetal_helmet, 1), "EEE", "ECE", 'E', STAR.ingot(), 'C', ArmorSets.cobalt_helmet);
 			addRecipeAuto(new ItemStack(ArmorSets.starmetal_plate, 1), "ECE", "EEE", "EEE", 'E', STAR.ingot(), 'C', ArmorSets.cobalt_plate);

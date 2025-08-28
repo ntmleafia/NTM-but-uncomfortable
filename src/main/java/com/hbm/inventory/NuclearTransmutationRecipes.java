@@ -1,6 +1,7 @@
 package com.hbm.inventory;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.config.GeneralConfig;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
@@ -22,9 +23,13 @@ public class NuclearTransmutationRecipes {
 	public static void registerRecipes() {
 
 		//input, output
-		addRecipe(new OreDictStack(U.crystal()), new ItemStack(Crystals.crystal_schraranium, 1), 5_000_000L);
-		addRecipe(new OreDictStack(U.ingot()), new ItemStack(Ingots.ingot_schraranium, 1), 5_000_000L);
-		addRecipe(new OreDictStack(U.block()), new ItemStack(ModBlocks.block_schraranium, 1), 50_000_000L);
+		if (GeneralConfig.enableBabyMode)
+			addRecipe(new OreDictStack(U.ingot()),new ItemStack(Ingots.ingot_ralseinium,1),5_000_000L);
+		else {
+			addRecipe(new OreDictStack(U.crystal()),new ItemStack(Crystals.crystal_schraranium,1),5_000_000L);
+			addRecipe(new OreDictStack(U.ingot()),new ItemStack(Ingots.ingot_schraranium,1),5_000_000L);
+			addRecipe(new OreDictStack(U.block()),new ItemStack(ModBlocks.block_schraranium,1),50_000_000L);
+		}
 	}
 
 	public static void addRecipe(AStack input, ItemStack output, long energy){

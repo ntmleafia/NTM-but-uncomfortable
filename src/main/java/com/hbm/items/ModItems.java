@@ -7,6 +7,7 @@ import com.hbm.blocks.items.ItemBlockHazard;
 import com.hbm.blocks.items.ItemBlockScrap;
 import com.hbm.blocks.machine.ItemSelfcharger;
 import com.hbm.config.BombConfig;
+import com.hbm.config.GeneralConfig;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ToolAbility;
 import com.hbm.handler.ToolAbility.LuckAbility;
@@ -772,6 +773,11 @@ public class ModItems {
 	public static class Materials {
 		public static final Item plate_cast = new ItemMaterialsAutogen("plate_cast", MaterialShapes.CASTPLATE).setCreativeTab(MainRegistry.partsTab);
 		public static class Ingots {
+			static {
+				if (GeneralConfig.enableBabyMode) {
+					ingot_ralseinium = new ItemCustomLore("ingot_ralseinium");
+				}
+			}
 			//Materials
 			public static final Item ingot_bscco = new ItemCustomLore("ingot_bscco").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_silicon = new ItemBase("ingot_silicon").setCreativeTab(MainRegistry.partsTab);
@@ -823,6 +829,7 @@ public class ModItems {
 			public static final Item ingot_am242 = new ItemHazard("ingot_am242").addBeta(ItemHazard.am242 * ItemHazard.ingot).toItem().setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_am_mix = new ItemHazard("ingot_am_mix").addBeta(ItemHazard.amrg * ItemHazard.ingot).toItem().setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_schraranium = new ItemHazard(ALPHA,ItemHazard.sr, false, true, "ingot_schraranium").setCreativeTab(MainRegistry.partsTab);
+			public static Item ingot_ralseinium;
 			public static final Item ingot_schrabidium = new ItemHazard(ALPHA,ItemHazard.sa326, false, true, "ingot_schrabidium").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_schrabidate = new ItemHazard(ALPHA,ItemHazard.sb, false, true, "ingot_schrabidate").setCreativeTab(MainRegistry.partsTab);
 			public static final Item ingot_solinium = new ItemHazard(ALPHA,ItemHazard.sa327, false, true, "ingot_solinium").setCreativeTab(MainRegistry.partsTab);

@@ -4670,6 +4670,7 @@ tile.concrete_yellow.name=Yellow Concrete
 tile.concrete_yellow_slab.name=Yellow Concrete Slab
 tile.concrete_yellow_stairs.name=Yellow Concrete Stairs
 tile.control_panel_custom.name=Custom Control Panel [WIP]
+tile.control_torch.name=Control Panel Torch
 tile.conveyor.name=Conveyor Belt
 tile.conveyor_chute.name=Conveyor Chute
 tile.conveyor_double.name=Double-Lane Conveyor Belt
