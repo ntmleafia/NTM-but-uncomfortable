@@ -42,6 +42,10 @@ public class SIPfx { // Now its both uppercase!
 		byte exponent = getExponent(x);
 		return String.format(format,scale(x,exponent))+(exponent <= 0 ? " " : " "+(full ? siPrefixFull : siPrefix)[exponent-1]);
 	}
+	public static String formatNoSpace(String format,double x,boolean full) {
+		byte exponent = getExponent(x);
+		return String.format(format,scale(x,exponent))+(exponent <= 0 ? "" : (full ? siPrefixFull : siPrefix)[exponent-1]);
+	}
 	public static String custom(BiFunction<Double,String,String> callback,double x,boolean full) {
 		byte exponent = getExponent(x);
 		return callback.apply(scale(x,exponent),(exponent <= 0 ? " " : " "+(full ? siPrefixFull : siPrefix)[exponent-1]));

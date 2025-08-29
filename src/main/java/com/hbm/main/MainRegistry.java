@@ -88,6 +88,7 @@ import com.leafia.contents.machines.panel.controltorch.ControlTorchTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
+import com.leafia.contents.machines.processing.assemtable.AssemTableTE;
 import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.gascent.GasCentTE;
@@ -401,6 +402,7 @@ public class MainRegistry {
 
 		rendererWaiting.add(new AssemblyFactoryTE());
 		rendererWaiting.add(new ChemTableTE());
+		rendererWaiting.add(new AssemTableTE());
 
 		rendererWaiting.add(new MixingVatTE());
 		//}

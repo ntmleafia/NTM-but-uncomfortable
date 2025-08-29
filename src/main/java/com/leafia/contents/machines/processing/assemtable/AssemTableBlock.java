@@ -1,8 +1,7 @@
-package com.leafia.contents.machines.processing.chemtable;
+package com.leafia.contents.machines.processing.assemtable;
 
 import com.hbm.blocks.BlockDummyable;
 import com.leafia.dev.MachineTooltip;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -17,15 +16,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ChemTableBlock extends BlockDummyable {
-	public ChemTableBlock(Material materialIn,String s) {
+public class AssemTableBlock extends BlockDummyable {
+	public AssemTableBlock(Material materialIn,String s) {
 		super(materialIn,s);
-		setSoundType(SoundType.WOOD);
 	}
 
 	@Override
 	public int[] getDimensions() {
-		return new int[]{1,0,0,0,0,1};
+		return new int[]{0,0,0,0,0,1};
 	}
 
 	@Override
@@ -36,13 +34,13 @@ public class ChemTableBlock extends BlockDummyable {
 	@Override
 	public @Nullable TileEntity createNewTileEntity(World worldIn,int meta) {
 		if (meta >= 12)
-			return new ChemTableTE();
+			return new AssemTableTE();
 		else
 			return null;
 	}
 
 	@Override
-	public boolean onBlockActivated(World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		return standardOpenBehavior(world, pos.getX(), pos.getY(), pos.getZ(), player, 0);
 	}
 

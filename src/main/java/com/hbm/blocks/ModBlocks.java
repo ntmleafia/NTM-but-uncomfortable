@@ -34,6 +34,7 @@ import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryBlock;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
 import com.leafia.contents.machines.manfacturing.wish.WishBlock;
 import com.leafia.contents.machines.panel.controltorch.ControlTorchBlock;
+import com.leafia.contents.machines.processing.assemtable.AssemTableBlock;
 import com.leafia.contents.machines.processing.chemtable.ChemTableBlock;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorBlock;
@@ -1096,7 +1097,8 @@ public class ModBlocks {
 	public static final Block machine_chemplant = new MachineChemplant(Material.IRON, "machine_chemplant").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block machine_chemfac = new MachineChemfac(Material.IRON, "machine_chemfac").setHardness(5.0F).setResistance(30.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_machine_chemplant = 49;
-	public static final Block chemtable = new ChemTableBlock(Material.IRON, "chemtable").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block chemtable = new ChemTableBlock(Material.WOOD, "chemtable").setHardness(3.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
+	public static final Block assemtable = new AssemTableBlock(Material.IRON, "assemtable").setHardness(5.0F).setResistance(5.0F).setCreativeTab(MainRegistry.machineTab);
 
 	public static final Block machine_mixer = new MachineMixer(Material.IRON, "machine_mixer").setHardness(5.0F).setResistance(30.0F).setCreativeTab(MainRegistry.machineTab);
 

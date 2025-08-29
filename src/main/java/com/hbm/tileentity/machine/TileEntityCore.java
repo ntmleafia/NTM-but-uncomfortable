@@ -22,6 +22,7 @@ import com.leafia.LeafiaHelper;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr.VacuumInstance;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
+import com.leafia.contents.machines.powercores.dfc.ParticleEyeOfHarmony;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
@@ -30,6 +31,7 @@ import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.LeafiaPassiveLocal;
+import com.leafia.unsorted.ParticleBalefire;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.leafia.dev.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
@@ -175,10 +177,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	AudioWrapper client_sfx = null;
 	boolean sfxPlaying = false;
 	AudioWrapper meltdownSFX = null;
+	public float angle = 0;
+	public float lightRotateSpeed = 15/20f;
 
 	@Override
 	public void invalidate() {
-		if (sfxPlaying && client_sfx != null) {
+		if (client_sfx != null) {
 			client_sfx.stopSound();
 			client_sfx = null;
 			sfxPlaying = false;
@@ -328,7 +332,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialGain);
 						containedEnergy += (deltaEnergy*corePower+Math.pow(Math.max(0,incomingSpk-deltaEnergy),0.9))*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower/666;
+						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower/666;
+						containedEnergy += Math.pow(Math.min(tempRatio,3),3)*100;
 						double tgtTemp = temperature;
 						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
 						//temperature += Math.pow(deltaEnergy,0.1*Math.pow(potentialRelease,0.8))*100*catalystHeatMod*coreHeatMod;
@@ -350,18 +355,20 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						gainedEnergy = containedEnergy;
 
 						double absorbed = Math.pow(containedEnergy,0.75+energyRatio*0.25)/20*absorbDiv;
+						double transferred = 0;
 						for (TileEntityCoreReceiver absorber : absorbers) {
 							long absorb = (long)(absorbed/absorbDiv*absorber.level*1000_000);
 							containedEnergy -= absorb/1000_000d;
+							transferred += absorb/1000_000d;
 							absorber.joules += absorb + (long)((catalystPower*Math.pow(tempRatio,0.1)+incomingSpk*2000_000)/absorbDiv*absorber.level);
 						}
-						expellingSpk = absorbed;
+						expellingSpk = transferred;
 						expelTicks[Math.floorMod(ticks, 20)] = expellingSpk;
 						containedEnergy = Math.max(containedEnergy,0);
 						double targetEnergy = Math.pow(containedEnergy,0.99);
-						double deltaSubEnergy = containedEnergy-targetEnergy;
-						Tracker._tracePosition(this,pos.down(5),"deltaSubEnergy: ",deltaSubEnergy);
-						containedEnergy -= deltaSubEnergy*Math.pow(Math.max(0,1-energyRatio),0.25);
+						//double deltaSubEnergy = containedEnergy-targetEnergy; what's the point??
+						//Tracker._tracePosition(this,pos.down(5),"deltaSubEnergy: ",deltaSubEnergy);
+						//containedEnergy -= deltaSubEnergy*Math.pow(Math.max(0,1-energyRatio),0.25);
 
 						containedEnergy = Math.min(containedEnergy,failsafeLevel);
 
@@ -663,6 +670,19 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 				if (dfcShocks.get(0).ticks > 4)
 					dfcShocks.remove(0);
 				else break;
+			}
+			if (temperature > 100) {
+				if (client_type == Cores.ams_core_eyeofharmony) {
+					float r = (color>>16&255)/255F;
+					float g = (color>>8&255)/255F;
+					float b = (color&255)/255F;
+					float scale = (float) Math.log(temperature/50+1);
+					ParticleEyeOfHarmony fx = new ParticleEyeOfHarmony(world,pos,r,g,b,scale);
+					Minecraft.getMinecraft().effectRenderer.addEffect(fx);
+					angle = angle + lightRotateSpeed;
+					if (angle > 360)
+						angle -= 360;
+				}
 			}
 			//TODO: sick particle effects
 		}

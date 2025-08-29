@@ -2,6 +2,7 @@ package com.leafia.contents.machines.processing.chemtable;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.tileentity.IGUIProvider;
+import com.hbm.tileentity.TileEntityMachineBase;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,7 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ChemTableTE extends TileEntity implements LeafiaQuickModel, IGUIProvider {
+public class ChemTableTE extends TileEntityMachineBase implements LeafiaQuickModel, IGUIProvider {
+	public ChemTableTE() {
+		super(8);
+	}
+
 	@Override
 	public String _resourcePath() {
 		return "chemtable";
@@ -52,5 +57,10 @@ public class ChemTableTE extends TileEntity implements LeafiaQuickModel, IGUIPro
 	@Override
 	public GuiScreen provideGUI(int ID,EntityPlayer player,World world,int x,int y,int z) {
 		return null;
+	}
+
+	@Override
+	public String getName() {
+		return "tile.chemtable.name";
 	}
 }
