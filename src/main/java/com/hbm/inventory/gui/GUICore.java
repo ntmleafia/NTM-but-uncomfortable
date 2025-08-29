@@ -5,6 +5,7 @@ import com.hbm.inventory.container.ContainerCore;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.machine.TileEntityCore;
 import com.leafia.transformer.LeafiaGls;
+import com.llib.math.SIPfx;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -42,9 +43,9 @@ public class GUICore extends GuiInfoContainer {
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 7, guiTop + 102, 70, 4, mouseX, mouseY,
 				new String[]{"Stabilization: "+Math.round(core.stabilization*100)+"%"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 98, 70, 4, mouseX, mouseY,
-				new String[]{"Contained Energy: "+((core.containedEnergy >= TileEntityCore.failsafeLevel) ? "ERROR" : String.format("%01.3f",core.containedEnergy)+"MSPK")});
+				new String[]{"Contained Energy: "+((core.containedEnergy >= TileEntityCore.failsafeLevel) ? "ERROR" : SIPfx.formatNoSpace("%01.3f",core.containedEnergy*1000,false)+"SPK")});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 84, guiTop + 102, 70, 4, mouseX, mouseY,
-				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/1000)+"GSPK/s"});
+				new String[]{"Expelling Energy: "+String.format("%01.3f",core.expellingEnergy/10000)+"SPK/s"});
 		this.drawCustomInfoStat(mouseX, mouseY, guiLeft + 161, guiTop + 98, 8, 8, mouseX, mouseY,
 				new String[]{"Potential: "+Math.round(core.potentialGain*100)+"%"});
 

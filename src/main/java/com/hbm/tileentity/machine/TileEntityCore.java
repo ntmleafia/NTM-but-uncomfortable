@@ -314,7 +314,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						potentialGain = energyMod; //Math.max(0,Math.pow(energyMod,0.75));
 						if (temperature >= 100) {
 							double randRange = Math.pow(tempRatio,0.65)*10;
-							potentialGain += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv();
+							potentialGain += world.rand.nextDouble()*randRange/getStabilizationDivAlt()/getStabilizationDiv() + Math.pow(collapsing,0.666)*66;
 						}
 					}
 					{ // i wanted to redo everything this sucks ASS
@@ -330,9 +330,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//Tracker._tracePosition(this,pos.down(4),"potAbsorb: "+potAbsorb);
 						double boost = catalystPowerMod*energyMod;
 						double deltaEnergy = (Math.pow(Math.pow(incomingSpk, 0.666/2) + 1, 0.666/2) - 1) * 6.666 / 3 * Math.pow(1.2,potentialGain);
-						containedEnergy += (deltaEnergy*corePower+Math.pow(Math.max(0,incomingSpk-deltaEnergy),0.9))*boost*fill0*fill1;
+						double addition0 = (deltaEnergy*corePower+Math.pow(Math.max(0,incomingSpk-deltaEnergy),0.9))*boost*fill0*fill1;
 						//containedEnergy += Math.pow(Math.min(temperature,10000)/100,1.2)*potentialRelease*boost*fill0*fill1;
-						containedEnergy += Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower/666;
+						double addition1 = Math.pow(Math.min(temperature,10000)/100,0.75)*corePower*potentialGain*boost*fill0*fill1*fuelPower/666 * Math.pow(0.9,potentialGain);
+						addition0 = Math.max(addition0,0);
+						addition1 = Math.max(addition1,0);
+						containedEnergy = Math.min(Math.min(containedEnergy+addition0,failsafeLevel)+addition1,failsafeLevel);
 						//containedEnergy += Math.pow(Math.min(tempRatio,3),3)*100;
 						double tgtTemp = temperature;
 						//tgtTemp = Math.max(0,temperature-(1-energyRatio)*100*(Math.pow(tempRatio,2)+0.001));
@@ -360,7 +363,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 							long absorb = (long)(absorbed/absorbDiv*absorber.level*1000_000);
 							containedEnergy -= absorb/1000_000d;
 							transferred += absorb/1000_000d;
-							absorber.joules += absorb + (long)((catalystPower*Math.pow(tempRatio,0.1)+incomingSpk*2000_000)/absorbDiv*absorber.level);
+							double val = (catalystPower*Math.pow(tempRatio,0.1)+incomingSpk*2000_000)/absorbDiv*absorber.level;
+							val = Math.min(val,Long.MAX_VALUE);
+							absorber.joules += absorb + (long)val;
 						}
 						expellingSpk = transferred;
 						expelTicks[Math.floorMod(ticks, 20)] = expellingSpk;
@@ -369,6 +374,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						//double deltaSubEnergy = containedEnergy-targetEnergy; what's the point??
 						//Tracker._tracePosition(this,pos.down(5),"deltaSubEnergy: ",deltaSubEnergy);
 						//containedEnergy -= deltaSubEnergy*Math.pow(Math.max(0,1-energyRatio),0.25);
+
+						containedEnergy += collapsing*1_000_000;
 
 						containedEnergy = Math.min(containedEnergy,failsafeLevel);
 
@@ -390,7 +397,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						if (containedEnergy >= 1_000_000*(world.rand.nextInt(150)+6.66)+0.5 && shockCooldown <= 0) {
 							double count = Math.ceil(containedEnergy/energyPerShock);
 							for (int i = 0; i < Math.pow(count,0.25); i++) shock();
-							world.playSound(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,HBMSoundEvents.mus_sfx_a_lithit,SoundCategory.BLOCKS,3,1+(float)world.rand.nextGaussian()*0.1f);
+							world.playSound(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,HBMSoundEvents.mus_sfx_a_lithit,SoundCategory.BLOCKS,6.66f,1+(float)world.rand.nextGaussian()*0.1f);
 							PacketDispatcher.wrapper.sendToAllAround(
 									new CommandLeaf.ShakecamPacket(new String[]{
 											"type=smooth",
@@ -616,7 +623,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 					.__write(packetKeys.TEMP.key, temperature)
 					.__write(packetKeys.STABILIZATION.key, stabilization)
-					.__write(packetKeys.CONTAINED.key, gainedEnergy + bonus * bonus)
+					.__write(packetKeys.CONTAINED.key, containedEnergy/* gainedEnergy + bonus * bonus*/) // wtf?
 					.__write(packetKeys.EXPELLING.key, expellingEnergy)
 					.__write(packetKeys.POTENTIAL.key,potentialGain)
 
