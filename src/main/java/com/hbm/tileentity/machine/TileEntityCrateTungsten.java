@@ -109,10 +109,10 @@ public class TileEntityCrateTungsten extends TileEntityLockableBase implements I
 		heatTimer = 5;
 		
 		for(int i = 0; i < inventory.getSlots(); i++) {
-			
+
 			if(inventory.getStackInSlot(i).isEmpty())
 				continue;
-			
+
 			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(inventory.getStackInSlot(i));
 
 			long requiredEnergy = DFCRecipes.getRequiredFlux(inventory.getStackInSlot(i));
@@ -120,16 +120,18 @@ public class TileEntityCrateTungsten extends TileEntityLockableBase implements I
 			requiredEnergy *= 0.9D;
 			if(requiredEnergy > -1 && energy > requiredEnergy){
 				if(0.001D > count * rand.nextDouble() * ((double)requiredEnergy/(double)energy)){
-					result = DFCRecipes.getOutput(inventory.getStackInSlot(i));
+					ItemStack check = DFCRecipes.getOutput(inventory.getStackInSlot(i));
+					if (check != null)
+						result = check;
 				}
 			}
-			
+
 			if(inventory.getStackInSlot(i).getItem() == Armory.crucible && ItemCrucible.getCharges(inventory.getStackInSlot(i)) < 3 && energy > 10000000)
 				ItemCrucible.charge(inventory.getStackInSlot(i));
-			
+
 			if(result != null && !result.isEmpty()){
 				int size = inventory.getStackInSlot(i).getCount();
-			
+
 				if(result.getCount() * size <= result.getMaxStackSize()) {
 					inventory.setStackInSlot(i, result.copy());
 					inventory.getStackInSlot(i).setCount(inventory.getStackInSlot(i).getCount()*size);
