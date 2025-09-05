@@ -88,12 +88,14 @@ import com.leafia.contents.machines.panel.controltorch.ControlTorchTE;
 import com.leafia.contents.machines.powercores.dfc.creativeemitter.TileEntityCoreCreativeEmitter;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.powercores.dfc.exchanger.DFCExchangerTE;
+import com.leafia.contents.machines.processing.advcent.AdvCentTE;
 import com.leafia.contents.machines.processing.assemtable.AssemTableTE;
 import com.leafia.contents.machines.processing.chemtable.ChemTableTE;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerTE;
 import com.leafia.contents.machines.processing.gascent.GasCentTE;
 import com.leafia.contents.machines.processing.liquefactor.LiquefactorTE;
 import com.leafia.contents.machines.processing.mixingvat.MixingVatTE;
+import com.leafia.contents.machines.processing.mixingvat.proxy.MixingVatProxy;
 import com.leafia.contents.machines.processing.pyrooven.PyroOvenTE;
 import com.leafia.contents.machines.processing.solidifier.SolidifierTE;
 import com.leafia.contents.machines.reactors.msr.MSRMixerTE;
@@ -405,6 +407,7 @@ public class MainRegistry {
 		rendererWaiting.add(new AssemTableTE());
 
 		rendererWaiting.add(new MixingVatTE());
+		rendererWaiting.add(new AdvCentTE());
 		//}
 
 		proxy.registerRenderInfo();
@@ -613,6 +616,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityNukeBalefire.class, new ResourceLocation(RefStrings.MODID, "tileentity_nuke_fstbmb"));
 		GameRegistry.registerTileEntity(TileEntityProxyCombo.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_combo"));
 		GameRegistry.registerTileEntity(TileEntityProxyConductor.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_conductor"));
+		GameRegistry.registerTileEntity(MixingVatProxy.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_mixingvat"));
 		GameRegistry.registerTileEntity(TileEntityMicrowave.class, new ResourceLocation(RefStrings.MODID, "tileentity_microwave"));
 		GameRegistry.registerTileEntity(TileEntityMachineUUCreator.class, new ResourceLocation(RefStrings.MODID, "tileentity_uu_creator"));
 		GameRegistry.registerTileEntity(TileEntityMachineMiniRTG.class, new ResourceLocation(RefStrings.MODID, "tileentity_mini_rtg"));

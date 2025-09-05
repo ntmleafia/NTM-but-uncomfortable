@@ -41,6 +41,8 @@ public class BlockAMSBase extends BlockContainer implements IMultiBlock {
 		MachineTooltip.addMultiblock(tooltip);
 		MachineTooltip.addCore(tooltip);
 		MachineTooltip.addGenerator(tooltip);
+		tooltip.add("Yeah I DO know spectrometers don't generate power.");
+		tooltip.add("Just shut up.");
 		super.addInformation(stack,player,tooltip,advanced);
 	}
 

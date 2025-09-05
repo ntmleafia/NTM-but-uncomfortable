@@ -16,7 +16,7 @@ public class AssemblyFactoryRender extends TileEntitySpecialRenderer<TileEntity>
 	@Override
 	public void render(TileEntity te,double x,double y,double z,float interp,int destroyStage,float alpha) {
 		LeafiaGls.pushMatrix();
-		LeafiaGls.translate(x,y,z);/*
+		LeafiaGls.translate(x+0.5,y,z+0.5);/*
 		switch(te.getBlockMetadata() - 10) {
 			case 2:
 				GL11.glRotatef(90, 0F, 1F, 0F); break;
@@ -33,6 +33,7 @@ public class AssemblyFactoryRender extends TileEntitySpecialRenderer<TileEntity>
 			case 3: LeafiaGls.rotate(0, 0F, 1F, 0F); break;
 			case 5: LeafiaGls.rotate(90, 0F, 1F, 0F); break;
 		}
+		LeafiaGls.translate(-0.5,0,-0.5);
 
 		LeafiaQuickModel mdl = (LeafiaQuickModel)te;
 		bindTexture(mdl.__getTexture());

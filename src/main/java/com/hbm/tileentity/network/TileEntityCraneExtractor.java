@@ -1,6 +1,7 @@
 package com.hbm.tileentity.network;
 
 import api.hbm.block.IConveyorBelt;
+import com.hbm.items.ModItems.Upgrades;
 import com.hbm.lib.Library;
 import com.hbm.entity.item.EntityMovingItem;
 import com.hbm.interfaces.IControlReceiver;
@@ -235,6 +236,14 @@ public class TileEntityCraneExtractor extends TileEntityCraneBase implements IGU
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
+        if (i == 18)
+            return itemStack.getItem() == Upgrades.upgrade_stack_1 ||
+                    itemStack.getItem() == Upgrades.upgrade_stack_2 ||
+                    itemStack.getItem() == Upgrades.upgrade_stack_3;
+        if (i == 19)
+            return itemStack.getItem() == Upgrades.upgrade_ejector_1 ||
+                    itemStack.getItem() == Upgrades.upgrade_ejector_2 ||
+                    itemStack.getItem() == Upgrades.upgrade_ejector_3;
         return i > 8 && i < 18;
     }
 

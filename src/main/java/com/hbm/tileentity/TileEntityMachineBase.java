@@ -1,5 +1,6 @@
 package com.hbm.tileentity;
 
+import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.lib.ItemStackHandlerWrapper;
@@ -185,6 +186,17 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 		float volume = 1 - (countMufflers() / (float)toSilence);
 
 		return Math.max(volume, 0);
+	}
+
+	public EnumFacing getFacingDummyable() { // for BlockDummyables
+		int meta = world.getBlockState(pos).getValue(BlockDummyable.META);
+		return switch(meta) { // matches opposite IDs
+			case 13 -> EnumFacing.NORTH;
+			case 14 -> EnumFacing.EAST;
+			case 12 -> EnumFacing.SOUTH;
+			case 15 -> EnumFacing.WEST;
+			default -> null;
+		};
 	}
 	
 	@Override

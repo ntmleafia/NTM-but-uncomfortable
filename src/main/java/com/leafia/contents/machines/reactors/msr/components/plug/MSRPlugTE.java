@@ -6,6 +6,7 @@ import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import com.leafia.contents.machines.reactors.msr.components.ejector.MSREjectorBlock;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.SoundEvents;
@@ -28,8 +29,8 @@ public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
 	public boolean molten = false;
 	EnumFacing getDirection() {
 		IBlockState state = world.getBlockState(pos);
-		if (state.getBlock() instanceof MSREjectorBlock)
-			return state.getValue(MSREjectorBlock.FACING);
+		if (state.getBlock() instanceof MSRPlugBlock)
+			return state.getValue(BlockHorizontal.FACING);
 		return EnumFacing.NORTH;
 	}
 	public MSRPlugTE() {

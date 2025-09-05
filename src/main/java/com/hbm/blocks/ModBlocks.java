@@ -34,6 +34,7 @@ import com.leafia.contents.machines.manfacturing.assemfac.AssemblyFactoryBlock;
 import com.leafia.contents.machines.manfacturing.soldering.SolderingBlock;
 import com.leafia.contents.machines.manfacturing.wish.WishBlock;
 import com.leafia.contents.machines.panel.controltorch.ControlTorchBlock;
+import com.leafia.contents.machines.processing.advcent.AdvCentBlock;
 import com.leafia.contents.machines.processing.assemtable.AssemTableBlock;
 import com.leafia.contents.machines.processing.chemtable.ChemTableBlock;
 import com.leafia.contents.machines.processing.electrolyzer.ElectrolyzerBlock;
@@ -1164,6 +1165,7 @@ public class ModBlocks {
 
 	public static final Block machine_gascent = new MachineGasCent(Material.IRON, "machine_gascentv2").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_gascent = 71;
+	public static final Block machine_advcent = new AdvCentBlock(Material.IRON, "machine_advcent").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 
 	// ah fuck it public static final Block gascent_deprecated = new Reserved6Block("machine_gascent",9,new ItemStack(machine_gascent,1));
 

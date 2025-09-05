@@ -148,6 +148,7 @@ public class GasCentTE extends TileEntityMachineBase implements ITickable, Leafi
 				fillFluid(output,tank1);
 				LeafiaDebug.debugPos(world,output,0.05f,0xFFFF00,"output");
 			}
+			this.updateConnectionsExcept(world, pos, Library.POS_Y);
 			isProgressing = false;
 			power = Library.chargeTEFromItems(inventory, 0, power, maxPower);
 			boolean sicko = inventory.getStackInSlot(1).getItem() == Upgrades.upgrade_gc_speed;
