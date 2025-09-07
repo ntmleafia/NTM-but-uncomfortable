@@ -7,6 +7,7 @@ import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.INBTPacketReceiver;
+import com.leafia.contents.gear.utility.IFuzzyCompatible;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +25,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityHeatBoiler extends TileEntity implements INBTPacketReceiver, ITickable, IFluidHandler {
+public class TileEntityHeatBoiler extends TileEntity implements INBTPacketReceiver, IFuzzyCompatible, ITickable, IFluidHandler {
 
     public FluidTank[] tanks;
     public Fluid[] types = new Fluid[2];
@@ -256,4 +257,8 @@ public class TileEntityHeatBoiler extends TileEntity implements INBTPacketReceiv
         return 65536.0D;
     }
 
+    @Override
+    public Fluid getOutputType() {
+        return types[1];
+    }
 }

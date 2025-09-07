@@ -1,11 +1,13 @@
 package com.leafia.contents.gear.utility;
 
+import com.hbm.blocks.BlockDummyable;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemForgeFluidIdentifier;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RefStrings;
 import com.hbm.tileentity.conductor.TileEntityFFDuctBaseMk2;
 import com.hbm.util.I18nUtil;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -66,7 +68,33 @@ public class ItemFuzzyIdentifier extends ItemForgeFluidIdentifier {
 		if(te != null && te instanceof TileEntityFFDuctBaseMk2){
 			duct = (TileEntityFFDuctBaseMk2) te;
 		}
-		if(duct != null){
+		if(duct == null) {
+			if (player.isSneaking()) {
+				Block block = worldIn.getBlockState(pos).getBlock();
+				if (block instanceof BlockDummyable dummyable) {
+					BlockPos core = dummyable.findCore(worldIn,pos);
+					if (core != null)
+						te = worldIn.getTileEntity(core);
+				}
+				if (te != null) {
+					if (te instanceof IFuzzyCompatible fz) {
+						Fluid fluid = fz.getOutputType();
+						if (fluid != null && !player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() instanceof ItemFuzzyIdentifier) {
+							ItemStack stack = player.getHeldItem(hand);
+							NBTTagCompound nbt = stack.getTagCompound();
+							if (nbt == null) nbt = new NBTTagCompound();
+							nbt.setString("fluidtype",fluid.getName());
+							stack.setTagCompound(nbt);
+							player.swingArm(hand);
+							if (!worldIn.isRemote)
+								worldIn.playSound(null,player.getPosition(),HBMSoundEvents.techBleep,SoundCategory.PLAYERS,1,1);
+							else
+								Minecraft.getMinecraft().player.sendMessage(new TextComponentTranslation("item.fuzzy_identifier.message",fluid.getLocalizedName(new FluidStack(fluid,1000))).setStyle(new Style().setColor(TextFormatting.YELLOW)));
+						}
+					}
+				}
+			}
+		} else {
 			if(player.isSneaking()){
 				if(null != duct.getType()){
 					if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() instanceof ItemFuzzyIdentifier) {

@@ -4,7 +4,6 @@ import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
@@ -121,13 +120,13 @@ public class MixingVatTE extends TileEntityMachineBase implements LeafiaQuickMod
 	}
 	EnumFacing getFacingForward() {
 		BlockDummyable dummyable = (BlockDummyable)getBlockType();
-		FiaMatrix mat = dummyable.getMatrix(world,pos);
+		FiaMatrix mat = dummyable.getRotationMat(world,pos);
 		if (mat == null) return null;
 		return EnumFacing.getFacingFromVector((float)mat.frontVector.x,(float)mat.frontVector.y,(float)mat.frontVector.z);
 	}
 	EnumFacing getFacing() {
 		BlockDummyable dummyable = (BlockDummyable)getBlockType();
-		FiaMatrix mat = dummyable.getMatrix(world,pos);
+		FiaMatrix mat = dummyable.getRotationMat(world,pos);
 		if (mat == null) return null;
 		mat = mat.rotateY(180);
 		return EnumFacing.getFacingFromVector((float)mat.frontVector.x,(float)mat.frontVector.y,(float)mat.frontVector.z);

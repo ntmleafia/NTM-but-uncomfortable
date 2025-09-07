@@ -242,7 +242,7 @@ public abstract class BlockDummyable extends BlockContainer implements ICopiable
 	}
 
 	@Nullable
-	public FiaMatrix getMatrix(World world,BlockPos pos) {
+	public FiaMatrix getRotationMat(World world,BlockPos pos) {
 		if(world.getBlockState(pos).getBlock() != this)
 			return null;
 		int meta = world.getBlockState(pos).getValue(META);

@@ -1621,20 +1621,6 @@ public class ModBlocks {
 		
 	}.setImmovableMobility());
 
-	public static final Material fluidfluoride = (new MaterialLiquid(MapColor.SAND) {
-
-		@Override
-		public boolean blocksMovement() {
-			return true;
-		}
-
-		@Override
-		public Material setImmovableMobility() {
-			return super.setImmovableMobility();
-		}
-
-	}.setImmovableMobility());
-
 	public static Block corium_block;
 	public static final Material fluidvolcanic = (new MaterialLiquid(MapColor.RED));
 	public static Block volcanic_lava_block;

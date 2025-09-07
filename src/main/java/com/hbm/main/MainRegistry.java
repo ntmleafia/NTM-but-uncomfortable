@@ -125,6 +125,7 @@ import com.leafia.contents.network.fluid.valves.FluidBoxValveTE;
 import com.leafia.contents.network.spk_cable.SPKCableTE;
 import com.leafia.contents.worldgen.ModBiomes;
 import com.leafia.contents.worldgen.ModBiomesGenerator;
+import com.leafia.dev.proxy.TileEntityProxyFluidIO;
 import com.leafia.dev.blockitems.LeafiaQuickModel;
 import com.leafia.dev.fluids.ntmtraits.*;
 import com.leafia.eventbuses.LeafiaServerListener;
@@ -616,6 +617,7 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityNukeBalefire.class, new ResourceLocation(RefStrings.MODID, "tileentity_nuke_fstbmb"));
 		GameRegistry.registerTileEntity(TileEntityProxyCombo.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_combo"));
 		GameRegistry.registerTileEntity(TileEntityProxyConductor.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_conductor"));
+		GameRegistry.registerTileEntity(TileEntityProxyFluidIO.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_fluidio"));
 		GameRegistry.registerTileEntity(MixingVatProxy.class, new ResourceLocation(RefStrings.MODID, "tileentity_proxy_mixingvat"));
 		GameRegistry.registerTileEntity(TileEntityMicrowave.class, new ResourceLocation(RefStrings.MODID, "tileentity_microwave"));
 		GameRegistry.registerTileEntity(TileEntityMachineUUCreator.class, new ResourceLocation(RefStrings.MODID, "tileentity_uu_creator"));

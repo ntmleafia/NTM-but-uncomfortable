@@ -17,15 +17,14 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.items.CapabilityItemHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class MixingVatProxy extends TileEntityProxyBase implements ITickable, IEnergyUser, IFluidHandler {
+public class MixingVatProxy extends TileEntityProxyBase implements IEnergyUser, IFluidHandler {
 	FiaMatrix getMatrix() {
 		BlockDummyable dummyable = (BlockDummyable)getBlockType();
 		BlockPos core = dummyable.findCore(world,pos);
 		if (core == null) return null;
-		FiaMatrix mat = dummyable.getMatrix(world,core);
+		FiaMatrix mat = dummyable.getRotationMat(world,core);
 		return mat.add(new Vec3d(core).add(0.5,0.5,0.5));
 	}
 	FiaMatrix getDirection() {
@@ -45,14 +44,6 @@ public class MixingVatProxy extends TileEntityProxyBase implements ITickable, IE
 		FiaMatrix mat = getDirection();
 		if (mat == null) return null;
 		return EnumFacing.getFacingFromVector((float)mat.frontVector.x,(float)mat.frontVector.y,(float)mat.frontVector.z);
-	}
-	@Override
-	public void update() {
-		EnumFacing face = getFacing();
-		if (face == null) return;
-		Tracker._startProfile(this,"update");
-		Tracker._traceLine(this,new Vec3d(pos).add(0.5,0.5,0.5),new Vec3d(pos.offset(face)).add(0.5,0.5,0.5),"node");
-		Tracker._endProfile(this);
 	}
 
 	@Override

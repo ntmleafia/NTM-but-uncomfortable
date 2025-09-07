@@ -11,6 +11,7 @@ import com.hbm.inventory.control_panel.IControllable;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityLoadedBase;
+import com.leafia.contents.gear.utility.IFuzzyCompatible;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -33,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TileEntityChungus extends TileEntityLoadedBase implements ITickable, IFluidHandler, IEnergyGenerator, INBTPacketReceiver, IControllable {
+public class TileEntityChungus extends TileEntityLoadedBase implements ITickable, IFuzzyCompatible, IFluidHandler, IEnergyGenerator, INBTPacketReceiver, IControllable {
 
 	public long powerProduction = 0;
 	public long power;
@@ -263,5 +264,10 @@ public class TileEntityChungus extends TileEntityLoadedBase implements ITickable
 	@Override
 	public World getControlWorld() {
 		return getWorld();
+	}
+
+	@Override
+	public Fluid getOutputType() {
+		return types[1];
 	}
 }

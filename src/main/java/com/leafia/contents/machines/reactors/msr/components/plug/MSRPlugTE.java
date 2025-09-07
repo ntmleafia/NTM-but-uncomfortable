@@ -120,7 +120,7 @@ public class MSRPlugTE extends MSRTEBase implements IFluidHandler {
 					this.world.playSound(null,pos,SoundEvents.ENTITY_GENERIC_SPLASH,SoundCategory.BLOCKS,3.0F,0.5F);
 					world.setBlockState(pos.down(),ModBlocks.fluoride_block.getDefaultState());
 				}
-				if (mat == ModBlocks.fluidfluoride)
+				if (world.getBlockState(pos).getBlock() == ModBlocks.fluoride_block)
 					tank.drain(1000,true);
 			}
 			LeafiaDebug.debugPos(world,pos,0.05f,0xFFFF00,tank.getFluidAmount()+"mB");
