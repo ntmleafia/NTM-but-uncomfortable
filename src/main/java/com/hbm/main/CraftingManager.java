@@ -135,6 +135,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(ModItems.circuit_targeting_tier4, 1), "CPC", 'C', ModItems.circuit_gold, 'P', LAPIS.dust());
 		addRecipeAuto(new ItemStack(ModItems.circuit_targeting_tier5, 1), "CPC", 'C', ModItems.circuit_schrabidium, 'P', DIAMOND.dust());
 		addRecipeAuto(new ItemStack(ModItems.circuit_targeting_tier6, 1), "P", "D", "C", 'C', ModItems.circuit_targeting_tier5, 'D', Batteries.battery_potatos, 'P', Powders.powder_spark_mix);
+		addRecipeAuto(new ItemStack(ModItems.fix_survival, 1), " O ", "OTO", " O ", 'O', Ingots.ingot_osmiridium, 'T', Crystals.crystal_trixite);
 		addShapelessAuto(new ItemStack(ModItems.circuit_aluminium, 2), ModItems.circuit_targeting_tier1);
 		addShapelessAuto(new ItemStack(ModItems.circuit_copper, 2), ModItems.circuit_targeting_tier2);
 		addShapelessAuto(new ItemStack(ModItems.circuit_red_copper, 2), ModItems.circuit_targeting_tier3);

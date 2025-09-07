@@ -304,6 +304,7 @@ public final class HBMSoundEvents {
 	public static SoundEvent UI_BUTTON_INVALID;
 	public static SoundEvent mus_sfx_a_lithit;
 	public static SoundEvent crucifix;
+	public static SoundEvent crucifix_fail;
 	public static SoundEvent crafting_tech1_part;
 
 	public static SoundEvent assemblerStart;
@@ -570,6 +571,7 @@ public final class HBMSoundEvents {
 		UI_BUTTON_INVALID = register("ui.button.invalid");
 		mus_sfx_a_lithit = register("external.mus_sfx_a_lithit");
 		crucifix = register("external.lsplash.crucifix");
+		crucifix_fail = register("external.lsplash.crucifix_fail");
 		crafting_tech1_part = register("external.crafting_tech1_part");
 
 		assemblerStart = register("block.assembler_start");

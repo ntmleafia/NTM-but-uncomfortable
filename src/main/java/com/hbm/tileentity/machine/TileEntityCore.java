@@ -114,6 +114,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public double gainedEnergy = 0;
 
 	public double collapsing = 0;
+	public int stabilizers = 0; // used for crucifix chance calculation
+	public int lastStabilizers = 0; // used for crucifix chance calculation
+	public boolean wasBoosted = false; // used for crucifix chance calculation
 
 	public double internalEnergy = 0;
 	public double[] expelTicks = new double[20];
@@ -213,6 +216,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	public void update() {
 		if (destroyed) return;
 		if (!world.isRemote) {
+			lastStabilizers = stabilizers;
+			stabilizers = 0;
 			/*
 			if(heat > 0 && heat >= field) {
 				
@@ -588,6 +593,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			expellingEnergy = 0;
 			for (double energy : expelTicks)
 				expellingEnergy += energy;
+			wasBoosted = incomingSpk > 0;
 			incomingSpk = 0;
 			energyMod = 1;
 			absorbers.clear();
@@ -831,6 +837,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		return false;
 	}
 
+	boolean isSurvivalFixTool(Entity e) {
+		if (e instanceof EntityItem)
+			return ((EntityItem)e).getItem().getItem() == ModItems.fix_survival;
+		return false;
+	}
+
 	private void vaporization() {
 
 		double scale = (int) Math.log(temperature / 50 + 1) * 1.25 / 4 + 0.5;
@@ -866,14 +878,18 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		List<Entity> list3 = world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.getX()+0.4,pos.getY()+0.4,pos.getZ()+0.4,pos.getX()+0.6,pos.getY()+0.6,pos.getZ()+0.6));
 		if (collapsing > 0) {
 			for (Entity e : list3) {
-				if (isFixTool(e)) {
+				if (isFixTool(e) || isSurvivalFixTool(e)) {
 					e.setEntityInvulnerable(false);
 					e.setDead();
+					world.createExplosion(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,20,false);
+					if (wasBoosted || isSurvivalFixTool(e) && world.rand.nextInt(100) < 80-lastStabilizers*10) {
+						world.playSound(null,pos,HBMSoundEvents.crucifix_fail,SoundCategory.BLOCKS,20,1);
+						continue;
+					}
 					temperature = 0;
 					containedEnergy = 0;
 					tanks[0].drain(1000000000,true);
 					tanks[1].drain(1000000000,true);
-					world.createExplosion(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,20,false);
 					world.playSound(null,pos,HBMSoundEvents.crucifix,SoundCategory.BLOCKS,20,1);
 					continue;
 				}

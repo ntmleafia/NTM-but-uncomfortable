@@ -3620,6 +3620,7 @@ public class ModItems {
 	public static final Item defuser_desh = new ItemTooling(ToolType.DEFUSER, -1, "defuser_desh").setMaxStackSize(1).setFull3D().setCreativeTab(MainRegistry.nukeTab);
 	public static final Item meltdown_tool = new ItemDyatlov("meltdown_tool").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 	public static final Item fix_tool = new CrucifixItem("fix_tool").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
+	public static final Item fix_survival = new CrucifixItem("fix_survival").setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab);
 
 	public static final Item
 			leafRodDyatlov

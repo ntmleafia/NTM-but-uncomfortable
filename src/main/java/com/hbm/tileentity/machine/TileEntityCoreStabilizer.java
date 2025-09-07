@@ -277,6 +277,7 @@ public class TileEntityCoreStabilizer extends DFCBaseTE implements ITickable, IE
                 if (core != null) {
                     //core.field += (int)(watts * lens.fieldMod);
                     core.stabilization += lens.fieldMod * (watts / 100d);
+                    core.stabilizers++;
                     core.energyMod *= lens.energyMod;
                     this.power -= (long) (demand * lens.drainMod);
 

@@ -11,6 +11,8 @@ which is forked from the fork made by [TheOriginalGolem](https://github.com/TheO
 which is forked from the port made by [Drillgon200](https://github.com/Drillgon200/Hbm-s-Nuclear-Tech-GIT)<br>
 which is ported from the original mod made by [HBMTheBobcat](https://github.com/HbmMods/Hbm-s-Nuclear-Tech-GIT).
 
+Thatchie created a [discord server](https://discord.gg/CKfuXcjRve)! If you have questions, feel free to join!
+
 ![2025-01-05_11 50 16](https://github.com/user-attachments/assets/db2d0f36-9a31-4647-9ba3-45f6beebdd5b)
 
 # <u>Technical information</u>
