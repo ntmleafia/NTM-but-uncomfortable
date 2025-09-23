@@ -113,7 +113,9 @@ public class ChemplantRecipes {
 		makeRecipe(360, "COOLANT", new AStack[] { new OreDictStack(KNO.dust(), 1) }, new FluidStack[]{ new FluidStack(FluidRegistry.WATER, 1800) }, null, new FluidStack[]{ new FluidStack(ModForgeFluids.COOLANT, 2000) }, 50);
 		
 		makeRecipe(370, "CRYOGEL", new AStack[] { new ComparableStack(Powders.powder_ice, 1) }, new FluidStack[]{ new FluidStack(ModForgeFluids.COOLANT, 1800) }, null, new FluidStack[]{ new FluidStack(ModForgeFluids.CRYOGEL, 2000) }, 50);
-		
+
+		makeRecipe(371, "CO2", new AStack[] { }, new FluidStack[]{ new FluidStack(ModForgeFluids.GAS, 1000) }, null, new FluidStack[]{ new FluidStack(ModForgeFluids.CARBONDIOXIDE, 1000) }, 50);
+
 		if(GeneralConfig.enableBabyMode) {
 			makeRecipe(380, "DESH", new AStack[] { new ComparableStack(Powders.powder_desh_mix, 1) }, new FluidStack[]{ new FluidStack(ModForgeFluids.LIGHTOIL, 200) }, new AStack[] { new ComparableStack(Ingots.ingot_desh, 1) }, null, 300);
 		} else {
