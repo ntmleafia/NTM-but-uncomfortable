@@ -9,6 +9,7 @@ import com.llib.technical.FifthString;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -151,6 +152,8 @@ public class NTMStructBuffer {
 				else {
 					if (modifier == 0b10) property.replaceAirOnly = true;
 					Block block = paletteBlock[buf.readUnsignedShort()];
+					if (block == null)
+						block = Blocks.AIR;
 					if ((value>>>15&1) > 0)
 						property.state = block.getStateFromMeta(buf.readInt());
 					else

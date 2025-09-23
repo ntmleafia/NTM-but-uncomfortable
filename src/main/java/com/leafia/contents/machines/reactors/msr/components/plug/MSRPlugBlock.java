@@ -6,8 +6,11 @@ import com.hbm.util.I18nUtil;
 import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -45,5 +48,10 @@ public class MSRPlugBlock extends BlockMachineBase implements ILookOverlay {
 		}
 		MSRTEBase.appendPrintHook(texts,world,x,y,z);
 		ILookOverlay.printGeneric(event, I18nUtil.resolveKey(getTranslationKey() + ".name"), 0xFF55FF, 0x3F153F, texts);
+	}
+
+	@Override
+	public boolean onBlockActivated(World world,BlockPos pos,IBlockState state,EntityPlayer player,EnumHand hand,EnumFacing facing,float hitX,float hitY,float hitZ) {
+		return false;
 	}
 }

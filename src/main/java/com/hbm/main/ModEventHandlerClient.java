@@ -111,6 +111,7 @@ import com.leafia.contents.worldgen.ModBiome;
 import com.leafia.dev.LeafiaUtil;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
+import com.leafia.dev.customblock.ICustomBlock;
 import com.leafia.passive.LeafiaPassiveLocal;
 import com.leafia.passive.effects.IdkWhereThisShitBelongs;
 import com.leafia.passive.effects.LeafiaShakecam;
@@ -144,6 +145,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -328,6 +330,7 @@ public class ModEventHandlerClient {
 		for(Block block : ModBlocks.ALL_BLOCKS) {
 			registerBlockModel(block, 0);
 		}
+		ICustomBlock.registerModels();
 
 		registerBedrockOreModels();
 	}
@@ -446,6 +449,7 @@ public class ModEventHandlerClient {
 
 	@SubscribeEvent
 	public void modelBaking(ModelBakeEvent evt) {
+		ICustomBlock.bakeModels(evt);
 
 		for(EnumCanister e : EnumCanister.values()) {
 			Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
@@ -778,6 +782,9 @@ public class ModEventHandlerClient {
 
 	@SubscribeEvent
 	public void textureStitch(TextureStitchEvent.Pre evt) {
+		TextureMap map = evt.getMap();
+		ICustomBlock.registerSprites(map);
+
 		DSmokeRenderer.sprites[0] = evt.getMap().registerSprite(new ResourceLocation(RefStrings.MODID, "particle/d_smoke1"));
 		DSmokeRenderer.sprites[1] = evt.getMap().registerSprite(new ResourceLocation(RefStrings.MODID, "particle/d_smoke2"));
 		DSmokeRenderer.sprites[2] = evt.getMap().registerSprite(new ResourceLocation(RefStrings.MODID, "particle/d_smoke3"));

@@ -24,6 +24,7 @@ import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
 import com.leafia.contents.building.BlockPinkDoor;
+import com.leafia.contents.building.mixed.BlockMixedConcrete;
 import com.leafia.contents.machines.Reserved6Block;
 import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulley;
@@ -82,14 +83,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Map.Entry;
 
 import static com.hbm.blocks.ModBlocks.GenericBlockResistance.*;
 import static com.hbm.blocks.ModBlocks.PWR.innerHardness;
@@ -249,6 +251,32 @@ public class ModBlocks {
 	public static final Block concrete__ext_pink = new BlockBase(Material.ROCK, "concrete__ext_pink").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
 	public static final Block concrete__ext_purple = new BlockBase(Material.ROCK, "concrete__ext_purple").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
 	public static final Block concrete__ext_sand = new BlockBase(Material.ROCK, "concrete__ext_sand").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+
+	static boolean mixed_dummy = MixedConcretes.dummy;
+	public static class MixedConcretes {
+		static boolean dummy = false;
+		public static final Map<String,String> idMap = new HashMap<>();
+		public static final Map<String,BlockMixedConcrete> blocks = new HashMap<>();
+		static {
+			idMap.put("brick_concrete","brick");
+			idMap.put("concrete","raw");
+			for (EnumDyeColor dye : EnumDyeColor.values())
+				idMap.put("concrete_"+dye.getName(),dye.getName());
+			Set<Entry<String,String>> set = idMap.entrySet();
+			Entry<String,String>[] entries = new Entry[set.size()];
+			int index = 0;
+			for (Entry<String,String> entry : set)
+				entries[index++] = entry;
+			for (int i = 0; i < entries.length-1; i++) {
+				for (int j = i+1; j < entries.length; j++) {
+					String id = "concrete__mixed_"+entries[i].getValue()+"_"+entries[j].getValue();
+					blocks.put(id,new BlockMixedConcrete(id,entries[i].getKey(),entries[j].getKey()));
+				}
+			}
+		}
+	}
+	//public static final Block concrete_mixed = new BlockMixedConcrete("concrete__mixed_red_blue","concrete_red","concrete_blue").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(CONCRETE.v);
+
 
 	public static final Block concrete_asbestos = new BlockOutgas(true, 20, true, "concrete_asbestos").addAsbestos(6).toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(ASB_CONCRETE.v);
 	public static final Block concrete_pillar = new BlockRotatablePillar(Material.ROCK, "concrete_pillar").setCreativeTab(MainRegistry.blockTab).setHardness(15.0F).setResistance(REBARPILLAR.v);

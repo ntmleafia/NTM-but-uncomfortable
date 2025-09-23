@@ -327,7 +327,9 @@ public class FFUtils {
 				for (Entry<String,Double> entry : mixture.entrySet()) {
 					texts.add(prefix+" "+TextFormatting.LIGHT_PURPLE+I18nUtil.resolveKey("tile.msr.fuel."+entry.getKey())+" "+String.format("%01.1f",entry.getValue())+"/B ");
 					try {
-						texts.add(prefix+TextFormatting.LIGHT_PURPLE+"  Heat Function: "+MSRFuel.valueOf(entry.getKey()).funcString);
+						MSRFuel fuel = MSRFuel.valueOf(entry.getKey());
+						if (!fuel.funcString.equals("0"))
+							texts.add(prefix+TextFormatting.LIGHT_PURPLE+"  Heat Function: "+fuel.funcString);
 					} catch (IllegalArgumentException ignored) {}
 				}
 			}

@@ -62,7 +62,7 @@ public class MSRControlTE extends TileEntity implements ITickable, LeafiaPacketR
 	LeafiaSet<MSRElementTE> TEs = new LeafiaSet<>();
 	void clearTEs() {
 		for (MSRElementTE te : TEs) {
-			if (te.control == this) {
+			if (te.control.equals(getPos())) {
 				te.control = null;
 				te.restriction = 0;
 			}
@@ -84,9 +84,9 @@ public class MSRControlTE extends TileEntity implements ITickable, LeafiaPacketR
 				for (int i = 1; i <= length; i++) {
 					BlockPos pos1 = pos.offset(direction,i);
 					if (world.getTileEntity(pos1) instanceof MSRElementTE te) {
-						if (te.control == null || te.control.isInvalid() || te.control == this) {
+						if (te.control == null || te.control.equals(getPos())) {
 							if (Math.ceil(insertion) >= i) {
-								te.control = this;
+								te.control = getPos();
 								TEs.add(te);
 								te.restriction = MathHelper.clamp(insertion-i+1,0,1);
 							}

@@ -3,6 +3,7 @@ package com.leafia.contents.machines.processing.mixingvat;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.blocks.ModBlocks;
+import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.lib.Library;
 import com.hbm.tileentity.IGUIProvider;
@@ -27,6 +28,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -53,6 +55,9 @@ public class MixingVatTE extends TileEntityMachineBase implements LeafiaQuickMod
 
 	public MixingVatTE() {
 		super(3+10+8);
+	}
+	public void fillFluid(BlockPos pos1,FluidTank tank) {
+		FFUtils.fillFluid(this, tank, world, pos1, 500);
 	}
 	public long getProgressScaled(long i) {
 		return (progress * i) / maxProgress;
@@ -250,7 +255,12 @@ public class MixingVatTE extends TileEntityMachineBase implements LeafiaQuickMod
 					progress = 0;
 			} else
 				progress = 0;
-			//fillFluid(pos.add(getDirection().getDirectionVec()),tank1);
+			if (!nuclearMode) {
+
+			} else {
+				fillFluid(pos.offset(facing,2).offset(facing.rotateY(),-1),tankNc1);
+				fillFluid(pos.offset(facing,2).offset(facing.rotateY(),2),tankNc1);
+			}
 			LeafiaPacket._start(this)
 					.__write(0,power)
 					.__write(1,nuclearMode)

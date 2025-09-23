@@ -3,6 +3,7 @@ package com.hbm.entity.effect;
 import com.hbm.explosion.ExplosionNT;
 import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.lib.HBMSoundEvents;
+import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
 import com.hbm.main.MainRegistry;
 import com.hbm.render.amlfrom1710.Vec3;
@@ -97,28 +98,29 @@ public class EntitySpear extends Entity {
 			
 			ticksInGround++;
 			
-			if(!world.isRemote && ticksInGround > 100) {
-				
-				List<Entity> entities =  new ArrayList<>(world.loadedEntityList);
-				for(Object obj : entities) {
-					
-					if(obj instanceof EntityLivingBase) {
-						ContaminationUtil.contaminate((EntityLivingBase) obj, HazardType.DIGAMMA, ContaminationType.DIGAMMA2, 10F);
-						((EntityLivingBase) obj).setDead();
-					}
-				}
+			if(ticksInGround > 100) {
 				this.setDead();
-				
-				world.playSound(null, posX, posY, posZ, HBMSoundEvents.dflash, SoundCategory.HOSTILE, 25000.0F, 1.0F);
-				
-				NBTTagCompound data = new NBTTagCompound();
-				data.setString("type", "smoke");
-				data.setString("mode", "radialDigamma");
-				data.setInteger("count", 100);
-				data.setDouble("posX", posX);
-				data.setDouble("posY", posY + 7);
-				data.setDouble("posZ", posZ);
-				MainRegistry.proxy.effectNT(data);
+				if (!world.isRemote) {
+					List<Entity> entities = new ArrayList<>(world.loadedEntityList);
+					for (Object obj : entities) {
+
+						if (obj instanceof EntityLivingBase) {
+							ContaminationUtil.contaminate((EntityLivingBase) obj,HazardType.DIGAMMA,ContaminationType.DIGAMMA2,10F);
+							((EntityLivingBase) obj).attackEntityFrom(ModDamageSource.digamma,((EntityLivingBase) obj).getMaxHealth());
+						}
+					}
+
+					world.playSound(null,posX,posY,posZ,HBMSoundEvents.dflash,SoundCategory.HOSTILE,25000.0F,1.0F);
+
+					NBTTagCompound data = new NBTTagCompound();
+					data.setString("type","smoke");
+					data.setString("mode","radialDigamma");
+					data.setInteger("count",100);
+					data.setDouble("posX",posX);
+					data.setDouble("posY",posY+7);
+					data.setDouble("posZ",posZ);
+					MainRegistry.proxy.effectNT(data);
+				}
 			}
 		}
 	}

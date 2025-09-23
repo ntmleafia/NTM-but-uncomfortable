@@ -5,6 +5,7 @@ import com.hbm.render.amlfrom1710.CompositeBrush;
 import com.leafia.dev.math.FiaMatrix;
 import com.leafia.transformer.LeafiaGls;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;

@@ -1,7 +1,9 @@
 package com.leafia.contents.machines.reactors.msr.components.element;
 
 import com.hbm.interfaces.IRadResistantBlock;
+import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Materials.Nuggies;
+import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.reactors.msr.components.MSRTEBase;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryBlock;
 import com.leafia.contents.machines.reactors.msr.components.arbitrary.MSRArbitraryTE;
@@ -28,22 +30,81 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class MSRElementTE extends MSRTEBase {
+	public enum MSRByproduct {
+		uranium(
+				6,
+				new Pair<>("mep",2d),
+				new Pair<>("np",1d),
+				new Pair<>("tc",1d),
+				new Pair<>("waste",2d)
+		);
+		final public double division;
+		final public Pair<String,Double>[] byproducts;
+		MSRByproduct(double division,Pair<String,Double>... byproducts) {
+			this.division = division;
+			this.byproducts = byproducts;
+		}
+	}
 	public enum MSRFuel {
 		meu(
 				new Item[]{Nuggies.nugget_uranium_fuel},
 				new String[0],
 				"(x×3)^0.7/B",
-				(x)->Math.pow(x*3,0.7)
+				(x)->Math.pow(x*3,0.7),
+				100000000d,
+				MSRByproduct.uranium
+		),
+		np(
+				new Item[0],
+				new String[]{"nuggetPlutonium"},
+				"(x×2.2)^0.85/B",
+				(x)->Math.pow(x*3,0.85)
+		),
+		lep(
+				new Item[]{Nuggies.nugget_plutonium_fuel},
+				new String[0],
+				"(x×2)^0.85/B",
+				(x)->Math.pow(x*3,0.85)
+		),
+		mep(
+				new Item[0],
+				new String[]{"nuggetPlutoniumRG"},
+				"(x×3)^0.85/B",
+				(x)->Math.pow(x*3,0.85)
+		),
+		tc(
+				new Item[0],
+				new String[]{"nuggetTc99"},
+				"0",
+				(x)->0d
+		),
+		waste(
+				new Item[]{ModItems.nuclear_waste_tiny},
+				new String[0],
+				"0",
+				(x)->0d
 		);
 		final public Item[] items;
 		final public String[] dicts;
 		final public String funcString;
 		final public Function<Double,Double> function;
+		final public double life;
+		final public MSRByproduct byproduct;
 		MSRFuel(Item[] items,String[] dicts,String funcString,Function<Double,Double> function) {
 			this.items = items;
 			this.dicts = dicts;
 			this.funcString = funcString;
 			this.function = function;
+			life = 0;
+			byproduct = null;
+		}
+		MSRFuel(Item[] items,String[] dicts,String funcString,Function<Double,Double> function,double life,MSRByproduct byproduct) {
+			this.items = items;
+			this.dicts = dicts;
+			this.funcString = funcString;
+			this.function = function;
+			this.life = life;
+			this.byproduct = byproduct;
 		}
 	}
 	Block getBlockArbitrary(BlockPos pos) {
@@ -84,6 +145,13 @@ public class MSRElementTE extends MSRTEBase {
 		return null;
 	}
 
+	void addMixture(Map<String,Double> mixture,String fuelType,double amt) {
+		if (mixture.containsKey(fuelType))
+			mixture.put(fuelType,mixture.get(fuelType)+amt);
+		else
+			mixture.put(fuelType,amt);
+	}
+
 	void react(MSRElementTE te,double distance,double multiplier) {
 		double B = te.tank.getFluidAmount()/2000d+tank.getFluidAmount()/2000d;
 		FluidStack stack0 = tank.getFluid();
@@ -97,10 +165,21 @@ public class MSRElementTE extends MSRTEBase {
 				for (Entry<String,Double> entry : mixture.entrySet()) {
 					try {
 						MSRFuel type = MSRFuel.valueOf(entry.getKey());
-						y += type.function.apply(nbtProtocol(stack1.tag).getDouble("heat")+baseTemperature)*entry.getValue()*B;
+						double tempAdd = type.function.apply(nbtProtocol(stack1.tag).getDouble("heat")+baseTemperature)*entry.getValue()*B;
+						y += tempAdd;
+						if (type.byproduct != null) {
+							double addAmt = tempAdd/type.life;
+							for (Pair<String,Double> byproduct : type.byproduct.byproducts)
+								addMixture(mixture,byproduct.getA(),byproduct.getB()*addAmt/type.byproduct.division);
+							double perc = entry.getValue()-addAmt;
+							mixture.put(entry.getKey(),perc);
+							if (perc <= 0)
+								mixture.remove(entry.getKey());
+						}
 					} catch (IllegalArgumentException ignored) {}
 				}
 				curRestriction = Math.max(curRestriction,te.restriction);
+				nbt.setTag("itemMixture",writeMixture(mixture));
 			}
 			y *= (1-curRestriction);
 			double heat = nbt.getDouble("heat");
@@ -173,7 +252,7 @@ public class MSRElementTE extends MSRTEBase {
 	public String getPacketIdentifier() {
 		return "MSRElement";
 	}
-	public MSRControlTE control = null;
+	public BlockPos control = null;
 	public double restriction = 0;
 
 	@Override
@@ -196,13 +275,11 @@ public class MSRElementTE extends MSRTEBase {
 		super.readFromNBT(compound);
 		restriction = compound.getDouble("restriction");
 		if (compound.hasKey("controlX")) {
-			BlockPos pos1 = new BlockPos(
+			control = new BlockPos(
 					compound.getInteger("controlX"),
 					compound.getInteger("controlY"),
 					compound.getInteger("controlZ")
-			);
-			if (world.getTileEntity(pos1) instanceof MSRControlTE te)
-				control = te;
+			);;
 		}
 	}
 
@@ -210,9 +287,9 @@ public class MSRElementTE extends MSRTEBase {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setDouble("restriction",restriction);
 		if (control != null) {
-			compound.setInteger("controlX",control.getPos().getX());
-			compound.setInteger("controlY",control.getPos().getY());
-			compound.setInteger("controlZ",control.getPos().getZ());
+			compound.setInteger("controlX",control.getX());
+			compound.setInteger("controlY",control.getY());
+			compound.setInteger("controlZ",control.getZ());
 		} else {
 			compound.removeTag("controlX");
 			compound.removeTag("controlY");
