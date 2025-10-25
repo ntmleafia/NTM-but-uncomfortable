@@ -1,6 +1,5 @@
 package com.hbm.inventory;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.hbm.inventory.OreDictManager.*;
@@ -20,7 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class SolderingRecipes {
 	
-	public static List<SolderingRecipe> recipes = new ArrayList();
+	public static List<SolderingRecipe> recipes = new ArrayList<>();
 	
 	public static void registerDefaults() {
 		
@@ -56,7 +55,7 @@ public class SolderingRecipes {
 						new ComparableStack(ModItems.circuit, 4, EnumCircuitType.CAPACITOR.ordinal())},
 				new AStack[] {
 						new ComparableStack(ModItems.circuit, 8, EnumCircuitType.PCB.ordinal()),
-						new OreDictStack(RUBBER.ingot(), 2)},
+						new OreDictStack(POLYMER.ingot(), 2)},
 				new AStack[] {
 						new OreDictStack(PB.wire(), 8)}
 		));
@@ -79,7 +78,7 @@ public class SolderingRecipes {
 						new ComparableStack(ModItems.circuit, lbsm ? 8 : 24, EnumCircuitType.CAPACITOR.ordinal())},
 				new AStack[] {
 						new ComparableStack(ModItems.circuit, 12, EnumCircuitType.PCB.ordinal()),
-						new OreDictStack(ANY_HARDPLASTIC.ingot(), 2)},
+						new OreDictStack(CMB.plateCast(), 2)},
 				new AStack[] {
 						new OreDictStack(PB.wire(), 12)}
 		));
@@ -94,7 +93,7 @@ public class SolderingRecipes {
 						new ComparableStack(ModItems.circuit, 16, EnumCircuitType.PCB.ordinal()),
 						new OreDictStack(ANY_HARDPLASTIC.ingot(), 4)},
 				new AStack[] {
-						new OreDictStack(PB.wire(), 16)}
+						new OreDictStack(SA326.wire(), 16)}
 		));
 		
 		/*
@@ -107,7 +106,7 @@ public class SolderingRecipes {
 				new AStack[] {
 						new ComparableStack(ModItems.circuit, lbsm ? 8 : 32, EnumCircuitType.CHIP.ordinal()),
 						new ComparableStack(ModItems.circuit, lbsm ? 8 : 32, EnumCircuitType.CAPACITOR.ordinal()),
-						new ComparableStack(ModItems.circuit, lbsm ? 8 : 16, EnumCircuitType.CAPACITOR_TANTALIUM.ordinal())},
+						new ComparableStack(ModItems.circuit, lbsm ? 4 : 8, EnumCircuitType.CRT_TUBE.ordinal())},
 				new AStack[] {
 						new ComparableStack(ModItems.circuit, 1, EnumCircuitType.CONTROLLER_CHASSIS.ordinal()),
 						new ComparableStack(ModItems.upgrade_speed_1)},
@@ -127,7 +126,7 @@ public class SolderingRecipes {
 						new OreDictStack(PB.wire(), 24)}
 		));
 		recipes.add(new SolderingRecipe(new ItemStack(ModItems.circuit, 1, EnumCircuitType.CONTROLLER_QUANTUM.ordinal()), 600, 250_000,
-				new FluidStack(ModForgeFluids.PERFLUOROMETHYL, 6_000),
+				new FluidStack(ModForgeFluids.MUD_FLUID, 8_000),
 				new AStack[] {
 						new ComparableStack(ModItems.circuit, lbsm ? 8 : 16, EnumCircuitType.CHIP_QUANTUM.ordinal()),
 						new ComparableStack(ModItems.circuit, lbsm ? 16 : 48, EnumCircuitType.CHIP_BISMOID.ordinal()),
@@ -136,7 +135,7 @@ public class SolderingRecipes {
 						new ComparableStack(ModItems.circuit, 2, EnumCircuitType.CONTROLLER_ADVANCED.ordinal()),
 						new ComparableStack(ModItems.upgrade_overdrive_1)},
 				new AStack[] {
-						new OreDictStack(PB.wire(), 32)}
+						new OreDictStack(SA326.wire(), 32)}
 		));
 
 		/*
@@ -178,6 +177,12 @@ public class SolderingRecipes {
 				new AStack[] {new ComparableStack(ModItems.upgrade_template), new OreDictStack(LI.dust(), 4)},
 				new AStack[] {}
 		));
+
+        recipes.add(new SolderingRecipe(new ItemStack(ModItems.upgrade_gc_speed), 400, 2_000,
+                new AStack[] {new ComparableStack(ModItems.circuit, 2, EnumCircuitType.ADVANCED.ordinal()), new ComparableStack(ModItems.circuit, 4, EnumCircuitType.CAPACITOR_TANTALIUM.ordinal())},
+                new AStack[] {new ComparableStack(ModItems.upgrade_template), new OreDictStack(UF.ingot(), 4)},
+                new AStack[] {}
+        ));
 		
 		addFirstUpgrade(ModItems.upgrade_speed_1, ModItems.upgrade_speed_2);
 		addSecondUpgrade(ModItems.upgrade_speed_2, ModItems.upgrade_speed_3);

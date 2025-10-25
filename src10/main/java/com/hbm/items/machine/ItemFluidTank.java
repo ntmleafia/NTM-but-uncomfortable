@@ -28,6 +28,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemFluidTank extends Item implements IHasCustomModel {
 
@@ -79,12 +80,12 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + I18n.format(this.getTranslationKey() + ".name")).trim();
+		String s = (I18n.format(this.getTranslationKey() + ".name")).trim();
 		String s1 = null;// ("" +
 							// StatCollector.translateToLocal(FluidType.getEnum(stack.getItemDamage()).getTranslationKey()))
 		// .trim();
 		if (FluidUtil.getFluidContained(stack) != null) {
-			s1 = ("" + I18n.format(FluidUtil.getFluidContained(stack).getLocalizedName()).trim());
+			s1 = (I18n.format(FluidUtil.getFluidContained(stack).getLocalizedName()).trim());
 		} else {
 			if(this == ModItems.fluid_tank_full)
 				return "Empty Universal Fluid Tank";
@@ -120,20 +121,19 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
+	public void addInformation(@NotNull ItemStack stack, World worldIn, @NotNull List<String> list, @NotNull ITooltipFlag flagIn) {
 		
 		FluidStack f = FluidUtil.getFluidContained(stack);
 		String s = Library.getColoredMbPercent(f == null ? 0 : f.amount, cap);
 		if(stack.getCount() > 1)
 			s = stack.getCount() + "x " + s;
 		list.add(s);
-
 	}
 	
 	public static ItemStack getFullBarrel(Fluid f, int amount){
 		ItemStack stack = new ItemStack(ModItems.fluid_barrel_full, amount, 0);
 		stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, new FluidStack(f, 16000).writeToNBT(new NBTTagCompound()));
+		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, safeFluidStackSerialization(new FluidStack(f, 16000)));
 		return stack;
 	}
 	
@@ -144,7 +144,7 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	public static ItemStack getFullTank(Fluid f, int amount){
 		ItemStack stack = new ItemStack(ModItems.fluid_tank_full, amount, 0);
 		stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, new FluidStack(f, 1000).writeToNBT(new NBTTagCompound()));
+		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, safeFluidStackSerialization(new FluidStack(f, 1000)));
 		return stack;
 	}
 	
@@ -155,7 +155,7 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 	public static ItemStack getFullTankLead(Fluid f, int amount){
 		ItemStack stack = new ItemStack(ModItems.fluid_tank_lead_full, amount, 0);
 		stack.setTagCompound(new NBTTagCompound());
-		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, new FluidStack(f, 1000).writeToNBT(new NBTTagCompound()));
+		stack.getTagCompound().setTag(HbmFluidHandlerItemStack.FLUID_NBT_KEY, safeFluidStackSerialization(new FluidStack(f, 1000)));
 		return stack;
 	}
 	
@@ -179,48 +179,45 @@ public class ItemFluidTank extends Item implements IHasCustomModel {
 			if(f == null)
 				return true;
 			return f.amount == 1000 || f.amount == 0;
-		} else if(stack.getItem() == ModItems.fluid_barrel_full || stack.getItem() == ModItems.fluid_tank_full){
-			return true;
-		}
-		return false;
-	}
+		} else return stack.getItem() == ModItems.fluid_barrel_full || stack.getItem() == ModItems.fluid_tank_full;
+    }
 
 	public static boolean isEmptyTank(ItemStack out) {
-		if(out.getItem() == ModItems.fluid_tank_full && FluidUtil.getFluidContained(out) == null)
-			return true;
-		return false;
-	}
+        return out.getItem() == ModItems.fluid_tank_full && FluidUtil.getFluidContained(out) == null;
+    }
 
 	public static boolean isFullTank(ItemStack stack, Fluid fluid) {
 		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(stack.getItem() == ModItems.fluid_tank_full && f != null && f.getFluid() == fluid && f.amount == 1000)
-			return true;
-		return false;
-	}
+        return stack.getItem() == ModItems.fluid_tank_full && f != null && f.getFluid() == fluid && f.amount == 1000;
+    }
 
 	public static boolean isEmptyTankLead(ItemStack out) {
-		if(out.getItem() == ModItems.fluid_tank_lead_full && FluidUtil.getFluidContained(out) == null)
-			return true;
-		return false;
-	}
+        return out.getItem() == ModItems.fluid_tank_lead_full && FluidUtil.getFluidContained(out) == null;
+    }
 
 	public static boolean isFullTankLead(ItemStack stack, Fluid fluid) {
 		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(stack.getItem() == ModItems.fluid_tank_lead_full && f != null && f.getFluid() == fluid && f.amount == 1000)
-			return true;
-		return false;
-	}
+        return stack.getItem() == ModItems.fluid_tank_lead_full && f != null && f.getFluid() == fluid && f.amount == 1000;
+    }
 	
 	public static boolean isEmptyBarrel(ItemStack out) {
-		if(out.getItem() == ModItems.fluid_barrel_full && FluidUtil.getFluidContained(out) == null)
-			return true;
-		return false;
-	}
+        return out.getItem() == ModItems.fluid_barrel_full && FluidUtil.getFluidContained(out) == null;
+    }
 
 	public static boolean isFullBarrel(ItemStack stack, Fluid fluid) {
 		FluidStack f = FluidUtil.getFluidContained(stack);
-		if(stack.getItem() == ModItems.fluid_barrel_full && f != null && f.getFluid() == fluid && f.amount == 16000)
-			return true;
-		return false;
+
+        return stack.getItem() == ModItems.fluid_barrel_full && f != null && f.getFluid() == fluid && f.amount == 16000;
+    }
+
+	private static NBTTagCompound safeFluidStackSerialization(FluidStack stack) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setString("FluidName", stack.getFluid().getName());
+		nbt.setInteger("Amount", stack.amount);
+		if (stack.tag != null) {
+			nbt.setTag("Tag", stack.tag);
+		}
+		return nbt;
 	}
+
 }

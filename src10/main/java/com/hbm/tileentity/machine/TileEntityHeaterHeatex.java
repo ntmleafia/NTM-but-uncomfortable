@@ -39,6 +39,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,7 +50,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
 
     public Fluid[] tankTypes;
 
-    public int amountToCool = 1;
+    public int amountToCool = 32_000;
     public int tickDelay = 1;
     public int heatGen;
     public int heatEnergy;
@@ -60,9 +61,9 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
         this.tanks = new FluidTank[2];
         this.tankTypes = new Fluid[2];
 
-        this.tanks[0] = new FluidTank(ModForgeFluids.HOTCOOLANT, 0, 24_000);
+        this.tanks[0] = new FluidTank(ModForgeFluids.HOTCOOLANT, 0, 32_000);
         this.tankTypes[0] = ModForgeFluids.HOTCOOLANT;
-        this.tanks[1] = new FluidTank(ModForgeFluids.COOLANT, 0, 24_000);
+        this.tanks[1] = new FluidTank(ModForgeFluids.COOLANT, 0, 32_000);
         this.tankTypes[1] = ModForgeFluids.COOLANT;
     }
 
@@ -80,7 +81,6 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
             setFluidType();
 
             PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos.getX(), pos.getY(), pos.getZ(), new FluidTank[]{tanks[0], tanks[1]}), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
-            PacketDispatcher.wrapper.sendToAllAround(new FluidTypePacketTest(pos.getX(), pos.getY(), pos.getZ(), tankTypes), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
 
             this.heatEnergy *= 0.999;
 
@@ -105,10 +105,10 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
         ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - BlockDummyable.offset);
         ForgeDirection rot = dir.getRotation(ForgeDirection.UP);
 
-        FFUtils.fillFluid(this, tank, world, pos.add(dir.offsetX * 2 + rot.offsetX, 0, dir.offsetZ * 2 + rot.offsetZ), 12000);
-        FFUtils.fillFluid(this, tank, world, pos.add(dir.offsetX * 2 - rot.offsetX, 0, dir.offsetZ * 2 - rot.offsetZ), 12000);
-        FFUtils.fillFluid(this, tank, world, pos.add(-dir.offsetX * 2 + rot.offsetX, 0, -dir.offsetZ * 2 + rot.offsetZ), 12000);
-        FFUtils.fillFluid(this, tank, world, pos.add(-dir.offsetX * 2 - rot.offsetX, 0, -dir.offsetZ * 2 - rot.offsetZ), 12000);
+        FFUtils.fillFluid(this, tank, world, pos.add(dir.offsetX * 2 + rot.offsetX, 0, dir.offsetZ * 2 + rot.offsetZ), 32000);
+        FFUtils.fillFluid(this, tank, world, pos.add(dir.offsetX * 2 - rot.offsetX, 0, dir.offsetZ * 2 - rot.offsetZ), 32000);
+        FFUtils.fillFluid(this, tank, world, pos.add(-dir.offsetX * 2 + rot.offsetX, 0, -dir.offsetZ * 2 + rot.offsetZ), 32000);
+        FFUtils.fillFluid(this, tank, world, pos.add(-dir.offsetX * 2 - rot.offsetX, 0, -dir.offsetZ * 2 - rot.offsetZ), 32000);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setInteger("heatEnergy", heatEnergy);
         nbt.setInteger("toCool", amountToCool);
         nbt.setInteger("delay", tickDelay);
@@ -207,9 +207,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
 
     @Override
     public void recievePacket(NBTTagCompound[] tags) {
-        if (tags.length != 2) {
-            return;
-        } else {
+        if (tags.length == 2) {
             tanks[0].readFromNBT(tags[0]);
             tanks[1].readFromNBT(tags[1]);
         }
@@ -225,7 +223,6 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
         if (resource != null && resource.getFluid() == tankTypes[0] && resource.amount > 0) {
             return tanks[0].fill(resource, doFill);
         }
-
         return 0;
     }
 
@@ -252,8 +249,9 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+            if(facing == null) return true;
             ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - BlockDummyable.offset);
-            if (facing == dir.toEnumFacing().getOpposite() || facing == dir.toEnumFacing() || facing == null) {
+            if (facing == dir.toEnumFacing().getOpposite() || facing == dir.toEnumFacing()) {
                 return true;
             }
         }
@@ -265,7 +263,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
             ForgeDirection dir = ForgeDirection.getOrientation(this.getBlockMetadata() - BlockDummyable.offset);
-            if (facing == dir.toEnumFacing().getOpposite() || facing == dir.toEnumFacing() || facing == null) {
+            if (facing == null || facing == dir.toEnumFacing().getOpposite() || facing == dir.toEnumFacing()) {
                 return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
             }
         }
@@ -312,7 +310,7 @@ public class TileEntityHeaterHeatex extends TileEntityMachineBase implements IHe
     public void receiveControl(NBTTagCompound data) {
         if (data.hasKey("toCool")) this.amountToCool = Math.max(data.getInteger("toCool"), 1);
         if (data.hasKey("delay")) this.tickDelay = Math.max(data.getInteger("delay"), 1);
-
+        this.amountToCool = Math.min(this.amountToCool, tanks[0].getCapacity());
         markDirty();
     }
 }

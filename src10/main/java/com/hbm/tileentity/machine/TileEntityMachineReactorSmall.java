@@ -1,5 +1,6 @@
 package com.hbm.tileentity.machine;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.hbm.blocks.ModBlocks;
@@ -8,11 +9,13 @@ import com.hbm.config.MobConfig;
 import com.hbm.explosion.ExplosionNukeGeneric;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModForgeFluids;
+import com.hbm.handler.RadiationSystemNT;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.interfaces.IRadResistantBlock;
 import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemFuelRod;
 import com.hbm.lib.HBMSoundHandler;
+import com.hbm.lib.ItemStackHandlerWrapper;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.PacketDispatcher;
@@ -43,6 +46,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineReactorSmall extends TileEntity implements ITickable, IFluidHandler, ITankPacketAcceptor {
 
@@ -75,37 +79,12 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 	// private static final int[] slots_side = new int[] { 0, 1, 2, 3, 4, 5, 6,
 	// 7, 8, 9, 10, 11, 12, 14, 16 };
 
+    public static HashMap<Item, Item> conversions = new HashMap<>();
+
 	private String customName;
 
 	public TileEntityMachineReactorSmall() {
-		inventory = new ItemStackHandler(16) {
-			@Override
-			protected void onContentsChanged(int slot) {
-				markDirty();
-				super.onContentsChanged(slot);
-			}
-
-			@Override
-			public boolean isItemValid(int i, ItemStack itemStack) {
-				if(i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 11)
-					if(itemStack.getItem() instanceof ItemFuelRod)
-						return true;
-				if(i == 12)
-					if(FFUtils.containsFluid(itemStack, FluidRegistry.WATER))
-						return true;
-				if(i == 14)
-					if(FFUtils.containsFluid(itemStack, ModForgeFluids.COOLANT))
-						return true;
-				return false;
-			}
-
-			@Override
-			public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-				if(isItemValid(slot, stack))
-					return super.insertItem(slot, stack, simulate);
-				return stack;
-			}
-		};
+		inventory = new ItemStackHandler(16);
 
 		tanks = new FluidTank[3];
 		tankTypes = new Fluid[3];
@@ -119,12 +98,40 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 	}
 
-	public String getInventoryName() {
+    public static void setupConversions() {
+        if(!conversions.isEmpty()) return;
+        conversions.put(ModItems.rod_uranium_fuel, ModItems.rod_uranium_fuel_depleted);
+        conversions.put(ModItems.rod_thorium_fuel, ModItems.rod_thorium_fuel_depleted);
+        conversions.put(ModItems.rod_plutonium_fuel, ModItems.rod_plutonium_fuel_depleted);
+        conversions.put(ModItems.rod_mox_fuel, ModItems.rod_mox_fuel_depleted);
+        conversions.put(ModItems.rod_schrabidium, ModItems.rod_schrabidium_fuel_depleted);
+
+        conversions.put(ModItems.rod_dual_uranium_fuel, ModItems.rod_dual_uranium_fuel_depleted);
+        conversions.put(ModItems.rod_dual_thorium_fuel, ModItems.rod_dual_thorium_fuel_depleted);
+        conversions.put(ModItems.rod_dual_plutonium_fuel, ModItems.rod_dual_plutonium_fuel_depleted);
+        conversions.put(ModItems.rod_dual_mox_fuel, ModItems.rod_dual_mox_fuel_depleted);
+        conversions.put(ModItems.rod_dual_schrabidium_fuel, ModItems.rod_dual_schrabidium_fuel_depleted);
+
+        conversions.put(ModItems.rod_quad_uranium_fuel, ModItems.rod_quad_uranium_fuel_depleted);
+        conversions.put(ModItems.rod_quad_thorium_fuel, ModItems.rod_quad_thorium_fuel_depleted);
+        conversions.put(ModItems.rod_quad_plutonium_fuel, ModItems.rod_quad_plutonium_fuel_depleted);
+        conversions.put(ModItems.rod_quad_mox_fuel, ModItems.rod_quad_mox_fuel_depleted);
+        conversions.put(ModItems.rod_quad_schrabidium_fuel, ModItems.rod_quad_schrabidium_fuel_depleted);
+    }
+
+    public boolean canExtractItem(int slot, ItemStack stack){
+    	if(slot == 13 || slot == 15) return true;
+        if(slot == 12 || slot == 14) return false;
+        if(!stack.isEmpty()) return !conversions.containsKey(stack.getItem());
+        return true;
+    }
+
+    public String getInventoryName() {
 		return this.hasCustomInventoryName() ? this.customName : "container.reactorSmall";
 	}
 
 	public boolean hasCustomInventoryName() {
-		return this.customName != null && this.customName.length() > 0;
+		return this.customName != null && !this.customName.isEmpty();
 	}
 
 	public void setCustomName(String name) {
@@ -245,7 +252,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 			getInteractions();
 
-			if(this.coreHeat > 0 && this.tanks[1].getFluidAmount() > 0 && this.hullHeat < this.maxHullHeat) {
+			if(this.coreHeat > 0 && this.tanks[1].getFluidAmount() > 0 && this.hullHeat < maxHullHeat) {
 				this.hullHeat += this.coreHeat * 0.175 * hullHeatMod;
 				this.coreHeat -= this.coreHeat * 0.1;
 
@@ -321,27 +328,19 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 			return false;
 		}
 
-		boolean side4 = blocksRad(pos.add(0, 1, -1));
-		if(!side4){
-			return false;
-		}
-
-		return true;
-	}
+        return blocksRad(pos.add(0, 1, -1));
+    }
 
 	@SuppressWarnings("deprecation")
 	private boolean blocksRad(BlockPos pos) {
 
 		Block b = world.getBlockState(pos).getBlock();
 
-		if(b instanceof IRadResistantBlock)
-			return ((IRadResistantBlock)b).isRadResistant(world, pos);
-
-		if(b == Blocks.FLOWING_WATER || b == Blocks.WATER)
+        if(RadiationSystemNT.isRadResistant(world, b, pos))
 			return true;
 
-		return false;
-	}
+        return b == Blocks.FLOWING_WATER || b == Blocks.WATER;
+    }
 
 	private void generateSteam() {
 
@@ -424,20 +423,17 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 				TileEntity tile = world.getTileEntity(new BlockPos(pos1[0], pos1[1], pos1[2]));
 
-				if(tile instanceof TileEntityMachineReactor) {
+				if(tile instanceof TileEntityMachineReactor reactor) {
 
-					TileEntityMachineReactor reactor = (TileEntityMachineReactor) tile;
-
-					if(reactor.charge <= 1 && this.hullHeat > 0) {
+                    if(reactor.charge <= 1 && this.hullHeat > 0) {
 						reactor.charge = 1;
 						reactor.heat = (int) Math.floor(hullHeat * 4 / maxHullHeat) + 1;
 					}
 				}
 			}
 
-		} else if(te instanceof TileEntityNukeFurnace) {
-			TileEntityNukeFurnace reactor = (TileEntityNukeFurnace) te;
-			if(reactor.dualPower < 1 && this.coreHeat > 0)
+		} else if(te instanceof TileEntityNukeFurnace reactor) {
+            if(reactor.dualPower < 1 && this.coreHeat > 0)
 				reactor.dualPower = 1;
 
 		} else if(b == ModBlocks.block_uranium) {
@@ -470,7 +466,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 		for(int i = 0; i < decay; i++) {
 			ItemFuelRod rod = ((ItemFuelRod) inventory.getStackInSlot(id).getItem());
-			this.coreHeat += rod.getHeatPerTick() * coreHeatMod;
+			this.coreHeat += (int) (rod.getHeatPerTick() * coreHeatMod);
 			ItemFuelRod.setLifetime(inventory.getStackInSlot(id), ItemFuelRod.getLifeTime(inventory.getStackInSlot(id)) + 1);
 
 			if(ItemFuelRod.getLifeTime(inventory.getStackInSlot(id)) > ((ItemFuelRod) inventory.getStackInSlot(id).getItem()).getMaxLifeTime()) {
@@ -480,57 +476,15 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		}
 	}
 
+
 	private void onRunOut(int id) {
 
 		// System.out.println("aaa");
 
 		Item item = inventory.getStackInSlot(id).getItem();
-
-		if(item == ModItems.rod_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_uranium_fuel_depleted));
-
-		} else if(item == ModItems.rod_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_thorium_fuel_depleted));
-
-		} else if(item == ModItems.rod_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_plutonium_fuel_depleted));
-
-		} else if(item == ModItems.rod_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_mox_fuel_depleted));
-
-		} else if(item == ModItems.rod_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_schrabidium_fuel_depleted));
-
-		} else if(item == ModItems.rod_dual_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_uranium_fuel_depleted));
-
-		} else if(item == ModItems.rod_dual_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_thorium_fuel_depleted));
-
-		} else if(item == ModItems.rod_dual_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_plutonium_fuel_depleted));
-
-		} else if(item == ModItems.rod_dual_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_mox_fuel_depleted));
-
-		} else if(item == ModItems.rod_dual_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_dual_schrabidium_fuel_depleted));
-
-		} else if(item == ModItems.rod_quad_uranium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_uranium_fuel_depleted));
-
-		} else if(item == ModItems.rod_quad_thorium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_thorium_fuel_depleted));
-
-		} else if(item == ModItems.rod_quad_plutonium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_plutonium_fuel_depleted));
-
-		} else if(item == ModItems.rod_quad_mox_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_mox_fuel_depleted));
-
-		} else if(item == ModItems.rod_quad_schrabidium_fuel) {
-			inventory.setStackInSlot(id, new ItemStack(ModItems.rod_quad_schrabidium_fuel_depleted));
-		}
+        Item out = conversions.get(item);
+        if(out == null) return;
+        inventory.setStackInSlot(id, new ItemStack(out));
 	}
 
 	private int getNeightbourCount(int id) {
@@ -562,9 +516,7 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 
 	protected boolean inputValidForTank(int tank, int slot) {
 		if(inventory.getStackInSlot(slot) != ItemStack.EMPTY && tanks[tank] != null) {
-			if(isValidFluidForTank(tank, FluidUtil.getFluidContained(inventory.getStackInSlot(slot)))) {
-				return true;
-			}
+            return isValidFluidForTank(tank, FluidUtil.getFluidContained(inventory.getStackInSlot(slot)));
 		}
 		return false;
 	}
@@ -773,14 +725,47 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		return 65536.0D;
 	}
 
+    public boolean isItemValid(int i, ItemStack itemStack) {
+        if(i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10 || i == 11)
+            if(itemStack.getItem() instanceof ItemFuelRod)
+                return true;
+        if(i == 12)
+            if(FFUtils.containsFluid(itemStack, FluidRegistry.WATER))
+                return true;
+        if(i == 14)
+            return FFUtils.containsFluid(itemStack, ModForgeFluids.COOLANT);
+        return false;
+    }
+
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+	public boolean hasCapability(@NotNull Capability<?> capability, EnumFacing facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY || capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory) : capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY ? CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this) : super.getCapability(capability, facing);
+	public <T> T getCapability(@NotNull Capability<T> capability, EnumFacing facing) {
+		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            if(facing == null)
+                return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+            else return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(new ItemStackHandlerWrapper(inventory){
+                @Override
+                public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+                    if(canExtractItem(slot, inventory.getStackInSlot(slot)))
+                        return super.extractItem(slot, amount, simulate);
+                    return ItemStack.EMPTY;
+                }
+
+                @Override
+                public @NotNull ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                    if(isItemValid(slot, stack))
+                        return super.insertItem(slot, stack, simulate);
+                    return stack;
+                }
+            });
+        else if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+            return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(this);
+        else
+            return super.getCapability(capability, facing);
 	}
 
 	private int detectHeat;

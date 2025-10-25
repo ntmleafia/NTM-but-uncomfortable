@@ -16,6 +16,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityNukeBalefire extends TileEntityMachineBase implements ITickable {
 
@@ -85,12 +86,8 @@ public class TileEntityNukeBalefire extends TileEntityMachineBase implements ITi
 
 	public boolean hasEgg() {
 
-		if(inventory.getStackInSlot(0).getItem() == ModItems.egg_balefire) {
-			return true;
-		}
-
-		return false;
-	}
+        return inventory.getStackInSlot(0).getItem() == ModItems.egg_balefire;
+    }
 
 	public boolean hasBattery() {
 
@@ -100,11 +97,11 @@ public class TileEntityNukeBalefire extends TileEntityMachineBase implements ITi
 	public int getBattery() {
 		
 		if(inventory.getStackInSlot(1).getItem() == ModItems.battery_spark &&
-				((IBatteryItem)ModItems.battery_spark).getCharge(inventory.getStackInSlot(1)) == ((IBatteryItem)ModItems.battery_spark).getMaxCharge()) {
+				((IBatteryItem)ModItems.battery_spark).getCharge(inventory.getStackInSlot(1)) == ((IBatteryItem)ModItems.battery_spark).getMaxCharge(inventory.getStackInSlot(1))) {
 			return 1;
 		}
 		if(inventory.getStackInSlot(1).getItem() == ModItems.battery_trixite &&
-				((IBatteryItem)ModItems.battery_trixite).getCharge(inventory.getStackInSlot(1)) == ((IBatteryItem)ModItems.battery_trixite).getMaxCharge()) {
+				((IBatteryItem)ModItems.battery_trixite).getCharge(inventory.getStackInSlot(1)) == ((IBatteryItem)ModItems.battery_trixite).getMaxCharge(inventory.getStackInSlot(1))) {
 			return 2;
 		}
 
@@ -156,7 +153,7 @@ public class TileEntityNukeBalefire extends TileEntityMachineBase implements ITi
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setBoolean("started", started);
 		compound.setInteger("timer", timer);
 		return super.writeToNBT(compound);

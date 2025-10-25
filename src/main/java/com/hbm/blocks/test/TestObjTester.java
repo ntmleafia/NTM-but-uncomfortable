@@ -4,6 +4,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.effect.EntityCloudTom;
 import com.hbm.interfaces.IBomb;
 import com.hbm.tileentity.deco.TileEntityObjTester;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -146,10 +147,8 @@ public class TestObjTester extends BlockContainer implements IBomb {
     		ex.doExplosionB(false);*/
     	} else {
     		TileEntity te = world.getTileEntity(pos);
-    		if(te instanceof TileEntityObjTester){
-    			//((TileEntityObjTester)te).fireAge = 0;
-    		}
-    		try {
+            //((TileEntityObjTester)te).fireAge = 0;
+            try {
     			//Minecraft.getMinecraft().effectRenderer.addEffect(new PhysicsTestParticle(world, pos.getX()+2.5, pos.getY() + 3, pos.getZ() + 5.55));
     		}catch (Exception x){
     			x.printStackTrace();

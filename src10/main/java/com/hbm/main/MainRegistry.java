@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.hbm.blocks.machine.WatzPump;
 import com.hbm.entity.item.EntityMovingPackage;
+import com.hbm.handler.*;
 import com.hbm.inventory.*;
+import com.hbm.items.armor.ItemModLens;
 import com.hbm.tileentity.network.*;
 import com.hbm.world.feature.OreLayer3D;
+import net.minecraft.block.*;
 import org.apache.logging.log4j.Logger;
 
 import com.hbm.blocks.ModBlocks;
@@ -211,18 +215,9 @@ import com.hbm.entity.projectile.EntityTom;
 import com.hbm.entity.projectile.EntityWaterSplash;
 import com.hbm.entity.siege.SiegeTier;
 import com.hbm.explosion.ExplosionNukeGeneric;
-import com.hbm.forgefluid.FFPipeNetwork;
 import com.hbm.forgefluid.FluidContainerRegistry;
 import com.hbm.forgefluid.FluidTypeHandler;
 import com.hbm.forgefluid.ModForgeFluids;
-import com.hbm.handler.ArmorUtil;
-import com.hbm.handler.BobmazonOfferFactory;
-import com.hbm.handler.BulletConfigSyncingUtil;
-import com.hbm.handler.GuiHandler;
-import com.hbm.handler.HTTPHandler;
-import com.hbm.handler.HazmatRegistry;
-import com.hbm.handler.HbmKeybinds;
-import com.hbm.handler.MultiblockBBHandler;
 import com.hbm.handler.crt.NTMCraftTweaker;
 import com.hbm.hazard.HazardRegistry;
 import com.hbm.inventory.material.MatDistribution;
@@ -263,9 +258,6 @@ import com.hbm.tileentity.bomb.TileEntityNukePrototype;
 import com.hbm.tileentity.bomb.TileEntityNukeSolinium;
 import com.hbm.tileentity.bomb.TileEntityNukeTsar;
 import com.hbm.tileentity.bomb.TileEntityRailgun;
-import com.hbm.tileentity.network.energy.TileEntityCableBaseNT;
-import com.hbm.tileentity.network.energy.TileEntityCableSwitch;
-import com.hbm.tileentity.network.energy.TileEntityMachineDetector;
 import com.hbm.tileentity.conductor.TileEntityFFFluidDuctMk2;
 import com.hbm.tileentity.conductor.TileEntityFFFluidSuccMk2;
 import com.hbm.tileentity.conductor.TileEntityFFFluidDuctMk2Solid;
@@ -324,7 +316,6 @@ import com.hbm.tileentity.turret.TileEntityTurretTauon;
 import com.hbm.world.feature.SchistStratum;
 import com.hbm.world.generator.CellularDungeonFactory;
 
-import net.minecraft.block.BlockDispenser;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -376,8 +367,6 @@ public class MainRegistry {
 	public static MainRegistry instance;
 
 	public static Logger logger;
-
-	public static List<FFPipeNetwork> allPipeNetworks = new ArrayList<FFPipeNetwork>();
 
 	// Creative Tabs
 	// ingots, nuggets, wires, machine parts
@@ -478,9 +467,8 @@ public class MainRegistry {
 		if(generalOverride > 0 && generalOverride < 19) {
 			polaroidID = generalOverride;
 		} else {
-			polaroidID = rand.nextInt(18) + 1;
-			while(polaroidID == 4 || polaroidID == 9)
-				polaroidID = rand.nextInt(18) + 1;
+            do polaroidID = rand.nextInt(18) + 1;
+            while (polaroidID == 4 || polaroidID == 9);
 		}
 		
 		if(SharedMonsterAttributes.MAX_HEALTH.clampValue(Integer.MAX_VALUE) <= 2000){
@@ -491,7 +479,7 @@ public class MainRegistry {
 				modifiersField.setAccessible(true);
 				modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
 				f.set(SharedMonsterAttributes.MAX_HEALTH, Integer.MAX_VALUE);
-			} catch(Throwable e){}
+			} catch(Throwable ignored){}
 		}
 		proxy.checkGLCaps();
 		reloadConfig();
@@ -519,6 +507,7 @@ public class MainRegistry {
 		ModForgeFluids.init();
 		ModItems.preInit();
 		ModBlocks.preInit();
+		OreDictManager.registerOres();
 		BulletConfigSyncingUtil.loadConfigsForSync();
 		CellularDungeonFactory.init();
 		Satellite.register();
@@ -587,7 +576,6 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCableGauge.class, new ResourceLocation(RefStrings.MODID, "tileentity_cable_gauge"));
 		GameRegistry.registerTileEntity(TileEntityBedrockOre.class, new ResourceLocation(RefStrings.MODID, "tileentity_ore_bedrock"));
 		GameRegistry.registerTileEntity(TileEntityMachineBattery.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_battery"));
-		GameRegistry.registerTileEntity(TileEntityMachineTransformer.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_transformer"));
 		GameRegistry.registerTileEntity(TileEntityConverterHeRf.class, new ResourceLocation(RefStrings.MODID, "tileentity_converter_he_rf"));
 		GameRegistry.registerTileEntity(TileEntityConverterRfHe.class, new ResourceLocation(RefStrings.MODID, "tileentity_converter_rf_he"));
 		GameRegistry.registerTileEntity(TileEntityMachineTurbine.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_turbine"));
@@ -605,13 +593,12 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineBoilerElectric.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_boiler_electric"));
 		GameRegistry.registerTileEntity(TileEntityMachineBoilerRTG.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_boiler_rtg"));
 		GameRegistry.registerTileEntity(TileEntityMachineEPress.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_epress"));
+		GameRegistry.registerTileEntity(TileEntityConnector.class, new ResourceLocation(RefStrings.MODID, "tileentity_connector_redwire"));
 		GameRegistry.registerTileEntity(TileEntityPylon.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_red_wire"));
 		GameRegistry.registerTileEntity(TileEntityPylonLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_large"));
 		GameRegistry.registerTileEntity(TileEntitySubstation.class, new ResourceLocation(RefStrings.MODID, "tileentity_pylon_substation"));
 		GameRegistry.registerTileEntity(TileEntityMachineCentrifuge.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_centrifuge"));
 		GameRegistry.registerTileEntity(TileEntityMachineGasCent.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gascent"));
-		GameRegistry.registerTileEntity(TileEntityMachineUF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_uf6_tank"));
-		GameRegistry.registerTileEntity(TileEntityMachinePuF6Tank.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_puf6_tank"));
 		GameRegistry.registerTileEntity(TileEntityRailgun.class, new ResourceLocation(RefStrings.MODID, "tileentity_railgun"));
 		GameRegistry.registerTileEntity(TileEntityMachineReactor.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_reactor"));
 		GameRegistry.registerTileEntity(TileEntityMachineShredder.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_shredder"));
@@ -654,7 +641,6 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityMachineGasFlare.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_gas_flare"));
 		GameRegistry.registerTileEntity(TileEntityMachineExcavator.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_excavator"));
 		GameRegistry.registerTileEntity(TileEntityMachineTurbofan.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_turbofan"));
-		GameRegistry.registerTileEntity(TileEntityMachineCMBFactory.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_cmb_factory"));
 		GameRegistry.registerTileEntity(TileEntityMachineTeleporter.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_teleporter"));
 		GameRegistry.registerTileEntity(TileEntityRadiobox.class, new ResourceLocation(RefStrings.MODID, "tileentity_radiobox"));
 		GameRegistry.registerTileEntity(TileEntityRadioRec.class, new ResourceLocation(RefStrings.MODID, "tileentity_radiorec"));
@@ -669,8 +655,6 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityReactorHatch.class, new ResourceLocation(RefStrings.MODID, "tileentity_reactor_hatch"));
 		GameRegistry.registerTileEntity(TileEntityFactoryHatch.class, new ResourceLocation(RefStrings.MODID, "tileentity_factory_hatch"));
 		GameRegistry.registerTileEntity(TileEntityMachineReactorLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_reactor_large"));
-		GameRegistry.registerTileEntity(TileEntityWatzHatch.class, new ResourceLocation(RefStrings.MODID, "tileentity_watz_hatch"));
-		GameRegistry.registerTileEntity(TileEntityWatzCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_watz_core"));
 		GameRegistry.registerTileEntity(TileEntityFWatzHatch.class, new ResourceLocation(RefStrings.MODID, "tileentity_fwatz_hatch"));
 		GameRegistry.registerTileEntity(TileEntityFWatzCore.class, new ResourceLocation(RefStrings.MODID, "tileentity_fwatz_core"));
 		GameRegistry.registerTileEntity(TileEntityNukeGadget.class, new ResourceLocation(RefStrings.MODID, "tileentity_nuke_gadget"));
@@ -744,6 +728,9 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityHadron.class, new ResourceLocation(RefStrings.MODID, "tileentity_hadron"));
 		GameRegistry.registerTileEntity(TileEntitySolarBoiler.class, new ResourceLocation(RefStrings.MODID, "tileentity_solarboiler"));
 		GameRegistry.registerTileEntity(TileEntitySolarMirror.class, new ResourceLocation(RefStrings.MODID, "tileentity_solarmirror"));
+		GameRegistry.registerTileEntity(TileEntityWatz.class, new ResourceLocation(RefStrings.MODID, "tileentity_watz"));
+		GameRegistry.registerTileEntity(WatzPump.TileEntityWatzPump.class, new ResourceLocation(RefStrings.MODID, "tileentity_watz_pump"));
+		GameRegistry.registerTileEntity(TileEntityWatzStruct.class, new ResourceLocation(RefStrings.MODID, "tileentity_watz_struct"));
 		GameRegistry.registerTileEntity(TileEntityMachineDetector.class, new ResourceLocation(RefStrings.MODID, "tileentity_he_detector"));
 		GameRegistry.registerTileEntity(TileEntityFireworks.class, new ResourceLocation(RefStrings.MODID, "tileentity_firework_box"));
 		GameRegistry.registerTileEntity(TileEntityMachineIGenerator.class, new ResourceLocation(RefStrings.MODID, "tileentity_igenerator"));
@@ -788,13 +775,15 @@ public class MainRegistry {
 		GameRegistry.registerTileEntity(TileEntityCondenser.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_condenser"));
 		GameRegistry.registerTileEntity(TileEntityMachineLiquefactor.class, new ResourceLocation(RefStrings.MODID, "tileentity_liquefactor"));
 		GameRegistry.registerTileEntity(TileEntityMachineSolidifier.class, new ResourceLocation(RefStrings.MODID, "tileentity_solidifier"));
-		GameRegistry.registerTileEntity(TileEntityMachineSolderingStation.class, new ResourceLocation(RefStrings.MODID, "tileentity_soldering_station"));
+        GameRegistry.registerTileEntity(TileEntityMachineAutocrafter.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_autocrafter"));
+        GameRegistry.registerTileEntity(TileEntityMachineSolderingStation.class, new ResourceLocation(RefStrings.MODID, "tileentity_soldering_station"));
 		GameRegistry.registerTileEntity(TileEntityMachineArcWelder.class, new ResourceLocation(RefStrings.MODID, "tileentity_arc_welder"));
 		GameRegistry.registerTileEntity(TileEntityChungus.class, new ResourceLocation(RefStrings.MODID, "tileentity_chungus"));
 		GameRegistry.registerTileEntity(TileEntitySpacer.class, new ResourceLocation(RefStrings.MODID, "tileentity_spacer"));
 		GameRegistry.registerTileEntity(TileEntityMachineFractionTower.class, new ResourceLocation(RefStrings.MODID, "tileentity_machine_frac_tower"));
 		GameRegistry.registerTileEntity(TileEntityTowerSmall.class, new ResourceLocation(RefStrings.MODID, "tileentity_tower_small"));
 		GameRegistry.registerTileEntity(TileEntityTowerLarge.class, new ResourceLocation(RefStrings.MODID, "tileentity_tower_large"));
+		GameRegistry.registerTileEntity(TileEntityCondenserPowered.class, new ResourceLocation(RefStrings.MODID, "tileentity_condenser_powered"));
 		GameRegistry.registerTileEntity(TileEntitySILEX.class, new ResourceLocation(RefStrings.MODID, "tileentity_silex"));
 		GameRegistry.registerTileEntity(TileEntityFEL.class, new ResourceLocation(RefStrings.MODID, "tileentity_fel"));
 		GameRegistry.registerTileEntity(TileEntityHeaterFirebox.class, new ResourceLocation(RefStrings.MODID, "tileentity_heater_firebox"));
@@ -1044,7 +1033,6 @@ public class MainRegistry {
 		HazmatRegistry.registerHazmats();
 		registerReactorFuels();
 		ControlRegistry.init();
-		OreDictManager.registerOres();
 	}
 
 	@EventHandler
@@ -1054,6 +1042,7 @@ public class MainRegistry {
 		MatDistribution.registerDefaults();
 		BlockCrate.setDrops();
 		BedrockOreRegistry.registerBedrockOres();
+		HazardRegistry.registerBedrockOreHazards();
 		FluidTypeHandler.registerFluidProperties();
 		CraftingManager.addBedrockOreSmelting();
 		ShredderRecipes.registerShredder();
@@ -1062,7 +1051,8 @@ public class MainRegistry {
 		DiFurnaceRecipes.registerFuels();
 		CrystallizerRecipes.register();
 		CentrifugeRecipes.register();
-		CrucibleRecipes.registerDefaults();
+        GasCentrifugeRecipes.registerRecipes();
+        CrucibleRecipes.registerDefaults();
 		PressRecipes.registerOverrides();
 		BreederRecipes.registerFuels();
 		BreederRecipes.registerRecipes();
@@ -1080,6 +1070,7 @@ public class MainRegistry {
 		MagicRecipes.register();
 		SILEXRecipes.register();
 		AnvilRecipes.register();
+		NTMToolHandler.register();
 		WasteDrumRecipes.registerRecipes();
 		RefineryRecipes.registerRefineryRecipes();
 		FractionRecipes.registerDefaults();
@@ -1100,6 +1091,7 @@ public class MainRegistry {
 		LiquefactionRecipes.registerDefaults();
 		SolidificationRecipes.registerDefaults();
 		CokerRecipes.registerDefaults();
+        TileEntityMachineReactorSmall.setupConversions();
 		HbmDetox.init();
 
 		FluidContainerRegistry.registerContainer(Item.getItemFromBlock(ModBlocks.lox_barrel), ModItems.tank_steel, new FluidStack(ModForgeFluids.OXYGEN, 10000));
@@ -1123,6 +1115,7 @@ public class MainRegistry {
 		NTMCraftTweaker.applyPostInitActions();
 		AssemblerRecipes.generateList();
 		HeatRecipes.setFluidsForRBMKLoader();
+		ItemModLens.initBlockList();
 		if(event.getSide() == Side.CLIENT) {
 			BedrockOreRegistry.registerOreColors();
 			ModForgeFluids.registerFluidColors();

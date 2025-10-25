@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityCraneBoxer extends TileEntityCraneBase implements IGUIProvider, IControlReceiver {
 
@@ -111,15 +112,14 @@ public class TileEntityCraneBoxer extends TileEntityCraneBase implements IGUIPro
 
             if(mode != MODE_REDSTONE && tickCounter%10==0) {
                 tickCounter = 0;
-                int pack = 0;
-
-                switch(mode) {
-                    case MODE_1: pack = 1; break;
-                    case MODE_2: pack = 2; break;
-                    case MODE_4: pack = 4; break;
-                    case MODE_8: pack = 8; break;
-                    case MODE_16: pack = 16; break;
-                }
+                int pack = switch (mode) {
+                    case MODE_1 -> 1;
+                    case MODE_2 -> 2;
+                    case MODE_4 -> 4;
+                    case MODE_8 -> 8;
+                    case MODE_16 -> 16;
+                    default -> 0;
+                };
 
                 int fullStacks = 0;
 
@@ -176,9 +176,8 @@ public class TileEntityCraneBoxer extends TileEntityCraneBase implements IGUIPro
 
         int meta = this.getBlockMetadata();
         if(te != null){
-            ICapabilityProvider capte = te;
-            if(capte.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, outputSide)) {
-                IItemHandler cap = capte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, outputSide);
+            if(te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, outputSide)) {
+                IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, outputSide);
 
                 for(int i = 0; i < inventory.getSlots(); i++) {
                     tryFillContainerCap(cap, i);
@@ -233,11 +232,6 @@ public class TileEntityCraneBoxer extends TileEntityCraneBase implements IGUIPro
     }
 
     @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemStack) {
-        return true;
-    }
-
-    @Override
     public Container provideContainer(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return new ContainerCraneBoxer(player.inventory, this);
     }
@@ -264,7 +258,7 @@ public class TileEntityCraneBoxer extends TileEntityCraneBase implements IGUIPro
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setByte("mode", mode);
         nbt.setBoolean("lastRedstone", lastRedstone);

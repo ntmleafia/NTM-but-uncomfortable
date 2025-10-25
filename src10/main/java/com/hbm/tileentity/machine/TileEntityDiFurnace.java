@@ -3,7 +3,6 @@ package com.hbm.tileentity.machine;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineDiFurnace;
 import com.hbm.inventory.DiFurnaceRecipes;
-import com.hbm.items.ModItems;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityDiFurnace extends TileEntityMachineBase implements ITickable, ICapabilityProvider {
 
@@ -41,7 +41,7 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("dualPower", this.dualPower);
 		compound.setInteger("cookTime", this.dualCookTime);
 		compound.setTag("inventory", inventory.serializeNBT());
@@ -79,14 +79,9 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 
 		if(!world.isRemote)
 		{
-			boolean trigger = true;
-			
-			if(flag && canProcess() && this.dualCookTime == 0)
-			{
-				trigger = false;
-			}
-			
-			if(trigger)
+			boolean trigger = !flag || !canProcess() || this.dualCookTime != 0;
+
+            if(trigger)
             {
                 MachineDiFurnace.updateBlockState(this.dualCookTime > 0, extension, this.world, pos);
             }
@@ -128,10 +123,8 @@ public class TileEntityDiFurnace extends TileEntityMachineBase implements ITicka
 	
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
-		if(slot == 3)
-			return true;
-		return false;
-	}
+        return slot == 3;
+    }
 	
 	public boolean isUsableByPlayer(EntityPlayer player){
 		if(world.getTileEntity(pos) != this)

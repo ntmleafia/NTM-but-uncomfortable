@@ -6,9 +6,9 @@ import static com.hbm.inventory.material.MaterialShapes.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
-import com.hbm.inventory.OreDictManager.DictFrame;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.material.NTMMaterial.SmeltingBehavior;
 import com.hbm.items.ModItems;
@@ -17,6 +17,7 @@ import com.hbm.util.I18nUtil;
 import com.hbm.util.ItemStackUtil;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 /* with every new rewrite, optimization and improvement, the code becomes more gregian */
 
@@ -64,12 +65,12 @@ public class Mats {
 
 	//Radioactive
 	public static final NTMMaterial MAT_URANIUM		= makeSmeltable(9200,		U,			0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
-	public static final NTMMaterial MAT_U233		= makeSmeltable(9233,		U233,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
-	public static final NTMMaterial MAT_U235		= makeSmeltable(9235,		U235,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
-	public static final NTMMaterial MAT_U238		= makeSmeltable(9238,		U238,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
+	public static final NTMMaterial MAT_U233		= makeSmeltable(9233,		U233,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, BLOCK);
+	public static final NTMMaterial MAT_U235		= makeSmeltable(9235,		U235,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, BLOCK);
+	public static final NTMMaterial MAT_U238		= makeSmeltable(9238,		U238,		0xC1C7BD, 0x2B3227, 0x9AA196).setShapes(NUGGET, BILLET, INGOT, BLOCK);
 	public static final NTMMaterial MAT_THORIUM		= makeSmeltable(9032,		TH232,		0xBF825F, 0x1C0000, 0xBF825F).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
 	public static final NTMMaterial MAT_PLUTONIUM	= makeSmeltable(9400,		PU,			0x9AA3A0, 0x111A17, 0x78817E).setShapes(NUGGET, BILLET, INGOT, DUST, BLOCK);
-	public static final NTMMaterial MAT_RGP			= makeSmeltable(9401,		PURG,		0x9AA3A0, 0x111A17, 0x78817E).setShapes(NUGGET, BILLET, INGOT, BLOCK);
+	public static final NTMMaterial MAT_PRG			= makeSmeltable(9401,		PURG,		0x9AA3A0, 0x111A17, 0x78817E).setShapes(NUGGET, BILLET, INGOT, BLOCK);
 	public static final NTMMaterial MAT_PU238		= makeSmeltable(9438,		PU238,		0xFFBC59, 0xFF8E2B, 0x78817E).setShapes(NUGGET, BILLET, INGOT, BLOCK);
 	public static final NTMMaterial MAT_PU239		= makeSmeltable(9439,		PU239,		0x9AA3A0, 0x111A17, 0x78817E).setShapes(NUGGET, BILLET, INGOT, BLOCK);
 	public static final NTMMaterial MAT_PU240		= makeSmeltable(9440,		PU240,		0x9AA3A0, 0x111A17, 0x78817E).setShapes(NUGGET, BILLET, INGOT, BLOCK);
@@ -125,14 +126,16 @@ public class Mats {
 	public static final NTMMaterial MAT_FERRO		= makeSmeltable(_AS + 7,	FERRO,		0xB7B7C9, 0x101022, 0x36424C).setShapes(INGOT);
 	public static final NTMMaterial MAT_TCALLOY		= makeSmeltable(_AS + 6,	TCALLOY,	0xD4D6D6, 0x323D3D, 0x9CA6A6).setShapes(INGOT, DUST, CASTPLATE, WELDEDPLATE, HEAVY_COMPONENT);
 	public static final NTMMaterial MAT_CDALLOY		= makeSmeltable(_AS + 13,CDALLOY,	0xF7DF8F, 0x604308, 0xFFCC54).setShapes(INGOT, CASTPLATE, WELDEDPLATE, HEAVY_COMPONENT);
-	public static final NTMMaterial MAT_BSCCO		= makeSmeltable(_AS + 18,BSCCO,		0x767BF1, 0x000000, 0x5E62C0).setShapes(INGOT, DENSEWIRE);
+	public static final NTMMaterial MAT_TUNGCAR		= makeSmeltable(_AS + 17,TUNGCAR,	0x212121, 0x404040, 0x2288A2).setShapes(PLATE);
 	public static final NTMMaterial MAT_MAGTUNG		= makeSmeltable(_AS + 8,	MAGTUNG,	0x22A2A2, 0x0F0F0F, 0x2288A2).setShapes(WIRE, INGOT, DUST, DENSEWIRE, BLOCK);
+	public static final NTMMaterial MAT_BSCCO		= makeSmeltable(_AS + 18,BSCCO,		0x767BF1, 0x000000, 0x5E62C0).setShapes(INGOT, DENSEWIRE);
 	public static final NTMMaterial MAT_CMB			= makeSmeltable(_AS + 9,	CMB,		0x6F6FB4, 0x000011, 0x2D4972).setShapes(INGOT, DUST, PLATE, CASTPLATE, WELDEDPLATE, BLOCK);
 	public static final NTMMaterial MAT_DNT			= makeSmeltable(_AS + 15,DNT,		0x7582B9, 0x16000E, 0x455289).setShapes(INGOT, DUST, DENSEWIRE, BLOCK);
-	public static final NTMMaterial MAT_FLUX		= makeAdditive(_AS + 10,	df("Flux"),0xF1E0BB, 0x6F6256, 0xDECCAD).setShapes(DUST);
+	public static final NTMMaterial MAT_FLUX		= makeAdditive(	_AS + 10,df("Flux"),	0xF1E0BB, 0x6F6256, 0xDECCAD).setShapes(DUST);
 	public static final NTMMaterial MAT_SLAG		= makeSmeltable(_AS + 11,SLAG,		0x554940, 0x34281F, 0x6C6562).setShapes(BLOCK);
-	public static final NTMMaterial MAT_METEOR		= makeAdditive(_AS + 14,	METEOR,		0x474747, 0x474747, 0xFFAAAA).setShapes(DUST);
-
+	public static final NTMMaterial MAT_METEOR		= makeAdditive(	_AS + 14,METEOR,		0x474747, 0x474747, 0xFFAAAA).setShapes(DUST, BLOCK);
+	public static final NTMMaterial MAT_MUD			= makeSmeltable(_AS + 16,MUD,		0xBCB5A9, 0x497400, 0x55B700).setShapes(INGOT);
+	
 	@Deprecated public static NTMMaterial makeSmeltable(int id, DictFrame dict, int color) { return makeSmeltable(id, dict, color, color, color); }
 	@Deprecated public static NTMMaterial makeAdditive(int id, DictFrame dict, int color) { return makeAdditive(id, dict, color, color, color); }
 
@@ -154,7 +157,7 @@ public class Mats {
 	
 	/** will not respect stacksizes - all stacks will be treated as a singular */
 	public static List<MaterialStack> getMaterialsFromItem(ItemStack stack) {
-		List<MaterialStack> list = new ArrayList();
+		List<MaterialStack> list = new ArrayList<>();
 		List<String> names = ItemStackUtil.getOreDictNames(stack);
 		
 		if(!names.isEmpty()) {
@@ -165,7 +168,7 @@ public class Mats {
 				
 				if(oreEntries != null) {
 					list.addAll(oreEntries);
-					break outer;
+					break;
 				}
 				
 				for(Entry<String, MaterialShapes> prefixEntry : prefixByName.entrySet()) {
@@ -200,7 +203,7 @@ public class Mats {
 	public static List<MaterialStack> getSmeltingMaterialsFromItem(ItemStack stack) {
 		List<MaterialStack> baseMats = getMaterialsFromItem(stack);
 		if(baseMats.isEmpty()) return baseMats;
-		List<MaterialStack> smelting = new ArrayList();
+		List<MaterialStack> smelting = new ArrayList<>();
 		baseMats.forEach(x -> smelting.add(new MaterialStack(x.material.smeltsInto, (int) (x.amount * x.material.convOut / x.material.convIn))));
 		return smelting;
 	}
@@ -219,6 +222,42 @@ public class Mats {
 			scraps.add(ItemScraps.create(x, liquid));
 		return scraps;
 	}
+
+    public static ItemStack matsToDust(List<MaterialStack> mats) {
+        if(mats.isEmpty()) return null;
+        for (MaterialStack mat : mats){
+            if(mat.material.hasDust() && !(mat.amount < DUST.q(1))){
+                List<ItemStack> stacks = OreDictionary.getOres(DUST.make(mat.material));
+                if(!stacks.isEmpty()){
+                    return new ItemStack(stacks.get(0).getItem(), mat.amount / DUST.q(1), stacks.get(0).getItemDamage());
+                }
+            }
+            if(mat.material.hasTinyDust() && !(mat.amount < DUSTTINY.q(1))){
+                List<ItemStack> stacks = OreDictionary.getOres(DUSTTINY.make(mat.material));
+                if(!stacks.isEmpty()){
+                    return new ItemStack(stacks.get(0).getItem(), mat.amount / DUSTTINY.q(1), stacks.get(0).getItemDamage());
+                }
+            }
+        }
+        return null;
+    }
+
+    public static List<MaterialStack> sum(List<List<MaterialStack>> mats, float factor){
+        HashMap<NTMMaterial, Integer> sumMats = new HashMap<>();
+        for(List<MaterialStack> matList : mats){
+            for(MaterialStack mat : matList) {
+                Integer amount = sumMats.get(mat.material);
+                if(amount == null) amount = 0;
+                amount += mat.amount;
+                sumMats.put(mat.material, amount);
+            }
+        }
+        List<MaterialStack> list = new ArrayList<>();
+        for(Map.Entry<NTMMaterial, Integer> e: sumMats.entrySet()){
+            list.add(new MaterialStack(e.getKey(), (int) (e.getValue() / factor)));
+        }
+        return list;
+    }
 	
 	public static class MaterialStack {
 		//final fields to prevent accidental changing

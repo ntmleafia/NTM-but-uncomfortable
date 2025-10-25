@@ -1452,7 +1452,19 @@ public class ModBlocks {
 	public static final Block watz_conductor = new BlockCableConnect(Material.IRON, "watz_conductor").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block watz_core = new WatzCore(Material.IRON, "watz_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_watz_multiblock = 32;
-	
+
+	//static boolean watz_dummy = WatzNew.dummy;
+	public static class WatzNew {
+		//Watz Components
+		static boolean dummy = false;
+		//public static final Block struct_watz_core = new BlockStruct(Material.IRON, "struct_watz_core", TileEntityWatzStruct.class).setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block watz_element = new BlockBase(Material.IRON, "struct_watz_element").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block watz_cooler = new BlockBase(Material.IRON, "struct_watz_cooler").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block watz_casing = new BlockToolConversion(Material.IRON, "struct_watz_casing").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block watz = new Watz("watz").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block watz_pump = new WatzPump("watz_pump").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+	}
+
 	//Fwatz stuff
 	public static final Block fwatz_conductor = new BlockReactor(Material.IRON, "fwatz_conductor").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block fwatz_cooler = new BlockReactor(Material.IRON, "fwatz_cooler").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);

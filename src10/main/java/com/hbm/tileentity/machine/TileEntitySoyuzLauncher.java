@@ -40,6 +40,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
@@ -157,10 +158,8 @@ public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements IT
 		FluidStack f = FluidUtil.getFluidContained(stack);
 		if(f == null)
 			return false;
-		if((tank == 0 && f.getFluid() == ModForgeFluids.KEROSENE) || (tank == 1 && f.getFluid() == ModForgeFluids.OXYGEN))
-			return true;
-		return false;
-	}
+        return (tank == 0 && f.getFluid() == ModForgeFluids.KEROSENE) || (tank == 1 && f.getFluid() == ModForgeFluids.OXYGEN);
+    }
 	
 	@Override
 	public void networkUnpack(NBTTagCompound data) {
@@ -358,7 +357,7 @@ public class TileEntitySoyuzLauncher extends TileEntityMachineBase implements IT
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("power", power);
 		compound.setByte("mode", mode);
 		compound.setTag("inventory", inventory.serializeNBT());

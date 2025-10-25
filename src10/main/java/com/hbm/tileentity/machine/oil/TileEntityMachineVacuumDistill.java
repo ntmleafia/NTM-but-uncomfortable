@@ -3,17 +3,13 @@ package com.hbm.tileentity.machine.oil;
 import api.hbm.energy.IBatteryItem;
 import api.hbm.energy.IEnergyUser;
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.inventory.HydrotreatingRecipes;
 import com.hbm.inventory.VacuumDistillRecipes;
 import com.hbm.inventory.container.ContainerMachineVacuumDistill;
 import com.hbm.inventory.gui.GUIMachineVacuumDistill;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.ForgeDirection;
-import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.Library;
-import com.hbm.main.MainRegistry;
 import com.hbm.sound.AudioWrapper;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
@@ -26,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,6 +33,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implements ITickable, IGUIProvider, IFluidHandler, IEnergyUser, ITankPacketAcceptor {
 
@@ -240,7 +236,7 @@ public class TileEntityMachineVacuumDistill extends TileEntityMachineBase implem
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setLong("power", power);
         nbt.setTag("tanks", FFUtils.serializeTankArray(tanks));
 

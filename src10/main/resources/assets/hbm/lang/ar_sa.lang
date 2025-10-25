@@ -1,37 +1,3 @@
-#book.rbmk.cover=كيف 2 RBMK: $ الأساسيات $ للمفاعل $ البناء
-#book.rbmk.page1=§lRBMK§r هو مفاعل نووي معياري بالكامل. على عكس معظم المفاعلات الأخرى ، لا يوجد "قلب" ولا حدود للحجم ، بل إن سلوك المفاعل وكفاءته يأتيان من كيفية بنائه وكيفية تفاعل القطع المختلفة مع بعضها البعض.
-#book.rbmk.page2=أثناء تشغيل المفاعل ، سوف يولد § lheat§r. سوف تنتشر الحرارة بين الأجزاء ، وتتناقص ببطء في هذه العملية. الهدف هو إنتاج أكبر قدر ممكن من الحرارة دون إذابة المفاعل ، وتحريك هذه الحرارة إلى قناة بخار ، والتي تبرد المفاعل وتنتج البخار.
-#book.rbmk.page3=سوف يلتقط §lfuel rod§r تدفق النيوترونات ، مما يتسبب في تفاعل الوقود الموجود داخل قضيب الوقود ، مما يؤدي إلى إطلاق النيوترونات في هذه العملية. يتم تحرير النيوترونات في جميع الاتجاهات الأساسية الأربعة بحد أقصى 5 كتل. كمية النيوترونات المنبعثة تعتمد على §lfuel§r المستخدم.
-#book.rbmk.page4=سيقلل §lcontrol rod§r من كمية النيوترونات التي تمر عبرها. عند إدخاله بالكامل ، فإنه سيمنع جميع النيوترونات ، وعند إدخال نصفه ، فإنه سيمنع النصف فقط. تستخدم قضبان التحكم لتنظيم نشاط المفاعل وإيقاف تشغيله.
-#book.rbmk.page5=سيعرض مركز واجهة المستخدم الرسومية إدخال القضيب الحالي. ستضيف الأزرار الملونة الموجودة على اليسار قضيب تحكم إلى مجموعة ألوان ، وهو أمر مفيد لتحديد قضبان مجمعة بسرعة من وحدة التحكم §lRBMK § r. تسمح الأزرار الموجودة على اليمين بالإدخال اليدوي بزيادات قدرها 25 ٪٪.
-#book.rbmk.page6=§ وظيفة قضبان التحكم الأوتوماتيكية § وظيفة r تتطابق تقريبًا مع قضبان التحكم العادية ، ولكن لا يمكن تكوينها يدويًا ، وبدلاً من ذلك ستقوم بتعديل موضع القضيب بناءً على درجة الحرارة الحالية. ما هي الوظيفة التي يجب استخدامها ومدى عمق الإدراج في أي درجة حرارة يجب تحديدها أولاً.
-#book.rbmk.page7=§ قناة البخار § هي الجزء الوحيد الذي سيقلل بشكل فعال من مستوى حرارة المفاعل. إذا تجاوزت درجة حرارة المكون درجة الغليان لنوع البخار المحدد ، فسيحاول استهلاك أكبر قدر من الماء وإنتاج البخار حسب الحاجة ليبرد مرة أخرى إلى ما دون نقطة الغليان.
-#book.rbmk.page8=سوف يمنع عاكس النيوترونات النيوترونات من تمريره ، وبدلاً من ذلك ستنعكس النيوترونات مرة أخرى عند قضيب الوقود الذي أتت منه. هذا مفيد لاستخدام النيوترونات التي كانت ستضيع بمجرد الخروج من المفاعل.
-#book.rbmk.page9=§ ماص النيوترون سيمنع النيوترونات ببساطة. لن تولد النيوترونات الممتصة حرارة وسيتم إفراغها بشكل فعال. هذا مفيد لمنع قضبان الوقود من التفاعل التي قد تكون في النطاق.
-#book.rbmk.page10=سيحول وسيط الجرافيت § r النيوترونات السريعة التي تمر عبره إلى نيوترونات بطيئة. تعمل معظم الوقود على الانشطار إلى نيوترونات سريعة بينما تحتاج إلى انقسام نيوترونات بطيئة ، لذلك يوصى بشدة باستخدام الوسطاء.
-#book.rbmk.page11=لن يتداخل العمود البنيوي § r مع النيوترونات ، كما أنه ليس له استخدامات خاصة. يوصى بملء المفاعل بأعمدة هيكلية حيث لا توجد أجزاء أخرى ، لأن الأعمدة الهيكلية قادرة على نقل الحرارة.
-#book.rbmk.page12=تتيح لك وحدة التحكم §lRBMK التحكم في المفاعل من بعيد. باستخدام §lRBMK§r §lconsole linking device §r على جزء RBMK ومن ثم ستربط وحدة التحكم المفاعل بوحدة التحكم. يمكن لوحدة التحكم إدارة أجزاء 15 × 15 فقط ، بالنسبة للمفاعلات الأكبر حجمًا ، قد ترغب في استخدام وحدات تحكم متعددة.
-#book.rbmk.page13=سيؤدي النقر فوق الأجزاء إلى تحديدها وإلغاء تحديدها. باستخدام الأزرار الملونة ، يمكنك تحديد جميع قضبان التحكم الخاصة بمجموعة الألوان هذه بسرعة. سيحدد الزر "أ" جميع أذرع التحكم ، بينما سيؤدي الزر "X" إلى إلغاء تحديد الكل.
-#book.rbmk.page14=سيؤدي إدخال رقم 0-100 في المربع الأخضر ثم الضغط على الزر المجاور له إلى ضبط جميع قضبان التحكم المحددة على هذا الموضع. سيؤدي الزر "AZ-5" إلى إدخال جميع قضبان التحكم بالكامل.
-#book.rbmk.page15=تعتمد تفاعلات §lfuel§r على عدة عوامل. أهمها هي §lenrichment§r و §lxenonoxr و كمية النيوترونات الواردة. يتراكم الزينون عندما يتلقى الوقود القليل من النيوترونات ويحترق أثناء التشغيل العادي. تعتمد فعالية النيوترونات على النوع ، ومعظم أنواع الوقود ، أفضل ما يمكن انقسامه مع النيوترونات البطيئة.
-#book.rbmk.page16=§4 § تجنب.
-#book.rbmk.title1=مقدمة
-#book.rbmk.title2=الحرارة
-#book.rbmk.title3=قضيب الوقود
-#book.rbmk.title4=قضيب السيطرة
-#book.rbmk.title5=قضيب التحكم - الاستخدام
-#book.rbmk.title6=قضيب التحكم الآلي
-#book.rbmk.title7=قناة البخار
-#book.rbmk.title8=عاكس نيوتروني
-#book.rbmk.title9=امتصاص النيوترون
-#book.rbmk.title10=وسيط الجرافيت
-#book.rbmk.title11=العمود الهيكلي
-#book.rbmk.title12=وحدة التحكم
-#book.rbmk.title13=استخدام وحدة التحكم
-#book.rbmk.title15=الوقود
-#book.rbmk.title16=الانهيار
-achievement.bossUFO=أيي لماو
-achievement.bossUFO.desc=يو ، ماذا لدينا هنا؟ مركبة فضائية ضخمة تقترب من السفينة الكبيرة؟
 adjective.extreme=أقصى
 adjective.high=عالي
 adjective.little=قليل
@@ -154,6 +120,7 @@ armor.thermal=البصر الحراري
 armor.threshold=حد الضرر٪ s
 armor.vats=هود العدو
 armor.yield=تنطبق الحماية على الضرر <%s
+armorMod.type.battery=بطارية
 battery.priority.high=أولوية الشحن: عالية
 battery.priority.high.desc=المخازن المؤقتة للطوارئ التي تحتاج دائمًا إلى أن تكون ممتلئة
 battery.priority.low=أولوية الشحن: منخفضة
@@ -264,7 +231,6 @@ book.rbmk.title2=الحرارة
 book.rbmk.title3=قضيب الوقود
 book.rbmk.title4=تنظيم رود
 book.rbmk.title5=قضبان التنظيم - الاستخدام
-book.rbmk.title5.scale=0.9
 book.rbmk.title6=قضبان التحكم الآلي
 book.rbmk.title7=قناة البخار
 book.rbmk.title8=عاكس نيوتروني
@@ -329,7 +295,7 @@ chat.glitch.8=أوه، وبالمناسبة: بولارويد يغير الوا�
 chat.glitch.13a=احصل على بعض الأشياء المجانية. سوف تحتاج إليها لتحقيق هذا الإنجاز الغامض.
 chat.glitch.13b=§4 قتل السور
 chat.glitch.16=v yvxr lbhe nggvghqr!
-chat.glitch.17=89% من الخدع السحرية ليست سحرية. من الناحية الفنية، فهي السحر.
+chat.glitch.17=89%% من الخدع السحرية ليست سحرية. من الناحية الفنية، فهي السحر.
 chat.glitch.18=هنا يا الذهاب.
 chat.glitch.19=ح
 chat.glitch.20=يوم جيد، أنا النص
@@ -402,6 +368,7 @@ chem.CC_NAPHTHA=تسييل النفتا للفحم
 chem.CC_OIL=تسييل الفحم
 chem.CIRCUIT_4=إنتاج الدوائر فيركلوكيد
 chem.CIRCUIT_5=إنتاج الدوائر عالية الأداء
+chem.COALGAS_LEADED=خلط بنزين الفحم الرصاص
 chem.COLTAN_CLEANING=تنقية الكولتان
 chem.COLTAN_CRYSTAL=تبلور التنتاليوم
 chem.COLTAN_PAIN=إنتاج التانتاليت البانديمون (الثالث)
@@ -420,6 +387,8 @@ chem.DYN_EUPH=التوليف الديناميكي للأوفيميوم
 chem.DYN_SCHRAB=التخليق الديناميكي للسكرابيديوم
 chem.DYN_STR=نيوفيلين الديناميكي
 chem.ELECTROLYSIS=التحليل الكهربائي بالتبريد
+chem.EPEARL=تخليق اللؤلؤ الإندر
+chem.ETHANOL=إنتاج الإيثانول
 chem.FC_BITUMEN=تكسير البيتومين
 chem.FC_DIESEL_KEROSENE=تكسير الديزل
 chem.FC_GAS_PETROLEUM=تكسير الغاز
@@ -433,16 +402,21 @@ chem.FRACKSOL=إنتاج حلول التكسير
 chem.FR_PETROIL=خلط بترويل
 chem.FR_REOIL=إعادة معالجة الزيت
 chem.GASOLINE=إنتاج البنزين
+chem.GASOLINE_LEADED=وترتفع خلط البنزين
 chem.GNEISS_GAS=معمل تكسير الغاز الصخري
 chem.HEAVY_ELECTROLYSIS=التحليل الكهربائي بالتبريد للمياه الثقيلة
 chem.KEVLAR=إنتاج مجمع كيفلر
+chem.LUBRICANT=خلط زيوت التشحيم
 chem.NITAN=خلط الوقود الفائق NITAN
 chem.NITRIC_ACID=إنتاج حمض النيتريك
 chem.OIL_SAND=استخراج رمال القطران
 chem.OSMIRIDIUM_DEATH=إنتاج الحل الأوزميريدي
+chem.PC=تخليق البولي
 chem.PEROXIDE=إنتاج بيروكسيد الهيدروجين
+chem.PETROIL_LEADED=قاد بترويل خلط
 chem.POLYMER=تخليق البوليمر
 chem.PUF6=إنتاج سداسي فلوريد البلوتونيوم
+chem.PVC=تخليق بولي فينيل كلوريد
 chem.RADIOSOLVENT=خلط المذيبات عالي الأداء
 chem.RUBBER=إنتاج المطاط
 chem.SAS3=إنتاج Schrabidium Trisulfide
@@ -468,6 +442,7 @@ chem.SOLID_FUEL=إنتاج وقود الصواريخ الصلبة
 chem.SOLVENT=خلط المذيبات العضوية
 chem.STEAM=غليان الماء
 chem.SULFURIC_ACID=إنتاج حمض الكبريتيك
+chem.TATB=تخليق TATB
 chem.TEL=خلط الهاتف
 chem.TEST=اختبار
 chem.TNT=توليف تي ان تي
@@ -489,15 +464,21 @@ container.anvil=سندان الطبقة٪ s
 container.arcFurnace=فرن القوس
 container.armorTable=جدول تعديل الدرع
 container.assembler=آلة التجميع
+container.autocrafter=طاولة صياغة تلقائية
 container.barrel=برميل
 container.bat9000=9000 مسعود
 container.battery=تخزين الطاقة
 container.bombMulti=قنبلة متعددة الأغراض
+container.catalyticReformer=مصلح الحفاز
 container.centrifuge=جهاز الطرد المركزي
 container.chemplant=نبات كيميائى
 container.compactLauncher=منصة الإطلاق المدمجة
+container.craneBoxer=الملاكم الناقل
 container.craneExtractor=القاذف الناقل
+container.craneGrabber=المنتزع الناقل
 container.craneInserter=ناقل الناقل
+container.craneRouter=فارز الناقل
+container.craneUnboxer=ناقل Unboxer
 container.crateDesh=ديش قفص
 container.crateIron=قفص حديدي
 container.crateSteel=صندوق فولاذي
@@ -517,7 +498,11 @@ container.factoryAdvanced=المصنع المتقدم
 container.factoryTitanium=المصنع الأساسي
 container.fluidtank=خزان
 container.forceField=فورسفيلد باعث
+container.foundryCasting=الصب بوتقة
+container.foundryMixing=سبائك بوتقة
+container.foundrySmelting=صهر بوتقة
 container.frackingTower=برج التكسير الهيدروليكي
+container.furnaceCombination=الفرن الجمع
 container.furnaceIron=فرن حديد
 container.furnaceSteel=فرن الصلب
 container.fusionMultiblock=مفاعل الانصهار الكبير
@@ -532,25 +517,32 @@ container.heaterOilburner=حارق السوائل
 container.heaterOven=فرن التدفئة
 container.heaterRadioThermal=سخان حراري بالنظائر المشعة
 container.heater_firebox=صندوق الاحتراق
+container.hydrotreater=Hydrotreater
 container.iGenerator=مولد صناعي
 container.keyForge=جدول الأقفال
 container.launchPad=منصة إطلاق الصواريخ
 container.launchTable=منصة إطلاق كبيرة
+container.machineArcWelder=لحام قوس
 container.machineBoiler=سخان مياه
 container.machineCMB=فرن الصلب CMB
 container.machineChemFac=مصنع كيميائي
 container.machineCoal=مولد الاحتراق
+container.machineCoker=وحدة Coker
+container.machineCrucible=بوتقة
 container.machineDiesel=مولد ديزل
 container.machineElectricBoiler=غلاية كهربائية
 container.machineFEL=شعر
 container.machineITER=مفاعل الانصهار
 container.machineLargeTurbine=التوربينات البخارية الصناعية
+container.machineLiquefactor=عامل المسائل
 container.machineMixer=خلاط صناعي
 container.machineRTGBoiler=RTG المرجل
 container.machineRefinery=مصفى نفط
 container.machineSILEX=سيليكس
 container.machineSelenium=محرك ذو أداء شعاعي
 container.machineShredder=التقطيع
+container.machineSolderingStation=محطة لحام
+container.machineSolidifier=الصلبة
 container.machineTurbine=توربينات البخار
 container.machineTurbofan=توربوفان
 container.machineUUMixer=خلاط UU الصناعي
@@ -577,7 +569,6 @@ container.oilWell=زيت ديريك
 container.orbus=تخزين المادة المضادة الثقيلة
 container.plasmaHeater=سخان بلازما
 container.press=الصحافة الموقد
-container.puf6_tank=خزان PuF6
 container.pumpjack=جاك مضخة
 container.radGen=محرك يعمل بالإشعاع
 container.radar=رادار
@@ -618,10 +609,29 @@ container.turretJeremy=جيريمي
 container.turretMaxwell=ماكسويل
 container.turretRichard=ريتشارد
 container.turretTauon=تاون
-container.uf6_tank=خزان سادس فلوريد اليورانيوم
 container.uuCreator=مكثف UU
+container.vacuumDistill=مصفاة فراغ
 container.wasteDrum=طبل تجمع الوقود المستهلك
 container.watzPowerplant=محطة Watz لتوليد الطاقة
+crucible.aa=إنتاج السبائك المتقدمة
+crucible.abronze=الإنتاج البرونزي الزرنيخ
+crucible.bbronze=بسموث برونزية الإنتاج
+crucible.bscco=إنتاج BSCCO
+crucible.cdalloy=إنتاج الصلب الكادميوم
+crucible.cmb=إنتاج الصلب CMB
+crucible.ferro=إنتاج فيرورانيوم
+crucible.hematite=إنتاج الحديد من الهيماتيت
+crucible.hss=إنتاج الصلب عالي السرعة
+crucible.magtung=إنتاج التنغستن المغناطيسي
+crucible.malachite=إنتاج النحاس من ملكت
+crucible.redcopper=إنتاج النحاس الأحمر
+crucible.star=إنتاج Starmetal
+crucible.steel=إنتاج الصلب
+crucible.steelMeteoric=إنتاج الصلب من الحديد الأرصاد
+crucible.steelPig=إنتاج الصلب من الحديد الخنزير
+crucible.steelWrought=إنتاج الصلب من الحديد المطاوع
+crucible.tcalloy=إنتاج الصلب التكنتيوم
+crucible.tungcar=التنغستن إنتاج كاربين
 death.attack.acid=٪ 1 $ s وقع في الحمض.
 death.attack.ams=تم غمر٪ 1 $ s في جسيمات قاتلة لم يسميها العلم البشري بعد.
 death.attack.amsCore=تم تبخير٪ 1 $ s بنار التفرد.
@@ -629,6 +639,7 @@ death.attack.asbestos=يحق الآن لـ٪ 1 $ s الحصول على تعوي�
 death.attack.bang=تم تفجير٪ 1 $ s إلى قطع صغيرة.
 death.attack.blackhole=تم جعل٪ 1 $ s معكرونة.
 death.attack.blacklung=أعطى٪ 1 $ s حياته لمناجم الفحم.
+death.attack.blast=تم تفجير %1$s بسبب موجة صادمة من الانفجار.
 death.attack.blender=تم تقطيع٪ 1 $ s إلى قطع صغيرة.
 death.attack.boat=٪ 1 $ s أصيب بقارب.
 death.attack.boxcar=تم تحطيم٪ 1 $ s بواسطة عربة صندوقية ساقطة. اوه حسناً.
@@ -729,9 +740,17 @@ desc.contructionwand.3=اضبط الكتلة بالنقر بزر الماوس ا
 desc.contructionwand.blocksaved=تم حفظ الحظر: %s
 desc.contructionwand.pos=الموضع: %s، %s، %s
 desc.contructionwand.posnoset=المواقف لم تحدد!
+desc.conveyor.boxer.mode1=قم بالتعبئة عندما يحتوي المخزون على مكدس واحد كامل
+desc.conveyor.boxer.mode2=قم بالتعبئة عندما يحتوي المخزون على مجموعتين كاملتين
+desc.conveyor.boxer.mode4=قم بالتعبئة عندما يحتوي المخزون على 4 مجموعات كاملة
+desc.conveyor.boxer.mode8=قم بالتعبئة عندما يحتوي المخزون على 8 مجموعات كاملة
+desc.conveyor.boxer.mode16=قم بالتعبئة عندما يحتوي المخزون على 16 مجموعة كاملة
+desc.conveyor.boxer.modeR=قم بالتعبئة عند تشغيل إشارة إعادة الحجر
 desc.count=العد
 desc.creative=عنصر إبداعي فقط
 desc.debugwand=تستخدم لأغراض التصحيح.
+desc.defuser=انقر بزر الماوس الأيمن على نزع فتيل أو تشغيل عن طريق الخطأ ...
+desc.defuserChance=فرصة الانفجار: ٪ s ٪٪
 desc.depth=العمق: %sm
 desc.digammaed=mDRX/s
 desc.duration=المدة: %ss
@@ -762,6 +781,7 @@ desc.flameopinion=حسنا أنا أحب ذلك...
 desc.flamepolitics=سوف يقوم دونالد داك ببناء الجدار!
 desc.flamepony=الحصان الأصفر يتفوق على الحصان الأزرق، هذه حقيقة مثبتة!
 desc.fortune=حظ
+desc.fortuneBedrock=(-%s%% سائل خام الأساس)
 desc.fuelamnt=كمية الوقود:
 desc.fuelcon=استهلاك الوقود:
 desc.fueltype=نوع الوقود:
@@ -795,8 +815,8 @@ desc.guiacceptupgrades2=الترقيات المقبولة:$ -السرعة (مك�
 desc.guimachassembler=خطأ: يتطلب هذا الجهاز قالب تجميع!
 desc.guimachbattery=انقر فوق الأزرار الموجودة على اليمين$لتغيير سلوك البطارية لـ$عند تطبيق redstone أو عدم تطبيقه.
 desc.guimachboiler=الحرارة المنتجة: $0.5 درجة مئوية/طن أو 10 درجة مئوية/ثانية$الحرارة المستهلكة:$0.15 درجة مئوية/طن أو 3.0 درجة مئوية/ثانية (قاعدة)$0.25 درجة مئوية/طن أو 5.0 درجة مئوية/ثانية (نقطة غليان واحدة) تم الوصول إليه) $ 0.40 درجة مئوية / طن أو 8.0 درجة مئوية / ثانية (لكل مضاعف لاحق لنقطة الغليان)
+desc.guimachboiler1=معدل الغليان:$ المعدل الأساسي * مقدار المضاعفات الكاملة لنقاط الغليان التي تم الوصول إليها
 desc.guimachboilerel=الحرارة المنتجة: $1.5 درجة مئوية/طن أو 30 درجة مئوية/ثانية$الحرارة المستهلكة:$0.30 درجة مئوية/طن أو 6.0 درجة مئوية/ثانية (قاعدة)$0.35 درجة مئوية/طن أو 7.0 درجة مئوية/ثانية (نقطة غليان واحدة) تم الوصول إليه) $ 0.50 درجة مئوية / طن أو 10.0 درجة مئوية / ثانية (لكل مضاعف لاحق لنقطة الغليان)
-desc.guimachboilerel1=معدل الغليان:$ المعدل الأساسي * مقدار المضاعفات الكاملة لنقاط الغليان التي تم الوصول إليها
 desc.guimachboilerrtg=RTG إلى الحرارة$ 1 RTG الحرارة -> 1 درجة مئوية/ثانية$الحرارة المستهلكة: 0.40 درجة مئوية/طن أو 8.0 درجة مئوية/ثانية (قاعدة)$0.45 درجة مئوية/طن أو 9.0 درجة مئوية/ثانية (بمجرد الوصول إلى نقطة الغليان ) $ 0.60 درجة مئوية / طن أو 12.0 درجة مئوية / ثانية (لكل مضاعف لاحق لنقطة الغليان)
 desc.guimachcomplauncher1=يقبل فقط الصواريخ المخصصة بحجم 10 و10/15.
 desc.guimachcomplauncher2=يمكن للمفجر تشغيل الكتلة المركزية فقط.
@@ -919,10 +939,11 @@ desc.upgrade15=إنه كما هو الحال في Super Mario حيث توجد ج
 desc.upgrade16=في الواقع الضفادع، ولكن هنا علماء نصف الحياة
 desc.upgrade17=وهم يصرخون. كثيراً.
 desc.upgrade18=يسمح بمعالجة UU-Matter.
-desc.upgrade19=فرصة بنسبة 50% لتجاوز العناصر التي لا قيمة لها باستخدام /dev/zero
-desc.upgrade20=فرصة بنسبة 50% لتجاوز العناصر التي لا قيمة لها باستخدام /dev/zero
+desc.upgrade19=فرصة بنسبة 50%% لتجاوز العناصر التي لا قيمة لها باستخدام /dev/zero
+desc.upgrade20=فرصة بنسبة 50%% لتجاوز العناصر التي لا قيمة لها باستخدام /dev/zero
 desc.upgrade21=نأمل أن الاسم يقول كل شيء في حد ذاته
 desc.upgrade22=ترقية القاذف:
+desc.upgrade23=ترقية أجهزة الطرد المركزي الغازية
 desc.upgradeaf1=الإنتاج ×2 / الاستهلاك ×2.5
 desc.upgradeaf2=الإنتاج ×3 / الاستهلاك ×5
 desc.upgradeaf3=الإنتاج ×4 / الاستهلاك ×7.5
@@ -950,6 +971,7 @@ desc.upgradeej6=يمكن إخراج 64 عنصرًا في المرة الواحد
 desc.upgradeft1=فورتشن أنا / تأخير +15
 desc.upgradeft2=فورتشن 2 / تأخير +30
 desc.upgradeft3=فورتشن الثالث / تأخير +45
+desc.upgradegc=تمكن من تحسين مستوى الأسلحة
 desc.upgradeht=الأعلى. الصحة +50 / الاستهلاك +250
 desc.upgraderd=نصف القطر +16 / الاستهلاك +500
 desc.upgradesp11=تأخير -15 / الاستهلاك +300
@@ -984,11 +1006,14 @@ digamma.playerDigamma=تلوث اللاعب:
 digamma.playerHealth=نضوب اللاعب:
 digamma.title=التشخيص DIGAMMA
 dosimeter.title=الجرعات
+entity.ItemFrame.name=إطار البند
 entity.entity_balls_o_tron.name=كرات- O- ترون برايم
 entity.entity_balls_o_tron_seg.name=جزء الكرات- O-Tron
 entity.entity_bullet.name=رصاصة
 entity.entity_bullet_mk2.name=رصاصة
+entity.entity_c_item.name=البند الناقل
 entity.entity_c_item_name=نقل العنصر
+entity.entity_c_package.name=صندوق ناقل
 entity.entity_cyber_crab.name=سايبر كراب
 entity.entity_elder_one.name=كواكو الأكبر
 entity.entity_fucc_a_ducc.name=بطة
@@ -1016,46 +1041,76 @@ fluid.balefire=وقود الصواريخ BF
 fluid.biofuel=وقود حيوي
 fluid.biogas=الغاز الحيوي
 fluid.bitumen=البيتومين
+fluid.chlorine=غاز الكلور
+fluid.coalcreosote=الفحم القطران الكريوسوت
+fluid.coalgas=بنزين الفحم
+fluid.coalgas_leaded=قاد بنزين الفحم
+fluid.coaloil=زيت الفحم
 fluid.colloid=الغروانية
 fluid.coolant=المبرد
 fluid.corium_fluid=كوريوم
 fluid.crackoil=زيت متصدع
+fluid.crackoil_ds=زيت متشقص
 fluid.cryogel=كريوجل
 fluid.deadblood=الدم الطفيلي
 fluid.deuterium=الديوتيريوم
 fluid.diesel=ديزل
+fluid.diesel_crack=ديزل متصدع
+fluid.diesel_crack_reform=ديزل عالي الأوكتان
+fluid.diesel_reform=ديزل عالي الأوكتان
+fluid.ender=عصير إندر
 fluid.ethanol=الإيثانول
 fluid.experience=عصير اكس بي
 fluid.fishoil=زيت سمك
 fluid.fracksol=حل التكسير
+fluid.fuelgc=Galacticraft الوقود
 fluid.gas=غاز طبيعي
+fluid.gas_coker=غاز Coker
 fluid.gasoline=البنزين المحتوي على الرصاص
+fluid.gasoline_leaded=قاد البنزين
 fluid.heatingoil=زيت التدفئة
+fluid.heatingoil_vacuum=زيت التدفئة الثقيل
 fluid.heavyoil=زيت ثقيل
+fluid.heavyoil_vacuum=فراغ الزيت الثقيل
 fluid.heavywater=الماء الثقيل
 fluid.hotcoolant=المبرد الساخن
 fluid.hotcrackoil=زيت مكسر ساخن
+fluid.hotcrackoil_ds=زيت متشققة الساخنة
 fluid.hotoil=زيت خام ساخن
+fluid.hotoil_ds=زيت الخام الساخن
 fluid.hotsteam=بخار كثيف
 fluid.hydrogen=الهيدروجين السائل
 fluid.ic2uu_matter=UU-المسألة
+fluid.iongel=هلام أيوني
 fluid.kerosene=الكيروسين
+fluid.kerosene_reform=الوقود النفاث
 fluid.lightoil=زيت خفيف
+fluid.lightoil_crack=زيت الضوء المتشققة
+fluid.lightoil_ds=زيت الضوء المنحني
+fluid.lightoil_vacuum=زيت الضوء الفراغ
 fluid.liquid_osmiridium=الحل الأوزميريدي
 fluid.lubircant=زيوت تشحيم المحرك
 fluid.lubricant=زيوت تشحيم المحرك
 fluid.mercury=الزئبق
 fluid.mud_fluid=الطين السام
 fluid.naphtha=النفثا
+fluid.naphtha_coker=Coker Naphtha
+fluid.naphtha_crack=نفثا متشققة
+fluid.naphtha_ds=Desulfurized Naphtha
 fluid.nitan=NITAN © 100 وقود سوبر أوكتان
 fluid.nitric_acid=حمض النيتريك
 fluid.nitroglycerin=النتروجليسرين
 fluid.oil=زيت خام
+fluid.oil_coker=زيت كوكر
+fluid.oil_ds=زيت النفط الخام
 fluid.oilgc=زيت جالاكتيكرافت
 fluid.oxygen=الأكسجين السائل
 fluid.pain=محلول التانتاليت (III) Pandemonium (III)
+fluid.perfluoromethyl=pherluoromethyl
 fluid.petroil=بترويل
+fluid.petroil_leaded=بقيت بترويل
 fluid.petroleum=الغاز البترولي
+fluid.phosgene=فوسجين
 fluid.plasma_bf=Balefire Plasma
 fluid.plasma_dt=بلازما الديوتيريوم والتريتيوم
 fluid.plasma_hd=بلازما الهيدروجين والديوتيريوم
@@ -1066,15 +1121,19 @@ fluid.puf6=سداسي فلوريد البلوتونيوم
 fluid.radiosolvent=مذيب عالي الأداء
 fluid.radwater_fluid=الماء المشع
 fluid.reclaimed=زيت صناعي مستصلح
+fluid.reformate=إصلاح
+fluid.reformgas=إصلاح الغاز
 fluid.sas3=شرابيديوم تريسولفيد
 fluid.schrabidic=حمض شرابيديك
 fluid.smear=زيت صناعي
 fluid.solvent=مذيب
+fluid.sourgas=الغاز الحامض
 fluid.spentsteam=بخار منخفض الضغط
 fluid.steam=بخار
 fluid.sulfuric_acid=حمض الكبريتيك
 fluid.sunfloweroil=زيت بذور دوار الشمس
 fluid.superhotsteam=بخار شديد الكثافة
+fluid.syngas=Syngas
 fluid.tile.lava=حمم بركانية
 fluid.tile.water=ماء
 fluid.toxic_fluid=سلالين
@@ -1085,8 +1144,13 @@ fluid.unsaturateds=الهيدروكربونات غير المشبعة
 fluid.volcanic_lava_fluid=الحمم البركانية
 fluid.wastefluid=النفايات النووية السائلة
 fluid.wastegas=النفايات النووية الغازية
-fluid.watz=الطين السام
+fluid.woodoil=زيت الخشب
 fluid.xenon=غاز زينون
+fluid.xylene=BTX
+foundry.filter=مرشح: ٪ ق
+foundry.invertFilter=مرشح مقلوب
+foundry.inverted=Redstone مقلوب
+foundry.noCast=لا قالب مثبت!
 fuel.balefire=وقود الصواريخ BF / بيروكسيد
 fuel.hydrogen=الهيدروجين / الأكسجين
 fuel.kerosene=الكيروسين / بيروكسيد
@@ -1100,10 +1164,11 @@ geiger.playerRad=تلوث اللاعب:
 geiger.playerRes=مقاومة اللاعب:
 geiger.recievedRad=إجمالي الإشعاع المتلقاة:
 geiger.title=عداد جيجر
+gui.crucible.side.alloy=جانب السبائك:
+gui.crucible.side.smelt=جانب الصهر:
 hadron.analysis=جاري التحليل ...
 hadron.buttonOff=غرفة التحليل متوقفة عن التشغيل
 hadron.buttonOn=غرفة التحليل (إن وجدت) قيد التشغيل
-hadron.error=خطأ!
 hadron.error_analysis_too_long=خطأ 0x06 [ATL]
 hadron.error_analysis_too_short=خطأ 0x07 [ATS]
 hadron.error_branching_turn=خطأ 0x09 [BT]
@@ -1144,8 +1209,6 @@ hazard.radGas=الغاز المشع
 hazard.sand=مهيجات العين
 hbm.achievement.aa_progress_burnerpress=تحت الضغط
 hbm.achievement.aa_progress_burnerpress.desc=الضغط يضغط عليّ، عليك
-hbm.achievement.assembly=تلفيق
-hbm.achievement.assembly.desc=دعم Vault-tec المستوى 2 (آلة التجميع)
 hbm.achievement.bobassembly=تلفيق
 hbm.achievement.bobassembly.desc=Bobmazon: المستوى 2 (الدائرة المحسنة)
 hbm.achievement.bobchemistry=كيمياء
@@ -1172,8 +1235,6 @@ hbm.achievement.c20_5=الفصل [خمس وعشرون نقطة]
 hbm.achievement.c20_5.desc=؟؟؟
 hbm.achievement.c44=الفصل 44
 hbm.achievement.c44.desc=المجلفن! أعني الزنك!
-hbm.achievement.chemistry=كيمياء
-hbm.achievement.chemistry.desc=مستوى دعم Vault-tec 3 (طوب خرساني)
 hbm.achievement.digammaFeel=رعب الشعور
 hbm.achievement.digammaFeel.desc=الجوف في الداخل.
 hbm.achievement.digammaKauaiMoho=غني لي أغنية كاواي موهو
@@ -1192,8 +1253,6 @@ hbm.achievement.foeq=صوامع البيجاسي والصواريخ
 hbm.achievement.foeq.desc=إرسال تتابع إلى المريخ ... أعني مدار دونيان.
 hbm.achievement.freytag=فريتاج
 hbm.achievement.freytag.desc=حراس حياة هيرولد
-hbm.achievement.hidden=كتالوج مخفي
-hbm.achievement.hidden.desc=اقتل زاحفًا ملوثًا بعربة صندوقية تتساقط.
 hbm.achievement.horizonsBonus=إسهال سلام دنك
 hbm.achievement.horizonsBonus.desc=بصراحة الله ما خطبك بحق الجحيم
 hbm.achievement.horizonsEnd=الآفاق
@@ -1204,12 +1263,6 @@ hbm.achievement.impossible=مستحيل حرفيا
 hbm.achievement.impossible.desc=لا يمكنك الحصول على هذا الإنجاز hbm.
 hbm.achievement.meltdown=تفكيك سريع وغير مجدول
 hbm.achievement.meltdown.desc=لقد وصلت إلى هذا الحد ، كيف يمكنك العبث بهذا الأمر؟
-hbm.achievement.metalworks=أعمال معدنية
-hbm.achievement.metalworks.desc=دعم Vault-tec المستوى 1 (فرن الانفجار)
-hbm.achievement.nuclear=العلوم الذرية
-hbm.achievement.nuclear.desc=دعم Vault-tec المستوى 5 (وقود اليورانيوم)
-hbm.achievement.oil=البترول
-hbm.achievement.oil.desc=دعم Vault-tec المستوى 4 (غلاية كهربائية)
 hbm.achievement.omega12=مسرع الجسيمات أوميغا 12
 hbm.achievement.omega12.desc=حل مشكلة استمرار الحياة على هذا الكوكب البائس.
 hbm.achievement.potato=روغ منظمة العفو الدولية
@@ -1228,6 +1281,8 @@ hbm.achievement.progress_australium=النمسا
 hbm.achievement.progress_australium.desc=ɐᴉlɐɹʇsn∀ uᴉ īlᴉɥʍuɐW
 hbm.achievement.progress_bedrock_ore=خامات لا حصر لها
 hbm.achievement.progress_bedrock_ore.desc=ربما سأجد بقعة Unobtainium
+hbm.achievement.progress_bedrock_ore_e=معالجة الذروة
+hbm.achievement.progress_bedrock_ore_e.desc=تشاد معتمد
 hbm.achievement.progress_bismuth=البزموت-209
 hbm.achievement.progress_bismuth.desc=هل تتذكر عندما اشتكى الناس من هذا لمدة شهر؟ أفعل.
 hbm.achievement.progress_book=كتاب §kboxcars
@@ -1246,6 +1301,8 @@ hbm.achievement.progress_crack=دعونا نفعل الكراك
 hbm.achievement.progress_crack.desc=تكسير النفط لمزيد من الأشياء
 hbm.achievement.progress_creative=محترف معتمد من DFC
 hbm.achievement.progress_creative.desc=أنت الآن مؤهل في DFC
+hbm.achievement.progress_crucible=السبائك الصناعية
+hbm.achievement.progress_crucible.desc=خلط المعادن
 hbm.achievement.progress_crystalizer=حمضية
 hbm.achievement.progress_crystalizer.desc=أوه آه بشرتي
 hbm.achievement.progress_cyclotron=السيكلوترونيك
@@ -1270,14 +1327,20 @@ hbm.achievement.progress_fraction=التجزئة
 hbm.achievement.progress_fraction.desc=معالجة الزيت من المستوى التالي
 hbm.achievement.progress_fusion=انصهار
 hbm.achievement.progress_fusion.desc=رقصة الديوترونات والتريتونات والطاقة.
+hbm.achievement.progress_gc_speed=مشروع مانهاتن
+hbm.achievement.progress_gc_speed.desc=ترك الطلبات المدنية
 hbm.achievement.progress_geiger=عداد جيجر
 hbm.achievement.progress_geiger.desc=أفضل صديق تمت ترقيته
+hbm.achievement.progress_gh336=ألبرت غورسو
+hbm.achievement.progress_gh336.desc=زميل جلين ت. سيبورغ
 hbm.achievement.progress_hadron=مصادم هادرون الكبير
 hbm.achievement.progress_hadron.desc=لقد وصلت إلى مقدمة البشرية
 hbm.achievement.progress_mask=لا مزيد من غبار الفحم
 hbm.achievement.progress_mask.desc=لا يهم أنها جفت
 hbm.achievement.progress_modtable=جدول التعديل
 hbm.achievement.progress_modtable.desc=ترقيات الناس ترقيات
+hbm.achievement.progress_nuke=ماذا فعلنا؟
+hbm.achievement.progress_nuke.desc=الآن أصبحت موتًا ، مدمرة العوالم.
 hbm.achievement.progress_oil_1=ضربنا النفط
 hbm.achievement.progress_oil_1.desc=الخطوة الأولى نحو تلويث الأرض
 hbm.achievement.progress_oil_2=نحن بحاجة إلى المزيد! أكثر!!
@@ -1286,6 +1349,8 @@ hbm.achievement.progress_oil_3=فراك هذا الأساس
 hbm.achievement.progress_oil_3.desc=النفط لانهائي!
 hbm.achievement.progress_omega_filter=واحد للكل
 hbm.achievement.progress_omega_filter.desc=لا شيء يمكن أن يمنعني الآن
+hbm.achievement.progress_ore_schrab=علم مجنون
+hbm.achievement.progress_ore_schrab.desc=لقد قمنا بتثبيط عنصر في الوجود
 hbm.achievement.progress_osmiridium=سبائك الأوسيميوم إيريديوم
 hbm.achievement.progress_osmiridium.desc=تم استخراجه من كويكب نشأ من نظام Digamma-Star
 hbm.achievement.progress_pile=هبط الملاح في العالم الجديد
@@ -1296,6 +1361,8 @@ hbm.achievement.progress_potatos=المارقة منظمة العفو الدول
 hbm.achievement.progress_potatos.desc=لقد طعنتني! ما هو الخطأ معك-WOAH
 hbm.achievement.progress_pu239=أسلحة البلوتونيوم
 hbm.achievement.progress_pu239.desc=هههه الكرة المضحكة تنطلق
+hbm.achievement.progress_pu241=البلوتونيوم -241
+hbm.achievement.progress_pu241.desc=نادر للغاية
 hbm.achievement.progress_radium=الطاقة النووية الأولى
 hbm.achievement.progress_radium.desc=رميها في الماء
 hbm.achievement.progress_radspice=سبيكة تشيرنوبيل
@@ -1312,12 +1379,24 @@ hbm.achievement.progress_silex=فصل النظائر
 hbm.achievement.progress_silex.desc=إنه أكثر برودة مما يبدو، أعدك.
 hbm.achievement.progress_singularity_spark=سيد الكون
 hbm.achievement.progress_singularity_spark.desc=اصنع جيب الكوازار
+hbm.achievement.progress_soldering=التكنولوجيا العالية
+hbm.achievement.progress_soldering.desc=الدوائر هي المفتاح
+hbm.achievement.progress_srb=schrabidate
+hbm.achievement.progress_srb.desc=الحديد ولكن النووي
 hbm.achievement.progress_starmetal=الثامن عشر القمر
 hbm.achievement.progress_starmetal.desc=نعم.
 hbm.achievement.progress_steel=فُولاَذ
 hbm.achievement.progress_steel.desc=الأساس لإمبراطوريتنا
+hbm.achievement.progress_transmut=تحويل
+hbm.achievement.progress_transmut.desc=الآن ماذا؟
 hbm.achievement.progress_u235=اليورانيوم من فئة الأسلحة
 hbm.achievement.progress_u235.desc=خيارك: السلام أو الحرب
+hbm.achievement.progress_uf=وقود اليورانيوم
+hbm.achievement.progress_uf.desc=20 مليون كيلو كالوري/ز
+hbm.achievement.progress_watz=الكرات النووية
+hbm.achievement.progress_watz.desc=احصل على الكرات ساخنة
+hbm.achievement.progress_watz_boom=Slopcano
+hbm.achievement.progress_watz_boom.desc=الآن احصل على mopp وقم بتنظيفه
 hbm.achievement.radDeath=أوتش ، إشعاع!
 hbm.achievement.radDeath.desc=ابتكرت ماري كوري نظرية النشاط الإشعاعي ، وعلاج النشاط الإشعاعي ، والموت بسبب النشاط الإشعاعي.
 hbm.achievement.radPoison=ياي ، إشعاع!
@@ -1338,72 +1417,109 @@ hbm.achievement.tasteofblood=طعم الدم
 hbm.achievement.tasteofblood.desc=ليس جزءًا من أي بروتوكول اختبار.
 hbm.advancement.root=تطورات NTM
 hbm.advancement.root.desc=التطورات في التكنولوجيا النووية Hbm.
-hbmfluid.acid=بيروكسيد الهيدروجين
-hbmfluid.amat=المادة المضادة
-hbmfluid.aromatics=الهيدروكربونات العطرية
-hbmfluid.aschrab=Antischrabidium
-hbmfluid.balefire=وقود الصواريخ BF
-hbmfluid.biofuel=وقود حيوي
-hbmfluid.biogas=الغاز الحيوي
-hbmfluid.bitumen=البيتومين
-hbmfluid.coolant=المبرد
-hbmfluid.crackoil=زيت متصدع
-hbmfluid.cryogel=كريوجل
-hbmfluid.deuterium=الديوتيريوم
-hbmfluid.diesel=ديزل
-hbmfluid.experience=عصير اكس بي
-hbmfluid.gas=غاز طبيعي
-hbmfluid.gasoline=البنزين المحتوي على الرصاص
-hbmfluid.heatingoil=زيت التدفئة
-hbmfluid.heavyoil=زيت ثقيل
-hbmfluid.heavywater=الماء الثقيل
-hbmfluid.hotcoolant=المبرد الساخن
-hbmfluid.hotcrackoil=زيت مكسر ساخن
-hbmfluid.hotoil=زيت خام ساخن
-hbmfluid.hotsteam=بخار كثيف
-hbmfluid.hydrogen=الهيدروجين السائل
-hbmfluid.ic2uu_matter=UU-المسألة
-hbmfluid.kerosene=الكيروسين
-hbmfluid.lava=حمم بركانية
-hbmfluid.lightoil=زيت خفيف
-hbmfluid.liquid_osmiridium=الحل الأوزميريدي
-hbmfluid.lubricant=زيوت تشحيم المحرك
-hbmfluid.mercury=الزئبق
-hbmfluid.naphtha=النفثا
-hbmfluid.nitan=NITAN © 100 وقود سوبر أوكتان
-hbmfluid.nitric_acid=حمض النيتريك
-hbmfluid.none=لا أحد
-hbmfluid.oil=زيت خام
-hbmfluid.oxygen=الأكسجين السائل
-hbmfluid.pain=محلول التانتاليت (III) Pandemonium (III)
-hbmfluid.petroil=بترويل
-hbmfluid.petroleum=الغاز البترولي
-hbmfluid.plasma_bf=Balefire Plasma
-hbmfluid.plasma_dt=بلازما الديوتيريوم والتريتيوم
-hbmfluid.plasma_hd=بلازما الهيدروجين والديوتيريوم
-hbmfluid.plasma_ht=بلازما الهيدروجين التريتيوم
-hbmfluid.plasma_put=بلازما البلوتونيوم والتريتيوم
-hbmfluid.plasma_xm=Xenon-Mercury Plasma
-hbmfluid.puf6=سداسي فلوريد البلوتونيوم
-hbmfluid.radiosolvent=مذيب عالي الأداء
-hbmfluid.reclaimed=زيت صناعي مستصلح
-hbmfluid.sas3=شرابيديوم تريسولفيد
-hbmfluid.schrabidic_fluid=حمض شرابيديك
-hbmfluid.smear=زيت صناعي
-hbmfluid.solvent=مذيب
-hbmfluid.spentsteam=بخار منخفض الضغط
-hbmfluid.steam=بخار
-hbmfluid.sulfuric_acid=حمض الكبريتيك
-hbmfluid.superhotsteam=بخار شديد الكثافة
-hbmfluid.tritium=التريتيوم
-hbmfluid.uf6=اليورانيوم هيكسافلورايد
-hbmfluid.ultrahotsteam=بخار شديد الكثافة
-hbmfluid.unsaturateds=الهيدروكربونات غير المشبعة
-hbmfluid.wastefluid=النفايات النووية السائلة
-hbmfluid.wastegas=النفايات النووية الغازية
-hbmfluid.water=ماء
-hbmfluid.watz=الطين السام
-hbmfluid.xenon=غاز زينون
+hbmmat.actinium227=أكتينيوم 227
+hbmmat.advancedalloy=سبيكة متقدمة
+hbmmat.aluminum=الألومنيوم
+hbmmat.americium241=الأميركيوم -241
+hbmmat.americium242=الأميركيوم -242
+hbmmat.americiumrg=أميريوم من الدرجة
+hbmmat.anybismoid=البزموت
+hbmmat.arsenic=الزرنيخ
+hbmmat.arsenicbronze=برونز الزرنيخ
+hbmmat.asbestos=الأسبستوس
+hbmmat.bakelite=الباكليت
+hbmmat.beryllium=البريليوم
+hbmmat.bismuth=البزموت
+hbmmat.bismuthbronze=البزموت برونزية
+hbmmat.borax=بوراكس
+hbmmat.boron=البورون
+hbmmat.bscco=BSCCO
+hbmmat.cadmium=الكادميوم
+hbmmat.calcium=الكالسيوم
+hbmmat.carbon=الكربون
+hbmmat.cdalloy=الصلب الكادميوم
+hbmmat.cinnabar=سينابار
+hbmmat.cmbsteel=الجمع بين الصلب
+hbmmat.coal=الفحم
+hbmmat.coalcoke=فحم الكوك
+hbmmat.cobalt=الكوبالت
+hbmmat.cobalt60=الكوبالت 60
+hbmmat.coltan=كولتان
+hbmmat.copper=نحاس
+hbmmat.desh=ديش
+hbmmat.dineutronium=Dineutronium
+hbmmat.durasteel=فولاذ عالي السرعة
+hbmmat.euphemium=euphemium
+hbmmat.ferrouranium=ferrouranium
+hbmmat.fiberglass=الألياف الزجاجية
+hbmmat.fluorite=فلوريت
+hbmmat.flux=تدفق
+hbmmat.ghiorsium336=ghiorsium-336
+hbmmat.gold=ذهب
+hbmmat.gold198=الذهب -198
+hbmmat.graphene=الجرافين
+hbmmat.graphite=الجرافيت
+hbmmat.hematite=الهيماتيت
+hbmmat.iron=حديد
+hbmmat.lapis=اللازورد
+hbmmat.lead=يقود
+hbmmat.lead209=Lead-209
+hbmmat.lignite=لينيت
+hbmmat.lignitecoke=لينيت فحم الكوك
+hbmmat.lithium=الليثيوم
+hbmmat.magnetizedtungsten=التنغستن المغناطيسية
+hbmmat.malachite=الملكيت
+hbmmat.meteor=نيزك
+hbmmat.meteoriciron=مكواة الأرصاد الجوية
+hbmmat.mingrade=Minecraft درجة النحاس
+hbmmat.neodymium=النيوديميوم
+hbmmat.neptunium237=نبتونيوم 237
+hbmmat.niobium=نيوبيوم
+hbmmat.obsidian=سبج
+hbmmat.osmiridium=Osmiridium
+hbmmat.petcoke=فحم الكوك البترول
+hbmmat.pigiron=حديد الخنزير
+hbmmat.plutonium=البلوتونيوم
+hbmmat.plutonium238=البلوتونيوم 238
+hbmmat.plutonium239=البلوتونيوم 239
+hbmmat.plutonium240=البلوتونيوم -240
+hbmmat.plutonium241=البلوتونيوم -241
+hbmmat.plutoniumrg=البلوتونيوم من فئة المفاعل
+hbmmat.polonium210=Polonium-210
+hbmmat.polymer=البوليمر
+hbmmat.radium226=Radium-226
+hbmmat.redphosphorus=الفوسفور الأحمر
+hbmmat.redstone=ريدستون
+hbmmat.rubber=ممحاة
+hbmmat.saltpeter=نيتر
+hbmmat.saturnite=زحل
+hbmmat.schrabidate=فيريريك شرابيد
+hbmmat.schrabidium=شرابيديوم
+hbmmat.schraranium=شرارانيوم
+hbmmat.silicon=السيليكون
+hbmmat.slag=الخبث
+hbmmat.solinium=سولينيوم
+hbmmat.starmetal=Starmetal
+hbmmat.steel=فُولاَذ
+hbmmat.stone=حجر
+hbmmat.strontium=السترونتيوم
+hbmmat.sulfur=الكبريت
+hbmmat.tantalum=tantalum
+hbmmat.tcalloy=الصلب التكنتيوم
+hbmmat.technetium99=Technetium-99
+hbmmat.thorium232=ثوريوم 232
+hbmmat.titanium=التيتانيوم
+hbmmat.tungcar=كربيد التنغستن
+hbmmat.tungsten=التنغستن
+hbmmat.uranium=اليورانيوم
+hbmmat.uranium233=اليورانيوم 233
+hbmmat.uranium235=اليورانيوم 235
+hbmmat.uranium238=اليورانيوم 238
+hbmmat.watzmud=طين واتز
+hbmmat.whitephosphorus=الفوسفور الأبيض
+hbmmat.workersalloy=ديش
+hbmmat.wroughtiron=الحديد المطاوع
+hbmmat.zirconium=الزركونيوم
 info.coil=قوة الملف
 info.template_in=إدخال:
 info.template_in_p=المدخلات:
@@ -1431,6 +1547,7 @@ item.alloy_hoe.name=متقدمة سبيكة مجرفة
 item.alloy_legs.name=طماق سبائك متقدمة
 item.alloy_pickaxe.name=فأس سبيكة متقدم
 item.alloy_plate.name=لوح صندوق من خليط معدني متطور
+item.alloy_shield.name=درع السبائك المتقدمة
 item.alloy_shovel.name=مجرفة سبائك متقدمة
 item.alloy_sword.name=سيف السبائك المتقدم
 item.ammo_4gauge.name=4 مقياس رصاصة
@@ -1521,7 +1638,6 @@ item.ammo_556_phosphorus.name=5.56mm جولة (WP)
 item.ammo_556_sleek.name=مستديرة 5.56 مم (IF-R & D)
 item.ammo_556_star.name=5.56 مم دائري (نجمي)
 item.ammo_556_tracer.name=5.56 مم دائري (التتبع)
-item.ammo_cell.name=خلية الطاقة
 item.ammo_container.name=حاوية الذخيرة
 item.ammo_dart.name=دارت بلاستيكية (تذبل)
 item.ammo_dgk.name=حارس المرمى التوأم CIWS 200 حزام دائري
@@ -1610,6 +1726,10 @@ item.apple_schrabidium.name=التفاح شرابيديوم
 item.arc_electrode.name=القطب الجرافيت
 item.arc_electrode_burnt.name=القطب المنصهر
 item.arc_electrode_desh.name=ديش الكترود
+item.armor_battery.name=Power Armor Battery Pack MK1
+item.armor_battery_mk2.name=Power Armor Battery Pack MK2
+item.armor_battery_mk3.name=Power Armor Battery Pack MK3
+item.armor_battery_mk4.name=Power Armor Battery Pack MK4
 item.armor_polish.name=ملمع الدروع ShiningArmor ™
 item.asbestos_boots.name=أحذية القرب من النار
 item.asbestos_cloth.name=قماش القرب من النار
@@ -1642,10 +1762,12 @@ item.australium_v.name=موسع الحياة مارك الخامس
 item.back_tesla.name=لفائف تسلا المثبتة في الخلف
 item.balefire_and_ham.name=بيض لحم الخنزير و Balefire
 item.balefire_and_steel.name=Balefire and Steel
+item.balefire_kit.name=مجموعة القنابل Balefire
 item.balefire_scrambled.name=بيض بالفير المخفوق
 item.ball_dynamite.name=ديناميت
 item.ball_fireclay.name=الطين الناري
 item.ball_resin.name=مطاط
+item.ball_tatb.name=TATB
 item.ball_tnt.name=تي ان تي
 item.ballistite.name=الباليستيت
 item.bandaid.name=إسعافات أولية مخملية
@@ -1733,6 +1855,7 @@ item.billet_ra226.name=راديوم -226 بيليت
 item.billet_ra226be.name=Ra226Be Billet
 item.billet_schrabidium.name=شرابيديوم 326 بيليت
 item.billet_schrabidium_fuel.name=Schrabidium وقود بيليت
+item.billet_silicon.name=رقاقة السيليكون
 item.billet_solinium.name=سولينيوم 327 بيليت
 item.billet_sr90.name=سترونتيوم 90 بيليت
 item.billet_technetium.name=تكنيتيوم 99 بيليت
@@ -1780,9 +1903,10 @@ item.bobmazon_machines.name=دعم Vault-tec: الكتل والآلات
 item.bobmazon_materials.name=دعم Vault-tec: المواد
 item.bobmazon_tools.name=دعم Vault-tec: الأدوات
 item.bobmazon_weapons.name=دعم Vault-tec: الأسلحة والمتفجرات
-item.bolt_compound.name=عززت التوربينات رمح
+item.bolt.name=٪ s الترباس
 item.bolt_dura_steel.name=الترباس الصلب عالي السرعة
 item.bolt_tungsten.name=التنغستن بولت
+item.boltgun.name=بندقية برشام الهوائية
 item.bomb_caller.name=محدد الغارة الجوية
 item.bomb_waffle.name=وافل الدمار الشامل
 item.book_guide_book.name=كتاب الدليل
@@ -1904,6 +2028,7 @@ item.casing_50.name=غلاف عيار كبير (x12)
 item.casing_357.name=.357 غلاف ماغنوم (x24)
 item.casing_buckshot.name=غلاف رصاصة (x12)
 item.catalyst_clay.name=محفز الطين
+item.catalytic_converter.name=محول الحفاز
 item.cbt_device.name=جهاز CBT
 item.cc_plasma_gun.name=[WIP] CC Plasma Gun
 item.cell_anti_schrabidium.name=خلية Antischrabidium
@@ -1919,6 +2044,22 @@ item.centrifuge_element.name=عنصر الطرد المركزي
 item.centrifuge_tower.name=برج الطرد المركزي
 item.chainsaw.name=المنشار
 item.charge_railgun.name=كبسولة ديوتيريوم بلازما
+item.chemical_dye_black.name=صبغة كيميائية (أسود)
+item.chemical_dye_blue.name=الصبغة الكيميائية (الأزرق)
+item.chemical_dye_brown.name=صبغة كيميائية (بنية)
+item.chemical_dye_cyan.name=صبغة كيميائية (سماوي)
+item.chemical_dye_gray.name=صبغة كيميائية (رمادية)
+item.chemical_dye_green.name=صبغة كيميائية (خضراء)
+item.chemical_dye_lightblue.name=الصبغة الكيميائية (الأزرق الفاتح)
+item.chemical_dye_lime.name=الصبغة الكيميائية (الجير)
+item.chemical_dye_magenta.name=صبغة كيميائية (أرجواني)
+item.chemical_dye_orange.name=صبغة كيميائية (برتقالية)
+item.chemical_dye_pink.name=الصبغة الكيميائية (الوردي)
+item.chemical_dye_purple.name=صبغة كيميائية (أرجوانية)
+item.chemical_dye_red.name=صبغة كيميائية (أحمر)
+item.chemical_dye_silver.name=صبغة كيميائية (رمادي فاتح)
+item.chemical_dye_white.name=الصبغة الكيميائية (أبيض)
+item.chemical_dye_yellow.name=صبغة كيميائية (صفراء)
 item.chemistry_template.name=نموذج الكيمياء:
 item.chernobylsign.name=علامة تحذير تشيرنوبيل فأس المعركة
 item.chlorine_pinwheel.name=المروحة الكلور
@@ -1932,16 +2073,35 @@ item.chopper_tail.name=ذيل هنتر تشوبر
 item.chopper_torso.name=هيكل هنتر تشوبر
 item.chopper_wing.name=جناح هنتر تشوبر
 item.cinnebar.name=سينابار
+item.circuit_advanced.name=لوحة دائرة الصف العسكري
 item.circuit_aluminium.name=الدائرة الأساسية
+item.circuit_analog.name=لوحة الدائرة التناظرية
 item.circuit_arsenic.name=دائرة قابلة للتكيف
 item.circuit_arsenic_raw.name=مجموعة الدوائر القابلة للتكيف
+item.circuit_atomic_clock.name=الساعة الذرية
+item.circuit_basic.name=لوحة الدوائر المتكاملة
+item.circuit_bismoid.name=لوحة الدوائر متعددة الاستخدامات
 item.circuit_bismuth.name=شرائح متعددة الاستخدامات
 item.circuit_bismuth_raw.name=مجموعة شرائح متعددة الاستخدامات
+item.circuit_capacitor.name=مكثف
+item.circuit_capacitor_board.name=مجلس مكثف
+item.circuit_capacitor_tantalium.name=مكثف تانتالوم
+item.circuit_chip.name=رقاقة
+item.circuit_chip_bismoid.name=دائرة متكاملة متعددة الاستخدامات
+item.circuit_chip_quantum.name=معالج كمية الحالة الصلبة
+item.circuit_controller.name=وحدة التحكم
+item.circuit_controller_advanced.name=وحدة التحكم المتقدمة
+item.circuit_controller_chassis.name=وحدة التحكم غلاف
+item.circuit_controller_quantum.name=كمبيوتر الكم
 item.circuit_copper.name=دائرة محسّنة
+item.circuit_crt_tube.name=أنبوب شعاع الكاثود
 item.circuit_gold.name=حلبة فيركلوكيد
+item.circuit_pcb.name=لوحة الدوائر المطبوعة
+item.circuit_quantum.name=وحدة المعالجة الكم
 item.circuit_raw.name=الجمعية الأساسية للدائرة
 item.circuit_red_copper.name=دائرة متقدمة
 item.circuit_schrabidium.name=دائرة عالية الأداء
+item.circuit_silicon.name=رقاقة السيليكون المطبوعة
 item.circuit_tantalium.name=مجلس مكثف
 item.circuit_tantalium_raw.name=الجمعية مجلس مكثف
 item.circuit_targeting_tier1.name=لوحة الدوائر العسكرية (المستوى 1)
@@ -1950,6 +2110,7 @@ item.circuit_targeting_tier3.name=لوحة الدوائر العسكرية (ال
 item.circuit_targeting_tier4.name=لوحة الدوائر العسكرية (المستوى 4)
 item.circuit_targeting_tier5.name=لوحة الدوائر العسكرية (المستوى 5)
 item.circuit_targeting_tier6.name=لوحة الدوائر العسكرية (المستوى 6)
+item.circuit_vacuum_tube.name=أنبوب فراغ
 item.cladding_desh.name=ديش كلادينج
 item.cladding_di.name=تكسية دينيوترونيوم
 item.cladding_electronium.name=تكسية الإلكترون
@@ -1999,6 +2160,7 @@ item.cmb_hoe.name=CMB الصلب مجرفة
 item.cmb_legs.name=طماق CMB الصلب
 item.cmb_pickaxe.name=فأس CMB الصلب
 item.cmb_plate.name=CMB الصلب Chestplate
+item.cmb_shield.name=درع CMB
 item.cmb_shovel.name=مجرفة الصلب CMB
 item.cmb_sword.name=سيف الصلب CMB
 item.coal_infernal.name=الفحم الجهنمي
@@ -2014,6 +2176,7 @@ item.cobalt_hoe.name=كوبالت مجرفة
 item.cobalt_legs.name=طماق الكوبالت
 item.cobalt_pickaxe.name=فأس الكوبالت
 item.cobalt_plate.name=الكوبالت Chestplate
+item.cobalt_shield.name=درع الكوبالت
 item.cobalt_shovel.name=مجرفة الكوبالت
 item.cobalt_sword.name=سيف الكوبالت
 item.coil_advanced_alloy.name=ملف موصل فائق
@@ -2030,7 +2193,9 @@ item.coin_radiation.name=عملة الإشعاع
 item.coin_siege.name=عملة الحصار
 item.coin_ufo.name=عملة UFO
 item.coin_worm.name=عملة كرات- O- ترون
-item.coke.name=فحم الكوك
+item.coke_coal.name=فحم الكوك
+item.coke_lignite.name=لينيت فحم الكوك
+item.coke_petroleum.name=فحم الكوك البترول
 item.coltass.name=كولتاس
 item.combine_scrap.name=CMB خردة المعادن
 item.component_emitter.name=مكون الباعث
@@ -2040,6 +2205,7 @@ item.cotton_candy.name=حلوى القطن المشعة
 item.crate_caller.name=مقدم طلب انخفاض العرض
 item.crowbar.name=جهاز فتح قفص MKV "Crowbar"
 item.crucible.name=بوتقة
+item.crucible_template.name=قالب بوتقة:
 item.crystal_aluminium.name=بلورات الألمنيوم
 item.crystal_asbestos.name=بلورات الأسبستوس
 item.crystal_beryllium.name=بلورات البريليوم
@@ -2096,6 +2262,7 @@ item.demon_core_open.name=تم تعليق قلب الشيطان
 item.desh_axe.name=الفأس سبيكة العامل
 item.desh_hoe.name=مجرفة سبائك العامل
 item.desh_pickaxe.name=معول سبيكة العامل
+item.desh_shield.name=درع ديش
 item.desh_shovel.name=مجرفة سبائك العامل
 item.desh_sword.name=سيف سبيكة العامل
 item.designator.name=محدد الهدف قصير المدى
@@ -2156,6 +2323,7 @@ item.egg_balefire.name=بيض بالفير
 item.egg_balefire_shard.name=بلفير شارد
 item.elec_axe.name=منشار كهربائي
 item.elec_pickaxe.name=تأثير الحفر
+item.elec_shield.name=درع سوات
 item.elec_shovel.name=المثقاب الحلزوني
 item.elec_sword.name=ستونستيك
 item.energy_core.name=قلب الطاقة المؤقتة
@@ -2198,6 +2366,8 @@ item.fluid_duct.name=قناة السوائل:
 item.fluid_identifier.name=معرف السوائل
 item.fluid_tank_empty.name=خزان السوائل العالمي فارغ
 item.fluid_tank_full.name=خزان السوائل العالمي:
+item.fluid_tank_lead_empty.name=خزان مواد خطرة فارغة
+item.fluid_tank_lead_full.name=خزان المواد الخطرة:
 item.fluorite.name=الفلوريت
 item.flywheel_beryllium.name=حذافة البريليوم
 item.fmn.name=Flunitrazepam Tablet
@@ -2329,7 +2499,6 @@ item.gun_emp_ammo.name=خلية الطاقة
 item.gun_euthanasia.name=القتل الرحيم
 item.gun_euthanasia_ammo.name=حقنة
 item.gun_fatman.name=المنجنيق النووي M42 "الرجل السمين"
-item.gun_fatman_ammo.name=ميني نوك
 item.gun_flamer.name=السيد توباز
 item.gun_flechette.name=بندقية Flechette
 item.gun_folly.name=النموذج الأولي Digamma "Folly"
@@ -2354,7 +2523,6 @@ item.gun_lever_action_sonata.name=انقلبت ساق ماري
 item.gun_lever_action_sonata_2.name=§cSonata's Microphone§r
 item.gun_minigun.name=CZ53 شخصية Minigun
 item.gun_mirv.name=المنجنيق النووي M42 "التجريبية MIRV"
-item.gun_mirv_ammo.name=ثمانية أضعاف MIRV
 item.gun_moist_nugget.name=موسين ناجانت
 item.gun_mp40.name=مدفع رشاش
 item.gun_mp40_ammo.name=مدفع رشاش (ليغاسي)
@@ -2441,6 +2609,8 @@ item.heart_booster.name=مقوي للقلب
 item.heart_container.name=حاوية القلب
 item.heart_fab.name=فاب القلب
 item.heart_piece.name=قطعة قلب
+item.heavy_component.name=مكون ثقيل ٪ s
+item.heavy_duty_element.name=عنصر ثقيل
 item.hev_battery.name=تناسب البطارية
 item.hev_boots.name=حذاء HEV Mark IV
 item.hev_helmet.name=خوذة HEV Mark IV
@@ -2456,13 +2626,6 @@ item.hull_small_aluminium.name=غلاف ألومنيوم صغير
 item.hull_small_steel.name=قذيفة فولاذية صغيرة
 item.igniter.name=أنبوب
 item.industrial_magnet.name=مغناطيس صناعي
-item.inf_antimatter.name=خزان المادة المضادة اللانهائي
-item.inf_antischrabidium.name=خزان لانهائي مضاد للسكربيديوم
-item.inf_coolant.name=خزان سائل التبريد اللانهائي
-item.inf_deuterium.name=خزان الديوتيريوم اللانهائي
-item.inf_diesel.name=خزان ديزل لانهائي
-item.inf_sulfur.name=خزان الكبريت اللانهائي
-item.inf_tritium.name=خزان التريتيوم اللانهائي
 item.inf_water.name=خزان مياه لانهائي
 item.inf_water_mk2.name=خزان مياه ثقيل لانهائي
 item.inf_water_mk3.name=خزان المياه السميك اللانهائي
@@ -2486,9 +2649,11 @@ item.ingot_biorubber.name=شريط اللاتكس
 item.ingot_bismuth.name=سبيكة البزموت
 item.ingot_boron.name=سبيكة البورون
 item.ingot_bromine.name=سبيكة البروم
+item.ingot_bscco.name=BSCCO السند
 item.ingot_c4.name=شريط C-4
 item.ingot_cadmium.name=سبائك الكادميوم
 item.ingot_caesium.name=سبيكة السيزيوم
+item.ingot_calcium.name=سبيكة الكالسيوم
 item.ingot_cdalloy.name=سبائك الصلب الكادميوم
 item.ingot_cerium.name=سبيكة السيريوم
 item.ingot_chainsteel.name=سلسلة ثقيلة
@@ -2517,12 +2682,14 @@ item.ingot_magnetized_tungsten.name=ممغنط سبيكة التنغستن
 item.ingot_meteorite.name=سبيكة نيزك
 item.ingot_meteorite_forged.name=سبيكة نيزك مزورة
 item.ingot_mox_fuel.name=سبيكة وقود موكس
+item.ingot_mud.name=واتز موند
 item.ingot_neodymium.name=سبيكة النيوديميوم
 item.ingot_neptunium.name=النبتونيوم 237 سبيكة
 item.ingot_neptunium_fuel.name=سبيكة وقود النبتونيوم
 item.ingot_niobium.name=سبيكة النيوبيوم
 item.ingot_osmiridium.name=سبيكة أوزميريديوم
 item.ingot_pb209.name=الرصاص 209 سبيكة
+item.ingot_pc.name=شريط البلاستيك الصلب
 item.ingot_phosphorus.name=قطعة من الفوسفور الأبيض
 item.ingot_plutonium.name=سبيكة البلوتونيوم
 item.ingot_plutonium_fuel.name=سبيكة وقود البلوتونيوم
@@ -2533,6 +2700,7 @@ item.ingot_pu239.name=بلوتونيوم 239 سبيكة
 item.ingot_pu240.name=بلوتونيوم -240 سبيكة
 item.ingot_pu241.name=بلوتونيوم 241 سبيكة
 item.ingot_pu_mix.name=مفاعل الصف سبيكة البلوتونيوم
+item.ingot_pvc.name=بار PVC
 item.ingot_ra226.name=راديوم -226 سبيكة
 item.ingot_radspice.name=نيوفلين سبيكة
 item.ingot_red_copper.name=ماين كرافت الصف النحاس
@@ -2544,6 +2712,7 @@ item.ingot_schrabidium.name=Schrabidium-326 سبيكة
 item.ingot_schrabidium_fuel.name=سبيكة من وقود Schrabidium
 item.ingot_schraranium.name=شرارانيوم سبيكة
 item.ingot_semtex.name=شريط Semtex
+item.ingot_silicon.name=سيليكون شارع
 item.ingot_smore.name=S'more سبيكة
 item.ingot_solinium.name=سولينيوم 327 سبيكة
 item.ingot_sr90.name=سترونتيوم 90 سبيكة
@@ -2636,8 +2805,8 @@ item.loops.name=لوبس
 item.loot_10.name=الحجم 10 صندوق نهب الصواريخ
 item.loot_15.name=حجم 15 صندوق غنائم الصواريخ
 item.loot_misc.name=صندوق نهب الصواريخ العام
+item.low_density_element.name=عنصر كثافة منخفضة
 item.lung_diagnostic.name=تشخيص الرئة
-item.magnet_circular.name=مغناطيس مسطح
 item.magnet_dee.name=مغناطيس دي
 item.magnetron.name=المغنطرون
 item.man_core.name=نواة البلوتونيوم
@@ -2663,7 +2832,6 @@ item.mechanism_special.name=آلية سلاح عالية التقنية
 item.med_bag.name=حقيبة الطبيب
 item.med_ipecac.name=شراب عرق الذهب
 item.med_ptsd.name=دواء اضطراب ما بعد الصدمة
-item.med_schiziphrenia.name=دواء الفصام
 item.med_schizophrenia.name=دواء الفصام
 item.medal_ghoul.name=الغول المعتمد
 item.medal_liquidator.name=وسام المصفي
@@ -2739,6 +2907,8 @@ item.missile_soyuz_lander.name=الوحدة المدارية
 item.missile_strong.name=صاروخ HE قوي
 item.missile_taint.name=صاروخ ملوث
 item.missile_volcano.name=الصاروخ التكتوني
+item.mold.name=قالب المسبح
+item.mold_base.name=قالب مسبك فارغ
 item.morning_glory.name=بهاء الصباح
 item.motor.name=محرك
 item.motor_desh.name=دهش موتور
@@ -2876,6 +3046,7 @@ item.multitool_silk.name=قبضة القوة (مخلب لمسة حريرية)
 item.multitool_sky.name=قبضة القوة (كسر السماء)
 item.mysteryshovel.name=هش المجرف
 item.n2_charge.name=شحنة متفجرة كبيرة
+item.neutrino_lens.name=عدسة النيوترينو
 item.neutron_reflector.name=عاكس نيوتروني
 item.niter.name=نتر
 item.nossy_hat.name=قبعة رائعة
@@ -2922,6 +3093,7 @@ item.nugget_mercury.name=قطرة صغيرة من الزئبق
 item.nugget_mox_fuel.name=كتلة من وقود MOX
 item.nugget_neptunium.name=النبتونيوم 237 الكتلة
 item.nugget_neptunium_fuel.name=كتلة وقود النبتونيوم
+item.nugget_niobium.name=نيوبيوم الكتلة
 item.nugget_osmiridium.name=كتلة أوزميريديوم
 item.nugget_pb209.name=كتلة الرصاص 209
 item.nugget_plutonium.name=كتلة البلوتونيوم
@@ -2937,6 +3109,7 @@ item.nugget_radspice.name=نيوفلين ناجت
 item.nugget_reiium.name=Reiium Nugget
 item.nugget_schrabidium.name=Schrabidium-326 الكتلة
 item.nugget_schrabidium_fuel.name=كتلة صلبة من وقود Schrabidium
+item.nugget_silicon.name=سيليكون الكتلة
 item.nugget_solinium.name=سولينيوم 327 الكتلة
 item.nugget_sr90.name=كتلة سترونتيوم 90
 item.nugget_strontium.name=كتلة السترونشيوم
@@ -2969,7 +3142,12 @@ item.oil_detector.detected=تم الكشف عن النفط في مكان قري�
 item.oil_detector.detectedBedrock=تم اكتشاف زيت الأساس في مكان قريب
 item.oil_detector.name=كاشف خزان الزيت
 item.oil_detector.noOil=لم يتم الكشف عن زيت.
-item.oil_tar.name=قطران الزيت
+item.oil_tar_coal.name=قطران الفحم
+item.oil_tar_crack.name=قطران الزيت
+item.oil_tar_crude.name=قطران الزيت
+item.oil_tar_paraffin.name=الشمع البارافين
+item.oil_tar_wax.name=شمع البترول المكلور
+item.oil_tar_wood.name=القطران الخشب
 item.ore_bedrock.name=%s خام الأساس
 item.ore_bedrock_centrifuged.name=الطرد المركزي %scOre
 item.ore_bedrock_cleaned.name=تنظيف %scOre
@@ -3073,6 +3251,7 @@ item.pile_rod_uranium.name=شيكاغو بايل يورانيوم رود
 item.pill_herbal.name=معجون عشبي
 item.pill_iodine.name=حبة اليود
 item.pin.name=بوبي دبوس
+item.pipe.name=٪ s أنبوب
 item.pipes_steel.name=مواسير حديد
 item.piston_electro.name=المكبس الكهربائي
 item.piston_hydraulic.name=المكبس الهيدروليكي
@@ -3087,6 +3266,7 @@ item.plate_armor_fau.name=تصفيح درع الفاو
 item.plate_armor_hev.name=تصفيح الدروع التفاعلية
 item.plate_armor_lunar.name=تصفيح القمر
 item.plate_armor_titanium.name=لوحة درع التيتانيوم
+item.plate_cast.name=يلقي ٪ S Plate
 item.plate_combine_steel.name=صفيحة فولاذية CMB
 item.plate_copper.name=لوحة من النحاس
 item.plate_dalekanium.name=غاضب ميتال
@@ -3104,6 +3284,7 @@ item.plate_saturnite.name=لوحة ساتورنايت
 item.plate_schrabidium.name=صفيحة شرابيديوم 326
 item.plate_steel.name=لوحة الصلب
 item.plate_titanium.name=لوحة التيتانيوم
+item.plate_welded.name=لوحة ٪ s s
 item.pocket_ptsd.name=رادار الجيب
 item.polaroid.name=بولارويد
 item.powder_ac227.name=مسحوق الأكتينيوم 227
@@ -3129,6 +3310,7 @@ item.powder_boron_tiny.name=كومة صغيرة من مسحوق البورون
 item.powder_bromine.name=مسحوق البروم
 item.powder_cadmium.name=مسحوق الكادميوم
 item.powder_caesium.name=مسحوق السيزيوم
+item.powder_calcium.name=مسحوق الكالسيوم
 item.powder_cdalloy.name=مسحوق الصلب الكادميوم
 item.powder_cerium.name=مسحوق السيريوم
 item.powder_cerium_tiny.name=كومة صغيرة من مسحوق السيريوم
@@ -3156,6 +3338,7 @@ item.powder_dura_steel.name=مسحوق فولاذي عالي السرعة
 item.powder_emerald.name=مسحوق الزمرد
 item.powder_euphemium.name=مسحوق أوفيميوم
 item.powder_fire.name=الفوسفور الأحمر
+item.powder_flux.name=تدفق
 item.powder_gold.name=مسحوق الذهب
 item.powder_i131.name=مسحوق اليود 131
 item.powder_i131_tiny.name=كومة صغيرة من مسحوق اليود 131
@@ -3164,6 +3347,7 @@ item.powder_impure_osmiridium.name=مسحوق أوزميريديوم النجس
 item.powder_iodine.name=مسحوق اليود
 item.powder_iodine_tiny.name=كومة صغيرة من مسحوق اليود
 item.powder_iron.name=مسحوق الحديد
+item.powder_iron_tiny.name=كومة صغيرة من مسحوق الحديد
 item.powder_lanthanium.name=مسحوق اللانثانم
 item.powder_lanthanium_tiny.name=كومة صغيرة من مسحوق اللانثانيوم
 item.powder_lapis.name=مسحوق اللازورد
@@ -3238,6 +3422,7 @@ item.radx.name=راد- X
 item.rag.name=قماش
 item.rag_damp.name=ملابس مبللة
 item.rag_piss.name=شخ غارقة خرقة
+item.rare_earth_chunk.name=قطعة الأرض النادرة
 item.rbmk_fuel_balefire.name=قضيب الوقود Balefire RBMK
 item.rbmk_fuel_balefire_gold.name=قضيب الوقود Flashgold RBMK
 item.rbmk_fuel_drx.name=§ سي ديجاما RBMK فيول رود § r
@@ -3478,10 +3663,12 @@ item.schrabidium_hoe.name=Schrabidium Hoe
 item.schrabidium_legs.name=طماق شرابيديوم
 item.schrabidium_pickaxe.name=فأس شرابيديوم
 item.schrabidium_plate.name=Schrabidium Chestplate
+item.schrabidium_shield.name=شرابيديوم درع
 item.schrabidium_shovel.name=مجرفة شرابيديوم
 item.schrabidium_sword.name=سيف شرابيديوم
 item.scrap.name=خردة
 item.scrap_oil.name=قصاصات الزيتية
+item.scraps.name=٪ S قصاصات مسبك
 item.screwdriver.name=مفك براغي
 item.screwdriver_desh.name=مفك ديش
 item.scrumpy.name=زجاجة سكرامبي
@@ -3496,6 +3683,7 @@ item.serum.name=مصل
 item.servo_set.name=مجموعة المؤازرة
 item.servo_set_desh.name=مجموعة أجهزة Desh
 item.shackles.name=أصفاد
+item.shell.name=٪ s قذيفة
 item.shimmer_axe.name=الفأس اللامع
 item.shimmer_axe_head.name=رأس فأس ثقيل
 item.shimmer_handle.name=مقبض بوليمر مقوى
@@ -3512,8 +3700,11 @@ item.sliding_blast_door_skin1.name=الباب الجانبي المنزلق ذو
 item.sliding_blast_door_skin2.name=جانب الباب المنزلق ذو الباب الزجاجي البديل 2 الجلد
 item.smashing_hammer.name=تكسير المطرقة
 item.solid_fuel.name=وقود صلب
+item.solid_fuel_bf.name=بيلفير الوقود الصلب
 item.solid_fuel_presto.name=سجل المعزوفة
+item.solid_fuel_presto_bf.name=Balefire Presto Log
 item.solid_fuel_presto_triplet.name=تعزيز سجلات المعزوفة
+item.solid_fuel_presto_triplet_bf.name=تعزيز سجلات Balefire Presto
 item.solinium_core.name=قلب سولينيوم شبه مستقر
 item.solinium_igniter.name=جهاز SOL Pulse Igniter
 item.solinium_kit.name=طقم سولينيوم
@@ -3567,6 +3758,7 @@ item.starmetal_hoe.name=Starmetal Hoe
 item.starmetal_legs.name=طماق Starmetal
 item.starmetal_pickaxe.name=الفأس النجمي
 item.starmetal_plate.name=Starmetal Chestplate
+item.starmetal_shield.name=درع Starmetal
 item.starmetal_shovel.name=مجرفة نجمية
 item.starmetal_sword.name=سيف نجمي
 item.static_sandwich.name=شطيرة مزينة بتلفاز ثابت
@@ -3578,6 +3770,7 @@ item.steel_hoe.name=مجرفة الصلب
 item.steel_legs.name=طماق الصلب
 item.steel_pickaxe.name=فأس فولاذي
 item.steel_plate.name=صفيحة فولاذية
+item.steel_shield.name=درع الصلب
 item.steel_shovel.name=مجرفة فولاذية
 item.steel_sword.name=السيف الصلب
 item.stopsign.name=وقف علامة معركة الفأس
@@ -3638,6 +3831,7 @@ item.titanium_hoe.name=التيتانيوم مجرفة
 item.titanium_legs.name=طماق التيتانيوم
 item.titanium_pickaxe.name=فأس التيتانيوم
 item.titanium_plate.name=صفيحة التيتانيوم
+item.titanium_shield.name=درع التيتانيوم
 item.titanium_shovel.name=مجرفة التيتانيوم
 item.titanium_sword.name=سيف التيتانيوم
 item.toothpicks.name=المسواك
@@ -3675,6 +3869,7 @@ item.upgrade_ejector_3.name=ترقية سرعة الطرد Mk.III
 item.upgrade_fortune_1.name=ترقية فورتشن عضو الكنيست
 item.upgrade_fortune_2.name=ترقية Fortune Mk.II
 item.upgrade_fortune_3.name=ترقية Fortune Mk.III
+item.upgrade_gc_speed.name=ترقية غنية
 item.upgrade_health.name=ترقية صحة الباعث
 item.upgrade_nullifier.name=ترقية مدمرة الخردة
 item.upgrade_overdrive_1.name=ترقية آلة مضاعفة Mk.I
@@ -3729,6 +3924,32 @@ item.waste_thorium_hot.name=وقود الثوريوم المنضب (ساخن)
 item.waste_uranium.name=وقود اليورانيوم المنضب
 item.waste_uranium_hot.name=وقود اليورانيوم المنضب (ساخن)
 item.watch.name=ساعة الجيب المكسورة
+item.watz_pellet.amf.name=ليا واتز بيليه
+item.watz_pellet.amrg.name=ميا واتز بيليه
+item.watz_pellet.boron.name=بورون الامتصاص بيليه
+item.watz_pellet.du.name=بيليه امتصاص اليورانيوم المستنفد
+item.watz_pellet.hen.name=دجاجة واتز بيليه
+item.watz_pellet.hes.name=هس واتز بيليه
+item.watz_pellet.lead.name=بيليه امتصاص الرصاص
+item.watz_pellet.les.name=ليه واتز بيليه
+item.watz_pellet.mep.name=ميوب واتز بيليه
+item.watz_pellet.mes.name=ميس واتز بيليه
+item.watz_pellet.meu.name=ميو واتز بيليه
+item.watz_pellet.pu241.name=PU-241 واتز بيليه
+item.watz_pellet.schrabidium.name=شرابيديوم واتز بيليه
+item.watz_pellet_depleted.amf.name=ليا واتز بيليه (مستنفدة)
+item.watz_pellet_depleted.amrg.name=ميا واتز بيليه (مستنفدة)
+item.watz_pellet_depleted.boron.name=بيليه البورون Absorber (مستنفد)
+item.watz_pellet_depleted.du.name=بيليه مستنفد لامتصاص اليورانيوم (مستنفد)
+item.watz_pellet_depleted.hen.name=دجاجة واتز بيليه (مستنفدة)
+item.watz_pellet_depleted.hes.name=هس واتز بيليه (مستنفد)
+item.watz_pellet_depleted.lead.name=بيليه امتصاص الرصاص (مستنفد)
+item.watz_pellet_depleted.les.name=ليه واتز بيليه (مستنفد)
+item.watz_pellet_depleted.mep.name=MEP Watz Pellet (مستنفد)
+item.watz_pellet_depleted.mes.name=ميس واتز بيليه (مستنفدة)
+item.watz_pellet_depleted.meu.name=مو واتز بيليه (مستنفدة)
+item.watz_pellet_depleted.pu241.name=PU-241 Watz Pellet (المنضب)
+item.watz_pellet_depleted.schrabidium.name=بيليه شرابيديوم واتز (مستنفد)
 item.wd40.name=VT-40
 item.weapon_bat.name=ريتشارد الافتراضي
 item.weapon_bat_nail.name=كليشيه
@@ -3740,9 +3961,11 @@ item.weaponized_starblaster_cell.name=§ خلية طاقة نجمية متعرج
 item.wild_p.name=ويسكي بري بيغاسوس الجاف
 item.wings_limp.name=أجنحة عرجة
 item.wings_murk.name=أجنحة غامضة
+item.wire.name=٪ s سلك
 item.wire_advanced_alloy.name=موصل فائق
 item.wire_aluminium.name=أسلاك الألمنيوم
 item.wire_copper.name=سلك نحاس
+item.wire_dense.name=كثافة ٪ س سلك
 item.wire_gold.name=سلك ذهبي
 item.wire_magnetized_tungsten.name=4000K ارتفاع درجة الحرارة فائقة التوصيل
 item.wire_red_copper.name=سلك نحاسي أحمر
@@ -3761,7 +3984,6 @@ itemGroup.tabMissile=الصواريخ والأقمار الصناعية NTM
 itemGroup.tabNuke=قنابل NTM
 itemGroup.tabParts=موارد وأجزاء NTM
 itemGroup.tabResource=موارد NTM
-itemGroup.tabRessource=مصادر NTM
 itemGroup.tabTemplate=قوالب NTM
 itemGroup.tabTest=علامة تبويب اختبار تعديل التكنولوجيا النووية
 itemGroup.tabWeapon=أسلحة وأبراج NTM
@@ -3770,6 +3992,7 @@ jei.construction=بناء
 jei.conversion=تحويل
 jei.dfc=وصفة صندوق DFC
 jei.fluids=السوائل
+jei.rbmkfueluncrafting=تفكيك وقود RBMK
 jei.recycling=إعادة التدوير
 jei.silexdigamma=وصفات سيلكس ديغاما
 jei.silexgamma=وصفات سيلكس جاما
@@ -3804,10 +4027,22 @@ lingering_potion.effect.potion.hbm_radx=الجرعة العالقة من Rad-X
 lingering_potion.effect.potion.hbm_stability=جرعة الاستقرار العالقة
 lingering_potion.effect.potion.hbm_taint=جرعة العالقة من العيب
 lingering_potion.effect.potion.hbm_telekinesis=جرعة العالقة من التحريك الذهني
+lung_scanner.neg=§2 سلبي
 lung_scanner.player_asbestos_health=صحة الرئة [الأسبستوس]:
 lung_scanner.player_coal_health=صحة الرئة [الفحم]:
+lung_scanner.player_mku=اختبار مكو:
+lung_scanner.player_mku_duration=الموت في:
 lung_scanner.player_total_health=إجمالي صحة الرئة:
+lung_scanner.pos=§4إيجابي
 lung_scanner.title=تشخيص الرئة
+matshape.block=٪ s كتلة
+matshape.blocks=كتل ٪ S.
+matshape.ingot=٪ s
+matshape.ingots=٪ s سبائك
+matshape.nugget=٪ s الفائقة
+matshape.nuggets=٪ s ناغتس
+matshape.quanta=٪ S Quanta
+matshape.quantum=٪ s الكمية
 potion.effect.potion.hbm_bang=جرعة من ! ! !
 potion.effect.potion.hbm_lead=جرعة التسمم بالرصاص
 potion.effect.potion.hbm_mutation=جرعة الغويل
@@ -3881,6 +4116,27 @@ rbmk.screen.flux=التدفق: %s
 rbmk.screen.rod=ضوابط
 rbmk.screen.temp=درجة الحرارة: %s
 rbmk.screen.xenon=زينون: %s
+shape.billet=بليت
+shape.blade=شفرة
+shape.blades=شفرات التقطيع
+shape.block=حاجز
+shape.dust=تراب
+shape.dusttiny=غبار صغير
+shape.hull_big=قذيفة كبيرة
+shape.hull_small=قذيفة صغيرة
+shape.ingot=سبيكة
+shape.ntmpipe=ماسورة
+shape.nugget=كتلة صلبة
+shape.pipe=ماسورة
+shape.plate=طبق
+shape.plateTriple=لوحة يلقي
+shape.quantum=الكم
+shape.quart=كتلة الربع
+shape.shell=صدَفَة
+shape.stamp=اضغط على ختم
+shape.wire=سلك
+shape.wireDense=سلك كثيف
+shape.wiresDense=أسلاك كثيفة
 splash_potion.effect.potion.hbm_bang=جرعة سبلاش من! ! !
 splash_potion.effect.potion.hbm_lead=جرعة البداية من التسمم بالرصاص
 splash_potion.effect.potion.hbm_mutation=جرعة سبلاش من الغويليشن
@@ -4028,10 +4284,14 @@ tile.block_schrabidium_fuel.name=كتلة وقود سكرابيديوم
 tile.block_schraranium.name=بلوك شرارانيوم
 tile.block_scrap.name=كتلة الخردة
 tile.block_semtex.name=بلوك سيمتكس
+tile.block_slag.name=كتلة الخبث
 tile.block_smore.name=بلوك S'more
 tile.block_solid_fuel.name=كتلة من الوقود الصلب
+tile.block_solid_fuel_bf.name=كتلة من الوقود الصلب Balefire
 tile.block_solid_fuel_presto.name=كتلة من سجلات المعزوفة
+tile.block_solid_fuel_presto_bf.name=كتلة من سجلات Balefire Presto
 tile.block_solid_fuel_presto_triplet.name=كتلة من سجلات المعزوفة المعززة
+tile.block_solid_fuel_presto_triplet_bf.name=كتلة من Balefire تعزز سجلات بريستو
 tile.block_solinium.name=كتلة من Solinium-327
 tile.block_starmetal.name=§ 9 بلوك ستار ميتال §
 tile.block_steel.name=كتلة من الصلب
@@ -4088,7 +4348,11 @@ tile.brick_dungeon.name=طوب Berzelianite
 tile.brick_dungeon_circle.name=الدائرة البرازيلية
 tile.brick_dungeon_flat.name=كتلة Berzelianite
 tile.brick_dungeon_tile.name=بلاط Berzelianite
+tile.brick_fire.name=طوب النار
+tile.brick_fire_slab.name=حريق لبنة
+tile.brick_fire_stairs.name=درج الحريق من الطوب
 tile.brick_jungle.name=طوب Enargite
+tile.brick_jungle_circle.desc=استخدم المفتاح الفضي الكبير لتفريغ الكرات-O-Tron
 tile.brick_jungle_circle.name=دائرة الميكانيكي
 tile.brick_jungle_cracked.name=الطوب Enargite المتصدع
 tile.brick_jungle_glyph.name=Enargite Glyph Bricks
@@ -4097,6 +4361,8 @@ tile.brick_jungle_mystic.name=طوب Arcane Enargite
 tile.brick_jungle_ooze.name=طوب Enargite المشع
 tile.brick_jungle_trap.name=طوب Enargite المحاصرين
 tile.brick_light.name=طوب خفيف
+tile.brick_light_slab.name=لوح من الطوب الخفيف
+tile.brick_light_stairs.name=سلالم الطوب الخفيفة
 tile.brick_obsidian.name=طوب سبج
 tile.brick_obsidian_slab.name=لوح من حجر السج
 tile.brick_obsidian_stairs.name=سبج سلالم من الطوب
@@ -4179,13 +4445,21 @@ tile.concrete_white_stairs.name=سلالم خرسانية بيضاء
 tile.concrete_yellow.name=الخرسانة الصفراء
 tile.concrete_yellow_slab.name=بلاطة خرسانية صفراء
 tile.concrete_yellow_stairs.name=سلالم خرسانية صفراء
-tile.control_panel0.name=[WIP] لوحة التحكم
 tile.control_panel_custom.name=لوحة التحكم المخصصة [WIP]
 tile.conveyor.name=الحزام الناقل
+tile.conveyor_chute.name=شلال الناقل
+tile.conveyor_double.name=الحزام الناقل ذو المسار المزدوج
 tile.conveyor_express.name=الحزام الناقل السريع
+tile.conveyor_lift.name=رفع سلسلة الناقل
+tile.conveyor_triple.name=الحزام الناقل ثلاثي المسار
 tile.corium_block.name=سائل كوريوم
+tile.crane_boxer.name=الملاكم الناقل
 tile.crane_ejector.name=القاذف الناقل
+tile.crane_grabber.name=المنتزع الناقل
 tile.crane_inserter.name=ناقل الناقل
+tile.crane_router.name=فارز الناقل
+tile.crane_splitter.name=الفاصل الناقل
+tile.crane_unboxer.name=ناقل Unboxer
 tile.crashed_bomb.name=فاشل
 tile.crate.name=صندوق الإمداد
 tile.crate_ammo.name=صندوق النجوم
@@ -4231,7 +4505,6 @@ tile.deco_pipe_rim_red.name=أنبوب فولاذي أحمر (ريميد)
 tile.deco_pipe_rim_rusted.name=أنبوب فولاذي صدئ (مسطّر)
 tile.deco_pipe_rusted.name=أنابيب فولاذية صدئة
 tile.deco_rbmk.name=RBMK ديكو
-tile.deco_rbmk_smooth=RBMK Smooth Deco
 tile.deco_rbmk_smooth.name=آر بي إم كيه ديكو السلس
 tile.deco_red_copper.name=كتلة النحاس الأحمر ديكو
 tile.deco_sat_foeq.name=PEAF - Mk.I FOEQ Duna Probe مع الدفع النووي التجريبي (Deco Block)
@@ -4305,11 +4578,18 @@ tile.fluid_duct.name=قناة السوائل العامة [مهملة]
 tile.fluid_duct_mk2.name=قناة السوائل العالمية
 tile.fluid_duct_solid.name=قناة السوائل المختومة
 tile.fluid_duct_solid_sealed.name=راد قناة السوائل المختومة
+tile.foundry_basin.name=حوض مسبك
+tile.foundry_channel.name=قناة مسبك
+tile.foundry_mold.name=حوض مسبك ضحل
+tile.foundry_outlet.name=منفذ مسبك
+tile.foundry_tank.name=حوض تخزين مسبك
 tile.fraction_spacer.name=فاصل برج التجزئة
 tile.frozen_dirt.name=الأوساخ المجمدة
 tile.frozen_grass.name=عشب مجمد
 tile.frozen_log.name=سجل مجمد
 tile.frozen_planks.name=ألواح مجمدة
+tile.furnace_combination.desc=فرن كبير يمكن أن ينتج الفحم والفحم.
+tile.furnace_combination.name=الفرن الجمع
 tile.furnace_iron.desc=فرن أكبر وأكثر كفاءة، لا يهدر الوقود عندما يكون خاملاً.
 tile.furnace_iron.name=فرن حديد
 tile.furnace_steel.desc=فرن كبير جدًا يمكنه توفير عناصر إضافية عند صهر الخامات. يتطلب مصدر حرارة خارجي. $معدل نقل الحرارة: ΔT*0.05 TU/t$(Δ يعني الفرق و T يعني درجة الحرارة)
@@ -4350,6 +4630,7 @@ tile.glass_polonium.name=زجاج البولونيوم
 tile.glass_quartz.name=زجاج الكوارتز
 tile.glass_trinitite.name=زجاج الثالوث
 tile.glass_uranium.name=زجاج اليورانيوم
+tile.glow_spawner.name=جاكوزي النفايات
 tile.gravel_diamond.name=الماس الحصى
 tile.gravel_obsidian.name=حجر السج المكسر
 tile.hadron_access.name=محطة الوصول إلى مسرع الجسيمات
@@ -4377,7 +4658,7 @@ tile.hadron_power.name=مسرع الجسيمات قابس الطاقة
 tile.hazmat.name=كتلة القماش Hazmat
 tile.heat_boiler.desc=غلاية كبيرة يمكنها غلي الماء أو تسخين الزيت.$تتطلب مصدر حرارة خارجي.$معدل نقل الحرارة: ΔT*0.01 TU/t
 tile.heat_boiler.name=غلاية كبيرة
-tile.heater_electric.desc=يستخدم الطاقة لإنتاج الحرارة.$يقبل الحرارة من الأسفل بكفاءة تصل إلى 85%.$يمكن تهيئته باستخدام مفك براغي ومثقاب يدوي.
+tile.heater_electric.desc=يستخدم الطاقة لإنتاج الحرارة.$يقبل الحرارة من الأسفل بكفاءة تصل إلى 85 %%.$يمكن تهيئته باستخدام مفك براغي ومثقاب يدوي.
 tile.heater_electric.name=سخان كهربائي
 tile.heater_firebox.desc=يحرق الوقود الصلب لإنتاج الحرارة.
 tile.heater_firebox.name=صندوق الاحتراق
@@ -4385,7 +4666,7 @@ tile.heater_heatex.desc=تنتج الحرارة من السوائل الساخن
 tile.heater_heatex.name=سخان التبادل الحراري
 tile.heater_oilburner.desc=يحرق السوائل لإنتاج الحرارة.$§eاستخدم مفك البراغي لزيادة الإنتاجية.$§eاستخدم المثقاب اليدوي لتقليل الإنتاجية.
 tile.heater_oilburner.name=حارق السوائل
-tile.heater_oven.desc=يحرق الوقود الصلب لإنتاج الحرارة. $يقبل الحرارة من الأسفل بكفاءة 50%.
+tile.heater_oven.desc=يحرق الوقود الصلب لإنتاج الحرارة. $يقبل الحرارة من الأسفل بكفاءة 50 %%.
 tile.heater_oven.name=فرن التدفئة
 tile.heater_rt.desc=تنتج الحرارة من الكريات RTG
 tile.heater_rt.name=سخان حراري بالنظائر المشعة
@@ -4410,8 +4691,10 @@ tile.lox_barrel.name=برميل LOX
 tile.machine_amgen.name=مولد الإشعاع المحيط
 tile.machine_arc_furnace_off.name=فرن القوس
 tile.machine_arc_furnace_on.name=فرن القوس
+tile.machine_arc_welder.name=لحام قوس
 tile.machine_armor_table.name=جدول تعديل الدرع
 tile.machine_assembler.name=آلة التجميع
+tile.machine_autocrafter.name=طاولة صياغة تلقائية
 tile.machine_bat9000.name=9000 مسعود
 tile.machine_battery.name=كتلة تخزين الطاقة
 tile.machine_battery_potato.name=كتلة بطارية البطاطس
@@ -4422,17 +4705,22 @@ tile.machine_boiler_on.name=سخان مياه
 tile.machine_boiler_rtg_off.name=RTG المرجل
 tile.machine_boiler_rtg_on.name=RTG المرجل
 tile.machine_catalytic_cracker.name=برج التكسير الحفزي
+tile.machine_catalytic_reformer.name=مصلح الحفاز
 tile.machine_centrifuge.name=جهاز الطرد المركزي
 tile.machine_chemfac.name=مصنع كيميائي
 tile.machine_chemplant.name=نبات كيميائى
 tile.machine_chungus.name=توربين ليفياثان البخاري
 tile.machine_coal_off.name=مولد الاحتراق
 tile.machine_coal_on.name=مولد الاحتراق
+tile.machine_coker.desc=زيت cokes ، إنشاء منتجات ثانوية السوائل. $ يتطلب مصدر حرارة خارجي. معدل نقل الحرارة $: ΔT*0.025
+tile.machine_coker.name=وحدة Coker
 tile.machine_combine_factory.name=فرن الصلب CMB
 tile.machine_condenser.name=مكثف بخار
+tile.machine_condenser_powered.name=مكثف البخار عالي الطاقة
 tile.machine_controller.name=مفاعل التحكم عن بعد بلوك
 tile.machine_converter_he_rf.name=HE to RF Converter
 tile.machine_converter_rf_he.name=RF لتحويل HE
+tile.machine_crucible.name=بوتقة
 tile.machine_crystallizer.name=خام حامض
 tile.machine_cyclotron.name=السيكلوترون
 tile.machine_desh_battery.name=كتلة تخزين الطاقة ديش
@@ -4464,9 +4752,12 @@ tile.machine_fraction_tower.name=برج التجزيء
 tile.machine_gascent.name=الطرد المركزي الغازي
 tile.machine_generator.name=مفاعل نووي (قديم)
 tile.machine_geo.name=مولد كهربائي حراري
+tile.machine_hydrotreater.name=Hydrotreater
 tile.machine_industrial_generator.name=مولد صناعي
 tile.machine_keyforge.name=جدول الأقفال
 tile.machine_large_turbine.name=التوربينات البخارية الصناعية
+tile.machine_liquefactor.desc=آلة عالمية قوية لتحويل العناصر إلى سوائل. يأتي $ مع مكونات الحفازة متعددة الاستخدامات ، وعناصر التدفئة $ ومراتل مدمج لتلويل البتروكيماويات.
+tile.machine_liquefactor.name=آلة التسييل الصناعية
 tile.machine_lithium_battery.name=كتلة تخزين طاقة ليثيوم أيون
 tile.machine_microwave.name=الميكروويف
 tile.machine_mining_laser.name=ليزر التعدين
@@ -4477,7 +4768,6 @@ tile.machine_nuke_furnace_off.name=فرن نووي
 tile.machine_nuke_furnace_on.name=فرن نووي
 tile.machine_orbus.name=خزان تخزين مغناطيسي ثقيل
 tile.machine_press.name=الصحافة الموقد
-tile.machine_puf6_tank.name=خزان سداسي فلوريد البلوتونيوم
 tile.machine_pumpjack.name=جاك مضخة
 tile.machine_radar.name=رادار
 tile.machine_radgen.name=محرك يعمل بالإشعاع
@@ -4507,6 +4797,9 @@ tile.machine_silex.name=فاصل النظائر بالليزر (SILEX)
 tile.machine_siren.name=صفارة إنذار
 tile.machine_solar_boiler.desc=يستخدم ضوء الشمس من مرايا هيليوستات لتسخين السوائل.
 tile.machine_solar_boiler.name=غلاية برج الطاقة الشمسية
+tile.machine_soldering_station.name=محطة لحام
+tile.machine_solidifier.desc=آلة عالمية مزودة بأنظمة التبريد وغيرها من الأدوات متعددة الاستخدامات لتحويل السوائل الصلبة باستخدام عمليات مختلفة $ مثل التجميد والبلمرة البتروكيماوية.
+tile.machine_solidifier.name=آلة التصلب الصناعية
 tile.machine_spp_bottom.name=مولد جهد ZPE (سفلي)
 tile.machine_spp_top.name=مولد جهد ZPE (علوي)
 tile.machine_storage_drum.desc=محتويات تتحلل ببطء مع مرور الوقت. إذا كانت خزانات النفايات السائلة والغازية الداخلية ممتلئة، فسوف يتسرب الإشعاع.
@@ -4525,7 +4818,7 @@ tile.machine_transformer_dnt_20.desc=يستخدم الطاقة لشحن العن
 tile.machine_transformer_dnt_20.name=محول DNT-1Hz
 tile.machine_turbine.name=توربينات البخار
 tile.machine_turbofan.name=توربوفان
-tile.machine_uf6_tank.name=خزان سداسي فلوريد اليورانيوم
+tile.machine_vacuum_distill.name=مصفاة فراغ
 tile.machine_waste_drum.desc=يبرد الوقود المستهلك. يحتاج إلى الماء على جانب واحد على الأقل. كلما زاد عدد الجوانب التي تحتوي على الماء كلما كانت أسرع.
 tile.machine_waste_drum.name=طبل تجمع الوقود المستهلك
 tile.machine_well.name=زيت ديريك
@@ -4542,7 +4835,6 @@ tile.mine_ap.name=لغم مضاد للأفراد
 tile.mine_fat.name=منجم الدهون
 tile.mine_he.name=منجم مضاد للدبابات
 tile.mine_shrap.name=منجم شظايا
-tile.mud_block.name=الطين السام
 tile.muffler.name=كاتم صوت
 tile.mush.name=فطر متوهج
 tile.mush_block.name=ينمو متوهجة شروم
@@ -4593,8 +4885,10 @@ tile.ore_gneiss_rare.name=خام الأرض النادرة
 tile.ore_gneiss_schrabidium.name=خام Schist Schrabidium
 tile.ore_gneiss_uranium.name=خام اليورانيوم Schist
 tile.ore_gneiss_uranium_scorched.name=خام اليورانيوم الشست المحروق
+tile.ore_hematite.name=الهيماتيت
 tile.ore_lead.name=خام الرصاص
 tile.ore_lignite.name=خام الليغنيت
+tile.ore_malachite.name=الملكيت
 tile.ore_meteor_aluminium.name=خام الألمنيوم النيزكي
 tile.ore_meteor_copper.name=خام النحاس النيزكي
 tile.ore_meteor_lead.name=ركاز الرصاص النيزكي
@@ -4623,6 +4917,7 @@ tile.ore_rare.name=خام الأرض النادرة
 tile.ore_reiium.name=رييت
 tile.ore_schrabidium.name=خام شرابيديوم
 tile.ore_sulfur.name=خام الكبريت
+tile.ore_tektite_osmiridium.name=التكتيت المملوء بالأوزميريديوم
 tile.ore_thorium.name=خام الثوريوم
 tile.ore_tikite.name=تريكسيت
 tile.ore_titanium.name=خام التيتانيوم
@@ -4648,6 +4943,7 @@ tile.plasma.name=بلازما
 tile.plasma_heater.name=سخان بلازما
 tile.pole_satellite_receiver.name=طبق استقبال أقمار صناعية
 tile.pole_top.name=قمة الهوائي
+tile.press_preheater.name=المسلحة المسبقة
 tile.pribris.name=RBMK Debris
 tile.pribris_burning.name=المشتعلة الحطام RBMK
 tile.pribris_digamma.name=اسودد RBMK الحطام
@@ -4718,6 +5014,7 @@ tile.red_barrel.name=برميل متفجر
 tile.red_cable.name=كبل نحاسي أحمر
 tile.red_cable_gauge.desc=كابل يعرض مقدار الطاقة التي تتحرك داخل الشبكة في الثانية. تعتبر الشبكات المقسمة المتصلة بواسطة كتل تخزين الطاقة بمثابة شبكة واحدة مشتركة.
 tile.red_cable_gauge.name=مقياس قوة
+tile.red_connector.name=موصل الكهرباء
 tile.red_pylon.desc=§6نوع الاتصال: §eSingle$§6نطاق الاتصال: §e25m
 tile.red_pylon.name=قطب الكهرباء
 tile.red_pylon_large.desc=§6نوع الاتصال: §eQuadruple$§6نطاق الاتصال: §e100m$§6يتطلب هذا الصرح محطة فرعية!
@@ -4769,6 +5066,7 @@ tile.silo_hatch.name=صومعة هاتش
 tile.sliding_blast_door.name=باب انزلاقي جانبي
 tile.sliding_blast_door_2.name=باب انزلاقي جانبي
 tile.sliding_blast_door_2.variant=البديل: لوحة المفاتيح
+tile.sliding_blast_door_keypad=لوحة مفاتيح الباب الانفجار الجانبي
 tile.sliding_gate_door.name=باب احتواء التيسير الكمي الصغير
 tile.sliding_seal_door.name=انزلاق الباب الختم
 tile.small_hatch.name=فتحة صغيرة
@@ -4796,11 +5094,13 @@ tile.struct_launcher_core_large.name=تشغيل مكون الجدول الأسا
 tile.struct_plasma_core.name=المكون الأساسي لسخان البلازما
 tile.struct_scaffold.name=إطلاق منصة سقالة بلوك
 tile.struct_soyuz_core.name=المكون الأساسي لقاذفة سويوز
+tile.struct_watz_core.name=مكون Watz Powerplant Core
 tile.substation.desc=§6نوع الاتصال: §eQuadruple$§6نطاق الاتصال: §e20m
 tile.substation.name=محطة فرعية
 tile.taint.name=تلوث
 tile.taint_barrel.name=برميل بقايا IMP
 tile.tape_recorder.name=مسجل
+tile.tektite.name=التكتيت
 tile.tesla.name=لفائف تسلا
 tile.test_nuke.name=اختبار Nuke
 tile.therm_endo.name=قنبلة ماصة للحرارة
@@ -4847,7 +5147,12 @@ tile.waste_earth.name=ميت العشب
 tile.waste_grass_tall.name=نفايات العشب
 tile.waste_gravel.name=الحصى الملوثة
 tile.waste_ice.name=الجليد الملوث
-tile.waste_leaves.name=أوراق النفايات
+tile.waste_leaves.acacia.name=أوراق نفايات السنط
+tile.waste_leaves.big_oak.name=أوراق نفايات البلوط الداكن
+tile.waste_leaves.birch.name=أوراق نفايات البتولا
+tile.waste_leaves.jungle.name=أوراق نفايات الغابة
+tile.waste_leaves.oak.name=أوراق نفايات البلوط
+tile.waste_leaves.spruce.name=أوراق نفايات شجرة التنوب
 tile.waste_log.name=السجل المتفحم
 tile.waste_mycelium.name=متوهجة فطيرة
 tile.waste_planks.name=ألواح خشبية متفحمة
@@ -4861,6 +5166,9 @@ tile.waste_terracotta.name=الطين الملوث
 tile.waste_trinitite.name=خام الترينيتيت
 tile.waste_trinitite_red.name=خام الترينيتيت الأحمر
 tile.water_door.name=باب الماء
+tile.watz.name=Watz Powerplant
+tile.watz_casing.name=غلاف واتز
+tile.watz_casing_tooled.name=غلاف واتز انسحب
 tile.watz_conductor.name=ميناء كهرباء واتز
 tile.watz_control.name=قضبان تحكم معززة
 tile.watz_cooler.name=مبرد مفاعل Watz الفائق
@@ -4868,6 +5176,7 @@ tile.watz_core.name=التحكم في مفاعل Watz
 tile.watz_element.name=غرفة تفاعل واتز
 tile.watz_end.name=عنصر استقرار مفاعل واتز
 tile.watz_hatch.name=Watz Reactor Access Hatch
+tile.watz_pump.name=مضخة الضغط واتز
 tile.yellow_barrel.name=برميل مشع
 tipped_arrow.effect.potion.hbm_bang=السهم من ! ! !
 tipped_arrow.effect.potion.hbm_lead=سهم التسمم بالرصاص
@@ -4941,6 +5250,7 @@ trait.hot=اشتعال / ساخن
 trait.hotfluid=حار
 trait.hydro=انفجار مائي
 trait.legendaryweap=§d§l[السلاح الأسطوري]
+trait.mkuinfected=مُصاب
 trait.modularbomb=قنبلة وحدات
 trait.nuclearbomb=قنبلة نووية
 trait.nucleargrenade=قنبلة نووية
@@ -5053,35 +5363,3 @@ weapon.ability.phosphorus=نصيحة الفوسفور
 weapon.ability.radiation=شفرة مشعة
 weapon.ability.stun=مدهش
 weapon.ability.vampire=مصاص دماء
-container.craneBoxer=الملاكم الناقل
-container.craneGrabber=المنتزع الناقل
-container.craneRouter=فارز الناقل
-container.craneUnboxer=ناقل Unboxer
-death.attack.blast=تم تفجير %1$s بسبب موجة صادمة من الانفجار.
-desc.conveyor.boxer.mode1=قم بالتعبئة عندما يحتوي المخزون على مكدس واحد كامل
-desc.conveyor.boxer.mode2=قم بالتعبئة عندما يحتوي المخزون على مجموعتين كاملتين
-desc.conveyor.boxer.mode4=قم بالتعبئة عندما يحتوي المخزون على 4 مجموعات كاملة
-desc.conveyor.boxer.mode8=قم بالتعبئة عندما يحتوي المخزون على 8 مجموعات كاملة
-desc.conveyor.boxer.mode16=قم بالتعبئة عندما يحتوي المخزون على 16 مجموعة كاملة
-desc.conveyor.boxer.modeR=قم بالتعبئة عند تشغيل إشارة إعادة الحجر
-desc.guimachboiler1=معدل الغليان:$ المعدل الأساسي * مقدار المضاعفات الكاملة لنقاط الغليان التي تم الوصول إليها
-entity.entity_c_item.name=البند الناقل
-entity.entity_c_package.name=صندوق ناقل
-item.rare_earth_chunk.name=قطعة الأرض النادرة
-jei.rbmkfueluncrafting=تفكيك وقود RBMK
-lung_scanner.neg=§2 سلبي
-lung_scanner.player_mku=اختبار مكو:
-lung_scanner.player_mku_duration=الموت في:
-lung_scanner.pos=§4إيجابي
-tile.conveyor_chute.name=شلال الناقل
-tile.conveyor_double.name=الحزام الناقل ذو المسار المزدوج
-tile.conveyor_lift.name=رفع سلسلة الناقل
-tile.conveyor_triple.name=الحزام الناقل ثلاثي المسار
-tile.crane_boxer.name=الملاكم الناقل
-tile.crane_grabber.name=المنتزع الناقل
-tile.crane_router.name=فارز الناقل
-tile.crane_splitter.name=الفاصل الناقل
-tile.crane_unboxer.name=ناقل Unboxer
-tile.ore_tektite_osmiridium.name=التكتيت المملوء بالأوزميريديوم
-tile.tektite.name=التكتيت
-trait.mkuinfected=مُصاب

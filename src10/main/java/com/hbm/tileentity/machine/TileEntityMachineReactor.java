@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineReactor extends TileEntityMachineBase implements ITickable {
 
@@ -69,7 +70,7 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 
 		nbt.setShort("powerTime", (short) charge);
 		nbt.setShort("heat", (short) heat);
@@ -112,19 +113,15 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 	@Override
 	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
 		if(slot == 0) {
-			if(!hasItemPower(inventory.getStackInSlot(0))) {
-				return true;
-			}
-
-			return false;
-		}
+            return !hasItemPower(inventory.getStackInSlot(0));
+        }
 
 		return true;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack stack) {
-		return i == 2 ? false : (i == 0 ? hasItemPower(stack) : true);
+		return i != 2 && (i != 0 || hasItemPower(stack));
 	}
 
 	public int getProgressScaled(int i) {
@@ -254,12 +251,9 @@ public class TileEntityMachineReactor extends TileEntityMachineBase implements I
 				progress = 0;
 			}
 
-			boolean trigger = true;
+			boolean trigger = !hasPower() || !canProcess() || this.progress != 0;
 
-			if(hasPower() && canProcess() && this.progress == 0)
-				trigger = false;
-
-			if(trigger) {
+            if(trigger) {
 				markDirty = true;
 			}
 

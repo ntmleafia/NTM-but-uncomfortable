@@ -3,6 +3,7 @@ package com.hbm.blocks.machine;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
+import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityForceField;
 
@@ -77,6 +78,18 @@ public class MachineForceField extends BlockContainer {
 				world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f + f4, f1, f2 + f5, 0.0D, 0.0D, 0.0D);
 			}
 		}
+	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		TileEntity tileentity = world.getTileEntity(pos);
+
+		if(tileentity instanceof TileEntityForceField te) {
+			InventoryHelper.dropInventoryItems(world, pos, te);
+
+			world.updateComparatorOutputLevel(pos, this);
+		}
+		super.breakBlock(world, pos, state);
 	}
 	
 	@Override

@@ -1,6 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemRBMKRod;
 import com.hbm.inventory.WasteDrumRecipes;
 import com.hbm.tileentity.TileEntityMachineBase;
@@ -13,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityWasteDrum extends TileEntityMachineBase implements ITickable {
 
@@ -76,7 +76,7 @@ public class TileEntityWasteDrum extends TileEntityMachineBase implements ITicka
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound){
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound){
 		compound.setInteger("water", water);
 		return super.writeToNBT(compound);
 	}

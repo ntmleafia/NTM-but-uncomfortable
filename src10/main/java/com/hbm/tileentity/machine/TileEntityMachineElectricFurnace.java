@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineElectricFurnace extends TileEntityMachineBase implements ITickable, IEnergyUser {
 
@@ -56,7 +57,7 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("powerTime", power);
 		compound.setInteger("cookTime", dualCookTime);
 		compound.setTag("inventory", inventory.serializeNBT());
@@ -74,12 +75,9 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 		if(i == 0)
 			if(stack.getItem() instanceof IBatteryItem)
 				return true;
-		
-		if(i == 1)
-			return true;
-		
-		return false;
-	}
+
+        return i == 1;
+    }
 	
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
@@ -91,11 +89,8 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 		if(slot == 0)
 			if (itemStack.getItem() instanceof IBatteryItem && ((IBatteryItem)itemStack.getItem()).getCharge(itemStack) == 0)
 				return true;
-		if(slot == 2)
-			return true;
-		
-		return false;
-	}
+        return slot == 2;
+    }
 	
 	public int getDiFurnaceProgressScaled(int i) {
 		return (dualCookTime * i) / processingSpeed;
@@ -192,14 +187,9 @@ public class TileEntityMachineElectricFurnace extends TileEntityMachineBase impl
 				dualCookTime = 0;
 			}
 			
-			boolean trigger = true;
-			
-			if(hasPower() && canProcess() && this.dualCookTime == 0)
-			{
-				trigger = false;
-			}
-			
-			if(trigger)
+			boolean trigger = !hasPower() || !canProcess() || this.dualCookTime != 0;
+
+            if(trigger)
             {
                 flag1 = true;
                 MachineElectricFurnace.updateBlockState(this.dualCookTime > 0, this.world, pos);

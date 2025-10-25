@@ -22,10 +22,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityFurnaceSteel extends TileEntityMachineBase implements IGUIProvider, ITickable {
 
@@ -36,7 +36,7 @@ public class TileEntityFurnaceSteel extends TileEntityMachineBase implements IGU
 	public int heat;
 	public static final int maxHeat = 100_000;
 	public static final double diffusion = 0.05D;
-	private ItemStack[] lastItems = new ItemStack[3];
+	private ItemStack[] lastItems = new ItemStack[]{ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
 	
 	public boolean wasOn = false;
 	    
@@ -155,7 +155,7 @@ public class TileEntityFurnaceSteel extends TileEntityMachineBase implements IGU
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 
 		nbt.setIntArray("progress", progress);

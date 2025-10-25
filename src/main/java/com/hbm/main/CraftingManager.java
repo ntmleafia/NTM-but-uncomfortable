@@ -2151,7 +2151,8 @@ public class CraftingManager {
 		addShapelessAuto(new ItemStack(Ingots.ingot_smore), Items.WHEAT, new ItemStack(Foods.marshmallow_roasted, 1), new ItemStack(Items.DYE, 1, 3));
 		addShapelessAuto(new ItemStack(Foods.marshmallow), Items.STICK, Items.SUGAR, Items.WHEAT_SEEDS);
 
-		addRecipeAuto(new ItemStack(ModItems.coltass, 1), "ACA", "CXC", "ACA", 'A', ALLOY.ingot(), 'C', ModItems.cinnebar, 'X', Items.COMPASS);
+		if (GeneralConfig.enable528 && GeneralConfig.enable528ColtanDeposit)
+			addRecipeAuto(new ItemStack(ModItems.coltass, 1), "ACA", "CXC", "ACA", 'A', ALLOY.ingot(), 'C', ModItems.cinnebar, 'X', Items.COMPASS);
 		addRecipeAuto(new ItemStack(ModItems.bismuth_tool, 1), "TBT", "SRS", "SCS", 'T', TA.nugget(), 'B', ANY_BISMOID.nugget(), 'S', TCALLOY.ingot(), 'R', ModItems.reacher, 'C', ModItems.circuit_aluminium);
 		addRecipeAuto(new ItemStack(ModItems.reacher, 1), "BIB", "P P", "B B", 'B', ModItems.bolt_tungsten, 'I', W.ingot(), 'P', ANY_RUBBER.ingot());
 		addShapelessAuto(new ItemStack(Powders.powder_tcalloy, 1), STEEL.dust(), TC99.nugget());

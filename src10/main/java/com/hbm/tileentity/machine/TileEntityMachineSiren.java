@@ -51,7 +51,7 @@ public class TileEntityMachineSiren extends TileEntity implements ITickable, ICo
 	}
 
 	public boolean hasCustomInventoryName() {
-		return this.customName != null && this.customName.length() > 0;
+		return this.customName != null && !this.customName.isEmpty();
 	}
 	
 	public void setCustomName(String name) {
@@ -90,7 +90,7 @@ public class TileEntityMachineSiren extends TileEntity implements ITickable, ICo
 				return;
 			}
 			
-			boolean active = ctrlActive || world.getStrongPower(pos) > 0;
+			boolean active = ctrlActive || world.getRedstonePowerFromNeighbors(pos) > 0;
 			
 			if(getCurrentType().getType().name().equals(SoundType.LOOP.name())) {
 				

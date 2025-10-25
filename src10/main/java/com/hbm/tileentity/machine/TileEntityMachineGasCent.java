@@ -5,50 +5,52 @@ import java.util.Collections;
 import java.util.List;
 
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.inventory.MachineRecipes;
-import com.hbm.inventory.MachineRecipes.GasCentOutput;
+import com.hbm.inventory.GasCentrifugeRecipes;
+import com.hbm.inventory.GasCentrifugeRecipes.*;
+import com.hbm.inventory.UpgradeManager;
+import com.hbm.items.ModItems;
+import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.Library;
-import com.hbm.packet.AuxElectricityPacket;
-import com.hbm.packet.AuxGaugePacket;
-import com.hbm.packet.FluidTankPacket;
 import com.hbm.packet.LoopedSoundPacket;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyUser;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineGasCent extends TileEntityMachineBase implements ITickable, IEnergyUser, ITankPacketAcceptor, IFluidHandler {
 
 	
 	public long power;
 	public int progress;
+    public int processTime = 200;
 	public boolean isProgressing;
 	public static final int maxPower = 100000;
 	public static final int processingSpeed = 200;
-	public boolean needsUpdate = false;
+    public static final int baseConsumption = 200;
+    public boolean needsUpdate = false;
+    public boolean hasCentUpgrade = false;
 	
 	public FluidTank tank;
-	
-	//private static final int[] slots_top = new int[] {3};
+
+    private final UpgradeManager upgradeManager = new UpgradeManager();
+
+    //private static final int[] slots_top = new int[] {3};
 	//private static final int[] slots_bottom = new int[] {5, 6, 7, 8};
 	//private static final int[] slots_side = new int[] {0, 3};
 	
@@ -56,7 +58,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	
 	public TileEntityMachineGasCent() {
 		super(9);
-		tank = new FluidTank(8000);
+		tank = new FluidTank(16000);
 	}
 	
 	public String getName() {
@@ -75,7 +77,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt.setLong("powerTime", power);
 		nbt.setShort("cookTime", (short) progress);
 		tank.writeToNBT(nbt);
@@ -84,7 +86,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	}
 	
 	public int getCentrifugeProgressScaled(int i) {
-		return (progress * i) / processingSpeed;
+		return (progress * i) / processTime;
 	}
 	
 	public long getPowerRemainingScaled(int i) {
@@ -93,15 +95,19 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	
 	private boolean canProcess() {
 		
-		if(power > 0 && this.tank.getFluidAmount() >= MachineRecipes.getFluidConsumedGasCent(tank.getFluid() == null ? null : tank.getFluid().getFluid())) {
+		if(power > 0 && this.tank.getFluid() != null) {
+
+            if(this.tank.getFluidAmount() < GasCentrifugeRecipes.getFluidConsumedGasCent(hasCentUpgrade, tank.getFluid().getFluid())) return false;
+
+            GasCentRecipe recipe = GasCentrifugeRecipes.getGasCentRecipe(tank.getFluid().getFluid());
 			
-			List<GasCentOutput> list = MachineRecipes.getGasCentOutput(tank.getFluid() == null ? null : tank.getFluid().getFluid());
-			
-			if(list == null)
+			if(recipe == null)
 				return false;
 			
-			if(list.size() < 1 || list.size() > 4)
+			if(recipe.outputListA.isEmpty() || recipe.outputListA.size() > 4)
 				return false;
+
+            List<GasCentOutput> list = hasCentUpgrade && recipe.outputListB != null ? recipe.outputListB : recipe.outputListA;
 			
 			for(int i = 0; i < list.size(); i++) {
 				
@@ -126,22 +132,25 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	
 	private void process() {
 
-		List<GasCentOutput> out = MachineRecipes.getGasCentOutput(tank.getFluid() == null ? null : tank.getFluid().getFluid());
-		this.progress = 0;
-		tank.drain(MachineRecipes.getFluidConsumedGasCent(tank.getFluid() == null ? null : tank.getFluid().getFluid()), true);
+        GasCentRecipe recipe = GasCentrifugeRecipes.getGasCentRecipe(tank.getFluid().getFluid());
+        boolean useB = hasCentUpgrade && recipe.outputListB != null;
+        List<GasCentOutput> out = useB ? recipe.outputListB : recipe.outputListA;
+        int amount = useB ? recipe.amountB : recipe.amountA;
+        this.progress = 0;
+		tank.drain(amount, true);
 		
 		List<GasCentOutput> random = new ArrayList<GasCentOutput>();
-		
-		for(int i = 0; i < out.size(); i++) {
-			for(int j = 0; j < out.get(i).weight; j++) {
-				random.add(out.get(i));
-			}
-		}
+
+        for (GasCentOutput gasCentOutput : out) {
+            for (int j = 0; j < gasCentOutput.weight; j++) {
+                random.add(gasCentOutput);
+            }
+        }
 		
 		Collections.shuffle(random);
 		
 		GasCentOutput result = random.get(world.rand.nextInt(random.size()));
-		
+
 		int slot = result.slot + 4;
 		
 		if(inventory.getStackInSlot(slot).isEmpty()) {
@@ -150,6 +159,10 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 			inventory.getStackInSlot(slot).grow(result.output.getCount());
 		}
 	}
+
+    public boolean hasCentUpgrade(){
+        return inventory.getStackInSlot(1).getItem() == ModItems.upgrade_gc_speed;
+    }
 	
 	@Override
 	public void update() {
@@ -159,9 +172,17 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 			if (needsUpdate) {
 				needsUpdate = false;
 			}
+            upgradeManager.eval(inventory, 2, 3);
+            int speedLevel = Math.min(upgradeManager.getLevel(ItemMachineUpgrade.UpgradeType.SPEED), 9);
+            int powerLevel = Math.min(upgradeManager.getLevel(ItemMachineUpgrade.UpgradeType.POWER), 3);
+            int overLevel = upgradeManager.getLevel(ItemMachineUpgrade.UpgradeType.OVERDRIVE);
+
+            int consumption = baseConsumption * (1 + speedLevel);
+            consumption *= (overLevel * 3 + 1);
+            consumption /= (1 + powerLevel);
+
 			this.updateConnectionsExcept(world, pos, Library.POS_Y);
-			PacketDispatcher.wrapper.sendToAllAround(new FluidTankPacket(pos.getX(), pos.getY(), pos.getZ(), new FluidTank[] {tank}), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
-			
+
 			power = Library.chargeTEFromItems(inventory, 0, power, maxPower);
 			
 			//First number doesn't matter, there's only one tank.
@@ -169,19 +190,25 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 				FFUtils.fillFromFluidContainer(inventory, tank, 3, 4);
 			
 			
-			
-			if(canProcess()) {
+			 this.hasCentUpgrade = hasCentUpgrade();
+			if(this.power >= consumption && canProcess()) {
 				
 				isProgressing = true;
 				
 				this.progress++;
 				
-				this.power -= 200;
+				this.power -= consumption;
 				
 				if(this.power < 0)
 					power = 0;
-				
-				if(progress >= processingSpeed) {
+
+                this.processTime = (int) (processingSpeed * (2 + powerLevel)/2D);
+                this.processTime -= (int) (this.processTime * speedLevel / 10D);
+                this.processTime /= (overLevel + 1);
+
+                if(this.processTime <= 0) this.processTime = 1;
+
+                if(this.progress >= this.processTime) {
 					process();
 				}
 				
@@ -190,8 +217,8 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 				this.progress = 0;
 			}
 
-			PacketDispatcher.wrapper.sendToAll(new LoopedSoundPacket(pos.getX(), pos.getY(), pos.getZ()));
-			detectAndSendChanges();
+            if(countMufflers() == 0) PacketDispatcher.wrapper.sendToAll(new LoopedSoundPacket(pos.getX(), pos.getY(), pos.getZ()));
+            detectAndSendChanges();
 		}
 
 		
@@ -221,18 +248,31 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 			needsUpdate = true;
 			mark = true;
 		}
-		PacketDispatcher.wrapper.sendToAllAround(new AuxElectricityPacket(pos.getX(), pos.getY(), pos.getZ(), power), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
-		PacketDispatcher.wrapper.sendToAllAround(new AuxGaugePacket(pos.getX(), pos.getY(), pos.getZ(), progress, 0), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
-		PacketDispatcher.wrapper.sendToAllAround(new AuxGaugePacket(pos.getX(), pos.getY(), pos.getZ(), isProgressing ? 1 : 0, 1), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 100));
-		if(mark)
+
+        NBTTagCompound data = new NBTTagCompound();
+        tank.writeToNBT(data);
+        data.setBoolean("ip", isProgressing);
+        data.setInteger("pr", progress);
+        data.setInteger("t", processTime);
+        data.setLong("p", power);
+        this.networkPack(data, 150);
+        if(mark)
 			markDirty();
 	}
 
+    @Override
+    public void networkUnpack(NBTTagCompound nbt) {
+        this.tank.readFromNBT(nbt);
+        this.isProgressing = nbt.getBoolean("ip");
+
+        this.progress = nbt.getInteger("pr");
+        this.processTime = nbt.getInteger("t");
+        this.power = nbt.getLong("p");
+    }
+
 	protected boolean inputValidForTank(int tank, int slot){
 		if(!inventory.getStackInSlot(slot).isEmpty()){
-			if(isValidFluid(FluidUtil.getFluidContained(inventory.getStackInSlot(slot)))){
-				return true;
-			}
+            return isValidFluid(FluidUtil.getFluidContained(inventory.getStackInSlot(slot)));
 		}
 		return false;
 	}
@@ -240,7 +280,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 	private boolean isValidFluid(FluidStack stack) {
 		if(stack == null)
 			return false;
-		return MachineRecipes.getFluidConsumedGasCent(stack.getFluid()) != 0;
+		return GasCentrifugeRecipes.recipes.containsKey(stack.getFluid());
 	}
 
 	@Override
@@ -283,9 +323,7 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 
 	@Override
 	public void recievePacket(NBTTagCompound[] tags) {
-		if(tags.length != 1){
-			return;
-		} else {
+		if(tags.length == 1){
 			tank.readFromNBT(tags[0]);
 		}
 	}

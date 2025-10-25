@@ -6,9 +6,7 @@ import com.hbm.entity.effect.EntityCloudFleijaRainbow;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.FluidTypeHandler;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.handler.ArmorUtil;
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemCatalyst;
 import com.hbm.items.special.ItemAMSCore;
 import com.hbm.lib.Library;
@@ -30,6 +28,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityCore extends TileEntityMachineBase implements ITickable {
 
@@ -200,12 +199,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable {
 		
 		if(tanks[0].getFluid() == null || tanks[1].getFluid() == null)
 			return false;
-		
-		if(FluidTypeHandler.getDFCEfficiency(tanks[0].getFluid().getFluid()) <= 0 || FluidTypeHandler.getDFCEfficiency(tanks[1].getFluid().getFluid()) <= 0)
-			return false;
-		
-		return true;
-	}
+
+        return !(FluidTypeHandler.getDFCEfficiency(tanks[0].getFluid().getFluid()) <= 0) && !(FluidTypeHandler.getDFCEfficiency(tanks[1].getFluid().getFluid()) <= 0);
+    }
 	
 	//100 emitter watt = 10000 joules = 1 heat = 10mB burned
 	public long burn(long joules) {
@@ -292,7 +288,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable {
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("tanks", FFUtils.serializeTankArray(tanks));
 		return super.writeToNBT(compound);
 	}

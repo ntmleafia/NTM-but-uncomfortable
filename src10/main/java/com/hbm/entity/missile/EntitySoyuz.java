@@ -3,8 +3,8 @@ package com.hbm.entity.missile;
 import java.util.List;
 
 import com.hbm.explosion.ExplosionLarge;
+import com.hbm.items.ISatChip;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemSatChip;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
@@ -117,8 +117,8 @@ public class EntitySoyuz extends Entity {
 						AdvancementManager.grantAchievement(p, AdvancementManager.achFOEQ);
 				}
 				
-				if(load.getItem() instanceof ItemSatChip) {
-				    int freq = ItemSatChip.getFreq(load);
+				if(load.getItem() instanceof ISatChip) {
+				    int freq = ISatChip.getFreqS(load);
 			    	Satellite.orbit(world, Satellite.getIDFromItem(load.getItem()), freq, posX, posY, posZ);
 				}
 			}

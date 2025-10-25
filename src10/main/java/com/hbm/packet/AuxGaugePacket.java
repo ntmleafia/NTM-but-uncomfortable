@@ -22,13 +22,11 @@ import com.hbm.tileentity.machine.TileEntityMachineCentrifuge;
 import com.hbm.tileentity.machine.TileEntityMachineCoal;
 import com.hbm.tileentity.machine.TileEntityMachineDiesel;
 import com.hbm.tileentity.machine.TileEntityMachineElectricFurnace;
-import com.hbm.tileentity.machine.TileEntityMachineGasCent;
 import com.hbm.tileentity.machine.TileEntityMachineGenerator;
 import com.hbm.tileentity.machine.TileEntityMachineReactorLarge;
 import com.hbm.tileentity.machine.TileEntityMachineReactorSmall;
 import com.hbm.tileentity.machine.TileEntityMachineSeleniumEngine;
 import com.hbm.tileentity.machine.TileEntitySlidingBlastDoor;
-import com.hbm.tileentity.machine.TileEntityWatzCore;
 import com.hbm.tileentity.turret.TileEntityTurretCIWS;
 import com.hbm.tileentity.turret.TileEntityTurretCheapo;
 
@@ -148,13 +146,6 @@ public class AuxGaugePacket implements IMessage {
 							reactor.coreHeat = m.value;
 						if(m.id == 3)
 							reactor.hullHeat = m.value;
-					} else if(te instanceof TileEntityMachineGasCent) {
-						TileEntityMachineGasCent cent = (TileEntityMachineGasCent) te;
-
-						if(m.id == 0)
-							cent.progress = m.value;
-						if(m.id == 1)
-							cent.isProgressing = m.value == 1;
 					} else if(te instanceof TileEntityMachineCentrifuge) {
 						TileEntityMachineCentrifuge cent = (TileEntityMachineCentrifuge) te;
 
@@ -251,22 +242,8 @@ public class AuxGaugePacket implements IMessage {
 					} else if(te instanceof TileEntityMachineGenerator){
 						if(m.id == 0)
 							((TileEntityMachineGenerator) te).heat = m.value;
-					} else if(te instanceof TileEntityWatzCore){
-						TileEntityWatzCore core = (TileEntityWatzCore) te;
-						if(m.id == 0)
-							core.powerList = m.value;
-						else if(m.id == 1)
-							core.heatList = m.value;
-						else if(m.id == 2)
-							core.decayMultiplier = m.value;
-						else if(m.id == 3)
-							core.powerMultiplier = m.value;
-						else if(m.id == 4)
-							core.heatMultiplier = m.value;
-						else if(m.id == 5)
-							core.heat = m.value;
 					} else if(te instanceof TileEntitySlidingBlastDoor){
-						((TileEntitySlidingBlastDoor) te).shouldUseBB = m.value == 1 ? true : false;
+						((TileEntitySlidingBlastDoor) te).shouldUseBB = m.value == 1;
 					}
 				} catch(Exception x) {
 				}

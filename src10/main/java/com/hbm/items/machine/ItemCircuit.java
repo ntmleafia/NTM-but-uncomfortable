@@ -8,7 +8,7 @@ public class ItemCircuit extends ItemEnumMulti {
 		super(EnumCircuitType.class, s);
 	}
 
-	public static enum EnumCircuitType {
+	public enum EnumCircuitType {
 		VACUUM_TUBE,
 		CAPACITOR,
 		CAPACITOR_TANTALIUM,
@@ -29,6 +29,5 @@ public class ItemCircuit extends ItemEnumMulti {
 		CONTROLLER,
 		CONTROLLER_ADVANCED,
 		CONTROLLER_QUANTUM,
-
 	}
 }

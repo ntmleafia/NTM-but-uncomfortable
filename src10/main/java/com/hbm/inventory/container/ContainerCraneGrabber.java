@@ -55,7 +55,6 @@ public class ContainerCraneGrabber extends Container {
 
         if (clickTypeIn == ClickType.PICKUP && dragType == 1 && slot.getHasStack()) {
             grabber.nextMode(slotId);
-            return ret;
         } else {
             slot.putStack(held.isEmpty() ? ItemStack.EMPTY : held.copy());
 
@@ -66,11 +65,16 @@ public class ContainerCraneGrabber extends Container {
             slot.onSlotChanged();
             grabber.initPattern(slot.getStack(), slotId);
 
-            return ret;
         }
+        return ret;
     }
 
     @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+        return ItemStack.EMPTY;
+    }
+
+        @Override
     public boolean canInteractWith(EntityPlayer player) {
         return grabber.isUseableByPlayer(player);
     }

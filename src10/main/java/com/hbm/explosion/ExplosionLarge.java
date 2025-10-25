@@ -15,9 +15,7 @@ import com.hbm.packet.PacketDispatcher;
 import com.hbm.render.amlfrom1710.Vec3;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -241,11 +239,11 @@ public class ExplosionLarge {
 	public static int shrapnelFunction(int i) {
 		return i / 3;
 	}
-	
+
 	public static void explodeFire(World world, double x, double y, double z, float strength, boolean cloud, boolean rubble, boolean shrapnel) {
 		if(CompatibilityConfig.isWarDim(world)){
 			world.spawnEntity(EntityNukeExplosionMK5.statFacNoRadFire(world, (int)strength, x, y, z));
-			
+
 			ContaminationUtil.radiate(world, x, y, z, strength, 0, 0, strength*20F, strength*5F);
 		}
 		if(cloud)

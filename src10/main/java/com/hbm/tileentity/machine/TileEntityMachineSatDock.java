@@ -1,36 +1,34 @@
 package com.hbm.tileentity.machine;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import com.hbm.blocks.ModBlocks;
 import com.hbm.entity.missile.EntityMinerRocket;
+import com.hbm.items.ISatChip;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemSatChip;
+import com.hbm.main.AdvancementManager;
 import com.hbm.saveddata.satellites.Satellite;
-import com.hbm.saveddata.satellites.SatelliteMiner;
 import com.hbm.saveddata.satellites.SatelliteHorizons;
+import com.hbm.saveddata.satellites.SatelliteMiner;
 import com.hbm.saveddata.satellites.SatelliteSavedData;
-import com.hbm.util.WeightedRandomObject;
 import com.hbm.tileentity.TileEntityMachineBase;
-
+import com.hbm.util.WeightedRandomObject;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class TileEntityMachineSatDock extends TileEntityMachineBase implements ITickable {
 
@@ -69,17 +67,15 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 			data.markDirty();
 
 			if(data != null && !inventory.getStackInSlot(15).isEmpty()) {
-				int freq = ItemSatChip.getFreq(inventory.getStackInSlot(15));
+				int freq = ISatChip.getFreqS(inventory.getStackInSlot(15));
 
 				Satellite sat = data.getSatFromFreq(freq);
 
 				int delay = 10 * 60 * 1000; //10min
 
-				if(sat != null && sat instanceof SatelliteMiner) {
+				if(sat != null && sat instanceof SatelliteMiner miner) {
 
-					SatelliteMiner miner = (SatelliteMiner)sat;
-
-					if(miner.lastOp + delay < System.currentTimeMillis()) {
+                    if(miner.lastOp + delay < System.currentTimeMillis()) {
 
 						EntityMinerRocket rocket = new EntityMinerRocket(world);
 						rocket.posX = pos.getX() + 0.5;
@@ -90,11 +86,9 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 						data.markDirty();
 					}
 				}
-				if(sat != null && sat instanceof SatelliteHorizons) {
-					
-					SatelliteHorizons gerald = (SatelliteHorizons)sat;
+				if(sat != null && sat instanceof SatelliteHorizons gerald) {
 
-					if(gerald.lastOp + delay < System.currentTimeMillis()) {
+                    if(gerald.lastOp + delay < System.currentTimeMillis()) {
 
 						EntityMinerRocket rocket = new EntityMinerRocket(world, (byte)1);
 						rocket.posX = pos.getX() + 0.5;
@@ -112,11 +106,9 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 
 			for(Entity e : list) {
 
-				if(e instanceof EntityMinerRocket) {
+				if(e instanceof EntityMinerRocket rocket) {
 
-					EntityMinerRocket rocket = (EntityMinerRocket)e;
-
-					if(rocket.getDataManager().get(EntityMinerRocket.TIMER) == 1 && rocket.timer == 50) {
+                    if(rocket.getDataManager().get(EntityMinerRocket.TIMER) == 1 && rocket.timer == 50) {
 						byte type = rocket.getRocketType();
 						if(type == 0){
 							unloadCargo();
@@ -141,7 +133,10 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 	}
 
 	private void unloadGeraldCargo(){
-		unloadTheCargo(cargoGerald);
+        for(EntityPlayer p : world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5).grow(500, 50, 50)))
+            AdvancementManager.grantAchievement(p, AdvancementManager.horizonsEnd);
+
+        unloadTheCargo(cargoGerald);
 	}
 
 	private void unloadTheCargo(WeightedRandomObject[] cargo){
@@ -165,8 +160,9 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 		new WeightedRandomObject(new ItemStack(ModItems.powder_plutonium, 1), 5), 
 		new WeightedRandomObject(new ItemStack(ModItems.powder_thorium, 2), 7), 
 		new WeightedRandomObject(new ItemStack(ModItems.powder_desh_mix, 3), 5), 
-		new WeightedRandomObject(new ItemStack(ModItems.powder_diamond, 2), 7), 
-		new WeightedRandomObject(new ItemStack(Items.REDSTONE, 5), 15), 
+		new WeightedRandomObject(new ItemStack(ModItems.powder_diamond, 2), 7),
+        new WeightedRandomObject(new ItemStack(ModItems.powder_asbestos, 1), 6),
+        new WeightedRandomObject(new ItemStack(Items.REDSTONE, 5), 15),
 		new WeightedRandomObject(new ItemStack(ModItems.powder_nitan_mix, 2), 5), 
 		new WeightedRandomObject(new ItemStack(ModItems.powder_power, 2), 5),
 		new WeightedRandomObject(new ItemStack(ModItems.powder_copper, 5), 15), 
@@ -192,7 +188,7 @@ public class TileEntityMachineSatDock extends TileEntityMachineBase implements I
 		new WeightedRandomObject(new ItemStack(ModItems.powder_tantalium, 1), 16),
 		new WeightedRandomObject(new ItemStack(ModItems.powder_schrabidium, 1), 8),
 		new WeightedRandomObject(new ItemStack(ModItems.powder_bismuth, 1), 4),
-		new WeightedRandomObject(new ItemStack(ModItems.powder_radspice, 1), 1)
+		new WeightedRandomObject(new ItemStack(ModItems.nugget_radspice, 1), 1)
 	};
 
 	private void addToInv(ItemStack stack){

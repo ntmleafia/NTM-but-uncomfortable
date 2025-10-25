@@ -3,7 +3,6 @@ package com.hbm.world.dungeon;
 import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
-import com.hbm.blocks.bomb.BlockCrashedBomb;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -72,11 +71,11 @@ public class Ruin001 extends WorldGenerator {
 
 	public boolean generate_r0(World world, Random rand, int x, int y, int z) {
 
-		if(!LocationIsValidSpawn(world, x, y, z) || !LocationIsValidSpawn(world, x + 12, y, z) || !LocationIsValidSpawn(world, x + 12, y, z + 14) || !LocationIsValidSpawn(world, x, y, z + 14)) {
-		//	return false;
-		}
+        if (LocationIsValidSpawn(world, x, y, z) && LocationIsValidSpawn(world, x + 12, y, z) && LocationIsValidSpawn(world, x + 12, y, z + 14)) {
+            LocationIsValidSpawn(world, x, y, z + 14);
+        }//	return false;
 
-		world.setBlockState(new BlockPos(x + 1, y + 0, z + 5), Block1.getDefaultState(), 3);
+        world.setBlockState(new BlockPos(x + 1, y + 0, z + 5), Block1.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 1, y + 0, z + 6), Block1.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 2, y + 0, z + 6), Block1.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 3, y + 0, z + 6), Block1.getDefaultState(), 3);
@@ -321,7 +320,7 @@ public class Ruin001 extends WorldGenerator {
 		world.setBlockState(new BlockPos(x + 5, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 6, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 7, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);
-		world.setBlockState(new BlockPos(x + 8, y + 3, z + 10), ModBlocks.crashed_balefire.getDefaultState().withProperty(BlockCrashedBomb.FACING, EnumFacing.EAST), 3);
+		world.setBlockState(new BlockPos(x + 8, y + 3, z + 10), ModBlocks.crashed_balefire.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 9, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 10, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);
 		world.setBlockState(new BlockPos(x + 11, y + 3, z + 10), Blocks.AIR.getDefaultState(), 3);

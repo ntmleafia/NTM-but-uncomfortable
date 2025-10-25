@@ -40,7 +40,7 @@ public class DetCord extends Block implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if(worldIn.getStrongPower(pos) > 0){
+		if(worldIn.getRedstonePowerFromNeighbors(pos) > 0){
 			explode(worldIn, pos);
 		}
 	}
@@ -78,7 +78,7 @@ public class DetCord extends Block implements IBomb {
 				bf.posX = pos.getX() + 0.5;
 				bf.posY = pos.getY() + 0.5;
 				bf.posZ = pos.getZ() + 0.5;
-				bf.destructionRange = (int) 130;
+				bf.destructionRange = 130;
 				world.spawnEntity(bf);
 				if(BombConfig.enableNukeClouds) {
 					EntityNukeTorex.statFacBale(world, pos.getX() + 0.5, pos.getY() + 5, pos.getZ() + 0.5, 130F);

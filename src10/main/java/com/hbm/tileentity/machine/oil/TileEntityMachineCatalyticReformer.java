@@ -5,9 +5,7 @@ import api.hbm.energy.IEnergyUser;
 import com.hbm.blocks.BlockDummyable;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.interfaces.ITankPacketAcceptor;
-import com.hbm.inventory.RefineryRecipes;
 import com.hbm.inventory.ReformingRecipes;
-import com.hbm.inventory.VacuumDistillRecipes;
 import com.hbm.inventory.container.ContainerMachineCatalyticReformer;
 import com.hbm.inventory.gui.GUIMachineCatalyticReformer;
 import com.hbm.items.ModItems;
@@ -36,6 +34,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineCatalyticReformer extends TileEntityMachineBase implements ITickable, IGUIProvider, IFluidHandler, IEnergyUser, ITankPacketAcceptor {
 
@@ -180,7 +179,7 @@ public class TileEntityMachineCatalyticReformer extends TileEntityMachineBase im
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 
         nbt.setLong("power", power);
         nbt.setTag("tanks", FFUtils.serializeTankArray(tanks));

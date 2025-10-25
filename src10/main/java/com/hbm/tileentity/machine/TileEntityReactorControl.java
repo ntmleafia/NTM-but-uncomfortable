@@ -64,7 +64,7 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
 	}
 
 	public boolean hasCustomInventoryName() {
-		return this.customName != null && this.customName.length() > 0;
+		return this.customName != null && !this.customName.isEmpty();
 	}
 	
 	public void setCustomName(String name) {
@@ -138,7 +138,7 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         		maxCool = reactor.tanks[1].getCapacity();
         		maxSteam = reactor.tanks[2].getCapacity();
         		rods = reactor.rods;
-        		maxRods = reactor.rodsMax;
+        		maxRods = TileEntityMachineReactorSmall.rodsMax;
         		isOn = !reactor.retracting;
         		isLinked = true;
         		
@@ -151,12 +151,12 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         		}
         		
         		if(!redstoned) {
-        			if(world.getStrongPower(pos) > 0) {
+        			if(world.getRedstonePowerFromNeighbors(pos) > 0) {
         				redstoned = true;
         				reactor.retracting = !reactor.retracting;
         			}
         		} else {
-        			if(world.getStrongPower(pos) == 0) {
+        			if(world.getRedstonePowerFromNeighbors(pos) == 0) {
         				redstoned = false;
         			}
         		}
@@ -164,10 +164,9 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         		if(auto && (water < 100 || cool < 100 || coreHeat > (50000 * 0.95)) && fuel > 0) {
         			reactor.retracting = true;
         		}
-        	} else if(link != null && world.getTileEntity(link) instanceof TileEntityMachineReactorLarge && ((TileEntityMachineReactorLarge)world.getTileEntity(link)).checkBody()) {
-        		TileEntityMachineReactorLarge reactor = (TileEntityMachineReactorLarge)world.getTileEntity(link);
-        		
-        		hullHeat = reactor.hullHeat;
+        	} else if(link != null && world.getTileEntity(link) instanceof TileEntityMachineReactorLarge reactor && ((TileEntityMachineReactorLarge)world.getTileEntity(link)).checkBody()) {
+
+                hullHeat = reactor.hullHeat;
         		coreHeat = reactor.coreHeat;
         		fuel = reactor.fuel * 100 / Math.max(1, reactor.maxFuel);
         		water = reactor.tanks[0].getFluidAmount();
@@ -192,7 +191,7 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         			lastRods = rods;
         		
         		if(!redstoned) {
-        			if(world.getStrongPower(pos) > 0) {
+        			if(world.getRedstonePowerFromNeighbors(pos) > 0) {
         				redstoned = true;
         				
         				if(rods == 0)
@@ -201,7 +200,7 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         					rods = 0;
         			}
         		} else {
-        			if(world.getStrongPower(pos) == 0) {
+        			if(world.getRedstonePowerFromNeighbors(pos) == 0) {
         				redstoned = false;
         			}
         		}
@@ -217,11 +216,11 @@ public class TileEntityReactorControl extends TileEntity implements ITickable {
         		water = 0;
         		cool = 0;
         		steam = 0;
-        		maxWater = 0;
-        		maxCool = 0;
-        		maxSteam = 0;
+        		maxWater = 1;
+        		maxCool = 1;
+        		maxSteam = 1;
         		rods = 0;
-        		maxRods = 0;
+        		maxRods = 1;
         		isOn = false;
         		compression = 0;
         		isLinked = false;

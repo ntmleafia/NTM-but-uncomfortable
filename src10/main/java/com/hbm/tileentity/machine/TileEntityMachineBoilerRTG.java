@@ -3,7 +3,6 @@ package com.hbm.tileentity.machine;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.machine.MachineBoiler;
 import com.hbm.forgefluid.FFUtils;
-import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.interfaces.ITankPacketAcceptor;
 import com.hbm.inventory.HeatRecipes;
 import com.hbm.packet.AuxGaugePacket;
@@ -20,7 +19,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
@@ -28,6 +26,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineBoilerRTG extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor {
 
@@ -100,7 +99,7 @@ public class TileEntityMachineBoilerRTG extends TileEntityMachineBase implements
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("heat", heat);
 		nbt.setInteger("rtgPower", rtgPower);
 		nbt.setTag("tanks", FFUtils.serializeTankArray(tanks));
@@ -202,11 +201,8 @@ public class TileEntityMachineBoilerRTG extends TileEntityMachineBase implements
 	}
 
 	protected boolean inputValidForTank(int tank, int slot) {
-		if(isValidFluid(FluidUtil.getFluidContained(inventory.getStackInSlot(slot)))) {
-			return true;
-		}
-		return false;
-	}
+        return isValidFluid(FluidUtil.getFluidContained(inventory.getStackInSlot(slot)));
+    }
 
 	private boolean isValidFluid(FluidStack stack) {
 		if(stack == null)

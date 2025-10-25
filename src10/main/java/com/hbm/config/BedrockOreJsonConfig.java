@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -46,14 +45,13 @@ public class BedrockOreJsonConfig {
 	public static void setDefaults() {
 		addEntry(0, 15, Arrays.asList(
 			"orePlutonium", 
-			"oreQuartz", 
+			"oreNetherQuartz",
 			"oreInfernalCoal", 
 			"oreRedPhosphorus", 
 			"oreSchrabidium", 
 			"oreNeodymium", 
 			"oreNitanium",
 			"oreDesh",
-			"oreCheese",
 			"oreMercury",
 			"oreCarbon", 
 			"oreCrystal", 
@@ -85,15 +83,14 @@ public class BedrockOreJsonConfig {
 			"oreAdrite"
 		), true);
 		addEntry(-6, 30, Arrays.asList(//Mining Dim
-			"orePlutonium", 
-			"oreQuartz", 
-			"oreInfernalCoal", 
+			"orePlutonium",
+            "oreNetherQuartz",
+            "oreInfernalCoal",
 			"oreRedPhosphorus", 
 			"oreSchrabidium", 
 			"oreNeodymium", 
 			"oreNitanium",
 			"oreDesh",
-			"oreCheese",
 			"oreMercury",
 			"oreCarbon", 
 			"oreCrystal", 
@@ -114,8 +111,7 @@ public class BedrockOreJsonConfig {
 
 	public static void addEntry(int dimID, int rarity, List<String> ores, Boolean isWhiteList){
 		HashSet<String> set = new HashSet();
-		for(String ore : ores)
-			set.add(ore);
+        set.addAll(ores);
 		dimOres.put(dimID, set);
 		dimOreRarity.put(dimID, rarity);
 		dimWhiteList.put(dimID, isWhiteList);

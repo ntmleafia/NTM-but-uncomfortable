@@ -42,7 +42,6 @@ public class JEIConfig implements IModPlugin {
 	public static final String LIQUEFACTION = "hbm.liquefaction";
 	public static final String SOLIDIFCATION = "hbm.solidification";
 	public static final String CENTRIFUGE = "hbm.centrifuge";
-	public static final String CMB = "hbm.cmb_furnace";
 	public static final String GAS_CENT = "hbm.gas_centrifuge";
 	public static final String REACTOR = "hbm.reactor";
 	public static final String REFINERY = "hbm.refinery";
@@ -83,7 +82,9 @@ public class JEIConfig implements IModPlugin {
 			return;
 		registry.addRecipeRegistryPlugin(new HbmJeiRegistryPlugin());
 
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_electric_furnace_off), VanillaRecipeCategoryUid.SMELTING);
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_autocrafter), VanillaRecipeCategoryUid.CRAFTING);
+
+        registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_electric_furnace_off), VanillaRecipeCategoryUid.SMELTING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.furnace_iron), VanillaRecipeCategoryUid.SMELTING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.furnace_steel), VanillaRecipeCategoryUid.SMELTING);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_arc_furnace_off), VanillaRecipeCategoryUid.SMELTING);
@@ -119,7 +120,6 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_liquefactor), LIQUEFACTION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_solidifier), SOLIDIFCATION);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_centrifuge), CENTRIFUGE);
-		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_combine_factory), CMB);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_gascent), GAS_CENT);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_reactor), REACTOR);
 		registry.addRecipeCatalyst(new ItemStack(ModBlocks.machine_waste_drum), WASTEDRUM);
@@ -171,7 +171,6 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getLiquefactionRecipes(), LIQUEFACTION);
 		registry.addRecipes(JeiRecipes.getSolidificationRecipes(), SOLIDIFCATION);
 		registry.addRecipes(CentrifugeRecipes.getCentrifugeRecipes(), CENTRIFUGE);
-		registry.addRecipes(JeiRecipes.getCMBRecipes(), CMB);
 		registry.addRecipes(JeiRecipes.getGasCentrifugeRecipes(), GAS_CENT);
 		registry.addRecipes(JeiRecipes.getReactorRecipes(), REACTOR);
 		registry.addRecipes(JeiRecipes.getWasteDrumRecipes(), WASTEDRUM);
@@ -205,7 +204,8 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipes(JeiRecipes.getSAFERecipes(), SAFE_REACTOR);
 		registry.addRecipes(DFCRecipes.getDFCRecipes(), DFC);
 
-		registry.addRecipeClickArea(GUIMachineAssembler.class, 45, 83, 82, 30, ASSEMBLY);
+        registry.addRecipeClickArea(GUIAutocrafter.class, 97, 39, 17, 17, VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeClickArea(GUIMachineAssembler.class, 45, 83, 82, 30, ASSEMBLY);
 		registry.addRecipeClickArea(GUIMachineChemplant.class, 45, 90, 85, 15, CHEMPLANT);
 		registry.addRecipeClickArea(GUIMixer.class, 62, 36, 52, 44, MIXER);
 		registry.addRecipeClickArea(GUIMachineCyclotron.class, 50, 24, 40, 40, CYCLOTRON);
@@ -219,11 +219,10 @@ public class JEIConfig implements IModPlugin {
 		registry.addRecipeClickArea(GUIMachineBoilerRTG.class, 61, 34, 17, 17, BOILER);
 		registry.addRecipeClickArea(GUIMachineArcWelder.class, 70, 35, 35, 17, ARCWELDER);
 		registry.addRecipeClickArea(GUIMachineSolderingStation.class, 70, 26, 35, 17, SOLDERINGSTATION);
-		registry.addRecipeClickArea(GUILiquefactor.class, 52, 34, 18, 55, LIQUEFACTION);
-		registry.addRecipeClickArea(GUISolidifier.class, 52, 34, 18, 55, SOLIDIFCATION);
+		registry.addRecipeClickArea(GUILiquefactor.class, 52, 34, 17, 55, LIQUEFACTION);
+		registry.addRecipeClickArea(GUISolidifier.class, 52, 34, 17, 55, SOLIDIFCATION);
 		registry.addRecipeClickArea(GUIMachineCentrifuge.class, 35, 9, 106, 40, CENTRIFUGE);
-		registry.addRecipeClickArea(GUIMachineCMBFactory.class, 111, 35, 21, 14, CMB);
-		registry.addRecipeClickArea(GUIMachineGasCent.class, 118, 36, 51, 13, GAS_CENT);
+		registry.addRecipeClickArea(GUIMachineGasCent.class, 88, 33, 35, 17, GAS_CENT);
 		registry.addRecipeClickArea(GUIMachineReactor.class, 80, 35, 21, 14, REACTOR);
 		registry.addRecipeClickArea(GUIMachineRefinery.class, 79, 71, 71, 17, REFINERY);
 		registry.addRecipeClickArea(GUIMachineHydrotreater.class, 80, 70, 33, 53, HYDROTREATER);
@@ -341,7 +340,6 @@ public class JEIConfig implements IModPlugin {
 				new GasCentrifugeRecipeHandler(help),
 				new CyclotronRecipeHandler(help),
 				new TransmutationRecipeHandler(help),
-				new CMBFurnaceRecipeHandler(help),
 				new ReactorRecipeHandler(help),
 				new WasteDrumRecipeHandler(help),
 				new StorageDrumRecipeHandler(help),
@@ -389,7 +387,7 @@ public class JEIConfig implements IModPlugin {
 			return ModItems.canister_generic.getTranslationKey() + (fluid == null ? "empty" : fluid.getFluid().getUnlocalizedName() + fluid.amount);
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.missile_custom, (ItemStack stack) -> {
-			return ModItems.missile_custom.getTranslationKey() + "w" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "warhead")) + "f" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "fuselage")) + "s" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "stability")) + "t" + Integer.toString(ItemCustomMissile.readFromNBT(stack, "thruster"));
+			return ModItems.missile_custom.getTranslationKey() + "w" + ItemCustomMissile.readFromNBT(stack, "warhead") + "f" + ItemCustomMissile.readFromNBT(stack, "fuselage") + "s" + ItemCustomMissile.readFromNBT(stack, "stability") + "t" + ItemCustomMissile.readFromNBT(stack, "thruster");
 		});
 		subtypeRegistry.registerSubtypeInterpreter(ModItems.fluid_icon, (ItemStack stack) -> {
 			if(stack.hasTagCompound()) {

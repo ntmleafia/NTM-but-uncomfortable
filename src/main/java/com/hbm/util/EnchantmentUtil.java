@@ -3,12 +3,24 @@ package com.hbm.util;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
 
 public class EnchantmentUtil {
 
 	public static void addEnchantment(ItemStack stack, Enchantment enchantment, int level) {
 
 		stack.addEnchantment(enchantment, level);
+	}
+
+	public static boolean hasEnchantment(ItemStack stack, Enchantment enchantment){
+		if(!stack.isEmpty() && stack.hasTagCompound()){
+			NBTTagList enchants = stack.getEnchantmentTagList();
+			for(int i=0 ; i < enchants.tagCount(); i++) {
+				if(enchants.getCompoundTagAt(i).getShort("id") == Enchantment.getEnchantmentID(enchantment))
+					return true;
+			}
+		}
+		return false;
 	}
 
 	public static void removeEnchantment(ItemStack stack, Enchantment enchantment) {

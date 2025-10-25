@@ -354,9 +354,8 @@ public class EntityMiniNuke extends Entity implements IProjectile {
 
                     if (movingobjectposition.entityHit.attackEntityFrom(damagesource, k))
                     {
-                        if (movingobjectposition.entityHit instanceof EntityLivingBase)
+                        if (movingobjectposition.entityHit instanceof EntityLivingBase entitylivingbase)
                         {
-                            EntityLivingBase entitylivingbase = (EntityLivingBase)movingobjectposition.entityHit;
 
                             if (this.knockbackStrength > 0)
                             {
@@ -439,7 +438,6 @@ public class EntityMiniNuke extends Entity implements IProjectile {
 
             for (this.rotationPitch = (float)(Math.atan2(this.motionY, f2) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
             {
-                ;
             }
 
             while (this.rotationPitch - this.prevRotationPitch >= 180.0F)

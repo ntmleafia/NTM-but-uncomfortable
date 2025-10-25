@@ -2,6 +2,7 @@ package com.hbm.blocks.bomb;
 
 import java.util.List;
 
+import com.hbm.lib.InventoryHelper;
 import com.hbm.util.I18nUtil;
 import com.hbm.blocks.machine.BlockMachineBase;
 import com.hbm.interfaces.IBomb;
@@ -66,7 +67,7 @@ public class NukeBalefire extends BlockMachineBase implements IBomb {
 	
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (world.getStrongPower(pos) > 0) {
+		if (world.getRedstonePowerFromNeighbors(pos) > 0) {
 			explode(world, pos);
 		}
 	}
@@ -80,6 +81,12 @@ public class NukeBalefire extends BlockMachineBase implements IBomb {
 				bomb.explode();
 		}
 	}
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        InventoryHelper.dropInventoryItems(worldIn, pos, worldIn.getTileEntity(pos));
+        super.breakBlock(worldIn, pos, state);
+    }
 
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {

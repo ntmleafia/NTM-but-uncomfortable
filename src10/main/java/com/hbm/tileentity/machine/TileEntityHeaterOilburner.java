@@ -38,6 +38,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -183,7 +184,7 @@ public class TileEntityHeaterOilburner extends TileEntityMachineBase implements 
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         tank.writeToNBT(nbt);
         if(fluidType != null) {
             nbt.setString("fluidType", fluidType.getName());
@@ -222,9 +223,8 @@ public class TileEntityHeaterOilburner extends TileEntityMachineBase implements 
     public int fill(FluidStack resource, boolean doFill) {
         if(resource != null && resource.getFluid() == fluidType && resource.amount > 0) {
             return tank.fill(resource, doFill);
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     @Nullable

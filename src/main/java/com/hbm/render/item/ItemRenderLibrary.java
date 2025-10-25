@@ -811,14 +811,26 @@ public class ItemRenderLibrary {
 
 		renderers.put(Item.getItemFromBlock(ModBlocks.crashed_balefire), new ItemRenderBase() {
 			public void renderInventory() {
-				GL11.glTranslated(0, 3, 0);
-				GL11.glScaled(2, 2, 2);
+				GL11.glTranslated(0, 1, 0);
+				GL11.glScaled(3, 3, 3);
 			}
-			public void renderCommon() {
+			public void renderCommon(ItemStack stack) {
 				GL11.glRotated(90, 0, 1, 0);
 	            GlStateManager.disableCull();
-		        bindTexture(ResourceManager.dud_tex);
-		        ResourceManager.dud.renderAll();
+                int type = stack.getMetadata();
+                if(type == 0) {
+                    bindTexture(ResourceManager.dud_balefire_tex);
+                    ResourceManager.dud_balefire.renderAll();
+                } else if(type == 1) {
+                    bindTexture(ResourceManager.dud_conventional_tex);
+                    ResourceManager.dud_conventional.renderAll();
+                } else if(type == 2) {
+                    bindTexture(ResourceManager.dud_nuke_tex);
+                    ResourceManager.dud_nuke.renderAll();
+                } else if(type == 3) {
+                    bindTexture(ResourceManager.dud_salted_tex);
+                    ResourceManager.dud_salted.renderAll();
+                }
 	            GlStateManager.enableCull();
 			}});
 

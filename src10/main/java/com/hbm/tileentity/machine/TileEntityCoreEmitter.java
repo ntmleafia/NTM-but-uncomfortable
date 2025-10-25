@@ -34,6 +34,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ILaserable, ITankPacketAcceptor {
 
@@ -170,12 +171,7 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 		}
 	}
 
-	@Override
-	public boolean canConnect(ForgeDirection dir) {
-		return dir != ForgeDirection.UNKNOWN;
-	}
-
-	@Override
+    @Override
 	public String getName() {
 		return "container.dfcEmitter";
 	}
@@ -260,7 +256,7 @@ public class TileEntityCoreEmitter extends TileEntityMachineBase implements ITic
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("power", power);
 		compound.setInteger("watts", watts);
 		compound.setLong("joules", joules);

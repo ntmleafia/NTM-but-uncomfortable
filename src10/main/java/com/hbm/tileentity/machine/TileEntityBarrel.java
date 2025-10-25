@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityBarrel extends TileEntityMachineBase implements ITickable, IFluidHandler, ITankPacketAcceptor {
 
@@ -150,7 +151,7 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setShort("mode", mode);
 		compound.setInteger("cap", tank.getCapacity());
 		tank.writeToNBT(compound);
@@ -196,13 +197,9 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		if(i == 0){
 			return true;
 		}
-		
-		if(i == 2){
-			return true;
-		}
-		
-		return false;
-	}
+
+        return i == 2;
+    }
 	
 	@Override
 	public boolean canInsertItem(int slot, ItemStack itemStack, int amount) {
@@ -214,11 +211,7 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		if(slot == 1){
 			return true;
 		}
-		
-		if(slot == 3){
-			return true;
-		}
-		
-		return false;
-	}
+
+        return slot == 3;
+    }
 }

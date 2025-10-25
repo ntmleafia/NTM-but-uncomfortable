@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import com.hbm.items.ModItems.*;
+import com.hbm.particle.*;
 import com.hbm.render.item.*;
 import com.hbm.tileentity.network.TileEntityCraneSplitter;
 import com.leafia.contents.machines.elevators.*;
@@ -195,24 +196,6 @@ import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.RecoilHandler;
 import com.hbm.lib.RefStrings;
-import com.hbm.particle.ParticleBatchRenderer;
-import com.hbm.particle.ParticleCoolingTower;
-import com.hbm.particle.ParticleDigammaSmoke;
-import com.hbm.particle.ParticleExSmoke;
-import com.hbm.particle.ParticleGiblet;
-import com.hbm.particle.ParticleHadron;
-import com.hbm.particle.ParticleHaze;
-import com.hbm.particle.ParticleHbmSpark;
-import com.hbm.particle.ParticleLetter;
-import com.hbm.particle.ParticlePlasmaBlast;
-import com.hbm.particle.ParticleRBMKFlame;
-import com.hbm.particle.ParticleRBMKMush;
-import com.hbm.particle.ParticleRadiationFog;
-import com.hbm.particle.ParticleRenderLayer;
-import com.hbm.particle.ParticleRift;
-import com.hbm.particle.ParticleRocketFlame;
-import com.hbm.particle.ParticleSmokePlume;
-import com.hbm.particle.ParticleSpark;
 import com.hbm.particle.bfg.ParticleBFGBeam;
 import com.hbm.particle.bfg.ParticleBFGCoreLightning;
 import com.hbm.particle.bfg.ParticleBFGParticle;
@@ -2138,6 +2121,16 @@ public class ClientProxy extends ServerProxy {
 				}
 			}
 			return;
+		}
+
+		if("foundry".equals(type)) {
+			int color = data.getInteger("color");
+			byte dir = data.getByte("dir");
+			float length = data.getFloat("len");
+			float base = data.getFloat("base");
+			float offset = data.getFloat("off");
+
+			Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleFoundry(world, x, y, z, color, dir, length, base, offset));
 		}
 		
 		if("sound".equals(type)){

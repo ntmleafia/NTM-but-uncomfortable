@@ -35,6 +35,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineLargeTurbine extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor {
 
@@ -144,8 +145,7 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 	protected boolean inputValidForTank(int tank, int slot) {
 		if(inventory.getStackInSlot(slot) != ItemStack.EMPTY && tanks[tank] != null) {
 			FluidStack f = FluidUtil.getFluidContained(inventory.getStackInSlot(slot));
-			if(f != null && f.getFluid() == types[tank])
-				return true;
+            return f != null && f.getFluid() == types[tank];
 		}
 		return false;
 	}
@@ -183,7 +183,7 @@ public class TileEntityMachineLargeTurbine extends TileEntityMachineBase impleme
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("tanks", FFUtils.serializeTankArray(tanks));
 		compound.setLong("power", power);
 		if(types[0] != null)

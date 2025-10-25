@@ -170,7 +170,6 @@ public class BlockCrate extends BlockFalling {
     	BlockCrate.addToListWithWeight(metalList, ModItems.coil_copper, 10);
     	BlockCrate.addToListWithWeight(metalList, ModItems.tank_steel, 9);
     	BlockCrate.addToListWithWeight(metalList, ModItems.blade_titanium, 3);
-    	BlockCrate.addToListWithWeight(metalList, ModItems.bolt_compound, 2);
     	BlockCrate.addToListWithWeight(metalList, ModItems.piston_selenium, 6);
     	
     	//Red Crate
@@ -222,10 +221,8 @@ public class BlockCrate extends BlockFalling {
     	
     	if(this == ModBlocks.crate_red) {
     		list.clear();
-    		
-    		for(int k = 0; k < redList.size(); k++) {
-    			list.add(redList.get(k));
-    		}
+
+            list.addAll(redList);
     	}
     	
     	for(ItemStack stack : list) {

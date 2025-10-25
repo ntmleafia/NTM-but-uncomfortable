@@ -46,6 +46,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase implements IEnergyUser, IControllable, IControlReceiver, ITickable {
 
@@ -118,7 +119,7 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		nbt.setLong("power", this.power);
 		nbt.setBoolean("isOn", this.isOn);
 		nbt.setBoolean("targetPlayers", this.targetPlayers);
@@ -763,13 +764,8 @@ public abstract class TileEntityTurretBaseNT extends TileEntityMachineBase imple
 	public int[] getAccessibleSlotsFromSide(EnumFacing e){
 		return new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	}
-	
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack stack){
-		return true;
-	}
-	
-	public boolean hasPower() {
+
+    public boolean hasPower() {
 		return this.getPower() >= this.getConsumption();
 	}
 	

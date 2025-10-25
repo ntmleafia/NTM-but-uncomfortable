@@ -71,7 +71,10 @@ public class ResourceManager {
 
 	//UU
 	public static final IModelCustom uu_creator = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/uu_creator.obj"));
-	
+
+	public static final IModelCustom watz = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/watz.obj")).asVBO();
+	public static final IModelCustom watz_pump = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/watz_pump.obj")).asVBO();
+
 	//FENSU
 	public static final IModelCustom fensu = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/fensu.obj"));
 
@@ -337,8 +340,10 @@ public class ResourceManager {
 	public static final IModelCustom chungus = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/chungus.obj"));
 	
 	//Cooling Tower
-	public static final IModelCustom tower_small = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/tower_small.obj"));
-	public static final IModelCustom tower_large = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/tower_large.obj"));
+	public static final IModelCustom tower_small = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/tower_small.obj")).asVBO();
+	public static final IModelCustom tower_large = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/tower_large.obj")).asVBO();
+
+	public static final IModelCustom condenser = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/machines/condenser.obj")).asVBO();
 	
 	//Deuterium Tower
 	public static final ResourceLocation deuterium_tower_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/machine_deuterium_tower.png");
@@ -360,19 +365,22 @@ public class ResourceManager {
 	public static final IModelCustom combination_oven = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/machines/combination_oven.obj"));
 
 	//Bombs
-	public static final IModelCustom bomb_solinium = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/ufp.obj"));
-	public static final IModelCustom n2 = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/n2.obj"));
-	public static final WavefrontObject n45_chain = new WavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/n45_chain.obj"));
-	public static final IModelCustom fstbmb = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/fstbmb.obj"));
-	public static final IModelCustom bomb_gadget = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/gadget.obj"));
-	public static final IModelCustom bomb_boy = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/LilBoy.obj"));
-	public static final IModelCustom bomb_man = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/FatMan.obj"));
-	public static final IModelCustom bomb_mike = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/IvyMike.obj"));
-	public static final IModelCustom bomb_tsar = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/tsar.obj"));
-	public static final IModelCustom bomb_prototype = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/Prototype.obj"));
-	public static final IModelCustom bomb_fleija = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/Fleija.obj"));
-	public static final IModelCustom bomb_multi = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/bombs/BombGeneric.obj"));
-	public static final IModelCustom dud = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/BalefireCrashed.obj"));
+	public static final IModelCustom bomb_solinium = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/ufp.obj")).asVBO();
+	public static final IModelCustom n2 = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/n2.obj")).asVBO();
+	public static final IModelCustom n45_chain = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/n45_chain.obj")).asVBO();
+	public static final IModelCustom fstbmb = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/fstbmb.obj")).asVBO();
+	public static final IModelCustom bomb_gadget = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/gadget.obj")).asVBO();
+	public static final IModelCustom bomb_boy = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/LilBoy.obj")).asVBO();
+	public static final IModelCustom bomb_man = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/FatMan.obj")).asVBO();
+	public static final IModelCustom bomb_mike = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/IvyMike.obj")).asVBO();
+	public static final IModelCustom bomb_tsar = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/tsar.obj")).asVBO();
+	public static final IModelCustom bomb_prototype = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/Prototype.obj")).asVBO();
+	public static final IModelCustom bomb_fleija = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/Fleija.obj")).asVBO();
+	public static final IModelCustom bomb_multi = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/BombGeneric.obj")).asVBO();
+    public static final IModelCustom dud_balefire = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/dud_balefire.obj")).asVBO();
+    public static final IModelCustom dud_conventional = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/dud_conventional.obj")).asVBO();
+    public static final IModelCustom dud_nuke = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/dud_nuke.obj")).asVBO();
+    public static final IModelCustom dud_salted = new HFRWavefrontObject(new ResourceLocation(RefStrings.MODID, "models/bombs/dud_salted.obj")).asVBO();
 
 	//Landmines
 	public static final IModelCustom mine_ap = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/mine_ap.obj"));
@@ -514,7 +522,9 @@ public class ResourceManager {
 
 	//UU
 	public static final ResourceLocation uu_creator_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/uu_creator.png");
-	
+	public static final ResourceLocation watz_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/watz.png");
+	public static final ResourceLocation watz_pump_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/watz_pump.png");
+
 	//FENSU
 	public static final ResourceLocation[] fensu_tex = new ResourceLocation[] { 
 		new ResourceLocation(RefStrings.MODID, "textures/models/machines/fensus/fensu_white.png"),
@@ -699,7 +709,8 @@ public class ResourceManager {
 	//Cooling Tower
 	public static final ResourceLocation tower_small_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/tower_small.png");
 	public static final ResourceLocation tower_large_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/tower_large.png");
-	
+	public static final ResourceLocation condenser_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/condenser.png");
+
 	//IGen
 	public static final ResourceLocation igen_tex = new ResourceLocation(RefStrings.MODID, "textures/models/machines/igen.png");
 	public static final ResourceLocation igen_rotor = new ResourceLocation(RefStrings.MODID, "textures/models/machines/igen_rotor.png");
@@ -842,7 +853,10 @@ public class ResourceManager {
 	public static final ResourceLocation bomb_fleija_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/Fleija.png");
 	public static final ResourceLocation bomb_custom_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/CustomNuke.png");
 	public static final ResourceLocation bomb_multi_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/BombGeneric.png");
-	public static final ResourceLocation dud_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/BalefireCrashed.png");
+    public static final ResourceLocation dud_balefire_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/dud_balefire.png");
+    public static final ResourceLocation dud_conventional_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/dud_conventional.png");
+    public static final ResourceLocation dud_nuke_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/dud_nuke.png");
+    public static final ResourceLocation dud_salted_tex = new ResourceLocation(RefStrings.MODID, "textures/models/bombs/dud_salted.png");
 
 	//Satellites
 	public static final ResourceLocation sat_base_tex = new ResourceLocation(RefStrings.MODID, "textures/models/sat/sat_base.png");
@@ -1397,8 +1411,30 @@ public class ResourceManager {
 	public static ResourceLocation jetpack_hud_large = new ResourceLocation(RefStrings.MODID, "textures/gui/hud/jetpack_hud_large.png");
 	public static ResourceLocation jetpack_hud_small = new ResourceLocation(RefStrings.MODID, "textures/gui/hud/jetpack_hud_small.png");
 	public static ResourceLocation jetpack_hud_small_text = new ResourceLocation(RefStrings.MODID, "textures/gui/hud/jetpack_hud_small_text.png");
-	
-	//ANIMATIONS
+
+    public static ResourceLocation titanium_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/titanium_shield.png");
+    public static ResourceLocation steel_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/steel_shield.png");
+    public static ResourceLocation alloy_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/alloy_shield.png");
+    public static ResourceLocation elec_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/elec_shield.png");
+    public static ResourceLocation desh_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/desh_shield.png");
+    public static ResourceLocation cobalt_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/cobalt_shield.png");
+    public static ResourceLocation starmetal_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/starmetal_shield.png");
+    public static ResourceLocation cmb_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/cmb_shield.png");
+    public static ResourceLocation schrabidium_shield_tex = new ResourceLocation(RefStrings.MODID, "textures/items/schrabidium_shield.png");
+
+    public static ResourceLocation titanium_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/titanium_shield_blank.png");
+    public static ResourceLocation steel_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/steel_shield_blank.png");
+    public static ResourceLocation alloy_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/alloy_shield_blank.png");
+    public static ResourceLocation elec_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/elec_shield_blank.png");
+    public static ResourceLocation desh_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/desh_shield_blank.png");
+    public static ResourceLocation cobalt_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/cobalt_shield_blank.png");
+    public static ResourceLocation starmetal_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/starmetal_shield_blank.png");
+    public static ResourceLocation cmb_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/cmb_shield_blank.png");
+    public static ResourceLocation schrabidium_shield_blank_tex = new ResourceLocation(RefStrings.MODID, "textures/items/schrabidium_shield_blank.png");
+
+
+
+    //ANIMATIONS
 	public static AnimatedModel supershotgun;
 	public static Animation ssg_reload;
 

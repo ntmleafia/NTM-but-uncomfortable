@@ -1,6 +1,5 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.items.ModItems;
 import com.hbm.items.machine.ItemLens;
 import com.hbm.packet.AuxGaugePacket;
 import com.hbm.packet.PacketDispatcher;
@@ -19,6 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityCoreStabilizer extends TileEntityMachineBase implements ITickable, IEnergyUser {
 
@@ -150,7 +150,7 @@ public class TileEntityCoreStabilizer extends TileEntityMachineBase implements I
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("power", power);
 		compound.setInteger("watts", watts);
 		compound.setBoolean("isOn", isOn);

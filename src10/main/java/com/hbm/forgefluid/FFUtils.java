@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Predicate;
-import com.hbm.interfaces.IFluidPipe;
 import com.hbm.interfaces.IFluidPipeMk2;
 import com.hbm.interfaces.IFluidVisualConnectable;
 import com.hbm.interfaces.IItemFluidHandler;
@@ -39,6 +38,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -185,7 +185,7 @@ public class FFUtils {
 		}
 	}
 
-	public static void addFluidInfo(Fluid fluid, List<String> texts){
+	public static void addFluidInfo(Fluid fluid, List<String> texts, boolean isAdvanced){
 		int temp = fluid.getTemperature()-273;
 		if(temp != 27){
 			String tempColor = "";
@@ -275,6 +275,10 @@ public class FFUtils {
 			hasInfo = true;
 		}
 
+		if(isKeyPressed && isAdvanced){
+			texts.add("§bFluid Key: §3"+FluidRegistry.getDefaultFluidName(fluid));
+		}
+
 		if (hasInfo && !isKeyPressed) {
 			texts.add(I18nUtil.resolveKey("desc.tooltip.hold", "LSHIFT"));
 		}
@@ -286,7 +290,7 @@ public class FFUtils {
 			if (fluid != null) {
 				texts.add(fluid.getLocalizedName(new FluidStack(fluid, 1)));
 				texts.add(amount + "/" + capacity + "mB");
-				addFluidInfo(fluid, texts);
+				addFluidInfo(fluid, texts, true);
 			} else {
 				texts.add(I18nUtil.resolveKey("desc.none"));
 				texts.add(amount + "/" + capacity + "mB");
@@ -299,9 +303,8 @@ public class FFUtils {
 	public static boolean hasEnoughFluid(FluidTank t, FluidStack f){
 		if(f == null || f.amount == 0) return true;
 		if(t == null || t.getFluid() == null) return false;
-		if(t.getFluid().isFluidEqual(f) && t.getFluidAmount() >= f.amount) return true;
-		return false;
-	}
+        return t.getFluid().isFluidEqual(f) && t.getFluidAmount() >= f.amount;
+    }
 
 	/**
 	 * Replacement method for the old method of transferring fluids out of a
@@ -332,10 +335,9 @@ public class FFUtils {
 		}
 		TileEntity te = world.getTileEntity(toFill);
 
-		if(te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null)) {
-			if(te instanceof TileEntityDummy) {
-				TileEntityDummy ted = (TileEntityDummy)te;
-				if(world.getTileEntity(ted.target) == tileEntity) {
+		if(te != null && safeCheckCapa(te, CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)) {
+			if(te instanceof TileEntityDummy ted) {
+                if(world.getTileEntity(ted.target) == tileEntity) {
 					return false;
 				}
 			}
@@ -375,7 +377,7 @@ public class FFUtils {
 
 		if(slots.getStackInSlot(slot1).getItem() == ModItems.fluid_barrel_infinite && tank.getFluid() != null) {
 
-			return tank.fill(new FluidStack(tank.getFluid(), Integer.MAX_VALUE), true) > 0 ? true : false;
+			return tank.fill(new FluidStack(tank.getFluid(), Integer.MAX_VALUE), true) > 0;
 		}
 		if(FluidUtil.getFluidContained(slots.getStackInSlot(slot1)) == null) {
 
@@ -525,8 +527,7 @@ public class FFUtils {
 			return true;
 		if(FluidContainerRegistry.hasFluid(stack.getItem())) {
 			fluid = FluidContainerRegistry.getFluidFromItem(stack.getItem());
-			if(fluid != null && fluidRestrictor.apply(fluid))
-				return true;
+            return fluid != null && fluidRestrictor.apply(fluid);
 		}
 		return false;
 	}
@@ -562,9 +563,8 @@ public class FFUtils {
 			return fillItemAndMove(slots, slot1, slot2, tank, ifhi, fStack, stack, true);
 		}
 
-		if(stack.getItem() instanceof IItemFluidHandler) {
-			IItemFluidHandler handler = (IItemFluidHandler)stack.getItem();
-			FluidStack contained = handler.drain(stack, Integer.MAX_VALUE, false);
+		if(stack.getItem() instanceof IItemFluidHandler handler) {
+            FluidStack contained = handler.drain(stack, Integer.MAX_VALUE, false);
 			return fillItemAndMove(slots, slot1, slot2, tank, handler, contained, stack, true);
 		}
 
@@ -950,8 +950,7 @@ public class FFUtils {
 			return true;
 		if(FluidContainerRegistry.hasFluid(stack.getItem())) {
 			contained = FluidContainerRegistry.getFluidFromItem(stack.getItem());
-			if(contained != null && contained.getFluid() == fluid)
-				return true;
+            return contained != null && contained.getFluid() == fluid;
 		}
 		return false;
 	}
@@ -962,6 +961,7 @@ public class FFUtils {
 			if(tanks[i] != null) {
 				NBTTagCompound tag = new NBTTagCompound();
 				tag.setByte("tank", (byte)i);
+				tag.setInteger("capa", tanks[i].getCapacity());
 				tanks[i].writeToNBT(tag);
 				list.appendTag(tag);
 			}
@@ -974,6 +974,7 @@ public class FFUtils {
 			NBTTagCompound tag = tankList.getCompoundTagAt(i);
 			byte b0 = tag.getByte("tank");
 			if(b0 >= 0 && b0 < tanks.length) {
+				tanks[b0].setCapacity(tag.getInteger("capa"));
 				tanks[b0].readFromNBT(tag);
 			}
 		}
@@ -992,26 +993,13 @@ public class FFUtils {
 		if(tank1.getFluid() == null ^ tank2.getFluid() == null) {
 			return false;
 		}
-		if(tank1.getFluid().amount == tank2.getFluid().amount && tank1.getFluid().getFluid() == tank2.getFluid().getFluid() && tank1.getCapacity() == tank2.getCapacity()) {
-			return true;
-		}
-		return false;
-	}
+        return tank1.getFluid().amount == tank2.getFluid().amount && tank1.getFluid().getFluid() == tank2.getFluid().getFluid() && tank1.getCapacity() == tank2.getCapacity();
+    }
 
 	public static FluidTank copyTank(FluidTank tank){
 		if(tank == null)
 			return null;
 		return new FluidTank(tank.getFluid() != null ? tank.getFluid().copy() : null, tank.getCapacity());
-	}
-
-	public static boolean checkFluidConnectables(World world, BlockPos pos, FFPipeNetwork net, @Nullable EnumFacing facing){
-		TileEntity tileentity = world.getTileEntity(pos);
-		if(tileentity != null && tileentity instanceof IFluidPipe && ((IFluidPipe)tileentity).getNetworkTrue() == net)
-			return true;
-		if(tileentity != null && !(tileentity instanceof IFluidPipe) && tileentity.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing)) {
-			return true;
-		}
-		return false;
 	}
 
 	public static boolean checkFluidConnectablesMk2(World world, BlockPos pos, Fluid type, @Nullable EnumFacing facing){
@@ -1026,4 +1014,12 @@ public class FFUtils {
 			return ((IFluidVisualConnectable)block).shouldConnect(type);
 		return false;
 	}
+
+    public static boolean safeCheckCapa(TileEntity te, Capability<?> capability){
+        try{
+            return te.hasCapability(capability, null);
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 }

@@ -9,7 +9,6 @@ import com.hbm.interfaces.IAnimatedDoor;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.packet.TEDoorAnimationPacket;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +33,7 @@ public class TileEntitySiloHatch extends TileEntityLockableBase implements ITick
 	public void update() {
 		if(!world.isRemote){
 			if(!this.isLocked()){
-				boolean rs = world.getStrongPower(pos) > 0;
+				boolean rs = world.getRedstonePowerFromNeighbors(pos) > 0;
 				if(rs){
 					tryOpen();
 				} else {

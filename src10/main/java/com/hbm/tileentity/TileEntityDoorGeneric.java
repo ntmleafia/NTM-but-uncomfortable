@@ -24,13 +24,11 @@ import com.hbm.tileentity.machine.TileEntityLockableBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
@@ -315,10 +313,7 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 	//Ah yes piggy backing on this packet
 	@Override
 	public void setTextureState(byte tex){
-		if(tex > 0)
-			shouldUseBB = true;
-		else
-			shouldUseBB = false;
+        shouldUseBB = tex > 0;
 	}
 
 	@Override
@@ -420,7 +415,7 @@ public class TileEntityDoorGeneric extends TileEntityLockableBase implements ITi
 
 	public void updateRedstonePower(BlockPos pos){
 		//Drillgon200: Best I could come up with without having to use dummy tile entities
-		boolean powered = world.getStrongPower(pos) > 0;
+		boolean powered = world.getRedstonePowerFromNeighbors(pos) > 0;
 		boolean contained = activatedBlocks.contains(pos);
 		if(!contained && powered){
 			activatedBlocks.add(pos);

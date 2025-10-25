@@ -15,14 +15,11 @@ import com.hbm.inventory.AnvilRecipes.AnvilConstructionRecipe;
 import com.hbm.inventory.AnvilRecipes.AnvilOutput;
 import com.hbm.inventory.AnvilRecipes.OverlayType;
 import com.hbm.inventory.BreederRecipes.BreederRecipe;
-import com.hbm.inventory.MachineRecipes.GasCentOutput;
 import com.hbm.inventory.MagicRecipes.MagicRecipe;
 import com.hbm.inventory.RecipesCommon.AStack;
 import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
-import com.hbm.inventory.CrucibleRecipes;
-import com.hbm.inventory.ChemplantRecipes;
 import com.hbm.inventory.material.Mats;
 import com.hbm.inventory.material.NTMMaterial;
 import com.hbm.items.ModItems;
@@ -69,7 +66,6 @@ public class JeiRecipes {
 	private static List<BoilerRecipe> boilerRecipes = null;
 	private static List<LiquefactionRecipe> liquefactionRecipes = null;
 	private static List<SolidificationRecipe> solidificationRecipes = null;
-	private static List<CMBFurnaceRecipe> cmbRecipes = null;
 	private static List<GasCentRecipe> gasCentRecipes = null;
 	private static List<ReactorRecipe> reactorRecipes = null;
 	private static List<WasteDrumRecipe> wasteDrumRecipes = null;
@@ -152,7 +148,7 @@ public class JeiRecipes {
 		
 		public CyclotronRecipe(List<ItemStack> inputs, ItemStack output) {
 			this.inputs = inputs;
-			this.output = output; 
+			this.output = output;
 		}
 		
 		@Override
@@ -375,30 +371,14 @@ public class JeiRecipes {
 		
 	}
 	
-	public static class CMBFurnaceRecipe implements IRecipeWrapper {
-		
-		private final List<ItemStack> inputs;
-		private final ItemStack output;
-		
-		public CMBFurnaceRecipe(List<ItemStack> inputs, ItemStack output) {
-			this.inputs = inputs;
-			this.output = output; 
-		}
-		
-		@Override
-		public void getIngredients(IIngredients ingredients) {
-			ingredients.setInputs(VanillaTypes.ITEM, inputs);
-			ingredients.setOutput(VanillaTypes.ITEM, output);
-		}
-		
-	}
-	
 	public static class GasCentRecipe implements IRecipeWrapper {
 		
 		private final ItemStack input;
 		private final List<ItemStack> outputs;
-		
-		public GasCentRecipe(ItemStack input, List<ItemStack> outputs) {
+		public boolean isUpgraded;
+
+		public GasCentRecipe(boolean isUpgraded, ItemStack input, List<ItemStack> outputs) {
+            this.isUpgraded = isUpgraded;
 			this.input = input;
 			this.outputs = outputs; 
 		}
@@ -1211,44 +1191,35 @@ public class JeiRecipes {
 		return batteries;
 	}
 	
-	public static List<CMBFurnaceRecipe> getCMBRecipes() {
-		if(cmbRecipes != null)
-			return cmbRecipes;
-		cmbRecipes = new ArrayList<CMBFurnaceRecipe>();
-		
-		cmbRecipes.add(new CMBFurnaceRecipe(Arrays.asList(new ItemStack(ModItems.ingot_advanced_alloy), new ItemStack(ModItems.ingot_magnetized_tungsten)), new ItemStack(ModItems.ingot_combine_steel, 4)));
-		cmbRecipes.add(new CMBFurnaceRecipe(Arrays.asList(new ItemStack(ModItems.powder_advanced_alloy), new ItemStack(ModItems.powder_magnetized_tungsten)), new ItemStack(ModItems.ingot_combine_steel, 4)));
-		
-		return cmbRecipes;
-	}
-	
 	public static List<GasCentRecipe> getGasCentrifugeRecipes() {
 		if(gasCentRecipes != null)
 			return gasCentRecipes;
-		gasCentRecipes = new ArrayList<GasCentRecipe>();
+		gasCentRecipes = new ArrayList<>();
 		
-		for(Fluid f : FluidRegistry.getRegisteredFluids().values()){
-			List<GasCentOutput> outputs = MachineRecipes.getGasCentOutput(f);
-			
-			if(outputs != null){
-				int totalWeight = 0;
-				
-				for(GasCentOutput o : outputs) {
-					totalWeight += o.weight;
-				}
-				
-				ItemStack input = ItemFluidIcon.getStackWithQuantity(f, MachineRecipes.getFluidConsumedGasCent(f) * totalWeight);
-				
-				List<ItemStack> result = new ArrayList<ItemStack>(4);
-				
-				for(GasCentOutput o : outputs){
-					ItemStack stack = o.output.copy();
-					stack.setCount(stack.getCount() * o.weight);
-					result.add(stack);
-				}
-				
-				gasCentRecipes.add(new GasCentRecipe(input, result));
-			}
+		for(Map.Entry<Fluid, GasCentrifugeRecipes.GasCentRecipe> r: GasCentrifugeRecipes.recipes.entrySet()){
+
+            Fluid f = r.getKey();
+            GasCentrifugeRecipes.GasCentRecipe rec = r.getValue();
+
+            ItemStack inputA = ItemFluidIcon.getStackWithQuantity(f, rec.amountA * rec.totalWeightA);
+            List<ItemStack> resultA = new ArrayList<ItemStack>(4);
+            for(GasCentrifugeRecipes.GasCentOutput o : rec.outputListA){
+                ItemStack stack = o.output.copy();
+                stack.setCount(stack.getCount() * o.weight);
+                resultA.add(stack);
+            }
+            gasCentRecipes.add(new GasCentRecipe(false, inputA, resultA));
+
+            if(rec.outputListB != null) {
+                ItemStack inputB = ItemFluidIcon.getStackWithQuantity(f, rec.amountB * rec.totalWeightB);
+                List<ItemStack> resultB = new ArrayList<ItemStack>(4);
+                for (GasCentrifugeRecipes.GasCentOutput o : rec.outputListB) {
+                    ItemStack stack = o.output.copy();
+                    stack.setCount(stack.getCount() * o.weight);
+                    resultB.add(stack);
+                }
+                gasCentRecipes.add(new GasCentRecipe(true, inputB, resultB));
+            }
 		}
 		
 		return gasCentRecipes;

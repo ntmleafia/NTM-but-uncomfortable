@@ -19,9 +19,9 @@ public class Vec3
      * Static method for creating a new Vec3D given the three x,y,z values. This is only called from the other static
      * method which creates and places it in the list.
      */
-    public static Vec3 createVectorHelper(double p_72443_0_, double p_72443_2_, double p_72443_4_)
+    public static Vec3 createVectorHelper(double x, double y, double z)
     {
-        return new Vec3(p_72443_0_, p_72443_2_, p_72443_4_);
+        return new Vec3(x, y, z);
     }
 
     public static Vec3 createVectorHelper(Entity e)
@@ -191,7 +191,7 @@ public class Vec3
      */
     public double length()
     {
-        return (double)MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
+        return MathHelper.sqrt(this.xCoord * this.xCoord + this.yCoord * this.yCoord + this.zCoord * this.zCoord);
     }
     
     public double lengthSquared(){
@@ -323,11 +323,10 @@ public class Vec3
 
     //https://en.wikipedia.org/wiki/Outer_product
 	public Matrix3f outerProduct(Vec3 other) {
-		Matrix3f mat = new Matrix3f(
-				(float)(xCoord*other.xCoord), (float)(xCoord*other.yCoord), (float)(xCoord*other.zCoord),
-				(float)(yCoord*other.xCoord), (float)(yCoord*other.yCoord), (float)(yCoord*other.zCoord),
-				(float)(zCoord*other.xCoord), (float)(zCoord*other.yCoord), (float)(zCoord*other.zCoord));
-		return mat;
+        return new Matrix3f(
+                (float)(xCoord*other.xCoord), (float)(xCoord*other.yCoord), (float)(xCoord*other.zCoord),
+                (float)(yCoord*other.xCoord), (float)(yCoord*other.yCoord), (float)(yCoord*other.zCoord),
+                (float)(zCoord*other.xCoord), (float)(zCoord*other.yCoord), (float)(zCoord*other.zCoord));
 	}
 	
 	 public Vec3 matTransform(Matrix3f mat) {

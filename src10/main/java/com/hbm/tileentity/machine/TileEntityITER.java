@@ -43,6 +43,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityITER extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
@@ -309,7 +310,7 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("water", tanks[0].writeToNBT(new NBTTagCompound()));
 		compound.setTag("steam", tanks[1].writeToNBT(new NBTTagCompound()));
 		compound.setTag("plasma", plasma.writeToNBT(new NBTTagCompound()));
@@ -422,13 +423,8 @@ public class TileEntityITER extends TileEntityMachineBase implements ITickable, 
 	public FluidStack drain(int maxDrain, boolean doDrain) {
 		return tanks[1].drain(maxDrain, doDrain);
 	}
-	
-	@Override
-	public boolean canExtractItem(int slot, ItemStack itemStack, int amount) {
-		return true;
-	}
-	
-	@Override
+
+    @Override
 	public int[] getAccessibleSlotsFromSide(EnumFacing e) {
 		return new int[] { 2, 4 };
 	}

@@ -47,11 +47,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineCyclotron extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
 	public long power;
-	public static final long maxPower = 100000000;
+	public static final long maxPower = 1_000_000_000;
 	public int consumption = 1000000;
 
 	public boolean isOn;
@@ -151,9 +152,8 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 	private void fillFromContainers(TileEntity tile, int inputSlot, int tagetSlot){
 		int meta = this.getBlockMetadata();
 		if(tile != null && tile instanceof ICapabilityProvider) {
-			ICapabilityProvider capte = (ICapabilityProvider) tile;
-			if(capte.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY())) {
-				IItemHandler cap = capte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY());
+            if(((ICapabilityProvider) tile).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY())) {
+				IItemHandler cap = ((ICapabilityProvider) tile).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY());
 				int[] slots;
 				if(tile instanceof TileEntityMachineBase){
 					slots = ((TileEntityMachineBase)tile).getAccessibleSlotsFromSide(MultiblockHandler.intToEnumFacing(meta).rotateY());
@@ -248,9 +248,8 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 	private void exportIntoContainers(TileEntity tile, int slot){
 		int meta = this.getBlockMetadata();
 		if(tile != null && tile instanceof ICapabilityProvider) {
-			ICapabilityProvider capte = (ICapabilityProvider) tile;
-			if(capte.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY())) {
-				IItemHandler cap = capte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY());
+            if(((ICapabilityProvider) tile).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY())) {
+				IItemHandler cap = ((ICapabilityProvider) tile).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, MultiblockHandler.intToEnumFacing(meta).rotateY());
 				tryFillContainerCap(cap, slot);
 			}
 		}
@@ -617,7 +616,7 @@ public class TileEntityMachineCyclotron extends TileEntityMachineBase implements
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("coolant", coolant.writeToNBT(new NBTTagCompound()));
 		compound.setTag("amat", amat.writeToNBT(new NBTTagCompound()));
 

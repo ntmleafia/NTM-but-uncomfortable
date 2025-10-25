@@ -17,9 +17,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class TileEntityHeaterRadioThermal extends TileEntityMachineBase implements IHeatSource, ITickable, IGUIProvider {
     
@@ -68,7 +68,7 @@ public class TileEntityHeaterRadioThermal extends TileEntityMachineBase implemen
     }
     
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
         nbt.setInteger("heatEnergy", heatEnergy);
         return nbt;

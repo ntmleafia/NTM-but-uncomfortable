@@ -2,24 +2,26 @@ package com.hbm.hazard;
 
 import static com.hbm.blocks.ModBlocks.*;
 import static com.hbm.items.ModItems.*;
-import static com.hbm.inventory.OreDictManager.*;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
 import com.hbm.hazard.modifier.*;
 import com.hbm.hazard.transformer.*;
 import com.hbm.hazard.type.*;
+import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.inventory.OreDictManager.DictFrame;
-import com.hbm.inventory.material.MaterialShapes;
 import com.hbm.items.ModItems;
 import com.hbm.forgefluid.FluidTypeHandler;
 
+import com.hbm.items.machine.ItemWatzPellet;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.Map;
 
 @SuppressWarnings("unused") //shut the fuck up
 public class HazardRegistry {
@@ -88,6 +90,7 @@ public class HazardRegistry {
 	public static final float hes = 8.8F;
 	public static final float sas3 = 5F;
 	public static final float gh336 = 5.0F;
+	public static final float mud = 15.0F;
 	public static final float radsource_mult = 3F;
 	public static final float pobe = po210 * radsource_mult;
 	public static final float rabe = ra226 * radsource_mult;
@@ -387,15 +390,6 @@ public class HazardRegistry {
 		registerHazItem(pellet_rtg_gold, rtg * au198, 15);
 		registerHazItem(pellet_rtg_lead, rtg * pb209, 15, 5, 4, 0);
 		registerHazItem(pellet_rtg_balefire, rtg * bf * 2, 20);
-
-		registerHazItem(pellet_schrabidium, ts * 2 + sa326 * 5, 0, 50);
-		registerHazItem(pellet_hes, ts * 2 + hes * 5, 0, 50);
-		registerHazItem(pellet_mes, ts * 2 + mes * 5, 0, 50);
-		registerHazItem(pellet_les, ts * 2 + les * 5, 0, 50);
-		registerHazItem(pellet_beryllium, ts * 2);
-		registerHazItem(pellet_neptunium, ts * 2 + np237 * 5);
-		registerHazItem(pellet_lead, ts * 2);
-		registerHazItem(pellet_advanced, ts * 2);
 		
 		registerHazItem(pellet_charged, 420);
 		
@@ -502,6 +496,15 @@ public class HazardRegistry {
 		registerRBMKPellet(rbmk_pellet_zfb_pu241, zfb_pu241 * billet, wst * billet * 7.5F);
 		registerRBMKPellet(rbmk_pellet_zfb_am_mix, zfb_am_mix * billet, wst * billet * 10F);
 		registerRBMKPellet(rbmk_pellet_drx, bf * billet * 1.2F, bf * billet * 10F, true, 0F, 1F/24F);
+
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.SCHRABIDIUM), makeData(RADIATION, sa326 * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.HES), makeData(RADIATION, hes * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.MES), makeData(RADIATION, mes * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.LES), makeData(RADIATION, les * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.HEN), makeData(RADIATION, np237 * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.MEU), makeData(RADIATION, uf * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.MEP), makeData(RADIATION, purg * ingot * 4));
+		HazardSystem.register(DictFrame.fromOne(ModItems.watz_pellet, ItemWatzPellet.EnumWatzType.DU), makeData(RADIATION, u238 * ingot * 4));
 		
 		registerHazItem(powder_yellowcake, yc * powder);
 		registerHazItem(block_yellowcake, yc * block * powder_mult);
@@ -524,7 +527,8 @@ public class HazardRegistry {
 		HazardSystem.register(powder_coltan_ore, makeData(ASBESTOS, 3F));
 		
 		HazardSystem.register(ash_digamma, makeData(DIGAMMA, 0.001F));
-		HazardSystem.register(particle_digamma, makeData(RADIATION, 100F).addEntry(DIGAMMA, 0.3333F));
+        HazardSystem.register(digamma_matter, makeData(DIGAMMA, 0.2F));
+        HazardSystem.register(particle_digamma, makeData(RADIATION, 100F).addEntry(DIGAMMA, 0.3333F));
 		
 		HazardSystem.register(frozen_grass, makeData(CRYOGENIC, 3));
 		HazardSystem.register(frozen_log, makeData(CRYOGENIC, 2));
@@ -569,7 +573,11 @@ public class HazardRegistry {
 		registerHazItem(drillbit_tcalloy_diamond, 20 * tcalloy);
 		registerHazItem(drillbit_ferro, 24 * ferro);
 		registerHazItem(drillbit_ferro_diamond, 24 * ferro);
-		
+
+        registerHazItem(anvil_ferrouranium, ferro * 10);
+        registerHazItem(anvil_schrabidate, sb * 10);
+        HazardSystem.register(anvil_osmiridium, makeData(DIGAMMA, 0.4F));
+
 		//Fluid Hazards
 		for(Fluid entry : FluidRegistry.getRegisteredFluids().values()) {
 			if(FluidTypeHandler.noContainer(entry)) continue;
@@ -605,12 +613,39 @@ public class HazardRegistry {
 		
 		registerTrafos();
 	}
+
+	public static void registerBedrockOreHazards(){
+		for(Map.Entry<Integer, String> e : BedrockOreRegistry.oreIndexes.entrySet()) {
+			int oreMeta = e.getKey();
+			String output = BedrockOreRegistry.oreResults.get(e.getValue());
+			registerHazSameAsItem(new ItemStack(ore_bedrock, 1, oreMeta), output, 3.2f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_centrifuged, 1, oreMeta), output, 3f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_cleaned, 1, oreMeta), output, 2.8f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_separated, 1, oreMeta), output, 2.6f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_deepcleaned, 1, oreMeta), output, 2.4f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_purified, 1, oreMeta), output, 2.2f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_nitrated, 1, oreMeta), output, 2f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_nitrocrystalline, 1, oreMeta), output, 1.8f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_seared, 1, oreMeta), output, 1.6f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_exquisite, 1, oreMeta), output, 1.4f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_perfect, 1, oreMeta), output, 1.2f);
+			registerHazSameAsItem(new ItemStack(ore_bedrock_enriched, 1, oreMeta), output, 1f);
+		}
+	}
 	
 	public static void registerTrafos() {
 		HazardSystem.trafos.add(new HazardTransformerRadiationContainer());
 		HazardSystem.trafos.add(new HazardTransformerFluidContainer());
 		// if(!(GeneralConfig.enableLBSM && GeneralConfig.enableLBSMSafeCrates))	HazardSystem.trafos.add(new HazardTransformerRadiationContainer());
 		// if(!(GeneralConfig.enableLBSM && GeneralConfig.enableLBSMSafeMEDrives))	HazardSystem.trafos.add(new HazardTransformerRadiationME());
+	}
+
+	private static void registerHazSameAsItem(ItemStack item, String templateItem, float mul){
+		HazardData hazDat = HazardSystem.getHaz(templateItem);
+		if(hazDat == null || hazDat.isEmpty()) return;
+		HazardData copiedHazDat = new HazardData();
+		copiedHazDat.entries = hazDat.createMulList(mul);
+		HazardSystem.register(item, copiedHazDat);
 	}
 
 	private static void registerHazItem(Object item, float rads){

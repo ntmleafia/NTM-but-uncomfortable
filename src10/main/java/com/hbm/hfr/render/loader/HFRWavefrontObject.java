@@ -83,7 +83,7 @@ public class HFRWavefrontObject implements IModelCustom
                 lineCount++;
                 currentLine = currentLine.replaceAll("\\s+", " ").trim();
 
-                if (currentLine.startsWith("#") || currentLine.length() == 0)
+                if (currentLine.startsWith("#") || currentLine.isEmpty())
                 {
                     continue;
                 }
@@ -263,9 +263,9 @@ public class HFRWavefrontObject implements IModelCustom
             boolean skipPart=false;
             for (String excludedGroupName : excludedGroupNames)
             {
-                if (excludedGroupName.equalsIgnoreCase(groupObject.name))
-                {
-                    skipPart=true;
+                if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
+                    skipPart = true;
+                    break;
                 }
             }
             if(!skipPart)
@@ -284,9 +284,9 @@ public class HFRWavefrontObject implements IModelCustom
             exclude=false;
             for (String excludedGroupName : excludedGroupNames)
             {
-                if (excludedGroupName.equalsIgnoreCase(groupObject.name))
-                {
-                    exclude=true;
+                if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
+                    exclude = true;
+                    break;
                 }
             }
             if(!exclude)
@@ -503,7 +503,7 @@ public class HFRWavefrontObject implements IModelCustom
         {
             String trimmedLine = line.substring(line.indexOf(" ") + 1);
 
-            if (trimmedLine.length() > 0)
+            if (!trimmedLine.isEmpty())
             {
                 group = new S_GroupObject(trimmedLine);
             }
@@ -635,4 +635,8 @@ public class HFRWavefrontObject implements IModelCustom
 	public void tessellateAllExcept(com.hbm.render.amlfrom1710.Tessellator tes, String... excluded){
 		throw new RuntimeException("Tessellate not supported on HFR model");
 	}
+
+    public WavefrontObjVBO asVBO() {
+        return new WavefrontObjVBO(this);
+    }
 }

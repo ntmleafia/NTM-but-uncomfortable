@@ -1,5 +1,7 @@
 package com.hbm.lib;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,6 +17,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.annotation.Nullable;
 
+import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -55,7 +59,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
@@ -145,6 +148,29 @@ public class Library {
 		superuser.add(Alcater);
 	}
 
+    public static void setFinalStatic(Class c, String variable, String variableObf, Object newValue){
+        setFinal(c, variable, variableObf, newValue, false);
+    }
+
+    public static void setPrivateFinalStatic(Class c, String variable, String variableObf, Object newValue){
+        setFinal(c, variable, variableObf, newValue, true);
+    }
+
+    public static void setFinal(Class c, String variable, String variableObf, Object newValue, boolean isHidden) {
+        try{
+            Field f = ReflectionHelper.findField(c, variable, variableObf);
+            if(isHidden) f.setAccessible(true);
+
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+
+            f.set(null, newValue);
+        } catch(Throwable ignored){
+            ignored.printStackTrace();
+        }
+    }
+
 	public static String getColor(long a, long b){
 		float fraction = 100F * a/b;
 		if(fraction > 75)
@@ -185,6 +211,10 @@ public class Library {
 
 	public static String getShortNumber(long l) {
 		return getShortNumber(new BigDecimal(l));
+	}
+
+	public static long getMagnitude(int mag){
+		return new BigDecimal(10).pow(mag).longValue();
 	}
 
 	public static Map<Integer, String> numbersMap = null;
@@ -243,14 +273,9 @@ public class Library {
 		ResourceLocation path = null;
 		ResourceLocation actualPath = null;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getParticleIcon(stack.getItem(), stack.getMetadata());
-		if(sprite != null){
-			path = new ResourceLocation(sprite.getIconName()+".png");
-			actualPath = new ResourceLocation(path.getNamespace(), "textures/"+path.getPath());
-		} else {
-			path = new ResourceLocation(stack.getItem().getRegistryName()+".png");
-			actualPath = new ResourceLocation(path.getNamespace(), "textures/items/"+path.getPath());
-		}
-		return getColorFromResourceLocation(actualPath);
+        path = new ResourceLocation(sprite.getIconName() + ".png");
+        actualPath = new ResourceLocation(path.getNamespace(), "textures/"+path.getPath());
+        return getColorFromResourceLocation(actualPath);
 	}
 
 	public static int getColorFromResourceLocation(ResourceLocation r){
@@ -306,7 +331,7 @@ public class Library {
 			IBatteryItem battery = (IBatteryItem) inventory.getStackInSlot(index).getItem();
 			ItemStack stack = inventory.getStackInSlot(index);
 			
-			long batMax = battery.getMaxCharge();
+			long batMax = battery.getMaxCharge(stack);
 			long batCharge = battery.getCharge(stack);
 			long batRate = battery.getChargeRate();
 			
@@ -329,10 +354,12 @@ public class Library {
 
 		boolean flag = true;
 
-		for(int i = 0; i < array.length; i++) {
-			if(array[i] != null)
-				flag = false;
-		}
+        for (Object o : array) {
+            if (o != null) {
+                flag = false;
+                break;
+            }
+        }
 
 		return flag;
 	}
@@ -374,9 +401,8 @@ public class Library {
 
 				if (entityplayer1.isEntityAlive() && entityplayer1 instanceof EntityHunterChopper) {
 					double d5 = entityplayer1.getDistanceSq(x, y, z);
-					double d6 = radius;
 
-					if ((radius < 0.0D || d5 < d6 * d6) && (d4 == -1.0D || d5 < d4)) {
+                    if ((radius < 0.0D || d5 < radius * radius) && (d4 == -1.0D || d5 < d4)) {
 						d4 = d5;
 						entity = (EntityHunterChopper)entityplayer1;
 					}
@@ -395,9 +421,8 @@ public class Library {
 
 				if (entityplayer1.isEntityAlive() && entityplayer1 instanceof EntityChopperMine) {
 					double d5 = entityplayer1.getDistanceSq(x, y, z);
-					double d6 = radius;
 
-					if ((radius < 0.0D || d5 < d6 * d6) && (d4 == -1.0D || d5 < d4)) {
+                    if ((radius < 0.0D || d5 < radius * radius) && (d4 == -1.0D || d5 < d4)) {
 						d4 = d5;
 						entity = (EntityChopperMine)entityplayer1;
 					}
@@ -424,18 +449,13 @@ public class Library {
 	}
 	
 	public static AxisAlignedBB rotateAABB(AxisAlignedBB box, EnumFacing facing){
-		switch(facing){
-		case NORTH:
-			return new AxisAlignedBB(box.minX, box.minY, 1-box.minZ, box.maxX, box.maxY, 1-box.maxZ);
-		case SOUTH:
-			return box;
-		case EAST:
-			return new AxisAlignedBB(box.minZ, box.minY, box.minX, box.maxZ, box.maxY, box.maxX);
-		case WEST:
-			return new AxisAlignedBB(1-box.minZ, box.minY, box.minX, 1-box.maxZ, box.maxY, box.maxX);
-		default:
-			return box;
-		}
+        return switch (facing) {
+            case NORTH -> new AxisAlignedBB(box.minX, box.minY, 1 - box.minZ, box.maxX, box.maxY, 1 - box.maxZ);
+            case SOUTH -> box;
+            case EAST -> new AxisAlignedBB(box.minZ, box.minY, box.minX, box.maxZ, box.maxY, box.maxX);
+            case WEST -> new AxisAlignedBB(1 - box.minZ, box.minY, box.minX, 1 - box.maxZ, box.maxY, box.maxX);
+            default -> box;
+        };
 	}
 	
 	public static RayTraceResult rayTraceIncludeEntities(EntityPlayer player, double d, float f) {
@@ -780,9 +800,8 @@ public static boolean canConnect(IBlockAccess world, BlockPos pos, ForgeDirectio
 		
 		if(te instanceof IEnergyConnector) {
 			IEnergyConnector con = (IEnergyConnector) te;
-			
-			if(con.canConnect(dir.getOpposite() /* machine's connecting side */))
-				return true;
+
+            return con.canConnect(dir.getOpposite() /* machine's connecting side */);
 		}
 		
 		return false;

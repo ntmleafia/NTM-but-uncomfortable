@@ -26,6 +26,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFluidHandler, ITankPacketAcceptor {
 
@@ -47,13 +48,8 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 	protected List<Integer> getAmmoList() {
 		return null;
 	}
-	
-	@Override
-	public double getDecetorRange() {
-		return 32D;
-	}
-	
-	@Override
+
+    @Override
 	public double getDecetorGrace() {
 		return 2D;
 	}
@@ -127,7 +123,7 @@ public class TileEntityTurretFritz extends TileEntityTurretBaseNT implements IFl
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt){
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt){
 		nbt.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		return super.writeToNBT(nbt);
 	}

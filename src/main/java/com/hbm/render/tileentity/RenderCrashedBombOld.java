@@ -31,8 +31,8 @@ public class RenderCrashedBombOld extends TileEntitySpecialRenderer<TileEntityCr
 			GL11.glRotatef(-90, 0F, 1F, 0F); break;
 		}
 
-		bindTexture(ResourceManager.dud_tex);
-	    ResourceManager.dud.renderAll();
+		//bindTexture(ResourceManager.dud_tex);
+	    //ResourceManager.dud.renderAll();
 
         GlStateManager.enableCull();
         GL11.glPopMatrix();

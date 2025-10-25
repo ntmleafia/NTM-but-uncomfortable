@@ -1,9 +1,6 @@
 package com.hbm.forgefluid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.hbm.inventory.FluidCombustionRecipes.FuelGrade;
 import com.hbm.inventory.FluidCombustionRecipes;
@@ -103,7 +100,7 @@ public class FluidTypeHandler {
 		fluidProperties.put(ModForgeFluids.NITROGLYCERIN.getName(), new FluidProperties(0, 4, 4, 1.5F, EnumSymbol.NONE));
 		fluidProperties.put(ModForgeFluids.LIQUID_OSMIRIDIUM.getName(),	new FluidProperties(5, 0, 5, 1.8F, EnumSymbol.OXIDIZER, FluidTrait.CORROSIVE_2));
 		
-		fluidProperties.put(ModForgeFluids.WATZ.getName(), new FluidProperties(4, 0, 3, 1.5F, EnumSymbol.OXIDIZER, FluidTrait.CORROSIVE_2));
+		fluidProperties.put(ModForgeFluids.MUD_FLUID.getName(), new FluidProperties(4, 0, 3, 1.5F, EnumSymbol.OXIDIZER, FluidTrait.CORROSIVE_2));
 		fluidProperties.put(ModForgeFluids.CRYOGEL.getName(), new FluidProperties(2, 0, 0, EnumSymbol.CROYGENIC));
 		
 		fluidProperties.put(ModForgeFluids.OXYGEN.getName(), new FluidProperties(3, 0, 0, 1.1F, EnumSymbol.CROYGENIC));
@@ -283,18 +280,17 @@ public class FluidTypeHandler {
 			this.reactivity = r;
 			this.dfcFuel = dfc;
 			this.symbol = symbol;
-			for(FluidTrait trait : traits)
-				this.traits.add(trait);
+            this.traits.addAll(Arrays.asList(traits));
 		}
 	}
 	
-	public static enum FluidTrait {
+	public enum FluidTrait {
 		AMAT,
 		CORROSIVE,
 		CORROSIVE_2,
 		NO_CONTAINER,
-		NO_ID;
-	}
+		NO_ID
+    }
 
 
 	public static FluidProperties getProperties(Fluid f){

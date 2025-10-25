@@ -10,8 +10,6 @@ import com.hbm.inventory.gui.GUILiquefactor;
 import com.hbm.items.machine.ItemMachineUpgrade;
 import com.hbm.lib.DirPos;
 import com.hbm.lib.Library;
-import com.hbm.packet.FluidTankPacket;
-import com.hbm.packet.PacketDispatcher;
 import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 
@@ -32,13 +30,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineLiquefactor extends TileEntityMachineBase implements ITickable, IGUIProvider, IEnergyUser, IFluidHandler, ITankPacketAcceptor {
 
@@ -224,7 +218,7 @@ public class TileEntityMachineLiquefactor extends TileEntityMachineBase implemen
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public @NotNull NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         nbt.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
         return super.writeToNBT(nbt);
     }

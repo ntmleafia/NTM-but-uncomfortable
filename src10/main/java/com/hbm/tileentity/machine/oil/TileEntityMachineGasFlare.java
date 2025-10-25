@@ -45,6 +45,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 
 public class TileEntityMachineGasFlare extends TileEntityMachineBase implements ITickable, IEnergyGenerator, IFluidHandler, ITankPacketAcceptor, IGUIProvider, IControlReceiver {
@@ -72,16 +73,7 @@ public class TileEntityMachineGasFlare extends TileEntityMachineBase implements 
 		return "container.gasFlare";
 	}
 
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		if(world.getTileEntity(pos) != this)
-		{
-			return false;
-		}else{
-			return player.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <=128;
-		}
-	}
-	
-	@Override
+    @Override
 	public void readFromNBT(NBTTagCompound compound) {
 		this.power = compound.getLong("powerTime");
 		tank.readFromNBT(compound);
@@ -94,7 +86,7 @@ public class TileEntityMachineGasFlare extends TileEntityMachineBase implements 
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("powerTime", power);
 		tank.writeToNBT(compound);
 		if (tankType != null) {

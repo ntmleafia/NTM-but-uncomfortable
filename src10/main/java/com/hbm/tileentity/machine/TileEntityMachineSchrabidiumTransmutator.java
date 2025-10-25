@@ -17,8 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineBase implements ITickable, IEnergyUser {
 
@@ -77,8 +76,7 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 		}
 
 		if(i == 3) {
-			if(stack.getItem() instanceof IBatteryItem && ((IBatteryItem)stack.getItem()).getCharge(stack) == 0)
-				return true;
+            return stack.getItem() instanceof IBatteryItem && ((IBatteryItem) stack.getItem()).getCharge(stack) == 0;
 		}
 
 		return false;
@@ -92,7 +90,7 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setLong("power", power);
 		compound.setInteger("process", process);
 		return super.writeToNBT(compound);
@@ -179,10 +177,8 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 	public boolean hasCoil(){
 		if(inventory.getStackInSlot(2).getItem() == ModItems.redcoil_capacitor && ItemCapacitor.getDura(inventory.getStackInSlot(2)) > 0)
 			return true;
-		if(inventory.getStackInSlot(2).getItem() == ModItems.euphemium_capacitor)
-			return true;
-		return false;
-	}
+        return inventory.getStackInSlot(2).getItem() == ModItems.euphemium_capacitor;
+    }
 
 	public boolean canProcess() {
 		if(!hasCoil())
@@ -198,12 +194,9 @@ public class TileEntityMachineSchrabidiumTransmutator extends TileEntityMachineB
 			return false;
 
 		ItemStack outputItem = NuclearTransmutationRecipes.getOutput(inventory.getStackInSlot(0));
-		if(inventory.getStackInSlot(1) == null || inventory.getStackInSlot(1).isEmpty() || (inventory.getStackInSlot(1).getItem() == outputItem.getItem()
-			&& inventory.getStackInSlot(1).getCount() < inventory.getStackInSlot(1).getMaxStackSize())) {
-			return true;
-		}
-		return false;
-	}
+        return inventory.getStackInSlot(1) == null || inventory.getStackInSlot(1).isEmpty() || (inventory.getStackInSlot(1).getItem() == outputItem.getItem()
+                && inventory.getStackInSlot(1).getCount() < inventory.getStackInSlot(1).getMaxStackSize());
+    }
 
 	public boolean isProcessing() {
 		return process > 0;

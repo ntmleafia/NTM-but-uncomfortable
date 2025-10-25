@@ -1,6 +1,5 @@
 package com.hbm.inventory;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.hbm.inventory.OreDictManager.*;
@@ -14,7 +13,6 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.inventory.material.Mats;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemFluidIcon;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -33,14 +31,14 @@ public class ArcWelderRecipes {
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.motor, 2), 100, 400L,
 				new OreDictStack(STEEL.plate(), 1), new ComparableStack(ModItems.coil_copper), new ComparableStack(ModItems.coil_copper_torus)));
 		
-//		recipes.add(new ArcWelderRecipe(DictFrame.fromOne(ModItems.part_generic, EnumPartType.LDE), 200, 5_000L,
-//				new OreDictStack(AL.plate(), 4), new OreDictStack(FIBER.ingot(), 4), new OreDictStack(ANY_HARDPLASTIC.ingot())));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.low_density_element, 1), 200, 5_000L,
+				new OreDictStack(AL.plate(), 4), new OreDictStack(FIBER.ingot(), 4), new OreDictStack(ANY_HARDPLASTIC.ingot())));
 		
-//		recipes.add(new ArcWelderRecipe(DictFrame.fromOne(ModItems.part_generic, EnumPartType.LDE), 200, 10_000L,
-//				new OreDictStack(TI.plate(), 2), new OreDictStack(FIBER.ingot(), 4), new OreDictStack(ANY_HARDPLASTIC.ingot())));
-//		
-//		recipes.add(new ArcWelderRecipe(DictFrame.fromOne(ModItems.part_generic, EnumPartType.HDE), 600, 25_000_000L, new FluidStack(ModForgeFluids.STELLAR_FLUX, 4_000),
-//				new OreDictStack(ANY_BISMOIDBRONZE.plateCast(), 2), new OreDictStack(CMB.plateWelded(), 1), new ComparableStack(ModItems.ingot_cft)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.low_density_element, 1), 200, 10_000L,
+				new OreDictStack(TI.plate(), 2), new OreDictStack(FIBER.ingot(), 4), new OreDictStack(ANY_HARDPLASTIC.ingot())));
+
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.heavy_duty_element, 1), 600, 50_000_000L, new FluidStack(ModForgeFluids.UU_MATTER, 2_000),
+				new OreDictStack(CMB.plateWelded(), 2), new OreDictStack(STEEL.heavyComp(), 1), new OreDictStack(ZR.plateWelded())));
 
 		//Dense Wires
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.wire_dense, 1, Mats.MAT_ALLOY.id), 100, 10_000L,
@@ -54,9 +52,30 @@ public class ArcWelderRecipes {
 
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.wire_dense, 1, Mats.MAT_SCHRABIDIUM.id), 100, 10_000L,
 				new OreDictStack(SA326.wire(), 8)));
-		
 
-		//earlygame welded parts
+
+        //Shells
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.shell, 1, Mats.MAT_TITANIUM.id), 200, 1_000L,
+                new OreDictStack(TI.plate(), 4)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.shell, 1, Mats.MAT_COPPER.id), 100, 1_000L,
+                new OreDictStack(CU.plate(), 4)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.shell, 1, Mats.MAT_ALUMINIUM.id), 100, 1_000L,
+                new OreDictStack(AL.plate(), 4)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.shell, 1, Mats.MAT_STEEL.id), 100, 1_500L,
+                new OreDictStack(STEEL.plate(), 4)));
+
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.pipe, 1, Mats.MAT_COPPER.id), 100, 1_000L,
+                new OreDictStack(CU.plate(), 3)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.pipe, 1, Mats.MAT_ALUMINIUM.id), 100, 1_000L,
+                new OreDictStack(AL.plate(), 3)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.pipe, 1, Mats.MAT_LEAD.id), 100, 1_000L,
+                new OreDictStack(PB.plate(), 3)));
+        recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.pipe, 1, Mats.MAT_STEEL.id), 100, 1_500L,
+                new OreDictStack(STEEL.plate(), 3)));
+
+
+
+        //earlygame welded parts
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.plate_welded, 1, Mats.MAT_IRON.id), 100, 100L,
 				new OreDictStack(IRON.plateCast(), 2)));
 		//high-demand mid-game parts
@@ -94,9 +113,9 @@ public class ArcWelderRecipes {
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.thruster_medium), 100, 2_000L, new OreDictStack(STEEL.plate(), 8), new ComparableStack(ModItems.motor, 1), new OreDictStack(GRAPHITE.ingot(), 8)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.thruster_large), 200, 5_000L, new OreDictStack(DURA.ingot(), 10), new ComparableStack(ModItems.motor, 1), new OreDictStack(OreDictManager.getReflector(), 12)));
 
-		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_small), 60, 1_000L, new OreDictStack(AL.plate(), 6), new OreDictStack(CU.plate(), 4), new ComparableStack(ModBlocks.steel_scaffold, 4)));
-		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_medium), 100, 2_000L, new OreDictStack(AL.plateCast(), 4), new OreDictStack(TI.plate(), 8), new ComparableStack(ModBlocks.steel_scaffold, 12)));
-		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_large), 200, 5_000L, new OreDictStack(AL.plateWelded(), 8), new OreDictStack(BIGMT.plate(), 12), new ComparableStack(ModBlocks.steel_scaffold, 16)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_small), 60, 1_000L, new FluidStack(ModForgeFluids.KEROSENE, 6_000), new OreDictStack(AL.plate(), 6), new OreDictStack(CU.plate(), 4), new ComparableStack(ModBlocks.steel_scaffold, 4)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_medium), 100, 2_000L, new FluidStack(ModForgeFluids.KEROSENE, 8_000), new OreDictStack(AL.plateCast(), 4), new OreDictStack(TI.plate(), 8), new ComparableStack(ModBlocks.steel_scaffold, 12)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.fuel_tank_large), 200, 5_000L, new FluidStack(ModForgeFluids.KEROSENE, 12_000), new OreDictStack(AL.plateWelded(), 8), new OreDictStack(BIGMT.plate(), 12), new ComparableStack(ModBlocks.steel_scaffold, 16)));
 
 		//Missiles
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_anti_ballistic), 100, 5_000L, new OreDictStack(ANY_HIGHEXPLOSIVE.ingot(), 3), new ComparableStack(ModItems.missile_assembly), new ComparableStack(ModItems.thruster_small, 4)));
@@ -116,10 +135,14 @@ public class ArcWelderRecipes {
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_inferno), 300, 25_000L, new ComparableStack(ModItems.warhead_incendiary_large), new ComparableStack(ModItems.fuel_tank_medium, 2), new ComparableStack(ModItems.thruster_medium, 4)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_rain), 300, 25_000L, new ComparableStack(ModItems.warhead_cluster_large), new ComparableStack(ModItems.fuel_tank_medium, 2), new ComparableStack(ModItems.thruster_medium, 4)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_drill), 300, 25_000L, new ComparableStack(ModItems.warhead_buster_large), new ComparableStack(ModItems.fuel_tank_medium, 2), new ComparableStack(ModItems.thruster_medium, 4)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_endo), 300, 25_000L, new ComparableStack(ModBlocks.therm_endo), new ComparableStack(ModItems.fuel_tank_medium, 2), new ComparableStack(ModItems.thruster_medium, 4)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_exo), 300, 25_000L, new ComparableStack(ModBlocks.therm_exo), new ComparableStack(ModItems.fuel_tank_medium, 2), new ComparableStack(ModItems.thruster_medium, 4)));
 
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_n2), 600, 50_000L, new ComparableStack(ModItems.warhead_n2), new ComparableStack(ModItems.fuel_tank_large), new ComparableStack(ModItems.thruster_large, 3)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_nuclear), 600, 50_000L, new ComparableStack(ModItems.warhead_nuclear), new ComparableStack(ModItems.fuel_tank_large), new ComparableStack(ModItems.thruster_large, 3)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_nuclear_cluster), 600, 50_000L, new ComparableStack(ModItems.warhead_mirv), new ComparableStack(ModItems.fuel_tank_large), new ComparableStack(ModItems.thruster_large, 3)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_volcano), 600, 50_000L, new ComparableStack(ModItems.warhead_volcano), new ComparableStack(ModItems.fuel_tank_large), new ComparableStack(ModItems.thruster_large, 3)));
+		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.missile_doomsday), 600, 50_000L, new ComparableStack(ModItems.warhead_cluster_large, 8), new ComparableStack(ModItems.fuel_tank_large), new ComparableStack(ModItems.thruster_large, 3)));
 
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.sat_mapper), 600, 10_000L, new ComparableStack(ModItems.sat_base), new ComparableStack(ModItems.sat_head_mapper)));
 		recipes.add(new ArcWelderRecipe(new ItemStack(ModItems.sat_scanner), 600, 10_000L, new ComparableStack(ModItems.sat_base), new ComparableStack(ModItems.sat_head_scanner)));

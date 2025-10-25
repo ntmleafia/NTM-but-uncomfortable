@@ -5,7 +5,6 @@ import java.util.HashSet;
 
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 public class CompatibilityConfig {
 
@@ -33,7 +32,8 @@ public class CompatibilityConfig {
 	public static HashMap gasbubbleSpawn;
 	public static HashMap explosivebubbleSpawn;
 	public static HashMap cobaltSpawn;
-	
+	public static HashMap coltanSpawn;
+
 	public static HashMap ironClusterSpawn;
 	public static HashMap titaniumClusterSpawn;
 	public static HashMap aluminiumClusterSpawn;
@@ -86,6 +86,7 @@ public class CompatibilityConfig {
 	public static HashMap arcticStructure;
 	public static HashMap jungleStructure;
 	public static HashMap pyramidStructure;
+    public static HashMap vaulttecStructure;
 	
 	public static HashMap meteorStrikeChance;
 	public static HashMap meteorShowerChance;
@@ -213,7 +214,8 @@ public class CompatibilityConfig {
 		gasbubbleSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.19_gasBubbleSpawnRate", "Spawns a gas bubble every nTH chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:40", "-6:40" }, ":");
 		cinnebarSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.20_cinnebarSpawnRate", "Amount of cinnebar ore veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:1", "-6:1" }, ":");
 		cobaltSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.21_cobaltSpawnRate", "Amount of cobalt ore veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:2", "-6:2" }, ":");
-		
+		coltanSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.21a_coltanSpawnRate", "Amount of coltan ore veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:2", "-6:2" }, ":");
+
 		ironClusterSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.22_ironClusterSpawn", "Amount of iron cluster veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:4", "-6:4" }, ":");
 		titaniumClusterSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.23_titaniumClusterSpawn", "Amount of titanium cluster veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:2", "-6:2" }, ":");
 		aluminiumClusterSpawn = CommonConfig.createConfigHashMap(config, CATEGORY_DIMORE, "01.24_aluminiumClusterSpawn", "Amount of aluminium cluster veins per chunk - <dimID:amount> (Int:Int)", "Int", "Int", new String[]{ "0:3", "-6:3" }, ":");
@@ -269,7 +271,8 @@ public class CompatibilityConfig {
 		capsuleStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.24_capsuleSpawn", "Spawn landing capsule on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:100" }, ":");
 		arcticStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.25_arcticVaultSpawn", "Spawn artic code vault on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:500" }, ":");
 		jungleStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.26_jungleDungeonSpawn", "Spawn jungle dungeon on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:2000" }, ":");
-		pyramidStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.27_pyramidSpawn", "Spawn pyramid on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:4000" }, ":");
+        vaulttecStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.26.1_vaultDungeonSpawn", "Spawn vaulttec dungeon on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:20000", "-1:1000000" }, ":");
+        pyramidStructure = CommonConfig.createConfigHashMap(config, CATEGORY_DUNGEON, "03.27_pyramidSpawn", "Spawn pyramid on every nTH chunk - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ "0:4000" }, ":");
 		
 		meteorStrikeChance = CommonConfig.createConfigHashMap(config, CATEGORY_METEOR, "05.01_meteorStrikeChance", "The probability of a meteor spawning per tick (an average of once every nTH ticks) - <dimID:n> (Int:Int)", "Int", "Int", new String[]{ 
 			"0:"+20 * 10 * 60 * 5, //Earth
@@ -447,7 +450,8 @@ public class CompatibilityConfig {
 			"oreTh232",
 			"oreThorium232",
 			"oreVolcanic",
-			"oreSteel"
+			"oreSteel",
+            "oreNetherQuartz"
 		});
 	}
 

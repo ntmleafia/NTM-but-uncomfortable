@@ -52,6 +52,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityMachineMiningLaser extends TileEntityMachineBase implements ITickable, IEnergyUser, IFluidHandler, ITankPacketAcceptor, IMiningDrill {
 
@@ -428,9 +429,8 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 		if(b instanceof BlockGasBase) return false;
 		float hardness = block.getBlockHardness(world, new BlockPos(x, y, z));
 		if(hardness < 0 || hardness > 3_500_000) return false;
-		if(block.getMaterial().isLiquid()) return false;
-		return true;
-	}
+        return !block.getMaterial().isLiquid();
+    }
 
 	public int getOverdrive() {
 
@@ -596,9 +596,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 
 	public int getConsumption() {
 
-		int consumption = TileEntityMachineMiningLaser.consumption;
-
-		return consumption;
+        return TileEntityMachineMiningLaser.consumption;
 	}
 	
 	public int getWidth() {
@@ -626,12 +624,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 		return (int) (breakProgress * i);
 	}
 
-	@Override
-	public boolean canInsertItem(int i, ItemStack itemStack, int j) {
-		return this.isItemValidForSlot(i, itemStack);
-	}
-
-	@Override
+    @Override
 	public boolean canExtractItem(int i, ItemStack itemStack, int j) {
 		return i >= 9 && i <= 29;
 	}
@@ -715,7 +708,7 @@ public class TileEntityMachineMiningLaser extends TileEntityMachineBase implemen
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("tank", tank.writeToNBT(new NBTTagCompound()));
 		compound.setBoolean("isOn", isOn);
 		compound.setLong("power", power);

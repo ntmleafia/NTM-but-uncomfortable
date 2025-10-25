@@ -4,23 +4,21 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
 import com.hbm.items.ModItems;
-import com.hbm.items.machine.ItemBattery;
 import com.hbm.tileentity.INBTPacketReceiver;
 import com.hbm.tileentity.TileEntityMachineBase;
 
 import api.hbm.energy.IEnergyUser;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITickable, IEnergyUser, INBTPacketReceiver {
 
@@ -52,7 +50,7 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public @NotNull NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setInteger("cookTime", progress);
 		compound.setInteger("speed", this.progressStep);
 		compound.setLong("power", power);
@@ -231,39 +229,35 @@ public class TileEntityCoreAdvanced extends TileEntityMachineBase implements ITi
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-		
-		if(world.getBlockState(mPos.setPos(x, y, z)).getBlock() == ModBlocks.factory_advanced_core &&
-				world.getBlockState(mPos.setPos(x - 1, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x + 1, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
-				(world.getBlockState(mPos.setPos(x, y - 1, z)).getBlock() == ModBlocks.factory_advanced_conductor || world.getBlockState(mPos.setPos(x, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull) &&
-				world.getBlockState(mPos.setPos(x + 1, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x + 1, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y, z - 1)).getBlock() == ModBlocks.factory_advanced_furnace &&
-				world.getBlockState(mPos.setPos(x + 1, y, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y, z)).getBlock() == ModBlocks.factory_advanced_furnace &&
-				world.getBlockState(mPos.setPos(x + 1, y, z)).getBlock() == ModBlocks.factory_advanced_furnace &&
-				world.getBlockState(mPos.setPos(x - 1, y, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y, z + 1)).getBlock() == ModBlocks.factory_advanced_furnace &&
-				world.getBlockState(mPos.setPos(x + 1, y, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x + 1, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
-				(world.getBlockState(mPos.setPos(x, y + 1, z)).getBlock() == ModBlocks.factory_advanced_conductor || world.getBlockState(mPos.setPos(x, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull) &&
-				world.getBlockState(mPos.setPos(x + 1, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x - 1, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
-				world.getBlockState(mPos.setPos(x + 1, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull)
-		{
-			return true;
-		}
-		return false;
-	}
+
+        return world.getBlockState(mPos.setPos(x, y, z)).getBlock() == ModBlocks.factory_advanced_core &&
+                world.getBlockState(mPos.setPos(x - 1, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x + 1, y - 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
+                (world.getBlockState(mPos.setPos(x, y - 1, z)).getBlock() == ModBlocks.factory_advanced_conductor || world.getBlockState(mPos.setPos(x, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull) &&
+                world.getBlockState(mPos.setPos(x + 1, y - 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x + 1, y - 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y, z - 1)).getBlock() == ModBlocks.factory_advanced_furnace &&
+                world.getBlockState(mPos.setPos(x + 1, y, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y, z)).getBlock() == ModBlocks.factory_advanced_furnace &&
+                world.getBlockState(mPos.setPos(x + 1, y, z)).getBlock() == ModBlocks.factory_advanced_furnace &&
+                world.getBlockState(mPos.setPos(x - 1, y, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y, z + 1)).getBlock() == ModBlocks.factory_advanced_furnace &&
+                world.getBlockState(mPos.setPos(x + 1, y, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x + 1, y + 1, z - 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
+                (world.getBlockState(mPos.setPos(x, y + 1, z)).getBlock() == ModBlocks.factory_advanced_conductor || world.getBlockState(mPos.setPos(x, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull) &&
+                world.getBlockState(mPos.setPos(x + 1, y + 1, z)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x - 1, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull &&
+                world.getBlockState(mPos.setPos(x + 1, y + 1, z + 1)).getBlock() == ModBlocks.factory_advanced_hull;
+    }
 
 	public long getPowerScaled(long i) {
 		return (power * i) / maxPower;

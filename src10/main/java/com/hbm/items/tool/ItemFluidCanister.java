@@ -84,9 +84,10 @@ public class ItemFluidCanister extends Item implements IHasCustomModel {
 		if(tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH){
 			for(Fluid f : EnumCanister.getFluids()){
 				ItemStack stack = new ItemStack(this, 1, 0);
-				stack.setTagCompound(new NBTTagCompound());
-				if(f != null)
+				if(f != null) {
+					stack.setTagCompound(new NBTTagCompound());
 					stack.getTagCompound().setTag(HbmFluidHandlerCanister.FLUID_NBT_KEY, new FluidStack(f, cap).writeToNBT(new NBTTagCompound()));
+				}
 				items.add(stack);
 			}
 		}
@@ -108,8 +109,7 @@ public class ItemFluidCanister extends Item implements IHasCustomModel {
 	public static boolean isFullCanister(ItemStack stack, Fluid fluid){
 		if(stack != null){
 			FluidStack f = FluidUtil.getFluidContained(stack);
-			if(stack.getItem() instanceof ItemFluidCanister && f != null && f.getFluid() == fluid && f.amount == ((ItemFluidCanister)stack.getItem()).cap)
-				return true;
+            return stack.getItem() instanceof ItemFluidCanister && f != null && f.getFluid() == fluid && f.amount == ((ItemFluidCanister) stack.getItem()).cap;
 		}
 		return false;
 	}
@@ -117,7 +117,7 @@ public class ItemFluidCanister extends Item implements IHasCustomModel {
 	public static ItemStack getFullCanister(Fluid f, int amount){
 		ItemStack stack = new ItemStack(ModItems.canister_generic, amount, 0);
 		stack.setTagCompound(new NBTTagCompound());
-		if(f != null && EnumCanister.contains(f))
+		if(EnumCanister.contains(f))
 			stack.getTagCompound().setTag(HbmFluidHandlerCanister.FLUID_NBT_KEY, new FluidStack(f, 1000).writeToNBT(new NBTTagCompound()));
 		return stack;
 	}
@@ -133,15 +133,10 @@ public class ItemFluidCanister extends Item implements IHasCustomModel {
 				return true;
 			return f.amount == 1000 || f.amount == 0;
 			
-		} else if(stack.getItem() == ModItems.canister_generic){
-			return true;
-		}
-		return false;
-	}
+		} else return stack.getItem() == ModItems.canister_generic;
+    }
 
 	public static boolean isEmptyCanister(ItemStack out) {
-		if(out.getItem() == ModItems.canister_generic && FluidUtil.getFluidContained(out) == null)
-			return true;
-		return false;
-	}
+        return out.getItem() == ModItems.canister_generic && FluidUtil.getFluidContained(out) == null;
+    }
 }

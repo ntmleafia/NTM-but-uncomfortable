@@ -1,7 +1,6 @@
 package com.hbm.tileentity.machine;
 
-import com.hbm.items.machine.ItemSatChip;
-
+import com.hbm.items.ISatChip;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -38,7 +37,7 @@ public class TileEntityMachineSatLinker extends TileEntity implements ITickable 
 	}
 
 	public boolean hasCustomInventoryName() {
-		return this.customName != null && this.customName.length() > 0;
+		return this.customName != null && !this.customName.isEmpty();
 	}
 	
 	public void setCustomName(String name) {
@@ -71,12 +70,12 @@ public class TileEntityMachineSatLinker extends TileEntity implements ITickable 
 	public void update() {
 		if(!world.isRemote)
 		{
-			if(inventory.getStackInSlot(0).getItem() instanceof ItemSatChip && inventory.getStackInSlot(1).getItem() instanceof ItemSatChip) {
-				ItemSatChip.setFreq(inventory.getStackInSlot(1), ItemSatChip.getFreq(inventory.getStackInSlot(0)));
+			if(inventory.getStackInSlot(0).getItem() instanceof ISatChip && inventory.getStackInSlot(1).getItem() instanceof ISatChip) {
+				ISatChip.setFreqS(inventory.getStackInSlot(1), ISatChip.getFreqS(inventory.getStackInSlot(0)));
 			}
 			
-			if(inventory.getStackInSlot(2).getItem() instanceof ItemSatChip) {
-				ItemSatChip.setFreq(inventory.getStackInSlot(2), world.rand.nextInt(100000));
+			if(inventory.getStackInSlot(2).getItem() instanceof ISatChip) {
+				ISatChip.setFreqS(inventory.getStackInSlot(2), world.rand.nextInt(100000));
 			}
 		}
 	}
