@@ -31,6 +31,8 @@ public class ItemColtanCompass extends Item {
 		this.setRegistryName(s);
 		if (!GeneralConfig.enable528 || !GeneralConfig.enable528ColtanDeposit) {
 			this.setCreativeTab(null);
+		} else {
+			setCreativeTab(MainRegistry.consumableTab);
 		}
 		this.addPropertyOverride(new ResourceLocation("angle"), new IItemPropertyGetter(){
 
