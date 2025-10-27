@@ -278,6 +278,7 @@ public class MixingVatTE extends TileEntityMachineBase implements LeafiaQuickMod
 		return new MixingVatContainer(player.inventory,this);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public GuiScreen provideGUI(int ID,EntityPlayer player,World world,int x,int y,int z) {
 		return new MixingVatNclrGUI(player.inventory,this);

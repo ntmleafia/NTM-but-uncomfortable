@@ -18,7 +18,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid = RefStrings.MODID)
 public class ModForgeFluids {
@@ -136,7 +135,7 @@ public class ModForgeFluids {
 	public static Fluid NITROGLYCERIN = createFluid("nitroglycerin");
 	
 	public static Fluid LIQUID_OSMIRIDIUM = createFluid("liquid_osmiridium").setTemperature(573);
-	public static Fluid WATZ = createFluid("watz").setDensity(2500).setViscosity(3000).setLuminosity(5).setTemperature(2773);
+	//public static Fluid WATZ = createFluid("watz").setDensity(2500).setViscosity(3000).setLuminosity(5).setTemperature(2773);
 	public static Fluid CRYOGEL = createFluid("cryogel").setTemperature(50);
 
 	public static Fluid HYDROGEN = createFluid("hydrogen").setTemperature(21);
@@ -284,7 +283,7 @@ public class ModForgeFluids {
 		NITROGLYCERIN = registerOrGet(NITROGLYCERIN, "nitroglycerin");
 
 		LIQUID_OSMIRIDIUM = registerOrGet(LIQUID_OSMIRIDIUM, "liquid_osmiridium");
-		WATZ = registerOrGet(WATZ, "watz");
+		//WATZ = registerOrGet(WATZ, "watz");
 		CRYOGEL = registerOrGet(CRYOGEL, "cryogel");
 
 		HYDROGEN = registerOrGet(HYDROGEN, "hydrogen");
@@ -323,7 +322,7 @@ public class ModForgeFluids {
 
 		ModBlocks.toxic_block = new ToxicBlock(ModForgeFluids.TOXIC_FLUID, ModBlocks.fluidtoxic, ModDamageSource.radiation, "toxic_block").setResistance(500F);
 		ModBlocks.radwater_block = new RadWaterBlock(ModForgeFluids.RADWATER_FLUID,Material.WATER, ModDamageSource.radiation, "radwater_block").setResistance(500F);
-		ModBlocks.mud_block = new MudBlock(ModForgeFluids.MUD_FLUID, ModBlocks.fluidmud, ModDamageSource.mudPoisoning, "mud_block").setResistance(500F);
+		ModBlocks.mud_block = new MudBlock(MUD_FLUID, ModDamageSource.mudPoisoning, "mud_block", 0x98F500).setResistance(500F);
 		ModBlocks.schrabidic_block = new SchrabidicBlock(SCHRABIDIC, ModBlocks.fluidschrabidic.setReplaceable(), ModDamageSource.radiation, "schrabidic_block").setResistance(500F);
 		ModBlocks.corium_block = new BlockLiquidCorium(CORIUM_FLUID, ModBlocks.fluidcorium, "corium_block").setResistance(500F);
 		ModBlocks.volcanic_lava_block = new VolcanicBlock(VOLCANIC_LAVA_FLUID, ModBlocks.fluidvolcanic, "volcanic_lava_block").setResistance(500F);

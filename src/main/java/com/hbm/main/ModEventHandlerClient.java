@@ -26,6 +26,7 @@ import com.hbm.inventory.RecipesCommon.ComparableStack;
 import com.hbm.inventory.RecipesCommon.NbtComparableStack;
 import com.hbm.inventory.gui.GUIArmorTable;
 import com.hbm.inventory.material.Mats;
+import com.hbm.items.IDynamicModels;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.Armory;
 import com.hbm.items.ModItems.ElevatorStyles;
@@ -75,6 +76,7 @@ import com.hbm.render.modelrenderer.EgonBackpackRenderer;
 import com.hbm.render.tileentity.RenderMultiblock;
 import com.hbm.render.tileentity.RenderSoyuzMultiblock;
 import com.hbm.render.tileentity.RenderStructureMarker;
+import com.hbm.render.tileentity.RenderWatzMultiblock;
 import com.hbm.render.util.RenderOverhead;
 import com.hbm.render.world.RenderNTMSkybox;
 import com.hbm.sound.*;
@@ -331,6 +333,7 @@ public class ModEventHandlerClient {
 			registerBlockModel(block, 0);
 		}
 		ICustomBlock.registerModels();
+		IDynamicModels.registerModels();
 
 		registerBedrockOreModels();
 	}
@@ -450,6 +453,7 @@ public class ModEventHandlerClient {
 	@SubscribeEvent
 	public void modelBaking(ModelBakeEvent evt) {
 		ICustomBlock.bakeModels(evt);
+		IDynamicModels.bakeModels(evt);
 
 		for(EnumCanister e : EnumCanister.values()) {
 			Object o = evt.getModelRegistry().getObject(e.getResourceLocation());
@@ -784,6 +788,7 @@ public class ModEventHandlerClient {
 	public void textureStitch(TextureStitchEvent.Pre evt) {
 		TextureMap map = evt.getMap();
 		ICustomBlock.registerSprites(map);
+		IDynamicModels.registerSprites(evt.getMap());
 
 		DSmokeRenderer.sprites[0] = evt.getMap().registerSprite(new ResourceLocation(RefStrings.MODID, "particle/d_smoke1"));
 		DSmokeRenderer.sprites[1] = evt.getMap().registerSprite(new ResourceLocation(RefStrings.MODID, "particle/d_smoke2"));
@@ -882,6 +887,12 @@ public class ModEventHandlerClient {
 		RenderSoyuzMultiblock.blockIcons[0] = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/struct_launcher");
 		RenderSoyuzMultiblock.blockIcons[1] = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/concrete_smooth");
 		RenderSoyuzMultiblock.blockIcons[2] = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/struct_scaffold");
+
+		RenderWatzMultiblock.casingSprite = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/watz/watz_casing_tooled");
+		RenderWatzMultiblock.coolerSpriteSide = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/watz/watz_cooler_side");
+		RenderWatzMultiblock.coolerSpriteTop = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/watz/watz_cooler_top");
+		RenderWatzMultiblock.elementSpriteSide = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/watz/watz_element_side");
+		RenderWatzMultiblock.elementSpriteTop = evt.getMap().getAtlasSprite(RefStrings.MODID + ":blocks/watz/watz_element_top");
 	}
 
 	public static TextureAtlasSprite contrail;

@@ -5,6 +5,7 @@ import com.hbm.blocks.ModBlocks.WatzNew;
 import com.hbm.handler.MultiblockHandlerXR;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.tileentity.TileEntityProxyCombo;
+import com.hbm.tileentity.machine.TileEntityWatz;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -28,7 +29,7 @@ public class Watz extends BlockDummyable {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		
-		if(meta >= 12) return null;//new TileEntityWatz();
+		if(meta >= 12) return new TileEntityWatz();
 		if(meta >= 6) return new TileEntityProxyCombo(true, false, true);
 		return null;
 	}

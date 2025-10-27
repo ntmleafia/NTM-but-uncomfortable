@@ -44,6 +44,8 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
@@ -268,6 +270,7 @@ public class AdvCentTE extends TileEntityMachineBase implements LeafiaQuickModel
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public TileEntitySpecialRenderer<TileEntity> _renderer() {
 		return new AdvCentRender();
 	}
@@ -351,6 +354,7 @@ public class AdvCentTE extends TileEntityMachineBase implements LeafiaQuickModel
 		return new AdvCentContainer(player.inventory,this);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public GuiScreen provideGUI(int ID,EntityPlayer player,World world,int x,int y,int z) {
 		return new AdvCentGUI(player.inventory,this);

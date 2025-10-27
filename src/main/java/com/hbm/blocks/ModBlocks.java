@@ -23,6 +23,8 @@ import com.hbm.items.special.ItemHazard;
 import com.hbm.lib.HBMSoundEvents;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.DoorDecl;
+import com.hbm.tileentity.machine.TileEntityMultiblock;
+import com.hbm.tileentity.machine.TileEntityWatzStruct;
 import com.leafia.contents.building.BlockPinkDoor;
 import com.leafia.contents.building.mixed.BlockMixedConcrete;
 import com.leafia.contents.machines.Reserved6Block;
@@ -1335,8 +1337,8 @@ public class ModBlocks {
 	//Launcher Components
 	public static final Block struct_launcher = new BlockBase(Material.IRON, "struct_launcher").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
 	public static final Block struct_scaffold = new BlockBase(Material.IRON, "struct_scaffold").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
-	public static final Block struct_launcher_core = new BlockStruct(Material.IRON, "struct_launcher_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
-	public static final Block struct_launcher_core_large = new BlockStruct(Material.IRON, "struct_launcher_core_large").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
+	public static final Block struct_launcher_core = new BlockStruct(Material.IRON, "struct_launcher_core",TileEntityMultiblock.class).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
+	public static final Block struct_launcher_core_large = new BlockStruct(Material.IRON, "struct_launcher_core_large",TileEntityMultiblock.class).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
 	public static final Block struct_soyuz_core = new BlockSoyuzStruct(Material.IRON, "struct_soyuz_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.missileTab);
 	public static final Block struct_iter_core = new BlockITERStruct(Material.IRON, "struct_iter_core").setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final Block struct_plasma_core = new BlockPlasmaStruct(Material.IRON, "struct_plasma_core").setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
@@ -1453,11 +1455,11 @@ public class ModBlocks {
 	public static final Block watz_core = new WatzCore(Material.IRON, "watz_core").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 	public static final int guiID_watz_multiblock = 32;
 
-	//static boolean watz_dummy = WatzNew.dummy;
+	static boolean watz_dummy = WatzNew.dummy;
 	public static class WatzNew {
 		//Watz Components
 		static boolean dummy = false;
-		//public static final Block struct_watz_core = new BlockStruct(Material.IRON, "struct_watz_core", TileEntityWatzStruct.class).setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
+		public static final Block struct_watz_core = new BlockStruct(Material.IRON, "struct_watz_core", TileEntityWatzStruct.class).setLightLevel(1F).setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 		public static final Block watz_element = new BlockBase(Material.IRON, "struct_watz_element").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 		public static final Block watz_cooler = new BlockBase(Material.IRON, "struct_watz_cooler").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
 		public static final Block watz_casing = new BlockToolConversion(Material.IRON, "struct_watz_casing").setHardness(5.0F).setResistance(10.0F).setCreativeTab(MainRegistry.machineTab);
@@ -1641,7 +1643,7 @@ public class ModBlocks {
 	};
 	public static Block radwater_block;
 	
-	public static final Material fluidmud = (new MaterialLiquid(MapColor.ADOBE).setReplaceable());
+	//public static final Material fluidmud = (new MaterialLiquid(MapColor.ADOBE).setReplaceable());
 	public static Block mud_block;
 	
 	public static final Material fluidschrabidic = (new MaterialLiquid(MapColor.CYAN));

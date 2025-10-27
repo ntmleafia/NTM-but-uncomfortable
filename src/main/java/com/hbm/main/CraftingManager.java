@@ -8,8 +8,6 @@ import com.hbm.crafting.handlers.SmallReactorFuelCraftingHandler;
 import com.hbm.forgefluid.ModForgeFluids;
 import com.hbm.inventory.BedrockOreRegistry;
 import com.hbm.inventory.OreDictManager;
-import com.hbm.inventory.RecipesCommon;
-import com.hbm.inventory.RecipesCommon.OreDictStack;
 import com.hbm.items.ModItems;
 import com.hbm.items.ModItems.*;
 import com.hbm.items.ModItems.Materials.*;
@@ -1137,7 +1135,7 @@ public class CraftingManager {
 		addRecipeAuto(new ItemStack(Armory.gun_revolver_nightmare2_ammo, 12), "I", "C", "P", 'I', Powders.powder_power, 'C', Armory.casing_buckshot, 'P', Armory.primer_buckshot);
 		addRecipeAuto(new ItemStack(Armory.assembly_calamity, 12), " I ", "GCG", " P ", 'I', PB.ingot(), 'G', ModItems.cordite, 'C', Armory.casing_50, 'P', Armory.primer_50);
 		addRecipeAuto(new ItemStack(Armory.assembly_actionexpress, 12), " I", "GC", " P", 'I', PB.ingot(), 'G', ModItems.cordite, 'C', Armory.casing_50, 'P', Armory.primer_50);
-		addRecipeAuto(new ItemStack(Armory.ammo_dart, 16), "IPI", "ICI", "IPI", 'I', ModItems.plate_polymer, 'P', IRON.plate(), 'C', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.WATZ)));
+		addRecipeAuto(new ItemStack(Armory.ammo_dart, 16), "IPI", "ICI", "IPI", 'I', ModItems.plate_polymer, 'P', IRON.plate(), 'C', new IngredientContainsTag(ItemFluidTank.getFullBarrel(ModForgeFluids.MUD_FLUID)));
 
 		addRecipeAuto(new ItemStack(Armory.ammo_12gauge_incendiary, 8), "BBB", "BAB", "BBB", 'B', Armory.ammo_12gauge, 'A', P_RED.dust());
 		addRecipeAuto(new ItemStack(Armory.ammo_12gauge_shrapnel, 8), "BBB", "BAB", "BBB", 'B', Armory.ammo_12gauge, 'A', ModBlocks.gravel_obsidian);
