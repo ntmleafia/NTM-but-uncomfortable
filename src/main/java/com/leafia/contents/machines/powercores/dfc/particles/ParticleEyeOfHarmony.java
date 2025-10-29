@@ -1,4 +1,4 @@
-package com.leafia.contents.machines.powercores.dfc;
+package com.leafia.contents.machines.powercores.dfc.particles;
 
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
@@ -11,9 +11,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -73,6 +71,7 @@ public class ParticleEyeOfHarmony extends Particle {
 		GlStateManager.depthMask(false);
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
 
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
 		LeafiaGls.pushMatrix();
 		LeafiaGls.color(particleRed,particleGreen,particleBlue);
 		LeafiaGls.translate(calculate(curPercentage+partialTicks*speed).position.subtract(interpPosX,interpPosY,interpPosZ));

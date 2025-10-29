@@ -319,5 +319,8 @@
   "external.mechcrafting_lower": { "category": "block", "sounds": ["hbm:external/mechcrafting_lower"]},
   "external.mechcrafting_raise": { "category": "block", "sounds": ["hbm:external/mechcrafting_raise"]},
   "external.mechcrafting_loop": { "category": "block", "sounds": ["hbm:external/mechcrafting_loop"]},
-  "external.mechcrafting_weld": { "category": "block", "sounds": ["hbm:external/mechcrafting_weld"]}
+  "external.mechcrafting_weld": { "category": "block", "sounds": ["hbm:external/mechcrafting_weld"]},
+  "external.overload": { "category": "block", "sounds": ["hbm:external/1205987156"]},
+  "external.longexplosion": { "category": "block", "sounds": ["hbm:external/178962800"]},
+  "external.actualexplosion": { "category": "block", "sounds": ["hbm:external/169628396"]}
 }

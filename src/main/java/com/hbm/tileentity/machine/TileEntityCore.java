@@ -2,6 +2,8 @@ package com.hbm.tileentity.machine;
 
 import com.hbm.blocks.machine.MachineFieldDisturber;
 import com.hbm.entity.logic.EntityNukeExplosionMK3;
+import com.hbm.explosion.ExplosionNT;
+import com.hbm.explosion.ExplosionNT.ExAttrib;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.ModFluidProperties;
 import com.hbm.forgefluid.ModForgeFluids;
@@ -13,6 +15,7 @@ import com.hbm.lib.HBMSoundEvents;
 import com.hbm.lib.Library;
 import com.hbm.lib.ModDamageSource;
 import com.hbm.main.AdvancementManager;
+import com.hbm.main.ClientProxy;
 import com.hbm.main.MainRegistry;
 import com.hbm.packet.PacketDispatcher;
 import com.hbm.sound.AudioWrapper;
@@ -22,16 +25,16 @@ import com.leafia.LeafiaHelper;
 import com.leafia.contents.effects.folkvangr.EntityNukeFolkvangr.VacuumInstance;
 import com.leafia.contents.effects.folkvangr.particles.ParticleFleijaVacuum;
 import com.leafia.contents.effects.folkvangr.visual.EntityCloudFleijaRainbow;
-import com.leafia.contents.machines.powercores.dfc.ParticleEyeOfHarmony;
+import com.leafia.contents.machines.powercores.dfc.particles.ParticleEyeOfHarmony;
 import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.LeafiaDebug.Tracker;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.leafia.dev.container_utility.LeafiaPacketReceiver;
 import com.leafia.dev.custompacket.LeafiaCustomPacket;
 import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
+import com.leafia.dev.optimization.LeafiaParticlePacket.DFCBlastParticle;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.LeafiaPassiveLocal;
-import com.leafia.unsorted.ParticleBalefire;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.leafia.dev.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
@@ -180,6 +183,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	AudioWrapper client_sfx = null;
 	boolean sfxPlaying = false;
 	AudioWrapper meltdownSFX = null;
+	AudioWrapper overloadSFX = null;
+	AudioWrapper extinguishSFX = null;
+	AudioWrapper explosionsSFX = null;
 	public float angle = 0;
 	public float lightRotateSpeed = 15/20f;
 
@@ -193,6 +199,18 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		if (meltdownSFX != null) {
 			meltdownSFX.stopSound();
 			meltdownSFX = null;
+		}
+		if (extinguishSFX != null) {
+			extinguishSFX.stopSound();
+			extinguishSFX = null;
+		}
+		if (overloadSFX != null) {
+			overloadSFX.stopSound();
+			overloadSFX = null;
+		}
+		if (explosionsSFX != null) {
+			explosionsSFX.stopSound();
+			explosionsSFX = null;
 		}
 		MinecraftServer server = world.getMinecraftServer();
 		if (server != null && !world.isRemote) {
@@ -210,8 +228,34 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			if (!server.isDedicatedServer())
 				LeafiaPassiveLocal.trackingCores.add(this);
 		}
+		if (MainRegistry.proxy instanceof ClientProxy) {
+			meltdownSFX = MainRegistry.proxy.getLoopedSound(
+							HBMSoundEvents.dfc_meltdown,
+							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
+							1f,1
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-50)/500,0,1),6.66))
+					.setLooped(false);
+			extinguishSFX = MainRegistry.proxy.getLoopedSound(
+							SoundEvents.BLOCK_FIRE_EXTINGUISH,
+							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
+							1f,0.8f
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-50)/500,0,1),6.66))
+					.setLooped(false);
+			overloadSFX = MainRegistry.proxy.getLoopedSound(
+							HBMSoundEvents.overload,
+							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
+							1f,1
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-20)/100,0,1),6.66))
+					.setLooped(false);
+			explosionsSFX = MainRegistry.proxy.getLoopedSound(
+							HBMSoundEvents.longexplosion,
+							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
+							1f,1
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-20)/100,0,1),6.66))
+					.setLooped(false);
+		}
 	}
-
+	int overloadTimer = 0;
 	@Override
 	public void update() {
 		if (destroyed) return;
@@ -520,24 +564,45 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					exp.waste = false;
 				}
 				if (jammerPos == null) {
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 100000.0F, 1.0F);
-
-					if (!EntityNukeExplosionMK3.isJammed(this.world, exp)) {
-						destroyed = true;
-						world.spawnEntity(exp);
-						EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
-						cloud.posX = pos.getX();
-						cloud.posY = pos.getY();
-						cloud.posZ = pos.getZ();
-						world.spawnEntity(cloud);
-					} else {
-						jammerPos = EntityNukeExplosionMK3.lastDetectedJammer;
-						if (explosionIn < 0) {
-							explosionIn = 120;
-							explosionClock = System.currentTimeMillis();
+					if (overloadTimer <= 20*6) {
+						if (overloadTimer == 0) {
 							LeafiaPacket._start(this)
-									.__write(packetKeys.PLAY_SOUND.key, 0)
+									.__write(packetKeys.PLAY_SOUND.key, 2)
 									.__sendToAll();
+						}
+						overloadTimer++;
+					} else {
+						world.playSound(null, pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 100000.0F, 1.0F);
+
+						world.playSound(null, pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f, HBMSoundEvents.actualexplosion, SoundCategory.BLOCKS, 50.0F, 1.0F);
+						ExplosionNT nt = new ExplosionNT(world,null,pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,50);
+						nt.maxExplosionResistance = 20;
+						nt.ignoreBlockPoses.add(pos);
+						nt.explode();
+						LeafiaColor col = new LeafiaColor(calcAvgHex(
+								((ItemCatalyst) catalystA.getItem()).getColor(),
+								((ItemCatalyst) catalystB.getItem()).getColor()
+						));
+						DFCBlastParticle blast = new DFCBlastParticle((float)col.red,(float)col.green,(float)col.blue);
+						blast.emit(new Vec3d(pos).add(0.5,0.5,0.5),new Vec3d(0,1,0),world.provider.getDimension(),200);
+
+						if (!EntityNukeExplosionMK3.isJammed(this.world, exp)) {
+							destroyed = true;
+							world.spawnEntity(exp);
+							EntityCloudFleijaRainbow cloud = new EntityCloudFleijaRainbow(world, exp.destructionRange);
+							cloud.posX = pos.getX();
+							cloud.posY = pos.getY();
+							cloud.posZ = pos.getZ();
+							world.spawnEntity(cloud);
+						} else {
+							jammerPos = EntityNukeExplosionMK3.lastDetectedJammer;
+							if (explosionIn < 0) {
+								explosionIn = 120;
+								explosionClock = System.currentTimeMillis();
+								LeafiaPacket._start(this)
+										.__write(packetKeys.PLAY_SOUND.key, 0)
+										.__sendToAll();
+							}
 						}
 					}
 				}
@@ -587,6 +652,11 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					LeafiaPacket._start(this)
 							.__write(packetKeys.PLAY_SOUND.key, 1)
 							.__sendToAll();
+				} else if (overloadTimer > 0) {
+					LeafiaPacket._start(this)
+							.__write(packetKeys.PLAY_SOUND.key, 1)
+							.__sendToAll();
+					overloadTimer = 0;
 				}
 			}
 
@@ -1082,24 +1152,15 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						}
 						break;
 					case PLAY_SOUND:
-						if (meltdownSFX != null) meltdownSFX.stopSound();
 						if (value == null) break;
 						int type = (int) value;
-						SoundEvent soundToPlay;
-						float pitch = 1;
-						if (type == 0) {
-							soundToPlay = HBMSoundEvents.dfc_meltdown;
-						} else if (type == 1) {
-							soundToPlay = SoundEvents.BLOCK_FIRE_EXTINGUISH;
-							pitch = 0.8f;
-						} else break;
-						meltdownSFX = MainRegistry.proxy.getLoopedSound(
-										soundToPlay,
-										SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(),
-										1f, pitch
-								).setCustomAttentuation((intended, distance) -> Math.pow(MathHelper.clamp(1 - (distance - 50) / 500, 0, 1), 6.66))
-								.setLooped(false);
-						meltdownSFX.startSound();
+						if (type == 0 || type == 1) {
+							if (meltdownSFX != null) meltdownSFX.stopSound();
+							if (type == 0 && meltdownSFX != null) meltdownSFX.startSound();
+							if (type == 1 && extinguishSFX != null) extinguishSFX.startSound();
+						} else if (type == 2 && overloadSFX != null) {
+							overloadSFX.startSound();
+						}
 						break;
 					case COLLAPSE:
 						collapsing = (double)value;

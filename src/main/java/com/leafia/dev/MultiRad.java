@@ -35,9 +35,9 @@ public class MultiRad {
 			return accountConfig(amp>=2 ? (health < 0.5 ? 0.9f : 0.6f) : (amp+1)*(amp+1)*0.01f);
 		}),
 		GAMMA("gamma",TextFormatting.DARK_GREEN,(entity,base)->0.2f),
+		X("x",TextFormatting.DARK_AQUA,(entity,base)->0.05f),
 		NEUTRONS("neutrons",TextFormatting.YELLOW,(entity,base)->1.3f),
 		ACTIVATION("activation",TextFormatting.DARK_GRAY,(entity,base)->1f), // Should be always 1
-		X("x",TextFormatting.LIGHT_PURPLE,(entity,base)->0.05f),
 
 		// radon's a bit special, as we don't do stack count multipliers here
 		// x is simply unused because idk what emits that
@@ -61,18 +61,21 @@ public class MultiRad {
 	public float alpha;
 	public float beta;
 	public float gamma;
+	public float x;
 	public float neutrons;
 	public float activation;
 	public float radon;
 	public float getAlpha() { return alpha; }
 	public float getBeta() { return beta; }
 	public float getGamma() { return gamma; }
+	public float getX() { return x; }
 	public float getNeutrons() { return neutrons; }
 	public float getActivation() { return activation; }
 	public float getRadon() { return radon; }
 	public void setAlpha(float alpha) { this.alpha = alpha; }
 	public void setBeta(float beta) { this.beta = beta; }
 	public void setGamma(float gamma) { this.gamma = gamma; }
+	public void setX(float x) { this.x = x; }
 	public void setNeutrons(float neutrons) { this.neutrons = neutrons; }
 	public void setActivation(float activation) { this.activation = activation; }
 	public void setRadon(float radon) { this.radon = radon; }
@@ -83,6 +86,7 @@ public class MultiRad {
 				case ALPHA: alpha = value; break;
 				case BETA: beta = value; break;
 				case GAMMA: gamma = value; break;
+				case X: x = value; break;
 				case NEUTRONS: neutrons = value; break;
 				case ACTIVATION: activation = value; break;
 				case RADON: radon = value; break;
@@ -97,6 +101,7 @@ public class MultiRad {
 				case ALPHA: value += alpha; break;
 				case BETA: value += beta; break;
 				case GAMMA: value += gamma; break;
+				case X: value += x; break;
 				case NEUTRONS: value += neutrons; break;
 				case ACTIVATION: value += activation; break;
 			}
@@ -111,6 +116,7 @@ public class MultiRad {
 				case ALPHA: value = Math.max(value,alpha); break;
 				case BETA: value = Math.max(value,beta); break;
 				case GAMMA: value = Math.max(value,gamma); break;
+				case X: value = Math.max(value,x); break;
 				case NEUTRONS: value = Math.max(value,neutrons); break;
 				case ACTIVATION: value = Math.max(value,activation); break;
 			}
@@ -128,6 +134,7 @@ public class MultiRad {
 				case ALPHA: cmp = alpha; break;
 				case BETA: cmp = beta; break;
 				case GAMMA: cmp = gamma; break;
+				case X: cmp = x; break;
 				case NEUTRONS: cmp = neutrons; break;
 				case ACTIVATION: cmp = activation; break;
 			}
@@ -139,7 +146,7 @@ public class MultiRad {
 		return most;
 	}
 	public float total() {
-		return alpha+beta+gamma+neutrons+activation;
+		return alpha+beta+gamma+x+neutrons+activation;
 	}
 	public float max() {
 		return getM(RadiationType.values());
@@ -151,7 +158,7 @@ public class MultiRad {
 	public boolean equals(Object obj) {
 		if (obj instanceof MultiRad) {
 			MultiRad other = (MultiRad)obj;
-			return other.alpha == this.alpha && other.beta == this.beta && other.gamma == this.gamma && other.neutrons == this.neutrons && other.activation == this.activation && other.radon == this.radon;
+			return other.alpha == this.alpha && other.beta == this.beta && other.gamma == this.gamma && other.x == this.x && other.neutrons == this.neutrons && other.activation == this.activation && other.radon == this.radon;
 		}
 		return super.equals(obj);
 	}
@@ -159,6 +166,7 @@ public class MultiRad {
 		callback.accept(RadiationType.ALPHA,alpha);
 		callback.accept(RadiationType.BETA,beta);
 		callback.accept(RadiationType.GAMMA,gamma);
+		callback.accept(RadiationType.X,x);
 		callback.accept(RadiationType.NEUTRONS,neutrons);
 		callback.accept(RadiationType.ACTIVATION,activation);
 	}

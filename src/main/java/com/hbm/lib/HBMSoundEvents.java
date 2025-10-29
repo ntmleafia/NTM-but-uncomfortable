@@ -315,6 +315,10 @@ public final class HBMSoundEvents {
 	public static SoundEvent mechcrafting_weld;
 	public static SoundEvent mechcrafting_raise;
 	public static SoundEvent mechcrafting_loop;
+
+	public static SoundEvent overload;
+	public static SoundEvent longexplosion;
+	public static SoundEvent actualexplosion;
 	
 	
 	public static void init() {
@@ -582,6 +586,10 @@ public final class HBMSoundEvents {
 		mechcrafting_raise = register("external.mechcrafting_raise");
 		mechcrafting_weld = register("external.mechcrafting_weld");
 		mechcrafting_loop = register("external.mechcrafting_loop");
+
+		overload = register("external.overload");
+		longexplosion = register("external.longexplosion");
+		actualexplosion = register("external.actualexplosion");
 		
 		geigerSounds = new SoundEvent[]{geiger1, geiger2, geiger3, geiger4, geiger5, geiger6, geiger7, geiger8};
 		voiceSounds = new SoundEvent[]{voices1, voices2, voices3, voices4, voices5, voices6, voices7, voices8};

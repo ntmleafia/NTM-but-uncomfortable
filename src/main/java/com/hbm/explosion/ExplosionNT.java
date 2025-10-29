@@ -11,8 +11,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.network.play.server.SPacketExplosion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -31,15 +33,19 @@ public class ExplosionNT extends Explosion {
 
 	private Random explosionRNG = new Random();
 	private World worldObj;
-	protected int field_77289_h = 16;
+	protected int resolution = 16;
 	protected Map affectedEntities = new HashMap();
 	public float explosionSize;
 	public double explosionX;
 	public double explosionY;
 	public double explosionZ;
 	public Entity exploder;
+
+	public float maxExplosionResistance = -1;
 	/** A list of ChunkPositions of blocks affected by this explosion */
 	public final List<BlockPos> affectedBlockPositions;
+
+	public final List<BlockPos> ignoreBlockPoses = new ArrayList<>();
 	
 	public static final List<ExAttrib> nukeAttribs = Arrays.asList(new ExAttrib[] {ExAttrib.FIRE, ExAttrib.NOPARTICLE, ExAttrib.NOSOUND, ExAttrib.NODROP, ExAttrib.NOHURT});
 
@@ -65,62 +71,74 @@ public class ExplosionNT extends Explosion {
 	}
 	
 	public ExplosionNT overrideResolution(int res) {
-		field_77289_h = res;
+		resolution = res;
 		return this;
 	}
 
 	public void explode() {
 		if(CompatibilityConfig.isWarDim(worldObj)){
 			doNTExplosionA();
-    		doNTExplosionB(false);
+			if (!worldObj.isRemote) {
+				for (EntityPlayer entityplayer : worldObj.playerEntities) {
+					if (entityplayer.getDistanceSq(explosionX,explosionY,explosionZ) < 4096.0D)
+						((EntityPlayerMP) entityplayer).connection.sendPacket(new SPacketExplosion(explosionX,explosionY,explosionZ,explosionSize,getAffectedBlockPositions(),getPlayerKnockbackMap().get(entityplayer)));
+				}
+			}
+    		doNTExplosionB();
 		}
     }
 	
 	private void doNTExplosionA() {
 		float f = this.explosionSize;
 		HashSet hashset = new HashSet();
-		int i;
-		int j;
-		int k;
-		double d5;
-		double d6;
-		double d7;
+		int endX;
+		int endY;
+		int endZ;
+		double curX;
+		double curY;
+		double curZ;
 
-		for(i = 0; i < this.field_77289_h; ++i) {
-			for(j = 0; j < this.field_77289_h; ++j) {
-				for(k = 0; k < this.field_77289_h; ++k) {
-					if(i == 0 || i == this.field_77289_h - 1 || j == 0 || j == this.field_77289_h - 1 || k == 0 || k == this.field_77289_h - 1) {
-						double d0 = (double) ((float) i / ((float) this.field_77289_h - 1.0F) * 2.0F - 1.0F);
-						double d1 = (double) ((float) j / ((float) this.field_77289_h - 1.0F) * 2.0F - 1.0F);
-						double d2 = (double) ((float) k / ((float) this.field_77289_h - 1.0F) * 2.0F - 1.0F);
-						double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-						d0 /= d3;
-						d1 /= d3;
-						d2 /= d3;
-						float f1 = this.explosionSize * (0.7F + this.worldObj.rand.nextFloat() * 0.6F);
-						d5 = this.explosionX;
-						d6 = this.explosionY;
-						d7 = this.explosionZ;
+		for(endX = 0; endX < this.resolution; ++endX) {
+			for(endY = 0; endY < this.resolution; ++endY) {
+				for(endZ = 0; endZ < this.resolution; ++endZ) {
+					/// basically hollow box
+					if(endX == 0 || endX == this.resolution- 1 || endY == 0 || endY == this.resolution- 1 || endZ == 0 || endZ == this.resolution- 1) {
+						double ratioX = (double) ((float) endX / ((float) this.resolution- 1.0F) * 2.0F - 1.0F);
+						double ratioY = (double) ((float) endY / ((float) this.resolution- 1.0F) * 2.0F - 1.0F);
+						double ratioZ = (double) ((float) endZ / ((float) this.resolution- 1.0F) * 2.0F - 1.0F);
+						double distance = Math.sqrt(ratioX * ratioX + ratioY * ratioY + ratioZ * ratioZ);
+						ratioX /= distance;
+						ratioY /= distance;
+						ratioZ /= distance;
+						float power = this.explosionSize * (0.7F + this.worldObj.rand.nextFloat() * 0.6F);
+						curX = this.explosionX;
+						curY = this.explosionY;
+						curZ = this.explosionZ;
 
-						for(float f2 = 0.3F; f1 > 0.0F; f1 -= f2 * 0.75F) {
-							int j1 = MathHelper.floor(d5);
-							int k1 = MathHelper.floor(d6);
-							int l1 = MathHelper.floor(d7);
+						for(float weaken = 0.3F; power > 0.0F; power -= weaken * 0.75F) {
+							int j1 = MathHelper.floor(curX);
+							int k1 = MathHelper.floor(curY);
+							int l1 = MathHelper.floor(curZ);
 							BlockPos pos = new BlockPos(j1, k1, l1);
+							curX += ratioX * (double) weaken;
+							curY += ratioY * (double) weaken;
+							curZ += ratioZ * (double) weaken;
+							if (ignoreBlockPoses.contains(pos))
+								continue;
+
 							IBlockState block = this.worldObj.getBlockState(pos);
 
 							if(block.getMaterial() != Material.AIR) {
-								float f3 = this.exploder != null ? this.exploder.getExplosionResistance(this, this.worldObj, new BlockPos(j1, k1, l1), block) : block.getBlock().getExplosionResistance(worldObj, new BlockPos(j1, k1, l1), (Entity) null, this);
-								f1 -= (f3 + 0.3F) * f2;
+								float resistance = this.exploder != null ? this.exploder.getExplosionResistance(this, this.worldObj, new BlockPos(j1, k1, l1), block) : block.getBlock().getExplosionResistance(worldObj, new BlockPos(j1, k1, l1), (Entity) null, this);
+								if (maxExplosionResistance >= 0 && resistance > maxExplosionResistance*5/3)
+									power = 0;
+								power -= (resistance + 0.3F) * weaken;
 							}
 
-							if(f1 > 0.0F && (this.exploder == null || this.exploder.canExplosionDestroyBlock(this, this.worldObj, new BlockPos(j1, k1, l1), block, f1))) {
+							if(power > 0.0F && (this.exploder == null || this.exploder.canExplosionDestroyBlock(this, this.worldObj, new BlockPos(j1, k1, l1), block, power))) {
 								hashset.add(new BlockPos(j1, k1, l1));
 							}
 
-							d5 += d0 * (double) f2;
-							d6 += d1 * (double) f2;
-							d7 += d2 * (double) f2;
 						}
 					}
 				}
@@ -132,13 +150,13 @@ public class ExplosionNT extends Explosion {
 		if(!has(ExAttrib.NOHURT)) {
 
 			this.explosionSize *= 2.0F;
-			i = MathHelper.floor(this.explosionX - (double) this.explosionSize - 1.0D);
-			j = MathHelper.floor(this.explosionX + (double) this.explosionSize + 1.0D);
-			k = MathHelper.floor(this.explosionY - (double) this.explosionSize - 1.0D);
+			endX = MathHelper.floor(this.explosionX - (double) this.explosionSize - 1.0D);
+			endY = MathHelper.floor(this.explosionX + (double) this.explosionSize + 1.0D);
+			endZ = MathHelper.floor(this.explosionY - (double) this.explosionSize - 1.0D);
 			int i2 = MathHelper.floor(this.explosionY + (double) this.explosionSize + 1.0D);
 			int l = MathHelper.floor(this.explosionZ - (double) this.explosionSize - 1.0D);
 			int j2 = MathHelper.floor(this.explosionZ + (double) this.explosionSize + 1.0D);
-			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB((double) i, (double) k, (double) l, (double) j, (double) i2, (double) j2));
+			List list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB((double) endX, (double) endZ, (double) l, (double) endY, (double) i2, (double) j2));
 			net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.worldObj, this, list, this.explosionSize);
 			Vec3 vec3 = Vec3.createVectorHelper(this.explosionX, this.explosionY, this.explosionZ);
 
@@ -147,27 +165,27 @@ public class ExplosionNT extends Explosion {
 				double d4 = entity.getDistance(this.explosionX, this.explosionY, this.explosionZ) / (double) this.explosionSize;
 
 				if(d4 <= 1.0D) {
-					d5 = entity.posX - this.explosionX;
-					d6 = entity.posY + (double) entity.getEyeHeight() - this.explosionY;
-					d7 = entity.posZ - this.explosionZ;
-					double d9 = (double) MathHelper.sqrt(d5 * d5 + d6 * d6 + d7 * d7);
+					curX = entity.posX - this.explosionX;
+					curY = entity.posY + (double) entity.getEyeHeight() - this.explosionY;
+					curZ = entity.posZ - this.explosionZ;
+					double d9 = (double) MathHelper.sqrt(curX * curX + curY * curY + curZ * curZ);
 
 					if(d9 != 0.0D) {
-						d5 /= d9;
-						d6 /= d9;
-						d7 /= d9;
+						curX /= d9;
+						curY /= d9;
+						curZ /= d9;
 						double d10 = (double) this.worldObj.getBlockDensity(new Vec3d(vec3.xCoord, vec3.yCoord, vec3.zCoord), entity.getEntityBoundingBox());
 						double d11 = (1.0D - d4) * d10;
 						entity.attackEntityFrom(DamageSource.causeExplosionDamage(this), (float) ((int) ((d11 * d11 + d11) / 2.0D * 8.0D * (double) this.explosionSize + 1.0D)));
 						double d8 = d11;
 						if(entity instanceof EntityLivingBase)
 							d8 = EnchantmentProtection.getBlastDamageReduction((EntityLivingBase) entity, d11);
-						entity.motionX += d5 * d8;
-						entity.motionY += d6 * d8;
-						entity.motionZ += d7 * d8;
+						entity.motionX += curX * d8;
+						entity.motionY += curY * d8;
+						entity.motionZ += curZ * d8;
 
 						if(entity instanceof EntityPlayer) {
-							this.affectedEntities.put((EntityPlayer) entity, Vec3.createVectorHelper(d5 * d11, d6 * d11, d7 * d11));
+							this.affectedEntities.put((EntityPlayer) entity, Vec3.createVectorHelper(curX * d11, curY * d11, curZ * d11));
 						}
 					}
 				}
@@ -177,7 +195,7 @@ public class ExplosionNT extends Explosion {
 		}
 	}
 
-	private void doNTExplosionB(boolean p_77279_1_) {
+	private void doNTExplosionB() {
 		if(!has(ExAttrib.NOSOUND))
 			this.worldObj.playSound(null, this.explosionX, this.explosionY, this.explosionZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
 
