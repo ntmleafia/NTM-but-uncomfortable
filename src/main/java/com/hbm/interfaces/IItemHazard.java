@@ -16,6 +16,7 @@ public interface IItemHazard {
 	public default IItemHazard addAlpha(float radiation) { this.getModule().radiation.setAlpha(radiation); return this; }
 	public default IItemHazard addBeta(float radiation) { this.getModule().radiation.setBeta(radiation); return this; }
 	public default IItemHazard addGamma(float radiation) { this.getModule().radiation.setGamma(radiation); return this; }
+	public default IItemHazard addX(float radiation) { this.getModule().radiation.setX(radiation); return this; }
 	public default IItemHazard addNeutrons(float radiation) { this.getModule().radiation.setNeutrons(radiation); return this; }
 	public default IItemHazard addRadon(float radiation) { this.getModule().radiation.setRadon(radiation); return this; }
 	
