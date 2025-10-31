@@ -111,7 +111,9 @@ public class ControlEventSystem {
 			for(BlockPos pos : positions){
 				IControllable c = map.get(pos);
 				if(c != null){
-					c.receiveEvent(from, evt);
+					try {
+						c.receiveEvent(from,evt);
+					} catch (IllegalArgumentException ignored) {}
 				}
 			}
 		}

@@ -71,7 +71,7 @@ public class LeafiaServerListener {
 		@SubscribeEvent
 		public void onBlockNotify(NeighborNotifyEvent evt) {
 			if (!evt.getWorld().isRemote) {
-				LeafiaDebug.debugPos(evt.getWorld(),evt.getPos(),3,0xFF0000,"NeighborNotifyEvent");
+				//LeafiaDebug.debugPos(evt.getWorld(),evt.getPos(),3,0xFF0000,"NeighborNotifyEvent");
 				for (Entry<PWRElementTE,LeafiaSet<BlockPos>> entry : PWRElementTE.listeners.entrySet()) {
 					if (entry.getKey().isInvalid()) {
 						PWRElementTE.listeners.remove(entry.getKey());

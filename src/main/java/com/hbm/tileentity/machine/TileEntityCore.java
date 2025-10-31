@@ -604,6 +604,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 						ExplosionNT nt = new ExplosionNT(world,null,pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,50);
 						nt.maxExplosionResistance = 20;
+						nt.iterationLimit = 150;
 						nt.ignoreBlockPoses.add(pos);
 						nt.explode();
 
@@ -673,7 +674,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 							ExplosionNT nt = new ExplosionNT(world,null,pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,150);
 							nt.iterationLimit = 150;
-							nt.overrideResolution(32);
+							nt.overrideResolution(24);
 							nt.ignoreBlockPoses.add(pos);
 							nt.addAttrib(ExAttrib.FIRE);
 							nt.addAttrib(ExAttrib.DFC_FALL);

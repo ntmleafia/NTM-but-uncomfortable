@@ -156,7 +156,7 @@ public class ExplosionNT extends Explosion {
 		double curZ;
 		HashSet<BlockPos> hashset2 = null;
 		if (has(ExAttrib.DFC_FALL))
-			hashset2 = new HashSet();
+			hashset2 = new HashSet<>();
 
 		for(endX = 0; endX < this.resolution; ++endX) {
 			for(endY = 0; endY < this.resolution; ++endY) {
@@ -200,7 +200,7 @@ public class ExplosionNT extends Explosion {
 									power = 0;
 								power -= (resistance + 0.3F) * weaken;
 								if (has(ExAttrib.DFC_FALL) && power > 0) {
-									if (lastBlock.getMaterial() == Material.AIR || lastBlock.getMaterial() == Material.AIR) {
+									if (lastBlock.getMaterial() == Material.AIR || lastBlock2.getMaterial() == Material.AIR) {
 										hashset2.add(pos);
 									} else {
 										lastBlock2 = lastBlock;
@@ -295,138 +295,143 @@ public class ExplosionNT extends Explosion {
 		int j;
 		int k;
 		IBlockState block;
-
-		if (has(ExAttrib.DFC_FALL) && fallBlocks != null) {
-			for (BlockPos pos : fallBlocks) {
-				IBlockState state = worldObj.getBlockState(pos);
-				boolean destroy = false;
-				//if (worldObj.getBlockState(pos.down()).getMaterial().isReplaceable()) {
-				boolean canFall = true;
-				BlockPos checkPos = pos;
-				while (true) {
-					if (!fallBlocks.contains(checkPos)) {
-						canFall = false;
-						break;
-					}
-					if (worldObj.getBlockState(checkPos.down()).getMaterial().isReplaceable())
-						break;
-					else {
-						checkPos = checkPos.down();
-					}
-				}
-				if (canFall) {
-					Block bluk = state.getBlock();
-					if (LeafiaUtil.isSolidVisibleCube(state)) {
-						if (bluk instanceof ITileEntityProvider)
-							destroy = true;
+		if (!worldObj.isRemote) {
+			if (has(ExAttrib.DFC_FALL) && fallBlocks != null) {
+				for (BlockPos pos : fallBlocks) {
+					IBlockState state = worldObj.getBlockState(pos);
+					boolean destroy = false;
+					//if (worldObj.getBlockState(pos.down()).getMaterial().isReplaceable()) {
+					boolean canFall = true;
+					BlockPos checkPos = pos;
+					while (true) {
+						if (!fallBlocks.contains(checkPos)) {
+							canFall = false;
+							break;
+						}
+						if (worldObj.getBlockState(checkPos.down()).getMaterial().isReplaceable())
+							break;
 						else {
-							if (worldObj.rand.nextInt(3) > 0) {
-								worldObj.setBlockToAir(pos);
-								EntityFallingBlock fallingBlock = new EntityFallingBlock(worldObj,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,state);
-								fallingBlock.fallTime = 1;
-								worldObj.spawnEntity(fallingBlock);
-							} else
-								destroy = true;
+							checkPos = checkPos.down();
 						}
-					} else destroy = true;
-				} else
-					destroy = true;
-				//} else
-				//	destroy = true;
-				if (destroy)
-					worldObj.setBlockToAir(pos);
-			}
-		}
-		iterator = this.affectedBlockPositions.iterator();
-		while (iterator.hasNext()) {
-			chunkposition = iterator.next();
-			i = chunkposition.getX();
-			j = chunkposition.getY();
-			k = chunkposition.getZ();
-			block = this.worldObj.getBlockState(chunkposition);
-
-			if (!has(ExAttrib.NOPARTICLE)) {
-				double d0 = (double) ((float) i+this.worldObj.rand.nextFloat());
-				double d1 = (double) ((float) j+this.worldObj.rand.nextFloat());
-				double d2 = (double) ((float) k+this.worldObj.rand.nextFloat());
-				double d3 = d0-this.explosionX;
-				double d4 = d1-this.explosionY;
-				double d5 = d2-this.explosionZ;
-				double d6 = (double) MathHelper.sqrt(d3*d3+d4*d4+d5*d5);
-				d3 /= d6;
-				d4 /= d6;
-				d5 /= d6;
-				double d7 = 0.5D/(d6/(double) this.explosionSize+0.1D);
-				d7 *= (double) (this.worldObj.rand.nextFloat()*this.worldObj.rand.nextFloat()+0.3F);
-				d3 *= d7;
-				d4 *= d7;
-				d5 *= d7;
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,(d0+this.explosionX*1.0D)/2.0D,(d1+this.explosionY*1.0D)/2.0D,(d2+this.explosionZ*1.0D)/2.0D,d3,d4,d5);
-				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,d0,d1,d2,d3,d4,d5);
-			}
-
-			if (block.getMaterial() != Material.AIR) {
-				if (block.getBlock().canDropFromExplosion(this) && !has(ExAttrib.NODROP)) {
-					float chance = 1.0F;
-
-					if (!has(ExAttrib.ALLDROP))
-						chance = 1.0F/this.explosionSize;
-
-					block.getBlock().dropBlockAsItemWithChance(this.worldObj,chunkposition,this.worldObj.getBlockState(chunkposition),chance,0);
-				}
-
-				block.getBlock().onBlockExploded(this.worldObj,new BlockPos(i,j,k),this);
-
-				if (block.isNormalCube()) {
-
-					if (has(ExAttrib.DIGAMMA)) {
-						this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.ash_digamma.getDefaultState());
-
-						if (this.explosionRNG.nextInt(5) == 0 && this.worldObj.getBlockState(new BlockPos(i,j+1,k)).getBlock() == Blocks.AIR)
-							this.worldObj.setBlockState(new BlockPos(i,j+1,k),ModBlocks.fire_digamma.getDefaultState());
-
-					} else if (has(ExAttrib.DIGAMMA_CIRCUIT)) {
-
-						if (i%3 == 0 && k%3 == 0) {
-							this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.pribris_digamma.getDefaultState());
-						} else if ((i%3 == 0 || k%3 == 0) && this.explosionRNG.nextBoolean()) {
-							this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.pribris_digamma.getDefaultState());
-						} else {
-							this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.ash_digamma.getDefaultState());
-
-							if (this.explosionRNG.nextInt(5) == 0 && this.worldObj.getBlockState(new BlockPos(i,j+1,k)).getBlock() == Blocks.AIR)
-								this.worldObj.setBlockState(new BlockPos(i,j+1,k),ModBlocks.fire_digamma.getDefaultState());
-						}
-					} else if (has(ExAttrib.LAVA_V)) {
-						this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.volcanic_lava_block.getDefaultState());
 					}
+					if (canFall) {
+						Block bluk = state.getBlock();
+						if (LeafiaUtil.isSolidVisibleCube(state)) {
+							if (bluk instanceof ITileEntityProvider)
+								destroy = true;
+							else {
+								if (worldObj.rand.nextInt(3) > 0) {
+									worldObj.setBlockToAir(pos);
+									EntityFallingBlock fallingBlock = new EntityFallingBlock(worldObj,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,state);
+									fallingBlock.fallTime = 1;
+									worldObj.spawnEntity(fallingBlock);
+								} else
+									destroy = true;
+							}
+						} else destroy = true;
+					} else
+						destroy = true;
+					//} else
+					//	destroy = true;
+					if (destroy)
+						worldObj.setBlockToAir(pos);
 				}
 			}
 		}
-
-		if(has(ExAttrib.FIRE) || has(ExAttrib.BALEFIRE) || has(ExAttrib.LAVA)) {
+		if (!has(ExAttrib.DFC_FALL)) {
 			iterator = this.affectedBlockPositions.iterator();
-
-			while(iterator.hasNext()) {
-				chunkposition = (BlockPos) iterator.next();
+			while (iterator.hasNext()) {
+				chunkposition = iterator.next();
 				i = chunkposition.getX();
 				j = chunkposition.getY();
 				k = chunkposition.getZ();
 				block = this.worldObj.getBlockState(chunkposition);
-				IBlockState block1 = this.worldObj.getBlockState(new BlockPos(i, j - 1, k));
 
-				boolean shouldReplace = true;
+				if (!has(ExAttrib.NOPARTICLE)) {
+					double d0 = (double) ((float) i+this.worldObj.rand.nextFloat());
+					double d1 = (double) ((float) j+this.worldObj.rand.nextFloat());
+					double d2 = (double) ((float) k+this.worldObj.rand.nextFloat());
+					double d3 = d0-this.explosionX;
+					double d4 = d1-this.explosionY;
+					double d5 = d2-this.explosionZ;
+					double d6 = (double) MathHelper.sqrt(d3*d3+d4*d4+d5*d5);
+					d3 /= d6;
+					d4 /= d6;
+					d5 /= d6;
+					double d7 = 0.5D/(d6/(double) this.explosionSize+0.1D);
+					d7 *= (double) (this.worldObj.rand.nextFloat()*this.worldObj.rand.nextFloat()+0.3F);
+					d3 *= d7;
+					d4 *= d7;
+					d5 *= d7;
+					this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,(d0+this.explosionX*1.0D)/2.0D,(d1+this.explosionY*1.0D)/2.0D,(d2+this.explosionZ*1.0D)/2.0D,d3,d4,d5);
+					this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,d0,d1,d2,d3,d4,d5);
+				}
+				if (!worldObj.isRemote) {
+					if (block.getMaterial() != Material.AIR) {
+						if (block.getBlock().canDropFromExplosion(this) && !has(ExAttrib.NODROP)) {
+							float chance = 1.0F;
 
-				if(!has(ExAttrib.ALLMOD))
-					shouldReplace = this.explosionRNG.nextInt(3) == 0;
+							if (!has(ExAttrib.ALLDROP))
+								chance = 1.0F/this.explosionSize;
 
-				if(block.getMaterial() == Material.AIR && block1.isFullBlock() && shouldReplace) {
-					if(has(ExAttrib.FIRE))
-						this.worldObj.setBlockState(chunkposition, Blocks.FIRE.getDefaultState());
-					else if(has(ExAttrib.BALEFIRE))
-						this.worldObj.setBlockState(chunkposition, ModBlocks.balefire.getDefaultState());
-					else if(has(ExAttrib.LAVA))
-						this.worldObj.setBlockState(chunkposition, Blocks.FLOWING_LAVA.getDefaultState());
+							block.getBlock().dropBlockAsItemWithChance(this.worldObj,chunkposition,this.worldObj.getBlockState(chunkposition),chance,0);
+						}
+
+						block.getBlock().onBlockExploded(this.worldObj,new BlockPos(i,j,k),this);
+
+						if (block.isNormalCube()) {
+
+							if (has(ExAttrib.DIGAMMA)) {
+								this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.ash_digamma.getDefaultState());
+
+								if (this.explosionRNG.nextInt(5) == 0 && this.worldObj.getBlockState(new BlockPos(i,j+1,k)).getBlock() == Blocks.AIR)
+									this.worldObj.setBlockState(new BlockPos(i,j+1,k),ModBlocks.fire_digamma.getDefaultState());
+
+							} else if (has(ExAttrib.DIGAMMA_CIRCUIT)) {
+
+								if (i%3 == 0 && k%3 == 0) {
+									this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.pribris_digamma.getDefaultState());
+								} else if ((i%3 == 0 || k%3 == 0) && this.explosionRNG.nextBoolean()) {
+									this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.pribris_digamma.getDefaultState());
+								} else {
+									this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.ash_digamma.getDefaultState());
+
+									if (this.explosionRNG.nextInt(5) == 0 && this.worldObj.getBlockState(new BlockPos(i,j+1,k)).getBlock() == Blocks.AIR)
+										this.worldObj.setBlockState(new BlockPos(i,j+1,k),ModBlocks.fire_digamma.getDefaultState());
+								}
+							} else if (has(ExAttrib.LAVA_V)) {
+								this.worldObj.setBlockState(new BlockPos(i,j,k),ModBlocks.volcanic_lava_block.getDefaultState());
+							}
+						}
+					}
+				}
+			}
+			if (!worldObj.isRemote) {
+				if (has(ExAttrib.FIRE) || has(ExAttrib.BALEFIRE) || has(ExAttrib.LAVA)) {
+					iterator = this.affectedBlockPositions.iterator();
+
+					while (iterator.hasNext()) {
+						chunkposition = (BlockPos) iterator.next();
+						i = chunkposition.getX();
+						j = chunkposition.getY();
+						k = chunkposition.getZ();
+						block = this.worldObj.getBlockState(chunkposition);
+						IBlockState block1 = this.worldObj.getBlockState(new BlockPos(i,j-1,k));
+
+						boolean shouldReplace = true;
+
+						if (!has(ExAttrib.ALLMOD))
+							shouldReplace = this.explosionRNG.nextInt(3) == 0;
+
+						if (block.getMaterial() == Material.AIR && block1.isFullBlock() && shouldReplace) {
+							if (has(ExAttrib.FIRE))
+								this.worldObj.setBlockState(chunkposition,Blocks.FIRE.getDefaultState());
+							else if (has(ExAttrib.BALEFIRE))
+								this.worldObj.setBlockState(chunkposition,ModBlocks.balefire.getDefaultState());
+							else if (has(ExAttrib.LAVA))
+								this.worldObj.setBlockState(chunkposition,Blocks.FLOWING_LAVA.getDefaultState());
+						}
+					}
 				}
 			}
 		}

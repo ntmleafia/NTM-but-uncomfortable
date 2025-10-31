@@ -88,6 +88,12 @@ public class NodeMath extends Node {
 				return evalCache[0] = new DataValueFloat(Math.max(evals[0].getNumber(),evals[1].getNumber()));
 			case MIN:
 				return evalCache[0] = new DataValueFloat(Math.min(evals[0].getNumber(),evals[1].getNumber()));
+			case FLOOR:
+				return evalCache[0] = new DataValueFloat((float)Math.floor(evals[0].getNumber()));
+			case CEIL:
+				return evalCache[0] = new DataValueFloat((float)Math.ceil(evals[0].getNumber()));
+			case ROUND:
+				return evalCache[0] = new DataValueFloat((float)Math.round(evals[0].getNumber()));
 		}
 		return evalCache[0] = null;
 	}
@@ -172,7 +178,10 @@ public class NodeMath extends Node {
 		LEQUAL("Less/equal"),
 		CLAMP("Clamp"),
 		MAX("Max"),
-		MIN("Min");
+		MIN("Min"),
+		FLOOR("Floor"),
+		CEIL("Ceil"),
+		ROUND("Round");
 
 		public String name;
 		private Operation(String name){
