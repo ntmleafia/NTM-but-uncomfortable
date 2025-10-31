@@ -35,11 +35,14 @@ import com.leafia.dev.custompacket.LeafiaCustomPacketEncoder;
 import com.leafia.dev.optimization.LeafiaParticlePacket.DFCBlastParticle;
 import com.leafia.dev.optimization.bitbyte.LeafiaBuf;
 import com.leafia.passive.LeafiaPassiveLocal;
+import com.leafia.passive.LeafiaPassiveServer;
 import com.llib.exceptions.LeafiaDevFlaw;
 import com.leafia.dev.math.FiaMatrix;
 import com.llib.math.LeafiaColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -95,7 +98,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		CONTAINED, EXPELLING, POTENTIAL,
 
 		TANK_A, TANK_B,
-		EXPEL_TICK, COLOR, CORE_TYPE,
+		EXPEL_TICK, COLOR, COLOR_CATALYST, CORE_TYPE,
 
 		PLAY_SOUND, JAMMER,
 		COLLAPSE,
@@ -188,6 +191,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 	AudioWrapper explosionsSFX = null;
 	public float angle = 0;
 	public float lightRotateSpeed = 15/20f;
+	boolean finalPhase = false;
 
 	@Override
 	public void invalidate() {
@@ -199,6 +203,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		if (meltdownSFX != null) {
 			meltdownSFX.stopSound();
 			meltdownSFX = null;
+			LeafiaDebug.debugLog(world,"STOP: 2");
 		}
 		if (extinguishSFX != null) {
 			extinguishSFX.stopSound();
@@ -256,6 +261,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		}
 	}
 	int overloadTimer = 0;
+	public int colorCatalyst = 0xFFFFFF;
 	@Override
 	public void update() {
 		if (destroyed) return;
@@ -307,6 +313,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						((ItemCatalyst) catalystA.getItem()).getColor(),
 						((ItemCatalyst) catalystB.getItem()).getColor()
 				));
+				colorCatalyst = col.toInARGB();
 				tagA = catalystA.getTagCompound();
 				tagB = catalystB.getTagCompound();
 				if (tagA == null) {
@@ -431,7 +438,12 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						tgtTemp -= Math.max(0,Math.pow(temperature/meltingPoint,4)*temperature*getStabilizationDivAlt())*(0.5+(Math.pow(Math.abs(rdc),0.01)*Math.signum(rdc))/2);
 						tgtTemp = Math.min(Math.max(tgtTemp,0),5000000);
 						double deltaTemp = tgtTemp-temperature;
-						temperature += Math.pow(Math.abs(deltaTemp),0.5)*Math.signum(deltaTemp);
+						if (!finalPhase) {
+							double limit = 1000+world.rand.nextInt(1000) + world.rand.nextDouble();
+							temperature += Math.min(Math.pow(Math.abs(deltaTemp),0.5)*Math.signum(deltaTemp),limit);
+						} else {
+							temperature = temperature + world.rand.nextInt(5000)+10000 + world.rand.nextDouble();
+						}
 						temperature = Math.max(temperature,0);
 						/*
 
@@ -547,7 +559,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					));
 				}
 			}
-			if ((damageA >= 100 || damageB >= 100) && temperature > 100) {
+			if ((damageA >= 100 || damageB >= 100) && temperature > 100 || finalPhase) {
 				EntityNukeExplosionMK3 exp = null;
 				if (jammerPos != null) {
 					if (!(world.getBlockState(jammerPos).getBlock() instanceof MachineFieldDisturber))
@@ -575,16 +587,25 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						world.playSound(null, pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 100000.0F, 1.0F);
 
 						world.playSound(null, pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f, HBMSoundEvents.actualexplosion, SoundCategory.BLOCKS, 50.0F, 1.0F);
+						PacketDispatcher.wrapper.sendToAllAround(
+								new CommandLeaf.ShakecamPacket(new String[]{
+										"type=smooth",
+										"preset=RUPTURE",
+										"blurDulling*2",
+										"speed*1.5",
+										"duration/2",
+										"range=300"
+								}).setPos(pos),
+								new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 400)
+						);
+						LeafiaColor col = new LeafiaColor(colorCatalyst);
+						DFCBlastParticle blast = new DFCBlastParticle((float)col.red,(float)col.green,(float)col.blue);
+						blast.emit(new Vec3d(pos).add(0.5,0.5,0.5),new Vec3d(0,1,0),world.provider.getDimension(),200);
+
 						ExplosionNT nt = new ExplosionNT(world,null,pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,50);
 						nt.maxExplosionResistance = 20;
 						nt.ignoreBlockPoses.add(pos);
 						nt.explode();
-						LeafiaColor col = new LeafiaColor(calcAvgHex(
-								((ItemCatalyst) catalystA.getItem()).getColor(),
-								((ItemCatalyst) catalystB.getItem()).getColor()
-						));
-						DFCBlastParticle blast = new DFCBlastParticle((float)col.red,(float)col.green,(float)col.blue);
-						blast.emit(new Vec3d(pos).add(0.5,0.5,0.5),new Vec3d(0,1,0),world.provider.getDimension(),200);
 
 						if (!EntityNukeExplosionMK3.isJammed(this.world, exp)) {
 							destroyed = true;
@@ -610,10 +631,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					boolean tick = true;
 					MinecraftServer server = world.getMinecraftServer();
 					if (server != null) {
-						LeafiaDebug.debugLog(world, "isSinglePlayer: " + server.isSinglePlayer());
-						LeafiaDebug.debugLog(world, "isServerInOnlineMode: " + server.isServerInOnlineMode());
-						LeafiaDebug.debugLog(world, "isDedicatedServer: " + server.isDedicatedServer());
-						LeafiaDebug.debugLog(world, TextFormatting.GOLD + "Time Left: " + explosionIn);
+						//LeafiaDebug.debugLog(world, "isSinglePlayer: " + server.isSinglePlayer());
+						//LeafiaDebug.debugLog(world, "isServerInOnlineMode: " + server.isServerInOnlineMode());
+						//LeafiaDebug.debugLog(world, "isDedicatedServer: " + server.isDedicatedServer());
+						//LeafiaDebug.debugLog(world, TextFormatting.GOLD + "Time Left: " + explosionIn);
 						if (!server.isDedicatedServer())
 							tick = !Minecraft.getMinecraft().isGamePaused();
 					}
@@ -622,6 +643,42 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						explosionIn = Math.max(explosionIn - (time - explosionClock) / 1000d, 0);
 						collapsing = MathHelper.clamp(1-explosionIn/120,0,1);
 						explosionClock = time;
+						if (explosionIn <= 15 && !finalPhase) {
+							finalPhase = true;
+							PacketDispatcher.wrapper.sendToAllAround(
+									new CommandLeaf.ShakecamPacket(new String[]{
+											"type=smooth",
+											"preset=RUPTURE",
+											"blurDulling*2",
+											"speed*1.5",
+											"duration/2",
+											"range=300"
+									}).setPos(pos),
+									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 400)
+							);
+							PacketDispatcher.wrapper.sendToAllAround(
+									new CommandLeaf.ShakecamPacket(new String[]{
+											"type=smooth",
+											"preset=QUAKE",
+											"blurDulling*4",
+											"speed*3",
+											"duration=40",
+											"range=300"
+									}).setPos(pos),
+									new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 400)
+							);
+							LeafiaPacket._start(this)
+									.__write(packetKeys.PLAY_SOUND.key, 3)
+									.__sendToAll();
+
+							ExplosionNT nt = new ExplosionNT(world,null,pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f,150);
+							nt.iterationLimit = 150;
+							nt.overrideResolution(32);
+							nt.ignoreBlockPoses.add(pos);
+							nt.addAttrib(ExAttrib.FIRE);
+							nt.addAttrib(ExAttrib.DFC_FALL);
+							nt.explode();
+						}
 						if (explosionIn <= 0 && exp != null) {
 							PacketDispatcher.wrapper.sendToAllAround(
 									new CommandLeaf.ShakecamPacket(new String[]{
@@ -707,6 +764,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					.__write(packetKeys.MAXIMUM.key, meltingPoint)
 
 					.__write(packetKeys.COLOR.key, color)
+					.__write(packetKeys.COLOR_CATALYST.key, colorCatalyst)
 					.__write(packetKeys.CORE_TYPE.key, coreId)
 
 					.__write(packetKeys.JAMMER.key, jammerPos)
@@ -720,8 +778,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 			stabilization = 0;
 			if (this.collapsing > 0) {
 				List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(null,LeafiaHelper.getAABBRadius(LeafiaHelper.getBlockPosCenter(this.pos),getPullRange()));
-				for (Entity e : list)
-					pull(e);
+				for (Entity e : list) {
+					if (!(e instanceof EntityFallingBlock))
+						pull(e);
+				}
 			}
 			this.markDirty();
 			/*testDebug++;
@@ -767,9 +827,22 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						angle -= 360;
 				}
 			}
-			//TODO: sick particle effects
+			ringSpinSpeed = 360/20f;
+			if (120-collapsing*120 <= 15)
+				finalPhase = true;
+			if (collapsing > 0.95) {
+				double percent = (collapsing-0.95)/0.05;
+				ringSpinSpeed += 3600/20f*(float)percent;
+			}
+			if (finalPhase) {
+				ringAlpha = MathHelper.clamp(ringAlpha+0.025f,0,1);
+			}
+			ringAngle = MathHelper.positiveModulo(ringAngle+ringSpinSpeed,360);
 		}
 	}
+	public float ringSpinSpeed = 360/20f;
+	public float ringAngle = 0;
+	public float ringAlpha = 0;
 	@SideOnly(Side.CLIENT)
 	void pullLocal() {
 		pull(Minecraft.getMinecraft().player);
@@ -965,6 +1038,8 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 				}
 				e.attackEntityFrom(ModDamageSource.dfcMeltdown,(int) (this.temperature / 10));
 				e.setFire(10);
+				if (!(e instanceof EntityLivingBase))
+					e.setDead();
 			}
 		}
 	}
@@ -1042,7 +1117,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 		return ItemAMSCore.getFuelBase(inventory.getStackInSlot(1));
 	}
 
-	private int calcAvgHex(int h1, int h2) {
+	public int calcAvgHex(int h1, int h2) {
 
 		int r1 = ((h1 & 0xFF0000) >> 16);
 		int g1 = ((h1 & 0x00FF00) >> 8);
@@ -1128,6 +1203,9 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					case COLOR:
 						color = (int) value;
 						break;
+					case COLOR_CATALYST:
+						colorCatalyst = (int) value;
+						break;
 					case JAMMER:
 						jammerPos = (BlockPos) value;
 						break;
@@ -1156,10 +1234,15 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						int type = (int) value;
 						if (type == 0 || type == 1) {
 							if (meltdownSFX != null) meltdownSFX.stopSound();
+							if (explosionsSFX != null) explosionsSFX.stopSound();
 							if (type == 0 && meltdownSFX != null) meltdownSFX.startSound();
 							if (type == 1 && extinguishSFX != null) extinguishSFX.startSound();
-						} else if (type == 2 && overloadSFX != null) {
+							if (type == 1) LeafiaDebug.debugLog(world,"STOP: 1");
+						} else if (type == 2 && overloadSFX != null)
 							overloadSFX.startSound();
+						else if (type == 3 && explosionsSFX != null) {
+							explosionsSFX.startSound();
+							finalPhase = true;
 						}
 						break;
 					case COLLAPSE:

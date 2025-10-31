@@ -1,5 +1,6 @@
 package com.hbm.render.tileentity;
 
+import com.hbm.items.machine.ItemCatalyst;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ResourceManager;
 import com.hbm.render.RenderSparks;
@@ -23,6 +24,7 @@ import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -38,6 +40,7 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 		for (int i = 0; i < 10; i++)
 			deformSphere[i] = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID, "models/leafia/deformed_sphere/deform"+i+".obj"));
 	}
+	public static IModelCustom instability_ring = AdvancedModelLoader.loadModel(new ResourceLocation(RefStrings.MODID,"models/leafia/ecr_instability_ring.obj"));
 
 	@Override
 	public boolean isGlobalRenderer(TileEntityCore te) {
@@ -153,17 +156,17 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 		float r = (color>>16&255)/255F;
 		float g = (color>>8&255)/255F;
 		float b = (color&255)/255F;
-		GlStateManager.color(r,g,b,1.0F);
 
 		int tot = core.tanks[0].getCapacity()+core.tanks[1].getCapacity();
 		int fill = core.tanks[0].getFluidAmount()+core.tanks[1].getFluidAmount();
 
 		float scale = (float) Math.log(core.temperature/50+1) /* * ((float) fill / (float) tot)*/+0.5F;
+		double rot = 0;
 		if (core.collapsing > 0.97) {
 			double percent = (core.collapsing-0.97)/0.03;
 			LeafiaEase ease = new LeafiaEase(Ease.EXPO,Direction.I);
 			scale *= (float) ease.get(ease.get(percent),1,0);
-			GL11.glRotated(ease.get(percent)*1000,1,1,1);
+			rot = ease.get(percent)*1000;
 		}
 		GL11.glScalef(scale,scale,scale);
 
@@ -173,12 +176,38 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 		GlStateManager.disableTexture2D();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit,240F,240F);
 
+
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+		if (core.ringAlpha > 0) {
+			GlStateManager.pushMatrix();
+			GlStateManager.disableCull();
+			int colorC = core.colorCatalyst;
+			float rC = (colorC>>16&255)/255F;
+			float gC = (colorC>>8&255)/255F;
+			float bC = (colorC&255)/255F;
+			GlStateManager.scale(0.025f,0.025f,0.025f);
+			GlStateManager.color(rC,gC,bC,core.ringAlpha);
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(core.ringAngle+core.ringSpinSpeed*partialTicks,0,1,0);
+			instability_ring.renderPart("InstabilityInnerRing");
+			GlStateManager.popMatrix();
+			GlStateManager.rotate(core.ringAngle+core.ringSpinSpeed*partialTicks,0,-1,0);
+			instability_ring.renderPart("InstabilityRing");
+			GlStateManager.enableCull();
+			GlStateManager.popMatrix();
+		}
+		GlStateManager.color(r,g,b,1.0F);
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+
+		GL11.glRotated(rot,1,1,1);
 		GL11.glScalef(0.5F,0.5F,0.5F);
 		ResourceManager.sphere_ruv.renderAll();
 		GL11.glScalef(2F, 2F, 2F);
 
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+
 
 		if (core.client_type == Cores.ams_core_eyeofharmony) {
 			GL11.glScalef(0.5F,0.5F,0.5F);
@@ -233,6 +262,8 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 			LeafiaGls.enableCull();
 			LeafiaGls.popMatrix();
 		}
+
+
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GL11.glPopMatrix();
 
@@ -241,7 +272,6 @@ public class RenderCore extends TileEntitySpecialRenderer<TileEntityCore> {
 		GlStateManager.disableBlend();
 		GlStateManager.enableLighting();
 		GlStateManager.enableTexture2D();
-		GlStateManager.disableCull();
 		GL11.glPopMatrix();
 	}
 	private void renderFlash(float scale, double intensity, double alpha, float r, float g, float b) {

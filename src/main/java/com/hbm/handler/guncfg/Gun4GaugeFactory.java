@@ -269,8 +269,8 @@ public class Gun4GaugeFactory {
 					return;
 				
 				ExplosionNT explosion = new ExplosionNT(bullet.world, null, bullet.posX, bullet.posY, bullet.posZ, 4);
-				explosion.atttributes.add(ExAttrib.ALLDROP);
-				explosion.atttributes.add(ExAttrib.NOHURT);
+				explosion.attributes.add(ExAttrib.ALLDROP);
+				explosion.attributes.add(ExAttrib.NOHURT);
 				explosion.explode();
 
 				ExplosionLarge.spawnParticles(bullet.world, bullet.posX, bullet.posY, bullet.posZ, 15);
@@ -302,7 +302,7 @@ public class Gun4GaugeFactory {
 					return;
 				
 				ExplosionNT explosion = new ExplosionNT(bullet.world, null, bullet.posX, bullet.posY, bullet.posZ, 6);
-				explosion.atttributes.add(ExAttrib.BALEFIRE);
+				explosion.attributes.add(ExAttrib.BALEFIRE);
 				explosion.explode();
 
 				ExplosionLarge.spawnParticles(bullet.world, bullet.posX, bullet.posY, bullet.posZ, 30);

@@ -46,7 +46,9 @@ public class ControlEventSystem {
 				tickables.remove(c);
 				continue;
 			}
-			controllablesByEventName.get(s).remove(c);
+			Map<BlockPos,IControllable> map = controllablesByEventName.get(s);
+			if (map != null)
+				map.remove(c);
 		}
 		allControllables.remove(c);
 	}
