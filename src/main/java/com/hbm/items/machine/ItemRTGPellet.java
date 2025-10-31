@@ -3,6 +3,7 @@ package com.hbm.items.machine;
 import com.hbm.items.special.ItemHazard;
 import com.hbm.util.BobMathUtil;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MultiRad;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,6 +29,20 @@ public class ItemRTGPellet extends ItemHazard {
 	
 	public ItemRTGPellet(int heatIn, float radiation, String s) {
 		super(radiation, s);
+		this.heat = (short) heatIn;
+		this.setMaxStackSize(1);
+		this.setTranslationKey(s);
+		//ModItems.ALL_ITEMS.add(this);
+	}
+	public ItemRTGPellet(int heatIn,MultiRad rad,String s) {
+		super(rad,s);
+		this.heat = (short) heatIn;
+		this.setMaxStackSize(1);
+		this.setTranslationKey(s);
+		//ModItems.ALL_ITEMS.add(this);
+	}
+	public ItemRTGPellet(int heatIn,MultiRad rad,float mul,String s) {
+		super(rad,mul,s);
 		this.heat = (short) heatIn;
 		this.setMaxStackSize(1);
 		this.setTranslationKey(s);

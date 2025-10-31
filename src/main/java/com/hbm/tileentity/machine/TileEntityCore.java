@@ -416,6 +416,10 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 						double absorbed = Math.pow(containedEnergy,0.75+energyRatio*0.25)/20*absorbDiv;
 						double transferred = 0;
 						for (TileEntityCoreReceiver absorber : absorbers) {
+							if (finalPhase) {
+								absorber.explode();
+								continue;
+							}
 							long absorb = (long)(absorbed/absorbDiv*absorber.level*1000_000);
 							containedEnergy -= absorb/1000_000d;
 							transferred += absorb/1000_000d;
@@ -833,7 +837,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 				finalPhase = true;
 			if (collapsing > 0.95) {
 				double percent = (collapsing-0.95)/0.05;
-				ringSpinSpeed += 3600/20f*(float)percent;
+				ringSpinSpeed += 10800/20f*(float)percent;
 			}
 			if (finalPhase) {
 				ringAlpha = MathHelper.clamp(ringAlpha+0.025f,0,1);
@@ -996,6 +1000,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 
 		for (Entity e : list) {
 			if (isFixTool(e)) continue;
+			if (e instanceof EntityFallingBlock) continue;
 			boolean isPlayer = e instanceof EntityPlayer;
 			if (!(isPlayer && ArmorUtil.checkForHazmat((EntityPlayer) e))) {
 				if (!(Library.isObstructed(world, pos.getX() + 0.5, pos.getY() + 0.5 + 6, pos.getZ() + 0.5, e.posX, e.posY + e.getEyeHeight(), e.posZ))) {
@@ -1026,7 +1031,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					e.setEntityInvulnerable(false);
 					e.setDead();
 					world.createExplosion(null,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,20,false);
-					if (wasBoosted || isSurvivalFixTool(e) && world.rand.nextInt(100) < 80-lastStabilizers*10) {
+					if (finalPhase || wasBoosted || isSurvivalFixTool(e) && world.rand.nextInt(100) < 80-lastStabilizers*10) {
 						world.playSound(null,pos,HBMSoundEvents.crucifix_fail,SoundCategory.BLOCKS,20,1);
 						continue;
 					}
@@ -1038,7 +1043,7 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 					continue;
 				}
 				e.attackEntityFrom(ModDamageSource.dfcMeltdown,(int) (this.temperature / 10));
-				e.setFire(10);
+				//e.setFire(10);
 				if (!(e instanceof EntityLivingBase))
 					e.setDead();
 			}

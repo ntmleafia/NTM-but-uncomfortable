@@ -320,7 +320,7 @@ public class ExplosionNT extends Explosion {
 							if (bluk instanceof ITileEntityProvider)
 								destroy = true;
 							else {
-								if (worldObj.rand.nextInt(3) > 0) {
+								if (worldObj.rand.nextInt(5) > 0) {
 									worldObj.setBlockToAir(pos);
 									EntityFallingBlock fallingBlock = new EntityFallingBlock(worldObj,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,state);
 									fallingBlock.fallTime = 1;

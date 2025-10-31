@@ -2,6 +2,7 @@ package com.hbm.items.special;
 
 import com.hbm.interfaces.IItemHazard;
 import com.hbm.modules.ItemHazardModule;
+import com.leafia.dev.MultiRad;
 import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -160,6 +161,16 @@ public class ItemHazard extends ItemCustomLore implements IItemHazard {
 			this(s);
 			this.module.radiation.set(radiation,type);
 		}
+
+		public ItemHazard(MultiRad rad,String s) {
+			this(s);
+			this.module.radiation.reflect(rad);
+		}
+
+	public ItemHazard(MultiRad rad,float mult,String s) {
+		this(s);
+		this.module.radiation.reflect(rad).multiply(mult);
+	}
 
 		@Deprecated()
 		public ItemHazard(RadiationType type,float radiation,boolean fire, String s) {

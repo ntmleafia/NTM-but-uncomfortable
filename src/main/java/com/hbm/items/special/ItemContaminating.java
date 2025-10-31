@@ -4,6 +4,7 @@ import com.hbm.blocks.generic.BlockClean;
 import com.hbm.config.CompatibilityConfig;
 import com.hbm.entity.effect.EntityFalloutUnderGround;
 import com.hbm.util.I18nUtil;
+import com.leafia.dev.MultiRad;
 import com.leafia.dev.MultiRad.RadiationType;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,6 +19,28 @@ public class ItemContaminating extends ItemHazard {
 	
 	private int burntime;
 	private int falloutBallRadius = 0;
+
+	public ItemContaminating(MultiRad rad,String s) {
+		super(rad,s);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(rad.total())+0.5D, 500);
+	}
+
+	public ItemContaminating(MultiRad rad,float mul,String s) {
+		super(rad,mul,s);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(rad.total())+0.5D, 500);
+	}
+
+	public ItemContaminating(MultiRad rad,String s,boolean fire) {
+		super(rad,s);
+		this.module.addFire(5);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(rad.total())+0.5D, 500);
+	}
+
+	public ItemContaminating(MultiRad rad,float mul,String s,boolean fire) {
+		super(rad,mul,s);
+		this.module.addFire(5);
+		this.falloutBallRadius = (int)Math.min(Math.sqrt(rad.total())+0.5D, 500);
+	}
 
 	public ItemContaminating(float radiation, String s){
 		super(radiation, s);

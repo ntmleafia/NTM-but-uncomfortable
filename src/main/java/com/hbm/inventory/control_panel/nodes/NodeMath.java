@@ -139,6 +139,9 @@ public class NodeMath extends Node {
 			case EXP:
 			case SQRT:
 			case ABS:
+			case FLOOR:
+			case CEIL:
+			case ROUND:
 				inputs.add(new NodeConnection("Input", this, inputs.size(), true, DataType.NUMBER, new DataValueFloat(0)));
 				break;
 			case CLAMP:

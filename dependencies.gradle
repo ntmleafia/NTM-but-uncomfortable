@@ -67,4 +67,6 @@ dependencies {
 
     compileOnly files("../Computronics-1.12.2-1.6.6-deobf.jar");
 
+    runtimeOnlyNonPublishable rfg.deobf(files("../Backups-1.12.2-1.5.7.jar"))
+
 }

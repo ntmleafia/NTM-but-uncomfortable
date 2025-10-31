@@ -58,6 +58,39 @@ public class MultiRad {
 			this.modFunction = modFunction;
 		}
 	}
+
+	public MultiRad(float alpha,float beta,float x,float gamma,float neutrons) {
+		this.alpha = alpha;
+		this.beta = beta;
+		this.x = x;
+		this.gamma = gamma;
+		this.neutrons = neutrons;
+	}
+	public MultiRad() {
+	}
+
+	public MultiRad multiply(float v) {
+		alpha *= v;
+		beta *= v;
+		x *= v;
+		gamma *= v;
+		neutrons *= v;
+		activation *= v;
+		radon *= v;
+		return this;
+	}
+
+	public MultiRad reflect(MultiRad other) {
+		alpha = other.alpha;
+		beta = other.beta;
+		x = other.x;
+		gamma = other.gamma;
+		neutrons = other.neutrons;
+		activation = other.neutrons;
+		radon = other.radon;
+		return this;
+	}
+
 	public float alpha;
 	public float beta;
 	public float gamma;
@@ -162,11 +195,22 @@ public class MultiRad {
 		}
 		return super.equals(obj);
 	}
+	public MultiRad copy() {
+		MultiRad rad = new MultiRad();
+		rad.alpha = alpha;
+		rad.beta = beta;
+		rad.x = x;
+		rad.gamma = gamma;
+		rad.neutrons = neutrons;
+		rad.activation = activation;
+		rad.radon = radon;
+		return rad;
+	}
 	public void forEach(BiConsumer<RadiationType,Float> callback) {
 		callback.accept(RadiationType.ALPHA,alpha);
 		callback.accept(RadiationType.BETA,beta);
-		callback.accept(RadiationType.GAMMA,gamma);
 		callback.accept(RadiationType.X,x);
+		callback.accept(RadiationType.GAMMA,gamma);
 		callback.accept(RadiationType.NEUTRONS,neutrons);
 		callback.accept(RadiationType.ACTIVATION,activation);
 	}

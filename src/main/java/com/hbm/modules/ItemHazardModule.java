@@ -74,6 +74,7 @@ public class ItemHazardModule {
 		this.radiation.alpha = copyFrom.radiation.alpha;
 		this.radiation.beta = copyFrom.radiation.beta;
 		this.radiation.gamma = copyFrom.radiation.gamma;
+		this.radiation.x = copyFrom.radiation.x;
 		this.radiation.neutrons = copyFrom.radiation.neutrons;
 		this.radiation.activation = copyFrom.radiation.activation;
 		this.radiation.radon = copyFrom.radiation.radon;

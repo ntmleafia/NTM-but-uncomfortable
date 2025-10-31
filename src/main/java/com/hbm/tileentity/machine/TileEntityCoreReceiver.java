@@ -12,6 +12,7 @@ import com.hbm.util.Tuple.Pair;
 import com.leafia.contents.machines.powercores.dfc.DFCBaseTE;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity;
 import com.leafia.contents.machines.powercores.dfc.debris.AbsorberShrapnelEntity.DebrisType;
+import com.leafia.dev.LeafiaDebug;
 import com.leafia.dev.container_utility.LeafiaPacket;
 import com.llib.LeafiaLib.NumScale;
 import com.leafia.dev.math.FiaMatrix;
@@ -101,7 +102,7 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
         world.spawnEntity(entity);
     }
 
-    void explode() {
+    public void explode() {
         world.setBlockToAir(pos);
         for (int i = 0; i < 3; i++) spawnShrapnel(DebrisType.BEAM);
         for (int i = 0; i < 2; i++) spawnShrapnel(DebrisType.CORNER);
@@ -134,12 +135,12 @@ public class TileEntityCoreReceiver extends DFCBaseTE implements ITickable, IEne
             core.absorbers.add(this);
         if (!world.isRemote) {
             LeafiaPacket._start(this).__write(31,targetPosition).__sendToAffectedClients();
-
             if (joules >= NumScale.PETA && world.getBlockState(pos).getBlock() == ModBlocks.dfc_receiver) {
                 destructionLevel = Math.min(destructionLevel+2,400);
-                if (destructionLevel > 300 && world.rand.nextInt(100) == 0)
+                if (destructionLevel > 300 && world.rand.nextInt(100) == 0) {
                     this.explode();
-                return;
+                    return;
+                }
             } else {
                 destructionLevel = Math.max(destructionLevel-1,0);
             }

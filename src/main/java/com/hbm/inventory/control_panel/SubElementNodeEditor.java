@@ -1,10 +1,7 @@
 package com.hbm.inventory.control_panel;
 
 import com.hbm.inventory.control_panel.nodes.*;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeAddString;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSIPfx;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSounder;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSubString;
+import com.hbm.inventory.control_panel.nodes.leafia.*;
 import com.hbm.lib.RefStrings;
 import com.hbm.main.ClientProxy;
 import com.hbm.render.RenderHelper;
@@ -221,6 +218,8 @@ public class SubElementNodeEditor extends SubElement {
 						}
 						else if (s2.equals("SIPfx")) {
 							node = new NodeSIPfx(x, y);
+						} else if (s2.equals("Format")) {
+							node = new NodeFormat(x, y);
 						}
 						if (node != null) {
 							addMenu.close();
@@ -233,6 +232,7 @@ public class SubElementNodeEditor extends SubElement {
 					list.addItems("Add String");
 					list.addItems("Substring");
 					list.addItems("SIPfx");
+					list.addItems("Format");
 					return list;
 				}
 				return null;

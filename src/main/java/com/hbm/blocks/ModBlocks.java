@@ -27,6 +27,7 @@ import com.hbm.tileentity.machine.TileEntityMultiblock;
 import com.hbm.tileentity.machine.TileEntityWatzStruct;
 import com.leafia.contents.building.BlockPinkDoor;
 import com.leafia.contents.building.mixed.BlockMixedConcrete;
+import com.leafia.contents.control.ItemRads;
 import com.leafia.contents.machines.Reserved6Block;
 import com.leafia.contents.machines.elevators.EvBuffer;
 import com.leafia.contents.machines.elevators.EvPulley;
@@ -539,7 +540,7 @@ public class ModBlocks {
 	public static final Block block_schrabidate = new BlockHazard(Material.IRON, SoundType.METAL, "block_schrabidate").addAlpha(ItemHazard.sb * ItemHazard.block).addBlinding().toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(600.0F);
 	public static final Block block_solinium = new BlockHazard(Material.IRON, SoundType.METAL, "block_solinium").addAlpha(ItemHazard.sa327 * ItemHazard.block).addBlinding().toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(600.0F);
 	public static final Block block_schrabidium_fuel = new BlockHazard(Material.IRON, SoundType.METAL, "block_schrabidium_fuel").addAlpha(ItemHazard.saf * ItemHazard.block).addBlinding().toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(600.0F);
-	public static final Block block_au198 = new BlockHazard(Material.IRON, SoundType.METAL, "block_au198").addBeta(ItemHazard.au198 * ItemHazard.block).addFire(5).toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(600.0F);
+	public static final Block block_au198 = new BlockHazard(Material.IRON, SoundType.METAL, "block_au198").addRadiation(ItemRads.gold198, ItemHazard.block).addFire(5).toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(600.0F);
 	public static final Block block_euphemium = new BlockBase(Material.IRON, "block_euphemium").setSoundType(SoundType.METAL).setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(60000.0F);
 	public static final Block block_dineutronium = new BlockBase(Material.IRON, "block_dineutronium").setSoundType(SoundType.METAL).setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(120000.0F);
 	public static final Block block_schrabidium_cluster = new BlockRotatablePillarHazard(Material.ROCK, "block_schrabidium_cluster").addAlpha(70F).toBlock().setCreativeTab(MainRegistry.blockTab).setHardness(5.0F).setResistance(60000.0F);

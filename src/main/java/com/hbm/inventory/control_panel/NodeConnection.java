@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 
-public class NodeConnection extends NodeElement {
+public class NodeConnection extends NodeElement implements ITypableNode {
 
 	public String name;
 	//These should always be null and -1 for output nodes.
@@ -201,6 +201,7 @@ public class NodeConnection extends NodeElement {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@Override
 	public float[] getValueBox(){
 		if(enumSelector != null)
 			return enumSelector.getBox();
@@ -216,6 +217,13 @@ public class NodeConnection extends NodeElement {
 	}
 
 	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean isTyping() {
+		return isTyping;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
 	public void startTyping(){
 		isTyping = true;
 		builder = new StringBuilder();
@@ -224,6 +232,7 @@ public class NodeConnection extends NodeElement {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
+	@Override
 	public void stopTyping(){
 		DataValue val = new DataValueString(builder.toString());
 		builder = null;
@@ -251,6 +260,7 @@ public class NodeConnection extends NodeElement {
 	}
 	
 	@SideOnly(Side.CLIENT)
+	@Override
 	public void keyTyped(char c, int key){
 		if(key == Keyboard.KEY_BACK){
 			if(builder.length() > 0)

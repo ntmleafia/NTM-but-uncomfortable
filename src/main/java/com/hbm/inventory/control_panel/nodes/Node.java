@@ -1,10 +1,7 @@
 package com.hbm.inventory.control_panel.nodes;
 
 import com.hbm.inventory.control_panel.*;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeAddString;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSIPfx;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSounder;
-import com.hbm.inventory.control_panel.nodes.leafia.NodeSubString;
+import com.hbm.inventory.control_panel.nodes.leafia.*;
 import com.hbm.render.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -105,6 +102,9 @@ public abstract class Node {
 				break;
 			case "sipfx":
 				node = new NodeSIPfx(0,0);
+				break;
+			case "format":
+				node = new NodeFormat(0,0);
 				break;
 			case "getVar":
 				int ctrlIdx = tag.getInteger("controlIdx");

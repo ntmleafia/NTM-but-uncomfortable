@@ -1,6 +1,7 @@
 package com.hbm.interfaces;
 
 import com.hbm.modules.ItemHazardModule;
+import com.leafia.dev.MultiRad;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
@@ -12,6 +13,11 @@ public interface IItemHazard {
 		this.getModule().addRadiation(radiation);
 		return this;
 	}
+
+	default IItemHazard addRadiation(MultiRad rad) { this.getModule().radiation.reflect(rad); return this; }
+	default IItemHazard addRadiation(MultiRad rad,float mul) { this.getModule().radiation.reflect(rad).multiply(mul); return this; }
+
+	default IItemHazard multiply(float mul) { this.getModule().radiation.multiply(mul); return this; }
 
 	public default IItemHazard addAlpha(float radiation) { this.getModule().radiation.setAlpha(radiation); return this; }
 	public default IItemHazard addBeta(float radiation) { this.getModule().radiation.setBeta(radiation); return this; }
