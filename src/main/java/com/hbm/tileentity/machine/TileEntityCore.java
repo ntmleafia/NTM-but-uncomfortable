@@ -250,13 +250,13 @@ public class TileEntityCore extends TileEntityMachineBase implements ITickable, 
 							HBMSoundEvents.overload,
 							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
 							1f,1
-					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-20)/100,0,1),6.66))
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-20)/300,0,1),6.66))
 					.setLooped(false);
 			explosionsSFX = MainRegistry.proxy.getLoopedSound(
 							HBMSoundEvents.longexplosion,
 							SoundCategory.BLOCKS,pos.getX()+.5f,pos.getY()+.5f,pos.getZ()+.5f,
 							1f,1
-					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-20)/100,0,1),6.66))
+					).setCustomAttentuation((intended,distance)->Math.pow(MathHelper.clamp(1-(distance-50)/500,0,1),6.66))
 					.setLooped(false);
 		}
 	}
